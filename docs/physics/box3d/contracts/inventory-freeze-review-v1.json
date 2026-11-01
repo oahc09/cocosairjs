@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 1,
+  "reviewVersion": "box3d-inventory-freeze-review-v1",
+  "status": "INTEGRATOR_TECHNICAL_DECISION_RECORDED",
+  "scope": "required-cell-denominator-only",
+  "recordedDate": "2026-10-22",
+  "reviewAuthority": "Integrator engineering review of the v1.2 required test denominator",
+  "evidence": {
+    "id": "M0-DENOMINATOR-ENGINEERING-REVIEW-V1",
+    "kind": "INTEGRATOR_TECHNICAL_REVIEW",
+    "reviewerRole": "Integrator",
+    "candidateRevision": "5b8e575",
+    "basisSections": [
+      "v1.2 section 8",
+      "v1.2 section 9.1",
+      "v1.2 section 10",
+      "v1.2 section 11",
+      "v1.2 section 14",
+      "existing resource contract"
+    ],
+    "decisionSummary": "Adopt the explicit environment, variant, build-profile and aggregation definitions as the required denominator; retain positive MT targets, real-device and human obligations, unexecuted states and unresolved readiness.",
+    "engineeringChecks": [
+      "candidate byte-drift check",
+      "32 focused inventory and existing contract tests",
+      "source-plan and resource-contract review"
+    ]
+  },
+  "acceptedCandidate": {
+    "path": "docs/physics/box3d/contracts/inventory-expansion-candidate.json",
+    "sha256": "1ca96ccfd50b32a1e64c207cf0fc5899a488cbf4ebf48a28b1192eaf8894624d"
+  },
+  "acceptedPolicy": {
+    "path": "docs/physics/box3d/contracts/inventory-expansion-policy.json",
+    "sha256": "150d7166523a71eff7a58f76e205fd25676915639611ca76c75f523c6dcf507c"
+  },
+  "originalPlan": {
+    "path": "ai/plans/box3d-v1.2-reference.md",
+    "sha256": "17b4dcf0d8acbe0ed72f81ab4d3fc53c6a51f705d573699f0d50137e4bf00c46"
+  },
+  "protectedCandidateHistory": [
+    {
+      "path": "docs/physics/box3d/contracts/inventory-expansion-candidate.json",
+      "sha256": "1ca96ccfd50b32a1e64c207cf0fc5899a488cbf4ebf48a28b1192eaf8894624d"
+    },
+    {
+      "path": "docs/physics/box3d/contracts/inventory-expansion-policy.json",
+      "sha256": "150d7166523a71eff7a58f76e205fd25676915639611ca76c75f523c6dcf507c"
+    },
+    {
+      "path": "docs/physics/box3d/contracts/inventory-expansion-review.md",
+      "sha256": "fb03c77338b26c59ceeb3a594735c64aca0c532916099c5c89ee54681536df1e"
+    },
+    {
+      "path": "tools/verify/box3d/inventory-expansion.cjs",
+      "sha256": "055ec408f3098972c762532688ade2f503719ed3fdd44f32c6ef6b54aadafcd4"
+    },
+    {
+      "path": "tools/verify/box3d/inventory-expansion.test.cjs",
+      "sha256": "022ed2e2f17b0ecf4671e4cc291afe7d5144fe30ef4945943a14dd3e55b47d59"
+    }
+  ],
+  "adoptedDenominatorDecisions": [
+    {
+      "id": "D01-ENVIRONMENT-SCOPE",
+      "status": "ADOPTED_TECHNICAL",
+      "priorStatus": "PENDING_INTEGRATOR_REVIEW",
+      "acceptedScope": "Adopt the explicit candidate definition rows: all five real browser classes for public C/I/A behavior, Node plus Chrome for low-level binding/U fixtures, host-only artifact audits, exact HOST/DEVICE splits, three named product devices for performance, and one separately allocated human cohort. Node is not an AIR main-entry or rendering substitute. Keep all six platform classes and every fixed ID. For fixtures introduced before M5, schedule non-host-browser matrix cells at M5 while retaining the original fixture introduction phase; host Chrome/Node keep the source first phase. All positive MT cells first require M6 or later. This staging recommendation does not certify a complete parent at an earlier checkpoint.",
+      "evidenceId": "M0-DENOMINATOR-ENGINEERING-REVIEW-V1",
+      "effect": "DENOMINATOR_ONLY_NOT_IMPLEMENTATION_COMPATIBILITY_OR_GATE_PASS"
+    },
+    {
+      "id": "D02-MT-POSITIVE-TARGETS",
+      "status": "ADOPTED_TECHNICAL",
+      "priorStatus": "PENDING_INTEGRATOR_REVIEW",
+      "acceptedScope": "Retain the explicit MT2/MT4 shared-behavior cells and MT3 legal-count cells in the accepted matrix. Real successful pool/world execution is required only for the 1,331 cells with positiveMtExecutionRequired=true. The other 18 MT-related cells are artifact/contract audits or source-required negative diagnostics and cannot establish runtime compatibility. The six positive MT target classes are technically frozen as required obligations; actual support is established only by their corresponding real tests. Missing resources or capability observations cannot automatically replace positive obligations with unsupported/fallback credit. G0 fixture and other readiness conditions remain independently unmet.",
+      "evidenceId": "M0-DENOMINATOR-ENGINEERING-REVIEW-V1",
+      "effect": "DENOMINATOR_ONLY_NOT_IMPLEMENTATION_COMPATIBILITY_OR_GATE_PASS",
+      "candidateRecommendationPointer": {
+        "path": "docs/physics/box3d/contracts/inventory-expansion-policy.json",
+        "jsonPointer": "/decisions/1/recommendation",
+        "sha256": "150d7166523a71eff7a58f76e205fd25676915639611ca76c75f523c6dcf507c"
+      },
+      "technicalClarification": {
+        "positiveMtExecutionRequiredCellCount": 1331,
+        "auditOrRequiredNegativeMtCellCount": 18,
+        "auditOrNegativeCellsGiveCompatibilityCredit": false,
+        "targetClassEnumerationTechnicallyFrozen": true,
+        "actualTargetSupportVerified": false,
+        "G0ReadinessSatisfied": false
+      }
+    },
+    {
+      "id": "D03-DEBUG-RELEASE-CRITICAL",
+      "status": "ADOPTED_TECHNICAL",
+      "priorStatus": "PENDING_INTEGRATOR_REVIEW",
+      "acceptedScope": "Adopt criticalDebugReleaseTestIds exactly as the initial risk-based proposal: ABI, ST isolation, generation, heap growth, binding ownership/snapshot, real binding platform, runtime body setters/damping, contact snapshot/transient sensors/callback destruction, invalid query/setter rollback, complete app close and both real-native U fixtures. Run the entire required fixture in each listed build profile, with separate native artifact identities. Extend through a versioned technical review when risk warrants it.",
+      "evidenceId": "M0-DENOMINATOR-ENGINEERING-REVIEW-V1",
+      "effect": "DENOMINATOR_ONLY_NOT_IMPLEMENTATION_COMPATIBILITY_OR_GATE_PASS"
+    },
+    {
+      "id": "D06-AGGREGATION-AND-CELL-KEY",
+      "status": "ADOPTED_TECHNICAL",
+      "priorStatus": "PENDING_INTEGRATOR_REVIEW",
+      "acceptedScope": "Keep 91 parent aggregates and 84 fixed references plus U01/U02; only generated executable cells count. A caseKey is an internal fixture unit, not a new acceptance category. Split-only parents aggregate children; additive parents also require a parent-table-remainder caseKey. Build profile and worker count are explicit key dimensions; named performance profile and human cohort are caseKey dimensions. Aggregate fixed WASM-13-AIR-ST and C28-SENSOR-CCD are not executable or double-counted. WASM-15 aggregates P01–P07. Do not merge or remove cells without a reviewed version change and retained prior contract.",
+      "evidenceId": "M0-DENOMINATOR-ENGINEERING-REVIEW-V1",
+      "effect": "DENOMINATOR_ONLY_NOT_IMPLEMENTATION_COMPATIBILITY_OR_GATE_PASS"
+    }
+  ],
+  "unresolvedReadinessDecisions": [
+    {
+      "id": "D04-PERFORMANCE-PROTOCOL",
+      "status": "PENDING_INTEGRATOR_REVIEW",
+      "blocks": "G7 performance freeze; profile/MT applicability is separately decided by D01/D02, not by availability of baselines",
+      "approvalEvidence": null,
+      "doesNotUnfreezeDefinedDenominator": true
+    },
+    {
+      "id": "D05-FIXTURE-FREEZE",
+      "status": "PENDING_INTEGRATOR_REVIEW",
+      "blocks": "fixture-ready execution and G0 fixture readiness, not an otherwise defined denominator",
+      "approvalEvidence": null,
+      "doesNotUnfreezeDefinedDenominator": true
+    },
+    {
+      "id": "D07-AGENT-AND-HUMAN-ASSIGNMENT",
+      "status": "PENDING_COORDINATION",
+      "blocks": "specific BIZ07/AG execution, not unrelated implementation",
+      "approvalEvidence": null,
+      "doesNotUnfreezeDefinedDenominator": true
+    }
+  ],
+  "preservedObligations": {
+    "expandedRequiredCellCount": 2128,
+    "executableDefinitionCount": 186,
+    "sourceCounts": {
+      "parentCategories": 91,
+      "fixedSubcases": 84,
+      "auxiliaryTests": 2
+    },
+    "positiveMtExecutionCellCount": 1331,
+    "cellsWithResourceBlockers": 2056,
+    "everyCellExecutionStatus": "NOT_RUN",
+    "everyCellEvidence": [],
+    "fixtureReadiness": "NOT_FROZEN",
+    "G0": "NOT_RUN",
+    "oldResultsImported": false,
+    "fakeUnsupportedCreditAllowed": false,
+    "deviceAndHumanRequirementsRemoved": false
+  },
+  "revisionPolicy": "No in-place edits or automatic regeneration of this v1 review or its frozen denominator. Changed inputs or scope require a new explicitly reviewed version, retaining v1 and its historical inputs.",
+  "noProductCompatibilityOrAcceptanceClaim": true
+}

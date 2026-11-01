@@ -33,6 +33,7 @@ import {
 } from 'cc.decorator';
 import { EDITOR_NOT_IN_PREVIEW } from 'internal:constants';
 import { Constraint } from './constraint';
+import { tryChangeConstraintState } from '../../constraint-state-control';
 import { Vec3, CCFloat, CCBoolean } from '../../../../core';
 import { EConstraintType } from '../../physics-enum';
 import { IHingeConstraint } from '../../../spec/i-physics-constraint';
@@ -187,6 +188,7 @@ export class HingeConstraint extends Constraint {
     }
 
     set pivotA (v: Vec3) {
+        if (tryChangeConstraintState(this, 'pivotA', v, (admitted) => { Vec3.copy(this._pivotA, admitted as Vec3); })) return;
         Vec3.copy(this._pivotA, v);
         if (!EDITOR_NOT_IN_PREVIEW) {
             this.constraint.setPivotA(this._pivotA);
@@ -206,6 +208,7 @@ export class HingeConstraint extends Constraint {
     }
 
     set pivotB (v: Vec3) {
+        if (tryChangeConstraintState(this, 'pivotB', v, (admitted) => { Vec3.copy(this._pivotB, admitted as Vec3); })) return;
         Vec3.copy(this._pivotB, v);
         if (!EDITOR_NOT_IN_PREVIEW) {
             this.constraint.setPivotB(this._pivotB);
@@ -225,6 +228,7 @@ export class HingeConstraint extends Constraint {
     }
 
     set axis (v: Vec3) {
+        if (tryChangeConstraintState(this, 'axis', v, (admitted) => { Vec3.copy(this._axis, admitted as Vec3); })) return;
         Vec3.copy(this._axis, v);
         if (!EDITOR_NOT_IN_PREVIEW) {
             this.constraint.setAxis(this._axis);
@@ -242,6 +246,7 @@ export class HingeConstraint extends Constraint {
         return this._limitData.enabled;
     }
     set limitEnabled (v: boolean) {
+        if (tryChangeConstraintState(this, 'limitEnabled', v, () => { this._limitData.enabled = v; })) return;
         this._limitData.enabled = v;
         if (!EDITOR_NOT_IN_PREVIEW) {
             this.constraint.setLimitEnabled(v);
@@ -259,6 +264,7 @@ export class HingeConstraint extends Constraint {
         return this._limitData.upperLimit;
     }
     set upperLimit (v: number) {
+        if (tryChangeConstraintState(this, 'upperLimit', v, () => { this._limitData.upperLimit = v; })) return;
         this._limitData.upperLimit = v;
         if (!EDITOR_NOT_IN_PREVIEW) {
             this.constraint.setUpperLimit(v);
@@ -276,6 +282,7 @@ export class HingeConstraint extends Constraint {
         return this._limitData.lowerLimit;
     }
     set lowerLimit (v: number) {
+        if (tryChangeConstraintState(this, 'lowerLimit', v, () => { this._limitData.lowerLimit = v; })) return;
         this._limitData.lowerLimit = v;
         if (!EDITOR_NOT_IN_PREVIEW) {
             this.constraint.setLowerLimit(v);
@@ -293,6 +300,7 @@ export class HingeConstraint extends Constraint {
         return this._motorData.enabled;
     }
     set motorEnabled (v: boolean) {
+        if (tryChangeConstraintState(this, 'motorEnabled', v, () => { this._motorData.enabled = v; })) return;
         this._motorData.enabled = v;
         if (!EDITOR_NOT_IN_PREVIEW) {
             this.constraint.setMotorEnabled(v);
@@ -310,6 +318,7 @@ export class HingeConstraint extends Constraint {
         return this._motorData.motorVelocity;
     }
     set motorVelocity (v: number) {
+        if (tryChangeConstraintState(this, 'motorVelocity', v, () => { this._motorData.motorVelocity = v; })) return;
         this._motorData.motorVelocity = v;
         if (!EDITOR_NOT_IN_PREVIEW) {
             this.constraint.setMotorVelocity(v);
@@ -327,6 +336,7 @@ export class HingeConstraint extends Constraint {
         return this._motorData.motorForceLimit;
     }
     set motorForceLimit (v: number) {
+        if (tryChangeConstraintState(this, 'motorForceLimit', v, () => { this._motorData.motorForceLimit = v; })) return;
         this._motorData.motorForceLimit = v;
         if (!EDITOR_NOT_IN_PREVIEW) {
             this.constraint.setMotorForceLimit(v);

@@ -22,6 +22,7 @@
  THE SOFTWARE.
 */
 
+import { assertMutationAllowed } from '../../../../core/data/mutation-guard';
 import {
     ccclass,
     help,
@@ -33,6 +34,7 @@ import {
 import { Collider } from './collider';
 import { ISphereShape } from '../../../spec/i-physics-shape';
 import { EColliderType } from '../../physics-enum';
+import { selector } from '../../physics-selector';
 
 /**
  * @en
@@ -59,7 +61,14 @@ export class SphereCollider extends Collider {
     }
 
     public set radius (value) {
+        assertMutationAllowed(this, 'SphereCollider.radius');
         if (this._radius === value) return;
+        if (selector.id === 'box3d' && this._shape) {
+            const next = Math.abs(value);
+            (this.shape as ISphereShape & { updateRadius (candidate?: number): void }).updateRadius(next);
+            this._radius = next;
+            return;
+        }
         this._radius = Math.abs(value);
         if (this._shape) {
             this.shape.updateRadius();

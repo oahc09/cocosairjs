@@ -24,6 +24,10 @@
 
 // @ts-check
 
+import { beginPhysicsMaterialValuesChange, assertPhysicsMaterialDestroyable } from '../physics-material-values';
+import { MaterialValues } from '../physics-material-values-transaction';
+import { registerPhysicsMaterialPrivateCache } from '../physics-material-cache';
+import { assertMutationAllowed } from '../../../core/data/mutation-guard';
 import { ccclass, editable, range, serializable, type } from 'cc.decorator';
 import { Asset } from '../../../asset/assets/asset';
 import { CCFloat, math } from '../../../core';
@@ -66,6 +70,35 @@ export class PhysicsMaterial extends Asset {
     }
 
     set friction (value) {
+        assertMutationAllowed(this, 'PhysicsMaterial.friction');
+        const ticket = beginPhysicsMaterialValuesChange(this);
+        if (ticket) {
+            try {
+                ticket.prepare({
+                    read: () => {
+                        const before: MaterialValues = [this._friction, this._restitution, this._rollingFriction, this._spinningFriction];
+                        const candidate: MaterialValues = [value, before[1], before[2], before[3]];
+                        return {
+                            before,
+                            candidate,
+                            // The primitive validates both tuples before reading this flag.
+                            get changed () { return !math.equals(before[0], candidate[0]); },
+                            writeOnNoChange: false,
+                        };
+                    },
+                    write: (candidate, recorder) => {
+                        this._friction = candidate[0];
+                        recorder.written();
+                    },
+                    emit: () => this.emit(PhysicsMaterial.EVENT_UPDATE),
+                    readActual: () => [this._friction, this._restitution, this._rollingFriction, this._spinningFriction],
+                });
+                ticket.apply();
+            } finally {
+                ticket.dispose();
+            }
+            return;
+        }
         if (!math.equals(this._friction, value)) {
             this._friction = value;
             this.emit(PhysicsMaterial.EVENT_UPDATE);
@@ -85,6 +118,35 @@ export class PhysicsMaterial extends Asset {
     }
 
     set rollingFriction (value) {
+        assertMutationAllowed(this, 'PhysicsMaterial.rollingFriction');
+        const ticket = beginPhysicsMaterialValuesChange(this);
+        if (ticket) {
+            try {
+                ticket.prepare({
+                    read: () => {
+                        const before: MaterialValues = [this._friction, this._restitution, this._rollingFriction, this._spinningFriction];
+                        const candidate: MaterialValues = [before[0], before[1], value, before[3]];
+                        return {
+                            before,
+                            candidate,
+                            // The primitive validates both tuples before reading this flag.
+                            get changed () { return !math.equals(before[2], candidate[2]); },
+                            writeOnNoChange: false,
+                        };
+                    },
+                    write: (candidate, recorder) => {
+                        this._rollingFriction = candidate[2];
+                        recorder.written();
+                    },
+                    emit: () => this.emit(PhysicsMaterial.EVENT_UPDATE),
+                    readActual: () => [this._friction, this._restitution, this._rollingFriction, this._spinningFriction],
+                });
+                ticket.apply();
+            } finally {
+                ticket.dispose();
+            }
+            return;
+        }
         if (!math.equals(this._rollingFriction, value)) {
             this._rollingFriction = value;
             this.emit(PhysicsMaterial.EVENT_UPDATE);
@@ -104,6 +166,35 @@ export class PhysicsMaterial extends Asset {
     }
 
     set spinningFriction (value) {
+        assertMutationAllowed(this, 'PhysicsMaterial.spinningFriction');
+        const ticket = beginPhysicsMaterialValuesChange(this);
+        if (ticket) {
+            try {
+                ticket.prepare({
+                    read: () => {
+                        const before: MaterialValues = [this._friction, this._restitution, this._rollingFriction, this._spinningFriction];
+                        const candidate: MaterialValues = [before[0], before[1], before[2], value];
+                        return {
+                            before,
+                            candidate,
+                            // The primitive validates both tuples before reading this flag.
+                            get changed () { return !math.equals(before[3], candidate[3]); },
+                            writeOnNoChange: false,
+                        };
+                    },
+                    write: (candidate, recorder) => {
+                        this._spinningFriction = candidate[3];
+                        recorder.written();
+                    },
+                    emit: () => this.emit(PhysicsMaterial.EVENT_UPDATE),
+                    readActual: () => [this._friction, this._restitution, this._rollingFriction, this._spinningFriction],
+                });
+                ticket.apply();
+            } finally {
+                ticket.dispose();
+            }
+            return;
+        }
         if (!math.equals(this._spinningFriction, value)) {
             this._spinningFriction = value;
             this.emit(PhysicsMaterial.EVENT_UPDATE);
@@ -124,6 +215,35 @@ export class PhysicsMaterial extends Asset {
     }
 
     set restitution (value) {
+        assertMutationAllowed(this, 'PhysicsMaterial.restitution');
+        const ticket = beginPhysicsMaterialValuesChange(this);
+        if (ticket) {
+            try {
+                ticket.prepare({
+                    read: () => {
+                        const before: MaterialValues = [this._friction, this._restitution, this._rollingFriction, this._spinningFriction];
+                        const candidate: MaterialValues = [before[0], value, before[2], before[3]];
+                        return {
+                            before,
+                            candidate,
+                            // The primitive validates both tuples before reading this flag.
+                            get changed () { return !math.equals(before[1], candidate[1]); },
+                            writeOnNoChange: false,
+                        };
+                    },
+                    write: (candidate, recorder) => {
+                        this._restitution = candidate[1];
+                        recorder.written();
+                    },
+                    emit: () => this.emit(PhysicsMaterial.EVENT_UPDATE),
+                    readActual: () => [this._friction, this._restitution, this._rollingFriction, this._spinningFriction],
+                });
+                ticket.apply();
+            } finally {
+                ticket.dispose();
+            }
+            return;
+        }
         if (!math.equals(this._restitution, value)) {
             this._restitution = value;
             this.emit(PhysicsMaterial.EVENT_UPDATE);
@@ -147,6 +267,7 @@ export class PhysicsMaterial extends Asset {
 
     constructor () {
         super();
+        registerPhysicsMaterialPrivateCache(this, () => [this._friction, this._restitution, this._rollingFriction, this._spinningFriction]);
         PhysicsMaterial.allMaterials.push(this);
         this.id = PhysicsMaterial._idCounter++;
         if (!this._uuid) this._uuid = `pm_${this.id}`;
@@ -175,6 +296,8 @@ export class PhysicsMaterial extends Asset {
      * @return 是否成功
      */
     public destroy (): boolean {
+        assertMutationAllowed(this, 'PhysicsMaterial.destroy');
+        assertPhysicsMaterialDestroyable(this);
         if (super.destroy()) {
             const idx = PhysicsMaterial.allMaterials.indexOf(this);
             if (idx >= 0) {
@@ -196,6 +319,45 @@ export class PhysicsMaterial extends Asset {
      * @param restitution
      */
     public setValues (friction: number, rollingFriction: number, spinningFriction: number, restitution: number): void {
+        assertMutationAllowed(this, 'PhysicsMaterial.setValues');
+        const ticket = beginPhysicsMaterialValuesChange(this);
+        if (ticket) {
+            try {
+                ticket.prepare({
+                    read: () => {
+                        const before: MaterialValues = [this._friction, this._restitution, this._rollingFriction, this._spinningFriction];
+                        // Public argument order is friction, rolling, spinning, restitution.
+                        const candidate: MaterialValues = [friction, restitution, rollingFriction, spinningFriction];
+                        return {
+                            before,
+                            candidate,
+                            // Keep the original exact comparisons and short-circuit order.
+                            get changed () {
+                                return before[0] !== candidate[0] || before[2] !== candidate[2]
+                                    || before[3] !== candidate[3] || before[1] !== candidate[1];
+                            },
+                            writeOnNoChange: true,
+                        };
+                    },
+                    write: (candidate, recorder) => {
+                        this._friction = candidate[0];
+                        recorder.written();
+                        this._rollingFriction = candidate[2];
+                        recorder.written();
+                        this._spinningFriction = candidate[3];
+                        recorder.written();
+                        this._restitution = candidate[1];
+                        recorder.written();
+                    },
+                    emit: () => this.emit(PhysicsMaterial.EVENT_UPDATE),
+                    readActual: () => [this._friction, this._restitution, this._rollingFriction, this._spinningFriction],
+                });
+                ticket.apply();
+            } finally {
+                ticket.dispose();
+            }
+            return;
+        }
         const emitUpdate = this._friction !== friction || this._rollingFriction !== rollingFriction
             || this._spinningFriction !== spinningFriction || this._restitution !== restitution;
         this._friction = friction;

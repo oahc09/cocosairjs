@@ -1,0 +1,20 @@
+--- a/src/body.c
++++ b/src/body.c
+@@ -2288,6 +2288,17 @@
+ 	// Transfer body sim
+ 	b3TransferBody( world, disabledSet, set, body );
+ 
++	// Disabling the last sleeping body must retire its now-empty solver set.
++	// The disabled body no longer refers to that set, so later body destruction
++	// cannot reclaim it. Never reclaim a shared set or hide live constraints.
++	if ( set->setIndex >= b3_firstSleepingSet && set->bodySims.count == 0 )
++	{
++		bool empty = set->bodyStates.count == 0 && set->jointSims.count == 0 &&
++			set->contactIndices.count == 0 && set->islandSims.count == 0;
++		B3_ASSERT( empty );
++		if ( empty ) b3DestroySolverSet( world, set->setIndex );
++	}
++
+ 	b3ValidateConnectivity( world );
+ 	b3ValidateSolverSets( world );
+ 

@@ -1,0 +1,1246 @@
+{
+  "schemaVersion": 1,
+  "fixtureVersion": "gift-workshop-abnormal-1",
+  "inputProtocolVersion": "gift-workshop-input-1",
+  "configVersion": "rebuild-design-20261022-1",
+  "status": "SPECIFIED_NOT_RUN",
+  "sourceHashes": {
+    "ai/plans/box3d-v1.2-reference.md": "17b4dcf0d8acbe0ed72f81ab4d3fc53c6a51f705d573699f0d50137e4bf00c46",
+    "docs/physics/box3d/contracts/gift-workshop/config.json": "7456954e0c225c6aa4ee635645624bb3a085235f76ac3d5b1271d44c824e5827",
+    "docs/physics/box3d/contracts/gift-workshop/layouts.json": "eb483a944aef54bb5c5e1d3f2d4d93ff8e015e3ba44326dc87446b9587fbf123",
+    "docs/physics/box3d/contracts/gift-workshop/scenarios.json": "2d3b4c80e95e12cad9957045307bc795f8d32debd96b7e4f6521291959981bd5",
+    "docs/physics/box3d/contracts/gift-workshop/README.md": "f9e1eec50831135ed36a8dfb74984e7f5da59005fe68ea3ae79f865feae3dd4e"
+  },
+  "sourceInventory": "scenarios.json lifecyclePlan.abnormalRounds, exact one-to-one LIFE-A01..LIFE-A15",
+  "setupPolicy": {
+    "onlyBeforeSceneCreation": true,
+    "preserveAllTwelveLogicalItems": true,
+    "neverPreseedReceiptsOrLedger": true,
+    "normalGameplayOnlyPublicInput": true,
+    "sceneSetupIsNotInputTrace": true,
+    "allCandidateGeometryNeedsRealPhysicsValidation": true,
+    "newNumbersAreDesignNotMeasurements": true,
+    "noRuntimePoseOrClockWrites": true,
+    "exception": "Visible public recovery/reset may use its prescribed recoveryReset implementation; diagnostic probes may only re-deliver unchanged real observations as negative tests, never award success."
+  },
+  "supplementalGeometryDesign": {
+    "status": "STATIC_CANDIDATE_REQUIRES_T34",
+    "receiverCandidateSlab": {
+      "center": [1.65, 0.5, 0],
+      "size": [1, 0.04, 0.85],
+      "sensorOnly": true,
+      "fullCrossingUsesPlaneY": 0.5
+    },
+    "channelClearanceBounds": {
+      "min": [1.15, 0.5, -0.425],
+      "max": [2.15, 1.5, 0.425]
+    },
+    "chuteWallThicknessM": 0.04,
+    "supportedObservedItemSpeedMaxMps": 12,
+    "speedBoundMeaning": "New M0 observation/CCD design bound, not a velocity clamp or measured guarantee. Exceeding it is a retained out-of-contract failure; never drop the event, teleport, or loosen the limit to claim PASS. T34 must qualify all crossings including the whole compound geometry at this bound.",
+    "fullCrossing": "Track each submitted item from actual inside-chamber provenance through the chute. Freeze first real transition of maximum world Y over all child-shape support points to <= planeY after submit; an enter, COM crossing or side entry is insufficient. Numeric uncertainty is recorded and cannot manufacture crossing.",
+    "channelClearancePopulation": "Clearance checks count every live inventory item whose full geometry intersects the channel, including unshipped non-snapshot items. The door, structural chute walls and declared static fixture solids are not inventory items; their independent collision/sweep safety must still be verified, not hidden by this classification."
+  },
+  "commonBudgets": {
+    "perNavigationMaxTicks": 1800,
+    "perSettleMaxTicks": 180,
+    "shippingTimeoutTicks": 300,
+    "recoveryPenaltyTicks": 300,
+    "recoveryMaxWallMs": 5000,
+    "teardownMaxWallMs": 5000,
+    "normalRoundTicks": 10800,
+    "clock": "fixed active ticks; wall limits are independent runner-failure limits, never extra gameplay time"
+  },
+  "executionPolicy": {
+    "allBehaviorStatus": "NOT_RUN",
+    "failureStates": ["FAIL", "NOT_REPRODUCED", "BLOCKED_RUNTIME", "BLOCKED_DEVICE"],
+    "positiveEvidence": "Real public input, unmodified physical observations and actual end-to-end ledger from one identified run. No test setup, static arithmetic or diagnostic injected copy counts as a successful shipment.",
+    "terminalRequired": true,
+    "trialCounting": "Every variant/calibration/trial has its own runId and reaches real result/retry completion/teardown. Variants may increase actual rounds above 20; never count setup, repeated assertions or diagnostic copies as extra rounds. A failed trigger is not PASS, and its cleanup is not positive business evidence.",
+    "normalProfileIsolation": "Modified geometry/mass/motor/recovery-allocation profiles are labelled abnormal and cannot replace any of the five unmodified normal-layout BIZ01 runs.",
+    "resourceFields": [
+      "world",
+      "body",
+      "shape",
+      "joint",
+      "target handle",
+      "pair",
+      "weigh receipt",
+      "native bytes",
+      "item generations"
+    ],
+    "identityFields": [
+      "configVersion/hash",
+      "source commit",
+      "build manifest/hash",
+      "layout/input hash",
+      "roundGeneration",
+      "attemptId",
+      "itemGeneration",
+      "weigh/submit/delivery ticks",
+      "observed door angle",
+      "final ledger/score",
+      "protocolVersion/hash",
+      "fixtureVersion/hash",
+      "inputGeneration",
+      "runId",
+      "variantId",
+      "raw real observation hash",
+      "diagnostic probe provenance if any",
+      "profileId",
+      "resolved setup hash",
+      "effective configVersion/hash"
+    ],
+    "requiredRaw": "Retain all commands including rejection acks, observations and contact/geometry provenance, before/after counters, fixture/setup differences, attempts/failures and actual terminal; do not relabel old PASS.",
+    "resolveProfile": "Before scene creation merge the base configuration/layout with explicitly listed setup differences, validate it, compute a canonical resolved setup/config hash and load the declared effectiveConfigVersion. Variants with explicit configVersion override that value. Never mutate it in a running round."
+  },
+  "fixtures": [
+    {
+      "id": "LIFE-A01",
+      "fixture": "reset-while-held",
+      "status": "NOT_RUN",
+      "designStatus": "STATIC_CANDIDATE_REQUIRES_T34",
+      "sourceSections": ["12.4", "12.5", "12.6", "12.8", "12.9"],
+      "inputProtocolVersion": "gift-workshop-input-1",
+      "setup": {
+        "phase": "BEFORE_SCENE_CREATION_ONLY",
+        "baseLayoutId": "REBUILD-LAYOUT-01",
+        "itemPlacementOverrides": [],
+        "parameterOverrides": [],
+        "staticBoxes": [],
+        "runtimeMutationAllowed": false,
+        "effectiveConfigVersion": "rebuild-design-20261022-1"
+      },
+      "publicTrigger": {
+        "preconditions": [
+          "Start normally, weigh A1 genuinely, then reattach it; observe one live Fixed and dynamic A1."
+        ],
+        "commands": ["start-round", "set-axes", "attach-release", "pause", "resume", "reset-round", "start-round"]
+      },
+      "waits": [
+        {
+          "until": "real A1 pickup and receipt before reset",
+          "maxActiveTicks": 1800,
+          "onExpiry": "FAIL_OR_NOT_REPRODUCED_AND_PRESERVE_RAW"
+        },
+        {
+          "until": "after fresh start, finish all three orders",
+          "maxActiveTicks": 10800,
+          "onExpiry": "FAIL_OR_NOT_REPRODUCED_AND_PRESERVE_RAW"
+        }
+      ],
+      "assertions": [
+        "Pause freezes physics/time and preserves held Fixed; clear/resume changes input epoch and old axes do not move head.",
+        "reset-round while held releases Fixed/targets/pairs and all old receipts; old input/observation generations cannot affect the fresh scene.",
+        "The interrupted round is not a completion; only fresh full terminal or teardown counts."
+      ],
+      "terminal": {
+        "mode": "COMPLETE_THREE_ORDERS_OR_DECLARED_TIMEOUT_OR_TEARDOWN",
+        "setupTicksCountAsRound": false,
+        "resourcesAfter": "Return to matching app/scene baseline; legal retained empty world must be explicitly identified, not assumed zero."
+      },
+      "budgets": {
+        "maxActiveTicks": 21600,
+        "maxWallMs": 900000,
+        "recoveryMaxWallMs": 5000,
+        "teardownMaxWallMs": 5000
+      },
+      "variants": [
+        {
+          "id": "pause-clear-then-reset",
+          "pauseHoldWallMs": 250,
+          "resumeAckMaxWallMs": 2000,
+          "staleInputReplay": "Replay an actually recorded old movement packet after resume; expect STALE_INPUT_GENERATION with no movement."
+        }
+      ],
+      "profileId": "gift-workshop-abnormal-1/LIFE-A01"
+    },
+    {
+      "id": "LIFE-A02",
+      "fixture": "half-order-blocked-retry",
+      "status": "NOT_RUN",
+      "designStatus": "STATIC_CANDIDATE_REQUIRES_T34",
+      "sourceSections": ["12.4", "12.5", "12.6", "12.8", "12.9"],
+      "inputProtocolVersion": "gift-workshop-input-1",
+      "setup": {
+        "phase": "BEFORE_SCENE_CREATION_ONLY",
+        "baseLayoutId": "REBUILD-LAYOUT-01",
+        "itemPlacementOverrides": [],
+        "parameterOverrides": [],
+        "staticBoxes": [
+          {
+            "id": "half-order-shelf",
+            "bodyType": "static",
+            "shape": "box",
+            "center": [1.99, 0.57, 0],
+            "size": [0.3, 0.06, 0.7],
+            "visible": true
+          }
+        ],
+        "runtimeMutationAllowed": false,
+        "effectiveConfigVersion": "rebuild-design-20261022-1-life-a02-1"
+      },
+      "publicTrigger": {
+        "preconditions": [
+          "Use O1 with genuine receipts. Publicly place A1 in left lane and B1 over visible right shelf; settle all 45 ticks and submit."
+        ],
+        "commands": ["start-round", "set-axes", "attach-release", "submit-order", "retry-order"]
+      },
+      "waits": [
+        {
+          "until": "one actual full crossing, other retained above plane",
+          "maxActiveTicks": 300,
+          "onExpiry": "FAIL_OR_NOT_REPRODUCED_AND_PRESERVE_RAW"
+        },
+        {
+          "until": "BLOCKED at shipping elapsed 300 unless global timeout already ended round",
+          "maxActiveTicks": 300,
+          "onExpiry": "FAIL_OR_NOT_REPRODUCED_AND_PRESERVE_RAW"
+        },
+        {
+          "until": "after retry, genuinely finish three orders in remaining round budget",
+          "maxActiveTicks": 10800,
+          "onExpiry": "FAIL_OR_NOT_REPRODUCED_AND_PRESERVE_RAW"
+        }
+      ],
+      "assertions": [
+        "Exactly one deliveredPending is retained in basin, zero committed O1 and zero inventory consumption/score before second arrives.",
+        "At 300 elapsed ticks show BLOCKED, never automatic success; deliveredPending and jammed instances are both originals.",
+        "retry-order clears both pending records, advances affected item generations and attempt epoch, subtracts 300 ticks once, closes/reset door and clears channel before PACKING.",
+        "Retry steers both original items through left lane; successful commit consumes exactly two once, with no extra stock."
+      ],
+      "terminal": {
+        "mode": "COMPLETE_THREE_ORDERS_OR_DECLARED_TIMEOUT_OR_TEARDOWN",
+        "setupTicksCountAsRound": false,
+        "resourcesAfter": "Return to matching app/scene baseline; legal retained empty world must be explicitly identified, not assumed zero."
+      },
+      "budgets": {
+        "maxActiveTicks": 10800,
+        "maxWallMs": 900000,
+        "recoveryMaxWallMs": 5000,
+        "teardownMaxWallMs": 5000
+      },
+      "publicPlacementTargets": [
+        {
+          "itemId": "A1",
+          "bodyOrigin": [1.38, 1.64, -0.18],
+          "yawDegrees": 0,
+          "kind": "PUBLIC_INPUT_TARGET_NOT_POSE_COMMAND"
+        },
+        {
+          "itemId": "B1",
+          "bodyOrigin": [1.99, 1.68, 0.18],
+          "yawDegrees": 0,
+          "kind": "PUBLIC_INPUT_TARGET_NOT_POSE_COMMAND"
+        }
+      ],
+      "retryPlacementTargets": [
+        {
+          "itemId": "A1",
+          "bodyOrigin": [1.38, 1.64, -0.18],
+          "yawDegrees": 0,
+          "kind": "PUBLIC_INPUT_TARGET_NOT_POSE_COMMAND"
+        },
+        {
+          "itemId": "B1",
+          "bodyOrigin": [1.65, 1.68, 0.18],
+          "yawDegrees": 0,
+          "kind": "PUBLIC_INPUT_TARGET_NOT_POSE_COMMAND"
+        }
+      ],
+      "criticalBoundary": {
+        "firstFullyCrossedCount": 1,
+        "requiredCommitCount": 2,
+        "blockerTopY": 0.6,
+        "planeY": 0.5,
+        "bothOriginalRefsRecovered": true
+      },
+      "profileId": "gift-workshop-abnormal-1/LIFE-A02"
+    },
+    {
+      "id": "LIFE-A03",
+      "fixture": "reused-body-generation-recovery",
+      "status": "NOT_RUN",
+      "designStatus": "STATIC_CANDIDATE_REQUIRES_T34",
+      "sourceSections": ["12.4", "12.5", "12.6", "12.8", "12.9"],
+      "inputProtocolVersion": "gift-workshop-input-1",
+      "setup": {
+        "phase": "BEFORE_SCENE_CREATION_ONLY",
+        "baseLayoutId": "REBUILD-LAYOUT-01",
+        "itemPlacementOverrides": [
+          {
+            "itemId": "A1",
+            "position": [-2.7, 1.64, 1.7],
+            "yawDegrees": 0
+          }
+        ],
+        "parameterOverrides": [
+          {
+            "path": "testAdapter.recoveryAllocationPolicy",
+            "value": "reuse-existing-body",
+            "scope": "TEST_LIFECYCLE_SETUP_ONLY_NOT_NORMAL_PROFILE"
+          }
+        ],
+        "staticBoxes": [],
+        "runtimeMutationAllowed": false,
+        "effectiveConfigVersion": "rebuild-design-20261022-1-life-a03-1"
+      },
+      "publicTrigger": {
+        "preconditions": [
+          "Before scene creation select diagnostic recovery allocation policy reuse-existing-body; this requests actual body reuse, not a fake body ID.",
+          "Weigh A1 then carry toward x=-2.75 at cruise height and release while moving toward -X. Require an actual off-table drop, not merely a command."
+        ],
+        "commands": ["start-round", "set-axes", "attach-release", "recover-dropped", "submit-order"]
+      },
+      "waits": [
+        {
+          "until": "A1 physically drops outside table rather than chute",
+          "maxActiveTicks": 1800,
+          "onExpiry": "FAIL_OR_NOT_REPRODUCED_AND_PRESERVE_RAW"
+        },
+        {
+          "until": "freshly reweigh recovered A1 and finish all orders",
+          "maxActiveTicks": 10800,
+          "onExpiry": "FAIL_OR_NOT_REPRODUCED_AND_PRESERVE_RAW"
+        }
+      ],
+      "assertions": [
+        "Same actual native body identity survives recovery while logical itemGeneration strictly increases; unsupported reuse reports NOT_REPRODUCED, not PASS.",
+        "Old receipt and frozen old-generation observation cannot authorize current item or a shipment. Fresh generation needs 30 new valid scale ticks.",
+        "Recover adds no item, invalidates relevant pairs/receipt, charges exactly 300 ticks once; app/scene resource counters return to baseline at terminal."
+      ],
+      "terminal": {
+        "mode": "COMPLETE_THREE_ORDERS_OR_DECLARED_TIMEOUT_OR_TEARDOWN",
+        "setupTicksCountAsRound": false,
+        "resourcesAfter": "Return to matching app/scene baseline; legal retained empty world must be explicitly identified, not assumed zero."
+      },
+      "budgets": {
+        "maxActiveTicks": 21600,
+        "maxWallMs": 900000,
+        "recoveryMaxWallMs": 5000,
+        "teardownMaxWallMs": 5000
+      },
+      "observationProbe": {
+        "kind": "REDELIVER_CAPTURED_REAL_OBSERVATION",
+        "capture": "A real pre-recovery candidate/contact observation for A1, copied without changing identity or event tick.",
+        "deliver": "After recovery as an additional old-generation observation; do not suppress or fabricate normal observations.",
+        "expected": "Reject old generation with no receipt/pending/score effect.",
+        "businessSuccessEvidence": false
+      },
+      "profileId": "gift-workshop-abnormal-1/LIFE-A03"
+    },
+    {
+      "id": "LIFE-A04",
+      "fixture": "scene-exit-while-held",
+      "status": "NOT_RUN",
+      "designStatus": "STATIC_CANDIDATE_REQUIRES_T34",
+      "sourceSections": ["12.4", "12.5", "12.6", "12.8", "12.9"],
+      "inputProtocolVersion": "gift-workshop-input-1",
+      "setup": {
+        "phase": "BEFORE_SCENE_CREATION_ONLY",
+        "baseLayoutId": "REBUILD-LAYOUT-01",
+        "itemPlacementOverrides": [],
+        "parameterOverrides": [],
+        "staticBoxes": [],
+        "runtimeMutationAllowed": false,
+        "effectiveConfigVersion": "rebuild-design-20261022-1"
+      },
+      "publicTrigger": {
+        "preconditions": ["Start and publicly attach an actual stock item; observe live held Fixed and target."],
+        "commands": ["start-round", "set-axes", "attach-release", "exit-scene"]
+      },
+      "waits": [
+        {
+          "until": "real held item before navigation",
+          "maxActiveTicks": 1800,
+          "onExpiry": "FAIL_OR_NOT_REPRODUCED_AND_PRESERVE_RAW"
+        }
+      ],
+      "assertions": [
+        "Scene exit invalidates target/Fixed and drains/drops queued old-scene commands and callbacks safely.",
+        "world/body/shape/joint/target/pair/receipt/native-byte counters match declared app baseline after bounded teardown; no scene or old item survives accidentally.",
+        "Terminal is declared scene teardown, not three-order success or extra normal round."
+      ],
+      "terminal": {
+        "mode": "SCENE_TEARDOWN",
+        "setupTicksCountAsRound": false,
+        "resourcesAfter": "matching app baseline, with legal retained empty world documented"
+      },
+      "budgets": {
+        "maxActiveTicks": 10800,
+        "maxWallMs": 900000,
+        "recoveryMaxWallMs": 5000,
+        "teardownMaxWallMs": 5000
+      },
+      "profileId": "gift-workshop-abnormal-1/LIFE-A04"
+    },
+    {
+      "id": "LIFE-A05",
+      "fixture": "invalid-sku-correction",
+      "status": "NOT_RUN",
+      "designStatus": "STATIC_CANDIDATE_REQUIRES_T34",
+      "sourceSections": ["12.4", "12.5", "12.6", "12.8", "12.9"],
+      "inputProtocolVersion": "gift-workshop-input-1",
+      "setup": {
+        "phase": "BEFORE_SCENE_CREATION_ONLY",
+        "baseLayoutId": "REBUILD-LAYOUT-01",
+        "itemPlacementOverrides": [],
+        "parameterOverrides": [],
+        "staticBoxes": [],
+        "runtimeMutationAllowed": false,
+        "effectiveConfigVersion": "rebuild-design-20261022-1"
+      },
+      "publicTrigger": {
+        "preconditions": [
+          "Genuinely weigh wrong pair and place it stably inside chamber; issue one explicit rejected submit, then remove wrong item and supply correct pair."
+        ],
+        "commands": ["start-round", "set-axes", "attach-release", "submit-order"]
+      },
+      "waits": [
+        {
+          "until": "wrong pair stable and explicit submit rejected",
+          "maxActiveTicks": 1800,
+          "onExpiry": "FAIL_OR_NOT_REPRODUCED_AND_PRESERVE_RAW"
+        },
+        {
+          "until": "corrected pair and all orders genuinely complete",
+          "maxActiveTicks": 10800,
+          "onExpiry": "FAIL_OR_NOT_REPRODUCED_AND_PRESERVE_RAW"
+        }
+      ],
+      "assertions": [
+        "Reject SKU mismatch even if the wrong pair has identical total mass. Do not merely compare mass.",
+        "Each explicit rejection increments invalidSubmits once, not once per tick/trigger; inventory, receipts of other valid instances and committed ledger remain unchanged.",
+        "Correction uses real pickup/release, no sorting or implicit replacement."
+      ],
+      "terminal": {
+        "mode": "COMPLETE_THREE_ORDERS_OR_DECLARED_TIMEOUT_OR_TEARDOWN",
+        "setupTicksCountAsRound": false,
+        "resourcesAfter": "Return to matching app/scene baseline; legal retained empty world must be explicitly identified, not assumed zero."
+      },
+      "budgets": {
+        "maxActiveTicks": 10800,
+        "maxWallMs": 900000,
+        "recoveryMaxWallMs": 5000,
+        "teardownMaxWallMs": 5000
+      },
+      "variants": [
+        {
+          "id": "default-wrong-pair",
+          "configVersion": "rebuild-design-20261022-1",
+          "pair": ["A1", "C1"],
+          "orderId": "O1",
+          "expectedReason": "SKU_MISMATCH"
+        },
+        {
+          "id": "equal-mass-derived-theme",
+          "phase": "BEFORE_SCENE_CREATION_ONLY",
+          "configVersion": "rebuild-design-20261022-1-equal-mass-1",
+          "skuMassOverrides": {
+            "B": 0.35
+          },
+          "derivedOrderMassKg": {
+            "O1": 0.7,
+            "O2": 0.95,
+            "O3": 0.95
+          },
+          "pair": ["A1", "A2"],
+          "orderId": "O1",
+          "expectedReason": "SKU_MISMATCH",
+          "normalProfileEvidence": false,
+          "note": "Versioned abnormal theme, not an edit to config.json. Recompute all order totals and issue receipts under this distinct version; never change live SKU mass."
+        }
+      ],
+      "profileId": "gift-workshop-abnormal-1/LIFE-A05"
+    },
+    {
+      "id": "LIFE-A06",
+      "fixture": "third-item-correction",
+      "status": "NOT_RUN",
+      "designStatus": "STATIC_CANDIDATE_REQUIRES_T34",
+      "sourceSections": ["12.4", "12.5", "12.6", "12.8", "12.9"],
+      "inputProtocolVersion": "gift-workshop-input-1",
+      "setup": {
+        "phase": "BEFORE_SCENE_CREATION_ONLY",
+        "baseLayoutId": "REBUILD-LAYOUT-01",
+        "itemPlacementOverrides": [],
+        "parameterOverrides": [],
+        "staticBoxes": [],
+        "runtimeMutationAllowed": false,
+        "effectiveConfigVersion": "rebuild-design-20261022-1"
+      },
+      "publicTrigger": {
+        "preconditions": [
+          "Genuinely weigh A1/B1/C1; publicly put all three inside chamber at the declared separated target locations."
+        ],
+        "commands": ["start-round", "set-axes", "attach-release", "submit-order"]
+      },
+      "waits": [
+        {
+          "until": "all three actual candidates settled and rejected once",
+          "maxActiveTicks": 1800,
+          "onExpiry": "FAIL_OR_NOT_REPRODUCED_AND_PRESERVE_RAW"
+        },
+        {
+          "until": "remove C1 and complete all orders normally",
+          "maxActiveTicks": 10800,
+          "onExpiry": "FAIL_OR_NOT_REPRODUCED_AND_PRESERVE_RAW"
+        }
+      ],
+      "assertions": [
+        "Reject EXTRA_ITEM with three distinct real instances even when O1 A+B are present.",
+        "No snapshot, inventory consumption or delivery score arises from this rejected submit; whole-order stable counter remains invalid.",
+        "Remove C1 via ordinary pickup; new valid two-item configuration must maintain a fresh 45-tick window."
+      ],
+      "terminal": {
+        "mode": "COMPLETE_THREE_ORDERS_OR_DECLARED_TIMEOUT_OR_TEARDOWN",
+        "setupTicksCountAsRound": false,
+        "resourcesAfter": "Return to matching app/scene baseline; legal retained empty world must be explicitly identified, not assumed zero."
+      },
+      "budgets": {
+        "maxActiveTicks": 10800,
+        "maxWallMs": 900000,
+        "recoveryMaxWallMs": 5000,
+        "teardownMaxWallMs": 5000
+      },
+      "publicPlacementTargets": [
+        {
+          "itemId": "A1",
+          "bodyOrigin": [1.38, 1.64, -0.18],
+          "yawDegrees": 0,
+          "kind": "PUBLIC_INPUT_TARGET_NOT_POSE_COMMAND"
+        },
+        {
+          "itemId": "B1",
+          "bodyOrigin": [1.72, 1.68, -0.2],
+          "yawDegrees": 0,
+          "kind": "PUBLIC_INPUT_TARGET_NOT_POSE_COMMAND"
+        },
+        {
+          "itemId": "C1",
+          "bodyOrigin": [1.8, 1.61, 0.22],
+          "yawDegrees": 0,
+          "kind": "PUBLIC_INPUT_TARGET_NOT_POSE_COMMAND"
+        }
+      ],
+      "profileId": "gift-workshop-abnormal-1/LIFE-A06"
+    },
+    {
+      "id": "LIFE-A07",
+      "fixture": "unweighed-item-rejection",
+      "status": "NOT_RUN",
+      "designStatus": "STATIC_CANDIDATE_REQUIRES_T34",
+      "sourceSections": ["12.4", "12.5", "12.6", "12.8", "12.9"],
+      "inputProtocolVersion": "gift-workshop-input-1",
+      "setup": {
+        "phase": "BEFORE_SCENE_CREATION_ONLY",
+        "baseLayoutId": "REBUILD-LAYOUT-01",
+        "itemPlacementOverrides": [],
+        "parameterOverrides": [],
+        "staticBoxes": [],
+        "runtimeMutationAllowed": false,
+        "effectiveConfigVersion": "rebuild-design-20261022-1"
+      },
+      "publicTrigger": {
+        "preconditions": [
+          "Bypass scale physically, not via a receipt setter: move unweighed A1/B1 directly from stock to chamber."
+        ],
+        "commands": ["start-round", "set-axes", "attach-release", "submit-order"]
+      },
+      "waits": [
+        {
+          "until": "both actual items settled inside with no receipt, then submit",
+          "maxActiveTicks": 1800,
+          "onExpiry": "FAIL_OR_NOT_REPRODUCED_AND_PRESERVE_RAW"
+        },
+        {
+          "until": "remove, genuinely weigh and repack, finish all orders",
+          "maxActiveTicks": 10800,
+          "onExpiry": "FAIL_OR_NOT_REPRODUCED_AND_PRESERVE_RAW"
+        }
+      ],
+      "assertions": [
+        "Reject MISSING_WEIGH_RECEIPT even when SKU, mass, containment and speed checks otherwise match.",
+        "No invented/default-SKU receipt; another same-SKU instance receipt is not sufficient.",
+        "Only genuine direct scale support for 30 consecutive ticks permits later accepted submission; then 45 packing ticks are required."
+      ],
+      "terminal": {
+        "mode": "COMPLETE_THREE_ORDERS_OR_DECLARED_TIMEOUT_OR_TEARDOWN",
+        "setupTicksCountAsRound": false,
+        "resourcesAfter": "Return to matching app/scene baseline; legal retained empty world must be explicitly identified, not assumed zero."
+      },
+      "budgets": {
+        "maxActiveTicks": 10800,
+        "maxWallMs": 900000,
+        "recoveryMaxWallMs": 5000,
+        "teardownMaxWallMs": 5000
+      },
+      "profileId": "gift-workshop-abnormal-1/LIFE-A07"
+    },
+    {
+      "id": "LIFE-A08",
+      "fixture": "partial-outside-chamber",
+      "status": "NOT_RUN",
+      "designStatus": "STATIC_CANDIDATE_REQUIRES_T34",
+      "sourceSections": ["12.4", "12.5", "12.6", "12.8", "12.9"],
+      "inputProtocolVersion": "gift-workshop-input-1",
+      "setup": {
+        "phase": "BEFORE_SCENE_CREATION_ONLY",
+        "baseLayoutId": "REBUILD-LAYOUT-01",
+        "itemPlacementOverrides": [],
+        "parameterOverrides": [
+          {
+            "path": "testGeometry.packingPositiveXWall",
+            "value": "replace entire +X wall with the two visible segments listed below",
+            "scope": "STATIC_GEOMETRY_ANOMALY_NOT_NORMAL_PROFILE"
+          }
+        ],
+        "staticBoxes": [
+          {
+            "id": "positive-x-wall-back",
+            "bodyType": "static",
+            "shape": "box",
+            "center": [2.17, 1.8, -0.3225],
+            "size": [0.04, 0.6, 0.205],
+            "visible": true
+          },
+          {
+            "id": "positive-x-wall-front",
+            "bodyType": "static",
+            "shape": "box",
+            "center": [2.17, 1.8, 0.3225],
+            "size": [0.04, 0.6, 0.205],
+            "visible": true
+          },
+          {
+            "id": "outside-support-lip",
+            "bodyType": "static",
+            "shape": "box",
+            "center": [2.25, 1.48, 0],
+            "size": [0.2, 0.04, 0.42],
+            "visible": true
+          }
+        ],
+        "runtimeMutationAllowed": false,
+        "effectiveConfigVersion": "rebuild-design-20261022-1-life-a08-1"
+      },
+      "publicTrigger": {
+        "preconditions": [
+          "Use the visible predeclared side aperture and lip; weigh A1/B1 normally and steer A1 so its body origin is inside but its full shape crosses +X containment plane.",
+          "Require actual settled pose within target geometric condition, not exact endpoint setTransform."
+        ],
+        "commands": ["start-round", "set-axes", "attach-release", "submit-order"]
+      },
+      "waits": [
+        {
+          "until": "real partially outside A1 stable at aperture",
+          "maxActiveTicks": 1800,
+          "onExpiry": "FAIL_OR_NOT_REPRODUCED_AND_PRESERVE_RAW"
+        },
+        {
+          "until": "after rejection move fully inside and finish orders",
+          "maxActiveTicks": 10800,
+          "onExpiry": "FAIL_OR_NOT_REPRODUCED_AND_PRESERVE_RAW"
+        }
+      ],
+      "assertions": [
+        "A1 body origin x=2.10 is inside x<=2.15, while nominal full bound reaches 2.26; excess 0.11m is greater than 0.005m tolerance.",
+        "Reject OUTSIDE_PACKING using every child shape, not COM/Node/trigger center; support alone cannot admit a partly outside item.",
+        "Correction through real input re-establishes all 45 stable ticks; this modified wall profile never supplies normal-layout success evidence."
+      ],
+      "terminal": {
+        "mode": "COMPLETE_THREE_ORDERS_OR_DECLARED_TIMEOUT_OR_TEARDOWN",
+        "setupTicksCountAsRound": false,
+        "resourcesAfter": "Return to matching app/scene baseline; legal retained empty world must be explicitly identified, not assumed zero."
+      },
+      "budgets": {
+        "maxActiveTicks": 10800,
+        "maxWallMs": 900000,
+        "recoveryMaxWallMs": 5000,
+        "teardownMaxWallMs": 5000
+      },
+      "publicPlacementTargets": [
+        {
+          "itemId": "A1",
+          "bodyOrigin": [2.1, 1.64, 0],
+          "yawDegrees": 0,
+          "kind": "PUBLIC_INPUT_TARGET_NOT_POSE_COMMAND"
+        },
+        {
+          "itemId": "B1",
+          "bodyOrigin": [1.5, 1.68, -0.15],
+          "yawDegrees": 0,
+          "kind": "PUBLIC_INPUT_TARGET_NOT_POSE_COMMAND"
+        }
+      ],
+      "criticalBoundary": {
+        "axis": "x",
+        "insideMax": 2.15,
+        "targetOrigin": 2.1,
+        "targetFullMax": 2.26,
+        "toleranceM": 0.005
+      },
+      "profileId": "gift-workshop-abnormal-1/LIFE-A08"
+    },
+    {
+      "id": "LIFE-A09",
+      "fixture": "hanging-scale-no-receipt",
+      "status": "NOT_RUN",
+      "designStatus": "STATIC_CANDIDATE_REQUIRES_T34",
+      "sourceSections": ["12.4", "12.5", "12.6", "12.8", "12.9"],
+      "inputProtocolVersion": "gift-workshop-input-1",
+      "setup": {
+        "phase": "BEFORE_SCENE_CREATION_ONLY",
+        "baseLayoutId": "REBUILD-LAYOUT-01",
+        "itemPlacementOverrides": [],
+        "parameterOverrides": [],
+        "staticBoxes": [],
+        "runtimeMutationAllowed": false,
+        "effectiveConfigVersion": "rebuild-design-20261022-1"
+      },
+      "publicTrigger": {
+        "preconditions": [
+          "Carry A1 above scale with its entire XZ geometry inside support, bottom 0.02m above support and still held. Require real scale candidate overlap."
+        ],
+        "commands": ["start-round", "set-axes", "attach-release"]
+      },
+      "waits": [
+        {
+          "until": "actual suspended candidate remains held for 60 ticks",
+          "maxActiveTicks": 60,
+          "onExpiry": "FAIL_OR_NOT_REPRODUCED_AND_PRESERVE_RAW"
+        },
+        {
+          "until": "release, establish genuine receipt and finish orders",
+          "maxActiveTicks": 10800,
+          "onExpiry": "FAIL_OR_NOT_REPRODUCED_AND_PRESERVE_RAW"
+        }
+      ],
+      "assertions": [
+        "At least 30 stable-velocity ticks alone cannot award a receipt: no direct scale support and/or still held remains invalid.",
+        "No receipt while held even if incidental contact occurs. Require real candidate exposure; being outside trigger cannot satisfy this negative test.",
+        "After release only 30 consecutive actual unheld supported ticks qualify."
+      ],
+      "terminal": {
+        "mode": "COMPLETE_THREE_ORDERS_OR_DECLARED_TIMEOUT_OR_TEARDOWN",
+        "setupTicksCountAsRound": false,
+        "resourcesAfter": "Return to matching app/scene baseline; legal retained empty world must be explicitly identified, not assumed zero."
+      },
+      "budgets": {
+        "maxActiveTicks": 10800,
+        "maxWallMs": 900000,
+        "recoveryMaxWallMs": 5000,
+        "teardownMaxWallMs": 5000
+      },
+      "publicPlacementTargets": [
+        {
+          "itemId": "A1",
+          "bodyOrigin": [0, 1.68, -0.75],
+          "yawDegrees": 0,
+          "kind": "PUBLIC_INPUT_TARGET_NOT_POSE_COMMAND"
+        }
+      ],
+      "criticalBoundary": {
+        "bottomGapM": 0.02,
+        "minimumNegativeWindowTicks": 60
+      },
+      "profileId": "gift-workshop-abnormal-1/LIFE-A09"
+    },
+    {
+      "id": "LIFE-A10",
+      "fixture": "stacked-scale-no-receipt",
+      "status": "NOT_RUN",
+      "designStatus": "STATIC_CANDIDATE_REQUIRES_T34",
+      "sourceSections": ["12.4", "12.5", "12.6", "12.8", "12.9"],
+      "inputProtocolVersion": "gift-workshop-input-1",
+      "setup": {
+        "phase": "BEFORE_SCENE_CREATION_ONLY",
+        "baseLayoutId": "REBUILD-LAYOUT-01",
+        "itemPlacementOverrides": [
+          {
+            "itemId": "C1",
+            "position": [0, 1.63, -0.75],
+            "yawDegrees": 0
+          },
+          {
+            "itemId": "A1",
+            "position": [0.1, 2.02, -0.75],
+            "yawDegrees": 0
+          }
+        ],
+        "parameterOverrides": [],
+        "staticBoxes": [],
+        "runtimeMutationAllowed": false,
+        "effectiveConfigVersion": "rebuild-design-20261022-1-life-a10-1"
+      },
+      "publicTrigger": {
+        "preconditions": [
+          "Scene initialization places C1 on scale and A1 on C1 lug with fresh empty receipts; both remain ordinary dynamic bodies. No setup receipt or stable counter is injected.",
+          "Wait for an actual two-item supported stack; otherwise report candidate not reproduced."
+        ],
+        "commands": ["start-round", "set-axes", "attach-release"]
+      },
+      "waits": [
+        {
+          "until": "actual stack settled with both candidates for 60 ticks",
+          "maxActiveTicks": 180,
+          "onExpiry": "FAIL_OR_NOT_REPRODUCED_AND_PRESERVE_RAW"
+        },
+        {
+          "until": "unstack via public input, weigh individually and finish all orders",
+          "maxActiveTicks": 10800,
+          "onExpiry": "FAIL_OR_NOT_REPRODUCED_AND_PRESERVE_RAW"
+        }
+      ],
+      "assertions": [
+        "Top A1 has no direct scale support; C1 supports it. Neither obtains a new receipt while two items are candidates.",
+        "Record actual contact graph, containment and velocities, not only final AABBs; setup contact expectation is not observed support.",
+        "Removing upper item resets relevant stability; each later receipt requires genuine single-item 30-tick support."
+      ],
+      "terminal": {
+        "mode": "COMPLETE_THREE_ORDERS_OR_DECLARED_TIMEOUT_OR_TEARDOWN",
+        "setupTicksCountAsRound": false,
+        "resourcesAfter": "Return to matching app/scene baseline; legal retained empty world must be explicitly identified, not assumed zero."
+      },
+      "budgets": {
+        "maxActiveTicks": 10800,
+        "maxWallMs": 900000,
+        "recoveryMaxWallMs": 5000,
+        "teardownMaxWallMs": 5000
+      },
+      "criticalBoundary": {
+        "supportGraphDesign": ["scale -> C1", "C1 -> A1"],
+        "minimumNegativeWindowTicks": 60
+      },
+      "profileId": "gift-workshop-abnormal-1/LIFE-A10"
+    },
+    {
+      "id": "LIFE-A11",
+      "fixture": "early-plane-before-65degrees",
+      "status": "NOT_RUN",
+      "designStatus": "STATIC_CANDIDATE_REQUIRES_T34",
+      "sourceSections": ["12.4", "12.5", "12.6", "12.8", "12.9"],
+      "inputProtocolVersion": "gift-workshop-input-1",
+      "setup": {
+        "phase": "BEFORE_SCENE_CREATION_ONLY",
+        "baseLayoutId": "REBUILD-LAYOUT-01",
+        "itemPlacementOverrides": [],
+        "parameterOverrides": [
+          {
+            "path": "machine.packing.motorDegreesPerSecond",
+            "value": 15,
+            "baseValue": 90,
+            "configVersion": "rebuild-design-20261022-1-slow-door-1",
+            "scope": "VERSIONED_ABNORMAL_PROFILE_ONLY"
+          }
+        ],
+        "staticBoxes": [],
+        "runtimeMutationAllowed": false,
+        "effectiveConfigVersion": "rebuild-design-20261022-1-slow-door-1"
+      },
+      "publicTrigger": {
+        "preconditions": [
+          "Slow-door abnormal profile is loaded before start; all inventory and orders remain default. Genuinely weigh, pack and submit O1.",
+          "Must actually observe at least one snapshot item fully below receiver plane while measured door angle is strictly less than 65 degrees."
+        ],
+        "commands": ["start-round", "set-axes", "attach-release", "submit-order"]
+      },
+      "waits": [
+        {
+          "until": "real early full crossing, then real >=65 degree observation and commit",
+          "maxActiveTicks": 300,
+          "onExpiry": "FAIL_OR_NOT_REPRODUCED_AND_PRESERVE_RAW"
+        },
+        {
+          "until": "finish all three orders or preserve failed terminal",
+          "maxActiveTicks": 10800,
+          "onExpiry": "FAIL_OR_NOT_REPRODUCED_AND_PRESERVE_RAW"
+        }
+      ],
+      "assertions": [
+        "Freeze early full crossing at its real tick even if trigger later emits no second enter. Do not mistake center crossing or candidate enter for full passage.",
+        "Before qualified angle is observed, no commit even if both fully crossed. On qualification, use retained immutable crossings for both unique snapshot refs.",
+        "No second enter is required, and no animation timer may stand in for measured door angle. If early geometry never occurs, this variant is NOT_REPRODUCED, not PASS."
+      ],
+      "terminal": {
+        "mode": "COMPLETE_THREE_ORDERS_OR_DECLARED_TIMEOUT_OR_TEARDOWN",
+        "setupTicksCountAsRound": false,
+        "resourcesAfter": "Return to matching app/scene baseline; legal retained empty world must be explicitly identified, not assumed zero."
+      },
+      "budgets": {
+        "maxActiveTicks": 10800,
+        "maxWallMs": 900000,
+        "recoveryMaxWallMs": 5000,
+        "teardownMaxWallMs": 5000
+      },
+      "criticalBoundary": {
+        "measuredAngleUpperExclusiveDegrees": 65,
+        "acceptedFullShapeSide": "max support point Y <= planeY, directed from inside chamber",
+        "retainFirstCrossing": true,
+        "timeoutTicksUnchanged": 300
+      },
+      "profileId": "gift-workshop-abnormal-1/LIFE-A11"
+    },
+    {
+      "id": "LIFE-A12",
+      "fixture": "duplicate-and-stale-delivery",
+      "status": "NOT_RUN",
+      "designStatus": "STATIC_CANDIDATE_REQUIRES_T34",
+      "sourceSections": ["12.4", "12.5", "12.6", "12.8", "12.9"],
+      "inputProtocolVersion": "gift-workshop-input-1",
+      "setup": {
+        "phase": "BEFORE_SCENE_CREATION_ONLY",
+        "baseLayoutId": "REBUILD-LAYOUT-01",
+        "itemPlacementOverrides": [],
+        "parameterOverrides": [],
+        "staticBoxes": [
+          {
+            "id": "half-order-shelf",
+            "bodyType": "static",
+            "shape": "box",
+            "center": [1.99, 0.57, 0],
+            "size": [0.3, 0.06, 0.7],
+            "visible": true
+          }
+        ],
+        "runtimeMutationAllowed": false,
+        "effectiveConfigVersion": "rebuild-design-20261022-1-life-a12-1"
+      },
+      "publicTrigger": {
+        "preconditions": [
+          "Run actual public submission and observe real full-geometry delivery records; also run an actual abandoned attempt followed by public retry with generation changes.",
+          "Only actual captured immutable observations are copied by the separate diagnostic transport probe. Never synthesize a body crossing, receipt, snapshot or commit event.",
+          "Use LIFE-A02 initial right-lane blockage and left-lane recovery recipe for the abandoned-attempt cases. Use the separately initialized nuisance-item variant for an actual non-snapshot crossing during SHIPPING."
+        ],
+        "commands": [
+          "start-round",
+          "set-axes",
+          "attach-release",
+          "submit-order",
+          "retry-order",
+          "replay-round",
+          "start-round"
+        ]
+      },
+      "waits": [
+        {
+          "until": "collect actual current and abandoned attempt observations",
+          "maxActiveTicks": 300,
+          "onExpiry": "FAIL_OR_NOT_REPRODUCED_AND_PRESERVE_RAW"
+        },
+        {
+          "until": "finish current round, replay and reach declared terminal of next round",
+          "maxActiveTicks": 21600,
+          "onExpiry": "FAIL_OR_NOT_REPRODUCED_AND_PRESERVE_RAW"
+        }
+      ],
+      "assertions": [
+        "Duplicate current attempt/item/generation has no second pending entry, consumed item, score or shipment_committed.",
+        "Old attempt and old itemGeneration must both be rejected even when native body index is reused; previous round callback cannot alter new round.",
+        "Actual non-snapshot stock crossing is ignored. Probe copies never create positive delivery eligibility; independently retained original real geometry/angle evidence is required for any success."
+      ],
+      "terminal": {
+        "mode": "COMPLETE_THREE_ORDERS_OR_DECLARED_TIMEOUT_OR_TEARDOWN",
+        "setupTicksCountAsRound": false,
+        "resourcesAfter": "Return to matching app/scene baseline; legal retained empty world must be explicitly identified, not assumed zero."
+      },
+      "budgets": {
+        "maxActiveTicks": 21600,
+        "maxWallMs": 900000,
+        "recoveryMaxWallMs": 5000,
+        "teardownMaxWallMs": 5000
+      },
+      "observationProbe": {
+        "kind": "REDELIVER_CAPTURED_REAL_OBSERVATION",
+        "capture": "Store real immutable current-attempt crossing, pre-retry abandoned-attempt crossing and pre-replay old-round observation with original data/hash.",
+        "deliver": "After each original was ordinarily consumed, re-deliver an identical copy once at a declared later boundary; for stale copies, wait for actual retry/replay generation transition.",
+        "mutationAllowed": false,
+        "fabricatedEventsAllowed": false,
+        "businessSuccessEvidence": false,
+        "requiredCases": [
+          "same-attempt duplicate",
+          "old-attempt after retry",
+          "old-item-generation with reused body",
+          "old-round after replay",
+          "actual non-snapshot item crossing"
+        ]
+      },
+      "criticalBoundary": {
+        "dedupeKey": ["attemptId", "itemId", "itemGeneration"],
+        "alsoRequireRoundGeneration": true,
+        "copiesPerActualObservation": 1
+      },
+      "variants": [
+        {
+          "id": "live-non-snapshot-crossing",
+          "status": "NOT_RUN",
+          "normalProfileEvidence": false,
+          "setup": {
+            "phase": "BEFORE_SCENE_CREATION_ONLY",
+            "baseLayoutId": "REBUILD-LAYOUT-01",
+            "runtimeMutationAllowed": false,
+            "itemPlacementOverrides": [
+              {
+                "itemId": "B4",
+                "position": [1.99, 0.92, -0.05],
+                "yawDegrees": 0
+              }
+            ],
+            "parameterOverrides": [],
+            "staticBoxes": [
+              {
+                "id": "nuisance-item-peg",
+                "bodyType": "static",
+                "shape": "box",
+                "center": [1.99, 0.72, -0.05],
+                "size": [0.08, 0.04, 0.08],
+                "visible": true
+              }
+            ],
+            "effectiveConfigVersion": "rebuild-design-20261022-1-life-a12-live-non-snapshot-crossing-1"
+          },
+          "publicTrigger": "Pack only A1/B1 through the left lane using real receipts, then submit. The real opening door is intended to dislodge the visible spare B4 from the small peg. Do not push it with a test hook.",
+          "requiredObservation": "Actual B4 whole-geometry crossing during this SHIPPING attempt, with B4 not in its immutable snapshot. If it falls too early, never falls, blocks the door, or no actual crossing occurs, retain NOT_REPRODUCED.",
+          "assertion": "The current-attempt non-snapshot item cannot create deliveredPending or consume stock. It is recovered only through an explicit later recovery when eligible."
+        }
+      ],
+      "profileId": "gift-workshop-abnormal-1/LIFE-A12"
+    },
+    {
+      "id": "LIFE-A13",
+      "fixture": "timeout-on-shipping-deadline",
+      "status": "NOT_RUN",
+      "designStatus": "STATIC_CANDIDATE_REQUIRES_T34",
+      "sourceSections": ["12.4", "12.5", "12.6", "12.8", "12.9"],
+      "inputProtocolVersion": "gift-workshop-input-1",
+      "setup": {
+        "phase": "BEFORE_SCENE_CREATION_ONLY",
+        "baseLayoutId": "REBUILD-LAYOUT-01",
+        "itemPlacementOverrides": [],
+        "parameterOverrides": [],
+        "staticBoxes": [],
+        "runtimeMutationAllowed": false,
+        "effectiveConfigVersion": "rebuild-design-20261022-1"
+      },
+      "publicTrigger": {
+        "preconditions": [
+          "All time is accumulated by real fixed ticks; no remainingTicks/submitTick/door-angle/event setter. First two orders in final-order variants must genuinely commit.",
+          "Use a separately retained same-build public calibration trial to choose waiting-before-submit offsets; exact target collision/commit ticks remain NOT_RUN until T34."
+        ],
+        "commands": ["start-round", "set-axes", "attach-release", "submit-order"]
+      },
+      "waits": [
+        {
+          "until": "run to declared shipping or round boundary",
+          "maxActiveTicks": 10800,
+          "onExpiry": "FAIL_OR_NOT_REPRODUCED_AND_PRESERVE_RAW"
+        }
+      ],
+      "assertions": [
+        "On the last round tick process real full crossing and >=65-degree evidence first, then atomically commit final O3 and lock victory without awaiting close.",
+        "If final shipment is incomplete at deadline, lock timeout and reject all later callbacks/commands without inventory/score changes.",
+        "At shipping elapsed 300, genuine complete evidence commits first; if incomplete enter BLOCKED unless global deadline already ends the round.",
+        "An event observed at an adjacent tick cannot be relabelled as coincident. Every misaligned trial remains raw NOT_REPRODUCED or failed evidence."
+      ],
+      "terminal": {
+        "mode": "COMPLETE_THREE_ORDERS_OR_DECLARED_TIMEOUT_OR_TEARDOWN",
+        "setupTicksCountAsRound": false,
+        "resourcesAfter": "Return to matching app/scene baseline; legal retained empty world must be explicitly identified, not assumed zero."
+      },
+      "budgets": {
+        "maxActiveTicks": 10800,
+        "maxWallMs": 900000,
+        "recoveryMaxWallMs": 5000,
+        "teardownMaxWallMs": 5000
+      },
+      "boundaryVariants": [
+        {
+          "id": "final-order-on-round-deadline",
+          "targetRoundTick": 10800,
+          "requiredOrder": "O3",
+          "requiredOutcome": "RESULT_WON"
+        },
+        {
+          "id": "incomplete-on-round-deadline",
+          "targetRoundTick": 10800,
+          "requiredOutcome": "RESULT_TIMEOUT"
+        },
+        {
+          "id": "complete-on-shipping-deadline",
+          "targetShippingElapsedTicks": 300,
+          "requiredOutcome": "ATOMIC_COMMIT_BEFORE_SHIPPING_TIMEOUT"
+        },
+        {
+          "id": "incomplete-on-shipping-deadline",
+          "targetShippingElapsedTicks": 300,
+          "requiredOutcome": "BLOCKED_UNLESS_ROUND_TIMEOUT"
+        }
+      ],
+      "calibration": {
+        "status": "NOT_RUN",
+        "maxCalibrationRounds": 1,
+        "candidateWaitOffsetsRelativeToMeasuredLatencyTicks": [-1, 0, 1],
+        "maxCandidateRoundsPerBoundary": 3,
+        "eachTrialMustReachOwnTerminal": true,
+        "clockInjectionAllowed": false,
+        "freezeDependsOnSuccessfulTrace": false
+      },
+      "criticalBoundary": {
+        "roundTicks": 10800,
+        "shippingTimeoutTicks": 300,
+        "shippingSubmitStepCountsAsOne": true,
+        "finalOrderPriority": "DELIVERY_THEN_GLOBAL_TIMEOUT"
+      },
+      "profileId": "gift-workshop-abnormal-1/LIFE-A13"
+    },
+    {
+      "id": "LIFE-A14",
+      "fixture": "recovery-under-5seconds",
+      "status": "NOT_RUN",
+      "designStatus": "STATIC_CANDIDATE_REQUIRES_T34",
+      "sourceSections": ["12.4", "12.5", "12.6", "12.8", "12.9"],
+      "inputProtocolVersion": "gift-workshop-input-1",
+      "setup": {
+        "phase": "BEFORE_SCENE_CREATION_ONLY",
+        "baseLayoutId": "REBUILD-LAYOUT-01",
+        "itemPlacementOverrides": [
+          {
+            "itemId": "A1",
+            "position": [-2.7, 1.64, 1.7],
+            "yawDegrees": 0
+          }
+        ],
+        "parameterOverrides": [],
+        "staticBoxes": [],
+        "runtimeMutationAllowed": false,
+        "effectiveConfigVersion": "rebuild-design-20261022-1-life-a14-1"
+      },
+      "publicTrigger": {
+        "preconditions": [
+          "Actually drop unshipped A1 off table using outward motion/release; keep it in observable recovery state.",
+          "Wait with neutral public axes, unpaused, until remainingTicks is exactly 299, then issue recover-dropped once."
+        ],
+        "commands": ["start-round", "set-axes", "attach-release", "recover-dropped", "replay-round"]
+      },
+      "waits": [
+        {
+          "until": "real dropped item and neutral wait to 299 remaining ticks",
+          "maxActiveTicks": 10800,
+          "onExpiry": "FAIL_OR_NOT_REPRODUCED_AND_PRESERVE_RAW"
+        }
+      ],
+      "assertions": [
+        "Recovery acceptance records one recovery and one 300-tick penalty; 299-300 locks RESULT timeout with remaining clamped to zero.",
+        "No resumed PACKING tick or new movement after penalty timeout, no fabricated winning time bonus. Safe cleanup still finishes within wall-time bound.",
+        "A duplicate command seq or repeated RESULT click cannot charge again or revive old receipt; replay resets counters and generations via normal lifecycle."
+      ],
+      "terminal": {
+        "mode": "RESULT_TIMEOUT_THEN_REPLAY_READY_AND_TEARDOWN",
+        "setupTicksCountAsRound": false,
+        "resourcesAfter": "matching app baseline after replay READY and teardown"
+      },
+      "budgets": {
+        "maxActiveTicks": 10800,
+        "maxWallMs": 900000,
+        "recoveryMaxWallMs": 5000,
+        "teardownMaxWallMs": 5000
+      },
+      "criticalBoundary": {
+        "remainingBeforeRecoveryTicks": 299,
+        "recoveryPenaltyTicks": 300,
+        "requiredOutcome": "RESULT_TIMEOUT",
+        "testSetupMaySetClock": false
+      },
+      "profileId": "gift-workshop-abnormal-1/LIFE-A14"
+    },
+    {
+      "id": "LIFE-A15",
+      "fixture": "closing-channel-obstruction",
+      "status": "NOT_RUN",
+      "designStatus": "STATIC_CANDIDATE_REQUIRES_T34",
+      "sourceSections": ["12.4", "12.5", "12.6", "12.8", "12.9"],
+      "inputProtocolVersion": "gift-workshop-input-1",
+      "setup": {
+        "phase": "BEFORE_SCENE_CREATION_ONLY",
+        "baseLayoutId": "REBUILD-LAYOUT-01",
+        "itemPlacementOverrides": [
+          {
+            "itemId": "B4",
+            "position": [2.02, 0.68, 0.325],
+            "yawDegrees": 0
+          }
+        ],
+        "parameterOverrides": [],
+        "staticBoxes": [
+          {
+            "id": "spare-item-shelf",
+            "bodyType": "static",
+            "shape": "box",
+            "center": [2.02, 0.47, 0.325],
+            "size": [0.24, 0.06, 0.19],
+            "visible": true
+          }
+        ],
+        "runtimeMutationAllowed": false,
+        "effectiveConfigVersion": "rebuild-design-20261022-1-life-a15-1"
+      },
+      "publicTrigger": {
+        "preconditions": [
+          "Visible existing spare B4 starts on a shelf in the lower right-front channel; it is not a shipped item or newly generated body.",
+          "Genuinely ship O1 A1+B1 through left lane and observe atomic commit while actual B4 still obstructs clearance. A pre-submit policy blocking this profile makes it NOT_REPRODUCED, not permission to force submit."
+        ],
+        "commands": ["start-round", "set-axes", "attach-release", "submit-order", "clear-channel"]
+      },
+      "waits": [
+        {
+          "until": "actual O1 commit with B4 still in channel",
+          "maxActiveTicks": 300,
+          "onExpiry": "FAIL_OR_NOT_REPRODUCED_AND_PRESERVE_RAW"
+        },
+        {
+          "until": "explicit cleanup and finish remaining orders",
+          "maxActiveTicks": 10800,
+          "onExpiry": "FAIL_OR_NOT_REPRODUCED_AND_PRESERVE_RAW"
+        }
+      ],
+      "assertions": [
+        "CLOSING must not drive forcibly into occupied channel. Record actual channel overlap and motor/angle behavior; a planned obstacle alone is not proof.",
+        "clear-channel restores only unshipped B4/current unshipped layout and mechanism, charges one recovery, and preserves committed O1/consumed A1+B1/score contribution.",
+        "Previously consumed items cannot be regenerated, rolled back or scored twice; after actual closed angle <=2 degrees and empty channel, open next order."
+      ],
+      "terminal": {
+        "mode": "COMPLETE_THREE_ORDERS_OR_DECLARED_TIMEOUT_OR_TEARDOWN",
+        "setupTicksCountAsRound": false,
+        "resourcesAfter": "Return to matching app/scene baseline; legal retained empty world must be explicitly identified, not assumed zero."
+      },
+      "budgets": {
+        "maxActiveTicks": 10800,
+        "maxWallMs": 900000,
+        "recoveryMaxWallMs": 5000,
+        "teardownMaxWallMs": 5000
+      },
+      "publicPlacementTargets": [
+        {
+          "itemId": "A1",
+          "bodyOrigin": [1.38, 1.64, -0.18],
+          "yawDegrees": 0,
+          "kind": "PUBLIC_INPUT_TARGET_NOT_POSE_COMMAND"
+        },
+        {
+          "itemId": "B1",
+          "bodyOrigin": [1.65, 1.68, 0.18],
+          "yawDegrees": 0,
+          "kind": "PUBLIC_INPUT_TARGET_NOT_POSE_COMMAND"
+        }
+      ],
+      "criticalBoundary": {
+        "committedOrderBeforeCleanup": "O1",
+        "spareItem": "B4",
+        "preserveCommittedLedger": true,
+        "spareBottomY": 0.5,
+        "spareTopY": 0.9
+      },
+      "profileId": "gift-workshop-abnormal-1/LIFE-A15"
+    }
+  ]
+}

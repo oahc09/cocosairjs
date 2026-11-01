@@ -1,0 +1,160 @@
+{
+  "schemaVersion": 1,
+  "contractVersion": "box3d-initial-budget-1",
+  "status": "INITIAL_DESIGN_NOT_MEASUREMENT_OR_FINAL_G7_FREEZE",
+  "basis": "v1.2 section13.4 initial recommendations adopted without weakening",
+  "createdAt": "2026-10-22T05:42:24.178734+00:00",
+  "resources": "acceptance-resources.json",
+  "network": {
+    "downlinkMegabitsPerSecond": 20,
+    "roundTripMilliseconds": 100
+  },
+  "statistics": {
+    "percentile": "nearest-rank",
+    "gate": "worst independent run P95",
+    "regressionMaximumRatio": 1.1,
+    "absoluteBudgetsAlsoRequired": true,
+    "failedStartupAttemptsCountAsFailures": true,
+    "physicsStallsOrCrashesCannotBeExcludedAsNoise": true,
+    "nodeTightLoopIsNotBrowserPerformance": true
+  },
+  "profiles": [
+    {
+      "id": "DESKTOP-60",
+      "resources": ["HOST-CHROME"],
+      "activeBodies": 1000,
+      "fixedHz": 60,
+      "physicsFrameP95Ms": 6,
+      "frameWorkP95Ms": 14,
+      "minimumVisibleFps": 55,
+      "status": "NOT_RUN",
+      "baselineArtifactStatus": "NOT_ESTABLISHED",
+      "deviceFingerprintStatus": "REQUIRED_BEFORE_FINAL_PERFORMANCE_FREEZE"
+    },
+    {
+      "id": "MOBILE-60",
+      "resources": ["ANDROID-WEBVIEW"],
+      "activeBodies": 200,
+      "fixedHz": 60,
+      "physicsFrameP95Ms": 5,
+      "frameWorkP95Ms": 14,
+      "minimumVisibleFps": 55,
+      "continuousMinutes": 30,
+      "lastHotWindowMinutes": 10,
+      "status": "NOT_RUN",
+      "baselineArtifactStatus": "NOT_ESTABLISHED",
+      "deviceFingerprintStatus": "REQUIRED_BEFORE_FINAL_PERFORMANCE_FREEZE"
+    },
+    {
+      "id": "IOS-COMPAT",
+      "resources": ["IOS-SAFARI"],
+      "activeBodies": 200,
+      "correctnessRequired": true,
+      "performanceClaim": "No general 60fps claim from compatibility alone; EX09 iOS is independently subject to its business performance profile.",
+      "status": "NOT_RUN",
+      "baselineArtifactStatus": "NOT_ESTABLISHED",
+      "deviceFingerprintStatus": "REQUIRED_BEFORE_FINAL_PERFORMANCE_FREEZE"
+    },
+    {
+      "id": "EX09-BIZ-DESKTOP",
+      "resources": ["HOST-CHROME"],
+      "variant": "st",
+      "independentRounds": 5,
+      "activeTicksPerRoundMinimum": 1800,
+      "physicsFrameP95Ms": 3,
+      "frameWorkP95Ms": 14,
+      "minimumVisibleFps": 55,
+      "allOrdersCorrect": true,
+      "status": "NOT_RUN",
+      "baselineArtifactStatus": "NOT_ESTABLISHED",
+      "deviceFingerprintStatus": "REQUIRED_BEFORE_FINAL_PERFORMANCE_FREEZE"
+    },
+    {
+      "id": "EX09-BIZ-MOBILE",
+      "resources": ["ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "reportEachDeviceSeparately": true,
+      "variant": "st",
+      "independentRounds": 5,
+      "activeTicksPerRoundMinimum": 1800,
+      "physicsFrameP95Ms": 4,
+      "frameWorkP95Ms": 14,
+      "minimumVisibleFps": 55,
+      "continuousMinutes": 30,
+      "lastHotWindowMinutes": 10,
+      "allOrdersCorrect": true,
+      "status": "NOT_RUN",
+      "baselineArtifactStatus": "NOT_ESTABLISHED",
+      "deviceFingerprintStatus": "REQUIRED_BEFORE_FINAL_PERFORMANCE_FREEZE"
+    },
+    {
+      "id": "COLD-ST",
+      "resources": ["HOST-CHROME", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variant": "st",
+      "independentEmptyCacheStarts": 30,
+      "maxIncrementalTransferBytes": 2097152,
+      "postFetchInitP95Ms": {
+        "desktop": 250,
+        "mobile": 800
+      },
+      "readyP95Ms": 2000,
+      "status": "NOT_RUN",
+      "baselineArtifactStatus": "NOT_ESTABLISHED",
+      "deviceFingerprintStatus": "REQUIRED_BEFORE_FINAL_PERFORMANCE_FREEZE"
+    },
+    {
+      "id": "COLD-MT",
+      "resources": ["HOST-CHROME", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variant": "mt",
+      "independentEmptyCacheStarts": 30,
+      "maxIncrementalTransferBytes": 3145728,
+      "readyIncludingPoolP95Ms": 3000,
+      "unusedVariantRequests": 0,
+      "status": "NOT_RUN",
+      "baselineArtifactStatus": "NOT_ESTABLISHED",
+      "deviceFingerprintStatus": "REQUIRED_BEFORE_FINAL_PERFORMANCE_FREEZE",
+      "measurementApplicability": "Candidate resources only until the required capability matrix is frozen. Measure MT on every target where MT is promised and supported; unsupported targets still require explicit multi rejection and permitted auto fallback checks. Do not remove required environments based on failures.",
+      "capabilityMatrixStatus": "NOT_FROZEN"
+    },
+    {
+      "id": "MEMORY",
+      "resources": ["HOST-CHROME", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "lifecycleRounds": 100,
+      "maxWasmPeakBytes": {
+        "desktop": 134217728,
+        "mobile": 100663296
+      },
+      "nativeLiveObjectsAndBytesReturnToBaseline": true,
+      "doesNotEquateCoreCountersToTotalHeap": true,
+      "status": "NOT_RUN",
+      "baselineArtifactStatus": "NOT_ESTABLISHED",
+      "deviceFingerprintStatus": "REQUIRED_BEFORE_FINAL_PERFORMANCE_FREEZE"
+    },
+    {
+      "id": "EX09-WHOLE-PAGE-COLD",
+      "resources": ["HOST-CHROME", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variant": "st",
+      "independentEmptyCacheStarts": 30,
+      "maxNecessaryPageTransferBytes": 5242880,
+      "playableP95Ms": 4000,
+      "alsoMustPass": "COLD-ST",
+      "status": "NOT_RUN",
+      "baselineArtifactStatus": "NOT_ESTABLISHED",
+      "deviceFingerprintStatus": "REQUIRED_BEFORE_FINAL_PERFORMANCE_FREEZE"
+    }
+  ],
+  "futureFreezeRequirements": [
+    "actual target device/OS/browser fingerprint",
+    "sceneHash and settingsHash",
+    "source/build/manifest identity",
+    "first correctness-qualified baseline artifact",
+    "applicable per-profile thresholds",
+    "viewport/DPR/shadows and image-quality fingerprint",
+    "fixed active-window rule, retaining entire-round raw samples"
+  ],
+  "noSilentAdjustmentAfterFailure": true,
+  "transferAccounting": {
+    "includes": ["adapter", "loader", "WASM", "worker", "all other required incremental physics assets"],
+    "recordContentEncodingAndUncompressedBytes": true,
+    "ex09PageBudgetIsSeparateFromPhysicsIncrementalBudget": true
+  }
+}

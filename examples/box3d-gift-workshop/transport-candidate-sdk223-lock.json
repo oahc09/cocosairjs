@@ -1,0 +1,23 @@
+{
+  "status": "READY_FOR_VERIFICATION",
+  "candidateId": "sdk223",
+  "expectedBuild": 223,
+  "runtimeSha256": "81aaa7258bdd59f5400cd1767463c0019746c809af75901f765d11f6d7f8a70f",
+  "manifestSha256": "8b40312d61c55d6701c941453dd4d45c20e369f209f971f0634222b4d7f3397c",
+  "runtimeProducer": "b089d223aad1bb4be4a81f187eceb341510d766a",
+  "artifactDirectory": "attempt-223-esm",
+  "qualification": {
+    "committedQueries": true,
+    "committedRay": true,
+    "kinematicTarget": true,
+    "fixedAtIdle": true,
+    "boxSupportDeparture": true
+  },
+  "qualificationEvidence": {
+    "cohortSummarySha256": "b61137708688331b4519fedcf9ecb0931409edce298095efa2da537211b07756",
+    "mapPath": "tools/verify/box3d/gift-workshop/evidence/sdk223-admission/qualification-map.json",
+    "mapSha256": "929bdabaa48634dc66504b9eab234ec766ea505e6e0df126aad824db1d7e59a4"
+  },
+  "businessStatus": "NOT_RUN",
+  "scope": "Same-runtime public interface regressions only. Not EX09 selected-2 geometry, complete lifting route, browser, LIFE-A05, mobile/recovery or full BIZ acceptance."
+}

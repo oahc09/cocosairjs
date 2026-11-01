@@ -1,0 +1,15 @@
+✔ new configuration preserves three orders, twelve unique stock items and physical mass limits (1.909532ms)
+✔ five distinct new initial layouts are non-overlapping on the declared table (3.875527ms)
+✔ all initial attachment points and declared cruise waypoints are within magnet travel bounds (0.620871ms)
+✔ receiver geometry leaves a conservative full-item clearance and declared door endpoint above plane (0.226783ms)
+✔ transaction, recovery and terminal precedence cannot silently award a partial shipment (0.273644ms)
+✔ 20 lifecycle rows remain five whole normal rounds and fifteen declared abnormal cases, all unrun (0.257041ms)
+✔ ordinary input and performance design cannot count teleport, menus or hidden bodies as proof (0.141471ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 121.030376

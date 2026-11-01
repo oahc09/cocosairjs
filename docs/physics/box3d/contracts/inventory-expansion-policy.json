@@ -1,0 +1,4091 @@
+{
+  "schemaVersion": 1,
+  "contractVersion": "box3d-inventory-expansion-candidate-1",
+  "status": "DETERMINISTIC_PROPOSAL_NOT_APPROVED_FREEZE",
+  "expectedSourceCounts": {
+    "parentCategories": 91,
+    "fixedSubcases": 84,
+    "auxiliaryTests": 2
+  },
+  "reviewAuthority": "Integrator technical review within the authorized v1.2 implementation scope; user approval is needed only for a material product-scope/cost/permission change.",
+  "variantDefinitions": [
+    {
+      "id": "st",
+      "artifactVariant": "st-simd-f32",
+      "threading": "single",
+      "workerCount": 1
+    },
+    {
+      "id": "mt2",
+      "artifactVariant": "mt-simd-f32",
+      "threading": "multi",
+      "workerCount": 2
+    },
+    {
+      "id": "mt3",
+      "artifactVariant": "mt-simd-f32",
+      "threading": "multi",
+      "workerCount": 3
+    },
+    {
+      "id": "mt4",
+      "artifactVariant": "mt-simd-f32",
+      "threading": "multi",
+      "workerCount": 4
+    }
+  ],
+  "environmentDefinitions": [
+    {
+      "id": "HOST-NODE",
+      "resourceIds": ["HOST-NODE"],
+      "kind": "node-wasm"
+    },
+    {
+      "id": "HOST-CHROME",
+      "resourceIds": ["HOST-CHROME"],
+      "kind": "real-desktop-browser"
+    },
+    {
+      "id": "DESKTOP-FIREFOX",
+      "resourceIds": ["DESKTOP-FIREFOX"],
+      "kind": "real-desktop-browser"
+    },
+    {
+      "id": "DESKTOP-SAFARI",
+      "resourceIds": ["DESKTOP-SAFARI"],
+      "kind": "real-desktop-browser"
+    },
+    {
+      "id": "ANDROID-WEBVIEW",
+      "resourceIds": ["ANDROID-WEBVIEW"],
+      "kind": "real-mobile-browser"
+    },
+    {
+      "id": "IOS-SAFARI",
+      "resourceIds": ["IOS-SAFARI"],
+      "kind": "real-mobile-browser"
+    },
+    {
+      "id": "HUMAN-COHORT-UNASSIGNED",
+      "resourceIds": ["BIZ07-FIRST-TIME-USERS"],
+      "kind": "human-cohort",
+      "deviceAllocation": "PENDING_D07_NOT_A_VIRTUAL_DEVICE"
+    }
+  ],
+  "additionalResources": [
+    {
+      "id": "AGENT-INDEPENDENT-CONTEXT",
+      "category": "Agent not involved in module implementation, in a fresh task context with only public docs and tarball",
+      "required": true,
+      "assignment": "UNASSIGNED",
+      "access": "NOT_ARRANGED",
+      "availability": "NOT_SCHEDULED",
+      "status": "BLOCKED",
+      "reason": "No verified independent Agent/context, frozen prompt, public docs/tarball identity, or intervention log is assigned. This inventory author and implementers cannot self-certify independent use.",
+      "recoveryCondition": "Assign a fresh non-implementer Agent context per AG task; retain prompt/docs/package hashes, commands, failures, retries and interventions. Restart the task after public documentation fixes."
+    }
+  ],
+  "criticalDebugReleaseTestIds": [
+    "WASM-02",
+    "WASM-03",
+    "WASM-09",
+    "WASM-10",
+    "WASM-11-BINDING",
+    "WASM-12-BINDING",
+    "WASM-13-BINDING",
+    "B3-C04-GRAVITY",
+    "B3-C04-SLEEP",
+    "B3-C06-DAMPING-RUNTIME",
+    "B3-C21-SNAPSHOT",
+    "B3-C22-SENSOR-TRANSIENT",
+    "B3-C24",
+    "B3-C26-INVALID",
+    "B3-C36-SETTER-ROLLBACK",
+    "B3-I06-FULL",
+    "B3-U01",
+    "B3-U02"
+  ],
+  "aggregateFixedSubcases": {
+    "WASM-13-AIR-ST": ["WASM-13-AIR-ST-HOST", "WASM-13-AIR-ST-DEVICE"],
+    "B3-C28-SENSOR-CCD": [
+      "B3-C28-SENSOR-CCD-CAPACITY",
+      "B3-C28-SENSOR-CCD-EVENT-FLAGS",
+      "B3-C28-SENSOR-CCD-MOVING-SENSOR",
+      "B3-C28-SENSOR-CCD-OCCLUSION",
+      "B3-C28-SENSOR-CCD-SOLID-STATIC-SENSOR"
+    ]
+  },
+  "crossCategoryAggregateDependencies": {
+    "WASM-15": ["B3-P01", "B3-P02", "B3-P03", "B3-P04", "B3-P05", "B3-P06", "B3-P07"]
+  },
+  "parentRemainderTestIds": [
+    "B3-C04",
+    "B3-C06",
+    "B3-C11",
+    "B3-C14",
+    "B3-C21",
+    "B3-C22",
+    "B3-C28",
+    "B3-C29",
+    "B3-C36",
+    "B3-I03",
+    "B3-I04"
+  ],
+  "definitions": [
+    {
+      "caseKey": "B3-C02",
+      "testId": "B3-C02",
+      "parentCategoryId": "B3-C02",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M2",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C02",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C03",
+      "testId": "B3-C03",
+      "parentCategoryId": "B3-C03",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M2",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C03",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C04::parent-table-remainder",
+      "testId": "B3-C04",
+      "parentCategoryId": "B3-C04",
+      "coverageRole": "parent-table-remainder",
+      "firstPhase": "M2",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C04::parent-table-remainder",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C05",
+      "testId": "B3-C05",
+      "parentCategoryId": "B3-C05",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M2",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C05",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C06::parent-table-remainder",
+      "testId": "B3-C06",
+      "parentCategoryId": "B3-C06",
+      "coverageRole": "parent-table-remainder",
+      "firstPhase": "M2",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C06::parent-table-remainder",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C07",
+      "testId": "B3-C07",
+      "parentCategoryId": "B3-C07",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M2",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C07",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C08",
+      "testId": "B3-C08",
+      "parentCategoryId": "B3-C08",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M2",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C08",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C09",
+      "testId": "B3-C09",
+      "parentCategoryId": "B3-C09",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M2",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C09",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C10",
+      "testId": "B3-C10",
+      "parentCategoryId": "B3-C10",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M2",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C10",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C11::parent-table-remainder",
+      "testId": "B3-C11",
+      "parentCategoryId": "B3-C11",
+      "coverageRole": "parent-table-remainder",
+      "firstPhase": "M2",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C11::parent-table-remainder",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C12",
+      "testId": "B3-C12",
+      "parentCategoryId": "B3-C12",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M2",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C12",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C14::parent-table-remainder",
+      "testId": "B3-C14",
+      "parentCategoryId": "B3-C14",
+      "coverageRole": "parent-table-remainder",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C14::parent-table-remainder",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C15",
+      "testId": "B3-C15",
+      "parentCategoryId": "B3-C15",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C15",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C18",
+      "testId": "B3-C18",
+      "parentCategoryId": "B3-C18",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C18",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC", "LIFECYCLE"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C19",
+      "testId": "B3-C19",
+      "parentCategoryId": "B3-C19",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C19",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC", "LIFECYCLE"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C21::parent-table-remainder",
+      "testId": "B3-C21",
+      "parentCategoryId": "B3-C21",
+      "coverageRole": "parent-table-remainder",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C21::parent-table-remainder",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C22::parent-table-remainder",
+      "testId": "B3-C22",
+      "parentCategoryId": "B3-C22",
+      "coverageRole": "parent-table-remainder",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C22::parent-table-remainder",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C23",
+      "testId": "B3-C23",
+      "parentCategoryId": "B3-C23",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C23",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C24",
+      "testId": "B3-C24",
+      "parentCategoryId": "B3-C24",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release", "debug"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C24",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC", "LIFECYCLE"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D03-DEBUG-RELEASE-CRITICAL",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C25",
+      "testId": "B3-C25",
+      "parentCategoryId": "B3-C25",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C25",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C27",
+      "testId": "B3-C27",
+      "parentCategoryId": "B3-C27",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C27",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C28::parent-table-remainder",
+      "testId": "B3-C28",
+      "parentCategoryId": "B3-C28",
+      "coverageRole": "parent-table-remainder",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C28::parent-table-remainder",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C29::parent-table-remainder",
+      "testId": "B3-C29",
+      "parentCategoryId": "B3-C29",
+      "coverageRole": "parent-table-remainder",
+      "firstPhase": "M4",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C29::parent-table-remainder",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C31",
+      "testId": "B3-C31",
+      "parentCategoryId": "B3-C31",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M4",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C31",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C32",
+      "testId": "B3-C32",
+      "parentCategoryId": "B3-C32",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C32",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C33",
+      "testId": "B3-C33",
+      "parentCategoryId": "B3-C33",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C33",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C34",
+      "testId": "B3-C34",
+      "parentCategoryId": "B3-C34",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C34",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C35",
+      "testId": "B3-C35",
+      "parentCategoryId": "B3-C35",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M4",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C35",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C36::parent-table-remainder",
+      "testId": "B3-C36",
+      "parentCategoryId": "B3-C36",
+      "coverageRole": "parent-table-remainder",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C36::parent-table-remainder",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC", "LIFECYCLE"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "WASM-01",
+      "testId": "WASM-01",
+      "parentCategoryId": "WASM-01",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M1",
+      "environmentIds": ["HOST-NODE"],
+      "variantIds": ["st", "mt2"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "artifact-audit",
+      "fixtureSpecId": "WASM-01",
+      "evidenceRequirementIds": ["COMMON", "BUILD"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "WASM-02",
+      "testId": "WASM-02",
+      "parentCategoryId": "WASM-02",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M1",
+      "environmentIds": ["HOST-NODE", "HOST-CHROME"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release", "debug"],
+      "fixtureKind": "real-binding-fixture",
+      "fixtureSpecId": "WASM-02",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D03-DEBUG-RELEASE-CRITICAL",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "WASM-03",
+      "testId": "WASM-03",
+      "parentCategoryId": "WASM-03",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M1",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release", "debug"],
+      "fixtureKind": "real-binding-fixture",
+      "fixtureSpecId": "WASM-03",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE", "NON_ISOLATED_HTTP"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D05-FIXTURE-FREEZE",
+        "D03-DEBUG-RELEASE-CRITICAL",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "WASM-04",
+      "testId": "WASM-04",
+      "parentCategoryId": "WASM-04",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M6",
+      "environmentIds": [
+        "HOST-NODE",
+        "HOST-CHROME",
+        "DESKTOP-FIREFOX",
+        "DESKTOP-SAFARI",
+        "ANDROID-WEBVIEW",
+        "IOS-SAFARI"
+      ],
+      "variantIds": ["mt2", "mt3", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-binding-fixture",
+      "fixtureSpecId": "WASM-04",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "WASM-05",
+      "testId": "WASM-05",
+      "parentCategoryId": "WASM-05",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M6",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt3", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-binding-fixture",
+      "fixtureSpecId": "WASM-05",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE", "THREAD_ADMISSION"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "WASM-08",
+      "testId": "WASM-08",
+      "parentCategoryId": "WASM-08",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M1",
+      "environmentIds": [
+        "HOST-NODE",
+        "HOST-CHROME",
+        "DESKTOP-FIREFOX",
+        "DESKTOP-SAFARI",
+        "ANDROID-WEBVIEW",
+        "IOS-SAFARI"
+      ],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-binding-fixture",
+      "fixtureSpecId": "WASM-08",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE", "LOADER_FAILURES"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "WASM-09",
+      "testId": "WASM-09",
+      "parentCategoryId": "WASM-09",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M1",
+      "environmentIds": ["HOST-NODE", "HOST-CHROME"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release", "debug"],
+      "fixtureKind": "real-binding-fixture",
+      "fixtureSpecId": "WASM-09",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D03-DEBUG-RELEASE-CRITICAL",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "WASM-10",
+      "testId": "WASM-10",
+      "parentCategoryId": "WASM-10",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M1",
+      "environmentIds": ["HOST-NODE", "HOST-CHROME"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release", "debug"],
+      "fixtureKind": "real-binding-fixture",
+      "fixtureSpecId": "WASM-10",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D03-DEBUG-RELEASE-CRITICAL",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-I01",
+      "testId": "B3-I01",
+      "parentCategoryId": "B3-I01",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M2",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-app-fixture",
+      "fixtureSpecId": "B3-I01",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-I02",
+      "testId": "B3-I02",
+      "parentCategoryId": "B3-I02",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M2",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-app-fixture",
+      "fixtureSpecId": "B3-I02",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-I03::parent-table-remainder",
+      "testId": "B3-I03",
+      "parentCategoryId": "B3-I03",
+      "coverageRole": "parent-table-remainder",
+      "firstPhase": "M2",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-app-fixture",
+      "fixtureSpecId": "B3-I03::parent-table-remainder",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-I04::parent-table-remainder",
+      "testId": "B3-I04",
+      "parentCategoryId": "B3-I04",
+      "coverageRole": "parent-table-remainder",
+      "firstPhase": "M2",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-app-fixture",
+      "fixtureSpecId": "B3-I04::parent-table-remainder",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-I07",
+      "testId": "B3-I07",
+      "parentCategoryId": "B3-I07",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M5",
+      "environmentIds": ["HOST-NODE"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "artifact-audit",
+      "fixtureSpecId": "B3-I07",
+      "evidenceRequirementIds": ["COMMON", "BUILD"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-I08::core-examples",
+      "testId": "B3-I08",
+      "parentCategoryId": "B3-I08",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M5",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "example-campaign",
+      "fixtureSpecId": "B3-I08::core-examples",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE", "EXAMPLES"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": [],
+      "exampleIds": ["EX01", "EX02", "EX03", "EX04", "EX05", "EX06", "EX09"]
+    },
+    {
+      "caseKey": "B3-I08::advanced-examples",
+      "testId": "B3-I08",
+      "parentCategoryId": "B3-I08",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M6",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "example-campaign",
+      "fixtureSpecId": "B3-I08::advanced-examples",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE", "EXAMPLES"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": [],
+      "exampleIds": ["EX07", "EX08"]
+    },
+    {
+      "caseKey": "B3-A01",
+      "testId": "B3-A01",
+      "parentCategoryId": "B3-A01",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M6",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-A01",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-A02",
+      "testId": "B3-A02",
+      "parentCategoryId": "B3-A02",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M6",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-A02",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-A03",
+      "testId": "B3-A03",
+      "parentCategoryId": "B3-A03",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M6",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-A03",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-A04",
+      "testId": "B3-A04",
+      "parentCategoryId": "B3-A04",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M6",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-A04",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-A05",
+      "testId": "B3-A05",
+      "parentCategoryId": "B3-A05",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M6",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-A05",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-A06",
+      "testId": "B3-A06",
+      "parentCategoryId": "B3-A06",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M6",
+      "environmentIds": [
+        "HOST-NODE",
+        "HOST-CHROME",
+        "DESKTOP-FIREFOX",
+        "DESKTOP-SAFARI",
+        "ANDROID-WEBVIEW",
+        "IOS-SAFARI"
+      ],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-A06",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC", "DETERMINISM", "THREAD_ADMISSION"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-A07",
+      "testId": "B3-A07",
+      "parentCategoryId": "B3-A07",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M6",
+      "environmentIds": [
+        "HOST-NODE",
+        "HOST-CHROME",
+        "DESKTOP-FIREFOX",
+        "DESKTOP-SAFARI",
+        "ANDROID-WEBVIEW",
+        "IOS-SAFARI"
+      ],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-A07",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC", "DETERMINISM", "THREAD_ADMISSION"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-A08",
+      "testId": "B3-A08",
+      "parentCategoryId": "B3-A08",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M6",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-A08",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC", "REPLAY"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-A09",
+      "testId": "B3-A09",
+      "parentCategoryId": "B3-A09",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M6",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-A09",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC", "REPLAY"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-A10",
+      "testId": "B3-A10",
+      "parentCategoryId": "B3-A10",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M6",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-A10",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC", "REPLAY"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-BIZ01",
+      "testId": "B3-BIZ01",
+      "parentCategoryId": "B3-BIZ01",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M5",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "business-input-fixture",
+      "fixtureSpecId": "B3-BIZ01",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "BUSINESS"],
+      "decisionIds": ["D01-ENVIRONMENT-SCOPE", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-BIZ02",
+      "testId": "B3-BIZ02",
+      "parentCategoryId": "B3-BIZ02",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M5",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "business-input-fixture",
+      "fixtureSpecId": "B3-BIZ02",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "BUSINESS"],
+      "decisionIds": ["D01-ENVIRONMENT-SCOPE", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-BIZ03",
+      "testId": "B3-BIZ03",
+      "parentCategoryId": "B3-BIZ03",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M5",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "business-input-fixture",
+      "fixtureSpecId": "B3-BIZ03",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "BUSINESS"],
+      "decisionIds": ["D01-ENVIRONMENT-SCOPE", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-BIZ04",
+      "testId": "B3-BIZ04",
+      "parentCategoryId": "B3-BIZ04",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M5",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "business-input-fixture",
+      "fixtureSpecId": "B3-BIZ04",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "BUSINESS"],
+      "decisionIds": ["D01-ENVIRONMENT-SCOPE", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-BIZ05",
+      "testId": "B3-BIZ05",
+      "parentCategoryId": "B3-BIZ05",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M5",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "business-input-fixture",
+      "fixtureSpecId": "B3-BIZ05",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "BUSINESS"],
+      "decisionIds": ["D01-ENVIRONMENT-SCOPE", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-BIZ06",
+      "testId": "B3-BIZ06",
+      "parentCategoryId": "B3-BIZ06",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M5",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "business-input-fixture",
+      "fixtureSpecId": "B3-BIZ06",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "BUSINESS"],
+      "decisionIds": ["D01-ENVIRONMENT-SCOPE", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-BIZ07",
+      "testId": "B3-BIZ07",
+      "parentCategoryId": "B3-BIZ07",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M5",
+      "environmentIds": ["HOST-CHROME", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "business-input-fixture",
+      "fixtureSpecId": "B3-BIZ07",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "BUSINESS", "REAL_DEVICE_UX"],
+      "decisionIds": ["D01-ENVIRONMENT-SCOPE", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-BIZ08",
+      "testId": "B3-BIZ08",
+      "parentCategoryId": "B3-BIZ08",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M5",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "business-input-fixture",
+      "fixtureSpecId": "B3-BIZ08",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "BUSINESS"],
+      "decisionIds": ["D01-ENVIRONMENT-SCOPE", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-AG01",
+      "testId": "B3-AG01",
+      "parentCategoryId": "B3-AG01",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M7",
+      "environmentIds": ["HOST-CHROME"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "independent-agent-task",
+      "fixtureSpecId": "B3-AG01",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "INDEPENDENT_AGENT", "EXAMPLES"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY",
+        "D07-AGENT-AND-HUMAN-ASSIGNMENT"
+      ],
+      "participantResourceIds": ["AGENT-INDEPENDENT-CONTEXT"]
+    },
+    {
+      "caseKey": "B3-AG02",
+      "testId": "B3-AG02",
+      "parentCategoryId": "B3-AG02",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M7",
+      "environmentIds": ["HOST-CHROME"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "independent-agent-task",
+      "fixtureSpecId": "B3-AG02",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "INDEPENDENT_AGENT", "EXAMPLES"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY",
+        "D07-AGENT-AND-HUMAN-ASSIGNMENT"
+      ],
+      "participantResourceIds": ["AGENT-INDEPENDENT-CONTEXT"]
+    },
+    {
+      "caseKey": "B3-AG03",
+      "testId": "B3-AG03",
+      "parentCategoryId": "B3-AG03",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M7",
+      "environmentIds": ["HOST-CHROME"],
+      "variantIds": ["st", "mt2"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "independent-agent-task",
+      "fixtureSpecId": "B3-AG03",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "INDEPENDENT_AGENT", "EXAMPLES", "THREAD_ADMISSION"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY",
+        "D07-AGENT-AND-HUMAN-ASSIGNMENT"
+      ],
+      "participantResourceIds": ["AGENT-INDEPENDENT-CONTEXT"]
+    },
+    {
+      "caseKey": "B3-AG04",
+      "testId": "B3-AG04",
+      "parentCategoryId": "B3-AG04",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M7",
+      "environmentIds": ["HOST-CHROME"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "independent-agent-task",
+      "fixtureSpecId": "B3-AG04",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "INDEPENDENT_AGENT", "EXAMPLES"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY",
+        "D07-AGENT-AND-HUMAN-ASSIGNMENT"
+      ],
+      "participantResourceIds": ["AGENT-INDEPENDENT-CONTEXT"]
+    },
+    {
+      "caseKey": "B3-AG05",
+      "testId": "B3-AG05",
+      "parentCategoryId": "B3-AG05",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M7",
+      "environmentIds": ["HOST-CHROME"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "independent-agent-task",
+      "fixtureSpecId": "B3-AG05",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "INDEPENDENT_AGENT", "EXAMPLES", "BUSINESS"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D05-FIXTURE-FREEZE",
+        "D07-AGENT-AND-HUMAN-ASSIGNMENT",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": ["AGENT-INDEPENDENT-CONTEXT"]
+    },
+    {
+      "caseKey": "B3-C01-EVENTS",
+      "testId": "B3-C01-EVENTS",
+      "parentCategoryId": "B3-C01",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C01-EVENTS",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C01-TIME",
+      "testId": "B3-C01-TIME",
+      "parentCategoryId": "B3-C01",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M2",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C01-TIME",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C04-GRAVITY",
+      "testId": "B3-C04-GRAVITY",
+      "parentCategoryId": "B3-C04",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M2",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release", "debug"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C04-GRAVITY",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D03-DEBUG-RELEASE-CRITICAL",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C04-SLEEP",
+      "testId": "B3-C04-SLEEP",
+      "parentCategoryId": "B3-C04",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M2",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release", "debug"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C04-SLEEP",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D03-DEBUG-RELEASE-CRITICAL",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C06-DAMPING-ANGULAR",
+      "testId": "B3-C06-DAMPING-ANGULAR",
+      "parentCategoryId": "B3-C06",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M2",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C06-DAMPING-ANGULAR",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C06-DAMPING-LINEAR",
+      "testId": "B3-C06-DAMPING-LINEAR",
+      "parentCategoryId": "B3-C06",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M2",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C06-DAMPING-LINEAR",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C06-DAMPING-RUNTIME",
+      "testId": "B3-C06-DAMPING-RUNTIME",
+      "parentCategoryId": "B3-C06",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M2",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release", "debug"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C06-DAMPING-RUNTIME",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D03-DEBUG-RELEASE-CRITICAL",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C11-TARGET-CREATE",
+      "testId": "B3-C11-TARGET-CREATE",
+      "parentCategoryId": "B3-C11",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M2",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C11-TARGET-CREATE",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C11-TARGET-LIFETIME-APP",
+      "testId": "B3-C11-TARGET-LIFETIME-APP",
+      "parentCategoryId": "B3-C11",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M2",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C11-TARGET-LIFETIME-APP",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C11-TARGET-LIFETIME-BASIC",
+      "testId": "B3-C11-TARGET-LIFETIME-BASIC",
+      "parentCategoryId": "B3-C11",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M2",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C11-TARGET-LIFETIME-BASIC",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C11-TARGET-LIFETIME-FULL",
+      "testId": "B3-C11-TARGET-LIFETIME-FULL",
+      "parentCategoryId": "B3-C11",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C11-TARGET-LIFETIME-FULL",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C11-TARGET-TICK-BASIC",
+      "testId": "B3-C11-TARGET-TICK-BASIC",
+      "parentCategoryId": "B3-C11",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M2",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C11-TARGET-TICK-BASIC",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C11-TARGET-TICK-EVENTS",
+      "testId": "B3-C11-TARGET-TICK-EVENTS",
+      "parentCategoryId": "B3-C11",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C11-TARGET-TICK-EVENTS",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C11-TELEPORT",
+      "testId": "B3-C11-TELEPORT",
+      "parentCategoryId": "B3-C11",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M2",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C11-TELEPORT",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C13-GEOMETRY",
+      "testId": "B3-C13-GEOMETRY",
+      "parentCategoryId": "B3-C13",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C13-GEOMETRY",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C13-QUERY",
+      "testId": "B3-C13-QUERY",
+      "parentCategoryId": "B3-C13",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C13-QUERY",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C14-RECOVERY-PENDING-NULL",
+      "testId": "B3-C14-RECOVERY-PENDING-NULL",
+      "parentCategoryId": "B3-C14",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C14-RECOVERY-PENDING-NULL",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C14-RECOVERY-ROLLBACK-MESH-IDENTITY",
+      "testId": "B3-C14-RECOVERY-ROLLBACK-MESH-IDENTITY",
+      "parentCategoryId": "B3-C14",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C14-RECOVERY-ROLLBACK-MESH-IDENTITY",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C16-GEOMETRY",
+      "testId": "B3-C16-GEOMETRY",
+      "parentCategoryId": "B3-C16",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C16-GEOMETRY",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC", "LIFECYCLE"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C16-QUERY",
+      "testId": "B3-C16-QUERY",
+      "parentCategoryId": "B3-C16",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C16-QUERY",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC", "LIFECYCLE"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C16-SAMPLED-PEAK",
+      "testId": "B3-C16-SAMPLED-PEAK",
+      "parentCategoryId": "B3-C16",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C16-SAMPLED-PEAK",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC", "LIFECYCLE"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C16-SUSTAINED-DURATION-1",
+      "testId": "B3-C16-SUSTAINED-DURATION-1",
+      "parentCategoryId": "B3-C16",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C16-SUSTAINED-DURATION-1",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC", "LIFECYCLE"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C17-GEOMETRY",
+      "testId": "B3-C17-GEOMETRY",
+      "parentCategoryId": "B3-C17",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C17-GEOMETRY",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC", "LIFECYCLE"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C17-QUERY",
+      "testId": "B3-C17-QUERY",
+      "parentCategoryId": "B3-C17",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C17-QUERY",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC", "LIFECYCLE"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C20-APP",
+      "testId": "B3-C20-APP",
+      "parentCategoryId": "B3-C20",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C20-APP",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC", "LIFECYCLE"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C20-LOWLEVEL",
+      "testId": "B3-C20-LOWLEVEL",
+      "parentCategoryId": "B3-C20",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C20-LOWLEVEL",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC", "LIFECYCLE"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C21-SNAPSHOT",
+      "testId": "B3-C21-SNAPSHOT",
+      "parentCategoryId": "B3-C21",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release", "debug"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C21-SNAPSHOT",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D03-DEBUG-RELEASE-CRITICAL",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C22-SENSOR-TRANSIENT",
+      "testId": "B3-C22-SENSOR-TRANSIENT",
+      "parentCategoryId": "B3-C22",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release", "debug"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C22-SENSOR-TRANSIENT",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D03-DEBUG-RELEASE-CRITICAL",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C26-BACKFACE",
+      "testId": "B3-C26-BACKFACE",
+      "parentCategoryId": "B3-C26",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C26-BACKFACE",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C26-CAPSULE",
+      "testId": "B3-C26-CAPSULE",
+      "parentCategoryId": "B3-C26",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C26-CAPSULE",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C26-DIR",
+      "testId": "B3-C26-DIR",
+      "parentCategoryId": "B3-C26",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C26-DIR",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C26-ENDPOINT",
+      "testId": "B3-C26-ENDPOINT",
+      "parentCategoryId": "B3-C26",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C26-ENDPOINT",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C26-INSIDE-RAY",
+      "testId": "B3-C26-INSIDE-RAY",
+      "parentCategoryId": "B3-C26",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C26-INSIDE-RAY",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C26-INSIDE-SWEEP",
+      "testId": "B3-C26-INSIDE-SWEEP",
+      "parentCategoryId": "B3-C26",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C26-INSIDE-SWEEP",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C26-INVALID",
+      "testId": "B3-C26-INVALID",
+      "parentCategoryId": "B3-C26",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release", "debug"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C26-INVALID",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D03-DEBUG-RELEASE-CRITICAL",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C26-TIE",
+      "testId": "B3-C26-TIE",
+      "parentCategoryId": "B3-C26",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C26-TIE",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C26-TRIGGER",
+      "testId": "B3-C26-TRIGGER",
+      "parentCategoryId": "B3-C26",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C26-TRIGGER",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C26-ZERO",
+      "testId": "B3-C26-ZERO",
+      "parentCategoryId": "B3-C26",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C26-ZERO",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C28-SENSOR-CCD-CAPACITY",
+      "testId": "B3-C28-SENSOR-CCD-CAPACITY",
+      "parentCategoryId": "B3-C28",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C28-SENSOR-CCD-CAPACITY",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C28-SENSOR-CCD-EVENT-FLAGS",
+      "testId": "B3-C28-SENSOR-CCD-EVENT-FLAGS",
+      "parentCategoryId": "B3-C28",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C28-SENSOR-CCD-EVENT-FLAGS",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C28-SENSOR-CCD-MOVING-SENSOR",
+      "testId": "B3-C28-SENSOR-CCD-MOVING-SENSOR",
+      "parentCategoryId": "B3-C28",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C28-SENSOR-CCD-MOVING-SENSOR",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C28-SENSOR-CCD-OCCLUSION",
+      "testId": "B3-C28-SENSOR-CCD-OCCLUSION",
+      "parentCategoryId": "B3-C28",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C28-SENSOR-CCD-OCCLUSION",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C28-SENSOR-CCD-SOLID-STATIC-SENSOR",
+      "testId": "B3-C28-SENSOR-CCD-SOLID-STATIC-SENSOR",
+      "parentCategoryId": "B3-C28",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C28-SENSOR-CCD-SOLID-STATIC-SENSOR",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C29-ATTACH-POSE",
+      "testId": "B3-C29-ATTACH-POSE",
+      "parentCategoryId": "B3-C29",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M4",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C29-ATTACH-POSE",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C30-EXT",
+      "testId": "B3-C30-EXT",
+      "parentCategoryId": "B3-C30",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M4",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C30-EXT",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C30-PUBLIC",
+      "testId": "B3-C30-PUBLIC",
+      "parentCategoryId": "B3-C30",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M4",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C30-PUBLIC",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-C36-SETTER-ROLLBACK",
+      "testId": "B3-C36-SETTER-ROLLBACK",
+      "parentCategoryId": "B3-C36",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M2",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release", "debug"],
+      "fixtureKind": "real-air-fixture",
+      "fixtureSpecId": "B3-C36-SETTER-ROLLBACK",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC", "LIFECYCLE"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D03-DEBUG-RELEASE-CRITICAL",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-I03-COEXIST-PREPARE",
+      "testId": "B3-I03-COEXIST-PREPARE",
+      "parentCategoryId": "B3-I03",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M2",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-app-fixture",
+      "fixtureSpecId": "B3-I03-COEXIST-PREPARE",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-I04-COEXIST-COMPONENT",
+      "testId": "B3-I04-COEXIST-COMPONENT",
+      "parentCategoryId": "B3-I04",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M5",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-app-fixture",
+      "fixtureSpecId": "B3-I04-COEXIST-COMPONENT",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-I04-COEXIST-LOWLEVEL",
+      "testId": "B3-I04-COEXIST-LOWLEVEL",
+      "parentCategoryId": "B3-I04",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M2",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-app-fixture",
+      "fixtureSpecId": "B3-I04-COEXIST-LOWLEVEL",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-I05-BASIC",
+      "testId": "B3-I05-BASIC",
+      "parentCategoryId": "B3-I05",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M2",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-app-fixture",
+      "fixtureSpecId": "B3-I05-BASIC",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-I05-FULL",
+      "testId": "B3-I05-FULL",
+      "parentCategoryId": "B3-I05",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-app-fixture",
+      "fixtureSpecId": "B3-I05-FULL",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-I06-BASIC",
+      "testId": "B3-I06-BASIC",
+      "parentCategoryId": "B3-I06",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M2",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-app-fixture",
+      "fixtureSpecId": "B3-I06-BASIC",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-I06-COEXIST-BASIC",
+      "testId": "B3-I06-COEXIST-BASIC",
+      "parentCategoryId": "B3-I06",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M2",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-app-fixture",
+      "fixtureSpecId": "B3-I06-COEXIST-BASIC",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-I06-COEXIST-FULL",
+      "testId": "B3-I06-COEXIST-FULL",
+      "parentCategoryId": "B3-I06",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M5",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-app-fixture",
+      "fixtureSpecId": "B3-I06-COEXIST-FULL",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-I06-FULL",
+      "testId": "B3-I06-FULL",
+      "parentCategoryId": "B3-I06",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release", "debug"],
+      "fixtureKind": "real-app-fixture",
+      "fixtureSpecId": "B3-I06-FULL",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D03-DEBUG-RELEASE-CRITICAL",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-I09-MT",
+      "testId": "B3-I09-MT",
+      "parentCategoryId": "B3-I09",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M6",
+      "environmentIds": ["HOST-NODE"],
+      "variantIds": ["mt2"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "artifact-audit",
+      "fixtureSpecId": "B3-I09-MT",
+      "evidenceRequirementIds": ["COMMON", "BUILD"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-I09-ST",
+      "testId": "B3-I09-ST",
+      "parentCategoryId": "B3-I09",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M5",
+      "environmentIds": ["HOST-NODE"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "artifact-audit",
+      "fixtureSpecId": "B3-I09-ST",
+      "evidenceRequirementIds": ["COMMON", "BUILD"],
+      "decisionIds": ["D01-ENVIRONMENT-SCOPE", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-I10-COEXIST-PACK",
+      "testId": "B3-I10-COEXIST-PACK",
+      "parentCategoryId": "B3-I10",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M5",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-package-consumer",
+      "fixtureSpecId": "B3-I10-COEXIST-PACK",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE", "PACK_CONSUMER"],
+      "decisionIds": ["D01-ENVIRONMENT-SCOPE", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-I10-CORE",
+      "testId": "B3-I10-CORE",
+      "parentCategoryId": "B3-I10",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M5",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-package-consumer",
+      "fixtureSpecId": "B3-I10-CORE",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE", "PACK_CONSUMER"],
+      "decisionIds": ["D01-ENVIRONMENT-SCOPE", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-I10-FULL",
+      "testId": "B3-I10-FULL",
+      "parentCategoryId": "B3-I10",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M8",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-package-consumer",
+      "fixtureSpecId": "B3-I10-FULL",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE", "PACK_CONSUMER"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "WASM-06-AIR-MT",
+      "testId": "WASM-06-AIR-MT",
+      "parentCategoryId": "WASM-06",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M6",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-binding-fixture",
+      "fixtureSpecId": "WASM-06-AIR-MT",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE", "STRICT_CSP"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "WASM-06-AIR-ST",
+      "testId": "WASM-06-AIR-ST",
+      "parentCategoryId": "WASM-06",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M5",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-binding-fixture",
+      "fixtureSpecId": "WASM-06-AIR-ST",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE", "STRICT_CSP"],
+      "decisionIds": ["D01-ENVIRONMENT-SCOPE", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "WASM-06-BINDING",
+      "testId": "WASM-06-BINDING",
+      "parentCategoryId": "WASM-06",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M1",
+      "environmentIds": ["HOST-CHROME"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-binding-fixture",
+      "fixtureSpecId": "WASM-06-BINDING",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE", "STRICT_CSP"],
+      "decisionIds": ["D01-ENVIRONMENT-SCOPE", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "WASM-07-AIR",
+      "testId": "WASM-07-AIR",
+      "parentCategoryId": "WASM-07",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M2",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-binding-fixture",
+      "fixtureSpecId": "WASM-07-AIR",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "WASM-07-BINDING",
+      "testId": "WASM-07-BINDING",
+      "parentCategoryId": "WASM-07",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M1",
+      "environmentIds": ["HOST-NODE"],
+      "variantIds": ["st", "mt2"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "artifact-audit",
+      "fixtureSpecId": "WASM-07-BINDING",
+      "evidenceRequirementIds": ["COMMON", "BUILD"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "WASM-07-PACK-CORE",
+      "testId": "WASM-07-PACK-CORE",
+      "parentCategoryId": "WASM-07",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M5",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-package-consumer",
+      "fixtureSpecId": "WASM-07-PACK-CORE",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE", "PACK_CONSUMER"],
+      "decisionIds": ["D01-ENVIRONMENT-SCOPE", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "WASM-07-PACK-FULL",
+      "testId": "WASM-07-PACK-FULL",
+      "parentCategoryId": "WASM-07",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M8",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-package-consumer",
+      "fixtureSpecId": "WASM-07-PACK-FULL",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE", "PACK_CONSUMER"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "WASM-11-APP",
+      "testId": "WASM-11-APP",
+      "parentCategoryId": "WASM-11",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M2",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-binding-fixture",
+      "fixtureSpecId": "WASM-11-APP",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "WASM-11-ASSETS",
+      "testId": "WASM-11-ASSETS",
+      "parentCategoryId": "WASM-11",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-binding-fixture",
+      "fixtureSpecId": "WASM-11-ASSETS",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "WASM-11-BINDING",
+      "testId": "WASM-11-BINDING",
+      "parentCategoryId": "WASM-11",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M1",
+      "environmentIds": ["HOST-NODE", "HOST-CHROME"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release", "debug"],
+      "fixtureKind": "real-binding-fixture",
+      "fixtureSpecId": "WASM-11-BINDING",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D03-DEBUG-RELEASE-CRITICAL",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "WASM-11-MT",
+      "testId": "WASM-11-MT",
+      "parentCategoryId": "WASM-11",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M6",
+      "environmentIds": [
+        "HOST-NODE",
+        "HOST-CHROME",
+        "DESKTOP-FIREFOX",
+        "DESKTOP-SAFARI",
+        "ANDROID-WEBVIEW",
+        "IOS-SAFARI"
+      ],
+      "variantIds": ["mt2", "mt3", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-binding-fixture",
+      "fixtureSpecId": "WASM-11-MT",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "WASM-12-BINDING",
+      "testId": "WASM-12-BINDING",
+      "parentCategoryId": "WASM-12",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M1",
+      "environmentIds": ["HOST-NODE", "HOST-CHROME"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release", "debug"],
+      "fixtureKind": "real-binding-fixture",
+      "fixtureSpecId": "WASM-12-BINDING",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D03-DEBUG-RELEASE-CRITICAL",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "WASM-12-EVENTS",
+      "testId": "WASM-12-EVENTS",
+      "parentCategoryId": "WASM-12",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M3",
+      "environmentIds": ["HOST-CHROME", "DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-binding-fixture",
+      "fixtureSpecId": "WASM-12-EVENTS",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "WASM-12-MT",
+      "testId": "WASM-12-MT",
+      "parentCategoryId": "WASM-12",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M6",
+      "environmentIds": [
+        "HOST-NODE",
+        "HOST-CHROME",
+        "DESKTOP-FIREFOX",
+        "DESKTOP-SAFARI",
+        "ANDROID-WEBVIEW",
+        "IOS-SAFARI"
+      ],
+      "variantIds": ["mt2", "mt3", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-binding-fixture",
+      "fixtureSpecId": "WASM-12-MT",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "WASM-13-AIR-MT",
+      "testId": "WASM-13-AIR-MT",
+      "parentCategoryId": "WASM-13",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M6",
+      "environmentIds": [
+        "HOST-NODE",
+        "HOST-CHROME",
+        "DESKTOP-FIREFOX",
+        "DESKTOP-SAFARI",
+        "ANDROID-WEBVIEW",
+        "IOS-SAFARI"
+      ],
+      "variantIds": ["mt2", "mt3", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-binding-fixture",
+      "fixtureSpecId": "WASM-13-AIR-MT",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "WASM-13-AIR-ST-DEVICE",
+      "testId": "WASM-13-AIR-ST-DEVICE",
+      "parentCategoryId": "WASM-13",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M5",
+      "environmentIds": ["DESKTOP-FIREFOX", "DESKTOP-SAFARI", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-binding-fixture",
+      "fixtureSpecId": "WASM-13-AIR-ST-DEVICE",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE"],
+      "decisionIds": ["D01-ENVIRONMENT-SCOPE", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "WASM-13-AIR-ST-HOST",
+      "testId": "WASM-13-AIR-ST-HOST",
+      "parentCategoryId": "WASM-13",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M5",
+      "environmentIds": ["HOST-NODE", "HOST-CHROME"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-binding-fixture",
+      "fixtureSpecId": "WASM-13-AIR-ST-HOST",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE"],
+      "decisionIds": ["D01-ENVIRONMENT-SCOPE", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "WASM-13-BINDING",
+      "testId": "WASM-13-BINDING",
+      "parentCategoryId": "WASM-13",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M1",
+      "environmentIds": ["HOST-NODE", "HOST-CHROME"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release", "debug"],
+      "fixtureKind": "real-binding-fixture",
+      "fixtureSpecId": "WASM-13-BINDING",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D05-FIXTURE-FREEZE",
+        "D03-DEBUG-RELEASE-CRITICAL",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "WASM-14-MT",
+      "testId": "WASM-14-MT",
+      "parentCategoryId": "WASM-14",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M6",
+      "environmentIds": [
+        "HOST-NODE",
+        "HOST-CHROME",
+        "DESKTOP-FIREFOX",
+        "DESKTOP-SAFARI",
+        "ANDROID-WEBVIEW",
+        "IOS-SAFARI"
+      ],
+      "variantIds": ["mt2", "mt3", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-binding-fixture",
+      "fixtureSpecId": "WASM-14-MT",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE", "DETERMINISM"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D05-FIXTURE-FREEZE",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "WASM-14-REPLAY",
+      "testId": "WASM-14-REPLAY",
+      "parentCategoryId": "WASM-14",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M6",
+      "environmentIds": [
+        "HOST-NODE",
+        "HOST-CHROME",
+        "DESKTOP-FIREFOX",
+        "DESKTOP-SAFARI",
+        "ANDROID-WEBVIEW",
+        "IOS-SAFARI"
+      ],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-binding-fixture",
+      "fixtureSpecId": "WASM-14-REPLAY",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE", "REPLAY"],
+      "decisionIds": ["D01-ENVIRONMENT-SCOPE", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "WASM-14-ST",
+      "testId": "WASM-14-ST",
+      "parentCategoryId": "WASM-14",
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M5",
+      "environmentIds": [
+        "HOST-NODE",
+        "HOST-CHROME",
+        "DESKTOP-FIREFOX",
+        "DESKTOP-SAFARI",
+        "ANDROID-WEBVIEW",
+        "IOS-SAFARI"
+      ],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-binding-fixture",
+      "fixtureSpecId": "WASM-14-ST",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "LIFECYCLE", "DETERMINISM"],
+      "decisionIds": ["D01-ENVIRONMENT-SCOPE", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-U01",
+      "testId": "B3-U01",
+      "parentCategoryId": null,
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M2",
+      "environmentIds": ["HOST-NODE", "HOST-CHROME"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release", "debug"],
+      "fixtureKind": "real-native-world-fixture",
+      "fixtureSpecId": "B3-U01",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC", "LIFECYCLE"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D05-FIXTURE-FREEZE",
+        "D03-DEBUG-RELEASE-CRITICAL",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-U02",
+      "testId": "B3-U02",
+      "parentCategoryId": null,
+      "coverageRole": "direct-fixed-case",
+      "firstPhase": "M2",
+      "environmentIds": ["HOST-NODE", "HOST-CHROME"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release", "debug"],
+      "fixtureKind": "real-native-world-fixture",
+      "fixtureSpecId": "B3-U02",
+      "evidenceRequirementIds": ["COMMON", "REAL_WASM", "NUMERIC", "LIFECYCLE"],
+      "decisionIds": [
+        "D01-ENVIRONMENT-SCOPE",
+        "D05-FIXTURE-FREEZE",
+        "D03-DEBUG-RELEASE-CRITICAL",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-BIZ07::first-time-cohort",
+      "testId": "B3-BIZ07",
+      "parentCategoryId": "B3-BIZ07",
+      "coverageRole": "independent-human-cohort",
+      "firstPhase": "M5",
+      "environmentIds": ["HUMAN-COHORT-UNASSIGNED"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "human-first-use-observation",
+      "fixtureSpecId": "B3-BIZ07::first-time-cohort",
+      "evidenceRequirementIds": ["COMMON", "BUSINESS", "FIRST_TIME_HUMANS"],
+      "decisionIds": ["D05-FIXTURE-FREEZE", "D07-AGENT-AND-HUMAN-ASSIGNMENT", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": ["BIZ07-FIRST-TIME-USERS"]
+    },
+    {
+      "caseKey": "B3-P01::DESKTOP-60",
+      "testId": "B3-P01",
+      "parentCategoryId": "B3-P01",
+      "coverageRole": "named-performance-profile",
+      "firstPhase": "M7",
+      "environmentIds": ["HOST-CHROME"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "performance-contract-audit",
+      "fixtureSpecId": "B3-P01::DESKTOP-60",
+      "performanceProfileId": "DESKTOP-60",
+      "evidenceRequirementIds": ["COMMON", "PERFORMANCE"],
+      "decisionIds": ["D04-PERFORMANCE-PROTOCOL", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-P01::MOBILE-60",
+      "testId": "B3-P01",
+      "parentCategoryId": "B3-P01",
+      "coverageRole": "named-performance-profile",
+      "firstPhase": "M7",
+      "environmentIds": ["ANDROID-WEBVIEW"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "performance-contract-audit",
+      "fixtureSpecId": "B3-P01::MOBILE-60",
+      "performanceProfileId": "MOBILE-60",
+      "evidenceRequirementIds": ["COMMON", "PERFORMANCE"],
+      "decisionIds": ["D04-PERFORMANCE-PROTOCOL", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-P01::IOS-COMPAT",
+      "testId": "B3-P01",
+      "parentCategoryId": "B3-P01",
+      "coverageRole": "named-performance-profile",
+      "firstPhase": "M7",
+      "environmentIds": ["IOS-SAFARI"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "performance-contract-audit",
+      "fixtureSpecId": "B3-P01::IOS-COMPAT",
+      "performanceProfileId": "IOS-COMPAT",
+      "evidenceRequirementIds": ["COMMON", "PERFORMANCE"],
+      "decisionIds": ["D04-PERFORMANCE-PROTOCOL", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-P01::EX09-BIZ-DESKTOP",
+      "testId": "B3-P01",
+      "parentCategoryId": "B3-P01",
+      "coverageRole": "named-performance-profile",
+      "firstPhase": "M7",
+      "environmentIds": ["HOST-CHROME"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "performance-contract-audit",
+      "fixtureSpecId": "B3-P01::EX09-BIZ-DESKTOP",
+      "performanceProfileId": "EX09-BIZ-DESKTOP",
+      "evidenceRequirementIds": ["COMMON", "PERFORMANCE", "BUSINESS"],
+      "decisionIds": ["D04-PERFORMANCE-PROTOCOL", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-P01::EX09-BIZ-MOBILE",
+      "testId": "B3-P01",
+      "parentCategoryId": "B3-P01",
+      "coverageRole": "named-performance-profile",
+      "firstPhase": "M7",
+      "environmentIds": ["ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "performance-contract-audit",
+      "fixtureSpecId": "B3-P01::EX09-BIZ-MOBILE",
+      "performanceProfileId": "EX09-BIZ-MOBILE",
+      "evidenceRequirementIds": ["COMMON", "PERFORMANCE", "BUSINESS"],
+      "decisionIds": ["D04-PERFORMANCE-PROTOCOL", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-P01::COLD-ST",
+      "testId": "B3-P01",
+      "parentCategoryId": "B3-P01",
+      "coverageRole": "named-performance-profile",
+      "firstPhase": "M7",
+      "environmentIds": ["HOST-CHROME", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "performance-contract-audit",
+      "fixtureSpecId": "B3-P01::COLD-ST",
+      "performanceProfileId": "COLD-ST",
+      "evidenceRequirementIds": ["COMMON", "PERFORMANCE"],
+      "decisionIds": ["D04-PERFORMANCE-PROTOCOL", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-P01::COLD-MT",
+      "testId": "B3-P01",
+      "parentCategoryId": "B3-P01",
+      "coverageRole": "named-performance-profile",
+      "firstPhase": "M7",
+      "environmentIds": ["HOST-CHROME", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "performance-contract-audit",
+      "fixtureSpecId": "B3-P01::COLD-MT",
+      "performanceProfileId": "COLD-MT",
+      "evidenceRequirementIds": ["COMMON", "PERFORMANCE"],
+      "decisionIds": [
+        "D04-PERFORMANCE-PROTOCOL",
+        "D05-FIXTURE-FREEZE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-P01::MEMORY",
+      "testId": "B3-P01",
+      "parentCategoryId": "B3-P01",
+      "coverageRole": "named-performance-profile",
+      "firstPhase": "M7",
+      "environmentIds": ["HOST-CHROME", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "performance-contract-audit",
+      "fixtureSpecId": "B3-P01::MEMORY",
+      "performanceProfileId": "MEMORY",
+      "evidenceRequirementIds": ["COMMON", "PERFORMANCE"],
+      "decisionIds": ["D04-PERFORMANCE-PROTOCOL", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-P01::EX09-WHOLE-PAGE-COLD",
+      "testId": "B3-P01",
+      "parentCategoryId": "B3-P01",
+      "coverageRole": "named-performance-profile",
+      "firstPhase": "M7",
+      "environmentIds": ["HOST-CHROME", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "performance-contract-audit",
+      "fixtureSpecId": "B3-P01::EX09-WHOLE-PAGE-COLD",
+      "performanceProfileId": "EX09-WHOLE-PAGE-COLD",
+      "evidenceRequirementIds": ["COMMON", "PERFORMANCE", "BUSINESS"],
+      "decisionIds": ["D04-PERFORMANCE-PROTOCOL", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-P02::DESKTOP-60",
+      "testId": "B3-P02",
+      "parentCategoryId": "B3-P02",
+      "coverageRole": "named-performance-profile",
+      "firstPhase": "M7",
+      "environmentIds": ["HOST-CHROME"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-browser-performance",
+      "fixtureSpecId": "B3-P02::DESKTOP-60",
+      "performanceProfileId": "DESKTOP-60",
+      "evidenceRequirementIds": ["COMMON", "PERFORMANCE"],
+      "decisionIds": ["D04-PERFORMANCE-PROTOCOL", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-P02::MOBILE-60",
+      "testId": "B3-P02",
+      "parentCategoryId": "B3-P02",
+      "coverageRole": "named-performance-profile",
+      "firstPhase": "M7",
+      "environmentIds": ["ANDROID-WEBVIEW"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-browser-performance",
+      "fixtureSpecId": "B3-P02::MOBILE-60",
+      "performanceProfileId": "MOBILE-60",
+      "evidenceRequirementIds": ["COMMON", "PERFORMANCE"],
+      "decisionIds": ["D04-PERFORMANCE-PROTOCOL", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-P02::IOS-COMPAT",
+      "testId": "B3-P02",
+      "parentCategoryId": "B3-P02",
+      "coverageRole": "named-performance-profile",
+      "firstPhase": "M7",
+      "environmentIds": ["IOS-SAFARI"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-browser-performance",
+      "fixtureSpecId": "B3-P02::IOS-COMPAT",
+      "performanceProfileId": "IOS-COMPAT",
+      "evidenceRequirementIds": ["COMMON", "PERFORMANCE"],
+      "decisionIds": ["D04-PERFORMANCE-PROTOCOL", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-P03::DESKTOP-60",
+      "testId": "B3-P03",
+      "parentCategoryId": "B3-P03",
+      "coverageRole": "named-performance-profile",
+      "firstPhase": "M7",
+      "environmentIds": ["HOST-CHROME"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-browser-performance",
+      "fixtureSpecId": "B3-P03::DESKTOP-60",
+      "performanceProfileId": "DESKTOP-60",
+      "evidenceRequirementIds": ["COMMON", "PERFORMANCE"],
+      "decisionIds": [
+        "D04-PERFORMANCE-PROTOCOL",
+        "D05-FIXTURE-FREEZE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-P03::MOBILE-60",
+      "testId": "B3-P03",
+      "parentCategoryId": "B3-P03",
+      "coverageRole": "named-performance-profile",
+      "firstPhase": "M7",
+      "environmentIds": ["ANDROID-WEBVIEW"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-browser-performance",
+      "fixtureSpecId": "B3-P03::MOBILE-60",
+      "performanceProfileId": "MOBILE-60",
+      "evidenceRequirementIds": ["COMMON", "PERFORMANCE"],
+      "decisionIds": [
+        "D04-PERFORMANCE-PROTOCOL",
+        "D05-FIXTURE-FREEZE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-P03::IOS-COMPAT",
+      "testId": "B3-P03",
+      "parentCategoryId": "B3-P03",
+      "coverageRole": "named-performance-profile",
+      "firstPhase": "M7",
+      "environmentIds": ["IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-browser-performance",
+      "fixtureSpecId": "B3-P03::IOS-COMPAT",
+      "performanceProfileId": "IOS-COMPAT",
+      "evidenceRequirementIds": ["COMMON", "PERFORMANCE"],
+      "decisionIds": [
+        "D04-PERFORMANCE-PROTOCOL",
+        "D05-FIXTURE-FREEZE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-P04::MEMORY",
+      "testId": "B3-P04",
+      "parentCategoryId": "B3-P04",
+      "coverageRole": "named-performance-profile",
+      "firstPhase": "M7",
+      "environmentIds": ["HOST-CHROME", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-browser-performance",
+      "fixtureSpecId": "B3-P04::MEMORY",
+      "performanceProfileId": "MEMORY",
+      "evidenceRequirementIds": ["COMMON", "PERFORMANCE"],
+      "decisionIds": [
+        "D04-PERFORMANCE-PROTOCOL",
+        "D05-FIXTURE-FREEZE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-P04::MOBILE-60",
+      "testId": "B3-P04",
+      "parentCategoryId": "B3-P04",
+      "coverageRole": "named-performance-profile",
+      "firstPhase": "M7",
+      "environmentIds": ["ANDROID-WEBVIEW"],
+      "variantIds": ["st", "mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-browser-performance",
+      "fixtureSpecId": "B3-P04::MOBILE-60",
+      "performanceProfileId": "MOBILE-60",
+      "evidenceRequirementIds": ["COMMON", "PERFORMANCE"],
+      "decisionIds": [
+        "D04-PERFORMANCE-PROTOCOL",
+        "D05-FIXTURE-FREEZE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-P04::EX09-BIZ-MOBILE",
+      "testId": "B3-P04",
+      "parentCategoryId": "B3-P04",
+      "coverageRole": "named-performance-profile",
+      "firstPhase": "M7",
+      "environmentIds": ["ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-browser-performance",
+      "fixtureSpecId": "B3-P04::EX09-BIZ-MOBILE",
+      "performanceProfileId": "EX09-BIZ-MOBILE",
+      "evidenceRequirementIds": ["COMMON", "PERFORMANCE", "BUSINESS"],
+      "decisionIds": ["D04-PERFORMANCE-PROTOCOL", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-P05::COLD-ST",
+      "testId": "B3-P05",
+      "parentCategoryId": "B3-P05",
+      "coverageRole": "named-performance-profile",
+      "firstPhase": "M7",
+      "environmentIds": ["HOST-CHROME", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-browser-performance",
+      "fixtureSpecId": "B3-P05::COLD-ST",
+      "performanceProfileId": "COLD-ST",
+      "evidenceRequirementIds": ["COMMON", "PERFORMANCE"],
+      "decisionIds": ["D04-PERFORMANCE-PROTOCOL", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-P05::COLD-MT",
+      "testId": "B3-P05",
+      "parentCategoryId": "B3-P05",
+      "coverageRole": "named-performance-profile",
+      "firstPhase": "M7",
+      "environmentIds": ["HOST-CHROME", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-browser-performance",
+      "fixtureSpecId": "B3-P05::COLD-MT",
+      "performanceProfileId": "COLD-MT",
+      "evidenceRequirementIds": ["COMMON", "PERFORMANCE"],
+      "decisionIds": [
+        "D04-PERFORMANCE-PROTOCOL",
+        "D05-FIXTURE-FREEZE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-P06::DESKTOP-60",
+      "testId": "B3-P06",
+      "parentCategoryId": "B3-P06",
+      "coverageRole": "named-performance-profile",
+      "firstPhase": "M7",
+      "environmentIds": ["HOST-CHROME"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "performance-contract-audit",
+      "fixtureSpecId": "B3-P06::DESKTOP-60",
+      "performanceProfileId": "DESKTOP-60",
+      "evidenceRequirementIds": ["COMMON", "PERFORMANCE"],
+      "decisionIds": ["D04-PERFORMANCE-PROTOCOL", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-P06::MOBILE-60",
+      "testId": "B3-P06",
+      "parentCategoryId": "B3-P06",
+      "coverageRole": "named-performance-profile",
+      "firstPhase": "M7",
+      "environmentIds": ["ANDROID-WEBVIEW"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "performance-contract-audit",
+      "fixtureSpecId": "B3-P06::MOBILE-60",
+      "performanceProfileId": "MOBILE-60",
+      "evidenceRequirementIds": ["COMMON", "PERFORMANCE"],
+      "decisionIds": ["D04-PERFORMANCE-PROTOCOL", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-P06::IOS-COMPAT",
+      "testId": "B3-P06",
+      "parentCategoryId": "B3-P06",
+      "coverageRole": "named-performance-profile",
+      "firstPhase": "M7",
+      "environmentIds": ["IOS-SAFARI"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "performance-contract-audit",
+      "fixtureSpecId": "B3-P06::IOS-COMPAT",
+      "performanceProfileId": "IOS-COMPAT",
+      "evidenceRequirementIds": ["COMMON", "PERFORMANCE"],
+      "decisionIds": ["D04-PERFORMANCE-PROTOCOL", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-P06::EX09-BIZ-DESKTOP",
+      "testId": "B3-P06",
+      "parentCategoryId": "B3-P06",
+      "coverageRole": "named-performance-profile",
+      "firstPhase": "M7",
+      "environmentIds": ["HOST-CHROME"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "performance-contract-audit",
+      "fixtureSpecId": "B3-P06::EX09-BIZ-DESKTOP",
+      "performanceProfileId": "EX09-BIZ-DESKTOP",
+      "evidenceRequirementIds": ["COMMON", "PERFORMANCE", "BUSINESS"],
+      "decisionIds": ["D04-PERFORMANCE-PROTOCOL", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-P06::EX09-BIZ-MOBILE",
+      "testId": "B3-P06",
+      "parentCategoryId": "B3-P06",
+      "coverageRole": "named-performance-profile",
+      "firstPhase": "M7",
+      "environmentIds": ["ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "performance-contract-audit",
+      "fixtureSpecId": "B3-P06::EX09-BIZ-MOBILE",
+      "performanceProfileId": "EX09-BIZ-MOBILE",
+      "evidenceRequirementIds": ["COMMON", "PERFORMANCE", "BUSINESS"],
+      "decisionIds": ["D04-PERFORMANCE-PROTOCOL", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-P06::COLD-ST",
+      "testId": "B3-P06",
+      "parentCategoryId": "B3-P06",
+      "coverageRole": "named-performance-profile",
+      "firstPhase": "M7",
+      "environmentIds": ["HOST-CHROME", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "performance-contract-audit",
+      "fixtureSpecId": "B3-P06::COLD-ST",
+      "performanceProfileId": "COLD-ST",
+      "evidenceRequirementIds": ["COMMON", "PERFORMANCE"],
+      "decisionIds": ["D04-PERFORMANCE-PROTOCOL", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-P06::COLD-MT",
+      "testId": "B3-P06",
+      "parentCategoryId": "B3-P06",
+      "coverageRole": "named-performance-profile",
+      "firstPhase": "M7",
+      "environmentIds": ["HOST-CHROME", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["mt2", "mt4"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "performance-contract-audit",
+      "fixtureSpecId": "B3-P06::COLD-MT",
+      "performanceProfileId": "COLD-MT",
+      "evidenceRequirementIds": ["COMMON", "PERFORMANCE"],
+      "decisionIds": [
+        "D04-PERFORMANCE-PROTOCOL",
+        "D05-FIXTURE-FREEZE",
+        "D02-MT-POSITIVE-TARGETS",
+        "D06-AGGREGATION-AND-CELL-KEY"
+      ],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-P06::MEMORY",
+      "testId": "B3-P06",
+      "parentCategoryId": "B3-P06",
+      "coverageRole": "named-performance-profile",
+      "firstPhase": "M7",
+      "environmentIds": ["HOST-CHROME", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "performance-contract-audit",
+      "fixtureSpecId": "B3-P06::MEMORY",
+      "performanceProfileId": "MEMORY",
+      "evidenceRequirementIds": ["COMMON", "PERFORMANCE"],
+      "decisionIds": ["D04-PERFORMANCE-PROTOCOL", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-P06::EX09-WHOLE-PAGE-COLD",
+      "testId": "B3-P06",
+      "parentCategoryId": "B3-P06",
+      "coverageRole": "named-performance-profile",
+      "firstPhase": "M7",
+      "environmentIds": ["HOST-CHROME", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "performance-contract-audit",
+      "fixtureSpecId": "B3-P06::EX09-WHOLE-PAGE-COLD",
+      "performanceProfileId": "EX09-WHOLE-PAGE-COLD",
+      "evidenceRequirementIds": ["COMMON", "PERFORMANCE", "BUSINESS"],
+      "decisionIds": ["D04-PERFORMANCE-PROTOCOL", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-P07::EX09-BIZ-DESKTOP",
+      "testId": "B3-P07",
+      "parentCategoryId": "B3-P07",
+      "coverageRole": "named-performance-profile",
+      "firstPhase": "M7",
+      "environmentIds": ["HOST-CHROME"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-browser-performance",
+      "fixtureSpecId": "B3-P07::EX09-BIZ-DESKTOP",
+      "performanceProfileId": "EX09-BIZ-DESKTOP",
+      "evidenceRequirementIds": ["COMMON", "PERFORMANCE", "BUSINESS"],
+      "decisionIds": ["D04-PERFORMANCE-PROTOCOL", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-P07::EX09-BIZ-MOBILE",
+      "testId": "B3-P07",
+      "parentCategoryId": "B3-P07",
+      "coverageRole": "named-performance-profile",
+      "firstPhase": "M7",
+      "environmentIds": ["ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-browser-performance",
+      "fixtureSpecId": "B3-P07::EX09-BIZ-MOBILE",
+      "performanceProfileId": "EX09-BIZ-MOBILE",
+      "evidenceRequirementIds": ["COMMON", "PERFORMANCE", "BUSINESS"],
+      "decisionIds": ["D04-PERFORMANCE-PROTOCOL", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-P07::EX09-WHOLE-PAGE-COLD",
+      "testId": "B3-P07",
+      "parentCategoryId": "B3-P07",
+      "coverageRole": "named-performance-profile",
+      "firstPhase": "M7",
+      "environmentIds": ["HOST-CHROME", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-browser-performance",
+      "fixtureSpecId": "B3-P07::EX09-WHOLE-PAGE-COLD",
+      "performanceProfileId": "EX09-WHOLE-PAGE-COLD",
+      "evidenceRequirementIds": ["COMMON", "PERFORMANCE", "BUSINESS"],
+      "decisionIds": ["D04-PERFORMANCE-PROTOCOL", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-P07::COLD-ST",
+      "testId": "B3-P07",
+      "parentCategoryId": "B3-P07",
+      "coverageRole": "named-performance-profile",
+      "firstPhase": "M7",
+      "environmentIds": ["HOST-CHROME", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-browser-performance",
+      "fixtureSpecId": "B3-P07::COLD-ST",
+      "performanceProfileId": "COLD-ST",
+      "evidenceRequirementIds": ["COMMON", "PERFORMANCE", "BUSINESS"],
+      "decisionIds": ["D04-PERFORMANCE-PROTOCOL", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    },
+    {
+      "caseKey": "B3-P07::MEMORY",
+      "testId": "B3-P07",
+      "parentCategoryId": "B3-P07",
+      "coverageRole": "named-performance-profile",
+      "firstPhase": "M7",
+      "environmentIds": ["HOST-CHROME", "ANDROID-WEBVIEW", "IOS-SAFARI"],
+      "variantIds": ["st"],
+      "buildProfileIds": ["release"],
+      "fixtureKind": "real-browser-performance",
+      "fixtureSpecId": "B3-P07::MEMORY",
+      "performanceProfileId": "MEMORY",
+      "evidenceRequirementIds": ["COMMON", "PERFORMANCE", "BUSINESS"],
+      "decisionIds": ["D04-PERFORMANCE-PROTOCOL", "D05-FIXTURE-FREEZE", "D06-AGGREGATION-AND-CELL-KEY"],
+      "participantResourceIds": []
+    }
+  ],
+  "decisions": [
+    {
+      "id": "D01-ENVIRONMENT-SCOPE",
+      "status": "PENDING_INTEGRATOR_REVIEW",
+      "blocks": "final required cell denominator",
+      "basis": ["v1.2 §9.1, §11.1 WASM-13, §15.2", "acceptance-resources.json requiredEnvironmentIds"],
+      "missing": "The plan names six required platform classes and exact WASM-13 HOST/DEVICE splits, but does not state that every C/I/A/BIZ test runs on every browser or exactly which browser subset applies to each.",
+      "recommendation": "Adopt the explicit candidate definition rows: all five real browser classes for public C/I/A behavior, Node plus Chrome for low-level binding/U fixtures, host-only artifact audits, exact HOST/DEVICE splits, three named product devices for performance, and one separately allocated human cohort. Node is not an AIR main-entry or rendering substitute. Keep all six platform classes and every fixed ID. For fixtures introduced before M5, schedule non-host-browser matrix cells at M5 while retaining the original fixture introduction phase; host Chrome/Node keep the source first phase. All positive MT cells first require M6 or later. This staging recommendation does not certify a complete parent at an earlier checkpoint.",
+      "approvalEvidence": null
+    },
+    {
+      "id": "D02-MT-POSITIVE-TARGETS",
+      "status": "PENDING_INTEGRATOR_REVIEW",
+      "blocks": "final positive MT target/capability matrix",
+      "basis": ["v1.2 §5.1, §7.3, §8.8 T24, §11.3 A06/A07, §13.4 COLD-MT", "performance-budget-initial.json COLD-MT"],
+      "missing": "No target-by-target MT positive support decision, exact SIMD/SAB/Worker/browser versions, or feature-by-variant matrix is frozen. workerCount is 2..4, while A06/P03 compare 2 and 4.",
+      "recommendation": "Retain positive MT2/MT4 candidates wherever shared behavior is proposed and MT3 for complete legal-count admission, lifetime, platform and repeatability tests. Every MT candidate requires real successful pool/world execution; injected missing-capability multi rejection and permitted auto-to-ST fallback are additional observations, never substitutions. Freeze actual positive target support before G0; do not infer unsupported from current resource failure.",
+      "approvalEvidence": null
+    },
+    {
+      "id": "D03-DEBUG-RELEASE-CRITICAL",
+      "status": "PENDING_INTEGRATOR_REVIEW",
+      "blocks": "final build-profile dimension",
+      "basis": ["v1.2 §11.1 WASM-13", "inventory-design.json debugReleaseCriticalCoverage"],
+      "missing": "The source requires critical Debug/Release coverage but does not enumerate critical cases.",
+      "recommendation": "Adopt criticalDebugReleaseTestIds exactly as the initial risk-based proposal: ABI, ST isolation, generation, heap growth, binding ownership/snapshot, real binding platform, runtime body setters/damping, contact snapshot/transient sensors/callback destruction, invalid query/setter rollback, complete app close and both real-native U fixtures. Run the entire required fixture in each listed build profile, with separate native artifact identities. Extend through a versioned technical review when risk warrants it.",
+      "approvalEvidence": null
+    },
+    {
+      "id": "D04-PERFORMANCE-PROTOCOL",
+      "status": "PENDING_INTEGRATOR_REVIEW",
+      "blocks": "G7 performance freeze; profile/MT applicability is separately decided by D01/D02, not by availability of baselines",
+      "basis": ["v1.2 §13.2–13.5", "performance-budget-initial.json"],
+      "missing": "Actual device/power/browser/viewport fingerprints, first correctness-qualified baselines, exact scene/settings hashes, workload and active-window fixture assets, instrumentation overhead and invalid-infrastructure rules remain unestablished; MT applicability is pending D02.",
+      "recommendation": "Retain all nine initial profiles and published absolute/regression budgets. Adopt explicit P01–P07 profile rows, desktop 100/500/1000 workloads and mobile 200-body product profiles with separately retained 100/500/1000 pressure observations. IOS-COMPAT carries correctness, not an invented general 60fps guarantee. Freeze all applicable thresholds and measurement identity before optimization/acceptance, not after failures.",
+      "approvalEvidence": null
+    },
+    {
+      "id": "D05-FIXTURE-FREEZE",
+      "status": "PENDING_INTEGRATOR_REVIEW",
+      "blocks": "fixture-ready execution and G0 fixture readiness, not an otherwise defined denominator",
+      "basis": [
+        "v1.2 §6, §10, §12, §15.2",
+        "api-contract.json c16Duration",
+        "decisions.md C16 measurement clarification"
+      ],
+      "missing": "Source assertion text is not a runnable hash-bound fixture. Most exact fixture assets, creation order/settings/seed, sleep wait policy, minimum dimensions, hull/core limits, sweep linearSlop, contact snapshot timing, character normal/push limits and per-joint extreme targets are not frozen here. C16 original geometry/gravity/speed must be recovered or explicitly reconstructed. C14 recovery children have IDs but no complete standalone assertion text in the original plan.",
+      "recommendation": "Bind each fixtureSpecId to executable inputs and independent oracle versions before running. Preserve all original parent-table assertions alongside fixed additional children. Keep explicit parent-table-remainder units for the eleven additive splits; aggregates cannot become PASS from child subset evidence. Resolve special fixture requirements below without weakening positive capabilities or tolerances. This artifact does not certify existing narrow fixtures as complete.",
+      "approvalEvidence": null
+    },
+    {
+      "id": "D06-AGGREGATION-AND-CELL-KEY",
+      "status": "PENDING_INTEGRATOR_REVIEW",
+      "blocks": "final denominator schema",
+      "basis": ["v1.2 §9.1 parents aggregate only and G8 final union", "v1.2 §15.2 test × environment × variant"],
+      "missing": "The text does not define whether additive fixed children replace all parent table assertions, how profile/participant/build dimensions affect the denominator, or a machine key.",
+      "recommendation": "Keep 91 parent aggregates and 84 fixed references plus U01/U02; only generated executable cells count. A caseKey is an internal fixture unit, not a new acceptance category. Split-only parents aggregate children; additive parents also require a parent-table-remainder caseKey. Build profile and worker count are explicit key dimensions; named performance profile and human cohort are caseKey dimensions. Aggregate fixed WASM-13-AIR-ST and C28-SENSOR-CCD are not executable or double-counted. WASM-15 aggregates P01–P07. Do not merge or remove cells without a reviewed version change and retained prior contract.",
+      "approvalEvidence": null
+    },
+    {
+      "id": "D07-AGENT-AND-HUMAN-ASSIGNMENT",
+      "status": "PENDING_COORDINATION",
+      "blocks": "specific BIZ07/AG execution, not unrelated implementation",
+      "basis": ["v1.2 §9.3, §12.8 BIZ07, §14"],
+      "missing": "Three real first-time participants, coordinator/time/device allocation and the five independent Agent task contexts have not been assigned. The source requires three participants total, not three participants on each platform.",
+      "recommendation": "Keep separate BIZ07 device/UX cells on Chrome/Android/iOS and one human-cohort cell requiring three non-implementers with at least two first orders unaided within 90 seconds. Coordinator records actual device allocation without conflating this cohort with all-device QA. AG tasks require fresh non-implementer contexts and retained prompt/docs/tarball/failures/intervention records. No person, session, time or authorization is invented.",
+      "approvalEvidence": null
+    }
+  ],
+  "evidenceRequirements": {
+    "COMMON": [
+      "testId and exact cellId",
+      "sourceCommit and workingTreePatchSha256",
+      "coreCommit, bindingPatchSha256, artifactManifestSha256, ABI/schema identity",
+      "airBuildNumber, variant, workerCount, buildProfile and actual artifact hashes",
+      "actual environment/device/OS/browser/runtime fingerprint",
+      "fixture/input/settings hashes, seed and creation order",
+      "executedAt, exact command/collector version, bounded run duration and exit status",
+      "complete assertion list with actual observations and thresholds",
+      "immutable raw samples/log artifacts with SHA256 and portable repository-relative paths",
+      "same-run source/build/manifest identity; retain failed attempts and later invalidation"
+    ],
+    "REAL_WASM": [
+      "real locked-core WASM instantiated and native calls observed",
+      "no mock, source-only, native GCC, synthetic browser, or historical PASS substitution",
+      "native world/body/shape identity and before/after live counters as applicable"
+    ],
+    "NUMERIC": [
+      "full source assertion group, not one representative example",
+      "independent numerical expected values/geometry oracle and its version",
+      "all required tick/substep/shape/parameter combinations and retained samples"
+    ],
+    "LIFECYCLE": [
+      "ownership/counter baselines and bounded release receipts",
+      "failed/pending cleanup remains failed/pending",
+      "late events/async/ID generations cannot revive disposed state"
+    ],
+    "BUILD": [
+      "locked source/toolchain/flags/schema and actual output hashes",
+      "compile commands and Debug/Release/variant distinction as applicable",
+      "d.ts/build feature and Web-only/license audits with actual command results"
+    ],
+    "NON_ISOLATED_HTTP": [
+      "real served ordinary non-isolated page",
+      "actual response headers, request log and crossOriginIsolated=false",
+      "simulate, query and dispose successfully with no ST pthread/shared memory/worker"
+    ],
+    "STRICT_CSP": [
+      "actual HTTP CSP response header prohibiting JS unsafe-eval and unsafe-inline while allowing wasm-unsafe-eval",
+      "CSP violation/console log and real simulate/query/dispose result",
+      "resource/request hashes and served origin; string scans alone cannot pass"
+    ],
+    "THREAD_ADMISSION": [
+      "single/multi/auto, missing isolation/SAB/Worker, pool failure/exhaustion and invalid counts",
+      "positive MT pool-ready-before-world and actual total/background worker counts",
+      "explicit multi failures and permitted auto fallback reason; no cross-backend/version or ABI/hash-error fallback",
+      "navigation/close bounded shutdown with no live workers"
+    ],
+    "LOADER_FAILURES": [
+      "root/subpath/custom URL and 404/MIME/corrupt bytes/mismatch cases",
+      "same-scope concurrent preparation deduplicates",
+      "failed preparation owns no live world and retains correct cleanup receipts"
+    ],
+    "PACK_CONSUMER": [
+      "pack then clean-directory install and single public main-entry import",
+      "tarball/source/d.ts/asset/license hashes and actual network requests",
+      "root/subpath/strict-CSP pages plus simulate/scene-release/close",
+      "CORE examples EX01–EX06 and EX09; FULL examples EX01–EX09 with EX09 always ST",
+      "real 2D/3D coexistence where required; no second runtime or local-repository imports"
+    ],
+    "DETERMINISM": [
+      "same fixed input/seed/build repeated as specified",
+      "normalized state and event-tick hashes excluding native IDs/padding",
+      "mode-internal equality and cross-mode results reported separately; declared count coverage complete"
+    ],
+    "REPLAY": [
+      "600-tick complex-input record/replay and exact normalized state/event hashes",
+      "mismatched ABI/schema/core/pointer width/callback IDs rejected before simulation",
+      "independent diagnostic ST instance without second AIR PhysicsSystem or MT pool contention"
+    ],
+    "EXAMPLES": [
+      "independent objective, usable UI, automated path, reset/debug/export",
+      "fixed scene/config/input and at least 15 seconds same-run real video plus key screenshots",
+      "numeric assertions and visual outcomes; static screenshot or build alone is not acceptance"
+    ],
+    "BUSINESS": [
+      "full original BIZ assertions and frozen gift-workshop config/layout/input/abnormal-fixture hashes",
+      "same public user input path; no direct merchandise transform/velocity or success-hook writes",
+      "round/attempt/item generations, weigh/submit/open-angle/crossing ticks and unique shipment ledger",
+      "all five normal layouts individually pass; required abnormal/recovery paths pass",
+      "complete desktop round, actual touch-device round and failure/recovery recording plus four UI screenshot groups",
+      "BIZ08 retains at least 20 complete rounds/retries and does not replace I05 100 scene cycles"
+    ],
+    "REAL_DEVICE_UX": [
+      "actual desktop and Android/iOS devices; no emulator or Playwright WebKit replacement",
+      "full three-order touch/keyboard route, 360x640 and 844x390 layouts, at least 48 CSS px targets",
+      "focus/background/pause/resume, camera/audio and understandable load-failure/retry observations"
+    ],
+    "FIRST_TIME_HUMANS": [
+      "three actual first-time non-implementer participant observations",
+      "frozen on-page instructions, device allocation and coordinator/time",
+      "at least two first orders unaided within 90 seconds after formal start",
+      "actual recorded failures/help given retained; automated Agent cannot substitute"
+    ],
+    "INDEPENDENT_AGENT": [
+      "fresh Agent not involved in module implementation",
+      "frozen prompt, public documentation version and installable tarball only",
+      "full edits/commands/results/failures/retries/interventions",
+      "restart in new task context after public docs fixes; maintainer-disclosed private answer invalidates independence"
+    ],
+    "PERFORMANCE": [
+      "actual specified browser/device/power/viewport/DPR/quality fingerprint, no Node tight-loop substitute",
+      "correctness-qualified baseline and scene/settings/artifact hashes; no null required threshold",
+      "command/core/read-dispatch/sync/physicsTick/physicsFrame/frameWork and RAF/GC/live-memory raw samples",
+      "five independent runs each at least 1800 measured ticks; nearest-rank per-run P50/P95/P99 and worst-run P95 gate",
+      "thirty independent empty-cache starts per device/variant; failures retained and count FAIL; hot cache separate",
+      "100 lifecycle rounds and mobile 30 minutes with last 10-minute hot window",
+      "initial absolute budget plus <=1.1 regression ratio; workload pressure observations do not redefine product scale",
+      "complete EX09 rounds and predeclared active windows; no post-hoc removal of stuck/retry intervals"
+    ]
+  },
+  "fixtureSpecificRequirements": {
+    "B3-C04-SLEEP": [
+      "Freeze actual target-core sleep wait duration, threshold comparison/units and explicit wake transitions; retain low/high speed cases."
+    ],
+    "B3-C14-RECOVERY-PENDING-NULL": [
+      "Define valid -> missing/null mesh -> valid recovery transaction, component/native pending state and no residual shapes; source only names this child, so this proposed assertion group needs review."
+    ],
+    "B3-C14-RECOVERY-ROLLBACK-MESH-IDENTITY": [
+      "Define rejected geometry replacement preserving last valid component/native mesh identity and ownership, then successful retry; source only names this child, so this proposed assertion group needs review."
+    ],
+    "B3-C16-SAMPLED-PEAK": [
+      "Recover or reconstruct exact finite-triangle fixture, gravity, speed, dt, substeps and 600 ticks before execution.",
+      "Independent post-step sphere/finite-triangle geometry; every retained sample <=0.05 m; no continuous/substep peak claim."
+    ],
+    "B3-C16-SUSTAINED-DURATION-1": [
+      "Use C16-DURATION-1, 600 post-fixed-step samples, dt=1/60 and substeps=4.",
+      "Fail if at least seven consecutive samples exceed 0.02 m and first-to-last span >=0.1 s. Preserve times, triangle IDs/geometry, independent validator and negative controls; no infinite-plane substitution."
+    ],
+    "B3-C21-SNAPSHOT": [
+      "Freeze and prove native contact/COM/origin/rotation sampling time separately for rotating/off-COM/reused/CCD paths before public event implementation; unknown path stays blocked."
+    ],
+    "B3-C26": [
+      "Freeze actual core linearSlop and sweep tolerance, full 10 boundary children, all three sweep shapes plus ray/overlap, and stable logical-ID tie ordering."
+    ],
+    "B3-C28-SENSOR-CCD": [
+      "Retain five named children; >8 candidate capacity is boundary observation, not promised exact hit count. Every native-produced event still requires complete safe transfer. Moving-sensor limits cannot erase positive fast-solid-to-static-sensor requirements."
+    ],
+    "B3-C35": [
+      "Independent distance/prismatic/wheel/motor/parallel/filter fixtures with all declared setters and extremes; freeze target values, not just joint creation."
+    ],
+    "B3-A01": [
+      "Freeze controller recovery/step/grounding tolerances; 0.20 m passes and 0.35 m fails at stepOffset 0.30 m."
+    ],
+    "B3-A02": ["Freeze normal/slope tolerances with 30/44/46/60 degree slopes and 45-degree limit."],
+    "B3-A05": [
+      "Freeze push policy, body mass/max-force limits and no-unbounded-energy oracle; unsupported box controller remains an explicit negative case."
+    ],
+    "B3-I08": [
+      "CORE campaign EX01–EX06 and EX09 first belongs to G5; advanced EX07/EX08 first belongs to G6. G8 repeats full union."
+    ],
+    "B3-A10": [
+      "Main app world runs in the selected variant; diagnostic replay instance is explicitly isolated ST regardless of main variant."
+    ],
+    "B3-P02": [
+      "Measure six distinct base workloads: active stacks, natural sleep, CCD, joints, query+events, lifecycle; report 100/500/1000 desktop and mobile 200-body product profile, plus separate non-product pressure observations."
+    ],
+    "B3-P03": [
+      "ST/MT2/MT4 compare only on promised capable targets; full command-to-completion latency, worker/pool/startup and tail costs. Never declare MT benefit from coreStepWall alone."
+    ],
+    "B3-AG05": [
+      "Second theme: three new orders, real geometry/mass effects, config hash, one complete round video and BIZ01–BIZ06/BIZ08 automated paths. Do not edit runtime/WASM/rule judge."
+    ]
+  },
+  "denominatorDecisionIds": [
+    "D01-ENVIRONMENT-SCOPE",
+    "D02-MT-POSITIVE-TARGETS",
+    "D03-DEBUG-RELEASE-CRITICAL",
+    "D06-AGGREGATION-AND-CELL-KEY"
+  ],
+  "readinessDecisions": [
+    {
+      "id": "D05-FIXTURE-FREEZE",
+      "blocks": ["G0 fixture readiness", "affected executions"],
+      "doesNotBlockEnumeratedDenominator": true
+    },
+    {
+      "id": "D04-PERFORMANCE-PROTOCOL",
+      "blocks": ["G7 performance acceptance"],
+      "doesNotBlockEnumeratedDenominator": true
+    },
+    {
+      "id": "D07-AGENT-AND-HUMAN-ASSIGNMENT",
+      "blocks": ["BIZ07 human execution/G5", "AG execution/G7"],
+      "doesNotBlockEnumeratedDenominator": true
+    }
+  ],
+  "mtTargetRecommendations": [
+    {
+      "environmentId": "HOST-NODE",
+      "recommendation": "Retain positive low-level native MT target for the proposed Node rows.",
+      "basis": ["§11.1 Node release WASM and WASM-13 matrix", "§11.3 A06 mode comparison; §7.3 independent MT build"],
+      "rationale": "Node is an independent worker/bootstrap/lifetime path and verifies real release WASM without claiming to render or run the browser-only main entry. Successful ST says nothing about pthread startup/cleanup.",
+      "requiredVerification": [
+        "pinned Node/V8/platform and actual WASM SIMD/shared-memory/worker support",
+        "real MT2/MT3/MT4 where each definition requires them, pool-ready-before-world and bounded worker teardown",
+        "native-only fixture scope, never substitute Node for browser CSP, rendering or performance"
+      ],
+      "impactIfUnresolved": "Keep all Node positive MT candidate cells NOT_RUN/BLOCKED; early ST/host work continues. Any target removal requires a new reviewed capability/scope record, never an inferred unsupported label."
+    },
+    {
+      "environmentId": "HOST-CHROME",
+      "recommendation": "Retain primary positive browser MT target.",
+      "basis": ["§8.8 T24 host MT workflow", "§7.3 isolation/SAB/pool checks", "§13.4 desktop/COLD-MT profiles"],
+      "rationale": "Chrome is already the explicit host-browser class and the initial desktop performance resource. This is the first full browser path for MT loading, strict CSP, visible frame cost and worker cleanup.",
+      "requiredVerification": [
+        "real pinned Chrome host on authorized isolated origin",
+        "actual COOP/COEP/SAB/Worker/pool capability and resource response headers",
+        "MT2/MT4 shared behavior and complete-count MT3 admission/repeatability where required",
+        "matched positive MT plus injected failure/multi rejection/auto-ST-fallback paths"
+      ],
+      "impactIfUnresolved": "T24 host-MT scope and dependent advanced acceptance remain unproved; do not replace positive MT with a missing-isolation negative test."
+    },
+    {
+      "environmentId": "DESKTOP-FIREFOX",
+      "recommendation": "Retain positive Firefox MT candidate until explicit platform review.",
+      "basis": ["§11.1 frozen Firefox platform execution", "§9.1 AIR-MT expands frozen matrix"],
+      "rationale": "A Chrome result cannot establish Firefox worker startup, shared-memory scheduling, CSP, event transport or shutdown. The plan retains Firefox as required; no source excludes it from MT.",
+      "requiredVerification": [
+        "real pinned Firefox/OS and permitted isolated test origin",
+        "actual SIMD/SAB/Worker/pool path and all proposed public behavior fixtures",
+        "independent real MT counts and disposal evidence"
+      ],
+      "impactIfUnresolved": "Keep its proposed MT cells required candidates; failure or missing host is not permission to narrow the target class."
+    },
+    {
+      "environmentId": "DESKTOP-SAFARI",
+      "recommendation": "Retain positive actual macOS Safari MT candidate pending pinned capability review.",
+      "basis": ["§11.1 real Safari separate from Playwright WebKit", "§9.1 AIR-MT matrix"],
+      "rationale": "Actual Safari behavior, worker lifecycle and loading policies need their own result. Playwright WebKit, desktop Chrome and Node cannot establish this target. No current Safari capability is asserted by this proposal.",
+      "requiredVerification": [
+        "real macOS/Safari version and authorized isolated origin",
+        "actual SIMD/shared memory/SAB/Worker/pool behavior, not feature-string inference alone",
+        "strict CSP, repeatability and bounded close on the actual target"
+      ],
+      "impactIfUnresolved": "Retain pending positive cells; only a documented scope/capability decision with preserved old obligations may change them, not unavailable hardware."
+    },
+    {
+      "environmentId": "ANDROID-WEBVIEW",
+      "recommendation": "Retain positive real Android WebView MT candidate, including applicable mobile performance profiles.",
+      "basis": [
+        "§9.3 exact real WebView/device responsibility",
+        "§11.1 target Android WebView",
+        "§13.4 MOBILE-60/COLD-MT and initial resource budget"
+      ],
+      "rationale": "A real embedded WebView has its own app/origin/worker and mobile lifecycle constraints. The frozen product resource includes this class, and COLD-MT expressly requires a capability-matrix decision rather than silent exclusion.",
+      "requiredVerification": [
+        "exact device/Android/WebView version and embedding app/origin configuration",
+        "approved access and actual isolated SIMD/SAB/Worker/pool execution",
+        "touch/background/resume/close, worker cleanup and applicable 30-minute thermal/performance observations"
+      ],
+      "impactIfUnresolved": "Retain all positive MT cells and performance candidates; device absence cannot turn the target into an unsupported negative case. ST device work remains independently executable."
+    },
+    {
+      "environmentId": "IOS-SAFARI",
+      "recommendation": "Retain positive real iOS Safari MT candidate pending explicit product/capability decision.",
+      "basis": [
+        "§9.3 real iOS Safari acceptance resource",
+        "§13.4 IOS-COMPAT and COLD-MT; initial COLD-MT candidate resources"
+      ],
+      "rationale": "The plan requires a real iOS class and leaves COLD-MT applicability unfrozen. Preserving positive candidates avoids treating a simulator, missing device or presumed browser limitation as a scope decision. Compatibility alone does not invent a general iOS 60fps promise.",
+      "requiredVerification": [
+        "exact iPhone/iPad/iOS/Safari and isolated origin",
+        "actual SIMD/shared memory/SAB/Worker/pool capability and MT execution",
+        "real mobile background/navigation/close and separately applicable cold/thermal budget evidence"
+      ],
+      "impactIfUnresolved": "Retain candidate positive MT obligations; EX09 remains ST regardless and can proceed independently. Any MT scope reduction must be explicit and preserve failures/history."
+    }
+  ]
+}

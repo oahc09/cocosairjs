@@ -110,40 +110,165 @@ export interface Box2D3Options {
     /** Solver subdivisions per fixed physics tick, independent of PhysicsSystem2D.maxSubSteps. Default 4. */
     subStepCount?: number;
 }
+/** A scoped application acquisition; direct loadBox2D3 consumers retain a persistent module pin. */
+export interface Box2D3Lease {
+    readonly generation: number;
+    /** Selects the lease's backend; the subsequently constructed world belongs only to this lease. */
+    select(): void;
+    /** Drops only this lease's references after its world is destroyed; native memory is GC-managed. */
+    dispose(): Promise<Readonly<{ retained: readonly string[] }>>;
+}
+interface Box2D3LeaseState {
+    state: Box2D3LoadState;
+    world?: Box2D3World;
+    released: boolean;
+}
+interface Box2D3LoadState {
+    generation: number;
+    base: string;
+    count: number;
+    pinned: boolean;
+    waiters: number;
+    leases: Set<Box2D3LeaseState>;
+    promise: Promise<void>;
+    module?: Box2D3Module;
+    cleanupFailure?: string;
+}
 let native: Box2D3Module | undefined;
-let pending: Promise<void> | undefined;
-let loadedBase: string | undefined;
+let activeLoad: Box2D3LoadState | undefined;
+let selectedLease: Box2D3LeaseState | undefined;
+let loadGeneration = 0;
 let subSteps = 4;
-/** Load the optional pinned 3.2.0 module. Does not select a backend or create a world. */
-export function loadBox2D3(options: Box2D3Options = {}): Promise<void> {
+
+function prepareBox2D3(options: Box2D3Options, pin: boolean): Box2D3LoadState {
     const count = options.subStepCount ?? 4;
-    if (!Number.isInteger(count) || count < 1 || count > 64)
-        return Promise.reject(new Error('BOX2D3_SUBSTEPS: expected integer 1..64'));
+    if (!Number.isInteger(count) || count < 1 || count > 64) throw new Error('BOX2D3_SUBSTEPS: expected integer 1..64');
     const base = new URL(
         options.assetBaseUrl ?? (defaultAssetBase.startsWith('__') ? 'build/box2d3/' : defaultAssetBase),
         document.baseURI,
     ).href;
-    if (pending) {
-        if (loadedBase !== base || subSteps !== count) return Promise.reject(new Error('BOX2D3_CONFIG_CONFLICT'));
-        return pending;
+    if (activeLoad) {
+        if (activeLoad.base !== base || activeLoad.count !== count) throw new Error('BOX2D3_CONFIG_CONFLICT');
+        if (activeLoad.cleanupFailure) throw new Error('BOX2D3_CLEANUP_FAILED: retained native references');
+        // A direct consumer may arrive while the shared load is still pending.
+        if (pin) activeLoad.pinned = true;
+        return activeLoad;
     }
-    loadedBase = base;
-    subSteps = count;
-    pending = (async () => {
-        const wasm = new URL('air-box2d.wasm', base).href;
-        const response = await fetch(wasm);
-        if (!response.ok) throw new Error(`BOX2D3_LOAD: HTTP ${response.status}: ${wasm}`);
-        const module = await import(new URL('air-box2d.mjs', base).href);
-        const instance = await module.default({ wasmBinary: await response.arrayBuffer() });
-        if (typeof instance.createWorld !== 'function' || typeof instance.createJoint !== 'function')
-            throw new Error('BOX2D3_ABI');
-        native = instance;
-    })().catch((error) => {
-        pending = undefined;
-        loadedBase = undefined;
-        throw error;
+    const state: Box2D3LoadState = {
+        generation: ++loadGeneration,
+        base,
+        count,
+        pinned: pin,
+        waiters: 0,
+        leases: new Set(),
+        promise: undefined as unknown as Promise<void>,
+    };
+    activeLoad = state;
+    state.promise = Promise.resolve()
+        .then(async () => {
+            const wasm = new URL('air-box2d.wasm', base).href;
+            const response = await fetch(wasm);
+            if (!response.ok) throw new Error(`BOX2D3_LOAD: HTTP ${response.status}: ${wasm}`);
+            const module = await import(new URL('air-box2d.mjs', base).href);
+            const instance = await module.default({ wasmBinary: await response.arrayBuffer() });
+            if (typeof instance.createWorld !== 'function' || typeof instance.createJoint !== 'function')
+                throw new Error('BOX2D3_ABI: invalid module');
+            if (activeLoad !== state) throw new Error('BOX2D3_STALE_LOAD');
+            state.module = instance;
+            native = instance;
+            subSteps = count;
+        })
+        .catch((error) => {
+            if (activeLoad === state) activeLoad = undefined;
+            throw error;
+        });
+    return state;
+}
+
+/** Load and persistently pin the optional module. Does not select a backend or create a world. */
+export function loadBox2D3(options: Box2D3Options = {}): Promise<void> {
+    try {
+        return prepareBox2D3(options, true).promise;
+    } catch (error) {
+        return Promise.reject(error);
+    }
+}
+
+/** Independent leases share one in-flight module but never dispose another lease's world. */
+export function acquireBox2D3(options: Box2D3Options = {}): Promise<Box2D3Lease> {
+    let state: Box2D3LoadState;
+    try {
+        state = prepareBox2D3(options, false);
+    } catch (error) {
+        return Promise.reject(error);
+    }
+    state.waiters++;
+    return state.promise.then(
+        () => {
+            state.waiters--;
+            const owner: Box2D3LeaseState = { state, released: false };
+            state.leases.add(owner);
+            let closing: Promise<Readonly<{ retained: readonly string[] }>> | undefined;
+            return Object.freeze({
+                generation: state.generation,
+                select() {
+                    if (owner.released || closing || activeLoad !== state) throw new Error('BOX2D3_LEASE_CLOSED');
+                    if (selectedLease && selectedLease !== owner) throw new Error('BOX2D3_WORLD_OWNER_CONFLICT');
+                    selectOwnedPhysics2DBackend('box2d-v3-wasm', owner);
+                },
+                dispose() {
+                    if (closing) return closing;
+                    closing = Promise.resolve().then(() => {
+                        try {
+                            owner.world?.destroy();
+                        } catch (error) {
+                            state.cleanupFailure = String(error);
+                            throw error;
+                        }
+                        owner.released = true;
+                        owner.world = undefined;
+                        state.leases.delete(owner);
+                        if (selectedLease === owner) selectedLease = undefined;
+                        const retained: string[] = [];
+                        if (state.pinned) retained.push('box2d3-module:direct-consumer-pin');
+                        if (state.leases.size || state.waiters) retained.push('box2d3-module:other-acquisitions');
+                        if (state.cleanupFailure) retained.push('box2d3-module:cleanup-failed');
+                        if (!retained.length && activeLoad === state) {
+                            // No explicit native heap destructor exists. These drops only make GC possible.
+                            native = undefined;
+                            state.module = undefined;
+                            activeLoad = undefined;
+                        }
+                        return Object.freeze({ retained: Object.freeze(retained) });
+                    });
+                    return closing;
+                },
+            });
+        },
+        (error) => {
+            state.waiters--;
+            throw error;
+        },
+    );
+}
+
+/** Internal lifecycle diagnostics; reference release is not evidence of immediate WASM heap reclamation. */
+export function getBox2D3PreparationInfo(): Readonly<{
+    generation: number;
+    pinned: boolean;
+    leases: number;
+    pendingAcquisitions: number;
+    moduleReferenced: boolean;
+    cleanupFailure: string | null;
+}> {
+    return Object.freeze({
+        generation: activeLoad?.generation ?? loadGeneration,
+        pinned: activeLoad?.pinned ?? false,
+        leases: activeLoad?.leases.size ?? 0,
+        pendingAcquisitions: activeLoad?.waiters ?? 0,
+        moduleReferenced: !!native,
+        cleanupFailure: activeLoad?.cleanupFailure ?? null,
     });
-    return pending;
 }
 function api(): Box2D3Module {
     if (!native) throw new Error('BOX2D3_NOT_READY: await loadBox2D3 before initialization');
@@ -166,7 +291,11 @@ function pair(a: number, b: number): string {
 
 /** Select once, before the 2D system creates its world. Called by createAirApp. */
 export function selectPhysics2DBackend(backend: 'box2d' | 'box2d-v3-wasm'): void {
+    selectOwnedPhysics2DBackend(backend);
+}
+function selectOwnedPhysics2DBackend(backend: 'box2d' | 'box2d-v3-wasm', owner?: Box2D3LeaseState): void {
     if (selector.physicsWorld) throw new Error('BOX2D3_LATE_SELECTION: backend selection requires a fresh runtime');
+    if (selectedLease && selectedLease !== owner) throw new Error('BOX2D3_WORLD_OWNER_CONFLICT');
     if (backend === 'box2d') {
         const wrapper = selector.backend.box2d;
         if (!wrapper) throw new Error('BOX2D_BACKEND_MISSING');
@@ -174,6 +303,7 @@ export function selectPhysics2DBackend(backend: 'box2d' | 'box2d-v3-wasm'): void
         return;
     }
     api();
+    selectedLease = owner;
     selector.register('box2d-v3-wasm', {
         PhysicsWorld: Box2D3World,
         RigidBody: Box2D3Body,
@@ -229,6 +359,8 @@ class Box2D3World {
     private debug?: Graphics;
     constructor() {
         this.impl = api().createWorld({ x: 0, y: -10 }, (o, continuous) => this.preSolve(o, continuous));
+        // Capture actual acquisition before ground-body creation can fail.
+        if (selectedLease && !selectedLease.released) selectedLease.world = this;
         this.groundBodyImpl = api().createBody(this.impl, { type: 0 });
     }
     mutate(action: () => void): void {

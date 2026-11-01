@@ -1,0 +1,32 @@
+{
+  "schema": "box3d-actual-target-clock-frozen-roster-v1",
+  "status": "SOURCE_ONLY_NOT_RUN",
+  "cases": [
+    "motion-idle-zero",
+    "clear-dispose-protected",
+    "disable-collider-survives",
+    "type-away-reacquire",
+    "component-recreate",
+    "compound-covering-writeback",
+    "caught-revoked-set",
+    "caught-revoked-clear",
+    "listener-completed-step-failure"
+  ],
+  "nativeWasmSha256": "4b9494dc2d3c46b4cbacf8d12a8119df5e91a27e19f90b946d50f6467b7adf8f",
+  "formalCells": {
+    "total": 2128,
+    "status": "NOT_RUN"
+  },
+  "gates": {
+    "total": 9,
+    "status": "NOT_RUN"
+  },
+  "notCovered": [
+    "Full persistent-scene transfer and unrelated-scene release",
+    "Full Game application/background pause and lifetime matrix",
+    "Cross-world or multiple createAirApp instances",
+    "Formal damping, cap, lock, COM, CCD, constraint, browser and lifetime matrices",
+    "Injected lifecycle native/readback failures and universal resource freedom"
+  ],
+  "historicalResultPolicy": "No historical PASS is inherited. Original 96 target semantic checks plus two new common clock checks per case are SOURCE_ONLY_NOT_RUN."
+}

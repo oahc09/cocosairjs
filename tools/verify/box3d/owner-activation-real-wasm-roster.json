@@ -1,0 +1,22 @@
+{
+  "schema": "box3d-actual-activation-frozen-roster-v1",
+  "status": "SOURCE_ONLY_NOT_RUN",
+  "cases": ["onload-self-disable-collider", "ondisable-replace-timer", "onenable-schedule-work"],
+  "nativeWasmSha256": "4b9494dc2d3c46b4cbacf8d12a8119df5e91a27e19f90b946d50f6467b7adf8f",
+  "formalCells": {
+    "total": 2128,
+    "status": "NOT_RUN"
+  },
+  "gates": {
+    "total": 9,
+    "status": "NOT_RUN"
+  },
+  "notCovered": [
+    "Browser, full lifecycle and formal-cell qualification",
+    "Persistent-scene transfer and multiple apps",
+    "Nonzero center of mass, full damping/cap/lock/CCD/constraint matrices",
+    "Arbitrary reentrant callbacks or injected native failures",
+    "ESM/DTS consumer qualification (separate task)"
+  ],
+  "historicalResultPolicy": "No historical PASS is inherited. Phase42 synthetic activation and phase44 actual target results are not activation45 results. All three cases and every proposed assertion are SOURCE_ONLY_NOT_RUN."
+}

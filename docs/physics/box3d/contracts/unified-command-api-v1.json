@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "contractVersion": "box3d-unified-command-api-v1",
+  "status": "FROZEN_SOURCE_CONTRACT_NOT_IMPLEMENTED",
+  "originalApi": {
+    "path": "docs/physics/box3d/contracts/api-contract.json",
+    "sha256": "0e53683159e025ecdf07ae495abcf54e902529b51c6938ce3717fab4dd6e7fc9",
+    "preservedExtensions": [
+      {
+        "name": "createKinematicTarget",
+        "signature": "createKinematicTarget(body: RigidBody): KinematicTargetHandle",
+        "tests": ["B3-C11-TARGET-CREATE"]
+      },
+      {
+        "name": "KinematicTargetHandle.setTarget",
+        "signature": "setTarget(pose: { position: IVec3Like; rotation: IQuatLike }): void",
+        "tests": ["B3-C11-TARGET-TICK-BASIC", "B3-C11-TARGET-TICK-EVENTS"]
+      },
+      {
+        "name": "KinematicTargetHandle.clear",
+        "signature": "clear(): void",
+        "tests": ["B3-C11-TARGET-LIFETIME-BASIC"]
+      },
+      {
+        "name": "KinematicTargetHandle.dispose",
+        "signature": "dispose(): void",
+        "tests": ["B3-C11-TARGET-LIFETIME-BASIC", "B3-C11-TARGET-LIFETIME-APP", "B3-C11-TARGET-LIFETIME-FULL"]
+      },
+      {
+        "name": "teleportRigidBody",
+        "signature": "teleportRigidBody(body: RigidBody, pose: { position: IVec3Like; rotation: IQuatLike }, options?: { preserveVelocity?: boolean; wake?: boolean }): void",
+        "defaults": {
+          "preserveVelocity": false,
+          "wake": true
+        },
+        "tests": ["B3-C11-TELEPORT"]
+      },
+      {
+        "name": "getPhysicsBackendInfo",
+        "signature": "getPhysicsBackendInfo(): Readonly<PhysicsBackendInfo>",
+        "tests": ["B3-I01", "WASM-05", "WASM-07-AIR"]
+      }
+    ]
+  },
+  "decisionDocument": {
+    "path": "docs/physics/box3d/contracts/unified-command-decisions-v1.md",
+    "sha256": "56303d162e12346729c66461c1fa9976e69c941fb549804c7a110d1887c695d6"
+  },
+  "declarations": {
+    "path": "docs/physics/box3d/contracts/unified-command-api-v1.d.ts",
+    "sha256": "845ea78f81da613499e615e4576a5cc152916467bb7a79e1cf81fe5ec54ed09e",
+    "runtimeExported": false
+  },
+  "extensions": [
+    {
+      "name": "registerBox3DBeforeStep",
+      "tests": ["B3-C01", "B3-C02", "B3-C03", "B3-C06"],
+      "defaults": {
+        "enabled": true
+      }
+    },
+    {
+      "name": "createBox3DContinuousForce",
+      "tests": ["B3-C06", "B3-C07", "B3-I05", "B3-I06"],
+      "defaults": {
+        "enabled": true,
+        "force": [0, 0, 0],
+        "torque": [0, 0, 0],
+        "relativePoint": [0, 0, 0],
+        "space": "world"
+      },
+      "update": "complete-descriptor-replacement"
+    },
+    {
+      "name": "cancelPendingBox3DCommands",
+      "tests": ["B3-C06", "B3-C11-TARGET-LIFETIME-BASIC", "B3-C11-TELEPORT"],
+      "return": "count of original accepted unconsumed user records removed for this body",
+      "protectedLifecycleZeroRemovable": false
+    }
+  ],
+  "handleMethods": {
+    "Box3DProducerHandle": ["enable", "disable", "dispose"],
+    "Box3DContinuousForceHandle": ["update"]
+  },
+  "temporalSemantics": {
+    "ordinaryForceTorqueImpulse": "next-executable-fixed-tick",
+    "ordinaryClear": "ordered-next-executable-fixed-tick",
+    "velocityReadback": "last-committed-native-state",
+    "constantForce": "unchanged-frame-level-submissions",
+    "callbackFailure": "discard-provisional-candidate-preserve-accepted-pre-tick-queue",
+    "teleportPreserveSuppressesSameTickIdleZero": true
+  },
+  "inventory": {
+    "path": "docs/physics/box3d/contracts/inventory-frozen-v1.json",
+    "sha256": "c1031157b37b943d32b6cc26100b563064a16eb4225aeed6fbb7fcbbf25baaeb",
+    "requiredCells": 2128,
+    "statusChanges": 0,
+    "scope": "Additive implementation subdivisions map to existing required test identities; no denominator or original frozen input is rewritten."
+  },
+  "nativeWireStatus": "SEPARATE_FREEZE_REQUIRED_BEFORE_IMPLEMENTATION",
+  "implementation": "NOT_IMPLEMENTED"
+}

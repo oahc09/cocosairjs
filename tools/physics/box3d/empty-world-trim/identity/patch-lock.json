@@ -1,0 +1,119 @@
+{
+  "schemaVersion": 1,
+  "baseCoreCommit": "efca0c184d40fd6a82016983f1601c4d23965867",
+  "patches": [
+    {
+      "id": "sse2-loadv-float-alignment-v1",
+      "path": "tools/physics/box3d/patches/sse2-loadv-alignment.patch",
+      "sha256": "e5c4e5f2ae7f015cf62dfc2de5a36af73cc15d9b0ca0118fc0259c7d1f0b1403",
+      "files": [
+        {
+          "path": "src/simd_sse2.h",
+          "beforeSha256": "cc18b1f4f90fdceebb84b57f77e04c03009851a3a4c66439169318aa22a02719",
+          "afterSha256": "2295eae13388e656dc71396530ea928ecc575c8a86009182d76a9ef69333e8f6"
+        }
+      ]
+    },
+    {
+      "id": "contact-generation-geometry-v2",
+      "path": "tools/physics/box3d/patches/contact-geometry-epoch.patch",
+      "sha256": "4ca29eed58cd20d4134bf55bb9b9ec25fbb322b731d0a319ad2567225463d094",
+      "files": [
+        {
+          "path": "include/box3d/types.h",
+          "beforeSha256": "7f888e6a75dff5fd6b79f9e0dad79c9b5a769f47caedb19d71e027a751fd3664",
+          "afterSha256": "15a99589d8a54d80ff600ade7dc48ba56b02a4468e518e6de54b65d31f674f68"
+        },
+        {
+          "path": "src/contact.h",
+          "beforeSha256": "691d5c92e12c090f75f42310a7299aea1c044ab0f195fda9a2161e615191f895",
+          "afterSha256": "c70b270b50770c60bab6d20f2d17e7eb26e85edf8a8ba6b314c8c0982dd69db3"
+        },
+        {
+          "path": "include/box3d/box3d.h",
+          "beforeSha256": "3edb719e280ae09ff6fd225dbab6642ab7f5d68207aebd1a81a7d19827a22574",
+          "afterSha256": "0a1dbc372cbca9d30eee09a7571d20991ef84e8f3d91fb46dfdd21e5e1c42632"
+        },
+        {
+          "path": "src/contact.c",
+          "beforeSha256": "6d13719b6de73d8d2d2b5a7749fa1c4180480191b28afdd2e872aee6fedc9cbe",
+          "afterSha256": "25d910b2c9e99cd2b9b571a45ec9c0161d4681faf04375ca770d4c138402b42b"
+        },
+        {
+          "path": "src/physics_world.c",
+          "beforeSha256": "f96c0a3a11d3b9818ad81df8c44be26bf069a9f11335d7fbcbcbf0d45bcff454",
+          "afterSha256": "c7d679cf8051b59fee54c8b76ee63131f9c8c7d1d01a71f241827e53775939da"
+        }
+      ]
+    },
+    {
+      "id": "checked-hull-cooking-v1",
+      "path": "tools/physics/box3d/patches/checked-hull-cooking.patch",
+      "sha256": "846a7ae09fc5f6f34627ac7e8f7b1ba4eb26356f5f2ba885043b99bfc6953290",
+      "files": [
+        {
+          "path": "src/hull.c",
+          "beforeSha256": "9e062f54d79981d21c0a0bad25c9f995e1d47c8c1b31f01cbf840cc3dacdbde7",
+          "afterSha256": "eba549da27ccc49ebf2759a69077d6b3dc91fc77ccfdc432c84d2461e2bb222c"
+        },
+        {
+          "path": "include/box3d/collision.h",
+          "beforeSha256": "c1da165f20285470075e1a9bed55faae7f29a06c54e0353f95d2ca7a0365242a",
+          "afterSha256": "3d1d298ef76557d9491b25b4376730e6c5213ab5c9bfe2f8941089c64ddce69b"
+        }
+      ]
+    },
+    {
+      "id": "same-world-identity-v1-candidate",
+      "path": "tools/physics/box3d/patches/same-world-identity-v1.candidate.patch",
+      "sha256": "b883298ce8a1a6b9299f067f50927a0f77b7ff110a398ae8ed575913eb9460df",
+      "files": [
+        {
+          "path": "src/physics_world.h",
+          "beforeSha256": "10a71c0b83c4d9c58a7cacce22b7e280c947cc6e63ffa5f3259ae2c679e919cf",
+          "afterSha256": "a578f6d03f376ac362a12a3ff076d68c997cf8351eeeb12b3d72ea9b76d820a9"
+        },
+        {
+          "path": "src/id_pool.h",
+          "beforeSha256": "6f550f715337d37c987f95c4ff93ef25bd8c8883379d044109dbb2261c4487bf",
+          "afterSha256": "53317ddb454e607684c5f571450c4f11e694f198fb561f61ce074b22a41687c7"
+        },
+        {
+          "path": "src/body.c",
+          "beforeSha256": "7fef18daada158a278d99c742111671088fa625df310ea96255831c90bb8f40b",
+          "afterSha256": "915596df4eaac49042b3a3007863b47c5874592a0889c3ed0563890fbf4cef34"
+        },
+        {
+          "path": "src/shape.c",
+          "beforeSha256": "6b6b9dea2161a8ed5e561b4c684311c1ab2f068f62ce25e5b578e435afb7b4fe",
+          "afterSha256": "9a4fe0eafbaa58e81f38f34f11bf7b6011e37ae82b0cfb7a4b1ff22442d0ef26"
+        },
+        {
+          "path": "src/joint.c",
+          "beforeSha256": "7ba2f12e489722f108d628b2530822f6c60c61e4646c8e954ad5670fcbef67ac",
+          "afterSha256": "f1c30cb1d054fc4f94f98fe54b4c9bfbe2436e36d06a0a17edc438247edbc8bb"
+        },
+        {
+          "path": "src/contact.c",
+          "beforeSha256": "25d910b2c9e99cd2b9b571a45ec9c0161d4681faf04375ca770d4c138402b42b",
+          "afterSha256": "0d35916a827a5b4bcf90486ea5ee98434b6bcb5ab7150b71cb06f0b4bd9cf312"
+        },
+        {
+          "path": "src/broad_phase.c",
+          "beforeSha256": "62ee00431501219959d650cacc7c6bff62cd634a43de4c7b905a0ae15e511c37",
+          "afterSha256": "c8904237a542f0d2f03d2b444a33c1d891529123be513211c392add4e9febe0f"
+        },
+        {
+          "path": "src/physics_world.c",
+          "beforeSha256": "c7d679cf8051b59fee54c8b76ee63131f9c8c7d1d01a71f241827e53775939da",
+          "afterSha256": "be26cbe733b13f602a2fb9c53e3ace1388b5b7176aa001ba2e40b583794a9893"
+        },
+        {
+          "path": "include/box3d/box3d.h",
+          "beforeSha256": "0a1dbc372cbca9d30eee09a7571d20991ef84e8f3d91fb46dfdd21e5e1c42632",
+          "afterSha256": "0f3fc2afb18ed81956aa5a4cd80b77027bbe1f677e6767bf99c0ca70bd3850e9"
+        }
+      ]
+    }
+  ]
+}

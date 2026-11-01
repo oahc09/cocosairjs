@@ -1,0 +1,484 @@
+--- a/include/box3d/box3d.h
++++ b/include/box3d/box3d.h
+@@ -59,6 +59,30 @@
+ /// Fault refuses future Step/object creation, but destruction remains available.
+ /// There is no whole-step rollback and no successful partial-step publication.
+ B3_API bool b3World_HasIdentityFault( b3WorldId worldId );
++
++/// Restricted same-world empty-storage restoration. Not a live-world compactor.
++typedef enum b3EmptyTrimResult
++{
++	b3_emptyTrimSuccess = 0,
++	b3_emptyTrimInvalidWorld,
++	b3_emptyTrimLocked,
++	b3_emptyTrimBusy,
++	b3_emptyTrimNonempty,
++	b3_emptyTrimIdentityExhausted,
++	b3_emptyTrimUnacknowledgedEvents,
++	b3_emptyTrimRecording,
++	b3_emptyTrimFaulted,
++	b3_emptyTrimInconsistent
++} b3EmptyTrimResult;
++
++/// Caller must hold the world's exclusive safe point and retire all borrowed native
++/// views. acknowledgeRetiredEvents explicitly acknowledges ALL retained event arrays,
++/// including both end buffers. This never steps, dispatches or synthesizes events.
++/// Refusals do not modify the world. Successful restoration preserves world identity,
++/// configuration, lifetime generation high-water marks, step index and diagnostic
++/// maxima; per-step scratch/debug views are invalidated. Allocation failure is fatal,
++/// not a recoverable status. This candidate is not integrated in the production ABI.
++B3_API b3EmptyTrimResult b3World_TrimEmptyStorage( b3WorldId worldId, bool acknowledgeRetiredEvents );
+ 
+ /// Call this to draw shapes and other debug draw data
+ B3_API void b3World_Draw( b3WorldId worldId, b3DebugDraw* draw, uint64_t maskBits );
+--- a/src/core.c
++++ b/src/core.c
+@@ -151,6 +151,10 @@
+ 		void* ptr = b3_allocFcn( alignedSize, B3_ALIGNMENT );
+ 		b3TracyCAlloc( ptr, size );
+ 
++		if ( ptr == NULL )
++		{
++			abort(); // Allocation failure is fatal; never publish a partially restored world.
++		}
+ 		B3_ASSERT( ptr != NULL );
+ 		B3_ASSERT( ( (uintptr_t)ptr & ( B3_ALIGNMENT - 1 ) ) == 0 );
+ 
+@@ -172,6 +176,11 @@
+ 
+ 	b3TracyCAlloc( ptr, size );
+ 
++	if ( ptr == NULL )
++	{
++		abort(); // Match the custom allocator fatal policy, including release builds.
++	}
++
+ 	B3_ASSERT( ptr != NULL );
+ 	B3_ASSERT( ( (uintptr_t)ptr & ( B3_ALIGNMENT - 1 ) ) == 0 );
+ 
+--- a/src/physics_world.c
++++ b/src/physics_world.c
+@@ -207,62 +207,27 @@
+ 	b3Array_Destroy( world->sensorTaskContexts );
+ }
+ 
+-b3WorldId b3CreateWorld( const b3WorldDef* def )
+-{
+-	B3_CHECK_DEF( def );
+-
+-	B3_ASSERT( B3_LINEAR_SLOP <= B3_MESH_REST_OFFSET );
+-	B3_ASSERT( B3_MESH_REST_OFFSET < B3_SPECULATIVE_DISTANCE );
+-
+-	int worldId = B3_NULL_INDEX;
+-	for ( int i = 0; i < B3_MAX_WORLDS; ++i )
+-	{
+-		if ( b3_worlds[i].inUse == false )
+-		{
+-			worldId = i;
+-			break;
+-		}
+-	}
+-
+-	if ( worldId == B3_NULL_INDEX )
+-	{
+-		b3Log( "B3_MAX_WORLDS of %d exceeded!!!", B3_MAX_WORLDS );
+-		B3_ASSERT( worldId != B3_NULL_INDEX );
+-		return (b3WorldId){ 0 };
+-	}
+-
+-	// b3Log( "b3_lengthUnitsPerMeter = %g", b3_lengthUnitsPerMeter );
+-
+-	int oldCount = b3AtomicFetchAddInt( &b3_worldCount, 1 );
+-	b3_maxWorldCount = b3MaxInt( b3_maxWorldCount, oldCount + 1 );
+-
+-	// b3Log( "Created world %d", worldId );
+-
+-	b3InitializeContactRegisters();
+-
+-	b3World* world = b3_worlds + worldId;
+-	uint16_t revision = world->generation;
+-
+-	memset( world, 0, sizeof( b3World ) );
+-
+-	world->simdWidth = b3GetSIMDWidth();
+-
+-	world->worldId = (uint16_t)worldId;
+-	world->generation = revision;
+-	world->inUse = true;
+-
++static void b3CreateEmptyDebugStorage( b3World* world )
++{
++	world->debugBodySet = b3CreateBitSet( 256 );
++	world->debugJointSet = b3CreateBitSet( 256 );
++	world->debugContactSet = b3CreateBitSet( 256 );
++	world->debugIslandSet = b3CreateBitSet( 256 );
++}
++
++static void b3CreateEmptyStorage( b3World* world, const b3Capacity* capacity )
++{
+ 	world->stack = b3CreateStack( 2048 );
+ 
+ 	b3Array_Reserve( world->manifoldAllocators, 16 );
+-	world->manifoldAllocatorMutex = b3CreateMutex();
+-
+-	b3CreateBroadPhase( &world->broadPhase, &def->capacity );
++
++	b3CreateBroadPhase( &world->broadPhase, capacity );
+ 	b3CreateGraph( &world->constraintGraph, 16 );
+ 
+ 	// pools
+ 	world->bodyIdPool = b3CreateIdPool();
+ 
+-	int bodyCapacity = b3MaxInt( 16, def->capacity.staticBodyCount + def->capacity.dynamicBodyCount );
++	int bodyCapacity = b3MaxInt( 16, capacity->staticBodyCount + capacity->dynamicBodyCount );
+ 	b3Array_Reserve( world->bodies, bodyCapacity );
+ 	b3Array_Reserve( world->solverSets, 8 );
+ 
+@@ -273,7 +238,7 @@
+ 	// static set
+ 	set.setIndex = b3AllocId( &world->solverSetIdPool );
+ 	b3Array_Push( world->solverSets, set );
+-	b3Array_Reserve( world->solverSets.data[b3_staticSet].bodySims, b3MaxInt( 16, def->capacity.staticBodyCount ) );
++	b3Array_Reserve( world->solverSets.data[b3_staticSet].bodySims, b3MaxInt( 16, capacity->staticBodyCount ) );
+ 	B3_ASSERT( world->solverSets.data[b3_staticSet].setIndex == b3_staticSet );
+ 
+ 	// disabled set
+@@ -284,14 +249,14 @@
+ 	// awake set
+ 	set.setIndex = b3AllocId( &world->solverSetIdPool );
+ 	b3Array_Push( world->solverSets, set );
+-	b3Array_Reserve( world->solverSets.data[b3_awakeSet].bodySims, b3MaxInt( 16, def->capacity.dynamicBodyCount ) );
+-	b3Array_Reserve( world->solverSets.data[b3_awakeSet].bodyStates, b3MaxInt( 16, def->capacity.dynamicBodyCount ) );
+-	b3Array_Reserve( world->solverSets.data[b3_awakeSet].contactIndices, b3MaxInt( 16, def->capacity.contactCount ) );
++	b3Array_Reserve( world->solverSets.data[b3_awakeSet].bodySims, b3MaxInt( 16, capacity->dynamicBodyCount ) );
++	b3Array_Reserve( world->solverSets.data[b3_awakeSet].bodyStates, b3MaxInt( 16, capacity->dynamicBodyCount ) );
++	b3Array_Reserve( world->solverSets.data[b3_awakeSet].contactIndices, b3MaxInt( 16, capacity->contactCount ) );
+ 	B3_ASSERT( world->solverSets.data[b3_awakeSet].setIndex == b3_awakeSet );
+ 
+ 	world->shapeIdPool = b3CreateIdPool();
+ 
+-	int shapeCapacity = b3MaxInt( 16, def->capacity.staticShapeCount + def->capacity.dynamicShapeCount );
++	int shapeCapacity = b3MaxInt( 16, capacity->staticShapeCount + capacity->dynamicShapeCount );
+ 	b3Array_Reserve( world->shapes, shapeCapacity );
+ 	b3Array_Reserve( world->fatAABBs, shapeCapacity );
+ 
+@@ -301,13 +266,13 @@
+ 	world->names = b3CreateNameCache();
+ 
+ 	world->contactIdPool = b3CreateIdPool();
+-	b3Array_Reserve( world->contacts, b3MaxInt( 16, def->capacity.contactCount ) );
++	b3Array_Reserve( world->contacts, b3MaxInt( 16, capacity->contactCount ) );
+ 
+ 	world->jointIdPool = b3CreateIdPool();
+ 	b3Array_Reserve( world->joints, 16 );
+ 
+ 	world->islandIdPool = b3CreateIdPool();
+-	b3Array_Reserve( world->islands, b3MaxInt( 16, def->capacity.dynamicBodyCount ) );
++	b3Array_Reserve( world->islands, b3MaxInt( 16, capacity->dynamicBodyCount ) );
+ 
+ 	b3Array_Reserve( world->sensors, 4 );
+ 
+@@ -320,6 +285,55 @@
+ 	b3Array_Reserve( world->contactEndEvents[1], 4 );
+ 	b3Array_Reserve( world->contactHitEvents, 4 );
+ 	b3Array_Reserve( world->jointEvents, 4 );
++}
++
++b3WorldId b3CreateWorld( const b3WorldDef* def )
++{
++	B3_CHECK_DEF( def );
++
++	B3_ASSERT( B3_LINEAR_SLOP <= B3_MESH_REST_OFFSET );
++	B3_ASSERT( B3_MESH_REST_OFFSET < B3_SPECULATIVE_DISTANCE );
++
++	int worldId = B3_NULL_INDEX;
++	for ( int i = 0; i < B3_MAX_WORLDS; ++i )
++	{
++		if ( b3_worlds[i].inUse == false )
++		{
++			worldId = i;
++			break;
++		}
++	}
++
++	if ( worldId == B3_NULL_INDEX )
++	{
++		b3Log( "B3_MAX_WORLDS of %d exceeded!!!", B3_MAX_WORLDS );
++		B3_ASSERT( worldId != B3_NULL_INDEX );
++		return (b3WorldId){ 0 };
++	}
++
++	// b3Log( "b3_lengthUnitsPerMeter = %g", b3_lengthUnitsPerMeter );
++
++	int oldCount = b3AtomicFetchAddInt( &b3_worldCount, 1 );
++	b3_maxWorldCount = b3MaxInt( b3_maxWorldCount, oldCount + 1 );
++
++	// b3Log( "Created world %d", worldId );
++
++	b3InitializeContactRegisters();
++
++	b3World* world = b3_worlds + worldId;
++	uint16_t revision = world->generation;
++
++	memset( world, 0, sizeof( b3World ) );
++
++	world->simdWidth = b3GetSIMDWidth();
++
++	world->worldId = (uint16_t)worldId;
++	world->generation = revision;
++	world->inUse = true;
++
++	world->creationCapacity = def->capacity;
++	b3CreateEmptyStorage( world, &world->creationCapacity );
++	world->manifoldAllocatorMutex = b3CreateMutex();
+ 	world->endEventArrayIndex = 0;
+ 
+ 	world->stepIndex = 0;
+@@ -394,16 +408,209 @@
+ 
+ 	b3CreateWorkerContexts( world );
+ 
+-	world->debugBodySet = b3CreateBitSet( 256 );
+-	world->debugJointSet = b3CreateBitSet( 256 );
+-	world->debugContactSet = b3CreateBitSet( 256 );
+-	world->debugIslandSet = b3CreateBitSet( 256 );
++	b3CreateEmptyDebugStorage( world );
+ 	world->createDebugShape = def->createDebugShape;
+ 	world->destroyDebugShape = def->destroyDebugShape;
+ 	world->userDebugShapeContext = def->userDebugShapeContext;
+ 
+ 	// add one to worldId so that 0 represents a null b3WorldId
+ 	return (b3WorldId){ (uint16_t)( worldId + 1 ), world->generation };
++}
++
++
++// Only called after the complete empty-world preflight, or on the retired storage
++// snapshot after commit. No world callbacks, scheduler, mutex or identity is destroyed.
++static void b3DestroyEmptyStorage( b3World* world )
++{
++	b3DestroyWorkerContexts( world );
++	b3DestroyBitSet( &world->debugBodySet );
++	b3DestroyBitSet( &world->debugJointSet );
++	b3DestroyBitSet( &world->debugContactSet );
++	b3DestroyBitSet( &world->debugIslandSet );
++	b3Array_Destroy( world->bodyMoveEvents );
++	b3Array_Destroy( world->sensorBeginEvents );
++	b3Array_Destroy( world->sensorEndEvents[0] );
++	b3Array_Destroy( world->sensorEndEvents[1] );
++	b3Array_Destroy( world->contactBeginEvents );
++	b3Array_Destroy( world->contactEndEvents[0] );
++	b3Array_Destroy( world->contactEndEvents[1] );
++	b3Array_Destroy( world->contactHitEvents );
++	b3Array_Destroy( world->jointEvents );
++	b3Array_Destroy( world->sensors );
++	b3Array_Destroy( world->bodies );
++	b3Array_Destroy( world->shapes );
++	b3Array_Destroy( world->fatAABBs );
++	b3Array_Destroy( world->contacts );
++	b3Array_Destroy( world->joints );
++	for ( int i = 0; i < world->islands.count; ++i )
++	{
++		b3Array_Destroy( world->islands.data[i].bodies );
++		b3Array_Destroy( world->islands.data[i].contacts );
++		b3Array_Destroy( world->islands.data[i].joints );
++	}
++	b3Array_Destroy( world->islands );
++	for ( int i = 0; i < world->solverSets.count; ++i )
++	{
++		b3SolverSet* set = world->solverSets.data + i;
++		b3Array_Destroy( set->bodySims );
++		b3Array_Destroy( set->bodyStates );
++		b3Array_Destroy( set->contactIndices );
++		b3Array_Destroy( set->jointSims );
++		b3Array_Destroy( set->islandSims );
++	}
++	b3Array_Destroy( world->solverSets );
++	b3DestroyGraph( &world->constraintGraph );
++	b3DestroyBroadPhase( &world->broadPhase );
++	b3DestroyIdPool( &world->bodyIdPool );
++	b3DestroyIdPool( &world->shapeIdPool );
++	b3DestroyIdPool( &world->contactIdPool );
++	b3DestroyIdPool( &world->jointIdPool );
++	b3DestroyIdPool( &world->islandIdPool );
++	b3DestroyIdPool( &world->solverSetIdPool );
++	for ( int i = 0; i < world->manifoldAllocators.count; ++i )
++	{
++		b3DestroyBlockAllocator( world->manifoldAllocators.data + i );
++	}
++	b3Array_Destroy( world->manifoldAllocators );
++	b3HullMap_cleanup( world->hullDatabase );
++	b3Free( world->hullDatabase, sizeof( b3HullMap ) );
++	b3DestroyNameCache( &world->names );
++	b3DestroyStack( &world->stack );
++}
++
++static bool b3HasRetainedEvents( const b3World* world )
++{
++	return world->bodyMoveEvents.count != 0 || world->sensorBeginEvents.count != 0 ||
++		world->sensorEndEvents[0].count != 0 || world->sensorEndEvents[1].count != 0 ||
++		world->contactBeginEvents.count != 0 || world->contactEndEvents[0].count != 0 ||
++		world->contactEndEvents[1].count != 0 || world->contactHitEvents.count != 0 || world->jointEvents.count != 0;
++}
++
++b3EmptyTrimResult b3World_TrimEmptyStorage( b3WorldId worldId, bool acknowledgeRetiredEvents )
++{
++	// IsValid must precede access: the asserting unlocked accessor is not a probe.
++	if ( b3World_IsValid( worldId ) == false ) return b3_emptyTrimInvalidWorld;
++	b3World* world = b3GetWorldFromId( worldId );
++	if ( world->locked ) return b3_emptyTrimLocked;
++	if ( world->identity.contactExhausted != 0 ) return b3_emptyTrimFaulted;
++	if ( world->activeTaskCount != 0 || world->userTreeTask != NULL || world->broadPhase.movedSiblings != NULL ||
++		world->splitIslandId != B3_NULL_INDEX ||
++		world->stack.allocation != 0 || world->stack.index != 0 || world->stack.entryCount != 0 ) return b3_emptyTrimBusy;
++	if ( world->recording != NULL ) return b3_emptyTrimRecording;
++	if ( b3GetIdCount( &world->bodyIdPool ) != 0 || b3GetIdCount( &world->shapeIdPool ) != 0 ||
++		b3GetIdCount( &world->jointIdPool ) != 0 || b3GetIdCount( &world->contactIdPool ) != 0 ||
++		b3GetIdCount( &world->islandIdPool ) != 0 || world->sensors.count != 0 || world->compoundShapeCount != 0 )
++		return b3_emptyTrimNonempty;
++	for ( int i = 0; i < b3_identityKindCount; ++i )
++	{
++		uint32_t maximum = i == b3_contactIdentity ? UINT32_MAX : UINT16_MAX;
++		if ( world->identity.high[i] >= maximum ) return b3_emptyTrimIdentityExhausted;
++		if ( world->identity.floor[i] > world->identity.high[i] ) return b3_emptyTrimInconsistent;
++	}
++	if ( world->bodies.count != world->bodyIdPool.nextIndex || world->shapes.count != world->shapeIdPool.nextIndex ||
++		world->contacts.count != world->contactIdPool.nextIndex || world->joints.count != world->jointIdPool.nextIndex ||
++		world->islands.count != world->islandIdPool.nextIndex ||
++		b3GetIdCount( &world->solverSetIdPool ) != b3_firstSleepingSet || world->solverSets.count < b3_firstSleepingSet ||
++		world->solverSets.count != world->solverSetIdPool.nextIndex || world->hullDatabase == NULL ||
++		b3HullMap_size( (b3HullMap*)world->hullDatabase ) != 0 || world->broadPhase.pairSet.count != 0 ||
++		world->workerCount < 1 || world->taskContexts.count != world->workerCount ||
++		world->sensorTaskContexts.count != world->workerCount ) return b3_emptyTrimInconsistent;
++	for ( int i = 0; i < world->bodies.count; ++i )
++		if ( world->bodies.data[i].id != B3_NULL_INDEX || world->bodies.data[i].generation < world->identity.floor[b3_bodyIdentity] ||
++			world->bodies.data[i].generation > world->identity.high[b3_bodyIdentity] ) return b3_emptyTrimInconsistent;
++	for ( int i = 0; i < world->shapes.count; ++i )
++		if ( world->shapes.data[i].id != B3_NULL_INDEX || world->shapes.data[i].generation < world->identity.floor[b3_shapeIdentity] ||
++			world->shapes.data[i].generation > world->identity.high[b3_shapeIdentity] ) return b3_emptyTrimInconsistent;
++	for ( int i = 0; i < world->contacts.count; ++i )
++		if ( world->contacts.data[i].contactId != B3_NULL_INDEX || world->contacts.data[i].generation < world->identity.floor[b3_contactIdentity] ||
++			world->contacts.data[i].generation > world->identity.high[b3_contactIdentity] ) return b3_emptyTrimInconsistent;
++	for ( int i = 0; i < world->joints.count; ++i )
++		if ( world->joints.data[i].jointId != B3_NULL_INDEX || world->joints.data[i].generation < world->identity.floor[b3_jointIdentity] ||
++			world->joints.data[i].generation > world->identity.high[b3_jointIdentity] ) return b3_emptyTrimInconsistent;
++	for ( int i = 0; i < world->islands.count; ++i )
++	{
++		b3Island* island = world->islands.data + i;
++		if ( island->islandId != B3_NULL_INDEX || island->bodies.count != 0 || island->contacts.count != 0 ||
++			island->joints.count != 0 ) return b3_emptyTrimInconsistent;
++	}
++	for ( int i = 0; i < world->solverSets.count; ++i )
++	{
++		b3SolverSet* set = world->solverSets.data + i;
++		if ( set->setIndex != ( i < b3_firstSleepingSet ? i : B3_NULL_INDEX ) || set->bodySims.count != 0 ||
++			set->bodyStates.count != 0 || set->jointSims.count != 0 || set->contactIndices.count != 0 ||
++			set->islandSims.count != 0 ) return b3_emptyTrimInconsistent;
++	}
++	for ( int i = 0; i < b3_bodyTypeCount; ++i )
++		if ( world->broadPhase.trees[i].proxyCount != 0 ) return b3_emptyTrimInconsistent;
++	for ( int i = 0; i < B3_GRAPH_COLOR_COUNT; ++i )
++	{
++		b3GraphColor* color = world->constraintGraph.colors + i;
++		if ( color->jointSims.count != 0 || color->convexContacts.count != 0 || color->contacts.count != 0 )
++			return b3_emptyTrimInconsistent;
++		for ( uint32_t j = 0; j < color->bodySet.blockCount; ++j )
++			if ( color->bodySet.bits[j] != 0 ) return b3_emptyTrimInconsistent;
++	}
++	for ( int i = 0; i < world->manifoldAllocators.count; ++i )
++		if ( world->manifoldAllocators.data[i].allocationCount != 0 ) return b3_emptyTrimInconsistent;
++	for ( int i = 0; i < world->workerCount; ++i )
++		if ( world->taskContexts.data[i].arena.shared == NULL ) return b3_emptyTrimInconsistent;
++	// Joined per-step worker scratch and graph borrowed pointers may be stale: they
++	// are not live entities. Explicit acknowledgement retires all transient views.
++	if ( acknowledgeRetiredEvents == false && b3HasRetainedEvents( world ) ) return b3_emptyTrimUnacknowledgedEvents;
++
++	// All refusal paths precede lock, allocation, event ACK, generation floors and frees.
++	// Allocator failure is explicitly fatal, never a recoverable partial-success return.
++	world->locked = true;
++	b3World replacement = { 0 };
++	replacement.workerCount = world->workerCount;
++	b3CreateEmptyStorage( &replacement, &world->creationCapacity );
++	b3CreateWorkerContexts( &replacement );
++	b3CreateEmptyDebugStorage( &replacement );
++	replacement.stack.maxAllocation = world->stack.maxAllocation;
++	for ( int i = 0; i < world->workerCount; ++i )
++		replacement.taskContexts.data[i].arena.shared->peakDemand = world->taskContexts.data[i].arena.shared->peakDemand;
++
++	// Only container ownership changes. This is NOT memset/replacement of the world.
++	b3World retired = *world;
++	world->stack = replacement.stack;
++	world->broadPhase = replacement.broadPhase;
++	world->constraintGraph = replacement.constraintGraph;
++	world->manifoldAllocators = replacement.manifoldAllocators;
++	world->bodyIdPool = replacement.bodyIdPool;
++	world->bodies = replacement.bodies;
++	world->solverSetIdPool = replacement.solverSetIdPool;
++	world->solverSets = replacement.solverSets;
++	world->jointIdPool = replacement.jointIdPool;
++	world->joints = replacement.joints;
++	world->contactIdPool = replacement.contactIdPool;
++	world->contacts = replacement.contacts;
++	world->islandIdPool = replacement.islandIdPool;
++	world->islands = replacement.islands;
++	world->shapeIdPool = replacement.shapeIdPool;
++	world->shapes = replacement.shapes;
++	world->fatAABBs = replacement.fatAABBs;
++	world->hullDatabase = replacement.hullDatabase;
++	world->names = replacement.names;
++	world->sensors = replacement.sensors;
++	world->taskContexts = replacement.taskContexts;
++	world->sensorTaskContexts = replacement.sensorTaskContexts;
++	world->bodyMoveEvents = replacement.bodyMoveEvents;
++	world->sensorBeginEvents = replacement.sensorBeginEvents;
++	world->contactBeginEvents = replacement.contactBeginEvents;
++	world->sensorEndEvents[0] = replacement.sensorEndEvents[0];
++	world->sensorEndEvents[1] = replacement.sensorEndEvents[1];
++	world->contactEndEvents[0] = replacement.contactEndEvents[0];
++	world->contactEndEvents[1] = replacement.contactEndEvents[1];
++	world->contactHitEvents = replacement.contactHitEvents;
++	world->jointEvents = replacement.jointEvents;
++	world->debugBodySet = replacement.debugBodySet;
++	world->debugJointSet = replacement.debugJointSet;
++	world->debugContactSet = replacement.debugContactSet;
++	world->debugIslandSet = replacement.debugIslandSet;
++	for ( int i = 0; i < b3_identityKindCount; ++i ) world->identity.floor[i] = world->identity.high[i];
++	b3DestroyEmptyStorage( &retired );
++	world->locked = false;
++	return b3_emptyTrimSuccess;
+ }
+ 
+ void b3DestroyWorld( b3WorldId worldId )
+@@ -2389,10 +2596,11 @@
+ {
+ 	// Fixed embedded identity storage is present and counted from world creation.
+ 	// This ledger contribution is not a module allocator request.
+-	uint64_t total = sizeof( world->identity );
++	uint64_t total = sizeof( world->identity ) + sizeof( world->creationCapacity );
+ 	if ( log )
+ 	{
+ 		b3Log( "identity metadata: %d", (int)sizeof( world->identity ) );
++		b3Log( "creation capacity policy: %d", (int)sizeof( world->creationCapacity ) );
+ 	}
+ 
+ 	// id pools
+--- a/src/physics_world.h
++++ b/src/physics_world.h
+@@ -123,7 +123,7 @@
+ b3DeclareArray( b3TaskContext );
+ 
+ // AIR same-world identity history. Fixed, explicitly accounted storage.
+-// No trim/floor setter is enabled by this candidate.
++// Floors advance only through the restricted empty-storage operation.
+ enum b3IdentityKind
+ {
+ 	b3_bodyIdentity = 0,
+@@ -145,6 +145,9 @@
+ typedef struct b3World
+ {
+ 	b3IdentityState identity;
++
++	// Immutable creation reservation policy, explicitly counted from creation.
++	b3Capacity creationCapacity;
+ 	b3Stack stack;
+ 	b3BroadPhase broadPhase;
+ 	b3ConstraintGraph constraintGraph;

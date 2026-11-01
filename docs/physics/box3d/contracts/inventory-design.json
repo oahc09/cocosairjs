@@ -1,0 +1,1095 @@
+{
+  "schemaVersion": 1,
+  "contractVersion": "box3d-rebuild-contract-1",
+  "inventoryFrozen": false,
+  "reason": "Fixed subcase design is explicit; environment/variant and fixture expansion is still required before G0.",
+  "parentCategories": [
+    {
+      "id": "B3-C01",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C02",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C03",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C04",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C05",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C06",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C07",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C08",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C09",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C10",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C11",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C12",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C13",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C14",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C15",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C16",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C17",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C18",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C19",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C20",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C21",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C22",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C23",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C24",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C25",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C26",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C27",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C28",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C29",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C30",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C31",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C32",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C33",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C34",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C35",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C36",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "WASM-01",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "WASM-02",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "WASM-03",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "WASM-04",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "WASM-05",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "WASM-06",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "WASM-07",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "WASM-08",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "WASM-09",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "WASM-10",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "WASM-11",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "WASM-12",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "WASM-13",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "WASM-14",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "WASM-15",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-I01",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-I02",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-I03",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-I04",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-I05",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-I06",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-I07",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-I08",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-I09",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-I10",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-A01",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-A02",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-A03",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-A04",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-A05",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-A06",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-A07",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-A08",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-A09",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-A10",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-BIZ01",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-BIZ02",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-BIZ03",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-BIZ04",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-BIZ05",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-BIZ06",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-BIZ07",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-BIZ08",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-P01",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-P02",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-P03",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-P04",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-P05",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-P06",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-P07",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-AG01",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-AG02",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-AG03",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-AG04",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-AG05",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    }
+  ],
+  "requiredSubcaseDesign": [
+    {
+      "id": "B3-C01-EVENTS",
+      "parent": "B3-C01",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C01-TIME",
+      "parent": "B3-C01",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C04-GRAVITY",
+      "parent": "B3-C04",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C04-SLEEP",
+      "parent": "B3-C04",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C06-DAMPING-ANGULAR",
+      "parent": "B3-C06",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C06-DAMPING-LINEAR",
+      "parent": "B3-C06",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C06-DAMPING-RUNTIME",
+      "parent": "B3-C06",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C11-TARGET-CREATE",
+      "parent": "B3-C11",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C11-TARGET-LIFETIME-APP",
+      "parent": "B3-C11",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C11-TARGET-LIFETIME-BASIC",
+      "parent": "B3-C11",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C11-TARGET-LIFETIME-FULL",
+      "parent": "B3-C11",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C11-TARGET-TICK-BASIC",
+      "parent": "B3-C11",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C11-TARGET-TICK-EVENTS",
+      "parent": "B3-C11",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C11-TELEPORT",
+      "parent": "B3-C11",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C13-GEOMETRY",
+      "parent": "B3-C13",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C13-QUERY",
+      "parent": "B3-C13",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C14-RECOVERY-PENDING-NULL",
+      "parent": "B3-C14",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C14-RECOVERY-ROLLBACK-MESH-IDENTITY",
+      "parent": "B3-C14",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C16-GEOMETRY",
+      "parent": "B3-C16",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C16-QUERY",
+      "parent": "B3-C16",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C16-SAMPLED-PEAK",
+      "parent": "B3-C16",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C16-SUSTAINED-DURATION-1",
+      "parent": "B3-C16",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C17-GEOMETRY",
+      "parent": "B3-C17",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C17-QUERY",
+      "parent": "B3-C17",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C20-APP",
+      "parent": "B3-C20",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C20-LOWLEVEL",
+      "parent": "B3-C20",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C21-SNAPSHOT",
+      "parent": "B3-C21",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C22-SENSOR-TRANSIENT",
+      "parent": "B3-C22",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C26-BACKFACE",
+      "parent": "B3-C26",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C26-CAPSULE",
+      "parent": "B3-C26",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C26-DIR",
+      "parent": "B3-C26",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C26-ENDPOINT",
+      "parent": "B3-C26",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C26-INSIDE-RAY",
+      "parent": "B3-C26",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C26-INSIDE-SWEEP",
+      "parent": "B3-C26",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C26-INVALID",
+      "parent": "B3-C26",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C26-TIE",
+      "parent": "B3-C26",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C26-TRIGGER",
+      "parent": "B3-C26",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C26-ZERO",
+      "parent": "B3-C26",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C28-SENSOR-CCD",
+      "parent": "B3-C28",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C28-SENSOR-CCD-CAPACITY",
+      "parent": "B3-C28",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C28-SENSOR-CCD-EVENT-FLAGS",
+      "parent": "B3-C28",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C28-SENSOR-CCD-MOVING-SENSOR",
+      "parent": "B3-C28",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C28-SENSOR-CCD-OCCLUSION",
+      "parent": "B3-C28",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C28-SENSOR-CCD-SOLID-STATIC-SENSOR",
+      "parent": "B3-C28",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C29-ATTACH-POSE",
+      "parent": "B3-C29",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C30-EXT",
+      "parent": "B3-C30",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C30-PUBLIC",
+      "parent": "B3-C30",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-C36-SETTER-ROLLBACK",
+      "parent": "B3-C36",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-I03-COEXIST-PREPARE",
+      "parent": "B3-I03",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-I04-COEXIST-COMPONENT",
+      "parent": "B3-I04",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-I04-COEXIST-LOWLEVEL",
+      "parent": "B3-I04",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-I05-BASIC",
+      "parent": "B3-I05",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-I05-FULL",
+      "parent": "B3-I05",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-I06-BASIC",
+      "parent": "B3-I06",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-I06-COEXIST-BASIC",
+      "parent": "B3-I06",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-I06-COEXIST-FULL",
+      "parent": "B3-I06",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-I06-FULL",
+      "parent": "B3-I06",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-I09-MT",
+      "parent": "B3-I09",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-I09-ST",
+      "parent": "B3-I09",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-I10-COEXIST-PACK",
+      "parent": "B3-I10",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-I10-CORE",
+      "parent": "B3-I10",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-I10-FULL",
+      "parent": "B3-I10",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "WASM-06-AIR-MT",
+      "parent": "WASM-06",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "WASM-06-AIR-ST",
+      "parent": "WASM-06",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "WASM-06-BINDING",
+      "parent": "WASM-06",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "WASM-07-AIR",
+      "parent": "WASM-07",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "WASM-07-BINDING",
+      "parent": "WASM-07",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "WASM-07-PACK-CORE",
+      "parent": "WASM-07",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "WASM-07-PACK-FULL",
+      "parent": "WASM-07",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "WASM-11-APP",
+      "parent": "WASM-11",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "WASM-11-ASSETS",
+      "parent": "WASM-11",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "WASM-11-BINDING",
+      "parent": "WASM-11",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "WASM-11-MT",
+      "parent": "WASM-11",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "WASM-12-BINDING",
+      "parent": "WASM-12",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "WASM-12-EVENTS",
+      "parent": "WASM-12",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "WASM-12-MT",
+      "parent": "WASM-12",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "WASM-13-AIR-MT",
+      "parent": "WASM-13",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "WASM-13-AIR-ST",
+      "parent": "WASM-13",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "WASM-13-AIR-ST-DEVICE",
+      "parent": "WASM-13",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "WASM-13-AIR-ST-HOST",
+      "parent": "WASM-13",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "WASM-13-BINDING",
+      "parent": "WASM-13",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "WASM-14-MT",
+      "parent": "WASM-14",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "WASM-14-REPLAY",
+      "parent": "WASM-14",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "WASM-14-ST",
+      "parent": "WASM-14",
+      "required": true,
+      "status": "NOT_RUN"
+    }
+  ],
+  "requiredEnvironmentClasses": [
+    "Node real WASM",
+    "desktop Chrome",
+    "desktop Firefox",
+    "desktop Safari",
+    "Android WebView real device",
+    "iOS Safari real device"
+  ],
+  "debugReleaseCriticalCoverage": "Freeze explicit critical cases in final expanded inventory; no native-GCC substitution.",
+  "historical861CellsImported": false,
+  "expandedRequiredCellCount": null,
+  "auxiliaryRequiredTests": [
+    {
+      "id": "B3-U01",
+      "required": true,
+      "status": "NOT_RUN",
+      "firstPhase": "M2",
+      "firstTask": "T09",
+      "realNativeRequired": true,
+      "countedAsNewParentCategory": false,
+      "contract": "Actual binding body under the real PhysicsSystem: call order, one native step per fixed tick, dt, pause and accumulator. No dependency on unimplemented Collider/event adapters.",
+      "sourceSection": "v1.2 §9.1 fixed subcases"
+    },
+    {
+      "id": "B3-U02",
+      "required": true,
+      "status": "NOT_RUN",
+      "firstPhase": "M2",
+      "firstTask": "T12",
+      "realNativeRequired": true,
+      "countedAsNewParentCategory": false,
+      "contract": "Actual minimal native body/shape ownership, safe queue, repeated disposal and app-close guards. Not a substitute for later event-callback destruction cases.",
+      "sourceSection": "v1.2 §9.1 fixed subcases"
+    }
+  ]
+}

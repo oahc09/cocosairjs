@@ -1,0 +1,23 @@
+{
+  "consumerScaffold": {
+    "path": "tools/verify/box3d/campaign-runner/cases/cohort-v1/collision/consumer.mjs",
+    "sha256": "04e52bc884488321728ae824d8dc739c16d83c2bcb607c2cb2d21cbccc886da0"
+  },
+  "analyticReference": {
+    "path": "tools/verify/box3d/sweep-overlap-qualification/public-query.test.ts",
+    "commit": "a01996d0940857481738cd5328c1a5c7ea7b8adf"
+  },
+  "policyFiles": [
+    {
+      "path": "examples/box3d-gift-workshop/src/box-support-policy.mjs",
+      "sha256": "46fa88bca95f39a0c3ba45df4e5f2c975b917a9a15164ed030ab90b3d6269bff",
+      "capturedAtCommit": "867826ed3190bbb1f316dd08eaeb29eca4dbabaf"
+    },
+    {
+      "path": "examples/box3d-gift-workshop/src/stations.mjs",
+      "sha256": "c79a7c4e113bd7c66055f51358d860826c23de2883c2fa50a3509913c02b96fa",
+      "capturedAtCommit": "867826ed3190bbb1f316dd08eaeb29eca4dbabaf"
+    }
+  ],
+  "scope": "New production ESM consumer. No test adapter/native handles. Original scaffold and source fixtures unchanged."
+}

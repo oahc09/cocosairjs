@@ -1,0 +1,622 @@
+{
+  "schemaVersion": 1,
+  "protocolVersion": "gift-workshop-input-1",
+  "configVersion": "rebuild-design-20261022-1",
+  "status": "SPECIFIED_NOT_RUN",
+  "sourceHashes": {
+    "ai/plans/box3d-v1.2-reference.md": "17b4dcf0d8acbe0ed72f81ab4d3fc53c6a51f705d573699f0d50137e4bf00c46",
+    "docs/physics/box3d/contracts/gift-workshop/config.json": "7456954e0c225c6aa4ee635645624bb3a085235f76ac3d5b1271d44c824e5827",
+    "docs/physics/box3d/contracts/gift-workshop/layouts.json": "eb483a944aef54bb5c5e1d3f2d4d93ff8e015e3ba44326dc87446b9587fbf123",
+    "docs/physics/box3d/contracts/gift-workshop/scenarios.json": "2d3b4c80e95e12cad9957045307bc795f8d32debd96b7e4f6521291959981bd5",
+    "docs/physics/box3d/contracts/gift-workshop/README.md": "f9e1eec50831135ed36a8dfb74984e7f5da59005fe68ea3ae79f865feae3dd4e"
+  },
+  "scope": "M0 public-input specification for T33 implementation and T34 execution; not a runtime implementation, successful trace, or recovered historical input.",
+  "envelopeSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "protocolVersion",
+      "configVersion",
+      "layoutId",
+      "roundGeneration",
+      "inputGeneration",
+      "tick",
+      "seq",
+      "source",
+      "command",
+      "payload"
+    ],
+    "properties": {
+      "protocolVersion": {
+        "const": "gift-workshop-input-1"
+      },
+      "configVersion": {
+        "type": "string",
+        "minLength": 1
+      },
+      "layoutId": {
+        "type": "string",
+        "minLength": 1
+      },
+      "roundGeneration": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 9007199254740991
+      },
+      "inputGeneration": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 9007199254740991
+      },
+      "tick": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9007199254740991
+      },
+      "seq": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9007199254740991
+      },
+      "source": {
+        "type": "string",
+        "enum": ["keyboard", "touch", "ui", "runner", "system"]
+      },
+      "command": {
+        "type": "string",
+        "enum": [
+          "set-axes",
+          "key-edge",
+          "attach-release",
+          "submit-order",
+          "pause",
+          "resume",
+          "clear-input",
+          "recover-dropped",
+          "retry-order",
+          "clear-channel",
+          "start-round",
+          "enter-tutorial",
+          "replay-round",
+          "reset-round",
+          "exit-scene",
+          "set-view",
+          "set-muted"
+        ]
+      },
+      "payload": {
+        "type": "object"
+      }
+    }
+  },
+  "clock": {
+    "fixedHz": 60,
+    "solverSubSteps": 4,
+    "roundTicks": 10800,
+    "firstTick": 1,
+    "acceptedTickRule": "tick must equal lastCompletedTick + 1 at admission; no past input, arbitrary future scheduling, render-frame dt, or wall-clock physics stepping. Multiple commands for the next tick are ordered by seq.",
+    "consumeAt": "fixed tick before target submission",
+    "pauseBoundary": "Boundary lane drains before the next fixed step even while paused/READY/RESULT; its tick is lastCompletedTick + 1, but draining it does not step physics or spend gameplay time. Simulation lane is rejected while paused. Resume is therefore reachable without advancing a paused clock.",
+    "shippingElapsedRule": "The accepted submit step counts as shipping elapsed tick 1. After step t, elapsed = t - submitTick + 1. At elapsed 300, process real delivery evidence and atomic commit before BLOCKED. The timeout step is submitTick + 299.",
+    "phaseOrder": [
+      "drain ordered boundary commands; apply lifecycle/clear barriers and reject stale generations",
+      "if running, reduce this tick simulation inputs and submit safe target/constraint requests",
+      "advance exactly one fixed physics tick",
+      "freeze actual contact/trigger/pose observations with originating generations",
+      "evaluate scale and whole-order stability, complete geometry crossings and measured door angle",
+      "atomically commit any eligible two-item shipment; final order immediately locks RESULT victory",
+      "if uncommitted shipping elapsed >= 300, mark BLOCKED",
+      "if round remainingTicks <= 0 and no final-order victory, lock RESULT timeout",
+      "safe post-step destruction and publish read-only diagnostics"
+    ],
+    "remainingTicks": "max(0, 10800 - activeRoundTicks - 300 * recoveries). Pause/recovery work adds no simulation ticks. Recovery penalties are applied exactly once at acceptance; <=0 immediately locks timeout. After RESULT, later commands/events cannot alter the ledger."
+  },
+  "identity": {
+    "seqScope": "Strictly increasing safe integer across this runner/UI session, not reset by retry/replay. Exact duplicate seq returns its previous acknowledgement without side effects; an older nonduplicate/out-of-order seq is rejected. Rejected seq cannot be reused for a different packet.",
+    "roundGeneration": "Public monotone safe integer for each newly created formal/tutorial context, plus READY context identity; reset/replay/start invalidate prior context packets before applying any item operation.",
+    "inputGeneration": "Public monotone epoch advanced on every input-clear, pause, resume, source switch, recovery and scene lifecycle barrier. Buffered packets from earlier epochs are rejected, even if tick and round still match.",
+    "itemGeneration": "Not writable in a public input. Frozen when an actual observation is enqueued, checked against current logical identity on consumption; every restored instance increments it even if native body is reused.",
+    "attemptId": "Read-only opaque monotone attempt epoch within a round; accepted submission has a fresh value and retry invalidates the abandoned attempt before re-enabling input. Never identify an item by native index alone.",
+    "ackFields": ["seq", "accepted", "reason", "roundGeneration", "inputGeneration", "lastCompletedTick", "state"],
+    "rejectionReasons": [
+      "INVALID_ENVELOPE",
+      "INVALID_PAYLOAD",
+      "VERSION_MISMATCH",
+      "STALE_ROUND",
+      "STALE_INPUT_GENERATION",
+      "WRONG_TICK",
+      "OUT_OF_ORDER_SEQ",
+      "STATE_DISALLOWS_COMMAND",
+      "PAUSED",
+      "RECOVERY_IN_PROGRESS",
+      "SCENE_DISPOSED"
+    ]
+  },
+  "axes": {
+    "range": [-1, 1],
+    "space": "world X/Y/Z, not camera-relative",
+    "positive": {
+      "x": "right",
+      "y": "rise",
+      "z": "toward front"
+    },
+    "keyboard": {
+      "x": {
+        "negative": "KeyA",
+        "positive": "KeyD"
+      },
+      "y": {
+        "negative": "KeyQ",
+        "positive": "KeyE"
+      },
+      "z": {
+        "negative": "KeyW",
+        "positive": "KeyS"
+      }
+    },
+    "opposingKeys": "cancel to zero on that axis",
+    "diagonalXZ": "normalize to unit disk before speed conversion",
+    "maxHorizontalMps": 1.2,
+    "maxVerticalMps": 0.6,
+    "maxAccelerationMps2": 2,
+    "accelerationMeaning": "Euclidean velocity-change bound per fixed dt, with horizontal and vertical speed caps also enforced; clears discard pending motion target immediately, no residual axis intent.",
+    "rotationInput": false,
+    "mixing": "Exactly one active movement modality, digital keys or analog axes. Source/modality changes are clear-input barriers; never add joystick and keyboard speeds. key-edge Space remains an action, not a velocity axis."
+  },
+  "commands": [
+    {
+      "id": "set-axes",
+      "lane": "simulation",
+      "allowedStates": ["TUTORIAL", "PACKING"],
+      "payloadSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["x", "y", "z"],
+        "properties": {
+          "x": {
+            "type": "number",
+            "minimum": -1,
+            "maximum": 1
+          },
+          "y": {
+            "type": "number",
+            "minimum": -1,
+            "maximum": 1
+          },
+          "z": {
+            "type": "number",
+            "minimum": -1,
+            "maximum": 1
+          }
+        }
+      },
+      "effect": "Replace continuous analog intent, not pose or velocity. Normalize horizontal length above 1. Persist until replaced or cleared. While SHIPPING/BLOCKED/CLOSING no movement is admitted."
+    },
+    {
+      "id": "key-edge",
+      "lane": "simulation",
+      "allowedStates": ["TUTORIAL", "PACKING"],
+      "payloadSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "down"],
+        "properties": {
+          "code": {
+            "type": "string",
+            "enum": ["KeyW", "KeyA", "KeyS", "KeyD", "KeyQ", "KeyE", "Space"]
+          },
+          "down": {
+            "type": "boolean"
+          }
+        }
+      },
+      "effect": "Update one digital key latch. Repeated down without up is not an edge. Space rising edge dispatches exactly one attach-release operation; falling edge has no pickup effect."
+    },
+    {
+      "id": "attach-release",
+      "lane": "simulation",
+      "allowedStates": ["TUTORIAL", "PACKING"],
+      "payloadSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [],
+        "properties": {}
+      },
+      "effect": "If holding, request safe constraint release; otherwise attempt nearest reachable visible attachment within configured gap. Never move item to head or switch item to kinematic. A miss has no inventory/score effect."
+    },
+    {
+      "id": "submit-order",
+      "lane": "simulation",
+      "allowedStates": ["PACKING"],
+      "payloadSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [],
+        "properties": {}
+      },
+      "effect": "Run real whole-order validation once. One explicit rejected command increments invalidSubmits once with reason. Acceptance freezes a snapshot, not delivery or score."
+    },
+    {
+      "id": "pause",
+      "lane": "boundary",
+      "allowedStates": ["READY", "TUTORIAL", "PACKING", "SHIPPING", "BLOCKED", "CLOSING", "RESULT"],
+      "payloadSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [],
+        "properties": {}
+      },
+      "effect": "Enter pause layer without a physics step; preserve poses and held constraint, clear intent and queued simulation commands, advance inputGeneration."
+    },
+    {
+      "id": "resume",
+      "lane": "boundary",
+      "allowedStates": ["READY", "TUTORIAL", "PACKING", "SHIPPING", "BLOCKED", "CLOSING", "RESULT"],
+      "payloadSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [],
+        "properties": {}
+      },
+      "effect": "Leave pause layer only by fresh explicit UI input. Clear again and advance inputGeneration; no old key/axis/target replays."
+    },
+    {
+      "id": "clear-input",
+      "lane": "boundary",
+      "allowedStates": ["READY", "TUTORIAL", "PACKING", "SHIPPING", "BLOCKED", "CLOSING", "RESULT"],
+      "payloadSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["reason"],
+        "properties": {
+          "reason": {
+            "type": "string",
+            "enum": ["blur", "pointer-release", "pointer-cancel", "lost-pointer-capture", "background", "source-change"]
+          }
+        }
+      },
+      "effect": "Immediately invalidate all continuous intent, key latches and pending movement targets; advance inputGeneration before another step. Background additionally enters pause layer. No release of held Fixed."
+    },
+    {
+      "id": "recover-dropped",
+      "lane": "boundary",
+      "allowedStates": ["PACKING"],
+      "payloadSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [],
+        "properties": {}
+      },
+      "effect": "Visible unified recovery of unshipped dropped instances only. Invalidate affected receipts/candidates, increase each itemGeneration including body reuse, subtract 300 remaining ticks once. No ordinary movement is admitted until recovery completes."
+    },
+    {
+      "id": "retry-order",
+      "lane": "boundary",
+      "allowedStates": ["BLOCKED"],
+      "payloadSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [],
+        "properties": {}
+      },
+      "effect": "Recover original deliveredPending and blocked instances plus current unshipped layout; clear old pending evidence, increase restored item generations and attempt epoch, restore mechanism visibly. Preserve committed ledger and never spawn additional inventory."
+    },
+    {
+      "id": "clear-channel",
+      "lane": "boundary",
+      "allowedStates": ["CLOSING"],
+      "payloadSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [],
+        "properties": {}
+      },
+      "effect": "Explicit visible recovery of unshipped channel obstruction and mechanism only, with same time penalty. Never recreate consumed items or undo committed orders."
+    },
+    {
+      "id": "start-round",
+      "lane": "boundary",
+      "allowedStates": ["READY", "TUTORIAL"],
+      "payloadSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [],
+        "properties": {}
+      },
+      "effect": "Dispose tutorial state if any; create fresh roundGeneration and items from selected profile with tick 0, budget 10800, zero score/counters, empty receipts/snapshots. The next simulated step is tick 1."
+    },
+    {
+      "id": "enter-tutorial",
+      "lane": "boundary",
+      "allowedStates": ["READY"],
+      "payloadSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [],
+        "properties": {}
+      },
+      "effect": "Create separate unscored tutorial context. Its ticks, receipts and generations never enter a formal round."
+    },
+    {
+      "id": "replay-round",
+      "lane": "boundary",
+      "allowedStates": ["RESULT"],
+      "payloadSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [],
+        "properties": {}
+      },
+      "effect": "Invoke unified scene reset to fresh READY, not app.close followed by reuse. Starting again requires start-round and a new roundGeneration."
+    },
+    {
+      "id": "reset-round",
+      "lane": "boundary",
+      "allowedStates": ["TUTORIAL", "PACKING", "SHIPPING", "BLOCKED", "CLOSING"],
+      "payloadSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [],
+        "properties": {}
+      },
+      "effect": "Explicit visible Reset button disposes current round and returns a fresh READY scene. This is scene lifecycle replacement, not an extra edge in the existing business state machine; no partial round is counted as completed."
+    },
+    {
+      "id": "exit-scene",
+      "lane": "boundary",
+      "allowedStates": ["READY", "TUTORIAL", "PACKING", "SHIPPING", "BLOCKED", "CLOSING", "RESULT"],
+      "payloadSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [],
+        "properties": {}
+      },
+      "effect": "Public navigation disposes this scene and its handles/constraints/queued commands. A teardown may be the declared abnormal terminal; it is not a victory or completed order."
+    },
+    {
+      "id": "set-view",
+      "lane": "boundary",
+      "allowedStates": ["READY", "TUTORIAL", "PACKING", "SHIPPING", "BLOCKED", "CLOSING", "RESULT"],
+      "payloadSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["view"],
+        "properties": {
+          "view": {
+            "type": "string",
+            "enum": ["oblique", "top"]
+          }
+        }
+      },
+      "effect": "Change camera presentation only, with no physics or clock mutation."
+    },
+    {
+      "id": "set-muted",
+      "lane": "boundary",
+      "allowedStates": ["READY", "TUTORIAL", "PACKING", "SHIPPING", "BLOCKED", "CLOSING", "RESULT"],
+      "payloadSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["muted"],
+        "properties": {
+          "muted": {
+            "type": "boolean"
+          }
+        }
+      },
+      "effect": "Change audio preference only. Audio activation still requires a genuine user interaction; runner input does not impersonate one."
+    }
+  ],
+  "admission": {
+    "rejectUnknownFields": true,
+    "rejectNonFinite": true,
+    "rejectOutOfRangeRatherThanClamp": true,
+    "noTargetItemArgument": true,
+    "safeIntegerOverflow": "Stop recording and require a fresh session; never wrap identities.",
+    "systemSourceCommands": ["clear-input", "pause"],
+    "sameQueueForHumanAndRunner": true,
+    "eventCallbackInput": "A callback may enqueue only for the next not-started fixed tick; it cannot change an already frozen event/step.",
+    "mutualExclusion": "After any lifecycle/recovery/pause/clear barrier, re-read acknowledgement identity before submitting new actions. Commands after an accepted submit in that tick cannot pick up locked items or add to packing. Repeated native keyboard events do not synthesize additional action commands.",
+    "versionMatch": "configVersion/layoutId must match the currently loaded effective profile; profile/config/input/fixture hashes are recorded before scene creation. Derived abnormal profiles cannot submit packets labelled as the base normal profile.",
+    "pauseLayerAllowedBoundaryCommands": [
+      "pause",
+      "resume",
+      "clear-input",
+      "set-view",
+      "set-muted",
+      "reset-round",
+      "replay-round",
+      "exit-scene"
+    ],
+    "protocolRejectionDoesNotCountInvalidSubmit": true,
+    "pickupTieBreak": "Among actual visible reachable attachment candidates within the configured gap, use minimum geometric gap, then stable logical itemId on an exact tie; query and exclude all held/self child shapes. Never pick by native body index.",
+    "controlUnit": "One accepted attach-release or submit-order command is one user action, irrespective of render frames. Packet deduplication and key-edge repeat filtering happen before business counters."
+  },
+  "inputClear": {
+    "triggers": [
+      "blur",
+      "pointer release",
+      "pointer cancel",
+      "lost pointer capture",
+      "pause",
+      "background",
+      "source change",
+      "recovery",
+      "reset",
+      "replay",
+      "scene exit"
+    ],
+    "clearKeys": true,
+    "clearAxes": true,
+    "clearPendingTargets": true,
+    "discardQueuedSimulationCommands": true,
+    "advanceInputGeneration": true,
+    "preserveHeldJointOnOrdinaryPause": true,
+    "resumeRequiresFreshInput": true,
+    "pointerReleaseMeaning": "Touch/control pointer release clears all sustained intent immediately. A keyboard key-up clears its own latch; blur clears all. UI buttons capture their pointer and never leak scene movement."
+  },
+  "forbiddenInputFields": [
+    "position",
+    "rotation",
+    "quaternion",
+    "velocity",
+    "angularVelocity",
+    "itemGeneration",
+    "attemptId",
+    "remainingTicks",
+    "doorAngle",
+    "receipt",
+    "delivered",
+    "completedOrders"
+  ],
+  "forbiddenCommands": [
+    "set-item-pose",
+    "teleport-item",
+    "set-item-velocity",
+    "set-door-angle",
+    "award-receipt",
+    "complete-order",
+    "mark-delivered",
+    "set-time",
+    "inject-event"
+  ],
+  "recoveryOnlyPhysicsWrites": {
+    "entry": "Visible unified recovery/reset lifecycle using public teleportRigidBody; never an input payload containing arbitrary poses.",
+    "logTag": "recoveryReset",
+    "ordinaryInputMayTeleport": false,
+    "pauseInputMayTeleport": false
+  },
+  "requiredObservations": [
+    "protocol/fixture/config/source/build/input hashes",
+    "roundGeneration/inputGeneration/itemGeneration/attemptId",
+    "fixed tick, activeRoundTicks, remainingTicks and pause layer",
+    "public state and command acknowledgements/rejection reasons",
+    "public rigid-body poses, velocities, masses and dynamic types",
+    "all child shape containment, real support pairs and stable tick counters",
+    "held item identity and Fixed lifetime",
+    "immutable weigh receipts and submit snapshots",
+    "actual Hinge angle and first qualified-open tick",
+    "per-item directed full-crossing evidence and deliveredPending",
+    "committed ledger, unique consumed item refs and score components",
+    "before/after resource counters and teardown boundary"
+  ],
+  "normalRecipes": [
+    {
+      "layoutId": "REBUILD-LAYOUT-01",
+      "recipeId": "REBUILD-PATH-01",
+      "kind": "OBSERVATION_DRIVEN_DESIGN",
+      "status": "NOT_RUN",
+      "steps": [
+        "start-round from READY; optionally complete tutorial first",
+        "for each required SKU choose an unused instance from this layout, steer with axes/key edges and actual observations",
+        "approach attachment, attach-release, sweep-limited carry to scale, release and observe 30 valid support ticks",
+        "reattach using public input, carry into chamber, release and observe whole-order stable 45 ticks",
+        "submit-order; observe actual two-item commit and actual door/channel closure before next order",
+        "complete O1/O2/O3 by tick 9600 to preserve 1200-tick normal reserve; otherwise this normal recipe fails"
+      ],
+      "exactTrace": "To be captured in T34 from the real runtime; absence does not block freezing this specification."
+    },
+    {
+      "layoutId": "REBUILD-LAYOUT-02",
+      "recipeId": "REBUILD-PATH-02",
+      "kind": "OBSERVATION_DRIVEN_DESIGN",
+      "status": "NOT_RUN",
+      "steps": [
+        "start-round from READY; optionally complete tutorial first",
+        "for each required SKU choose an unused instance from this layout, steer with axes/key edges and actual observations",
+        "approach attachment, attach-release, sweep-limited carry to scale, release and observe 30 valid support ticks",
+        "reattach using public input, carry into chamber, release and observe whole-order stable 45 ticks",
+        "submit-order; observe actual two-item commit and actual door/channel closure before next order",
+        "complete O1/O2/O3 by tick 9600 to preserve 1200-tick normal reserve; otherwise this normal recipe fails"
+      ],
+      "exactTrace": "To be captured in T34 from the real runtime; absence does not block freezing this specification."
+    },
+    {
+      "layoutId": "REBUILD-LAYOUT-03",
+      "recipeId": "REBUILD-PATH-03",
+      "kind": "OBSERVATION_DRIVEN_DESIGN",
+      "status": "NOT_RUN",
+      "steps": [
+        "start-round from READY; optionally complete tutorial first",
+        "for each required SKU choose an unused instance from this layout, steer with axes/key edges and actual observations",
+        "approach attachment, attach-release, sweep-limited carry to scale, release and observe 30 valid support ticks",
+        "reattach using public input, carry into chamber, release and observe whole-order stable 45 ticks",
+        "submit-order; observe actual two-item commit and actual door/channel closure before next order",
+        "complete O1/O2/O3 by tick 9600 to preserve 1200-tick normal reserve; otherwise this normal recipe fails"
+      ],
+      "exactTrace": "To be captured in T34 from the real runtime; absence does not block freezing this specification."
+    },
+    {
+      "layoutId": "REBUILD-LAYOUT-04",
+      "recipeId": "REBUILD-PATH-04",
+      "kind": "OBSERVATION_DRIVEN_DESIGN",
+      "status": "NOT_RUN",
+      "steps": [
+        "start-round from READY; optionally complete tutorial first",
+        "for each required SKU choose an unused instance from this layout, steer with axes/key edges and actual observations",
+        "approach attachment, attach-release, sweep-limited carry to scale, release and observe 30 valid support ticks",
+        "reattach using public input, carry into chamber, release and observe whole-order stable 45 ticks",
+        "submit-order; observe actual two-item commit and actual door/channel closure before next order",
+        "complete O1/O2/O3 by tick 9600 to preserve 1200-tick normal reserve; otherwise this normal recipe fails"
+      ],
+      "exactTrace": "To be captured in T34 from the real runtime; absence does not block freezing this specification."
+    },
+    {
+      "layoutId": "REBUILD-LAYOUT-05",
+      "recipeId": "REBUILD-PATH-05",
+      "kind": "OBSERVATION_DRIVEN_DESIGN",
+      "status": "NOT_RUN",
+      "steps": [
+        "start-round from READY; optionally complete tutorial first",
+        "for each required SKU choose an unused instance from this layout, steer with axes/key edges and actual observations",
+        "approach attachment, attach-release, sweep-limited carry to scale, release and observe 30 valid support ticks",
+        "reattach using public input, carry into chamber, release and observe whole-order stable 45 ticks",
+        "submit-order; observe actual two-item commit and actual door/channel closure before next order",
+        "complete O1/O2/O3 by tick 9600 to preserve 1200-tick normal reserve; otherwise this normal recipe fails"
+      ],
+      "exactTrace": "To be captured in T34 from the real runtime; absence does not block freezing this specification."
+    }
+  ],
+  "designExamples": {
+    "status": "NOT_RUN",
+    "notExecutedTrace": true,
+    "assumedContext": {
+      "roundGeneration": 7,
+      "inputGeneration": 2,
+      "lastCompletedTick": 120,
+      "state": "PACKING",
+      "layoutId": "REBUILD-LAYOUT-01"
+    },
+    "packets": [
+      {
+        "protocolVersion": "gift-workshop-input-1",
+        "configVersion": "rebuild-design-20261022-1",
+        "layoutId": "REBUILD-LAYOUT-01",
+        "roundGeneration": 7,
+        "inputGeneration": 2,
+        "tick": 121,
+        "seq": 501,
+        "source": "runner",
+        "command": "set-axes",
+        "payload": {
+          "x": 0.5,
+          "y": 0,
+          "z": -0.5
+        }
+      },
+      {
+        "protocolVersion": "gift-workshop-input-1",
+        "configVersion": "rebuild-design-20261022-1",
+        "layoutId": "REBUILD-LAYOUT-01",
+        "roundGeneration": 7,
+        "inputGeneration": 2,
+        "tick": 121,
+        "seq": 502,
+        "source": "runner",
+        "command": "attach-release",
+        "payload": {}
+      }
+    ],
+    "meaning": "Illustrates closed envelope syntax only; no target position, pickup success, accepted runtime command or event is asserted."
+  }
+}

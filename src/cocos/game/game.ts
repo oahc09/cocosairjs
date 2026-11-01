@@ -43,6 +43,7 @@ import { bindingMappingInfo } from '../rendering/define';
 import { ICustomJointTextureLayout } from '../3d/skeletal-animation/skeletal-animation-utils';
 import { IPhysicsConfig } from '../physics/framework/physics-config';
 import { effectSettings } from '../core/effect-settings';
+import { installGameClockSource, changeGameClockReason, withLegacyGameEngineReason, assertGameClockStep, isGameClockTerminal } from './game-clock-control';
 
 const querySettings = settings.querySettings.bind(settings);
 
@@ -396,6 +397,22 @@ export class Game extends EventTarget {
 
     constructor () {
         super();
+        installGameClockSource(this, director, {
+            readPaused: () => this._paused,
+            disposeEvents: () => this._disposeEvents(),
+            applyPaused: (paused, background) => {
+                this._pausedByEngine = background;
+                if (paused === this._paused) { return; }
+                if (paused) {
+                    this._paused = true;
+                    this._pacer?.stop();
+                } else {
+                    input._clearEvents();
+                    this._paused = false;
+                    this._pacer?.start();
+                }
+            },
+        }, this._paused);
     }
 
     /**
@@ -549,6 +566,7 @@ export class Game extends EventTarget {
      * @zh 以固定帧间隔执行一帧游戏循环，帧间隔与设定的帧率匹配。
      */
     public step (): void {
+        assertGameClockStep(this, director);
         director.tick(this._calculateDT(true));
     }
 
@@ -589,6 +607,11 @@ export class Game extends EventTarget {
      * 这点和只暂停游戏逻辑的 `director.pause()` 不同。
      */
     public pause (): void {
+        const controlled = changeGameClockReason(this, 'application', true);
+        if (controlled) {
+            if (controlled.changed) { this.emit(Game.EVENT_PAUSE); }
+            return;
+        }
         if (this._paused) { return; }
         this._paused = true;
         this._pacer?.stop();
@@ -601,6 +624,11 @@ export class Game extends EventTarget {
      * @zh 恢复游戏主循环。包含：游戏逻辑，渲染，事件处理，背景音乐和所有音效。
      */
     public resume (): void {
+        const controlled = changeGameClockReason(this, 'application', false);
+        if (controlled) {
+            if (controlled.changed) { this.emit(Game.EVENT_RESUME); }
+            return;
+        }
         if (!this._paused) { return; }
         input._clearEvents();
         this._paused = false;
@@ -1096,22 +1124,53 @@ export class Game extends EventTarget {
     }
 
     private _initEvents (): void {
+        if (isGameClockTerminal(this)) { return; }
         systemInfo.on('show', this._onShow, this);
         systemInfo.on('hide', this._onHide, this);
         systemInfo.on('close', this._onClose, this);
     }
 
+    private _disposeEvents (): void {
+        let failed = false;
+        let first: unknown;
+        const remove = (type: 'show' | 'hide' | 'close', callback: () => void): void => {
+            try {
+                systemInfo.off(type, callback, this);
+            } catch (error) {
+                if (!failed) { first = error; }
+                failed = true;
+            }
+        };
+        remove('show', this._onShow);
+        remove('hide', this._onHide);
+        remove('close', this._onClose);
+        if (failed) { throw first; }
+    }
+
     private _onHide (): void {
+        if (isGameClockTerminal(this)) { return; }
+        const controlled = changeGameClockReason(this, 'background', true);
         this.emit(Game.EVENT_HIDE);
-        this.pauseByEngine();
+        if (controlled) {
+            if (controlled.changed) { this.emit(Game.EVENT_PAUSE); }
+        } else {
+            withLegacyGameEngineReason(this, () => this.pauseByEngine());
+        }
     }
 
     private _onShow (): void {
+        if (isGameClockTerminal(this)) { return; }
+        const controlled = changeGameClockReason(this, 'background', false);
         this.emit(Game.EVENT_SHOW);
-        this.resumeByEngine();
+        if (controlled) {
+            if (controlled.changed) { this.emit(Game.EVENT_RESUME); }
+        } else {
+            withLegacyGameEngineReason(this, () => this.resumeByEngine());
+        }
     }
 
     private _onClose (): void {
+        if (isGameClockTerminal(this)) { return; }
         this.emit(Game.EVENT_CLOSE);
         // TODO : Release Resources.
         systemInfo.exit();

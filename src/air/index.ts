@@ -82,3 +82,15 @@ export * from './ui-glyph-icons';
 export * from './ui-typewriter';
 
 export { createAirGradientEffect } from './effects/gradient';
+
+export { registerBox3DBeforeStep, readBox3DBodyMotion, readBox3DConstraintState } from './box3d-controls';
+export type {
+    Box3DBeforeStepContext,
+    Box3DBeforeStepHandle,
+    Box3DBeforeStepCallback,
+    Box3DBodyMotion,
+    Box3DBodyMotionVector,
+    Box3DBodyMotionRotation,
+} from './box3d-controls';
+
+export * from './box3d-queries';

@@ -1,0 +1,18 @@
+{
+  "source": "Frozen runtime220-final/lifecycle/fixture-inputs, not mutable worktree",
+  "files": [
+    {
+      "path": "tools/verify/box3d/public-trigger-events/evidence/runtime220-final/lifecycle/fixture-inputs/consumer.mjs",
+      "sha256": "0642f09f379d3e5c8304d29918b0ce19e4dd4764b47c4e1a80102085015174b0"
+    },
+    {
+      "path": "tools/verify/box3d/public-trigger-events/evidence/runtime220-final/lifecycle/fixture-inputs/scenario.mjs",
+      "sha256": "19af2d4af88f4ffb7395b559a6cf6b8847e0ebf05d6a5de6550349c665010b41"
+    },
+    {
+      "path": "tools/verify/box3d/public-trigger-events/evidence/runtime220-final/lifecycle/fixture-inputs/assertions.mjs",
+      "sha256": "a0d58314bcbc82aee50cff70dbad6b5829d205ca64833f8a89b63ab3de92386c"
+    }
+  ],
+  "changes": ["Cohort identity/input adapter", "Reuse public producer phase helper"]
+}

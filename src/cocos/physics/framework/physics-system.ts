@@ -22,6 +22,10 @@
  THE SOFTWARE.
 */
 
+import { beginPhysicsMaterialChange } from './physics-material-transaction';
+import { installPhysicsSystemControlSource, beginPhysicsSystemControl, getPhysicsSystemControlDisposition, assertPhysicsSystemManualStep } from './physics-system-control';
+import { assertMutationAllowed } from '../../core/data/mutation-guard';
+import { ensurePhysicsMaterialSource, beginPhysicsMaterialSourceIdentity, initializePhysicsMaterialSource } from './physics-material-binding-source';
 import { BUILD, EDITOR_NOT_IN_PREVIEW, LOAD_BULLET_MANUALLY, LOAD_PHYSX_MANUALLY } from 'internal:constants';
 import { Vec3, RecyclePool, Enum, System, cclegacy, settings, geometry, warn, IQuatLike, IVec3Like, SettingsCategory, errorID, warnID } from '../../core';
 import { IPhysicsWorld, IRaycastOptions } from '../spec/i-physics-world';
@@ -104,6 +108,24 @@ export class PhysicsSystem extends System implements IWorldInitData {
     }
 
     public set enable (value: boolean) {
+        assertMutationAllowed(this, 'PhysicsSystem.enable');
+        const change = beginPhysicsSystemControl(this, 'system-enable');
+        if (change) {
+            try {
+                change.prepare(() => ({
+                    before: { kind: 'system-control', enabled: this._enable, autoSimulation: this._autoSimulation },
+                    candidate: { kind: 'system-control', enabled: value, autoSimulation: this._autoSimulation },
+                }));
+                this._enable = value;
+                change.effect('cache-written');
+                change.commit(() => ({ kind: 'system-control', enabled: this._enable, autoSimulation: this._autoSimulation }));
+            } catch (error) {
+                const diagnostic = change.diagnostics();
+                if (diagnostic.disposed) throw diagnostic.hasFailure ? diagnostic.error : error;
+                change.fail(error, () => ({ kind: 'system-control', enabled: this._enable, autoSimulation: this._autoSimulation }));
+            } finally { change.dispose(); }
+            return;
+        }
         this._enable = value;
     }
 
@@ -118,6 +140,13 @@ export class PhysicsSystem extends System implements IWorldInitData {
     }
 
     public set allowSleep (v: boolean) {
+        assertMutationAllowed(this, 'PhysicsSystem.allowSleep');
+        // AIR Box3D rejects invalid native changes before committing the public cache.
+        if (selector.id === 'box3d' && this.physicsWorld) {
+            this.physicsWorld.setAllowSleep(v);
+            this._allowSleep = v;
+            return;
+        }
         this._allowSleep = v;
         if (this.physicsWorld) {
             this.physicsWorld.setAllowSleep(v);
@@ -135,6 +164,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
     }
 
     public set maxSubSteps (value: number) {
+        assertMutationAllowed(this, 'PhysicsSystem.maxSubSteps');
         this._maxSubSteps = value;
     }
 
@@ -149,6 +179,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
     }
 
     public set fixedTimeStep (value: number) {
+        assertMutationAllowed(this, 'PhysicsSystem.fixedTimeStep');
         this._fixedTimeStep = value;
     }
 
@@ -163,6 +194,12 @@ export class PhysicsSystem extends System implements IWorldInitData {
     }
 
     public set gravity (gravity: Vec3) {
+        assertMutationAllowed(this, 'PhysicsSystem.gravity');
+        if (selector.id === 'box3d' && this.physicsWorld) {
+            this.physicsWorld.setGravity(gravity);
+            this._gravity.set(gravity);
+            return;
+        }
         this._gravity.set(gravity);
         if (this.physicsWorld) {
             this.physicsWorld.setGravity(gravity);
@@ -180,6 +217,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
     }
 
     public set sleepThreshold (v: number) {
+        assertMutationAllowed(this, 'PhysicsSystem.sleepThreshold');
         this._sleepThreshold = v;
     }
 
@@ -194,6 +232,24 @@ export class PhysicsSystem extends System implements IWorldInitData {
     }
 
     public set autoSimulation (value: boolean) {
+        assertMutationAllowed(this, 'PhysicsSystem.autoSimulation');
+        const change = beginPhysicsSystemControl(this, 'system-auto-simulation');
+        if (change) {
+            try {
+                change.prepare(() => ({
+                    before: { kind: 'system-control', enabled: this._enable, autoSimulation: this._autoSimulation },
+                    candidate: { kind: 'system-control', enabled: this._enable, autoSimulation: value },
+                }));
+                this._autoSimulation = value;
+                change.effect('cache-written');
+                change.commit(() => ({ kind: 'system-control', enabled: this._enable, autoSimulation: this._autoSimulation }));
+            } catch (error) {
+                const diagnostic = change.diagnostics();
+                if (diagnostic.disposed) throw diagnostic.hasFailure ? diagnostic.error : error;
+                change.fail(error, () => ({ kind: 'system-control', enabled: this._enable, autoSimulation: this._autoSimulation }));
+            } finally { change.dispose(); }
+            return;
+        }
         this._autoSimulation = value;
     }
 
@@ -214,14 +270,66 @@ export class PhysicsSystem extends System implements IWorldInitData {
      * 设置默认物理材质。
      */
     public setDefaultPhysicsMaterial (material: PhysicsMaterial): void {
+        assertMutationAllowed(this, 'PhysicsSystem.setDefaultPhysicsMaterial');
+        ensurePhysicsMaterialSource(this, this.physicsWorld, 'default', () => this._material ?? null);
+        const identity = beginPhysicsMaterialSourceIdentity(this, this._material ?? null, material, 'system-default-material-set');
+        try {
+        const change = beginPhysicsMaterialChange(this, 'system-default-material-set');
+        if (change) {
+            try {
+                change.prepare(() => ({
+                    before: { kind: 'system-default-material', material: this._material ?? null },
+                    candidate: { kind: 'system-default-material', material },
+                }));
+                identity?.recordEntered('copied-native-delegate');
+                change.apply();
+                if (!change.privateSubscriptions) {
+                    change.effect('listener-edit-entered');
+                    if (this._material !== material) this._material?.off(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+                }
+                this._material = material;
+                change.effect('cache-written');
+                if (!change.privateSubscriptions) {
+                    this._material.on(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+                    change.effect('listeners-complete');
+                }
+                change.commit(() => ({ kind: 'system-default-material', material: this._material }));
+                identity?.publishActual(this._material);
+                initializePhysicsMaterialSource(this);
+            } catch (error) { change.fail(error, () => ({ kind: 'system-default-material', material: this._material ?? null })); }
+            finally { change.dispose(); }
+            return;
+        }
+        identity?.recordEntered('legacy-default-material');
+        if (selector.id === 'box3d') {
+            this.physicsWorld.setDefaultMaterial(material);
+            if (this._material !== material) {
+                this._material?.off(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+            }
+            this._material = material;
+            this._material.on(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+            identity?.publishActual(this._material);
+            initializePhysicsMaterialSource(this);
+            return;
+        }
         this._material = material;
         this.physicsWorld.setDefaultMaterial(this._material);
         this._material.on(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+        identity?.publishActual(this._material);
+        initializePhysicsMaterialSource(this);
+        } catch (error) {
+            try { identity?.fail(this._material ?? null); } catch { /* Preserve original failure. */ }
+            throw error;
+        }
     }
 
     // eslint-disable-next-line consistent-return
     private initDefaultMaterial (): Promise<void> {
-        if (this._material != null) return Promise.resolve();
+        if (this._material != null) {
+            // A non-null old cache is not acceptance by a new actual world generation.
+            ensurePhysicsMaterialSource(this, this.physicsWorld, 'default', () => this._material ?? null);
+            return Promise.resolve();
+        }
 
         const builtinMaterial = builtinResMgr.get<PhysicsMaterial>('default-physics-material');
         if (!builtinMaterial) {
@@ -347,14 +455,18 @@ export class PhysicsSystem extends System implements IWorldInitData {
 
     private constructor () {
         super();
+        installPhysicsSystemControlSource(this, () => ({ enabled: this._enable, autoSimulation: this._autoSimulation }));
     }
 
     postUpdate (deltaTime: number): void {
+        assertMutationAllowed(this, 'PhysicsSystem.postUpdate');
         if (EDITOR_NOT_IN_PREVIEW && !this._executeInEditMode && !selector.runInEditor) return;
 
         if (!this.physicsWorld) return;
 
-        if (!this._enable) {
+        const disposition = getPhysicsSystemControlDisposition(this);
+        const observed = disposition !== undefined;
+        if (!this._enable || disposition === 'paused') {
             this.physicsWorld.syncSceneToPhysics();
             return;
         }
@@ -363,7 +475,12 @@ export class PhysicsSystem extends System implements IWorldInitData {
             this._subStepCount = 0;
             this._accumulator += deltaTime;
             director.emit(DirectorEvent.BEFORE_PHYSICS);
+            if (observed && (getPhysicsSystemControlDisposition(this) !== 'ready' || !this._enable || !this._autoSimulation)) {
+                director.emit(DirectorEvent.AFTER_PHYSICS);
+                return;
+            }
             while (this._subStepCount < this._maxSubSteps) {
+                if (observed && (getPhysicsSystemControlDisposition(this) !== 'ready' || !this._enable || !this._autoSimulation)) break;
                 if (this._accumulator >= this._fixedTimeStep) {
                     this.physicsWorld.syncSceneToPhysics();
                     this.physicsWorld.step(this._fixedTimeStep);
@@ -387,6 +504,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
      * 重置物理配置。
      */
     resetConfiguration (config?: IPhysicsConfig): void {
+        assertMutationAllowed(this, 'PhysicsSystem.resetConfiguration');
         const allowSleep = config ? config.allowSleep : querySettings(SettingsCategory.PHYSICS, 'allowSleep');
         if (typeof allowSleep === 'boolean') this._allowSleep = allowSleep;
         const fixedTimeStep = config ? config.fixedTimeStep : querySettings(SettingsCategory.PHYSICS, 'fixedTimeStep');
@@ -429,6 +547,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
      * 重置时间累积总量为给定值。
      */
     resetAccumulator (time = 0): void {
+        assertMutationAllowed(this, 'PhysicsSystem.resetAccumulator');
         this._accumulator = time;
     }
 
@@ -440,6 +559,8 @@ export class PhysicsSystem extends System implements IWorldInitData {
      * @param fixedTimeStep
      */
     step (fixedTimeStep: number, deltaTime?: number, maxSubSteps?: number): void {
+        assertMutationAllowed(this, 'PhysicsSystem.step');
+        assertPhysicsSystemManualStep(this);
         if (this.physicsWorld) this.physicsWorld.step(fixedTimeStep, deltaTime, maxSubSteps);
     }
 
@@ -450,6 +571,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
      * 同步场景世界的变化信息到物理世界中。
      */
     syncSceneToPhysics (): void {
+        assertMutationAllowed(this, 'PhysicsSystem.syncSceneToPhysics');
         if (this.physicsWorld) this.physicsWorld.syncSceneToPhysics();
     }
 
@@ -460,6 +582,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
      * 触发`trigger`和`collision`事件。
      */
     emitEvents (): void {
+        assertMutationAllowed(this, 'PhysicsSystem.emitEvents');
         if (this.physicsWorld) this.physicsWorld.emitEvents();
     }
 
@@ -479,6 +602,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
     }
 
     set debugDrawFlags (v) {
+        assertMutationAllowed(this, 'PhysicsSystem.debugDrawFlags');
         this.physicsWorld.debugDrawFlags = v;
     }
 
@@ -493,6 +617,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
     }
 
     set debugDrawConstraintSize (v) {
+        assertMutationAllowed(this, 'PhysicsSystem.debugDrawConstraintSize');
         this.physicsWorld.debugDrawConstraintSize = v;
     }
 
@@ -509,6 +634,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
      * @return {boolean} @zh 表示是否有检测到碰撞 @en Indicates whether a collision has been detected
      */
     raycast (worldRay: geometry.Ray, mask = 0xffffffff, maxDistance = 10000000, queryTrigger = true): boolean {
+        assertMutationAllowed(this, 'PhysicsSystem.raycast');
         if (!this.physicsWorld) return false;
         this.raycastResultPool.reset();
         this.raycastResults.length = 0;
@@ -532,6 +658,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
      * @return {boolean} @zh 表示是否有检测到碰撞 @en Indicates whether a collision has been detected
      */
     raycastClosest (worldRay: geometry.Ray, mask = 0xffffffff, maxDistance = 10000000, queryTrigger = true): boolean {
+        assertMutationAllowed(this, 'PhysicsSystem.raycastClosest');
         if (!this.physicsWorld) return false;
         this.raycastOptions.mask = mask >>> 0;
         this.raycastOptions.maxDistance = maxDistance;
@@ -553,6 +680,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
     * @return {boolean} @zh 表示是否有检测到碰撞 @en Indicates whether a collision has been detected
     */
     lineStripCast (samplePointsWorldSpace: Array<Vec3>, mask = 0xffffffff, maxDistance = 10000000, queryTrigger = true): boolean {
+        assertMutationAllowed(this, 'PhysicsSystem.lineStripCast');
         if (samplePointsWorldSpace.length < 2) return false;
         this.lineStripCastResults = [];
         let distance = 0;
@@ -603,6 +731,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
      * @return {boolean} @zh 表示是否有检测到碰撞 @en Indicates whether a collision has been detected
      */
     lineStripCastClosest (samplePointsWorldSpace: Array<Vec3>, mask = 0xffffffff, maxDistance = 10000000, queryTrigger = true): boolean {
+        assertMutationAllowed(this, 'PhysicsSystem.lineStripCastClosest');
         if (samplePointsWorldSpace.length < 2) { return false; }
         let distance = 0;
         const worldRay = new geometry.Ray();
@@ -654,6 +783,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
         maxDistance = 10000000,
         queryTrigger = true,
     ): boolean {
+        assertMutationAllowed(this, 'PhysicsSystem.sweepBox');
         if (!this.physicsWorld) return false;
         this.sweepResultPool.reset();
         this.sweepCastResults.length = 0;
@@ -693,6 +823,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
         maxDistance = 10000000,
         queryTrigger = true,
     ): boolean {
+        assertMutationAllowed(this, 'PhysicsSystem.sweepBoxClosest');
         if (!this.physicsWorld) return false;
         this.raycastOptions.mask = mask >>> 0;
         this.raycastOptions.maxDistance = maxDistance;
@@ -727,6 +858,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
         maxDistance = 10000000,
         queryTrigger = true,
     ): boolean {
+        assertMutationAllowed(this, 'PhysicsSystem.sweepSphere');
         if (!this.physicsWorld) return false;
         this.sweepResultPool.reset();
         this.sweepCastResults.length = 0;
@@ -763,6 +895,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
         maxDistance = 10000000,
         queryTrigger = true,
     ): boolean {
+        assertMutationAllowed(this, 'PhysicsSystem.sweepSphereClosest');
         if (!this.physicsWorld) return false;
         this.raycastOptions.mask = mask >>> 0;
         this.raycastOptions.maxDistance = maxDistance;
@@ -802,6 +935,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
         maxDistance = 10000000,
         queryTrigger = true,
     ): boolean {
+        assertMutationAllowed(this, 'PhysicsSystem.sweepCapsule');
         if (!this.physicsWorld) return false;
         this.sweepResultPool.reset();
         this.sweepCastResults.length = 0;
@@ -846,6 +980,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
         maxDistance = 10000000,
         queryTrigger = true,
     ): boolean {
+        assertMutationAllowed(this, 'PhysicsSystem.sweepCapsuleClosest');
         if (!this.physicsWorld) return false;
         this.raycastOptions.mask = mask >>> 0;
         this.raycastOptions.maxDistance = maxDistance;

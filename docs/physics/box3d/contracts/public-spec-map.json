@@ -1,0 +1,1503 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "b573be0741db9e2a13d38ce7e65870b97a1f5fbc",
+  "generation": "TypeScript AST from pinned source, not guessed methods",
+  "status": "DESIGN_MAPPING_NOT_IMPLEMENTATION",
+  "members": [
+    {
+      "interface": "IBaseCharacterController",
+      "member": "initialize",
+      "signature": "initialize (v: CharacterController): boolean;",
+      "sourcePath": "src/cocos/physics/spec/i-character-controller.ts",
+      "targetCapability": "experimental",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-A01", "B3-A02", "B3-A03", "B3-A04", "B3-A05"]
+    },
+    {
+      "interface": "IBaseCharacterController",
+      "member": "updateEventListener",
+      "signature": "updateEventListener: () => void;",
+      "sourcePath": "src/cocos/physics/spec/i-character-controller.ts",
+      "targetCapability": "experimental",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-A01", "B3-A02", "B3-A03", "B3-A04", "B3-A05"]
+    },
+    {
+      "interface": "IBaseCharacterController",
+      "member": "onGround",
+      "signature": "onGround(): boolean;",
+      "sourcePath": "src/cocos/physics/spec/i-character-controller.ts",
+      "targetCapability": "experimental",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-A01", "B3-A02", "B3-A03", "B3-A04", "B3-A05"]
+    },
+    {
+      "interface": "IBaseCharacterController",
+      "member": "getPosition",
+      "signature": "getPosition (out: IVec3Like): void;",
+      "sourcePath": "src/cocos/physics/spec/i-character-controller.ts",
+      "targetCapability": "experimental",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-A01", "B3-A02", "B3-A03", "B3-A04", "B3-A05"]
+    },
+    {
+      "interface": "IBaseCharacterController",
+      "member": "setPosition",
+      "signature": "setPosition (value: IVec3Like): void;",
+      "sourcePath": "src/cocos/physics/spec/i-character-controller.ts",
+      "targetCapability": "experimental",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-A01", "B3-A02", "B3-A03", "B3-A04", "B3-A05"]
+    },
+    {
+      "interface": "IBaseCharacterController",
+      "member": "setStepOffset",
+      "signature": "setStepOffset (value: number): void;",
+      "sourcePath": "src/cocos/physics/spec/i-character-controller.ts",
+      "targetCapability": "experimental",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-A01", "B3-A02", "B3-A03", "B3-A04", "B3-A05"]
+    },
+    {
+      "interface": "IBaseCharacterController",
+      "member": "setSlopeLimit",
+      "signature": "setSlopeLimit (value: number): void;",
+      "sourcePath": "src/cocos/physics/spec/i-character-controller.ts",
+      "targetCapability": "experimental",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-A01", "B3-A02", "B3-A03", "B3-A04", "B3-A05"]
+    },
+    {
+      "interface": "IBaseCharacterController",
+      "member": "setContactOffset",
+      "signature": "setContactOffset (value: number): void;",
+      "sourcePath": "src/cocos/physics/spec/i-character-controller.ts",
+      "targetCapability": "experimental",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-A01", "B3-A02", "B3-A03", "B3-A04", "B3-A05"]
+    },
+    {
+      "interface": "IBaseCharacterController",
+      "member": "setDetectCollisions",
+      "signature": "setDetectCollisions (value: boolean): void;",
+      "sourcePath": "src/cocos/physics/spec/i-character-controller.ts",
+      "targetCapability": "experimental",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-A01", "B3-A02", "B3-A03", "B3-A04", "B3-A05"]
+    },
+    {
+      "interface": "IBaseCharacterController",
+      "member": "setOverlapRecovery",
+      "signature": "setOverlapRecovery (value: boolean): void;",
+      "sourcePath": "src/cocos/physics/spec/i-character-controller.ts",
+      "targetCapability": "experimental",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-A01", "B3-A02", "B3-A03", "B3-A04", "B3-A05"]
+    },
+    {
+      "interface": "IBaseCharacterController",
+      "member": "move",
+      "signature": "move(movement: IVec3Like, minDist: number, elapsedTime: number): void;",
+      "sourcePath": "src/cocos/physics/spec/i-character-controller.ts",
+      "targetCapability": "experimental",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-A01", "B3-A02", "B3-A03", "B3-A04", "B3-A05"]
+    },
+    {
+      "interface": "IBaseCharacterController",
+      "member": "syncPhysicsToScene",
+      "signature": "syncPhysicsToScene (): void;",
+      "sourcePath": "src/cocos/physics/spec/i-character-controller.ts",
+      "targetCapability": "experimental",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-A01", "B3-A02", "B3-A03", "B3-A04", "B3-A05"]
+    },
+    {
+      "interface": "ICapsuleCharacterController",
+      "member": "setRadius",
+      "signature": "setRadius (value: number): void;",
+      "sourcePath": "src/cocos/physics/spec/i-character-controller.ts",
+      "targetCapability": "experimental",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-A01", "B3-A02", "B3-A03", "B3-A04", "B3-A05"]
+    },
+    {
+      "interface": "ICapsuleCharacterController",
+      "member": "setHeight",
+      "signature": "setHeight (value: number): void;",
+      "sourcePath": "src/cocos/physics/spec/i-character-controller.ts",
+      "targetCapability": "experimental",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-A01", "B3-A02", "B3-A03", "B3-A04", "B3-A05"]
+    },
+    {
+      "interface": "IBoxCharacterController",
+      "member": "setHalfHeight",
+      "signature": "setHalfHeight (value: number): void;",
+      "sourcePath": "src/cocos/physics/spec/i-character-controller.ts",
+      "targetCapability": "unsupported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-A01", "B3-A02", "B3-A03", "B3-A04", "B3-A05"]
+    },
+    {
+      "interface": "IBoxCharacterController",
+      "member": "setHalfSideExtent",
+      "signature": "setHalfSideExtent (value: number): void;",
+      "sourcePath": "src/cocos/physics/spec/i-character-controller.ts",
+      "targetCapability": "unsupported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-A01", "B3-A02", "B3-A03", "B3-A04", "B3-A05"]
+    },
+    {
+      "interface": "IBoxCharacterController",
+      "member": "setHalfForwardExtent",
+      "signature": "setHalfForwardExtent (value: number): void;",
+      "sourcePath": "src/cocos/physics/spec/i-character-controller.ts",
+      "targetCapability": "unsupported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-A01", "B3-A02", "B3-A03", "B3-A04", "B3-A05"]
+    },
+    {
+      "interface": "IGroupMask",
+      "member": "setGroup",
+      "signature": "setGroup (v: number): void;",
+      "sourcePath": "src/cocos/physics/spec/i-group-mask.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C25"]
+    },
+    {
+      "interface": "IGroupMask",
+      "member": "getGroup",
+      "signature": "getGroup (): number;",
+      "sourcePath": "src/cocos/physics/spec/i-group-mask.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C25"]
+    },
+    {
+      "interface": "IGroupMask",
+      "member": "addGroup",
+      "signature": "addGroup (v: number): void;",
+      "sourcePath": "src/cocos/physics/spec/i-group-mask.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C25"]
+    },
+    {
+      "interface": "IGroupMask",
+      "member": "removeGroup",
+      "signature": "removeGroup (v: number): void;",
+      "sourcePath": "src/cocos/physics/spec/i-group-mask.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C25"]
+    },
+    {
+      "interface": "IGroupMask",
+      "member": "setMask",
+      "signature": "setMask (v: number): void;",
+      "sourcePath": "src/cocos/physics/spec/i-group-mask.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C25"]
+    },
+    {
+      "interface": "IGroupMask",
+      "member": "getMask",
+      "signature": "getMask (): number;",
+      "sourcePath": "src/cocos/physics/spec/i-group-mask.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C25"]
+    },
+    {
+      "interface": "IGroupMask",
+      "member": "addMask",
+      "signature": "addMask (v: number): void;",
+      "sourcePath": "src/cocos/physics/spec/i-group-mask.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C25"]
+    },
+    {
+      "interface": "IGroupMask",
+      "member": "removeMask",
+      "signature": "removeMask (v: number): void;",
+      "sourcePath": "src/cocos/physics/spec/i-group-mask.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C25"]
+    },
+    {
+      "interface": "ILifecycle",
+      "member": "update",
+      "signature": "update?(dt: number): void;",
+      "sourcePath": "src/cocos/physics/spec/i-lifecycle.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C24", "B3-I05", "B3-I06"]
+    },
+    {
+      "interface": "ILifecycle",
+      "member": "lateUpdate",
+      "signature": "lateUpdate?(dt: number): void;",
+      "sourcePath": "src/cocos/physics/spec/i-lifecycle.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C24", "B3-I05", "B3-I06"]
+    },
+    {
+      "interface": "ILifecycle",
+      "member": "__preload",
+      "signature": "__preload?(component: any): void;",
+      "sourcePath": "src/cocos/physics/spec/i-lifecycle.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C24", "B3-I05", "B3-I06"]
+    },
+    {
+      "interface": "ILifecycle",
+      "member": "onLoad",
+      "signature": "onLoad?(): void;",
+      "sourcePath": "src/cocos/physics/spec/i-lifecycle.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C24", "B3-I05", "B3-I06"]
+    },
+    {
+      "interface": "ILifecycle",
+      "member": "start",
+      "signature": "start?(): void;",
+      "sourcePath": "src/cocos/physics/spec/i-lifecycle.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C24", "B3-I05", "B3-I06"]
+    },
+    {
+      "interface": "ILifecycle",
+      "member": "onEnable",
+      "signature": "onEnable?(): void;",
+      "sourcePath": "src/cocos/physics/spec/i-lifecycle.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C24", "B3-I05", "B3-I06"]
+    },
+    {
+      "interface": "ILifecycle",
+      "member": "onDisable",
+      "signature": "onDisable?(): void;",
+      "sourcePath": "src/cocos/physics/spec/i-lifecycle.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C24", "B3-I05", "B3-I06"]
+    },
+    {
+      "interface": "ILifecycle",
+      "member": "onDestroy",
+      "signature": "onDestroy?(): void;",
+      "sourcePath": "src/cocos/physics/spec/i-lifecycle.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C24", "B3-I05", "B3-I06"]
+    },
+    {
+      "interface": "ILifecycle",
+      "member": "onFocusInEditor",
+      "signature": "onFocusInEditor?(): void;",
+      "sourcePath": "src/cocos/physics/spec/i-lifecycle.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C24", "B3-I05", "B3-I06"]
+    },
+    {
+      "interface": "ILifecycle",
+      "member": "onLostFocusInEditor",
+      "signature": "onLostFocusInEditor?(): void;",
+      "sourcePath": "src/cocos/physics/spec/i-lifecycle.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C24", "B3-I05", "B3-I06"]
+    },
+    {
+      "interface": "ILifecycle",
+      "member": "resetInEditor",
+      "signature": "resetInEditor?(): void;",
+      "sourcePath": "src/cocos/physics/spec/i-lifecycle.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C24", "B3-I05", "B3-I06"]
+    },
+    {
+      "interface": "ILifecycle",
+      "member": "onRestore",
+      "signature": "onRestore?(): void;",
+      "sourcePath": "src/cocos/physics/spec/i-lifecycle.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C24", "B3-I05", "B3-I06"]
+    },
+    {
+      "interface": "IBaseConstraint",
+      "member": "impl",
+      "signature": "readonly impl: any;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C29"]
+    },
+    {
+      "interface": "IBaseConstraint",
+      "member": "initialize",
+      "signature": "initialize (v: Constraint): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C29"]
+    },
+    {
+      "interface": "IBaseConstraint",
+      "member": "setConnectedBody",
+      "signature": "setConnectedBody (v: RigidBody | null): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C29"]
+    },
+    {
+      "interface": "IBaseConstraint",
+      "member": "setEnableCollision",
+      "signature": "setEnableCollision (v: boolean): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C29"]
+    },
+    {
+      "interface": "IPointToPointConstraint",
+      "member": "setPivotA",
+      "signature": "setPivotA (v: IVec3Like): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C29"]
+    },
+    {
+      "interface": "IPointToPointConstraint",
+      "member": "setPivotB",
+      "signature": "setPivotB (v: IVec3Like): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C29"]
+    },
+    {
+      "interface": "IHingeConstraint",
+      "member": "setPivotA",
+      "signature": "setPivotA (v: IVec3Like): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C30-PUBLIC"]
+    },
+    {
+      "interface": "IHingeConstraint",
+      "member": "setPivotB",
+      "signature": "setPivotB (v: IVec3Like): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C30-PUBLIC"]
+    },
+    {
+      "interface": "IHingeConstraint",
+      "member": "setAxis",
+      "signature": "setAxis (v: IVec3Like): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C30-PUBLIC"]
+    },
+    {
+      "interface": "IHingeConstraint",
+      "member": "setLimitEnabled",
+      "signature": "setLimitEnabled(v: boolean): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C30-PUBLIC"]
+    },
+    {
+      "interface": "IHingeConstraint",
+      "member": "setLowerLimit",
+      "signature": "setLowerLimit(min: number): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C30-PUBLIC"]
+    },
+    {
+      "interface": "IHingeConstraint",
+      "member": "setUpperLimit",
+      "signature": "setUpperLimit(max: number): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C30-PUBLIC"]
+    },
+    {
+      "interface": "IHingeConstraint",
+      "member": "setMotorEnabled",
+      "signature": "setMotorEnabled(v: boolean): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C30-PUBLIC"]
+    },
+    {
+      "interface": "IHingeConstraint",
+      "member": "setMotorVelocity",
+      "signature": "setMotorVelocity (v: number): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C30-PUBLIC"]
+    },
+    {
+      "interface": "IHingeConstraint",
+      "member": "setMotorForceLimit",
+      "signature": "setMotorForceLimit (v: number): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C30-PUBLIC"]
+    },
+    {
+      "interface": "IFixedConstraint",
+      "member": "setBreakForce",
+      "signature": "setBreakForce(v: number): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C29", "B3-C29-ATTACH-POSE"]
+    },
+    {
+      "interface": "IFixedConstraint",
+      "member": "setBreakTorque",
+      "signature": "setBreakTorque(v: number): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C29", "B3-C29-ATTACH-POSE"]
+    },
+    {
+      "interface": "IConfigurableConstraint",
+      "member": "setConstraintMode",
+      "signature": "setConstraintMode (idx: number, v: EConstraintMode): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "unsupported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C31"]
+    },
+    {
+      "interface": "IConfigurableConstraint",
+      "member": "setLinearLimit",
+      "signature": "setLinearLimit (idx: number, lower: number, upper: number): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "unsupported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C31"]
+    },
+    {
+      "interface": "IConfigurableConstraint",
+      "member": "setAngularExtent",
+      "signature": "setAngularExtent(twist: number, swing1: number, swing2: number): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "unsupported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C31"]
+    },
+    {
+      "interface": "IConfigurableConstraint",
+      "member": "setLinearRestitution",
+      "signature": "setLinearRestitution (v: number): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "unsupported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C31"]
+    },
+    {
+      "interface": "IConfigurableConstraint",
+      "member": "setSwingRestitution",
+      "signature": "setSwingRestitution (v: number): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "unsupported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C31"]
+    },
+    {
+      "interface": "IConfigurableConstraint",
+      "member": "setTwistRestitution",
+      "signature": "setTwistRestitution (v: number): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "unsupported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C31"]
+    },
+    {
+      "interface": "IConfigurableConstraint",
+      "member": "setLinearSoftConstraint",
+      "signature": "setLinearSoftConstraint (v: boolean): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "unsupported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C31"]
+    },
+    {
+      "interface": "IConfigurableConstraint",
+      "member": "setLinearStiffness",
+      "signature": "setLinearStiffness (v: number): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "unsupported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C31"]
+    },
+    {
+      "interface": "IConfigurableConstraint",
+      "member": "setLinearDamping",
+      "signature": "setLinearDamping (v: number): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "unsupported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C31"]
+    },
+    {
+      "interface": "IConfigurableConstraint",
+      "member": "setSwingSoftConstraint",
+      "signature": "setSwingSoftConstraint (v: boolean): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "unsupported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C31"]
+    },
+    {
+      "interface": "IConfigurableConstraint",
+      "member": "setTwistSoftConstraint",
+      "signature": "setTwistSoftConstraint (v: boolean): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "unsupported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C31"]
+    },
+    {
+      "interface": "IConfigurableConstraint",
+      "member": "setSwingStiffness",
+      "signature": "setSwingStiffness (v: number): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "unsupported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C31"]
+    },
+    {
+      "interface": "IConfigurableConstraint",
+      "member": "setSwingDamping",
+      "signature": "setSwingDamping (v: number): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "unsupported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C31"]
+    },
+    {
+      "interface": "IConfigurableConstraint",
+      "member": "setTwistStiffness",
+      "signature": "setTwistStiffness (v: number): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "unsupported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C31"]
+    },
+    {
+      "interface": "IConfigurableConstraint",
+      "member": "setTwistDamping",
+      "signature": "setTwistDamping (v: number): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "unsupported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C31"]
+    },
+    {
+      "interface": "IConfigurableConstraint",
+      "member": "setDriverMode",
+      "signature": "setDriverMode (idx: number, v: EDriverMode): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "unsupported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C31"]
+    },
+    {
+      "interface": "IConfigurableConstraint",
+      "member": "setLinearMotorTarget",
+      "signature": "setLinearMotorTarget (v: IVec3Like): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "unsupported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C31"]
+    },
+    {
+      "interface": "IConfigurableConstraint",
+      "member": "setLinearMotorVelocity",
+      "signature": "setLinearMotorVelocity (v: IVec3Like): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "unsupported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C31"]
+    },
+    {
+      "interface": "IConfigurableConstraint",
+      "member": "setLinearMotorForceLimit",
+      "signature": "setLinearMotorForceLimit (v: number): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "unsupported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C31"]
+    },
+    {
+      "interface": "IConfigurableConstraint",
+      "member": "setAngularMotorTarget",
+      "signature": "setAngularMotorTarget (v: IVec3Like): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "unsupported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C31"]
+    },
+    {
+      "interface": "IConfigurableConstraint",
+      "member": "setAngularMotorVelocity",
+      "signature": "setAngularMotorVelocity (v: IVec3Like): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "unsupported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C31"]
+    },
+    {
+      "interface": "IConfigurableConstraint",
+      "member": "setAngularMotorForceLimit",
+      "signature": "setAngularMotorForceLimit (v: number): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "unsupported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C31"]
+    },
+    {
+      "interface": "IConfigurableConstraint",
+      "member": "setPivotA",
+      "signature": "setPivotA (v: IVec3Like): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "unsupported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C31"]
+    },
+    {
+      "interface": "IConfigurableConstraint",
+      "member": "setPivotB",
+      "signature": "setPivotB (v: IVec3Like): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "unsupported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C31"]
+    },
+    {
+      "interface": "IConfigurableConstraint",
+      "member": "setAutoPivotB",
+      "signature": "setAutoPivotB (v: boolean): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "unsupported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C31"]
+    },
+    {
+      "interface": "IConfigurableConstraint",
+      "member": "setAxis",
+      "signature": "setAxis (v: IVec3Like): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "unsupported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C31"]
+    },
+    {
+      "interface": "IConfigurableConstraint",
+      "member": "setSecondaryAxis",
+      "signature": "setSecondaryAxis (v: IVec3Like): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "unsupported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C31"]
+    },
+    {
+      "interface": "IConfigurableConstraint",
+      "member": "setBreakForce",
+      "signature": "setBreakForce(v: number): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "unsupported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C31"]
+    },
+    {
+      "interface": "IConfigurableConstraint",
+      "member": "setBreakTorque",
+      "signature": "setBreakTorque(v: number): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "targetCapability": "unsupported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C31"]
+    },
+    {
+      "interface": "IBaseShape",
+      "member": "impl",
+      "signature": "readonly impl: any;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-shape.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C13", "B3-C15", "B3-C36"]
+    },
+    {
+      "interface": "IBaseShape",
+      "member": "collider",
+      "signature": "readonly collider: Collider;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-shape.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C13", "B3-C15", "B3-C36"]
+    },
+    {
+      "interface": "IBaseShape",
+      "member": "attachedRigidBody",
+      "signature": "readonly attachedRigidBody: RigidBody | null;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-shape.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C13", "B3-C15", "B3-C36"]
+    },
+    {
+      "interface": "IBaseShape",
+      "member": "initialize",
+      "signature": "initialize (v: Collider): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-shape.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C13", "B3-C15", "B3-C36"]
+    },
+    {
+      "interface": "IBaseShape",
+      "member": "setMaterial",
+      "signature": "setMaterial: (v: PhysicsMaterial | null) => void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-shape.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C13", "B3-C15", "B3-C36"]
+    },
+    {
+      "interface": "IBaseShape",
+      "member": "setAsTrigger",
+      "signature": "setAsTrigger: (v: boolean) => void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-shape.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C13", "B3-C15", "B3-C36"]
+    },
+    {
+      "interface": "IBaseShape",
+      "member": "setCenter",
+      "signature": "setCenter: (v: IVec3Like) => void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-shape.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C13", "B3-C15", "B3-C36"]
+    },
+    {
+      "interface": "IBaseShape",
+      "member": "getAABB",
+      "signature": "getAABB: (v: geometry.AABB) => void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-shape.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C13", "B3-C15", "B3-C36"]
+    },
+    {
+      "interface": "IBaseShape",
+      "member": "getBoundingSphere",
+      "signature": "getBoundingSphere: (v: geometry.Sphere) => void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-shape.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C13", "B3-C15", "B3-C36"]
+    },
+    {
+      "interface": "IBaseShape",
+      "member": "updateEventListener",
+      "signature": "updateEventListener: () => void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-shape.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C13", "B3-C15", "B3-C36"]
+    },
+    {
+      "interface": "IBoxShape",
+      "member": "updateSize",
+      "signature": "updateSize: () => void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-shape.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C13", "B3-C15", "B3-C36"]
+    },
+    {
+      "interface": "ISphereShape",
+      "member": "updateRadius",
+      "signature": "updateRadius: () => void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-shape.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C13", "B3-C15", "B3-C36"]
+    },
+    {
+      "interface": "ICapsuleShape",
+      "member": "setRadius",
+      "signature": "setRadius: (v: number) => void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-shape.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C13", "B3-C15", "B3-C36"]
+    },
+    {
+      "interface": "ICapsuleShape",
+      "member": "setCylinderHeight",
+      "signature": "setCylinderHeight: (v: number) => void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-shape.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C13", "B3-C15", "B3-C36"]
+    },
+    {
+      "interface": "ICapsuleShape",
+      "member": "setDirection",
+      "signature": "setDirection: (v: number) => void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-shape.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C13", "B3-C15", "B3-C36"]
+    },
+    {
+      "interface": "ICylinderShape",
+      "member": "setRadius",
+      "signature": "setRadius: (v: number) => void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-shape.ts",
+      "targetCapability": "approximate",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C13", "B3-C15", "B3-C36"]
+    },
+    {
+      "interface": "ICylinderShape",
+      "member": "setHeight",
+      "signature": "setHeight: (v: number) => void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-shape.ts",
+      "targetCapability": "approximate",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C13", "B3-C15", "B3-C36"]
+    },
+    {
+      "interface": "ICylinderShape",
+      "member": "setDirection",
+      "signature": "setDirection: (v: number) => void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-shape.ts",
+      "targetCapability": "approximate",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C13", "B3-C15", "B3-C36"]
+    },
+    {
+      "interface": "ISimplexShape",
+      "member": "setShapeType",
+      "signature": "setShapeType: (v: SimplexCollider.ESimplexType) => void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-shape.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C14", "B3-C36"]
+    },
+    {
+      "interface": "ISimplexShape",
+      "member": "setVertices",
+      "signature": "setVertices: (v: IVec3Like[]) => void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-shape.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C14", "B3-C36"]
+    },
+    {
+      "interface": "IConeShape",
+      "member": "setRadius",
+      "signature": "setRadius: (v: number) => void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-shape.ts",
+      "targetCapability": "approximate",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C13", "B3-C15", "B3-C36"]
+    },
+    {
+      "interface": "IConeShape",
+      "member": "setHeight",
+      "signature": "setHeight: (v: number) => void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-shape.ts",
+      "targetCapability": "approximate",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C13", "B3-C15", "B3-C36"]
+    },
+    {
+      "interface": "IConeShape",
+      "member": "setDirection",
+      "signature": "setDirection: (v: number) => void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-shape.ts",
+      "targetCapability": "approximate",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C13", "B3-C15", "B3-C36"]
+    },
+    {
+      "interface": "ITrimeshShape",
+      "member": "setMesh",
+      "signature": "setMesh: (v: Mesh | null) => void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-shape.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C14", "B3-C16"]
+    },
+    {
+      "interface": "ITerrainShape",
+      "member": "setTerrain",
+      "signature": "setTerrain: (v: ITerrainAsset | null) => void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-shape.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C17", "B3-C19"]
+    },
+    {
+      "interface": "IPlaneShape",
+      "member": "setNormal",
+      "signature": "setNormal: (v: IVec3Like) => void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-shape.ts",
+      "targetCapability": "unsupported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C36"]
+    },
+    {
+      "interface": "IPlaneShape",
+      "member": "setConstant",
+      "signature": "setConstant: (v: number) => void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-shape.ts",
+      "targetCapability": "unsupported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C36"]
+    },
+    {
+      "interface": "IRaycastOptions",
+      "member": "mask",
+      "signature": "mask: number;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-world.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C25", "B3-C26"]
+    },
+    {
+      "interface": "IRaycastOptions",
+      "member": "group",
+      "signature": "group: number;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-world.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C25", "B3-C26"]
+    },
+    {
+      "interface": "IRaycastOptions",
+      "member": "queryTrigger",
+      "signature": "queryTrigger: boolean;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-world.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C25", "B3-C26"]
+    },
+    {
+      "interface": "IRaycastOptions",
+      "member": "maxDistance",
+      "signature": "maxDistance: number;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-world.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C25", "B3-C26"]
+    },
+    {
+      "interface": "IPhysicsWorld",
+      "member": "impl",
+      "signature": "readonly impl: any;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-world.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-I02", "B3-I06"]
+    },
+    {
+      "interface": "IPhysicsWorld",
+      "member": "debugDrawFlags",
+      "signature": "debugDrawFlags: EPhysicsDrawFlags;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-world.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-I02", "B3-I06"]
+    },
+    {
+      "interface": "IPhysicsWorld",
+      "member": "debugDrawConstraintSize",
+      "signature": "debugDrawConstraintSize: number;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-world.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-I02", "B3-I06"]
+    },
+    {
+      "interface": "IPhysicsWorld",
+      "member": "setGravity",
+      "signature": "setGravity: (v: IVec3Like) => void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-world.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-I02", "B3-I06"]
+    },
+    {
+      "interface": "IPhysicsWorld",
+      "member": "setAllowSleep",
+      "signature": "setAllowSleep: (v: boolean) => void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-world.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-I02", "B3-I06"]
+    },
+    {
+      "interface": "IPhysicsWorld",
+      "member": "setDefaultMaterial",
+      "signature": "setDefaultMaterial: (v: PhysicsMaterial) => void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-world.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-I02", "B3-I06"]
+    },
+    {
+      "interface": "IPhysicsWorld",
+      "member": "step",
+      "signature": "step (fixedTimeStep: number, timeSinceLastCalled?: number, maxSubSteps?: number): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-world.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C01", "B3-C02", "B3-C03"]
+    },
+    {
+      "interface": "IPhysicsWorld",
+      "member": "raycast",
+      "signature": "raycast (worldRay: geometry.Ray, options: IRaycastOptions, pool: RecyclePool<PhysicsRayResult>, results: PhysicsRayResult[]): boolean",
+      "sourcePath": "src/cocos/physics/spec/i-physics-world.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C26"]
+    },
+    {
+      "interface": "IPhysicsWorld",
+      "member": "raycastClosest",
+      "signature": "raycastClosest (worldRay: geometry.Ray, options: IRaycastOptions, out: PhysicsRayResult): boolean;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-world.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C26"]
+    },
+    {
+      "interface": "IPhysicsWorld",
+      "member": "sweepBox",
+      "signature": "sweepBox (worldRay: geometry.Ray, halfExtent: IVec3Like, orientation: IQuatLike,\n        options: IRaycastOptions, pool: RecyclePool<PhysicsRayResult>, results: PhysicsRayResult[]): boolean;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-world.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C26"]
+    },
+    {
+      "interface": "IPhysicsWorld",
+      "member": "sweepBoxClosest",
+      "signature": "sweepBoxClosest (worldRay: geometry.Ray, halfExtent: IVec3Like, orientation: IQuatLike,\n        options: IRaycastOptions, result: PhysicsRayResult): boolean;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-world.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C26"]
+    },
+    {
+      "interface": "IPhysicsWorld",
+      "member": "sweepSphere",
+      "signature": "sweepSphere (worldRay: geometry.Ray, radius: number,\n        options: IRaycastOptions, pool: RecyclePool<PhysicsRayResult>, results: PhysicsRayResult[]): boolean;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-world.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C26"]
+    },
+    {
+      "interface": "IPhysicsWorld",
+      "member": "sweepSphereClosest",
+      "signature": "sweepSphereClosest (worldRay: geometry.Ray, radius: number,\n        options: IRaycastOptions, result: PhysicsRayResult): boolean;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-world.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C26"]
+    },
+    {
+      "interface": "IPhysicsWorld",
+      "member": "sweepCapsule",
+      "signature": "sweepCapsule (worldRay: geometry.Ray, radius: number, height: number, orientation: IQuatLike,\n        options: IRaycastOptions, pool: RecyclePool<PhysicsRayResult>, results: PhysicsRayResult[]): boolean;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-world.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C26"]
+    },
+    {
+      "interface": "IPhysicsWorld",
+      "member": "sweepCapsuleClosest",
+      "signature": "sweepCapsuleClosest (worldRay: geometry.Ray, radius: number, height: number, orientation: IQuatLike,\n        options: IRaycastOptions, result: PhysicsRayResult): boolean;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-world.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C26"]
+    },
+    {
+      "interface": "IPhysicsWorld",
+      "member": "emitEvents",
+      "signature": "emitEvents (): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-world.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C21", "B3-C22", "B3-C24"]
+    },
+    {
+      "interface": "IPhysicsWorld",
+      "member": "syncSceneToPhysics",
+      "signature": "syncSceneToPhysics (): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-world.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C01", "B3-C02", "B3-C03"]
+    },
+    {
+      "interface": "IPhysicsWorld",
+      "member": "syncAfterEvents",
+      "signature": "syncAfterEvents (): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-world.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C01", "B3-C02", "B3-C03"]
+    },
+    {
+      "interface": "IPhysicsWorld",
+      "member": "destroy",
+      "signature": "destroy (): void;",
+      "sourcePath": "src/cocos/physics/spec/i-physics-world.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-I02", "B3-I06"]
+    },
+    {
+      "interface": "IRigidBody",
+      "member": "impl",
+      "signature": "readonly impl: any;",
+      "sourcePath": "src/cocos/physics/spec/i-rigid-body.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C04", "B3-C11", "B3-I06"]
+    },
+    {
+      "interface": "IRigidBody",
+      "member": "rigidBody",
+      "signature": "readonly rigidBody: RigidBody;",
+      "sourcePath": "src/cocos/physics/spec/i-rigid-body.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C04", "B3-C11", "B3-I06"]
+    },
+    {
+      "interface": "IRigidBody",
+      "member": "isAwake",
+      "signature": "readonly isAwake: boolean;",
+      "sourcePath": "src/cocos/physics/spec/i-rigid-body.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C04-GRAVITY", "B3-C04-SLEEP"]
+    },
+    {
+      "interface": "IRigidBody",
+      "member": "isSleepy",
+      "signature": "readonly isSleepy: boolean;",
+      "sourcePath": "src/cocos/physics/spec/i-rigid-body.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C04-GRAVITY", "B3-C04-SLEEP"]
+    },
+    {
+      "interface": "IRigidBody",
+      "member": "isSleeping",
+      "signature": "readonly isSleeping: boolean;",
+      "sourcePath": "src/cocos/physics/spec/i-rigid-body.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C04-GRAVITY", "B3-C04-SLEEP"]
+    },
+    {
+      "interface": "IRigidBody",
+      "member": "initialize",
+      "signature": "initialize (v: RigidBody): void;",
+      "sourcePath": "src/cocos/physics/spec/i-rigid-body.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C04", "B3-C11", "B3-I06"]
+    },
+    {
+      "interface": "IRigidBody",
+      "member": "setType",
+      "signature": "setType: (v: ERigidBodyType) => void;",
+      "sourcePath": "src/cocos/physics/spec/i-rigid-body.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C04", "B3-C11", "B3-I06"]
+    },
+    {
+      "interface": "IRigidBody",
+      "member": "setMass",
+      "signature": "setMass: (v: number) => void;",
+      "sourcePath": "src/cocos/physics/spec/i-rigid-body.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C08", "B3-C09"]
+    },
+    {
+      "interface": "IRigidBody",
+      "member": "setLinearDamping",
+      "signature": "setLinearDamping: (v: number) => void;",
+      "sourcePath": "src/cocos/physics/spec/i-rigid-body.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C06-DAMPING-RUNTIME", "B3-C36-SETTER-ROLLBACK"]
+    },
+    {
+      "interface": "IRigidBody",
+      "member": "setAngularDamping",
+      "signature": "setAngularDamping: (v: number) => void;",
+      "sourcePath": "src/cocos/physics/spec/i-rigid-body.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C06-DAMPING-RUNTIME", "B3-C36-SETTER-ROLLBACK"]
+    },
+    {
+      "interface": "IRigidBody",
+      "member": "useGravity",
+      "signature": "useGravity: (v: boolean) => void;",
+      "sourcePath": "src/cocos/physics/spec/i-rigid-body.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C04-GRAVITY", "B3-C04-SLEEP"]
+    },
+    {
+      "interface": "IRigidBody",
+      "member": "setLinearFactor",
+      "signature": "setLinearFactor: (v: IVec3Like) => void;",
+      "sourcePath": "src/cocos/physics/spec/i-rigid-body.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C12"]
+    },
+    {
+      "interface": "IRigidBody",
+      "member": "setAngularFactor",
+      "signature": "setAngularFactor: (v: IVec3Like) => void;",
+      "sourcePath": "src/cocos/physics/spec/i-rigid-body.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C12"]
+    },
+    {
+      "interface": "IRigidBody",
+      "member": "setAllowSleep",
+      "signature": "setAllowSleep: (v: boolean) => void;",
+      "sourcePath": "src/cocos/physics/spec/i-rigid-body.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C04-GRAVITY", "B3-C04-SLEEP"]
+    },
+    {
+      "interface": "IRigidBody",
+      "member": "wakeUp",
+      "signature": "wakeUp (): void;",
+      "sourcePath": "src/cocos/physics/spec/i-rigid-body.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C04", "B3-C11", "B3-I06"]
+    },
+    {
+      "interface": "IRigidBody",
+      "member": "sleep",
+      "signature": "sleep (): void;",
+      "sourcePath": "src/cocos/physics/spec/i-rigid-body.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C04", "B3-C11", "B3-I06"]
+    },
+    {
+      "interface": "IRigidBody",
+      "member": "clearState",
+      "signature": "clearState (): void;",
+      "sourcePath": "src/cocos/physics/spec/i-rigid-body.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C04", "B3-C11", "B3-I06"]
+    },
+    {
+      "interface": "IRigidBody",
+      "member": "clearForces",
+      "signature": "clearForces (): void;",
+      "sourcePath": "src/cocos/physics/spec/i-rigid-body.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C06", "B3-C07"]
+    },
+    {
+      "interface": "IRigidBody",
+      "member": "clearVelocity",
+      "signature": "clearVelocity (): void;",
+      "sourcePath": "src/cocos/physics/spec/i-rigid-body.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C04", "B3-C11", "B3-I06"]
+    },
+    {
+      "interface": "IRigidBody",
+      "member": "setSleepThreshold",
+      "signature": "setSleepThreshold (v: number): void;",
+      "sourcePath": "src/cocos/physics/spec/i-rigid-body.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C04-GRAVITY", "B3-C04-SLEEP"]
+    },
+    {
+      "interface": "IRigidBody",
+      "member": "getSleepThreshold",
+      "signature": "getSleepThreshold (): number;",
+      "sourcePath": "src/cocos/physics/spec/i-rigid-body.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C04-GRAVITY", "B3-C04-SLEEP"]
+    },
+    {
+      "interface": "IRigidBody",
+      "member": "useCCD",
+      "signature": "useCCD: (v: boolean) => void;",
+      "sourcePath": "src/cocos/physics/spec/i-rigid-body.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C27", "B3-C28"]
+    },
+    {
+      "interface": "IRigidBody",
+      "member": "isUsingCCD",
+      "signature": "isUsingCCD: () => boolean;",
+      "sourcePath": "src/cocos/physics/spec/i-rigid-body.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C27", "B3-C28"]
+    },
+    {
+      "interface": "IRigidBody",
+      "member": "getLinearVelocity",
+      "signature": "getLinearVelocity (out: IVec3Like): void;",
+      "sourcePath": "src/cocos/physics/spec/i-rigid-body.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C04", "B3-C11", "B3-I06"]
+    },
+    {
+      "interface": "IRigidBody",
+      "member": "setLinearVelocity",
+      "signature": "setLinearVelocity (value: IVec3Like): void;",
+      "sourcePath": "src/cocos/physics/spec/i-rigid-body.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C04", "B3-C11", "B3-I06"]
+    },
+    {
+      "interface": "IRigidBody",
+      "member": "getAngularVelocity",
+      "signature": "getAngularVelocity (out: IVec3Like): void;",
+      "sourcePath": "src/cocos/physics/spec/i-rigid-body.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C04", "B3-C11", "B3-I06"]
+    },
+    {
+      "interface": "IRigidBody",
+      "member": "setAngularVelocity",
+      "signature": "setAngularVelocity (value: IVec3Like): void;",
+      "sourcePath": "src/cocos/physics/spec/i-rigid-body.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C04", "B3-C11", "B3-I06"]
+    },
+    {
+      "interface": "IRigidBody",
+      "member": "applyForce",
+      "signature": "applyForce (force: IVec3Like, relativePoint?: IVec3Like): void;",
+      "sourcePath": "src/cocos/physics/spec/i-rigid-body.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C06", "B3-C07"]
+    },
+    {
+      "interface": "IRigidBody",
+      "member": "applyLocalForce",
+      "signature": "applyLocalForce (force: IVec3Like, relativePoint?: IVec3Like): void;",
+      "sourcePath": "src/cocos/physics/spec/i-rigid-body.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C06", "B3-C07"]
+    },
+    {
+      "interface": "IRigidBody",
+      "member": "applyImpulse",
+      "signature": "applyImpulse (force: IVec3Like, relativePoint?: IVec3Like): void;",
+      "sourcePath": "src/cocos/physics/spec/i-rigid-body.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C06", "B3-C07"]
+    },
+    {
+      "interface": "IRigidBody",
+      "member": "applyLocalImpulse",
+      "signature": "applyLocalImpulse (force: IVec3Like, relativePoint?: IVec3Like): void;",
+      "sourcePath": "src/cocos/physics/spec/i-rigid-body.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C06", "B3-C07"]
+    },
+    {
+      "interface": "IRigidBody",
+      "member": "applyTorque",
+      "signature": "applyTorque (torque: IVec3Like): void;",
+      "sourcePath": "src/cocos/physics/spec/i-rigid-body.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C06", "B3-C07"]
+    },
+    {
+      "interface": "IRigidBody",
+      "member": "applyLocalTorque",
+      "signature": "applyLocalTorque (torque: IVec3Like): void;",
+      "sourcePath": "src/cocos/physics/spec/i-rigid-body.ts",
+      "targetCapability": "supported",
+      "implementation": "NOT_IMPLEMENTED",
+      "requiredTestParents": ["B3-C06", "B3-C07"]
+    }
+  ],
+  "interfaceScope": "Cocos internal engine implementation spec; not a new public raw-pointer API"
+}

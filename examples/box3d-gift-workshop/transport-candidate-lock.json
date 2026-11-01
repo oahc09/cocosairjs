@@ -1,0 +1,15 @@
+{
+  "status": "READY_FOR_VERIFICATION",
+  "expectedBuild": 220,
+  "runtimeSha256": "00fbec981bb5c580c5b700888df4f538a47bec8ec75194d14a0b7cc2637964a8",
+  "manifestSha256": "fadce22b007f029c54dd97ccc2f2ef0c0de784b9b559f8a7e88ab8a9e8100c4a",
+  "artifactDirectory": "convex-query-public-runtime-20261024-b",
+  "qualification": {
+    "committedQueries": true,
+    "committedRay": true,
+    "kinematicTarget": true,
+    "fixedAtIdle": true,
+    "boxSupportDeparture": true
+  },
+  "scope": "Exact isolated transport candidate. Fresh public Cocos/WASM d qualifies same-epoch cast-only positive-gap Box departure; EX09 lifting/blocked transport browser validation pending. No BIZ pass."
+}

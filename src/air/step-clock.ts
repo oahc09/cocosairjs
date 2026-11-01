@@ -25,10 +25,12 @@
  * `game.step()` 只做 `director.tick(fixedDT)`，不会先暂停主循环——运行中直接调用等于
  * 真实 rAF 与手动步进双时钟并发（任务书明令禁止）。本封装把三步合同固化：
  *
- *   begin()  — game.pause()（停真实 pacer：rAF/渲染/业务时钟/音频）
+ *   begin()  — 停真实 pacer；被观察的 Game 使用独占 lease，不等同 application pause
  *   step(dt) — director.tick(dt ?? 1/frameRate)，等待本帧 AFTER_DRAW 后返回；
  *              未处于暂停态调用直接抛错（反双时钟门卫）
- *   end()    — game.resume()（恢复真实时钟）
+ *   end()    — 释放自己的时钟原因；只有没有其他暂停原因才恢复 pacer
+ *
+ * 未观察路径保留原 game.pause/resume 与 Promise 行为。被观察路径等完整 tick 返回才确认 AFTER_DRAW。
  *
  * 用法（测试/验收页）：
  *   const clock = createStepClock();
@@ -40,6 +42,7 @@
  */
 
 import { game, director, Director } from '../cocos/game';
+import { createGameClockClient } from '../cocos/game/game-clock-control';
 
 /** @en Single stepped frame receipt. @zh 一次手动步进的回执。 */
 export interface AirStepFrame {
@@ -85,6 +88,8 @@ export function createStepClock (options: AirStepClockOptions = {}): AirStepCloc
     const stepTimeoutMs = options.stepTimeoutMs ?? 2000;
     let stepping = false;
     let stepped = 0;
+    let pending = false;
+    const control = createGameClockClient(game);
 
     function assertPaused (): void {
         const paused = (game as unknown as { _paused?: boolean })._paused;
@@ -99,32 +104,91 @@ export function createStepClock (options: AirStepClockOptions = {}): AirStepCloc
         get stepping () { return stepping; },
         get stepped () { return stepped; },
         begin (): void {
-            if (stepping) { return; }
-            game.pause();
+            const owned = control.owned();
+            if (owned && pending) { throw new Error('[cocosair] begin(): a step is still pending.'); }
+            if (stepping) {
+                if (owned) { control.begin(); }
+                return;
+            }
+            if (!control.begin()) { game.pause(); }
             stepping = true;
         },
         step (dt: number = 1 / frameRate): Promise<AirStepFrame> {
-            assertPaused();
+            // Admission precedes local stale/parallel rejection; no paused-owner escape.
+            const owned = control.owned();
+            if (!owned) {
+                // Original no-observer Promise ordering and cleanup are deliberately unchanged.
+                assertPaused();
+                const index = stepped + 1;
+                return new Promise<AirStepFrame>((resolve, reject) => {
+                    const timer = setTimeout(() => {
+                        director.off(Director.EVENT_AFTER_DRAW, onLegacyDraw);
+                        reject(new Error(`[cocosair] step(): no AFTER_DRAW within ${stepTimeoutMs}ms`));
+                    }, stepTimeoutMs);
+                    function onLegacyDraw (): void {
+                        director.off(Director.EVENT_AFTER_DRAW, onLegacyDraw);
+                        clearTimeout(timer);
+                        stepped = index;
+                        resolve({ step: index, dt, afterDraw: true });
+                    }
+                    director.on(Director.EVENT_AFTER_DRAW, onLegacyDraw);
+                    director.tick(dt);
+                });
+            }
+            if (pending) { throw new Error('[cocosair] step(): a step is still pending.'); }
             const index = stepped + 1;
-            return new Promise<AirStepFrame>((resolve, reject) => {
-                const timer = setTimeout(() => {
-                    director.off(Director.EVENT_AFTER_DRAW, onDraw);
-                    reject(new Error(`[cocosair] step(): no AFTER_DRAW within ${stepTimeoutMs}ms`));
-                }, stepTimeoutMs);
+            pending = true;
+            const promise = new Promise<AirStepFrame>((resolve, reject) => {
+                let timer: ReturnType<typeof setTimeout> | undefined;
+                let listening = false, drew = false, returned = false, settled = false, ticking = false;
+                const finish = (failed: boolean, error?: unknown): void => {
+                    if (settled) { return; }
+                    settled = true;
+                    // Independent cleanup; preserve the first thrown value, including undefined.
+                    if (timer !== undefined) {
+                        try { clearTimeout(timer); } catch (cleanup) { if (!failed) { failed = true; error = cleanup; } }
+                        timer = undefined;
+                    }
+                    if (listening) {
+                        try { director.off(Director.EVENT_AFTER_DRAW, onDraw); }
+                        catch (cleanup) { if (!failed) { failed = true; error = cleanup; } }
+                        listening = false;
+                    }
+                    if (failed) { reject(error); }
+                    else { stepped = index; resolve({ step: index, dt, afterDraw: true }); }
+                };
                 function onDraw (): void {
-                    director.off(Director.EVENT_AFTER_DRAW, onDraw);
-                    clearTimeout(timer);
-                    stepped = index;
-                    resolve({ step: index, dt, afterDraw: true });
+                    if (ticking) { drew = true; }
                 }
-                director.on(Director.EVENT_AFTER_DRAW, onDraw);
-                director.tick(dt);
+                try {
+                    timer = setTimeout(() => finish(true,
+                        new Error(`[cocosair] step(): no AFTER_DRAW within ${stepTimeoutMs}ms`)), stepTimeoutMs);
+                    // Mark entered before registration so an exceptional partial registration is cleaned.
+                    listening = true;
+                    director.on(Director.EVENT_AFTER_DRAW, onDraw);
+                    ticking = true;
+                    try {
+                        control.frame(() => director.tick(dt));
+                    } finally { ticking = false; }
+                    returned = true;
+                    // AFTER_DRAW is necessary, not sufficient: END_FRAME and frame disposal returned too.
+                    if (returned && drew) { finish(false); }
+                } catch (error) { finish(true, error); }
             });
+            return promise.then(
+                (receipt) => { pending = false; return receipt; },
+                (error) => { pending = false; throw error; },
+            );
         },
         end (): void {
-            if (!stepping) { return; }
-            stepping = false;
-            game.resume();
+            const owned = control.owned();
+            if (owned && pending) { throw new Error('[cocosair] end(): a step is still pending.'); }
+            if (!stepping) {
+                if (owned) { control.end(); }
+                return;
+            }
+            if (owned) { control.end(); stepping = false; }
+            else { stepping = false; control.end(); game.resume(); }
         },
     };
 }

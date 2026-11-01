@@ -19,6 +19,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
 */
+import { safeErrorString } from './safe-error';
 /**
  * Cocos AIR — Agent-first Interactive Runtime.
  *
@@ -27,6 +28,7 @@
  * 不承担：资源系统抽象 / Scene DSL / Renderer 配置框架 / Plugin 管理。
  */
 
+import { terminateGameClock, isGameClockTerminal } from '../cocos/game/game-clock-control';
 import { game, director } from '../cocos/game';
 import { screenAdapter } from 'pal/screen-adapter';
 import { Scene } from '../cocos/scene-graph/scene';
@@ -37,10 +39,17 @@ import type { AirSessionScope, AirCleanupReceipt } from './session-scope';
 import { airError, airBootstrapRegistry } from './app-config';
 import { CCObject } from '../cocos/core/data/object';
 import { releaseManager } from '../cocos/asset/asset-manager/release-manager';
-import { disposeBox2D3 } from './physics-2d/box2d3';
+import type { AirBox3DOptions } from './physics/box3d/config';
+import type {
+    AirPhysicsPreparation,
+    AirPhysicsPreparationReceipt,
+    AirPhysicsSceneReleaseResult,
+} from './physics/preparation';
 
 export interface AirSceneReleaseReceipt extends AirCleanupReceipt {
     readonly scene: string | null;
+    readonly physicsPreparation?: AirPhysicsPreparationReceipt;
+    readonly physicsSceneRelease?: AirPhysicsSceneReleaseResult;
     readonly retained: readonly string[];
     readonly measurements: Readonly<{ gpuMemory: 'unavailable'; reason: string }>;
 }
@@ -95,7 +104,9 @@ export interface AirAppOptions {
      * `'cannon'` 使用 cannon.js 全量刚体模拟（纯 JS，默认 bundle 已编入）；
      * `'builtin'` 为官方内置离散碰撞检测器（不模拟）。须在 createAirApp 内 game.init 前生效。
      */
-    physics?: 'builtin' | 'cannon';
+    physics?: 'builtin' | 'cannon' | 'box3d';
+    /** Optional Box3D feature settings, copied and frozen during application admission. */
+    physicsOptions?: { box3d?: AirBox3DOptions };
     /** Optional 2D backend. Existing JavaScript Box2D remains the default. */
     physics2D?: 'box2d' | 'box2d-v3-wasm';
     /** Separate WASM deployment and solver configuration, used only by box2d-v3-wasm. */
@@ -146,6 +157,7 @@ export class AirAppImpl implements AirApp {
     private _started = false;
     private _scope = createSessionScope();
     private _release: Promise<AirSceneReleaseReceipt> | undefined;
+    private _terminalGameClock = false;
     private _close: Promise<AirSceneReleaseReceipt> | undefined;
     private _releaseFailed = false;
     private _needsResume = false;
@@ -157,6 +169,7 @@ export class AirAppImpl implements AirApp {
         readonly canvas: HTMLCanvasElement,
         readonly contextHealth: AirContextHealth,
         readonly diagnostics?: AirDiagnostics,
+        private readonly physicsPreparation?: AirPhysicsPreparation,
     ) {}
 
     /**
@@ -217,7 +230,7 @@ export class AirAppImpl implements AirApp {
                 try {
                     retained = director._releaseSceneImmediate();
                 } catch (error) {
-                    destructionFailure = String(error);
+                    destructionFailure = safeErrorString(error);
                 }
                 const result = await cleanup;
                 const pending = [...result.pending],
@@ -226,17 +239,28 @@ export class AirAppImpl implements AirApp {
                     releaseManager._flushAirReleaseQueue();
                     CCObject._deferredDestroy();
                 } catch (error) {
-                    failures.push({ label: 'native-asset-destruction', message: String(error) });
+                    failures.push({ label: 'native-asset-destruction', message: safeErrorString(error) });
                 }
                 if (destructionFailure)
                     failures.push({ label: 'native-scene-destruction', message: destructionFailure });
                 if (scene?.isValid) pending.push('native-scene-destruction');
+                // Scene components, asynchronous scope cleanup and asset deferred destruction
+                // must all settle before acknowledging this world's retired event storage.
+                let physicsSceneRelease: AirPhysicsSceneReleaseResult | undefined;
+                if (!pending.length && !failures.length) {
+                    try {
+                        physicsSceneRelease = this.physicsPreparation?.releaseScene();
+                    } catch (error) {
+                        failures.push({ label: 'box3d-empty-world-reclamation', message: safeErrorString(error) });
+                    }
+                }
                 const status = pending.length || failures.length ? ('failed' as const) : ('released' as const);
                 this._releaseFailed = status === 'failed';
                 return Object.freeze({
                     status,
                     scene: scene?.uuid ?? null,
                     completed: result.completed,
+                    ...(physicsSceneRelease ? { physicsSceneRelease } : {}),
                     pending: Object.freeze(pending),
                     failures: Object.freeze(failures),
                     retained: Object.freeze([
@@ -264,26 +288,72 @@ export class AirAppImpl implements AirApp {
                 },
             );
         scope.deactivate('release');
-        game.pause();
+        // close already installed sticky terminal pacing before any teardown callback.
+        if (!this._terminalGameClock) game.pause();
         this._needsResume = true;
         return this._release!;
     }
 
     close(): Promise<AirSceneReleaseReceipt> {
         if (this._close) return this._close;
-        (screenAdapter as unknown as { destroyLayoutObserver?: () => void }).destroyLayoutObserver?.();
         const registry = airBootstrapRegistry();
         if (registry.app === this) registry.status = 'closed';
-        this._close = Promise.resolve()
-            .then(() => this.releaseScene())
-            .then((receipt) => {
-                disposeBox2D3();
-                this.contextHealth.destroy();
-                this.diagnostics?.destroy();
-                return receipt;
+        const failures: { label: string; message: string }[] = [];
+        const attempt = (label: string, action: () => void): void => {
+            try {
+                action();
+            } catch (error) {
+                failures.push({ label, message: safeErrorString(error) });
+            }
+        };
+        // Install the shared promise before any teardown callback can reenter close.
+        this._close = Promise.resolve().then(async () => {
+            let receipt: AirSceneReleaseReceipt;
+            try {
+                receipt = await this.releaseScene();
+            } catch (error) {
+                receipt = Object.freeze({
+                    status: 'failed',
+                    scene: null,
+                    completed: Object.freeze([]),
+                    pending: Object.freeze(['scene-release']),
+                    retained: Object.freeze(['runtime', 'scene']),
+                    failures: Object.freeze([{ label: 'scene-release', message: safeErrorString(error) }]),
+                    measurements: Object.freeze({ gpuMemory: 'unavailable', reason: 'Scene release failed.' }),
+                });
+            }
+            // Scene components precede world/module teardown. A failed backend cannot skip the other.
+            const physics = await this.physicsPreparation?.dispose();
+            if (physics) {
+                registry.physicsPreparation = physics;
+                failures.push(...physics.cleanupErrors);
+            }
+            attempt('layout-observer', () =>
+                (screenAdapter as unknown as { destroyLayoutObserver?: () => void }).destroyLayoutObserver?.(),
+            );
+            attempt('context-health', () => this.contextHealth.destroy());
+            attempt('diagnostics', () => this.diagnostics?.destroy());
+            const allFailures = Object.freeze([...receipt.failures, ...failures]);
+            return Object.freeze({
+                ...receipt,
+                status: receipt.status === 'failed' || allFailures.length ? ('failed' as const) : ('released' as const),
+                failures: allFailures,
+                retained: Object.freeze([
+                    ...receipt.retained,
+                    ...(physics?.acquired.reduce<string[]>((all, entry) => [...all, ...entry.retained], []) ?? []),
+                ]),
+                physicsPreparation: physics,
             });
-        this._scope.deactivate('close');
-        game.pause();
+        });
+        attempt('game-clock-terminal', () => {
+            try {
+                terminateGameClock(game);
+            } finally {
+                this._terminalGameClock = isGameClockTerminal(game);
+            }
+        });
+        attempt('session-deactivate', () => this._scope.deactivate('close'));
+        if (!this._terminalGameClock) attempt('game-pause', () => game.pause());
         return this._close;
     }
 }

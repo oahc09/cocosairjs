@@ -1,0 +1,36 @@
+{
+  "schema": "box3d-actual-lifecycle-failure-frozen-roster-v1",
+  "status": "SOURCE_ONLY_NOT_RUN",
+  "cases": ["disable-before-native", "disable-after-native", "type-after-cleanup-not-mutated", "after-native-unknown"],
+  "nativeWasmSha256": "4b9494dc2d3c46b4cbacf8d12a8119df5e91a27e19f90b946d50f6467b7adf8f",
+  "deliveryFaults": {
+    "disable-before-native": {
+      "method": "clearBodyVelocity",
+      "phase": "before-delegate",
+      "outcome": "not-mutated",
+      "expectedBaseline": "RED component enabled cache publication invariant"
+    },
+    "disable-after-native": { "method": "clearBodyVelocity", "phase": "after-delegate", "outcome": "committed" },
+    "type-after-cleanup-not-mutated": {
+      "method": "setBodyType",
+      "phase": "before-delegate",
+      "outcome": "not-mutated",
+      "precedingRealMutation": "clearBodyVelocity"
+    },
+    "after-native-unknown": {
+      "method": "clearBodyVelocity",
+      "phase": "after-delegate",
+      "outcome": "unknown",
+      "qualification": "Lost-result delivery control, not a native numerical failure; delegate and readbacks recorded separately"
+    }
+  },
+  "formalCells": { "total": 2128, "status": "NOT_RUN" },
+  "gates": { "total": 9, "status": "NOT_RUN" },
+  "notCovered": [
+    "Game pause or owned manual clock",
+    "Persistent-scene migration",
+    "Native engine numerical errors",
+    "Browser visibility or suspension",
+    "Cross-world/multiple-app and complete lifetime matrices"
+  ]
+}

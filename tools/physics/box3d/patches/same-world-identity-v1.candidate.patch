@@ -1,0 +1,476 @@
+--- a/src/physics_world.h
++++ b/src/physics_world.h
+@@ -122,10 +122,29 @@
+ 
+ b3DeclareArray( b3TaskContext );
+ 
++// AIR same-world identity history. Fixed, explicitly accounted storage.
++// No trim/floor setter is enabled by this candidate.
++enum b3IdentityKind
++{
++	b3_bodyIdentity = 0,
++	b3_shapeIdentity = 1,
++	b3_jointIdentity = 2,
++	b3_contactIdentity = 3,
++	b3_identityKindCount = 4,
++};
++
++typedef struct b3IdentityState
++{
++	uint32_t high[b3_identityKindCount];
++	uint32_t floor[b3_identityKindCount];
++	uint32_t contactExhausted;
++} b3IdentityState;
++
+ // The world struct manages all physics entities, dynamic simulation,  and asynchronous queries.
+ // The world also contains efficient memory management facilities.
+ typedef struct b3World
+ {
++	b3IdentityState identity;
+ 	b3Stack stack;
+ 	b3BroadPhase broadPhase;
+ 	b3ConstraintGraph constraintGraph;
+@@ -299,6 +318,29 @@
+ 	bool inUse;
+ } b3World;
+ 
++// Pure preflight, before allocation/locking/contact removal. Reject rather than wrap.
++static inline bool b3NextIdentity( const b3World* world, enum b3IdentityKind kind, uint32_t previous,
++								  uint32_t maximum, uint32_t* next )
++{
++	if ( world->identity.contactExhausted != 0 || previous >= maximum ||
++		 world->identity.floor[kind] > previous || previous > world->identity.high[kind] ||
++		 world->identity.high[kind] > maximum )
++	{
++		return false;
++	}
++	*next = previous + UINT32_C( 1 );
++	return true;
++}
++
++// Commit before an identity can escape. No rollback/reset operation is provided.
++static inline void b3CommitIdentity( b3World* world, enum b3IdentityKind kind, uint32_t generation )
++{
++	if ( world->identity.high[kind] < generation )
++	{
++		world->identity.high[kind] = generation;
++	}
++}
++
+ b3World* b3GetUnlockedWorldFromId( b3WorldId id );
+ b3World* b3GetWorldFromId( b3WorldId id );
+ 
+--- a/src/id_pool.h
++++ b/src/id_pool.h
+@@ -13,6 +13,12 @@
+ 
+ b3IdPool b3CreateIdPool( void );
+ void b3DestroyIdPool( b3IdPool* pool );
++
++// Matches b3AllocId without consuming an id or changing the free list.
++static inline int b3PeekId( const b3IdPool* pool )
++{
++	return pool->freeArray.count > 0 ? pool->freeArray.data[pool->freeArray.count - 1] : pool->nextIndex;
++}
+ 
+ int b3AllocId( b3IdPool* pool );
+ void b3FreeId( b3IdPool* pool, int id );
+--- a/src/body.c
++++ b/src/body.c
+@@ -190,6 +190,18 @@
+ 	b3World* world = b3GetUnlockedWorldFromId( worldId );
+ 
+ 	if ( world == NULL )
++	{
++		return b3_nullBodyId;
++	}
++
++	int nextId = b3PeekId( &world->bodyIdPool );
++	uint32_t previous = world->identity.floor[b3_bodyIdentity];
++	if ( nextId < world->bodies.count )
++	{
++		previous = world->bodies.data[nextId].generation;
++	}
++	uint32_t nextGeneration;
++	if ( nextId == INT32_MAX || b3NextIdentity( world, b3_bodyIdentity, previous, UINT16_MAX, &nextGeneration ) == false )
+ 	{
+ 		return b3_nullBodyId;
+ 	}
+@@ -282,7 +294,7 @@
+ 
+ 	if ( bodyId == world->bodies.count )
+ 	{
+-		b3Array_Push( world->bodies, (b3Body){ 0 } );
++		b3Array_Push( world->bodies, (b3Body){ .generation = (uint16_t)world->identity.floor[b3_bodyIdentity] } );
+ 	}
+ 	else
+ 	{
+@@ -293,7 +305,8 @@
+ 	body->userData = def->userData;
+ 	body->setIndex = setId;
+ 	body->localIndex = set->bodySims.count - 1;
+-	body->generation += 1;
++	body->generation = (uint16_t)nextGeneration;
++	b3CommitIdentity( world, b3_bodyIdentity, nextGeneration );
+ 	body->headShapeId = B3_NULL_INDEX;
+ 	body->shapeCount = 0;
+ 	body->headChainId = B3_NULL_INDEX;
+--- a/src/shape.c
++++ b/src/shape.c
+@@ -91,13 +91,13 @@
+ 
+ static b3Shape* b3CreateShapeInternal( b3World* world, b3Body* body, b3WorldTransform bodyTransform, const b3ShapeDef* def,
+ 									   const void* geometry, b3ShapeType shapeType, b3Transform shapeTransform, b3Vec3 scale,
+-									   bool haveShapeTransform )
++									   bool haveShapeTransform, uint32_t nextGeneration )
+ {
+ 	int shapeId = b3AllocId( &world->shapeIdPool );
+ 
+ 	if ( shapeId == world->shapes.count )
+ 	{
+-		b3Array_Push( world->shapes, (b3Shape){ 0 } );
++		b3Array_Push( world->shapes, (b3Shape){ .generation = (uint16_t)world->identity.floor[b3_shapeIdentity] } );
+ 		b3Array_Push( world->fatAABBs, (b3AABB){ 0 } );
+ 	}
+ 	else
+@@ -184,7 +184,8 @@
+ 	shape->aabb = (b3AABB){ b3Vec3_zero, b3Vec3_zero };
+ 	world->fatAABBs.data[shapeId] = (b3AABB){ b3Vec3_zero, b3Vec3_zero };
+ 	shape->nameId = b3AddName( &world->names, def->name );
+-	shape->generation += 1;
++	shape->generation = (uint16_t)nextGeneration;
++	b3CommitIdentity( world, b3_shapeIdentity, nextGeneration );
+ 
+ 	if ( shape->type == b3_compoundShape )
+ 	{
+@@ -277,12 +278,24 @@
+ 		return b3_nullShapeId;
+ 	}
+ 
++	int nextId = b3PeekId( &world->shapeIdPool );
++	uint32_t previous = world->identity.floor[b3_shapeIdentity];
++	if ( nextId < world->shapes.count )
++	{
++		previous = world->shapes.data[nextId].generation;
++	}
++	uint32_t nextGeneration;
++	if ( b3NextIdentity( world, b3_shapeIdentity, previous, UINT16_MAX, &nextGeneration ) == false )
++	{
++		return b3_nullShapeId;
++	}
++
+ 	world->locked = true;
+ 
+ 	b3WorldTransform bodyTransform = b3GetBodyTransformQuick( world, body );
+ 
+ 	b3Shape* shape =
+-		b3CreateShapeInternal( world, body, bodyTransform, def, geometry, shapeType, transform, scale, haveTransform );
++		b3CreateShapeInternal( world, body, bodyTransform, def, geometry, shapeType, transform, scale, haveTransform, nextGeneration );
+ 
+ 	if ( shape == NULL )
+ 	{
+--- a/src/joint.c
++++ b/src/joint.c
+@@ -206,6 +206,18 @@
+ 	b3Body* bodyA = b3GetBodyFullId( world, def->bodyIdA );
+ 	b3Body* bodyB = b3GetBodyFullId( world, def->bodyIdB );
+ 
++	int nextId = b3PeekId( &world->jointIdPool );
++	uint32_t previous = world->identity.floor[b3_jointIdentity];
++	if ( nextId < world->joints.count )
++	{
++		previous = world->joints.data[nextId].generation;
++	}
++	uint32_t nextGeneration;
++	if ( nextId >= INT32_MAX / 2 || b3NextIdentity( world, b3_jointIdentity, previous, UINT16_MAX, &nextGeneration ) == false )
++	{
++		return (b3JointPair){ 0 };
++	}
++
+ 	// If the joint prevents collisions, then destroy all contacts between attached bodies.
+ 	// Do this first so world arrays are not disturbed in the following code.
+ 	if ( def->collideConnected == false )
+@@ -221,13 +233,14 @@
+ 	int jointId = b3AllocId( &world->jointIdPool );
+ 	if ( jointId == world->joints.count )
+ 	{
+-		b3Array_Push( world->joints, (b3Joint){ 0 } );
++		b3Array_Push( world->joints, (b3Joint){ .generation = (uint16_t)world->identity.floor[b3_jointIdentity] } );
+ 	}
+ 
+ 	b3Joint* joint = b3Array_Get( world->joints, jointId );
+ 	joint->jointId = jointId;
+ 	joint->userData = def->userData;
+-	joint->generation += 1;
++	joint->generation = (uint16_t)nextGeneration;
++	b3CommitIdentity( world, b3_jointIdentity, nextGeneration );
+ 	joint->setIndex = B3_NULL_INDEX;
+ 	joint->colorIndex = B3_NULL_INDEX;
+ 	joint->localIndex = B3_NULL_INDEX;
+@@ -456,6 +469,10 @@
+ 	B3_ASSERT( def->lowerSpringForce <= def->upperSpringForce );
+ 
+ 	b3JointPair pair = b3CreateJoint( world, &def->base, b3_distanceJoint );
++	if ( pair.joint == NULL )
++	{
++		return b3_nullJointId;
++	}
+ 
+ 	b3JointSim* joint = pair.jointSim;
+ 
+@@ -492,6 +509,10 @@
+ 	}
+ 
+ 	b3JointPair pair = b3CreateJoint( world, &def->base, b3_motorJoint );
++	if ( pair.joint == NULL )
++	{
++		return b3_nullJointId;
++	}
+ 	b3JointSim* joint = pair.jointSim;
+ 
+ 	joint->motorJoint = (b3MotorJoint){ 0 };
+@@ -521,6 +542,10 @@
+ 	}
+ 
+ 	b3JointPair pair = b3CreateJoint( world, &def->base, b3_filterJoint );
++	if ( pair.joint == NULL )
++	{
++		return b3_nullJointId;
++	}
+ 
+ 	b3JointSim* joint = pair.jointSim;
+ 
+@@ -543,6 +568,10 @@
+ 	B3_ASSERT( b3IsValidFloat( def->maxTorque ) && def->maxTorque >= 0.0f );
+ 
+ 	b3JointPair pair = b3CreateJoint( world, &def->base, b3_parallelJoint );
++	if ( pair.joint == NULL )
++	{
++		return b3_nullJointId;
++	}
+ 
+ 	b3JointSim* joint = pair.jointSim;
+ 
+@@ -568,6 +597,10 @@
+ 	}
+ 
+ 	b3JointPair pair = b3CreateJoint( world, &def->base, b3_prismaticJoint );
++	if ( pair.joint == NULL )
++	{
++		return b3_nullJointId;
++	}
+ 
+ 	b3JointSim* joint = pair.jointSim;
+ 
+@@ -599,6 +632,10 @@
+ 	}
+ 
+ 	b3JointPair pair = b3CreateJoint( world, &def->base, b3_revoluteJoint );
++	if ( pair.joint == NULL )
++	{
++		return b3_nullJointId;
++	}
+ 
+ 	b3JointSim* joint = pair.jointSim;
+ 
+@@ -636,6 +673,10 @@
+ 	}
+ 
+ 	b3JointPair pair = b3CreateJoint( world, &def->base, b3_sphericalJoint );
++	if ( pair.joint == NULL )
++	{
++		return b3_nullJointId;
++	}
+ 
+ 	b3JointSim* joint = pair.jointSim;
+ 
+@@ -677,6 +718,10 @@
+ 	}
+ 
+ 	b3JointPair pair = b3CreateJoint( world, &def->base, b3_weldJoint );
++	if ( pair.joint == NULL )
++	{
++		return b3_nullJointId;
++	}
+ 
+ 	b3JointSim* joint = pair.jointSim;
+ 
+@@ -703,6 +748,10 @@
+ 	}
+ 
+ 	b3JointPair pair = b3CreateJoint( world, &def->base, b3_wheelJoint );
++	if ( pair.joint == NULL )
++	{
++		return b3_nullJointId;
++	}
+ 
+ 	b3JointSim* joint = pair.jointSim;
+ 
+--- a/src/contact.c
++++ b/src/contact.c
+@@ -206,11 +206,25 @@
+ 
+ 	b3SolverSet* set = b3Array_Get( world->solverSets, setIndex );
+ 
++	// Missing a collision is a sticky step fault, never silent success.
++	int nextId = b3PeekId( &world->contactIdPool );
++	uint32_t previous = world->identity.floor[b3_contactIdentity];
++	if ( nextId < world->contacts.count )
++	{
++		previous = world->contacts.data[nextId].generation;
++	}
++	uint32_t nextGeneration;
++	if ( nextId >= INT32_MAX / 2 || b3NextIdentity( world, b3_contactIdentity, previous, UINT32_MAX, &nextGeneration ) == false )
++	{
++		world->identity.contactExhausted = 1;
++		return;
++	}
++
+ 	// Create contact key and contact
+ 	int contactId = b3AllocId( &world->contactIdPool );
+ 	if ( contactId == world->contacts.count )
+ 	{
+-		b3Contact emptyContact = { 0 };
++		b3Contact emptyContact = { .generation = world->identity.floor[b3_contactIdentity] };
+ 		b3Array_Push( world->contacts, emptyContact );
+ 	}
+ 
+@@ -218,10 +232,10 @@
+ 	int shapeIdB = shapeB->id;
+ 
+ 	b3Contact* contact = b3Array_Get( world->contacts, contactId );
+-	int generation = contact->generation;
+ 	*contact = (b3Contact){ 0 };
+ 	contact->contactId = contactId;
+-	contact->generation = generation + 1;
++	contact->generation = nextGeneration;
++	b3CommitIdentity( world, b3_contactIdentity, nextGeneration );
+ 	contact->setIndex = setIndex;
+ 	contact->colorIndex = B3_NULL_INDEX;
+ 	contact->localIndex = set->contactIndices.count;
+--- a/src/broad_phase.c
++++ b/src/broad_phase.c
+@@ -769,6 +769,10 @@
+ 		b3Shape* shapeB = b3Array_Get( world->shapes, shapeIdB );
+ 
+ 		b3CreateContact( world, shapeA, shapeB, childIndex );
++		if ( world->identity.contactExhausted != 0 )
++		{
++			break; // Preserve the common stack cleanup; Step joins the tree task.
++		}
+ 	}
+ 
+ 	b3StackFree( alloc, pairKeys );
+--- a/src/physics_world.c
++++ b/src/physics_world.c
+@@ -1049,10 +1049,20 @@
+ 	b3TracyCZoneEnd( collide );
+ }
+ 
++bool b3World_HasIdentityFault( b3WorldId worldId )
++{
++	return b3World_IsValid( worldId ) == false || b3GetWorldFromId( worldId )->identity.contactExhausted != 0;
++}
++
+ void b3World_Step( b3WorldId worldId, float timeStep, int subStepCount )
+ {
+ 	b3World* world = b3GetUnlockedWorldFromId( worldId );
+ 	if ( world == NULL )
++	{
++		return;
++	}
++
++	if ( world->identity.contactExhausted != 0 )
+ 	{
+ 		return;
+ 	}
+@@ -1111,6 +1121,23 @@
+ 		uint64_t pairTicks = b3GetTicks();
+ 		b3UpdateBroadPhasePairs( world );
+ 		world->profile.pairs = b3GetMilliseconds( pairTicks );
++	}
++
++	if ( world->identity.contactExhausted != 0 )
++	{
++		// Parallel pair tasks have joined; broad_phase freed both stack temporaries.
++		// Only the previously enqueued tree task may remain. Do not roll back issued ids.
++		if ( world->userTreeTask != NULL )
++		{
++			world->finishTaskFcn( world->userTreeTask, world->userTaskContext );
++			world->userTreeTask = NULL;
++			world->activeTaskCount -= 1;
++		}
++		B3_ASSERT( world->activeTaskCount == 0 );
++		B3_ASSERT( world->stack.allocation == 0 );
++		world->locked = false;
++		b3TracyCZoneEnd( world_step );
++		return; // No collide/solve/sensors, event flip or successful state-hash recording.
+ 	}
+ 
+ 	b3SolverSet* awakeSet = b3Array_Get( world->solverSets, b3_awakeSet );
+@@ -1764,7 +1791,7 @@
+ b3BodyEvents b3World_GetBodyEvents( b3WorldId worldId )
+ {
+ 	b3World* world = b3GetUnlockedWorldFromId( worldId );
+-	if ( world == NULL )
++	if ( world == NULL || world->identity.contactExhausted != 0 )
+ 	{
+ 		return (b3BodyEvents){ 0 };
+ 	}
+@@ -1777,7 +1804,7 @@
+ b3SensorEvents b3World_GetSensorEvents( b3WorldId worldId )
+ {
+ 	b3World* world = b3GetUnlockedWorldFromId( worldId );
+-	if ( world == NULL )
++	if ( world == NULL || world->identity.contactExhausted != 0 )
+ 	{
+ 		return (b3SensorEvents){ 0 };
+ 	}
+@@ -1800,7 +1827,7 @@
+ b3ContactEvents b3World_GetContactEvents( b3WorldId worldId )
+ {
+ 	b3World* world = b3GetUnlockedWorldFromId( worldId );
+-	if ( world == NULL )
++	if ( world == NULL || world->identity.contactExhausted != 0 )
+ 	{
+ 		return (b3ContactEvents){ 0 };
+ 	}
+@@ -1827,7 +1854,7 @@
+ b3JointEvents b3World_GetJointEvents( b3WorldId worldId )
+ {
+ 	b3World* world = b3GetUnlockedWorldFromId( worldId );
+-	if ( world == NULL )
++	if ( world == NULL || world->identity.contactExhausted != 0 )
+ 	{
+ 		return (b3JointEvents){ 0 };
+ 	}
+@@ -2360,7 +2387,13 @@
+ 
+ static uint64_t b3GetWorldByteCount( b3World* world, bool log )
+ {
+-	uint64_t total = 0;
++	// Fixed embedded identity storage is present and counted from world creation.
++	// This ledger contribution is not a module allocator request.
++	uint64_t total = sizeof( world->identity );
++	if ( log )
++	{
++		b3Log( "identity metadata: %d", (int)sizeof( world->identity ) );
++	}
+ 
+ 	// id pools
+ 	int bodyIdBytes = b3GetIdBytes( &world->bodyIdPool );
+--- a/include/box3d/box3d.h
++++ b/include/box3d/box3d.h
+@@ -53,6 +53,12 @@
+ /// @param timeStep The amount of time to simulate, this should be a fixed number. Usually 1/60.
+ /// @param subStepCount The number of sub-steps, increasing the sub-step count can increase accuracy. Usually 4.
+ B3_API void b3World_Step( b3WorldId worldId, float timeStep, int subStepCount );
++
++/// AIR identity-safety extension. Check after Step before publishing results.
++/// True for an invalid world or sticky internal contact identity exhaustion.
++/// Fault refuses future Step/object creation, but destruction remains available.
++/// There is no whole-step rollback and no successful partial-step publication.
++B3_API bool b3World_HasIdentityFault( b3WorldId worldId );
+ 
+ /// Call this to draw shapes and other debug draw data
+ B3_API void b3World_Draw( b3WorldId worldId, b3DebugDraw* draw, uint64_t maskBits );

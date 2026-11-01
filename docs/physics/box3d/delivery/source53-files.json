@@ -1,0 +1,1163 @@
+{
+  "schema": "box3d.source53.github-source-sync.v1",
+  "implementationSourceCommit": "f75f0f48e97db3053676cfe4433faf53071ed6b0",
+  "remoteImplementationCommit": "d8e2c328ec653cb996801929fb1a94aef28bc613",
+  "remoteImplementationTree": "3a627964e7ad9a558c586b9141006cb70d77c3ae",
+  "verifiedRemoteChangedPaths": 65,
+  "scope": "All changed engine src, native/build and EX01 implementation, required API/upstream documents and three directly related verification entries. Not a complete 576-file historical-evidence mirror.",
+  "files": [
+    {
+      "path": "docs/UPSTREAM.md",
+      "mode": "100644",
+      "sha": "2b13720b5fc639cae61c641095d17b09f6d9f7eb",
+      "bytes": 110654,
+      "sha256": "c382a1f4d30be596b35a4e95ac002043eb6e1a4f411a357cdbe421a3d9fd763b"
+    },
+    {
+      "path": "docs/physics/box3d/contracts/api-contract.json",
+      "mode": "100644",
+      "sha": "54d0f6dddf15d06f62db8e0ed76125462cca2470",
+      "bytes": 3476,
+      "sha256": "4534aad2fe242b3d215101f05012fdd11dc8f896f450bb57671767c555d5f418"
+    },
+    {
+      "path": "docs/physics/box3d/contracts/before-step-api-v1.md",
+      "mode": "100644",
+      "sha": "5797bd854212a6b92200611716d9e747c43bc3b6",
+      "bytes": 7641,
+      "sha256": "8788b4fab41d50f1e709da6c7a3aa2754b76dcad69db492cd840d9e4857be997"
+    },
+    {
+      "path": "docs/upstream-file-map.json",
+      "mode": "100644",
+      "sha": "2fefed0d3c1d7e4b3d4703d51996cc0281960759",
+      "bytes": 486153,
+      "sha256": "e4a5dca02b8eaa1b0e11e39019e760cf30d612fa8d524507f823a700f901ab9a"
+    },
+    {
+      "path": "examples/box3d-rigidbody-playground/README.md",
+      "mode": "100644",
+      "sha": "2583a5870b2cbabcd87d14b857a8ac07932e21af",
+      "bytes": 11606,
+      "sha256": "87766dfb64a0e8d8e1468e9dc03860de68e7e948fc82f387860f02983b201457"
+    },
+    {
+      "path": "examples/box3d-rigidbody-playground/index.html",
+      "mode": "100644",
+      "sha": "96fac79781ef8147f5096fcf9f2af26c1b2139f1",
+      "bytes": 11147,
+      "sha256": "21d32fc752c423e6bd5653f76848e1937cbd403c4132eda5db02c5bf6f069314"
+    },
+    {
+      "path": "examples/box3d-rigidbody-playground/original-requirements.json",
+      "mode": "100644",
+      "sha": "bee183469335465d685d0ac607bd35038444616c",
+      "bytes": 5455,
+      "sha256": "f508554a578b1c7bd0e564fdf9020b0e6537db57a99a50087ac389765e92e5af"
+    },
+    {
+      "path": "examples/box3d-rigidbody-playground/source-identity.json",
+      "mode": "100644",
+      "sha": "f81bc2f7fbbe5c2c8fd92cebc813bc0c69b6acff",
+      "bytes": 4146,
+      "sha256": "916f3b171915dd75a5b20d752c3976db090c5e5cf19989650ab7f025951844c4"
+    },
+    {
+      "path": "examples/box3d-rigidbody-playground/src/backend-observation.ts",
+      "mode": "100644",
+      "sha": "6c9aede3e7a17fc4b661d831d4b0bb46766eff9f",
+      "bytes": 7060,
+      "sha256": "61f0560cd64062687f137d0db3cda01b8a1b41229c550fa80605552c6e195887"
+    },
+    {
+      "path": "examples/box3d-rigidbody-playground/src/drag-spring-math.ts",
+      "mode": "100644",
+      "sha": "83421d8e900cc3dcdb6bb0bdfa94caac5069b8c9",
+      "bytes": 2513,
+      "sha256": "783e28343167418c0a08cadc36a133140ac7ee9405bcdd863c6cbdbb572e5f0a"
+    },
+    {
+      "path": "examples/box3d-rigidbody-playground/src/main.ts",
+      "mode": "100644",
+      "sha": "9cfe47d352b5f0a937f0c499ac3e402be68b9cfe",
+      "bytes": 35145,
+      "sha256": "c4a2b14b3ce6b39fa0568d6d36ef1f3c9b041e2522cb5928d7a929204e73782b"
+    },
+    {
+      "path": "examples/box3d-rigidbody-playground/src/spring-drag.ts",
+      "mode": "100644",
+      "sha": "cf35103a68b3a06ccb8621508b1ae4a7d3711221",
+      "bytes": 9702,
+      "sha256": "bf8bc154e24c237137917a540798f7bef5fc0b255acfb43d23bc42fe80e3181d"
+    },
+    {
+      "path": "examples/box3d-rigidbody-playground/style.css",
+      "mode": "100644",
+      "sha": "35a2369fdc82b30abbafe6b8b8e193fae6608c75",
+      "bytes": 9954,
+      "sha256": "8f87865e0e288ca2e513e3ee4a0c8defb905e078d84ec6401b83311e0a4241eb"
+    },
+    {
+      "path": "src/air/app.ts",
+      "mode": "100644",
+      "sha": "aa321691496e7fb25cb2de00496aafda08206697",
+      "bytes": 16761,
+      "sha256": "c9b037eb7f95dc4486141c66612197a9c8b9b2a505e6dadb3edc4af1db7776ca"
+    },
+    {
+      "path": "src/air/box3d-controls.ts",
+      "mode": "100644",
+      "sha": "7353e57d017ce24aa32fd215127caa964f2b8931",
+      "bytes": 3053,
+      "sha256": "3074e06d9a3d3d66504ed89f7bb6866629d88507ff7788205294b00722b14fe6"
+    },
+    {
+      "path": "src/air/index.ts",
+      "mode": "100644",
+      "sha": "2078183ec5dfc26a92ec152b7497efa26f9da3da",
+      "bytes": 3409,
+      "sha256": "0958216972ade20fdda47e801b8a3a077397abe717170505f20fb85ee9107438"
+    },
+    {
+      "path": "src/air/physics/box3d/before-step-source.ts",
+      "mode": "100644",
+      "sha": "0d749b6621af621229dd81c20001e564bd2b617c",
+      "bytes": 2747,
+      "sha256": "956897d2f3f5f67316fbfac11828debb7089641b64aabca81bae3c2fa4f58b2e"
+    },
+    {
+      "path": "src/air/physics/box3d/binding/facade.d.mts",
+      "mode": "100644",
+      "sha": "68a8ff0c7bc31f83de27d968c3e0c9a047702488",
+      "bytes": 21524,
+      "sha256": "7dd9c6abd7a0f7d89dba2465eb1e96956ad347fce4fbc10aafb1f8c0728e018c"
+    },
+    {
+      "path": "src/air/physics/box3d/binding/facade.mjs",
+      "mode": "100644",
+      "sha": "d095f5f798ea4568544fe29138e468ffd8d86d6e",
+      "bytes": 80524,
+      "sha256": "9b53d5a37c1410ae40a9d4184cf95aaf38e165e60da12843fa6c2a8b1a740734"
+    },
+    {
+      "path": "src/air/physics/box3d/box-sphere-shape.ts",
+      "mode": "100644",
+      "sha": "7ad7bea3bab522523dfab0a09902878bc567a1c9",
+      "bytes": 13091,
+      "sha256": "5fcba5f0a7b4759efa98a02ab9e57bdca30a28ccd2024ddcd524193c9e66a6cc"
+    },
+    {
+      "path": "src/air/physics/box3d/command-queue.ts",
+      "mode": "100644",
+      "sha": "e5af075c19a74fb8e42b210456e469aceb8dcde0",
+      "bytes": 29165,
+      "sha256": "215be55ea845af9a3a807bd64b9bf75b5c917a842fc4356abcc93bb14ed2bb6c"
+    },
+    {
+      "path": "src/air/physics/box3d/current-motion-route.ts",
+      "mode": "100644",
+      "sha": "fc5dfbd37e2ba6514e1ed54e21bc6d60b7e6f446",
+      "bytes": 4296,
+      "sha256": "700e702c04a390826f49f9accd5f29ba1467d9a987bc6f5b69966202098f3542"
+    },
+    {
+      "path": "src/air/physics/box3d/feature.ts",
+      "mode": "100644",
+      "sha": "f91065ad5cbf8e1d6ad2a6098aeb776754d9c62d",
+      "bytes": 2755,
+      "sha256": "6b80f454c63548202d7fc49eb63971283e04be32bd070174f316e7491b7ac70f"
+    },
+    {
+      "path": "src/air/physics/box3d/query.ts",
+      "mode": "100644",
+      "sha": "3f27e562cba1aef5280f51928a58e93d39490fa5",
+      "bytes": 7400,
+      "sha256": "f7e53ccdd67abd86a2a50e93a6baaadf3bc24deaca265acb8ccaa8584955d3c6"
+    },
+    {
+      "path": "src/air/physics/box3d/rigid-body.ts",
+      "mode": "100644",
+      "sha": "0d3b2b1b02614f38ad79964f1a3b0497295413a5",
+      "bytes": 11683,
+      "sha256": "42fa127c36e9c248e47e9fbda9353a6943e2bcbb821e0f75392ff2136a63dd92"
+    },
+    {
+      "path": "src/air/physics/box3d/shared-body.ts",
+      "mode": "100644",
+      "sha": "5b69edf9dd63a5712435cf0b756a7cce912d852f",
+      "bytes": 45855,
+      "sha256": "a1949d191dd66266ec615a356461af5f9adbcc2323d458578a25b409089a3b12"
+    },
+    {
+      "path": "src/air/physics/box3d/world-command-owner.ts",
+      "mode": "100644",
+      "sha": "3b5ce86d07391aa0cbac641f45dfef288ce7c6b2",
+      "bytes": 121788,
+      "sha256": "5b827b8c317981ed6f05993d9682cf769e07c2ab2cc86c9d484953ef023f8c58"
+    },
+    {
+      "path": "src/air/physics/box3d/world.ts",
+      "mode": "100644",
+      "sha": "c1751450f413dff14c3e83ec790ead1de0fca690",
+      "bytes": 52741,
+      "sha256": "446081ca41881529d97b20402a181e468e1eb66b324ec2e4d1f057bd2b864b96"
+    },
+    {
+      "path": "src/air/step-clock.ts",
+      "mode": "100644",
+      "sha": "5cb40c163e300c6a4a2acf2788acbd8611099135",
+      "bytes": 9175,
+      "sha256": "e651c4bd22cad746f1620f20ae3eb8b86f56663b8e04e32f2a67c27a3265c2cb"
+    },
+    {
+      "path": "src/cocos/core/index.ts",
+      "mode": "100644",
+      "sha": "f2a4aa98b6932f08b1f31ed14e95ea3e979c0d47",
+      "bytes": 2072,
+      "sha256": "a4b785a9d21916331a7bbd513821cc0a938a2fbb5245d0189bc13bcc40f29b72"
+    },
+    {
+      "path": "src/cocos/core/scheduler.ts",
+      "mode": "100644",
+      "sha": "3366f55d2954b669f1e2d93ce74228f0c8ba412f",
+      "bytes": 49259,
+      "sha256": "0f0fc826d0dbb398eef2ab8b3ea27f01be7d039b886c989a659994df6df1c332"
+    },
+    {
+      "path": "src/cocos/game/director.ts",
+      "mode": "100644",
+      "sha": "b4e16ae492463222922ec91ee1fb81f6325cc370",
+      "bytes": 37006,
+      "sha256": "34459bd732317d51d2ee994885e77763eb6c055da524f54665f601a1ff084701"
+    },
+    {
+      "path": "src/cocos/game/game-clock-control.ts",
+      "mode": "100644",
+      "sha": "9e2c436864b6b6bc63b741d0970a0af769180aea",
+      "bytes": 23390,
+      "sha256": "66bcaa91468f9bc22211d4ca121bcd71c5eada8ead7828bc1086300a1757c2b5"
+    },
+    {
+      "path": "src/cocos/game/game.ts",
+      "mode": "100644",
+      "sha": "1a92cc8394c32f74d42a53ee1f83fe1b09d05c65",
+      "bytes": 50901,
+      "sha256": "7fe4e81de8cc5fdf78ceab0910f60d549378b390caa3bed606e6d217cda685d5"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/rigid-body.ts",
+      "mode": "100644",
+      "sha": "c72b20c5abd987fd819c9c6a01f19ab8ae3da515",
+      "bytes": 24867,
+      "sha256": "d7af6a9e419638f6108296753ffb22048f1d44aa4fd1944290d98cda460b7404"
+    },
+    {
+      "path": "src/cocos/physics/framework/physics-command-submission.ts",
+      "mode": "100644",
+      "sha": "0ab8dd373b2cba6a2f3bdbd5d5ae91b7ce93ca6a",
+      "bytes": 6219,
+      "sha256": "9453fe110c90d8b7cfefeed715ad7566354694512c8e823bbb25196ebae39ec0"
+    },
+    {
+      "path": "src/cocos/scene-graph/component-activity-control.ts",
+      "mode": "100644",
+      "sha": "3a8a4dfc96c81d9a6243b3a59dc2578f0c777c8e",
+      "bytes": 34692,
+      "sha256": "bcb9ca5ea4b5df7931be8419617e97921f924f2dfd76d2f02f52ff8b656c0d51"
+    },
+    {
+      "path": "src/cocos/scene-graph/component-scheduler.ts",
+      "mode": "100644",
+      "sha": "4da6c6d84fec40d884947ae6b915d96c6baa02dd",
+      "bytes": 28261,
+      "sha256": "a3c084e0415a5af82b512a3642237d37fa21e839e220ffb845d4ad0dc6f6e3d6"
+    },
+    {
+      "path": "src/cocos/scene-graph/component.ts",
+      "mode": "100644",
+      "sha": "5f2b6d622fdabb08c09bfe141bf83e6b768579ee",
+      "bytes": 33632,
+      "sha256": "0c58d30fc91f0fe374629f20571eb1a1787a6ccdd074db4f41b05a9db6325dae"
+    },
+    {
+      "path": "src/cocos/scene-graph/node.ts",
+      "mode": "100644",
+      "sha": "4cb3bfabbbac8042a105fb2393dbab739711a6bc",
+      "bytes": 113075,
+      "sha256": "e8e2d9813fd731570893f2e28deb709dbe24b31b2d2b2fb4a672eb7411170c07"
+    },
+    {
+      "path": "tools/build/box3d-assets.cjs",
+      "mode": "100644",
+      "sha": "3b73ef26fb69b02c70333933a7851a4f151c7398",
+      "bytes": 24700,
+      "sha256": "ad7196fb507df0e1e15394e3c4677993ea54e0526574867c1270e62f7b516ebc"
+    },
+    {
+      "path": "tools/build/box3d-command-expectations.json",
+      "mode": "100644",
+      "sha": "6168839198f2aae3836a52b477cf77c1756e95e5",
+      "bytes": 10912,
+      "sha256": "3a60cc9d1e6de6ef14c554ca6fa8bf3ddd17e385f687107e8fea6d7b3e71e10f"
+    },
+    {
+      "path": "tools/build/box3d-command-qualification.cjs",
+      "mode": "100644",
+      "sha": "8305050073cb6ef56b6568f553e9904912b7a828",
+      "bytes": 16363,
+      "sha256": "6079a4bfbbe8c46c331781047a6916ada32376f521437e0346ad3b7f77945ed9"
+    },
+    {
+      "path": "tools/build/box3d-command-qualification.test.cjs",
+      "mode": "100644",
+      "sha": "7d02454e72441d73305c6943af9eaf7b1b428469",
+      "bytes": 16843,
+      "sha256": "e2aa314030b8d4bc33e8acde28c2e34531a8aee34655650b6d6fe186d24d34de"
+    },
+    {
+      "path": "tools/build/box3d-query-qualification.cjs",
+      "mode": "100644",
+      "sha": "d19cce4a0267a6df824d0212f93462552b05fa19",
+      "bytes": 3194,
+      "sha256": "bdf0966b528eb67b347e649f4b84a55d0441aeb5b56d5a1dd3223bd92cb70c45"
+    },
+    {
+      "path": "tools/build/box3d-query-qualification.test.cjs",
+      "mode": "100644",
+      "sha": "9d7000aed23838849c617b4a58f7c4430c6c628a",
+      "bytes": 3190,
+      "sha256": "054f2fc04f15d5ebd05edbe511ba8b205a982ca5589b82b1726c50edb239c235"
+    },
+    {
+      "path": "tools/build/build-number.json",
+      "mode": "100644",
+      "sha": "4c03299930524ab7bf60bf1aa8fb6b2067790c7d",
+      "bytes": 29,
+      "sha256": "3ee4306ed2e05ad40488e213524c5d0d33f8950a704cc55d239018b71b888c82"
+    },
+    {
+      "path": "tools/physics/box3d/CMakeLists.txt",
+      "mode": "100644",
+      "sha": "5762ae2a43d3e75488ac22dabfabee3a0e09ac47",
+      "bytes": 8089,
+      "sha256": "3b1f075a5cf5873e0c576eb193f092a7304fa97286bc860b4e190210441082ab"
+    },
+    {
+      "path": "tools/physics/box3d/abi-schema.json",
+      "mode": "100644",
+      "sha": "a351fa8e029fe5406447baaee9c15087d93bcd5d",
+      "bytes": 23979,
+      "sha256": "0df007cd748883621f89836b55f1c09437c04d6d7e6253914577b21455a11bd5"
+    },
+    {
+      "path": "tools/physics/box3d/audit-artifacts.mjs",
+      "mode": "100644",
+      "sha": "0495a165034323c6b10f9c6f3629b0b3f30dfb77",
+      "bytes": 24517,
+      "sha256": "a703fe80ed514089d2ac196364157b17d289611098757c2f0ac341b949b3ca00"
+    },
+    {
+      "path": "tools/physics/box3d/build.mjs",
+      "mode": "100644",
+      "sha": "07e2b86d452d165d3b04f0259107e672ddf50ece",
+      "bytes": 21443,
+      "sha256": "46302e9f4986802b08d54dd2d9544376dc5b0c8381196cbf880080439a2ce018"
+    },
+    {
+      "path": "tools/physics/box3d/command-source-controls.mjs",
+      "mode": "100644",
+      "sha": "fcd2dfeb897fa762dacc8c4eabbf95d835b78753",
+      "bytes": 4944,
+      "sha256": "99dc1b53a20ed5bae050cd801f55238d57ac702691cba16771deb6e123cdd3fe"
+    },
+    {
+      "path": "tools/physics/box3d/exports.json",
+      "mode": "100644",
+      "sha": "4acbf5eb792948eecfe9a1e735deeaa309f781a7",
+      "bytes": 1489,
+      "sha256": "b4efc799bfab61608e6d0a0a08cdd23aa86df46f9baae801f4af57e465c0b648"
+    },
+    {
+      "path": "tools/physics/box3d/motion-source-controls.mjs",
+      "mode": "100644",
+      "sha": "6369870beba5f4146af5d40ddbf4b2e40085e2cc",
+      "bytes": 4480,
+      "sha256": "9a96a974729a288fbe4bad4248753bfcb03f5578101f278a4da3f09dda3969bc"
+    },
+    {
+      "path": "tools/physics/box3d/native/air_box3d.h",
+      "mode": "100644",
+      "sha": "c363e5a7a6f6724febc470d9ccff80e2df868f24",
+      "bytes": 3697,
+      "sha256": "0e8389ce6f62e498243e236bd62860284dd834c0df88c1ab75e2973669109d20"
+    },
+    {
+      "path": "tools/physics/box3d/native/query_bridge.c",
+      "mode": "100644",
+      "sha": "352ebc3b48aeb7345a3411a2e330655d26ca50af",
+      "bytes": 5017,
+      "sha256": "7b7b3ffc79d7fb87b50c1ffff4dd5e494be423f36352cad1ffd9ea6cc63bd2d8"
+    },
+    {
+      "path": "tools/physics/box3d/native/query_bridge.h",
+      "mode": "100644",
+      "sha": "dedf2410c5c07672ec9021cb56b5769d7a9622a9",
+      "bytes": 838,
+      "sha256": "bb4b30479715f0ecc8ba610e36cc08011777a5b1d42f1ea6db18b4e43ac3a643"
+    },
+    {
+      "path": "tools/physics/box3d/native/query_contract.c",
+      "mode": "100644",
+      "sha": "c090cd21a414c61e99383ad135f38cc4202a217b",
+      "bytes": 5169,
+      "sha256": "933d82b84486a8fefc28801c1fa57a2f7e08e7c32f94ae483334abbab5681f80"
+    },
+    {
+      "path": "tools/physics/box3d/owned-files.json",
+      "mode": "100644",
+      "sha": "f5a239327960b351c5ac39af4d44afcae9efec35",
+      "bytes": 245295,
+      "sha256": "0a9abf0467027225a91f98aa956a73665c6647beee05cb877fd20b2bf8d57ea3"
+    },
+    {
+      "path": "tools/physics/box3d/query-admission-contract.mjs",
+      "mode": "100644",
+      "sha": "0adea333a00f91aef4c189374b35bf6040ad8d8e",
+      "bytes": 3252,
+      "sha256": "fce17ed1c9ef08d92d2f5d27d8157d8f00b90aae54748a49d956b33fd8be9ea6"
+    },
+    {
+      "path": "tools/physics/box3d/versions.lock.json",
+      "mode": "100644",
+      "sha": "6fc42cf7594a67d243abdad98969b65df716db10",
+      "bytes": 4943,
+      "sha256": "480dcb22238e29ef939492f5b44f3f20499401f46bf714b1a89928fcad31f65d"
+    },
+    {
+      "path": "tools/physics/box3d/wasm-query-contract.mjs",
+      "mode": "100644",
+      "sha": "f7a3377c29f5eff0c4889c81617c570add08df78",
+      "bytes": 4671,
+      "sha256": "1ba88adcea0e9b13c6b1112161192509bea7ed7d181685518fb7247b4ddd7576"
+    },
+    {
+      "path": "tools/verify/box3d/ex01-backend-observation.test.cjs",
+      "mode": "100644",
+      "sha": "58e7b7a83faf80988946fe6ceee7b9509dfda806",
+      "bytes": 6889,
+      "sha256": "52833dd29f357516accca4724cea50a15c223d9be4dd1c6d6a438bac3766acd5"
+    },
+    {
+      "path": "tools/verify/box3d/package-ex01-preview.cjs",
+      "mode": "100644",
+      "sha": "2bf735eb3b8855feda87d1f6bdb095b36a806611",
+      "bytes": 7759,
+      "sha256": "f2f39b1c09f31f9ba6b13f4eb70b65d8bfb539017c388209fb72ec832ddbc3ee"
+    },
+    {
+      "path": "tools/verify/box3d/public-feature-wiring.test.cjs",
+      "mode": "100644",
+      "sha": "132fd611858d908a17141da398945a7c60a0e5a4",
+      "bytes": 8049,
+      "sha256": "19d46c1f004ddf0fd8e2dcbb088a3363e7e62305bb6f39d0cae00ff2f67a8f78"
+    }
+  ],
+  "supplementalVerificationSources": {
+    "status": "FROZEN_SOURCE_IDENTITIES",
+    "implementationSourceCommit": "f75f0f48e97db3053676cfe4433faf53071ed6b0",
+    "fileCount": 86,
+    "bytes": 3754695,
+    "scope": "Exact historical verification source, configuration, roster and fixed-input identity files. No runtime raw is included. These files retain their original historical baseline and failure boundaries; they are not current source53 qualification.",
+    "remoteVerification": "This static identity inventory does not encode live ref status. Verify the containing Git commit and compare these exact blob identities.",
+    "files": [
+      {
+        "path": "tools/verify/box3d/component-activity-control.jest.cjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0bfcb339c10d6c173abd801d7fd8045b3c45c205",
+        "bytes": 424,
+        "sha256": "6aaaa6bd8b4bb6118289255e10290001e8d4ff311654dffedf55c5c8c7a1d758"
+      },
+      {
+        "path": "tools/verify/box3d/component-activity-control.test.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "60b61cab799f04c4074263cb85c65d88ffddb2b4",
+        "bytes": 16792,
+        "sha256": "2424379bc80653552361dae72c332db23d650fa9a8bf6e55d8876daf5387542d"
+      },
+      {
+        "path": "tools/verify/box3d/component-activity-control.tsconfig.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8b5b4bf182c487a80735803c99ef3a2a9dfd41df",
+        "bytes": 266,
+        "sha256": "414bc442a8eea4ffea91ced20d50d45d5092ec1ccb10ebb04de7a231d568f85b"
+      },
+      {
+        "path": "tools/verify/box3d/component-activity-source.test.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "99858ed77885a8c6c169e625aa8743859ba785a3",
+        "bytes": 8262,
+        "sha256": "98623ad2e3268cb5d9e6bdabc25a469566539025ae74d066750a14702a43753d"
+      },
+      {
+        "path": "tools/verify/box3d/esm45-README.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b9c23a3900db2c2f8ffd77211174833ec3ce64a2",
+        "bytes": 9601,
+        "sha256": "909eb308a36c891f5d045f994501171c2b87bf289c79d54e990a2030f6fc097c"
+      },
+      {
+        "path": "tools/verify/box3d/esm45-baseline.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1903dc5a686906174432d483be43e07a7dfbc5f6",
+        "bytes": 3151545,
+        "sha256": "731b5a98e5ce30552eadcbe06ef93d5cfda7e8ce9e5ee9b320c12281f65316d8"
+      },
+      {
+        "path": "tools/verify/box3d/esm45-build.cjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4ef2e02ee80833fa1a3c1c8c98114dfa3a154261",
+        "bytes": 9242,
+        "sha256": "07fd8888d7dd43b288ac4a31a8a636a0e0264c8365fe0a1cf12fb5e60b4cdce2"
+      },
+      {
+        "path": "tools/verify/box3d/esm45-capture.py",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e9e5e8c0e5e4daa5797911100df08d06c056d686",
+        "bytes": 1836,
+        "sha256": "b5ba1d1ae9733c84709e313e2568c02d627a48c3bc725768b3526f6bb618d4e5"
+      },
+      {
+        "path": "tools/verify/box3d/esm45-consume.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f340718c100f7e4230c2b0fb7bceda8b197f13ec",
+        "bytes": 13664,
+        "sha256": "6e25e23133fa60ff5091aedd1ccb6655e96558b1e85e2940fc856dcfff0373f2"
+      },
+      {
+        "path": "tools/verify/box3d/esm45-contract.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "37c4e26e4a8648e5d25593d2dcbe84a51fcb8030",
+        "bytes": 2576,
+        "sha256": "d48ee527c66c208df28886a10a5e21a51b9e16e7e87402ee9333bd260b9f030c"
+      },
+      {
+        "path": "tools/verify/box3d/esm45-dts-diagnostics.cjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9d68fb535826fef691be226c5c19c87b50bdeb64",
+        "bytes": 1136,
+        "sha256": "57e328a03fe0233e2adeab5876d4bf2012a92bb70fd8871729abb886bb6917bf"
+      },
+      {
+        "path": "tools/verify/box3d/esm45-package-consumer.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "230c5e89ec92ff158dda41d17af787698d19df42",
+        "bytes": 207,
+        "sha256": "9364d28c88c77b865412cc8e1c39ef9c8cb006748008e2b5b12b9b7f2100cb44"
+      },
+      {
+        "path": "tools/verify/box3d/esm45-run.py",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d26ca7665695ae7786e3f3a2b9fe1c2712d868b7",
+        "bytes": 17624,
+        "sha256": "64ea088bf126421b00642ab0d046a56204ffec67e1ed78b969fbcff14a42a640"
+      },
+      {
+        "path": "tools/verify/box3d/esm45-source-controls.cjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f8e5c239b318b4bd635a58079a56769ad337e0a8",
+        "bytes": 6410,
+        "sha256": "e5ae5e64f6001a2510c6e5bb28175c552200ccc4eb0ce5d7990efbbfbcde5f78"
+      },
+      {
+        "path": "tools/verify/box3d/esm45-test-only-entry.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "cfa7084754569d183a8b7906a542dfbabf91a9b7",
+        "bytes": 1269,
+        "sha256": "6fa6d6710f8e244b918215ab2c1563c18973a0d08f0142d57a6dc3c9f0480f04"
+      },
+      {
+        "path": "tools/verify/box3d/esm45-typed-consumer.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e7af76aed8be3a346fe41fef310285584f837d30",
+        "bytes": 1709,
+        "sha256": "f80960f66a9271de34f7b4eea8ebfc70ff55f96906b11da132f55dd3007f2fd6"
+      },
+      {
+        "path": "tools/verify/box3d/esm46-consume-README.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2dacc9c8651d71453ff933ad2503f7101984e2b2",
+        "bytes": 4601,
+        "sha256": "7479d20e69d7d907a47e951290163e64a93936db4915f0b7a68769c7fba53889"
+      },
+      {
+        "path": "tools/verify/box3d/esm46-consume-artifacts.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c3511c37bc90fe6bc2d0792c540c85cca322d9be",
+        "bytes": 24050,
+        "sha256": "117ae83f9b28df56d384e540e1b3528b3c93acdb1144edfe2d979cc44d8934cb"
+      },
+      {
+        "path": "tools/verify/box3d/esm46-consume-continuation.py",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "86ee1a91b4fc0d809b9ed7d3c15a1669b8b93c45",
+        "bytes": 13438,
+        "sha256": "2b33f996dd67b3fa09fdf256e48be498361f8e38fe38c49eff62ee15d6550c8b"
+      },
+      {
+        "path": "tools/verify/box3d/game-clock-control-source.test.cjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4982c6a1e778ad3059445727883159471e40e2b0",
+        "bytes": 14156,
+        "sha256": "b57db04d8145ca134f6013bd54cba8ecf1bce10445e4e8c6166f5d45ca7f31d0"
+      },
+      {
+        "path": "tools/verify/box3d/lifecycle-failure-real-wasm-README.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0d6e0f540a7501c5f8401959cb04bfbc1cbed17f",
+        "bytes": 6473,
+        "sha256": "29b53d20bf3ec8b36a30afcae25d35610825721690b95233df074e778c360b99"
+      },
+      {
+        "path": "tools/verify/box3d/lifecycle-failure-real-wasm-capture.cjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4afb8e60f23e81810676a57098cfb061cdc51f7f",
+        "bytes": 1667,
+        "sha256": "4bc8d098bec4c774612adb39dbda3937ac348fabacb48104f49c2389badbfb4a"
+      },
+      {
+        "path": "tools/verify/box3d/lifecycle-failure-real-wasm-environment.cjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6d9a16a80c9e89c5c4cfa61438141e018e282f75",
+        "bytes": 1709,
+        "sha256": "0de7c6d77bedd27b57f1731b2d28d52e5cada4097c1e5309e7f93855070a8aad"
+      },
+      {
+        "path": "tools/verify/box3d/lifecycle-failure-real-wasm-inputs.cjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "eda5ecaf5a9de1b7d48915c6c924df76f08e268c",
+        "bytes": 7390,
+        "sha256": "6850dff42a2804825c7ae51c9b1516ca5703002b8ba3bf0b22a4eb38e1a7d3a2"
+      },
+      {
+        "path": "tools/verify/box3d/lifecycle-failure-real-wasm-invoke.py",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "033be61d20d99316dec0f79e99267e57af7ae921",
+        "bytes": 2262,
+        "sha256": "ed3fe12507a6423feae1eeaf75e1262dca8f45bb6a9527e1cf121ff21274b817"
+      },
+      {
+        "path": "tools/verify/box3d/lifecycle-failure-real-wasm-package.py",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4195f4941364f19eac893db47b9338c88a19b0d3",
+        "bytes": 4622,
+        "sha256": "dfbc698b8d1efded4e196e87f3a6fb192fa2d499b003044a0dfadf26a04f5761"
+      },
+      {
+        "path": "tools/verify/box3d/lifecycle-failure-real-wasm-preload.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ba3b6ff0521b30e280539610c2bba6e942b79834",
+        "bytes": 13248,
+        "sha256": "5260c1fce270493bb96d4651b7468b285cc8f17853f6683515f558f3b5c2a7d0"
+      },
+      {
+        "path": "tools/verify/box3d/lifecycle-failure-real-wasm-resolver.cjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b78cb7b6339cf8743e1fd1360b3ba147c7357bb2",
+        "bytes": 329,
+        "sha256": "1a4777b1e375606e5921a37252fedb51ce2c0e9586f45fed2d959004ef116e3b"
+      },
+      {
+        "path": "tools/verify/box3d/lifecycle-failure-real-wasm-roster.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2be24bf90a6229b825da5018c139a3f9ab362c41",
+        "bytes": 1472,
+        "sha256": "2d2513a532982dda727359e777a7518aa68ca56723c75cedfa8b213111822fe4"
+      },
+      {
+        "path": "tools/verify/box3d/lifecycle-failure-real-wasm-run.py",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "71b5c799566808f06f611a86f525cce272209820",
+        "bytes": 1638,
+        "sha256": "dc91a049b43cf5e19f03dfb0fff338c787c8c26ff1998d6defa08d87f1e783d7"
+      },
+      {
+        "path": "tools/verify/box3d/lifecycle-failure-real-wasm.jest.cjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1d7759ebd3ce3d13acf56a367586baa8bf23d062",
+        "bytes": 1620,
+        "sha256": "27ce7d31f1f974397cb4445aa7a033b40a6ea8a3f1f6a86b80a109db9769e939"
+      },
+      {
+        "path": "tools/verify/box3d/lifecycle-failure-real-wasm.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b39ca831d9f0be1b056dad9d579fd6f26229d6cb",
+        "bytes": 13935,
+        "sha256": "af2b1311aae59df20d12231e3ad5af59a5709500cf4a1e3c3031383e6ba0ebd2"
+      },
+      {
+        "path": "tools/verify/box3d/lifecycle-failure-real-wasm.test.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ee615bbdeb3b13ccc857a281daf1f0353d1222df",
+        "bytes": 24829,
+        "sha256": "a3a9a51569fbe43497726a66fd55ca90f9de256bb850bbc9d26a7eb97dc9dbc8"
+      },
+      {
+        "path": "tools/verify/box3d/lifecycle-failure-real-wasm.tsconfig.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "804d6c478237fc557b64af325f8c037123166de3",
+        "bytes": 163,
+        "sha256": "5006cabb71aa72de99e24014279842346c6c5633c6ebd5190d69667ea2e9e5ba"
+      },
+      {
+        "path": "tools/verify/box3d/owner-activation-real-wasm-README.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a10d6aab8d2e9889128c1ddf634d3a49307b273d",
+        "bytes": 13597,
+        "sha256": "9275e1b83cf7e779288156378305ffbb300940e1560ceb4d87162f9cb080e053"
+      },
+      {
+        "path": "tools/verify/box3d/owner-activation-real-wasm-capture.cjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8e254bd380acb27b05349b4ac837e9ffc2c8b64e",
+        "bytes": 1650,
+        "sha256": "b1461e0b20e0ff4f668b9b6409a12edfa9c0681180e4572023e38c85a69d2910"
+      },
+      {
+        "path": "tools/verify/box3d/owner-activation-real-wasm-environment.cjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "35554a6662bc5bb59239974b3cb0e9a1973827e2",
+        "bytes": 1705,
+        "sha256": "11bafa741c816dcda006f1fae85d43bb02475fe4a6e2d83403abd4d6b5367a10"
+      },
+      {
+        "path": "tools/verify/box3d/owner-activation-real-wasm-inputs.cjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e60fa5962e7677866a91585a14bf34cc0b62e252",
+        "bytes": 7534,
+        "sha256": "0cfadbe2dacdf4494dde00352c810015f0b036b4903c426da8f61bbcf78be049"
+      },
+      {
+        "path": "tools/verify/box3d/owner-activation-real-wasm-package.py",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "45b67c8032882ddc4a9ee1eb2ccfe0f93d4cfc50",
+        "bytes": 3745,
+        "sha256": "5315bcbd9d95f9f34fabc87295490cc9a2281be370086ffba10d015022fd56f8"
+      },
+      {
+        "path": "tools/verify/box3d/owner-activation-real-wasm-preload.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "982c4169182b69a66a71fc64ba639aa0dc1c07c2",
+        "bytes": 8855,
+        "sha256": "6b72a58e7c167dfc8dbac49af0d64d3d94369e133cdaa6c6f95900b6e0cc5993"
+      },
+      {
+        "path": "tools/verify/box3d/owner-activation-real-wasm-resolver.cjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "cd7d44dbfaa65e94dc37bdff17807e14d5db81be",
+        "bytes": 320,
+        "sha256": "1f98572eddcb0c7b57a1b1aeedb27895beae26e935365617bceea72125500114"
+      },
+      {
+        "path": "tools/verify/box3d/owner-activation-real-wasm-roster.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6c0779b03cddc4dec6cd830fbbcc6c3c7373e8b0",
+        "bytes": 964,
+        "sha256": "c12a545a3abc659ce896374aa9f1e32c9c5e9615567c078e672942e05a901b7b"
+      },
+      {
+        "path": "tools/verify/box3d/owner-activation-real-wasm-run.py",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9c5b821fbd6d33591f9d74a0aff509369be8d5ef",
+        "bytes": 2250,
+        "sha256": "f362ccb989c8aea1a388fbd75cadc704216a84166a1970e702bf30dd06e7638d"
+      },
+      {
+        "path": "tools/verify/box3d/owner-activation-real-wasm.jest.cjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d7dfd56fd2e9a5a667b111e72a201269f66be6ec",
+        "bytes": 1610,
+        "sha256": "1565d8a6932ed1edcb4f55a3f3673dee359c98be85657d8002b1ac6864248798"
+      },
+      {
+        "path": "tools/verify/box3d/owner-activation-real-wasm.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "cc377601afa00baf4f48ac70dc92548b4190c770",
+        "bytes": 14063,
+        "sha256": "15f8b4003fbadb990df214b1e7c7cb71ab7949cd15bb16c7686be897a8c62d6d"
+      },
+      {
+        "path": "tools/verify/box3d/owner-activation-real-wasm.test.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6b92138bfde7ba5c4b6da515fbc4713d9c690a56",
+        "bytes": 39170,
+        "sha256": "e64bb4cdccd7a3f1a9d2773d0b3113abb40fbde86f830176b8085f29c673daaa"
+      },
+      {
+        "path": "tools/verify/box3d/owner-activation-real-wasm.tsconfig.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c5196a600a746a500e459aa85e96f49993d66d08",
+        "bytes": 162,
+        "sha256": "9e3196e35da6cd35abdcc33c67ff3300ef72a2ec55f00b3fdba751e6c2344460"
+      },
+      {
+        "path": "tools/verify/box3d/owner-clock-real-wasm-README.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "068640f4a2f1710f16526b7217f948b4bc2dbc19",
+        "bytes": 4128,
+        "sha256": "febb50d8cfe5532d5b67a7a1139dfc97c61ace759020115b1ee9ba218a051dc9"
+      },
+      {
+        "path": "tools/verify/box3d/owner-clock-real-wasm-capture.cjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b20e40746ea94d9c66d7b69d00b1cf277cd58870",
+        "bytes": 1635,
+        "sha256": "a068da09e9fd3ba24c22c62d138c103e3d61e4b87a0b077a3f4b7f835e345386"
+      },
+      {
+        "path": "tools/verify/box3d/owner-clock-real-wasm-environment.cjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b2d536e744620de70a43452ca8cd6b71a6ec82dc",
+        "bytes": 1685,
+        "sha256": "da605bd8d2d08aa2f4b71455c842045049d3f54b6ebcf338f306bfdd1b648774"
+      },
+      {
+        "path": "tools/verify/box3d/owner-clock-real-wasm-inputs.cjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b2b59f97f62641b5bb5c05f6ff8c7d2cef230df2",
+        "bytes": 7384,
+        "sha256": "f07d95df3c87e7fd94d874cb719c8b08acca4f4fad211bef4b13aeb395de8ef3"
+      },
+      {
+        "path": "tools/verify/box3d/owner-clock-real-wasm-package.py",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3dfa0dce28af4db6b25574184ba51c61ebb0bcb6",
+        "bytes": 3740,
+        "sha256": "a9661758b410508e59057f118ff804841f762b2fc6d75385bf21341afce2a56e"
+      },
+      {
+        "path": "tools/verify/box3d/owner-clock-real-wasm-preload.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "de0e95a5daa97ac24f689699ae9e0ad1f925c6d5",
+        "bytes": 8819,
+        "sha256": "042914c8d514de35d8013beaf929b93fe548fc3ce1727997f476b24733eb3b5e"
+      },
+      {
+        "path": "tools/verify/box3d/owner-clock-real-wasm-resolver.cjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "53abd479e7dffc0cb5aee9b1cbbc5b212fcfea39",
+        "bytes": 315,
+        "sha256": "02eeffb77a08ec664f647a6b192bab4aba807dee368fc0727904c4a69e2dc344"
+      },
+      {
+        "path": "tools/verify/box3d/owner-clock-real-wasm-roster.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d0cbfd8f856bc6b9941dfc9422b2a69f2c7cbcc6",
+        "bytes": 802,
+        "sha256": "9924416095b6dcc613a3148c2e4901063135d275d06f6c4b097eeb3cfc116aa7"
+      },
+      {
+        "path": "tools/verify/box3d/owner-clock-real-wasm-run.py",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "07c35e6a65a73b729dae4a5cd84495963dff765d",
+        "bytes": 2240,
+        "sha256": "06b51d8cb056126e5a00827f2530d23aa9d85006e5fab68f9b10e050bf0c40cf"
+      },
+      {
+        "path": "tools/verify/box3d/owner-clock-real-wasm.jest.cjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "63e7b76c97ee2c42f46bcee4ae7ccc09c3f96b42",
+        "bytes": 1590,
+        "sha256": "085b19045e93835be6612573c430ba6d908698e39593306b5d769fb250c43777"
+      },
+      {
+        "path": "tools/verify/box3d/owner-clock-real-wasm.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "48643c86c572bf2f077b3e184c48531c4030a5e6",
+        "bytes": 13836,
+        "sha256": "5ea10163cf611554b3288383c32e80a691e4b12a8b526edc407faf91fca980ec"
+      },
+      {
+        "path": "tools/verify/box3d/owner-clock-real-wasm.test.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "71bb92786394906c114b690d3b642674087d7c27",
+        "bytes": 34818,
+        "sha256": "f16c8559f680ae64297d6eb4aa92e60d53ee97d5ed084146745935105dbbd047"
+      },
+      {
+        "path": "tools/verify/box3d/owner-clock-real-wasm.tsconfig.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7b2bfb90ffe5dac4efd52be2a25d89040ed0cbf8",
+        "bytes": 157,
+        "sha256": "9661d607fcea73f9405f34cb47b64f9925eede11fc104373359a7680c1932dce"
+      },
+      {
+        "path": "tools/verify/box3d/owner-target-clock-real-wasm-README.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f583e583bcabc308dfb1d848be6d942e1e66cc39",
+        "bytes": 10139,
+        "sha256": "3b8cbef1324cf0d48be425afabb9fd48aa49ef5b4a30676754a91c3a120c9b07"
+      },
+      {
+        "path": "tools/verify/box3d/owner-target-clock-real-wasm-capture.cjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9b27d6f66762f38cda1ac716606ebfd830d20d6d",
+        "bytes": 1652,
+        "sha256": "63b4815caa8f5129ba4b9bb36e1cd86c145f1c2340a984195bc5f74fd8bd3091"
+      },
+      {
+        "path": "tools/verify/box3d/owner-target-clock-real-wasm-environment.cjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1de48acec340f78495c8287f2ed56e49ad9ebd4c",
+        "bytes": 1710,
+        "sha256": "b02945befbbd2b757a767791fddf400168b3fcaacf5a2c709ebd789466dc266f"
+      },
+      {
+        "path": "tools/verify/box3d/owner-target-clock-real-wasm-inputs.cjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "cfd299f3741349a8e87205088585e33f46eb66b6",
+        "bytes": 7391,
+        "sha256": "3a4a6ffd143a14eb8d370a3a97dfa49c857e2ef79797e74ce6e9022c8044d674"
+      },
+      {
+        "path": "tools/verify/box3d/owner-target-clock-real-wasm-package.py",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0e5fb55e95096f4e53ff07be19752ee16d3d781c",
+        "bytes": 3749,
+        "sha256": "0b845b35d9dbf00eb36995fe45b0588e65fe59cca4515649eeaac19efb1f1a65"
+      },
+      {
+        "path": "tools/verify/box3d/owner-target-clock-real-wasm-preload.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4c20e0e59b2899382b7f8973311f5daede59a2f5",
+        "bytes": 8871,
+        "sha256": "39463d971b2411d4b5df587fd124e584427e3d2357c12e0fb71bf3ecbcc22192"
+      },
+      {
+        "path": "tools/verify/box3d/owner-target-clock-real-wasm-resolver.cjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9590bee5ab854a2b2f99ea60797fd824090fb148",
+        "bytes": 318,
+        "sha256": "148548aead87e5a4314c086cf30c2bad931b604990fa5ec321b8d4e3ac91dd07"
+      },
+      {
+        "path": "tools/verify/box3d/owner-target-clock-real-wasm-roster.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "97b74e0e7c46ae9258aaf0bfe8535554a439953e",
+        "bytes": 1139,
+        "sha256": "511b100e2be8266d19162683327ec6cb98eeb6c5012a0e8f6b08be34b4e81a23"
+      },
+      {
+        "path": "tools/verify/box3d/owner-target-clock-real-wasm-run.py",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5618e568ee366b7301a0c8ed5b7867e6c0eecd42",
+        "bytes": 2256,
+        "sha256": "f099bdaa333fc2bc6bfdfdbc89c390dc66b012722981d428df4b7e5c22c61bb0"
+      },
+      {
+        "path": "tools/verify/box3d/owner-target-clock-real-wasm.jest.cjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4e68753a06b6e44f13d1b2c50b05d0794bd02db9",
+        "bytes": 1618,
+        "sha256": "6da8f21e44c8be318203a58067042440d9c6fb1a4900e77da6d7bcfd68baf1c3"
+      },
+      {
+        "path": "tools/verify/box3d/owner-target-clock-real-wasm.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "92aa7c07d75a49908307b0a749210541ba5fc984",
+        "bytes": 13875,
+        "sha256": "08ed9fdde8e70d264cf1c0557c5d67c6d099816c3f21116c5f5fb737f7b128c3"
+      },
+      {
+        "path": "tools/verify/box3d/owner-target-clock-real-wasm.test.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ebaf6d80ec7427a9e0d9b9ff08cf8a9678fea559",
+        "bytes": 49009,
+        "sha256": "e6c17bc3ca5274d42e7d6a9482af318d50570b0914cb91080ce5f2dbdae3e2f2"
+      },
+      {
+        "path": "tools/verify/box3d/owner-target-clock-real-wasm.tsconfig.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7f31d84e5b9024b8cba23c32201772b3dc576bd0",
+        "bytes": 164,
+        "sha256": "f86276c51e8bad1ae79955a1a51a8c78542adc145c86be1d4d22d04e98840bd6"
+      },
+      {
+        "path": "tools/verify/box3d/owner-target-real-wasm-README.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "822a02df18831f8d4b152967bf0be522142b4de2",
+        "bytes": 7997,
+        "sha256": "4f92fb17acc752e0e13c405ba5231321d3988941091479eca863cb98c38934aa"
+      },
+      {
+        "path": "tools/verify/box3d/owner-target-real-wasm-capture.cjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c5cf69a9436d0b88fb4b25085d9f45186ae0c7cb",
+        "bytes": 1634,
+        "sha256": "50facec4d2e7219b1acbeba44c7c1d3a71688b44a631fb9385684f7ad19391f7"
+      },
+      {
+        "path": "tools/verify/box3d/owner-target-real-wasm-environment.cjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "879050e529a7822d28b668686f9f3d126de54e2f",
+        "bytes": 1687,
+        "sha256": "91d0165f1acda5e75b0f4adf3a58c27253ec9a587d866c1af53598d94ba3d472"
+      },
+      {
+        "path": "tools/verify/box3d/owner-target-real-wasm-inputs.cjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2cd5e7ecb8d97546d79ae194eca63604dfa7d3f4",
+        "bytes": 7385,
+        "sha256": "1012708cd9635749ec61493e34d3db307d8ae7637e547df3009e125115188ad0"
+      },
+      {
+        "path": "tools/verify/box3d/owner-target-real-wasm-package.py",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "36816a2249b6b9ecb930e82e02be2301238b8c5d",
+        "bytes": 3737,
+        "sha256": "6ef75fc71a1eac8a03a638e99c60f837e82a423ce5119a6c8beb8cdd79ea242f"
+      },
+      {
+        "path": "tools/verify/box3d/owner-target-real-wasm-preload.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c80d7608618393467bf1f96b61dd8ee17de31abd",
+        "bytes": 8823,
+        "sha256": "3b95720f4446931faad070623120ed754f7ae585b2486ccb0196f08242c6f8c7"
+      },
+      {
+        "path": "tools/verify/box3d/owner-target-real-wasm-resolver.cjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2062f2f2ddacdbd8905494e7d695dd7569488a52",
+        "bytes": 312,
+        "sha256": "1aaef3aeb348aa3517021d90f7424fa3920054e2309d7a73a25a477c5f30faf6"
+      },
+      {
+        "path": "tools/verify/box3d/owner-target-real-wasm-roster.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "45f5d67fc98e727802dbee125c1fd89acbd62526",
+        "bytes": 939,
+        "sha256": "4f8083d32eb7faac50e58ec64462770a76724e0608e9ac3a03ffbdeeef12d320"
+      },
+      {
+        "path": "tools/verify/box3d/owner-target-real-wasm-run.py",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6dee5a809f6f998c287738bdd7f49134385589c8",
+        "bytes": 2238,
+        "sha256": "4b40d406dea99fe0142367cfcaef1e03ae27ef8e2c388f28cb79af87fd61ad96"
+      },
+      {
+        "path": "tools/verify/box3d/owner-target-real-wasm.jest.cjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ec34ed09041f9d315ae12aae917045355bc648ea",
+        "bytes": 1594,
+        "sha256": "e41307d905eb977c09e0041e35ece3d0e02da1a9b6d60b01c7b0e670591d2052"
+      },
+      {
+        "path": "tools/verify/box3d/owner-target-real-wasm.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d389dcc104caa4f87dcfd35956d2d9e2949e2c14",
+        "bytes": 13691,
+        "sha256": "96bb2ef36f2fbe69343fdead39b1b22eb08b3f769f1b88ce665bfb7513eb88ce"
+      },
+      {
+        "path": "tools/verify/box3d/owner-target-real-wasm.test.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "67e86ba67c3981e71b046ca0a3e234c33801c95f",
+        "bytes": 45670,
+        "sha256": "7a99af355c72469355404c467c78eeafeb1bea7e1cbb00e89f272af2d0827030"
+      },
+      {
+        "path": "tools/verify/box3d/owner-target-real-wasm.tsconfig.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9caba6206cd270d6c7349b58d5cc1e7bb4cf70a7",
+        "bytes": 158,
+        "sha256": "a1958d3190f4d6ab579e7a04397bcb0b822083c63051d9b7c94ffed60b4fd4d3"
+      }
+    ]
+  }
+}

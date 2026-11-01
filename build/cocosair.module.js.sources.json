@@ -1,8 +1,8 @@
 {
   "schema": "air-bundle-source-binding-v1",
-  "origin": "retained-compiler-map-migration",
-  "bundleSha256": "f963feb809142e64e35bc871135973f4eb1d103332dd16f921d1cbe0be4f49ea",
-  "mapSha256": "7c36117139cb36b46f36fddb1e8322da4a06d178a8f82f420807dbf0ea941ab7",
+  "origin": "compiler-map",
+  "bundleSha256": "853d4aa19d68624a9b8a57e84e2ad0cb12b6caedbea6e2684f067d3ccfd9142c",
+  "mapSha256": "1733130ba29f64f766fd2237ffaf8e99e10c03378d9c0afbce44f0fc86d14044",
   "sources": [
     {
       "path": "src/cocos/core/global-exports.ts",
@@ -517,12 +517,20 @@
       "sha256": "c7afe3e4dab902fdfcc7a78f786878e10ec5d195cbb4d0f62676c9bfb6119465"
     },
     {
+      "path": "src/cocos/scene-graph/component-scheduler.ts",
+      "sha256": "a3c084e0415a5af82b512a3642237d37fa21e839e220ffb845d4ad0dc6f6e3d6"
+    },
+    {
+      "path": "src/cocos/scene-graph/component-activity-control.ts",
+      "sha256": "bcb9ca5ea4b5df7931be8419617e97921f924f2dfd76d2f02f52ff8b656c0d51"
+    },
+    {
       "path": "src/cocos/core/system.ts",
       "sha256": "c0130fc74d1694fd76679b9a960431512df09716bc0ccb280723d0654fb75ce1"
     },
     {
       "path": "src/cocos/core/scheduler.ts",
-      "sha256": "236c2b56c26b6d404cd4205424db84c175c4db4d91e6c306a11fa74a769cb877"
+      "sha256": "0f0fc826d0dbb398eef2ab8b3ea27f01be7d039b886c989a659994df6df1c332"
     },
     {
       "path": "src/cocos/core/deprecated.ts",
@@ -550,7 +558,7 @@
     },
     {
       "path": "src/cocos/core/index.ts",
-      "sha256": "29416384491060988c0f05b1bc42c0e4e0874a1ffb3c727497c6510a9e98b914"
+      "sha256": "a4b785a9d21916331a7bbd513821cc0a938a2fbb5245d0189bc13bcc40f29b72"
     },
     {
       "path": "src/cocos/gfx/deprecated-3.0.0.ts",
@@ -617,6 +625,14 @@
       "sha256": "567d24608772c0a3556be8c80f7788086f834259f4a3a8f5aa1486546d14b474"
     },
     {
+      "path": "src/cocos/scene-graph/deferred-destroy-control.ts",
+      "sha256": "21af2661dcf5c6153b9180b01ad78d3a3c23b47aaeef31fc83b7dbe312ca0468"
+    },
+    {
+      "path": "src/cocos/core/data/mutation-guard.ts",
+      "sha256": "93758e4b5a90ff90e5cabc7d3b0b5fd71069e955d4bf64517bec27d1957774a0"
+    },
+    {
       "path": "src/cocos/asset/assets/scripts.ts",
       "sha256": "010c30efe79a8d7fcd5fa5cb11f27ff46d3e2462e0572059ba7ef480d8dfc35d"
     },
@@ -626,7 +642,7 @@
     },
     {
       "path": "src/cocos/scene-graph/component.ts",
-      "sha256": "a7132692a0e2636b7fe9cb37ef6d79b9cf471710c4107a3a9f7970842de715a8"
+      "sha256": "2f36e42a46678dc5b7fd2c29675b22fe8597a673f7840a6066797e134819f6a5"
     },
     {
       "path": "src/cocos/misc/missing-script.ts",
@@ -842,7 +858,7 @@
     },
     {
       "path": "src/cocos/scene-graph/node-transform-validation.ts",
-      "sha256": "b2332b6d50688fbd34f53f0fa4c23e3ce8eb96b0680e7edde355a431e14daecc"
+      "sha256": "cb524abd2adff10589c9e60d8c1b37f336add89a56ade2dc428d45d7f2273e8d"
     },
     {
       "path": "src/cocos/scene-graph/node-ui-properties.ts",
@@ -922,7 +938,7 @@
     },
     {
       "path": "src/cocos/scene-graph/node.ts",
-      "sha256": "385eabe981cf2c20c65211a488d03a702727e895029d3743193264cf9b500a2b"
+      "sha256": "eac7dedc118b230acd8c4d2e548dc1b38c36b584c8f9ebd9781466fc43f39dd3"
     },
     {
       "path": "src/cocos/asset/assets/render-texture.ts",
@@ -1161,10 +1177,6 @@
       "sha256": "880d41d2175ebcfadfa068fd22aa8cee4127feca870c2c61de811fbd424fe9f9"
     },
     {
-      "path": "src/cocos/scene-graph/component-scheduler.ts",
-      "sha256": "c6a45d3502dd25dbb2b6e4a9aa185acd87b773d9c8576fe23abefbb46799a1f4"
-    },
-    {
       "path": "src/cocos/scene-graph/node-activator.ts",
       "sha256": "7078e8e278b5aec690ddcf30f5f2dbf7d5c4b7e2d13ce309ccb083a5e48055b0"
     },
@@ -1217,8 +1229,12 @@
       "sha256": "a7ce25927c90290d53a946ddb987a86520c7fbb0c36de947f114eddad48f7ae4"
     },
     {
+      "path": "src/cocos/game/game-clock-control.ts",
+      "sha256": "436ef1702eba7c5197510c2fe6ce4188c0fa51e91435883211c8db07156593f3"
+    },
+    {
       "path": "src/cocos/game/director.ts",
-      "sha256": "7b1be62cd9e84e926d1744ccc5d467a63e115f689f888a720df44511f51aa224"
+      "sha256": "34459bd732317d51d2ee994885e77763eb6c055da524f54665f601a1ff084701"
     },
     {
       "path": "src/pal/env/web/env.js",
@@ -1242,7 +1258,7 @@
     },
     {
       "path": "src/cocos/game/game.ts",
-      "sha256": "66eb3ac36fa55f9608a2a1b6ae1e51a6ecb2bc7d37802a038bf5e1077feac62f"
+      "sha256": "9aee52feb11c427f7432c4437a3601dbcff0d02411350ade02d555da5a49d103"
     },
     {
       "path": "src/cocos/game/deprecated.ts",
@@ -2346,7 +2362,7 @@
     },
     {
       "path": "src/cocos/spine/skeleton.ts",
-      "sha256": "5d5093cea717732b234558c4fed2eb5790238f5d0986c07fd56507be1396eac1"
+      "sha256": "79a9f1c4e7c844e920bfc8c88d8de0490d7ce10ab945c4791017e27814827973"
     },
     {
       "path": "src/cocos/spine/vertex-effect-delegate.ts",
@@ -2529,8 +2545,40 @@
       "sha256": "9a7fae544ba517ee962f95ff61bd0f0ed40efd9db0b250ddc90a499b95e0c4fc"
     },
     {
+      "path": "src/cocos/physics/framework/physics-state-observer.ts",
+      "sha256": "4cf40c4f1be0d407a402e95dcdb7a898b1942cb175f869f6367a41b18c2d1d2b"
+    },
+    {
+      "path": "src/cocos/physics/framework/physics-material-transaction.ts",
+      "sha256": "5f13d045f77cd6f12068cd393974b29b5a001d145411ad2d5f0aae2b9d9b3e5a"
+    },
+    {
+      "path": "src/cocos/physics/framework/physics-system-control.ts",
+      "sha256": "59ab174ab3d18840992e3e211f399a2715cab8f0a8ffdf8b0aa3ee2a1fedfb4d"
+    },
+    {
+      "path": "src/cocos/physics/framework/physics-material-bindings.ts",
+      "sha256": "72a4f62fcd8c95445ce8a9598f908fd34a38fa893d0c1cd159c4269ff534bf36"
+    },
+    {
+      "path": "src/cocos/physics/framework/physics-material-binding-source.ts",
+      "sha256": "55fe6770f1054470596b6f6581151f6b19879f503783b952fed9b7f31d90880c"
+    },
+    {
+      "path": "src/cocos/physics/framework/physics-material-values-transaction.ts",
+      "sha256": "74d9b5d231330b7dcca9effd99ece77f4993672f4c6361aa14bc2e5a304c0df7"
+    },
+    {
+      "path": "src/cocos/physics/framework/physics-material-values.ts",
+      "sha256": "35e228b9f514559613ab5634a76d0d3f71af903e6a093235b4043e0647fdfc89"
+    },
+    {
+      "path": "src/cocos/physics/framework/physics-material-cache.ts",
+      "sha256": "904f7ac34f7cc3b0f99bf8135020351ea5666b3e8008c917d34cfb87d39e5e56"
+    },
+    {
       "path": "src/cocos/physics/framework/assets/physics-material.ts",
-      "sha256": "6d0bc3e3d83ee723e5bec3a86cb9b36f908d5761f32fbed4be6856fae615ed85"
+      "sha256": "11c4a617ca52093e5aa1abe3fc41e35c08cca018754d9c9a577dcb668266aa21"
     },
     {
       "path": "src/cocos/physics/framework/physics-ray-result.ts",
@@ -2538,43 +2586,47 @@
     },
     {
       "path": "src/cocos/physics/framework/physics-selector.ts",
-      "sha256": "121956af3ad15be76e7b75ac879adaff666f67e8a3d10327b3302b9fe4efc50c"
+      "sha256": "6faad9bce0e4d872bcecdb9ba4784dab762d50479dc2a4945820fb941d31fd9f"
     },
     {
       "path": "src/cocos/physics/framework/physics-system.ts",
-      "sha256": "7229d2423e8a8393503936d2576a11ef261f7e9d27b4e0849fb60cb7141e4383"
+      "sha256": "a738669fea9b122ae53549f448a73478639c7f1292607d791d63931edd4c31da"
+    },
+    {
+      "path": "src/cocos/physics/framework/physics-command-submission.ts",
+      "sha256": "9453fe110c90d8b7cfefeed715ad7566354694512c8e823bbb25196ebae39ec0"
     },
     {
       "path": "src/cocos/physics/framework/components/rigid-body.ts",
-      "sha256": "d452cafb18d8be4ebf89c4c89aa0342f121cccacbb6b2a096c76cce783b35bbf"
+      "sha256": "d7af6a9e419638f6108296753ffb22048f1d44aa4fd1944290d98cda460b7404"
     },
     {
       "path": "src/cocos/physics/framework/components/colliders/collider.ts",
-      "sha256": "9935f116e643095562a02e80b01821b4fa790e6cbb93164c6f67afd38ea9253f"
+      "sha256": "927167d9c3ee721c68ae2f1777d300a95bb1017f9af763478fb15cf4818d2e26"
     },
     {
       "path": "src/cocos/physics/framework/components/colliders/box-collider.ts",
-      "sha256": "86cd8bbef650977c491344317bc107b80cfa12c6d3271422cce3378f8a0f5016"
+      "sha256": "c984e32378d1424b57164c4d5c51f7cfd4b96ef837f598e05690caa48fc9b9cb"
     },
     {
       "path": "src/cocos/physics/framework/components/colliders/sphere-collider.ts",
-      "sha256": "003803a53848f16905058d44c1688063554d78c1d91e0b8789beb46330ccb6e5"
+      "sha256": "581d112c7ef6faa66b21636345e6de03a929ff69417ad8c6be61fc3078ac342d"
     },
     {
       "path": "src/cocos/physics/framework/components/colliders/capsule-collider.ts",
-      "sha256": "b5bcd27157c65973f9dfa3475c5bdbfc0e80c82c3fa97beb79dff96eea3f6d14"
+      "sha256": "9a910fb89e8eb86ba7004e64bf26bc056c34e6fb1da92d277cc1220124fe2314"
     },
     {
       "path": "src/cocos/physics/framework/components/colliders/cylinder-collider.ts",
-      "sha256": "1b93f1dee3e2f14cf2457b40082315c63d552b8d72db9d9b692ced7eba5447a9"
+      "sha256": "fcfee8661aa48ca2728327b075c6b1d22da51623a5bc8dcebd7a0fb45c9a28c1"
     },
     {
       "path": "src/cocos/physics/framework/components/colliders/cone-collider.ts",
-      "sha256": "b26de110f9b94498bdd5e76c53dea10d82bdcadba556e1662c694758b95a301e"
+      "sha256": "29723c912eef1f320cc78fe8cfa29ebd60e009f85048f6c95a5e97099a4bbd77"
     },
     {
       "path": "src/cocos/physics/framework/components/colliders/mesh-collider.ts",
-      "sha256": "a2d767c00bb388c2b644fa5b2cca531753fbd94cd46ea8cf1f1051a95a404b36"
+      "sha256": "39388f498ae5594051743b17fb96bd38916862f4e64db1a411c649ed39955af7"
     },
     {
       "path": "src/cocos/physics/framework/components/constant-force.ts",
@@ -2586,7 +2638,7 @@
     },
     {
       "path": "src/cocos/physics/framework/components/colliders/terrain-collider.ts",
-      "sha256": "7854661026d5975c0aeb7d6bbceb59e063e74602e9a3a5f613b2e59747f00ac5"
+      "sha256": "eaa5a6372b49a1b023880422a2790b0e2e7f0ffbfca848d8fcc64613e296643f"
     },
     {
       "path": "src/cocos/physics/framework/components/colliders/simplex-collider.ts",
@@ -2597,16 +2649,20 @@
       "sha256": "d30811ff4ece5a48f7613dc4b219b4c7441d2aa868391d8e89adc850b33cbe09"
     },
     {
+      "path": "src/cocos/physics/framework/constraint-state-control.ts",
+      "sha256": "ec183a45bc8ee6ebf2cc1a5ee8a8221f472c95534ffb68ac79511dedcb4bfdfd"
+    },
+    {
       "path": "src/cocos/physics/framework/components/constraints/constraint.ts",
-      "sha256": "92e35aab583117907c6be6a8ae63bd5af8d6c6eeee85bdda3e84909c555861b8"
+      "sha256": "2dbb8c5bc7642dd797c48b83f11a98ad9030228b87d1a92c4a6d572d453bd0a0"
     },
     {
       "path": "src/cocos/physics/framework/components/constraints/hinge-constraint.ts",
-      "sha256": "f04f87fa108317165ccca23a5259db7bf4b2d482bae6547725835673efec9540"
+      "sha256": "c82d5ceab6edc894d35aedc96daf7876c8f2d3655991bf92ce5973ed58ef716e"
     },
     {
       "path": "src/cocos/physics/framework/components/constraints/fixed-constraint.ts",
-      "sha256": "d48cab0bb2e898cca3665eb28245c04f8660f346ba92133ca18d9ef8db5402c0"
+      "sha256": "b1b906fa653871eff4aa12dfb846e5e06f2fb8ad3329e77ad89e2b7b87b221a1"
     },
     {
       "path": "src/cocos/physics/framework/components/constraints/configurable-constraint.ts",
@@ -2614,7 +2670,7 @@
     },
     {
       "path": "src/cocos/physics/framework/components/constraints/point-to-point-constraint.ts",
-      "sha256": "35bb22698451f05f0127c6ef0977eda34f3196a0f61fbfbb8a73b7c073bc6054"
+      "sha256": "230a700bb096c5cd0b86764beff95a660b596e4b53050dcca094ad11659b5127"
     },
     {
       "path": "src/cocos/physics/framework/components/character-controllers/character-controller.ts",
@@ -2698,7 +2754,7 @@
     },
     {
       "path": "src/cocos/physics/cannon/shapes/cannon-shape.ts",
-      "sha256": "0d318ea85990de2fafe7ae07cc9abd9886af573ffd13ded2a0f1b12454534a5d"
+      "sha256": "45e7f6ac454d781f154df91175248319db1767cf29ee04f8e84c634adf0f907a"
     },
     {
       "path": "src/cocos/physics/cannon/cannon-contact-equation.ts",
@@ -2710,7 +2766,7 @@
     },
     {
       "path": "src/cocos/physics/cannon/cannon-world.ts",
-      "sha256": "53d5ff1803f98af7bd1a1cabf96be5a1d6ef976098f0b0e9b205d7de08616ea3"
+      "sha256": "14fd3c4ff9a9c9485a636e73e486b4d32b1fccc87abb8d97969bec07ba5a257a"
     },
     {
       "path": "src/cocos/physics/cannon/shapes/cannon-box-shape.ts",
@@ -3025,20 +3081,24 @@
       "sha256": "0c53138173dd635b4119704565e3cce82fea61c6e1b86d22aaafdfb01650f05a"
     },
     {
+      "path": "src/air/safe-error.ts",
+      "sha256": "4451d9fb11a75148fde84d206848618110a9c0a3d90e7a64ed5c2458150b8035"
+    },
+    {
+      "path": "src/air/physics/box3d/config.ts",
+      "sha256": "19ff83570f24fd2e24eb7dc6753cabe5efa25225973722d7d8c3001f704ec949"
+    },
+    {
       "path": "src/air/app-config.ts",
-      "sha256": "68d1a6ea8a9f58f0a2a8d7002be2e8ee168031692baafa7e82481d364a19f02f"
+      "sha256": "079c87bc289e3bb28447bf7f0932f344644b8f28d67aa3cbe0268f2d6fbff157"
     },
     {
       "path": "src/air/session-scope.ts",
       "sha256": "28fdf0d1f7a75f06d80e74dde72a9209b6c40a216cccfca9f0101983097d1ea8"
     },
     {
-      "path": "src/air/physics-2d/box2d3.ts",
-      "sha256": "d9d803eadd497a1fc83dc418087caa9ea547f7c02b063be5bd10c0e865a96d68"
-    },
-    {
       "path": "src/air/app.ts",
-      "sha256": "32523c84d5f2efb3af6afe17cff613679c1f0d0f53798f8049ebd1d2f173c714"
+      "sha256": "5a03d743f30bf35325f54946c72e788c74899283789850e2e6488ad3ef967324"
     },
     {
       "path": "src/air/builtin/builtin-effects.ts",
@@ -3058,7 +3118,19 @@
     },
     {
       "path": "src/air/physics-backend.ts",
-      "sha256": "4722b52a2d7821e8ff02a0803f48b8dd9be81791b1a2eee7bacbae747e64132e"
+      "sha256": "df1aba9a9f1025f796b2622b7a9c61febd88d937685f6770795b5e3dab5037c7"
+    },
+    {
+      "path": "src/air/physics-2d/box2d3.ts",
+      "sha256": "139840e457c2bfe0c01c645f6b66ba72a4bf9475073f873a9807a9e047518d16"
+    },
+    {
+      "path": "src/air/physics/preparation.ts",
+      "sha256": "e7b969c019765719e08995eba40fb1d555637be7d0524e7938cf8da2b637ed49"
+    },
+    {
+      "path": "src/air/physics/box3d/prepare.ts",
+      "sha256": "60ff23f46afaf6854434fc07029f5c92cc86196d156235350ebec64f045d43c0"
     },
     {
       "path": "src/air/context-health.ts",
@@ -3158,7 +3230,7 @@
     },
     {
       "path": "src/air/bootstrap.ts",
-      "sha256": "1f625d061489e4c31c235044733b27917d28e8563618275dea494a5ef98ea99c"
+      "sha256": "6e57640ff7c193e7578c29ee15514272e083f9743d93b22bbbb908f096162fc5"
     },
     {
       "path": "src/air/html-source.ts",
@@ -3166,7 +3238,7 @@
     },
     {
       "path": "src/air/step-clock.ts",
-      "sha256": "17c2ef19bd7b677384a6905c8f9af9fc5c18091993327a4119e1bb6e4f73799c"
+      "sha256": "e651c4bd22cad746f1620f20ae3eb8b86f56663b8e04e32f2a67c27a3265c2cb"
     },
     {
       "path": "src/air/action-state.ts",
@@ -3763,6 +3835,34 @@
     {
       "path": "src/air/ui-typewriter.ts",
       "sha256": "7bf572629821bb81f50fcc7795bd1651b7a6251f0073762ffd399a00e126eb46"
+    },
+    {
+      "path": "src/air/effects/gradient.ts",
+      "sha256": "2129ec570b17e3b9f572dd5fd4f07885d0118ddf5eccd56646f7777413810433"
+    },
+    {
+      "path": "src/air/physics/box3d/world-binding.ts",
+      "sha256": "b66c4224928e157dc3b6453107fe115b824aedfe1eb1c23227efa5ea955ac420"
+    },
+    {
+      "path": "src/air/physics/box3d/body-motion-source.ts",
+      "sha256": "0edbcec5a20ae1eceafb2e6c3e41aca612c68f893704c670cb58bd8fcc224f56"
+    },
+    {
+      "path": "src/air/physics/box3d/before-step-source.ts",
+      "sha256": "956897d2f3f5f67316fbfac11828debb7089641b64aabca81bae3c2fa4f58b2e"
+    },
+    {
+      "path": "src/air/box3d-controls.ts",
+      "sha256": "4b3d4636a00cc289b8fca5c589e65f44e100fc905a99863a62285b271247cd38"
+    },
+    {
+      "path": "src/air/physics/box3d/committed-query-source.ts",
+      "sha256": "a54fca2d33ef9e821180e13b45561d94e1816d2b6384b037478ae356c2a00ca1"
+    },
+    {
+      "path": "src/air/box3d-queries.ts",
+      "sha256": "fb2c274cd74d64ffcca62fb0cb372244ea4a207d530983714ecbcbaf717a1d91"
     },
     {
       "path": "src/cocos/gfx/webgl2/webgl2-descriptor-set.ts",

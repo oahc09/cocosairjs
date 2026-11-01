@@ -20,6 +20,9 @@
  THE SOFTWARE.
 */
 import type { AirApp, AirAppOptions } from './app';
+import { normalizeAirBox3DOptions } from './physics/box3d/config';
+import type { AirNormalizedBox3DOptions } from './physics/box3d/config';
+import type { AirPhysicsPreparationReceipt } from './physics/preparation';
 
 /** Engine-free normalization shared by the full and deferred entries. */
 export interface AirNormalizedOptions {
@@ -27,7 +30,8 @@ export interface AirNormalizedOptions {
     readonly renderMode: number;
     readonly renderer: 'webgl2' | 'webgpu';
     readonly webgpuAssetBaseUrl: string | undefined;
-    readonly physics: 'builtin' | 'cannon';
+    readonly physics: 'builtin' | 'cannon' | 'box3d';
+    readonly physicsOptions: Readonly<{ box3d: AirNormalizedBox3DOptions }>;
     readonly physics2D: 'box2d' | 'box2d-v3-wasm';
     readonly box2d3AssetBaseUrl: string | undefined;
     readonly box2d3SubStepCount: number;
@@ -51,6 +55,7 @@ interface BootstrapRegistry {
     initPromise?: Promise<AirApp>;
     app?: AirApp;
     failure?: unknown;
+    physicsPreparation?: AirPhysicsPreparationReceipt;
 }
 const registryKey = Symbol.for('cocosair.bootstrap.v1');
 
@@ -84,8 +89,19 @@ export function normalizeAirOptions(options: AirAppOptions): AirNormalizedOption
     const box2d3SubStepCount = options.box2d3?.subStepCount ?? 4;
     if (!Number.isInteger(box2d3SubStepCount) || box2d3SubStepCount < 1 || box2d3SubStepCount > 64)
         throw airError('BOX2D3_SUBSTEPS', 'Expected integer 1..64.');
-    if (physics !== 'builtin' && physics !== 'cannon')
-        throw airError('AIR_E_PHYSICS_BACKEND', 'physics must be builtin or cannon.');
+    if (physics !== 'builtin' && physics !== 'cannon' && physics !== 'box3d')
+        throw airError('AIR_E_PHYSICS_BACKEND', 'physics must be builtin, cannon or box3d.');
+    if (
+        options.physicsOptions !== undefined &&
+        (!options.physicsOptions || typeof options.physicsOptions !== 'object' || Array.isArray(options.physicsOptions))
+    )
+        throw airError('AIR_E_BOX3D_CONFIG', 'physicsOptions must be an options object.');
+    const physicsOptions = Object.freeze({
+        box3d: normalizeAirBox3DOptions(
+            options.physicsOptions?.box3d,
+            typeof document === 'undefined' ? undefined : document.baseURI,
+        ),
+    });
     if (diagnostics !== 'errors' && diagnostics !== 'warnings')
         throw airError('AIR_E_DIAGNOSTIC_MODE', 'diagnostics must be errors or warnings.');
     if (typeof document === 'undefined' || typeof HTMLCanvasElement === 'undefined') {
@@ -239,6 +255,7 @@ export function normalizeAirOptions(options: AirAppOptions): AirNormalizedOption
         renderer: options.renderer ?? 'webgl2',
         webgpuAssetBaseUrl,
         physics,
+        physicsOptions,
         physics2D,
         box2d3AssetBaseUrl:
             options.box2d3?.assetBaseUrl === undefined
@@ -267,6 +284,10 @@ export function equalAirOptions(a: AirNormalizedOptions, b: AirNormalizedOptions
         a.renderer === b.renderer &&
         a.webgpuAssetBaseUrl === b.webgpuAssetBaseUrl &&
         a.physics === b.physics &&
+        a.physicsOptions.box3d.assetBaseUrl === b.physicsOptions.box3d.assetBaseUrl &&
+        a.physicsOptions.box3d.threading === b.physicsOptions.box3d.threading &&
+        a.physicsOptions.box3d.workerCount === b.physicsOptions.box3d.workerCount &&
+        a.physicsOptions.box3d.solverSubSteps === b.physicsOptions.box3d.solverSubSteps &&
         a.physics2D === b.physics2D &&
         a.box2d3AssetBaseUrl === b.box2d3AssetBaseUrl &&
         a.box2d3SubStepCount === b.box2d3SubStepCount &&

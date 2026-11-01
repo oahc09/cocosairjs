@@ -22,6 +22,8 @@
  THE SOFTWARE.
 */
 
+import { assertMutationAllowed } from '../../../../core/data/mutation-guard';
+import { selector } from '../../physics-selector';
 import {
     ccclass,
     help,
@@ -65,7 +67,13 @@ export class MeshCollider extends Collider {
     }
 
     set mesh (value) {
+        if (selector.id === 'box3d') assertMutationAllowed(this, 'MeshCollider.mesh');
         if (this._mesh === value) return;
+        if (selector.id === 'box3d' && this._shape) {
+            this.shape.setMesh(value);
+            this._mesh = value;
+            return;
+        }
         this._mesh = value;
         if (this._shape) this.shape.setMesh(this._mesh);
     }
@@ -83,7 +91,13 @@ export class MeshCollider extends Collider {
     }
 
     set convex (value) {
+        if (selector.id === 'box3d') assertMutationAllowed(this, 'MeshCollider.convex');
         if (this._convex === value) return;
+        if (selector.id === 'box3d' && this._shape) {
+            this.shape.setConvex!(value);
+            this._convex = value;
+            return;
+        }
         this._convex = value;
 
         if (this._shape && this._mesh) this.shape.setMesh(this._mesh);

@@ -1,0 +1,517 @@
+{
+  "schemaVersion": 1,
+  "identity": "NEW_RECONSTRUCTION_NOT_OLD_FIVE_LAYOUTS",
+  "layouts": [
+    {
+      "id": "REBUILD-LAYOUT-01",
+      "seed": 2026102201,
+      "status": "STATIC_CANDIDATE_NOT_PLAYED",
+      "items": [
+        {
+          "itemId": "C3",
+          "itemGeneration": 1,
+          "skuId": "C",
+          "position": [-2.6, 1.61, -1.35],
+          "yawDegrees": 90
+        },
+        {
+          "itemId": "C2",
+          "itemGeneration": 1,
+          "skuId": "C",
+          "position": [-1.95, 1.61, -1.35],
+          "yawDegrees": 180
+        },
+        {
+          "itemId": "A1",
+          "itemGeneration": 1,
+          "skuId": "A",
+          "position": [-1.3, 1.6400000000000001, -1.35],
+          "yawDegrees": 270
+        },
+        {
+          "itemId": "A4",
+          "itemGeneration": 1,
+          "skuId": "A",
+          "position": [-2.6, 1.6400000000000001, -0.45],
+          "yawDegrees": 0
+        },
+        {
+          "itemId": "B3",
+          "itemGeneration": 1,
+          "skuId": "B",
+          "position": [-1.95, 1.68, -0.45],
+          "yawDegrees": 90
+        },
+        {
+          "itemId": "B4",
+          "itemGeneration": 1,
+          "skuId": "B",
+          "position": [-1.3, 1.68, -0.45],
+          "yawDegrees": 180
+        },
+        {
+          "itemId": "B1",
+          "itemGeneration": 1,
+          "skuId": "B",
+          "position": [-2.6, 1.68, 0.45],
+          "yawDegrees": 270
+        },
+        {
+          "itemId": "C4",
+          "itemGeneration": 1,
+          "skuId": "C",
+          "position": [-1.95, 1.61, 0.45],
+          "yawDegrees": 0
+        },
+        {
+          "itemId": "B2",
+          "itemGeneration": 1,
+          "skuId": "B",
+          "position": [-1.3, 1.68, 0.45],
+          "yawDegrees": 90
+        },
+        {
+          "itemId": "C1",
+          "itemGeneration": 1,
+          "skuId": "C",
+          "position": [-2.6, 1.61, 1.35],
+          "yawDegrees": 180
+        },
+        {
+          "itemId": "A3",
+          "itemGeneration": 1,
+          "skuId": "A",
+          "position": [-1.95, 1.6400000000000001, 1.35],
+          "yawDegrees": 270
+        },
+        {
+          "itemId": "A2",
+          "itemGeneration": 1,
+          "skuId": "A",
+          "position": [-1.3, 1.6400000000000001, 1.35],
+          "yawDegrees": 0
+        }
+      ],
+      "inputRecipeId": "REBUILD-PATH-01",
+      "candidateWaypointProtocol": [
+        "move empty head above next required stock attachment at safeCruiseY",
+        "lower using input and public target until gap <=0.03m",
+        "attach via disabled-configured-enabled Fixed, preserving dynamic item and relative pose",
+        "raise while sweeping entire held shape set; stop and report obstacle, never teleport",
+        "navigate above scale, lower and release; wait actual support/geometry/velocity stable30tick",
+        "reattach by public input; carry to chamber; release and wait actual whole-order stable45tick",
+        "submit through same UI command; wait actual delivery transaction and door closure before next order"
+      ],
+      "scriptStatus": "EXACT_TICK_INPUT_TRACE_NOT_YET_RECORDED_REQUIRES_REAL_RUNTIME"
+    },
+    {
+      "id": "REBUILD-LAYOUT-02",
+      "seed": 2026102202,
+      "status": "STATIC_CANDIDATE_NOT_PLAYED",
+      "items": [
+        {
+          "itemId": "A2",
+          "itemGeneration": 1,
+          "skuId": "A",
+          "position": [-2.6, 1.6400000000000001, -1.35],
+          "yawDegrees": 180
+        },
+        {
+          "itemId": "C4",
+          "itemGeneration": 1,
+          "skuId": "C",
+          "position": [-1.95, 1.61, -1.35],
+          "yawDegrees": 270
+        },
+        {
+          "itemId": "B2",
+          "itemGeneration": 1,
+          "skuId": "B",
+          "position": [-1.3, 1.68, -1.35],
+          "yawDegrees": 0
+        },
+        {
+          "itemId": "B1",
+          "itemGeneration": 1,
+          "skuId": "B",
+          "position": [-2.6, 1.68, -0.45],
+          "yawDegrees": 90
+        },
+        {
+          "itemId": "C2",
+          "itemGeneration": 1,
+          "skuId": "C",
+          "position": [-1.95, 1.61, -0.45],
+          "yawDegrees": 180
+        },
+        {
+          "itemId": "A1",
+          "itemGeneration": 1,
+          "skuId": "A",
+          "position": [-1.3, 1.6400000000000001, -0.45],
+          "yawDegrees": 270
+        },
+        {
+          "itemId": "C1",
+          "itemGeneration": 1,
+          "skuId": "C",
+          "position": [-2.6, 1.61, 0.45],
+          "yawDegrees": 0
+        },
+        {
+          "itemId": "B3",
+          "itemGeneration": 1,
+          "skuId": "B",
+          "position": [-1.95, 1.68, 0.45],
+          "yawDegrees": 90
+        },
+        {
+          "itemId": "C3",
+          "itemGeneration": 1,
+          "skuId": "C",
+          "position": [-1.3, 1.61, 0.45],
+          "yawDegrees": 180
+        },
+        {
+          "itemId": "B4",
+          "itemGeneration": 1,
+          "skuId": "B",
+          "position": [-2.6, 1.68, 1.35],
+          "yawDegrees": 270
+        },
+        {
+          "itemId": "A4",
+          "itemGeneration": 1,
+          "skuId": "A",
+          "position": [-1.95, 1.6400000000000001, 1.35],
+          "yawDegrees": 0
+        },
+        {
+          "itemId": "A3",
+          "itemGeneration": 1,
+          "skuId": "A",
+          "position": [-1.3, 1.6400000000000001, 1.35],
+          "yawDegrees": 90
+        }
+      ],
+      "inputRecipeId": "REBUILD-PATH-02",
+      "candidateWaypointProtocol": [
+        "move empty head above next required stock attachment at safeCruiseY",
+        "lower using input and public target until gap <=0.03m",
+        "attach via disabled-configured-enabled Fixed, preserving dynamic item and relative pose",
+        "raise while sweeping entire held shape set; stop and report obstacle, never teleport",
+        "navigate above scale, lower and release; wait actual support/geometry/velocity stable30tick",
+        "reattach by public input; carry to chamber; release and wait actual whole-order stable45tick",
+        "submit through same UI command; wait actual delivery transaction and door closure before next order"
+      ],
+      "scriptStatus": "EXACT_TICK_INPUT_TRACE_NOT_YET_RECORDED_REQUIRES_REAL_RUNTIME"
+    },
+    {
+      "id": "REBUILD-LAYOUT-03",
+      "seed": 2026102203,
+      "status": "STATIC_CANDIDATE_NOT_PLAYED",
+      "items": [
+        {
+          "itemId": "B2",
+          "itemGeneration": 1,
+          "skuId": "B",
+          "position": [-2.6, 1.68, -1.35],
+          "yawDegrees": 270
+        },
+        {
+          "itemId": "C3",
+          "itemGeneration": 1,
+          "skuId": "C",
+          "position": [-1.95, 1.61, -1.35],
+          "yawDegrees": 0
+        },
+        {
+          "itemId": "A3",
+          "itemGeneration": 1,
+          "skuId": "A",
+          "position": [-1.3, 1.6400000000000001, -1.35],
+          "yawDegrees": 90
+        },
+        {
+          "itemId": "B3",
+          "itemGeneration": 1,
+          "skuId": "B",
+          "position": [-2.6, 1.68, -0.45],
+          "yawDegrees": 180
+        },
+        {
+          "itemId": "B4",
+          "itemGeneration": 1,
+          "skuId": "B",
+          "position": [-1.95, 1.68, -0.45],
+          "yawDegrees": 270
+        },
+        {
+          "itemId": "C2",
+          "itemGeneration": 1,
+          "skuId": "C",
+          "position": [-1.3, 1.61, -0.45],
+          "yawDegrees": 0
+        },
+        {
+          "itemId": "A2",
+          "itemGeneration": 1,
+          "skuId": "A",
+          "position": [-2.6, 1.6400000000000001, 0.45],
+          "yawDegrees": 90
+        },
+        {
+          "itemId": "C1",
+          "itemGeneration": 1,
+          "skuId": "C",
+          "position": [-1.95, 1.61, 0.45],
+          "yawDegrees": 180
+        },
+        {
+          "itemId": "A4",
+          "itemGeneration": 1,
+          "skuId": "A",
+          "position": [-1.3, 1.6400000000000001, 0.45],
+          "yawDegrees": 270
+        },
+        {
+          "itemId": "C4",
+          "itemGeneration": 1,
+          "skuId": "C",
+          "position": [-2.6, 1.61, 1.35],
+          "yawDegrees": 0
+        },
+        {
+          "itemId": "B1",
+          "itemGeneration": 1,
+          "skuId": "B",
+          "position": [-1.95, 1.68, 1.35],
+          "yawDegrees": 90
+        },
+        {
+          "itemId": "A1",
+          "itemGeneration": 1,
+          "skuId": "A",
+          "position": [-1.3, 1.6400000000000001, 1.35],
+          "yawDegrees": 180
+        }
+      ],
+      "inputRecipeId": "REBUILD-PATH-03",
+      "candidateWaypointProtocol": [
+        "move empty head above next required stock attachment at safeCruiseY",
+        "lower using input and public target until gap <=0.03m",
+        "attach via disabled-configured-enabled Fixed, preserving dynamic item and relative pose",
+        "raise while sweeping entire held shape set; stop and report obstacle, never teleport",
+        "navigate above scale, lower and release; wait actual support/geometry/velocity stable30tick",
+        "reattach by public input; carry to chamber; release and wait actual whole-order stable45tick",
+        "submit through same UI command; wait actual delivery transaction and door closure before next order"
+      ],
+      "scriptStatus": "EXACT_TICK_INPUT_TRACE_NOT_YET_RECORDED_REQUIRES_REAL_RUNTIME"
+    },
+    {
+      "id": "REBUILD-LAYOUT-04",
+      "seed": 2026102204,
+      "status": "STATIC_CANDIDATE_NOT_PLAYED",
+      "items": [
+        {
+          "itemId": "C2",
+          "itemGeneration": 1,
+          "skuId": "C",
+          "position": [-2.6, 1.61, -1.35],
+          "yawDegrees": 0
+        },
+        {
+          "itemId": "B4",
+          "itemGeneration": 1,
+          "skuId": "B",
+          "position": [-1.95, 1.68, -1.35],
+          "yawDegrees": 90
+        },
+        {
+          "itemId": "A4",
+          "itemGeneration": 1,
+          "skuId": "A",
+          "position": [-1.3, 1.6400000000000001, -1.35],
+          "yawDegrees": 180
+        },
+        {
+          "itemId": "B3",
+          "itemGeneration": 1,
+          "skuId": "B",
+          "position": [-2.6, 1.68, -0.45],
+          "yawDegrees": 270
+        },
+        {
+          "itemId": "B1",
+          "itemGeneration": 1,
+          "skuId": "B",
+          "position": [-1.95, 1.68, -0.45],
+          "yawDegrees": 0
+        },
+        {
+          "itemId": "C1",
+          "itemGeneration": 1,
+          "skuId": "C",
+          "position": [-1.3, 1.61, -0.45],
+          "yawDegrees": 90
+        },
+        {
+          "itemId": "A2",
+          "itemGeneration": 1,
+          "skuId": "A",
+          "position": [-2.6, 1.6400000000000001, 0.45],
+          "yawDegrees": 180
+        },
+        {
+          "itemId": "C4",
+          "itemGeneration": 1,
+          "skuId": "C",
+          "position": [-1.95, 1.61, 0.45],
+          "yawDegrees": 270
+        },
+        {
+          "itemId": "A3",
+          "itemGeneration": 1,
+          "skuId": "A",
+          "position": [-1.3, 1.6400000000000001, 0.45],
+          "yawDegrees": 0
+        },
+        {
+          "itemId": "B2",
+          "itemGeneration": 1,
+          "skuId": "B",
+          "position": [-2.6, 1.68, 1.35],
+          "yawDegrees": 90
+        },
+        {
+          "itemId": "A1",
+          "itemGeneration": 1,
+          "skuId": "A",
+          "position": [-1.95, 1.6400000000000001, 1.35],
+          "yawDegrees": 180
+        },
+        {
+          "itemId": "C3",
+          "itemGeneration": 1,
+          "skuId": "C",
+          "position": [-1.3, 1.61, 1.35],
+          "yawDegrees": 270
+        }
+      ],
+      "inputRecipeId": "REBUILD-PATH-04",
+      "candidateWaypointProtocol": [
+        "move empty head above next required stock attachment at safeCruiseY",
+        "lower using input and public target until gap <=0.03m",
+        "attach via disabled-configured-enabled Fixed, preserving dynamic item and relative pose",
+        "raise while sweeping entire held shape set; stop and report obstacle, never teleport",
+        "navigate above scale, lower and release; wait actual support/geometry/velocity stable30tick",
+        "reattach by public input; carry to chamber; release and wait actual whole-order stable45tick",
+        "submit through same UI command; wait actual delivery transaction and door closure before next order"
+      ],
+      "scriptStatus": "EXACT_TICK_INPUT_TRACE_NOT_YET_RECORDED_REQUIRES_REAL_RUNTIME"
+    },
+    {
+      "id": "REBUILD-LAYOUT-05",
+      "seed": 2026102205,
+      "status": "STATIC_CANDIDATE_NOT_PLAYED",
+      "items": [
+        {
+          "itemId": "B1",
+          "itemGeneration": 1,
+          "skuId": "B",
+          "position": [-2.6, 1.68, -1.35],
+          "yawDegrees": 90
+        },
+        {
+          "itemId": "C1",
+          "itemGeneration": 1,
+          "skuId": "C",
+          "position": [-1.95, 1.61, -1.35],
+          "yawDegrees": 180
+        },
+        {
+          "itemId": "A3",
+          "itemGeneration": 1,
+          "skuId": "A",
+          "position": [-1.3, 1.6400000000000001, -1.35],
+          "yawDegrees": 270
+        },
+        {
+          "itemId": "C4",
+          "itemGeneration": 1,
+          "skuId": "C",
+          "position": [-2.6, 1.61, -0.45],
+          "yawDegrees": 0
+        },
+        {
+          "itemId": "C3",
+          "itemGeneration": 1,
+          "skuId": "C",
+          "position": [-1.95, 1.61, -0.45],
+          "yawDegrees": 90
+        },
+        {
+          "itemId": "C2",
+          "itemGeneration": 1,
+          "skuId": "C",
+          "position": [-1.3, 1.61, -0.45],
+          "yawDegrees": 180
+        },
+        {
+          "itemId": "B3",
+          "itemGeneration": 1,
+          "skuId": "B",
+          "position": [-2.6, 1.68, 0.45],
+          "yawDegrees": 270
+        },
+        {
+          "itemId": "A2",
+          "itemGeneration": 1,
+          "skuId": "A",
+          "position": [-1.95, 1.6400000000000001, 0.45],
+          "yawDegrees": 0
+        },
+        {
+          "itemId": "B2",
+          "itemGeneration": 1,
+          "skuId": "B",
+          "position": [-1.3, 1.68, 0.45],
+          "yawDegrees": 90
+        },
+        {
+          "itemId": "A1",
+          "itemGeneration": 1,
+          "skuId": "A",
+          "position": [-2.6, 1.6400000000000001, 1.35],
+          "yawDegrees": 180
+        },
+        {
+          "itemId": "B4",
+          "itemGeneration": 1,
+          "skuId": "B",
+          "position": [-1.95, 1.68, 1.35],
+          "yawDegrees": 270
+        },
+        {
+          "itemId": "A4",
+          "itemGeneration": 1,
+          "skuId": "A",
+          "position": [-1.3, 1.6400000000000001, 1.35],
+          "yawDegrees": 0
+        }
+      ],
+      "inputRecipeId": "REBUILD-PATH-05",
+      "candidateWaypointProtocol": [
+        "move empty head above next required stock attachment at safeCruiseY",
+        "lower using input and public target until gap <=0.03m",
+        "attach via disabled-configured-enabled Fixed, preserving dynamic item and relative pose",
+        "raise while sweeping entire held shape set; stop and report obstacle, never teleport",
+        "navigate above scale, lower and release; wait actual support/geometry/velocity stable30tick",
+        "reattach by public input; carry to chamber; release and wait actual whole-order stable45tick",
+        "submit through same UI command; wait actual delivery transaction and door closure before next order"
+      ],
+      "scriptStatus": "EXACT_TICK_INPUT_TRACE_NOT_YET_RECORDED_REQUIRES_REAL_RUNTIME"
+    }
+  ],
+  "staticCheckScope": "initial compound AABBs, table bounds, reachable attachment points and conservative open-volume dimensions only; not swept dynamics, pickup success, stability or 160s completion"
+}

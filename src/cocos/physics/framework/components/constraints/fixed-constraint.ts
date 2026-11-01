@@ -36,6 +36,7 @@ import { Constraint } from './constraint';
 import { CCFloat } from '../../../../core';
 import { EConstraintType } from '../../physics-enum';
 import { IFixedConstraint } from '../../../spec/i-physics-constraint';
+import { tryChangeConstraintState } from '../../constraint-state-control';
 
 /**
  * @en The fixed constraint.
@@ -60,6 +61,7 @@ export class FixedConstraint extends Constraint {
     }
 
     set breakForce (v: number) {
+        if (tryChangeConstraintState(this, 'breakForce', v, () => { this._breakForce = v; })) return;
         this._breakForce = v;
         if (!EDITOR_NOT_IN_PREVIEW) {
             this.constraint.setBreakForce(v);
@@ -79,6 +81,7 @@ export class FixedConstraint extends Constraint {
     }
 
     set breakTorque (v: number) {
+        if (tryChangeConstraintState(this, 'breakTorque', v, () => { this._breakTorque = v; })) return;
         this._breakTorque = v;
         if (!EDITOR_NOT_IN_PREVIEW) {
             this.constraint.setBreakTorque(v);

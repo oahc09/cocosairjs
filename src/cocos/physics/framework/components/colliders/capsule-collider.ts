@@ -22,6 +22,7 @@
  THE SOFTWARE.
 */
 
+import { assertMutationAllowed } from '../../../../core/data/mutation-guard';
 import {
     ccclass,
     help,
@@ -34,6 +35,7 @@ import {
 import { Collider } from './collider';
 import { ICapsuleShape } from '../../../spec/i-physics-shape';
 import { EAxisDirection, EColliderType } from '../../physics-enum';
+import { selector } from '../../physics-selector';
 import { absMax } from '../../../../core';
 
 /**
@@ -61,7 +63,14 @@ export class CapsuleCollider extends Collider {
     }
 
     public set radius (value) {
+        if (selector.id === 'box3d') assertMutationAllowed(this, 'CapsuleCollider.radius');
         if (this._radius === value) return;
+        if (selector.id === 'box3d' && this._shape) {
+            const next = Math.abs(value);
+            this.shape.setRadius(next);
+            this._radius = next;
+            return;
+        }
         this._radius = Math.abs(value);
         if (this._shape) {
             this.shape.setRadius(value);
@@ -80,7 +89,14 @@ export class CapsuleCollider extends Collider {
     }
 
     public set cylinderHeight (value) {
+        if (selector.id === 'box3d') assertMutationAllowed(this, 'CapsuleCollider.cylinderHeight');
         if (this._cylinderHeight === value) return;
+        if (selector.id === 'box3d' && this._shape) {
+            const next = Math.abs(value);
+            this.shape.setCylinderHeight(next);
+            this._cylinderHeight = next;
+            return;
+        }
         this._cylinderHeight = Math.abs(value);
         if (this._shape) {
             this.shape.setCylinderHeight(value);
@@ -100,9 +116,15 @@ export class CapsuleCollider extends Collider {
     }
 
     public set direction (value: EAxisDirection) {
+        if (selector.id === 'box3d') assertMutationAllowed(this, 'CapsuleCollider.direction');
         value = Math.floor(value);
         if (value < EAxisDirection.X_AXIS || value > EAxisDirection.Z_AXIS) return;
         if (this._direction === value) return;
+        if (selector.id === 'box3d' && this._shape) {
+            this.shape.setDirection(value);
+            this._direction = value;
+            return;
+        }
         this._direction = value;
         if (this._shape) {
             this.shape.setDirection(value);

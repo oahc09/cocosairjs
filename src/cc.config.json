@@ -288,6 +288,11 @@
             "modules": [
                 "gfx-webgpu"
             ]
+        },
+        "physics-box3d": {
+            "modules": [
+                "physics-box3d"
+            ]
         }
     },
     "moduleOverrides": [

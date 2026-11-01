@@ -1,0 +1,328 @@
+{
+  "status": "LIMITED_PUBLIC_INTERFACE_EVIDENCE_MAPPED",
+  "businessStatus": "NOT_RUN",
+  "cohortSummarySha256": "b61137708688331b4519fedcf9ecb0931409edce298095efa2da537211b07756",
+  "qualification": {
+    "committedQueries": {
+      "qualifiedForIsolatedVerification": true,
+      "caseId": "cohort-query-target-support",
+      "assertions": [
+        {
+          "checkIndex0": 6,
+          "name": "Forged context rejected",
+          "pass": true
+        },
+        {
+          "checkIndex0": 7,
+          "name": "Cloned context rejected",
+          "pass": true
+        },
+        {
+          "checkIndex0": 12,
+          "name": "Complete two-child committed group and epoch",
+          "pass": true
+        },
+        {
+          "checkIndex0": 13,
+          "name": "Scaled offset collider uses committed center and radius",
+          "pass": true
+        },
+        {
+          "checkIndex0": 14,
+          "name": "Self filtered and all held children sweep wall",
+          "pass": true
+        },
+        {
+          "checkIndex0": 18,
+          "name": "Copied snapshot is frozen",
+          "pass": true
+        },
+        {
+          "checkIndex0": 19,
+          "name": "Zero translation retains children without fabricated sweep hits",
+          "pass": true
+        },
+        {
+          "checkIndex0": 22,
+          "name": "Cloned context rejected",
+          "pass": true
+        },
+        {
+          "checkIndex0": 23,
+          "name": "Prior tick context rejected",
+          "pass": true
+        },
+        {
+          "checkIndex0": 28,
+          "name": "Complete two-child committed group and epoch",
+          "pass": true
+        },
+        {
+          "checkIndex0": 29,
+          "name": "Scaled offset collider uses committed center and radius",
+          "pass": true
+        },
+        {
+          "checkIndex0": 30,
+          "name": "Self filtered and all held children sweep wall",
+          "pass": true
+        },
+        {
+          "checkIndex0": 34,
+          "name": "Copied snapshot is frozen",
+          "pass": true
+        },
+        {
+          "checkIndex0": 35,
+          "name": "Zero translation retains children without fabricated sweep hits",
+          "pass": true
+        },
+        {
+          "checkIndex0": 38,
+          "name": "Expired context rejected outside owner callback",
+          "pass": true
+        },
+        {
+          "checkIndex0": 41,
+          "name": "Quantized box analytic wall distance",
+          "pass": true
+        },
+        {
+          "checkIndex0": 42,
+          "name": "Quantized capsule analytic wall distance",
+          "pass": true
+        },
+        {
+          "checkIndex0": 43,
+          "name": "Zero sweep reports real external overlap and excludes self roster",
+          "pass": true
+        }
+      ]
+    },
+    "committedRay": {
+      "qualifiedForIsolatedVerification": true,
+      "caseId": "cohort-query-target-support",
+      "assertions": [
+        {
+          "checkIndex0": 5,
+          "name": "Query, ray, target and before-step are ordinary production exports",
+          "pass": true
+        },
+        {
+          "checkIndex0": 8,
+          "name": "Complete committed ray ordered real collider roster",
+          "pass": true
+        },
+        {
+          "checkIndex0": 9,
+          "name": "Ray analytic distance 0",
+          "pass": true
+        },
+        {
+          "checkIndex0": 10,
+          "name": "Ray analytic distance 1",
+          "pass": true
+        },
+        {
+          "checkIndex0": 11,
+          "name": "Ray analytic distance 2",
+          "pass": true
+        },
+        {
+          "checkIndex0": 24,
+          "name": "Complete committed ray ordered real collider roster",
+          "pass": true
+        },
+        {
+          "checkIndex0": 25,
+          "name": "Ray analytic distance 0",
+          "pass": true
+        },
+        {
+          "checkIndex0": 26,
+          "name": "Ray analytic distance 1",
+          "pass": true
+        },
+        {
+          "checkIndex0": 27,
+          "name": "Ray analytic distance 2",
+          "pass": true
+        }
+      ]
+    },
+    "kinematicTarget": {
+      "qualifiedForIsolatedVerification": true,
+      "caseId": "cohort-query-target-support",
+      "assertions": [
+        {
+          "checkIndex0": 44,
+          "name": "Dynamic target owner rejected",
+          "pass": true
+        },
+        {
+          "checkIndex0": 45,
+          "name": "Duplicate target owner rejected",
+          "pass": true
+        },
+        {
+          "checkIndex0": 46,
+          "name": "Target submission does not immediately overwrite copied position",
+          "pass": true
+        },
+        {
+          "checkIndex0": 47,
+          "name": "Independent damped target geometric-series prediction",
+          "pass": true
+        },
+        {
+          "checkIndex0": 48,
+          "name": "Target produces real native displacement",
+          "pass": true
+        },
+        {
+          "checkIndex0": 49,
+          "name": "Target clear zeros paired linear and angular velocities at next safe tick",
+          "pass": true
+        }
+      ]
+    },
+    "fixedAtIdle": {
+      "qualifiedForIsolatedVerification": true,
+      "caseId": "cohort-fixed-healthy",
+      "assertions": [
+        {
+          "checkIndex0": 5,
+          "name": "Actual Fixed adapter commits native weld",
+          "pass": true
+        },
+        {
+          "checkIndex0": 7,
+          "name": "Same-turn add-disable-configure-enable has no native weld at the sampled public boundaries",
+          "pass": true
+        },
+        {
+          "checkIndex0": 8,
+          "name": "First committed local frames coincide using only the final connected body",
+          "pass": true
+        },
+        {
+          "checkIndex0": 10,
+          "name": "Safe sync native readback matches thresholds and collision cache without frame recapture",
+          "pass": true
+        },
+        {
+          "checkIndex0": 39,
+          "name": "Disable retires the real weld at safe sync",
+          "pass": true
+        },
+        {
+          "checkIndex0": 57,
+          "name": "Public idle safe sync retires ToDestroy endpoint without waiting for Director flush",
+          "pass": true
+        },
+        {
+          "checkIndex0": 66,
+          "name": "Destroy only FixedConstraint component",
+          "pass": true
+        },
+        {
+          "checkIndex0": 67,
+          "name": "Constraint-only destroy retains live body and collider, permits gravity motion",
+          "pass": true
+        }
+      ]
+    },
+    "boxSupportDeparture": {
+      "qualifiedForIsolatedVerification": true,
+      "caseId": "cohort-query-target-support",
+      "assertions": [
+        {
+          "checkIndex0": 63,
+          "name": "Positive-gap Box has no actual overlap in either cast",
+          "pass": true
+        },
+        {
+          "checkIndex0": 64,
+          "name": "Positive-gap Box retains real zero-distance upward cast hit",
+          "pass": true
+        },
+        {
+          "checkIndex0": 65,
+          "name": "Positive-gap downward cast also remains raw zero-hit",
+          "pass": true
+        },
+        {
+          "checkIndex0": 66,
+          "name": "Cast-only hit carries frozen same-epoch Box blocker geometry",
+          "pass": true
+        },
+        {
+          "checkIndex0": 67,
+          "name": "Real cast-only initial hit admits bounded upward plane departure proof",
+          "pass": true
+        },
+        {
+          "checkIndex0": 68,
+          "name": "Positive-gap independent start gap",
+          "pass": true
+        },
+        {
+          "checkIndex0": 69,
+          "name": "Positive-gap independent end gap",
+          "pass": true
+        },
+        {
+          "checkIndex0": 70,
+          "name": "Forged cast pair cannot obtain support proof",
+          "pass": true
+        },
+        {
+          "checkIndex0": 71,
+          "name": "Downward Box motion is denied despite identical zero-hit marker",
+          "pass": true
+        },
+        {
+          "checkIndex0": 72,
+          "name": "Positive-gap upward cast still retains nonzero ceiling blocker",
+          "pass": true
+        },
+        {
+          "checkIndex0": 73,
+          "name": "Positive-gap ceiling analytic distance",
+          "pass": true
+        },
+        {
+          "checkIndex0": 74,
+          "name": "Positive-gap copied metadata survives later native tick",
+          "pass": true
+        },
+        {
+          "checkIndex0": 78,
+          "name": "Positive-gap copied metadata survives app close",
+          "pass": true
+        }
+      ]
+    }
+  },
+  "rawEvidence": {
+    "query-target-support": {
+      "path": "prepare-cohort-supervisor/attempt-complete22/cohort-query-target-support/attempt/consumer.raw.json",
+      "sha256": "6add86b939eddec2dc8ee61fd89a3ed1d74f7d9898695ae9a030abb9de31094b",
+      "checks": 79,
+      "allChecksPassed": true
+    },
+    "fixed-healthy": {
+      "path": "prepare-cohort-supervisor/attempt-complete22/cohort-fixed-healthy/attempt/consumer.raw.json",
+      "sha256": "9f15cfc2a0aa61ed27196ef0f1d9351411e929e3d6d12be3e1f538dccc970b11",
+      "checks": 80,
+      "allChecksPassed": true
+    }
+  },
+  "boundary": "Same-runtime public interface regressions only. Not EX09 selected-2 geometry, complete lifting route, browser, LIFE-A05, mobile/recovery or full BIZ acceptance.",
+  "supportPolicy": {
+    "source": "examples/box3d-gift-workshop/src/box-support-policy.mjs",
+    "sha256": "051920f3db4d6c0ee163deb2b6dd505284c79abf12a1cb8bd0e1ac00a190f62c",
+    "fixtureMatch": "Exact byte match independently reviewed; stations.rotate matches. Positive-gap upward plane departure retains ceiling blocker; no arbitrary rotation/sweep or obstruction-free whole-route claim."
+  },
+  "reviewedRuntimeNode": "22.16.0 (actual receipt; ignore historical raw hostBoundary prose)"
+}

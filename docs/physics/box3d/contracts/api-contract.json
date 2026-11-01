@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "contractVersion": "box3d-rebuild-contract-2",
+  "status": "DESIGN_CONTRACT_NOT_IMPLEMENTATION",
+  "primaryMainCommit": "b573be0741db9e2a13d38ce7e65870b97a1f5fbc",
+  "apiSpecMap": "public-spec-map.json",
+  "decisions": "decisions.md",
+  "extensions": [
+    {
+      "name": "createKinematicTarget",
+      "signature": "createKinematicTarget(body: RigidBody): KinematicTargetHandle",
+      "tests": ["B3-C11-TARGET-CREATE"]
+    },
+    {
+      "name": "KinematicTargetHandle.setTarget",
+      "signature": "setTarget(pose: { position: IVec3Like; rotation: IQuatLike }): void",
+      "tests": ["B3-C11-TARGET-TICK-BASIC", "B3-C11-TARGET-TICK-EVENTS"]
+    },
+    {
+      "name": "KinematicTargetHandle.clear",
+      "signature": "clear(): void",
+      "tests": ["B3-C11-TARGET-LIFETIME-BASIC"]
+    },
+    {
+      "name": "KinematicTargetHandle.dispose",
+      "signature": "dispose(): void",
+      "tests": ["B3-C11-TARGET-LIFETIME-BASIC", "B3-C11-TARGET-LIFETIME-APP", "B3-C11-TARGET-LIFETIME-FULL"]
+    },
+    {
+      "name": "teleportRigidBody",
+      "signature": "teleportRigidBody(body: RigidBody, pose: { position: IVec3Like; rotation: IQuatLike }, options?: { preserveVelocity?: boolean; wake?: boolean }): void",
+      "defaults": {
+        "preserveVelocity": false,
+        "wake": true
+      },
+      "tests": ["B3-C11-TELEPORT"]
+    },
+    {
+      "name": "getPhysicsBackendInfo",
+      "signature": "getPhysicsBackendInfo(): Readonly<PhysicsBackendInfo>",
+      "tests": ["B3-I01", "WASM-05", "WASM-07-AIR"]
+    },
+    {
+      "name": "registerBox3DBeforeStep",
+      "signature": "registerBox3DBeforeStep(callback: Box3DBeforeStepCallback, options?: { enabled?: boolean }): Box3DBeforeStepHandle",
+      "status": "SOURCE_INTEGRATED_NOT_QUALIFIED",
+      "tests": ["B3-C01", "B3-C03", "B3-C06"],
+      "qualification": "Original formal inventory and denominator unchanged; new finite source/Node checks do not pass these cells."
+    }
+  ],
+  "c16Duration": {
+    "version": "C16-DURATION-1",
+    "status": "NEW_EXPLICIT_CONTRACT_NOT_RECOVERED_OLD_DEFINITION",
+    "fixedDtSeconds": 0.016666666666666666,
+    "solverSubSteps": 4,
+    "completedTicks": 600,
+    "sampleTiming": "post-fixed-step",
+    "sampledPeakMaxMeters": 0.05,
+    "sustainedThresholdMeters": 0.02,
+    "sustainedMinimumConsecutiveSamples": 7,
+    "sustainedFirstLastSpanSeconds": 0.1,
+    "guaranteesSubstepPeak": false,
+    "fixtureIdentity": "MISSING_ORIGINAL_INPUT_RECONSTRUCTION_REQUIRED_BEFORE_EXECUTION"
+  },
+  "damping": {
+    "rangeInclusive": [0, 1],
+    "interpretation": "native coefficient c in s^-1",
+    "perSubstepMultiplier": "1 / (1 + h * c)",
+    "c1MeansZeroVelocity": false
+  },
+  "materialMix": {
+    "friction": "sqrt(a*b)",
+    "restitution": "max(a,b)",
+    "rollingMapping": "NONZERO_REJECTED_UNTIL_DIMENSIONAL_REVIEW",
+    "spinningMapping": "NONZERO_UNSUPPORTED"
+  },
+  "prepareOrder": [
+    "application admission",
+    "selected 2D prepare",
+    "selected 3D prepare",
+    "game.init",
+    "synchronous PRE final selection"
+  ],
+  "defaultsPreserved": [
+    "builtin",
+    "cannon",
+    "existing app single-instance admission",
+    "closed app requires page reload"
+  ],
+  "notAllowed": [
+    "default backend replacement",
+    "second RAF or physics accumulator",
+    "Jolt/XPBD substitution",
+    "old core/WASM substitution",
+    "historical PASS import",
+    "raw pointer exposure"
+  ],
+  "beforeStepDecision": "before-step-api-v1.md"
+}

@@ -1,0 +1,140 @@
+{
+  "schema": "cocosair.box3d.ex01.original-requirements.v1",
+  "status": "IN_PROGRESS",
+  "reference": "ai/plans/box3d-v1.2-reference.md#12-示例交付要求",
+  "sourceScope": "Original EX01, unchanged; not a replacement MVP",
+  "exactOriginalGlobalRequirement": "每个示例必须具有独立场景目标、可操作 UI、自动演示路径、重置、debug 显示和结果导出。所有示例附固定配置/seed、至少 15 秒真实运行录像、关键截图、数值断言、关联测试 ID 与 source/build fingerprint。编译成功和静态截图都不足以证明行为通过。",
+  "exactOriginalContents": "100块砖墙，sphere/capsule/box/hull；拾取拖拽、投掷、质量/摩擦/恢复调节；awake/contacts/step面板；线程模式由重载后的配置选择",
+  "exactOriginalAcceptance": "墙可击倒且不穿地；拾取命中与可视位置一致；100次增删资源恢复；关联C05–C15/C20/C26/C32–C34",
+  "exactOriginalVisualRequirement": "示例 UI 只展示用户需要决策的状态。构建 digest 等维护数据可以放诊断展开区，不能把普通操作流程变成工具参数面板。允许画面质量适度简化，但碰撞体与视觉尺寸、光照和相机必须足够清楚，便于判断穿透与运动问题。",
+  "checks": [
+    {
+      "requirement": "Independent scene goal and usable controls",
+      "source": "implemented",
+      "acceptance": "NOT_RUN"
+    },
+    {
+      "requirement": "Exactly 100 dynamic wall bricks",
+      "source": "implemented",
+      "acceptance": "NOT_RUN"
+    },
+    {
+      "requirement": "Sphere and box",
+      "source": "implemented using original public components",
+      "acceptance": "NOT_RUN"
+    },
+    {
+      "requirement": "Capsule",
+      "source": "source-integrated real public CapsuleCollider projectile option and automatic demo; centered Y-axis mesh r=0.42, cylinderHeight=1, totalHeight=1.84; fresh native/browser verification PENDING",
+      "acceptance": "NOT_RUN"
+    },
+    {
+      "requirement": "Hull",
+      "source": "source-integrated real convex MeshCollider tetrahedron; prior stage74 LIMITED_BROWSER_OBSERVED is historical, new native-COM dragging candidate requires fresh matching verification",
+      "acceptance": "NOT_RUN"
+    },
+    {
+      "requirement": "Raycast picking matches visible position",
+      "source": "source-integrated formal PhysicsSystem.raycastClosest consumer for real owned dynamic Box/Sphere/Capsule/Hull and same-body compounds; current-build native/browser alignment PENDING",
+      "acceptance": "NOT_RUN"
+    },
+    {
+      "requirement": "Dragging and throwing selected bodies",
+      "source": "source-integrated native origin/worldCOM/velocity snapshot with public fixed-tick spring and momentum release; no COM approximation or pose animation; current-build runtime/browser verification PENDING",
+      "acceptance": "NOT_RUN"
+    },
+    {
+      "requirement": "Mass, friction and restitution controls",
+      "source": "implemented for projectiles and shared surface material",
+      "acceptance": "NOT_RUN"
+    },
+    {
+      "requirement": "Awake panel",
+      "source": "implemented using RigidBody.isAwake",
+      "acceptance": "NOT_RUN"
+    },
+    {
+      "requirement": "Contacts and step panel",
+      "source": "backend-specific copied diagnostics/count reader implemented with runtime guards; not stable IPhysicsWorld API; public events still UNFINISHED",
+      "acceptance": "NOT_RUN"
+    },
+    {
+      "requirement": "Thread mode selected by reload configuration",
+      "source": "single only; multi/auto explicitly UNFINISHED",
+      "acceptance": "NOT_RUN"
+    },
+    {
+      "requirement": "Automatic demonstration",
+      "source": "implemented with real impulse submission; fixed sequence sphere then Capsule, scheduled by presentation dt only; physics remains owner fixed-tick driven",
+      "acceptance": "NOT_RUN"
+    },
+    {
+      "requirement": "Safe reset",
+      "source": "cancel/dispose drag before pause/reset/close; deferred node destruction and recreation; no live pose animation; lifecycle runtime proof PENDING",
+      "acceptance": "NOT_RUN"
+    },
+    {
+      "requirement": "Debug display",
+      "source": "partial numerical observations; native geometry drawing not claimed",
+      "acceptance": "NOT_RUN"
+    },
+    {
+      "requirement": "Result export",
+      "source": "implemented; missing identity fields preserved",
+      "acceptance": "NOT_RUN"
+    },
+    {
+      "requirement": "Fixed configuration and seed",
+      "source": "implemented; seed 20261022",
+      "acceptance": "NOT_RUN"
+    },
+    {
+      "requirement": "Wall knocked down without ground penetration",
+      "source": "real solver intended; conservative geometric observations only",
+      "acceptance": "NOT_RUN"
+    },
+    {
+      "requirement": "100 add/remove cycles restore resources",
+      "source": "UNFINISHED; reset counter not substituted for native proof",
+      "acceptance": "NOT_RUN"
+    },
+    {
+      "requirement": "At least 15 seconds real video",
+      "source": "UNFINISHED",
+      "acceptance": "NOT_RUN"
+    },
+    {
+      "requirement": "Key compositor screenshots",
+      "source": "UNFINISHED",
+      "acceptance": "NOT_RUN"
+    },
+    {
+      "requirement": "Numerical assertions for all associated tests",
+      "source": "UNFINISHED; observations do not qualify test IDs",
+      "acceptance": "NOT_RUN"
+    },
+    {
+      "requirement": "Source/build fingerprint bound to evidence",
+      "source": "source identity prepared; actual browser/native build identity pending",
+      "acceptance": "NOT_RUN"
+    }
+  ],
+  "associatedTestIds": [
+    "B3-C05",
+    "B3-C06",
+    "B3-C07",
+    "B3-C08",
+    "B3-C09",
+    "B3-C10",
+    "B3-C11",
+    "B3-C12",
+    "B3-C13",
+    "B3-C14",
+    "B3-C15",
+    "B3-C20",
+    "B3-C26",
+    "B3-C32",
+    "B3-C33",
+    "B3-C34"
+  ]
+}

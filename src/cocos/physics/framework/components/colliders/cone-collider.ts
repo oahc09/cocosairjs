@@ -22,6 +22,8 @@
  THE SOFTWARE.
 */
 
+import { assertMutationAllowed } from '../../../../core/data/mutation-guard';
+import { selector } from '../../physics-selector';
 import {
     ccclass,
     help,
@@ -60,7 +62,14 @@ export class ConeCollider extends Collider {
     }
 
     public set radius (value) {
+        if (selector.id === 'box3d') assertMutationAllowed(this, 'ConeCollider.radius');
         if (this._radius === value) return;
+        if (selector.id === 'box3d' && this._shape) {
+            const next = Math.abs(value);
+            this.shape.setRadius(next);
+            this._radius = next;
+            return;
+        }
         this._radius = Math.abs(value);
         if (this._shape) {
             this.shape.setRadius(value);
@@ -79,7 +88,14 @@ export class ConeCollider extends Collider {
     }
 
     public set height (value) {
+        if (selector.id === 'box3d') assertMutationAllowed(this, 'ConeCollider.height');
         if (this._height === value) return;
+        if (selector.id === 'box3d' && this._shape) {
+            const next = value < 0 ? 0 : value;
+            this.shape.setHeight(next);
+            this._height = next;
+            return;
+        }
         if (value < 0) value = 0;
         this._height = value;
         if (this._shape) {
@@ -100,7 +116,13 @@ export class ConeCollider extends Collider {
     }
 
     public set direction (value: EAxisDirection) {
+        if (selector.id === 'box3d') assertMutationAllowed(this, 'ConeCollider.direction');
         if (this._direction === value) return;
+        if (selector.id === 'box3d' && this._shape) {
+            this.shape.setDirection(value);
+            this._direction = value;
+            return;
+        }
         if (value < EAxisDirection.X_AXIS || value > EAxisDirection.Z_AXIS) return;
         this._direction = value;
         if (this._shape) {

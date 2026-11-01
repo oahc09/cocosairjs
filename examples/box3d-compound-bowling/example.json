@@ -1,0 +1,58 @@
+{
+  "id": "box3d-compound-bowling",
+  "version": "0.1.0",
+  "title": "Box3D Compound Bowling · EX02 (draft / NOT_RUN)",
+  "category": "physics",
+  "status": "draft",
+  "specStatus": "draft",
+  "requiresDevTools": false,
+  "learning": {
+    "goal": "使用显式 Box3D ST runtime 观察同 Node 复合体、原生 COM 与释放/重建生命周期；验收 NOT_RUN。",
+    "points": [
+      "十瓶 box + sphere 复合形状与三档质量",
+      "中心/偏心冲量与原生姿态计分",
+      "Start / Stop / Close 保留代际证据；20 次真实重置仍 NOT_RUN"
+    ]
+  },
+  "effect": {
+    "functional": "候选实现十瓶、运动平台、质量/冲量控制与原生证据导出。CPU 测试不代表物理通过；Gallery 浏览器、20-reset 和 Close 竞态 NOT_RUN。",
+    "visual": "预期显示保龄球场景和原生 COM 标记；实际呈现尚未验收。"
+  },
+  "api": {
+    "primary": ["createAirApp"],
+    "supporting": [],
+    "claims": ["createAirApp"],
+    "forbiddenShortcut": [
+      "不得使用模拟/teleport 或降低断言替代真实 Box3D 验收",
+      "不得以 CPU 或路由测试宣称视觉/物理通过"
+    ],
+    "evidence": []
+  },
+  "capabilities": ["physics"],
+  "scene": {
+    "expectedGraph": {
+      "nodes": ["Camera"]
+    }
+  },
+  "interaction": {
+    "steps": []
+  },
+  "ready": {
+    "validators": []
+  },
+  "validation": {
+    "functional": [],
+    "interaction": [],
+    "visual": [],
+    "lifecycle": [],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "程序化场景；随仓库 MIT 授权。"
+  }
+}

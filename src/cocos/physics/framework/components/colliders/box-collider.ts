@@ -22,6 +22,7 @@
  THE SOFTWARE.
 */
 
+import { assertMutationAllowed } from '../../../../core/data/mutation-guard';
 import {
     ccclass,
     help,
@@ -35,6 +36,7 @@ import { Vec3 } from '../../../../core';
 import { Collider } from './collider';
 import { IBoxShape } from '../../../spec/i-physics-shape';
 import { EColliderType } from '../../physics-enum';
+import { selector } from '../../physics-selector';
 import { absolute } from '../../../utils/util';
 
 /**
@@ -63,7 +65,15 @@ export class BoxCollider extends Collider {
     }
 
     public set size (value) {
+        assertMutationAllowed(this, 'BoxCollider.size');
         if (Vec3.strictEquals(this._size, value)) return;
+        if (selector.id === 'box3d' && this._shape) {
+            const next = new Vec3();
+            absolute(Vec3.copy(next, value));
+            (this.shape as IBoxShape & { updateSize (candidate?: Vec3): void }).updateSize(next);
+            Vec3.copy(this._size, next);
+            return;
+        }
         Vec3.copy(this._size, value);
         absolute(this._size);
         if (this._shape) {

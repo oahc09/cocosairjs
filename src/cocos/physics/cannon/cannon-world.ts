@@ -22,6 +22,7 @@
  THE SOFTWARE.
 */
 
+import { recordMaterialAcquisitionUnknown } from '../framework/physics-material-bindings';
 import CANNON from '@cocos/cannon';
 import { Vec3, RecyclePool, error, js, geometry, IVec3Like, IQuatLike, warnID, Color } from '../../core';
 import { fillRaycastResult, toCannonRaycastOptions } from './cannon-util';
@@ -44,6 +45,7 @@ export class CannonWorld implements IPhysicsWorld {
     }
 
     setDefaultMaterial (mat: PhysicsMaterial): void {
+        recordMaterialAcquisitionUnknown(mat);
         this._world.defaultMaterial.friction = mat.friction;
         this._world.defaultMaterial.restitution = mat.restitution;
         if (CannonShape.idToMaterial[mat.id] != null) {

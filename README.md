@@ -6,6 +6,8 @@
 
 2D 物理默认使用现有 JavaScript 后端；可显式选择 [Box2D 3.2 WASM 后端](docs/guides/box2d3.md)，继续使用 Cocos 刚体、碰撞体和关节组件。WASM 资产独立部署、按需加载。
 
+3D 另有显式选择的 [Box3D 单线程实验变体](docs/physics/box3d/integration-20261031.md)：构建需包含 `physics-box3d` 并部署匹配的 `physics/box3d/st/` 资产，再设置 `physics: 'box3d'`。默认发行包仍为 builtin / Cannon，不会下载 Box3D；实验变体不代表原九示例或完整验收矩阵已经完成。
+
 直接部署 SDK 时，先看 [build 最小文件集](build/README.md)：普通浏览器只需选择一份主 JS，可选后端/解码器按功能部署；声明、source map、编译收据和 Gallery 不是每个应用的运行依赖。
 
 ## 视觉展示
@@ -323,7 +325,7 @@ cocosair.js/
 - [文档导航](docs/README.md) — 目录与主题入口
 - [开发手册](docs/manual/index.md) — API 教程与可运行示例
 - [渲染目标与 MSAA](docs/manual/rendering-contracts.md) · [纹理颜色、离线 GGX 与材质诊断](docs/reference/rendering-color-diagnostics.md)
-- [独立数学入口](docs/guides/math-entry.md) · [WebGPU](docs/guides/webgpu.md) · [Box2D 3.2 WASM](docs/guides/box2d3.md)
+- [独立数学入口](docs/guides/math-entry.md) · [WebGPU](docs/guides/webgpu.md) · [Box2D 3.2 WASM](docs/guides/box2d3.md) · [Box3D 实验变体](docs/physics/box3d/integration-20261031.md)
 - [输入动作与状态](docs/manual/input-action-state.md) · [场景切换](docs/manual/scene-switching.md) · [音频就绪与所有权](docs/manual/audio-readiness-ownership.md)
 - [图集加载](docs/manual/atlas-loading.md) · [位图字体](docs/manual/bitmap-font-loading.md) · [SDK 生命周期配方](docs/manual/sdk-lifecycle-recipes.md)
 - [Code First 入门](docs/guides/code-first.md) — 启动与画布约定
@@ -372,7 +374,7 @@ cocosair.js/
 
 - `audio` 虽未列入默认 feature 选择，但由 `src/exports/air.ts` 静态聚合，音频能力已在默认 bundle 中。
 - `mask`、`graphics`、`sorting`、`intersection-2d`、`geometry-renderer`、`spine`、`physics-framework` 等能力由聚合入口导出，不能仅按同名 feature 开关判断是否包含。
-- 已声明但未选择的 feature 为 `audio`、`physics-2d-builtin`、`physics-ammo`、`physics-physx`、`physics-2d-box2d-wasm`、`marionette`、`procedural-animation`、`spark`。Spark 使用上文独立构建入口；其他构建变体使用 `AIR_FEATURES`，仍需验证完整依赖和运行资产。
+- 已声明但未选择的 feature 为 `audio`、`physics-2d-builtin`、`physics-ammo`、`physics-physx`、`physics-2d-box2d-wasm`、`physics-box3d`、`marionette`、`procedural-animation`、`spark`。Spark 使用上文独立构建入口；其他构建变体使用 `AIR_FEATURES`，仍需验证完整依赖和运行资产。
 
 可用 `npm run verify:feature-exports` 核对声明、聚合入口和默认产物组成；详细范围见 [功能范围](docs/reference/web-features.md)。源码或类型存在，只能证明相应代码已抽取，不能代替实际运行验证。
 

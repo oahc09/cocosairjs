@@ -24,6 +24,7 @@
  THE SOFTWARE.
 */
 
+import { assertMutationAllowed } from '../../../core/data/mutation-guard';
 import {
     ccclass,
     help,
@@ -44,6 +45,7 @@ import { IRigidBody } from '../../spec/i-rigid-body';
 import { selector, createRigidBody } from '../physics-selector';
 import { ERigidBodyType } from '../physics-enum';
 import { PhysicsSystem } from '../physics-system';
+import { trySubmitPhysicsBodyCommand, assertPhysicsBodyVelocityConfiguration } from '../physics-command-submission';
 
 /**
  * @en
@@ -82,7 +84,13 @@ export class RigidBody extends Component {
     }
 
     public set group (v: number) {
+        assertMutationAllowed(this, 'RigidBody.group');
         if (DEBUG && !Number.isInteger(Math.log2(v >>> 0))) warn('[Physics]: The group should only have one bit.');
+        if (selector.id === 'box3d' && this._body) {
+            if (this._body.getGroup() !== v) this._body.setGroup(v);
+            this._group = v;
+            return;
+        }
         this._group = v;
         if (this._body) {
             // The judgment is added here because the data exists in two places
@@ -104,7 +112,13 @@ export class RigidBody extends Component {
     }
 
     public set type (v: ERigidBodyType) {
+        assertMutationAllowed(this, 'RigidBody.type');
         if (this._type === v) return;
+        if (selector.id === 'box3d' && this._body) {
+            this._body.setType(v);
+            this._type = v;
+            return;
+        }
         this._type = v;
         if (this._body) this._body.setType(v);
     }
@@ -123,9 +137,15 @@ export class RigidBody extends Component {
     }
 
     public set mass (value) {
+        assertMutationAllowed(this, 'RigidBody.mass');
         if (DEBUG && value <= 0) warn('[Physics]: The mass should be greater than zero.');
         if (this._mass === value) return;
         value = value <= 0 ? 0.0001 : value;
+        if (selector.id === 'box3d' && this._body) {
+            this._body.setMass(value);
+            this._mass = value;
+            return;
+        }
         this._mass = value;
         if (this._body) this._body.setMass(value);
     }
@@ -144,6 +164,12 @@ export class RigidBody extends Component {
     }
 
     public set allowSleep (v: boolean) {
+        assertMutationAllowed(this, 'RigidBody.allowSleep');
+        if (selector.id === 'box3d' && this._body) {
+            this._body.setAllowSleep(v);
+            this._allowSleep = v;
+            return;
+        }
         this._allowSleep = v;
         if (this._body) this._body.setAllowSleep(v);
     }
@@ -162,7 +188,13 @@ export class RigidBody extends Component {
     }
 
     public set linearDamping (value) {
+        assertMutationAllowed(this, 'RigidBody.linearDamping');
         if (DEBUG && (value < 0 || value > 1)) warn('[Physics]: The damping should be between zero to one.');
+        if (selector.id === 'box3d' && this._body) {
+            this._body.setLinearDamping(value);
+            this._linearDamping = value;
+            return;
+        }
         this._linearDamping = value;
         if (this._body) this._body.setLinearDamping(value);
     }
@@ -181,7 +213,13 @@ export class RigidBody extends Component {
     }
 
     public set angularDamping (value) {
+        assertMutationAllowed(this, 'RigidBody.angularDamping');
         if (DEBUG && (value < 0 || value > 1)) warn('[Physics]: The damping should be between zero to one.');
+        if (selector.id === 'box3d' && this._body) {
+            this._body.setAngularDamping(value);
+            this._angularDamping = value;
+            return;
+        }
         this._angularDamping = value;
         if (this._body) this._body.setAngularDamping(value);
     }
@@ -200,6 +238,12 @@ export class RigidBody extends Component {
     }
 
     public set useGravity (value) {
+        assertMutationAllowed(this, 'RigidBody.useGravity');
+        if (selector.id === 'box3d' && this._body) {
+            this._body.useGravity(value);
+            this._useGravity = value;
+            return;
+        }
         this._useGravity = value;
         if (this._body) this._body.useGravity(value);
     }
@@ -218,6 +262,12 @@ export class RigidBody extends Component {
     }
 
     public set linearFactor (value: Vec3) {
+        assertMutationAllowed(this, 'RigidBody.linearFactor');
+        if (selector.id === 'box3d' && this._body) {
+            this._body.setLinearFactor(value);
+            Vec3.copy(this._linearFactor, value);
+            return;
+        }
         Vec3.copy(this._linearFactor, value);
         if (this._body) {
             this._body.setLinearFactor(this._linearFactor);
@@ -238,6 +288,12 @@ export class RigidBody extends Component {
     }
 
     public set angularFactor (value: Vec3) {
+        assertMutationAllowed(this, 'RigidBody.angularFactor');
+        if (selector.id === 'box3d' && this._body) {
+            this._body.setAngularFactor(value);
+            Vec3.copy(this._angularFactor, value);
+            return;
+        }
         Vec3.copy(this._angularFactor, value);
         if (this._body) {
             this._body.setAngularFactor(this._angularFactor);
@@ -258,6 +314,7 @@ export class RigidBody extends Component {
     }
 
     public set sleepThreshold (v: number) {
+        assertMutationAllowed(this, 'RigidBody.sleepThreshold');
         if (this._isInitialized) {
             this._body!.setSleepThreshold(v);
         }
@@ -277,6 +334,7 @@ export class RigidBody extends Component {
     }
 
     public set useCCD (v: boolean) {
+        assertMutationAllowed(this, 'RigidBody.useCCD');
         if (this._isInitialized) {
             this._body!.useCCD(v);
         }
@@ -326,6 +384,7 @@ export class RigidBody extends Component {
     }
 
     public set isStatic (v: boolean) {
+        assertMutationAllowed(this, 'RigidBody.isStatic');
         if ((v && this.isStatic) || (!v && !this.isStatic)) return;
         this.type = v ? ERigidBodyType.STATIC : ERigidBodyType.DYNAMIC;
     }
@@ -341,6 +400,7 @@ export class RigidBody extends Component {
     }
 
     public set isDynamic (v: boolean) {
+        assertMutationAllowed(this, 'RigidBody.isDynamic');
         if ((v && this.isDynamic) || (!v && !this.isDynamic)) return;
         this.type = v ? ERigidBodyType.DYNAMIC : ERigidBodyType.KINEMATIC;
     }
@@ -356,6 +416,7 @@ export class RigidBody extends Component {
     }
 
     public set isKinematic (v: boolean) {
+        assertMutationAllowed(this, 'RigidBody.isKinematic');
         if ((v && this.isKinematic) || (!v && !this.isKinematic)) return;
         this.type = v ? ERigidBodyType.KINEMATIC : ERigidBodyType.DYNAMIC;
     }
@@ -438,6 +499,9 @@ export class RigidBody extends Component {
      * @param relativePoint @zh 作用点，相对于刚体的质心 @en The point to apply the force on, relative to the center of mass of the rigid body
      */
     public applyForce (force: Vec3, relativePoint?: Vec3): void {
+        if (trySubmitPhysicsBodyCommand(this, () => (
+            { kind: 'force', vector: force, relativePoint, space: 'world' }
+        ))) return;
         if (this._isInitialized) this._body!.applyForce(force, relativePoint);
     }
 
@@ -450,6 +514,9 @@ export class RigidBody extends Component {
      * @param localPoint @zh 作用点 @en The point to apply the force on
      */
     public applyLocalForce (force: Vec3, localPoint?: Vec3): void {
+        if (trySubmitPhysicsBodyCommand(this, () => (
+            { kind: 'force', vector: force, relativePoint: localPoint, space: 'local' }
+        ))) return;
         if (this._isInitialized) this._body!.applyLocalForce(force, localPoint);
     }
 
@@ -462,6 +529,9 @@ export class RigidBody extends Component {
      * @param relativePoint @zh 作用点，相对于刚体的中心点 @en The point to apply the impulse, relative to the center of mass of the rigid body
      */
     public applyImpulse (impulse: Vec3, relativePoint?: Vec3): void {
+        if (trySubmitPhysicsBodyCommand(this, () => (
+            { kind: 'impulse', vector: impulse, relativePoint, space: 'world' }
+        ))) return;
         if (this._isInitialized) this._body!.applyImpulse(impulse, relativePoint);
     }
 
@@ -474,6 +544,9 @@ export class RigidBody extends Component {
      * @param localPoint @zh 作用点 @en The point to apply the impulse
      */
     public applyLocalImpulse (impulse: Vec3, localPoint?: Vec3): void {
+        if (trySubmitPhysicsBodyCommand(this, () => (
+            { kind: 'impulse', vector: impulse, relativePoint: localPoint, space: 'local' }
+        ))) return;
         if (this._isInitialized) this._body!.applyLocalImpulse(impulse, localPoint);
     }
 
@@ -485,6 +558,7 @@ export class RigidBody extends Component {
      * @param torque @zh 扭矩 @en The torque applied
      */
     public applyTorque (torque: Vec3): void {
+        if (trySubmitPhysicsBodyCommand(this, () => ({ kind: 'torque', vector: torque, space: 'world' }))) return;
         if (this._isInitialized) this._body!.applyTorque(torque);
     }
 
@@ -496,6 +570,7 @@ export class RigidBody extends Component {
      * @param torque @zh 扭矩 @en The torque applied
      */
     public applyLocalTorque (torque: Vec3): void {
+        if (trySubmitPhysicsBodyCommand(this, () => ({ kind: 'torque', vector: torque, space: 'local' }))) return;
         if (this._isInitialized) this._body!.applyLocalTorque(torque);
     }
 
@@ -506,6 +581,7 @@ export class RigidBody extends Component {
      * 唤醒刚体。
      */
     public wakeUp (): void {
+        assertMutationAllowed(this, 'RigidBody.wakeUp');
         if (this._isInitialized) this._body!.wakeUp();
     }
 
@@ -516,6 +592,7 @@ export class RigidBody extends Component {
      * 休眠刚体。
      */
     public sleep (): void {
+        assertMutationAllowed(this, 'RigidBody.sleep');
         if (this._isInitialized) this._body!.sleep();
     }
 
@@ -526,6 +603,7 @@ export class RigidBody extends Component {
      * 清除刚体受到的力和速度。
      */
     public clearState (): void {
+        if (trySubmitPhysicsBodyCommand(this, () => ({ kind: 'clear-state' }))) return;
         if (this._isInitialized) this._body!.clearState();
     }
 
@@ -536,6 +614,7 @@ export class RigidBody extends Component {
      * 清除刚体受到的力。
      */
     public clearForces (): void {
+        if (trySubmitPhysicsBodyCommand(this, () => ({ kind: 'clear-forces' }))) return;
         if (this._isInitialized) this._body!.clearForces();
     }
 
@@ -546,6 +625,7 @@ export class RigidBody extends Component {
      * 清除刚体的速度。
      */
     public clearVelocity (): void {
+        if (trySubmitPhysicsBodyCommand(this, () => ({ kind: 'clear-velocity' }))) return;
         if (this._isInitialized) this._body!.clearVelocity();
     }
 
@@ -568,6 +648,8 @@ export class RigidBody extends Component {
      * @param value @zh 速度向量 @en The velocity vector
      */
     public setLinearVelocity (value: Vec3): void {
+        assertPhysicsBodyVelocityConfiguration('RigidBody.setLinearVelocity', this);
+        assertMutationAllowed(this, 'RigidBody.setLinearVelocity');
         if (this._isInitialized) this._body!.setLinearVelocity(value);
     }
 
@@ -590,6 +672,8 @@ export class RigidBody extends Component {
      * @param value @zh 角速度向量 @en The angular velocity vector
      */
     public setAngularVelocity (value: Vec3): void {
+        assertPhysicsBodyVelocityConfiguration('RigidBody.setAngularVelocity', this);
+        assertMutationAllowed(this, 'RigidBody.setAngularVelocity');
         if (this._isInitialized) this._body!.setAngularVelocity(value);
     }
 
@@ -615,6 +699,7 @@ export class RigidBody extends Component {
      * @param v @zh 分组值，为 32 位整数，范围为 [2^0, 2^31] @en Group value which is a 32-bits integer, the range is [2^0, 2^31]
      */
     public setGroup (v: number): void {
+        assertMutationAllowed(this, 'RigidBody.setGroup');
         if (this._isInitialized) this._body!.setGroup(v);
     }
 
@@ -626,6 +711,7 @@ export class RigidBody extends Component {
      * @param v @zh 分组值，为 32 位整数，范围为 [2^0, 2^31] @en Group value which is a 32-bits integer, the range is [2^0, 2^31]
      */
     public addGroup (v: number): void {
+        assertMutationAllowed(this, 'RigidBody.addGroup');
         if (this._isInitialized) this._body!.addGroup(v);
     }
 
@@ -637,6 +723,7 @@ export class RigidBody extends Component {
      * @param v @zh 分组值，为 32 位整数，范围为 [2^0, 2^31] @en Group value which is a 32-bits integer, the range is [2^0, 2^31]
      */
     public removeGroup (v: number): void {
+        assertMutationAllowed(this, 'RigidBody.removeGroup');
         if (this._isInitialized) this._body!.removeGroup(v);
     }
 
@@ -660,6 +747,7 @@ export class RigidBody extends Component {
      * @param v @zh 掩码值，为 32 位整数，范围为 [2^0, 2^31] @en Mask value which is a 32-bits integer, the range is [2^0, 2^31]
      */
     public setMask (v: number): void {
+        assertMutationAllowed(this, 'RigidBody.setMask');
         if (this._isInitialized) this._body!.setMask(v);
     }
 
@@ -671,6 +759,7 @@ export class RigidBody extends Component {
      * @param v @zh 掩码值，为 32 位整数，范围为 [2^0, 2^31] @en Mask value which is a 32-bits integer, the range is [2^0, 2^31]
      */
     public addMask (v: number): void {
+        assertMutationAllowed(this, 'RigidBody.addMask');
         if (this._isInitialized) this._body!.addMask(v);
     }
 
@@ -682,6 +771,7 @@ export class RigidBody extends Component {
      * @param v @zh 掩码值，为 32 位整数，范围为 [2^0, 2^31] @en Mask value which is a 32-bits integer, the range is [2^0, 2^31]
      */
     public removeMask (v: number): void {
+        assertMutationAllowed(this, 'RigidBody.removeMask');
         if (this._isInitialized) this._body!.removeMask(v);
     }
 }

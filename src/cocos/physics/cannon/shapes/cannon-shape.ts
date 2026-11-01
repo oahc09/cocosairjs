@@ -22,6 +22,7 @@
  THE SOFTWARE.
 */
 
+import { recordMaterialAcquisitionUnknown } from '../../framework/physics-material-bindings';
 import CANNON from '@cocos/cannon';
 import { Vec3, Quat, IVec3Like, geometry } from '../../../core';
 import { getWrap, setWrap } from '../../utils/util';
@@ -61,6 +62,8 @@ export class CannonShape implements IBaseShape {
 
     setMaterial (mat: PhysicsMaterial | null): void {
         const mat1 = (mat == null) ? PhysicsSystem.instance.defaultMaterial : mat;
+        // Public raw effects have no independently proven release/participation receipt.
+        recordMaterialAcquisitionUnknown(mat1);
 
         if (CannonShape.idToMaterial[mat1.id] == null) {
             CannonShape.idToMaterial[mat1.id] = new CANNON.Material(mat1.id as any);

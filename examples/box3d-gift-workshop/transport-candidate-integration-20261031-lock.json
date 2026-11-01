@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "candidateId": "integration-20261031",
+  "status": "READY_FOR_VERIFICATION",
+  "expectedBuild": 248,
+  "runtimeSha256": "c2fc14b2d8007fa0d09728971ed9fbccd5e9167580b46c3a176bcb17249c260e",
+  "manifestSha256": "5876dd1f3ef34ce41ef42a7aadb12f73c2a7939891e98e40464c052a6d42b2a8",
+  "businessStatus": "NOT_RUN",
+  "qualification": {
+    "committedQueries": true,
+    "committedRay": true,
+    "kinematicTarget": true,
+    "fixedAtIdle": true,
+    "boxSupportDeparture": true
+  },
+  "qualificationEvidence": {
+    "mapPath": "tools/verify/box3d/integration-20261031/ex09-qualification-map.json",
+    "mapSha256": "cf7aaeb1a0491b8853e59789a4198761d99e439bd866592214e02d36ef2d5580",
+    "inputLockSha256": "a07ae8b82df7f39e50f9e1035f8cda8c5c00a5072a2181add01aa33de1f890be"
+  },
+  "scope": "Integration 20261031: bounded Node/JSDOM production ST WASM query, ray, target, support and Fixed only. No browser, full EX09, MT or original Gate credit.",
+  "remaining": [
+    "Current selected door geometry and browser three-order business flow are separately tested, not inherited from these Node fixtures.",
+    "Full EX09, mobile/Safari, MT and original G0-G8 gates remain unqualified by this lock."
+  ]
+}

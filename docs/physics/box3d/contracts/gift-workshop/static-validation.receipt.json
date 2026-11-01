@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "kind": "STATIC_CONTRACT_VALIDATION_NOT_BIZ_EXECUTION",
+  "command": [
+    "node",
+    "--test",
+    "tools/verify/box3d/gift-workshop-contract.test.cjs"
+  ],
+  "exitCode": 0,
+  "completedAtUtc": "2026-10-22T04:14:49.115086+00:00",
+  "tests": 7,
+  "status": "PASS_STATIC_ONLY",
+  "inputs": [
+    {
+      "path": "docs/physics/box3d/contracts/gift-workshop/README.md",
+      "sha256": "4dfbc2bca4b588b5e5917072448f0e99505326aca0c37b1d7990f1a0914418b2"
+    },
+    {
+      "path": "docs/physics/box3d/contracts/gift-workshop/config.json",
+      "sha256": "7456954e0c225c6aa4ee635645624bb3a085235f76ac3d5b1271d44c824e5827"
+    },
+    {
+      "path": "docs/physics/box3d/contracts/gift-workshop/layouts.json",
+      "sha256": "eb483a944aef54bb5c5e1d3f2d4d93ff8e015e3ba44326dc87446b9587fbf123"
+    },
+    {
+      "path": "docs/physics/box3d/contracts/gift-workshop/scenarios.json",
+      "sha256": "2d3b4c80e95e12cad9957045307bc795f8d32debd96b7e4f6521291959981bd5"
+    },
+    {
+      "path": "tools/verify/box3d/gift-workshop-contract.test.cjs",
+      "sha256": "4df428311079b2ceb13989d3e6e4297a2fe7a48bf32b8f692abf0c692cf0db94"
+    }
+  ],
+  "raw": {
+    "path": "docs/physics/box3d/contracts/gift-workshop/static-validation.raw.txt",
+    "sha256": "66aa774c9cf4f4294b4f91c8306219f753c7d8d6a3bcf319d51d5b0da4433f01"
+  },
+  "BIZExecution": "NOT_RUN",
+  "playableInputPathsRecorded": false,
+  "dynamicReachabilityProven": false,
+  "humanAndDeviceTested": false
+}

@@ -1,0 +1,200 @@
+{
+  "schema": "cocosair.box3d.ex01.source-identity.v1",
+  "status": "IN_PROGRESS",
+  "createdAt": "2026-10-23T19:38:06.636977+00:00",
+  "baseCommit": "ce491b0d412b7d5dd6361db1c4caca25a95f1cd4",
+  "runtimeExecuted": true,
+  "previousSourceIdentitySha256": "cf18121f8e95c7c4551a598b365641d9f18fa6868fe0a7053b84ac283660afb9",
+  "increment": "Metadata-only correction after source74 actual limited Firefox Hull observation. Runtime and scene JS/WASM are unchanged; original source74 metadata/raw bytes are preserved.",
+  "reference": {
+    "path": "ai/plans/box3d-v1.2-reference.md",
+    "sha256": "17b4dcf0d8acbe0ed72f81ab4d3fc53c6a51f705d573699f0d50137e4bf00c46",
+    "section": "12"
+  },
+  "files": [
+    {
+      "path": "docs/physics/box3d/contracts/before-step-api-v1.md",
+      "bytes": 7641,
+      "sha256": "8788b4fab41d50f1e709da6c7a3aa2754b76dcad69db492cd840d9e4857be997"
+    },
+    {
+      "path": "examples/box3d-rigidbody-playground/README.md",
+      "bytes": 14744,
+      "sha256": "b6a6f6e6c8b2f6f396bb3f2777058f17c32889a4170e3adea30cab996a07d039"
+    },
+    {
+      "path": "examples/box3d-rigidbody-playground/index.html",
+      "bytes": 12038,
+      "sha256": "11b81e030796223dd3763ec7f188277b3c9af880a32ba2f41a8e975c6f5f3448"
+    },
+    {
+      "path": "examples/box3d-rigidbody-playground/original-requirements.json",
+      "bytes": 5902,
+      "sha256": "ba877c681330634213878b0d298262cabf5554c543e9734d5169a57f987f7c3f"
+    },
+    {
+      "path": "examples/box3d-rigidbody-playground/src/backend-observation.ts",
+      "bytes": 7060,
+      "sha256": "61f0560cd64062687f137d0db3cda01b8a1b41229c550fa80605552c6e195887"
+    },
+    {
+      "path": "examples/box3d-rigidbody-playground/src/capsule-geometry.ts",
+      "bytes": 652,
+      "sha256": "3700b801954662284f9691dde3c60c193e8c7d734f48582a546e28db70ef3c3d"
+    },
+    {
+      "path": "examples/box3d-rigidbody-playground/src/drag-spring-math.ts",
+      "bytes": 2513,
+      "sha256": "783e28343167418c0a08cadc36a133140ac7ee9405bcdd863c6cbdbb572e5f0a"
+    },
+    {
+      "path": "examples/box3d-rigidbody-playground/src/hull-geometry.ts",
+      "bytes": 1916,
+      "sha256": "5e639aa72054f9a889f25c02db51818b2587ac364233c2b22da852a2a4a4a0f1"
+    },
+    {
+      "path": "examples/box3d-rigidbody-playground/src/main.ts",
+      "bytes": 38186,
+      "sha256": "4251ac1ac136128d51147f38155f9f200b31f083c9d1e860d3243ad32a5ed828"
+    },
+    {
+      "path": "examples/box3d-rigidbody-playground/src/spring-drag.ts",
+      "bytes": 9856,
+      "sha256": "3abc83869ffcb1bc2fdd726e9b0c27c9a2ac9df8eb4651973fe3a0db1b93b596"
+    },
+    {
+      "path": "examples/box3d-rigidbody-playground/style.css",
+      "bytes": 9954,
+      "sha256": "8f87865e0e288ca2e513e3ee4a0c8defb905e078d84ec6401b83311e0a4241eb"
+    },
+    {
+      "path": "src/air/box3d-controls.ts",
+      "bytes": 3053,
+      "sha256": "3074e06d9a3d3d66504ed89f7bb6866629d88507ff7788205294b00722b14fe6"
+    },
+    {
+      "path": "src/air/index.ts",
+      "bytes": 3409,
+      "sha256": "0958216972ade20fdda47e801b8a3a077397abe717170505f20fb85ee9107438"
+    },
+    {
+      "path": "src/air/physics/box3d/before-step-source.ts",
+      "bytes": 2747,
+      "sha256": "956897d2f3f5f67316fbfac11828debb7089641b64aabca81bae3c2fa4f58b2e"
+    },
+    {
+      "path": "src/air/physics/box3d/hull-geometry.ts",
+      "bytes": 10112,
+      "sha256": "f02b31452a8f5d99357d47a673ad5e56e1d05e90b6300d75c20873ddf4ae848e"
+    },
+    {
+      "path": "src/air/physics/box3d/hull-shape.ts",
+      "bytes": 13108,
+      "sha256": "595b4c330f7c66b57820ebea7599c9c9692ebc386dbe6b25d948f1f0344c21a7"
+    },
+    {
+      "path": "src/air/physics/box3d/query.ts",
+      "bytes": 7400,
+      "sha256": "f7e53ccdd67abd86a2a50e93a6baaadf3bc24deaca265acb8ccaa8584955d3c6"
+    },
+    {
+      "path": "src/air/physics/box3d/shared-body.ts",
+      "bytes": 48786,
+      "sha256": "b912758e699bd6dfb9254eb4056f604eab3f9695bd75c83d6a338ab909bb82ee"
+    },
+    {
+      "path": "src/air/physics/box3d/world.ts",
+      "bytes": 52741,
+      "sha256": "446081ca41881529d97b20402a181e468e1eb66b324ec2e4d1f057bd2b864b96"
+    },
+    {
+      "path": "tools/verify/box3d/ex01-capsule-scene.test.cjs",
+      "bytes": 7827,
+      "sha256": "eb67700e094e4cb322694a6e129d430b9053b31b024d56bff372391977842a73"
+    },
+    {
+      "path": "tools/verify/box3d/ex01-hull-scene.test.cjs",
+      "bytes": 4491,
+      "sha256": "7449e0d3e2a04a4b7232ac4842042c0f506e8c78a6a8b0edd72d181ab482bc18"
+    }
+  ],
+  "scope": "LIMITED_BROWSER_OBSERVED for the source74 runtime209 candidate only: 100-brick settlement, one real tetrahedral Hull launch/impact/rest, pause and normal close. Not full EX01 or formal Gates; source75 metadata wrapper itself is not rerun.",
+  "observedWorktreeHead": "ce491b0d412b7d5dd6361db1c4caca25a95f1cd4",
+  "notIntegrated": [
+    "Hull picking/dragging and arbitrary compound COM handling",
+    "Multi-thread/auto configuration",
+    "Native debug drawing in EX01",
+    "Formal100 add/remove resource-restoration scene path",
+    "Public collider contact/trigger event delivery"
+  ],
+  "previousDraftSourceIdentitySha256": "06b2ccc08918a4742256d9238a3dd5f7cbb001dd60ad110e1e5f216787c25f5d",
+  "sourceIntegratedButUnverified": [
+    "Full original EX01 numerical and video acceptance",
+    "100-cycle resource proof and continuous penetration checks",
+    "All associated formal2128 cells and nine Gates"
+  ],
+  "nativeGeneration": {
+    "schemaSha256": "96c2e532652d1f1d76f62852b2b269cebe37e30ba4615f47c80b9ed92844ba63",
+    "producerCommit": "ce69f582115411a35f55680d29a9b2df0d15ef46",
+    "releaseBuildEvidenceLibrary": "libfile_3542ec08be6c8191a03541f6555ac89d",
+    "releaseArchiveBytes": 6082860,
+    "releaseArchiveSha256": "28eade1757034442ebe8bd1c646bbabd2e290ca0d276bff6055e9cf6ac0c54a0",
+    "artifactManifestSha256": "b3bfe615326b168744b37e06cdc0792e237a5d84e45eed8973a6bea8f4dd5174",
+    "wasmSha256": "75cf5c280426cd25f3184646c7b43d473ff52b26990067894dd10e147891d048",
+    "facadeSha256": "1d910108b5a7570250bed070bf3529fbf2153346e7cbc8dd0f7cb54faca95ef4",
+    "patchChainSha256": "4c9d057fe6d7403f6f2c7672c4a7abe38041d845942540a6b5c5abbc6f4bc45c",
+    "qualification": "Finite real native/WASM Release contracts, full artifact gate and source73 actual Cocos component cases; LIMITED_BROWSER_OBSERVED source74. Not formal qualification.",
+    "browserExecuted": true,
+    "browserByteIdentityBoundary": "Exact served candidate and native artifact hashes are preserved. Browser export identifies actual Box3D runtime209 and fetched JS, not an independent hash of already-instantiated WASM memory."
+  },
+  "currentRuntimeCandidate": {
+    "producerCommit": "7aa47f04f70ebbfc9811ab969742ffb60e45076a",
+    "producerTree": "a7f7a45a92596b054d1cf2c12c79095728aa156c",
+    "buildNumber": 209,
+    "moduleBytes": 9200216,
+    "moduleSha256": "5c742107861a815688cff3f0953e8e81b714cc0a54dc450e76a5ac6d2046e4a7",
+    "libraryFileId": "libfile_19da37c08e508191a59f78fc09f7b8c9",
+    "archiveBytes": 9146017,
+    "archiveSha256": "df56c8fd483943dec742eded76c8ff19e9294d91ec277aea97f893e4b367f634",
+    "status": "LIMITED_BROWSER_OBSERVED_NORMAL_PRODUCTION_ESM_DTS"
+  },
+  "browserObservation": {
+    "status": "LIMITED_BROWSER_OBSERVED",
+    "observedSourceCommit": "ce491b0d412b7d5dd6361db1c4caca25a95f1cd4",
+    "browser": "Cloud Firefox 158.0.1 WebGL2",
+    "origin": "http://127.0.0.1:8769",
+    "freshOriginOperatorObservation": true,
+    "runtimeBuildNumber": 209,
+    "rawLibraryFileId": "libfile_2a713730dab48191b42f88f056483520",
+    "rawArchiveBytes": 160370,
+    "rawArchiveSha256": "0cbc28ad7b1f137ae388bc5a2e2efa0ade6d22dc722464c4cc30074172b7612d",
+    "actions": [
+      "start",
+      "wall settlement",
+      "one Hull launch",
+      "impact and rest",
+      "pause",
+      "normal close"
+    ],
+    "samplesUnique": 1056,
+    "minimumObservedGeometryY": -0.0093,
+    "samplesBelowMinus015": 0,
+    "errorsReported": 0,
+    "closeStatus": "released",
+    "retained": [
+      "runtime",
+      "scheduler",
+      "builtin-resources",
+      "shared-asset-caches"
+    ],
+    "notEstablished": [
+      "Hull dragging",
+      "continuous no-penetration",
+      "100-cycle zero-leak result",
+      "full browser console capture",
+      "formal video",
+      "formal2128/nine Gates"
+    ],
+    "identityCorrection": "Original source74 sourceIdentity mistakenly retained pre-Hull native generation and runtime208 metadata. Its original JSON/static bytes remain unmodified in the archived raw and preview74. This new metadata points to the actual runtime209 candidate; it does not rewrite history."
+  }
+}

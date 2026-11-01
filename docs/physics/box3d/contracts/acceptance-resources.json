@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "contractVersion": "box3d-acceptance-resource-plan-1",
+  "status": "RESOURCE_PLAN_NOT_ACCEPTANCE",
+  "createdAt": "2026-10-22T05:42:24.178734+00:00",
+  "basis": "Original v1.2 sections 9.3, WASM-13, BIZ07 and performance profiles",
+  "coordination": {
+    "engineering": "Integrator may implement code and available automated fixtures independently",
+    "deviceAndParticipantAssignment": "User or explicitly designated coordinator; no person is invented or scheduled by this file",
+    "notAnAccessOrDeploymentGrant": true
+  },
+  "resources": [
+    {
+      "id": "HOST-NODE",
+      "category": "actual Node execution host",
+      "required": true,
+      "assignment": "CURRENT_EXECUTOR",
+      "access": "local cloud execution",
+      "status": "AVAILABLE",
+      "observedRuntime": {
+        "node": "24.19.0",
+        "v8": "13.6.233.17-node.51",
+        "platform": "linux",
+        "arch": "x64"
+      },
+      "observedAt": "2026-10-22T05:42:24.178734+00:00",
+      "acceptanceScope": "Actual Node WASM only, not browser or device substitution",
+      "recoveryCondition": "Recheck exact runtime fingerprint after any environment replacement"
+    },
+    {
+      "id": "HOST-CHROME",
+      "category": "desktop Chrome with real served non-isolated and strict-CSP pages",
+      "required": true,
+      "assignment": "UNASSIGNED",
+      "access": "NOT_ARRANGED",
+      "availability": "NOT_SCHEDULED",
+      "status": "BLOCKED",
+      "reason": "Current exec Chromium launch reports socket EPERM; cloud CDP browser is a different host and cannot reach exec localhost. No website deployment is authorized.",
+      "recoveryCondition": "Provide an authorized reachable test origin/collector on an actual Chrome host without bypassing restrictions."
+    },
+    {
+      "id": "DESKTOP-FIREFOX",
+      "category": "actual desktop Firefox",
+      "required": true,
+      "assignment": "UNASSIGNED",
+      "access": "NOT_ARRANGED",
+      "availability": "NOT_SCHEDULED",
+      "status": "BLOCKED",
+      "reason": "No verified target instance, browser version or collector is assigned.",
+      "recoveryCondition": "Assign a real target machine/browser fingerprint and supported collector."
+    },
+    {
+      "id": "DESKTOP-SAFARI",
+      "category": "actual desktop Safari on macOS",
+      "required": true,
+      "assignment": "UNASSIGNED",
+      "access": "NOT_ARRANGED",
+      "availability": "NOT_SCHEDULED",
+      "status": "BLOCKED",
+      "reason": "No verified real Safari host/version/collector is assigned. Playwright WebKit is not a substitute.",
+      "recoveryCondition": "Assign a supported real macOS Safari host and collector."
+    },
+    {
+      "id": "ANDROID-WEBVIEW",
+      "category": "actual Android device with target WebView",
+      "required": true,
+      "assignment": "UNASSIGNED",
+      "access": "NOT_ARRANGED",
+      "availability": "NOT_SCHEDULED",
+      "status": "BLOCKED",
+      "reason": "Exact device model, OS/WebView, access, recording and tester are not assigned. Desktop/mobile emulation cannot satisfy this item.",
+      "recoveryCondition": "Record device/OS/WebView fingerprint, approved access, tester and availability."
+    },
+    {
+      "id": "IOS-SAFARI",
+      "category": "actual iPhone or iPad with Safari",
+      "required": true,
+      "assignment": "UNASSIGNED",
+      "access": "NOT_ARRANGED",
+      "availability": "NOT_SCHEDULED",
+      "status": "BLOCKED",
+      "reason": "Exact device model, iOS/Safari, touch/recording access and tester are not assigned. WebKit simulation cannot satisfy this item.",
+      "recoveryCondition": "Record actual device/iOS/Safari fingerprint, approved access, tester and availability."
+    },
+    {
+      "id": "BIZ07-FIRST-TIME-USERS",
+      "category": "three people not involved in implementation",
+      "required": true,
+      "assignment": "UNASSIGNED",
+      "access": "NOT_ARRANGED",
+      "availability": "NOT_SCHEDULED",
+      "status": "BLOCKED",
+      "reason": "Participants, coordinator and observation time are not assigned. An agent cannot substitute for a participant.",
+      "recoveryCondition": "Arrange three first-time participants, use the frozen instructions and preserve actual observations; at least two complete the first order unaided within 90 seconds."
+    }
+  ],
+  "requiredEnvironmentIds": [
+    "HOST-NODE",
+    "HOST-CHROME",
+    "DESKTOP-FIREFOX",
+    "DESKTOP-SAFARI",
+    "ANDROID-WEBVIEW",
+    "IOS-SAFARI"
+  ],
+  "requiredParticipantResource": "BIZ07-FIRST-TIME-USERS",
+  "fullInventoryStillUnfrozen": true,
+  "gateEffect": "Resource roles and recovery conditions can support M0 planning; unavailable resources remain in required denominators. This file does not complete G0/G1/G5/G7/G8."
+}

@@ -1,0 +1,80 @@
+{
+  "collision": {
+    "originFiles": [
+      {
+        "path": "tools/verify/box3d/public-collision-esm/consumer.mjs",
+        "sha256": "2d12eb2f91a229a9167c9958b75c583b1efe86c220ad601ebae7f02bdf2c9b38"
+      }
+    ],
+    "revision": "3ed853c403f8bd8c914360b5c94709396c2b1208",
+    "changes": [
+      "Input helper points to shared cohort verifier",
+      "Raw records cohort identity and case family",
+      "Collision build assertion label no longer names historical211"
+    ]
+  },
+  "fixed": {
+    "originFiles": [
+      {
+        "path": "tools/verify/box3d/public-fixed-joint/consumer.mjs",
+        "sha256": "df67cc1f3a88f1fc41783cd12d210d215c92394263b6bf1fcec0872e2e1af0c7"
+      }
+    ],
+    "revision": "3ed853c403f8bd8c914360b5c94709396c2b1208",
+    "changes": [
+      "Input helper points to shared cohort verifier",
+      "Raw records cohort identity and case family",
+      "Original physical oracles and thresholds retained"
+    ]
+  },
+  "hinge": {
+    "originFiles": [
+      {
+        "path": "tools/verify/box3d/public-hinge-joint/consumer.mjs",
+        "sha256": "ddbdd805cd41c0a4222ae0df55dddbf13eb30ed2940af2bcda87c191bc20a59e"
+      },
+      {
+        "path": "tools/verify/box3d/public-hinge-joint/thresholds.mjs",
+        "sha256": "e0f7c2ac0d170ca31a1ef3cd785103b7e1d09035553571ff3170ec106613cf38"
+      }
+    ],
+    "revision": "3ed853c403f8bd8c914360b5c94709396c2b1208",
+    "changes": [
+      "Input helper points to shared cohort verifier",
+      "Raw records cohort identity and case family",
+      "Original physical oracles and thresholds retained"
+    ]
+  },
+  "p2p": {
+    "originFiles": [
+      {
+        "path": "tools/verify/box3d/public-point-to-point/consumer.mjs",
+        "sha256": "cf08cbb18ae0658214c38139d5a9eb00c88c8e1742f969f26374a547e48e46e3"
+      },
+      {
+        "path": "tools/verify/box3d/public-point-to-point/thresholds.mjs",
+        "sha256": "10ad496954380bff8659bcd8e18496e56769f84436e3e65b56902954d4b0c576"
+      }
+    ],
+    "revision": "3ed853c403f8bd8c914360b5c94709396c2b1208",
+    "changes": [
+      "Input helper points to shared cohort verifier",
+      "Raw records cohort identity and case family",
+      "Original physical oracles and thresholds retained"
+    ]
+  },
+  "contact": {
+    "originFiles": [
+      {
+        "path": "tools/verify/box3d/contact-family-qualification/public-consumer.mjs",
+        "sha256": "d870095fb8c880a9e30f5b9a05792ed80edfa65477920b91111aee1403cd7761"
+      }
+    ],
+    "revision": "3ed853c403f8bd8c914360b5c94709396c2b1208",
+    "changes": [
+      "Input helper points to shared cohort verifier",
+      "Raw records cohort identity and case family",
+      "Original physical oracles and thresholds retained"
+    ]
+  }
+}

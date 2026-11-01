@@ -22,7 +22,10 @@
  THE SOFTWARE.
 */
 
-import { validateTransformValues } from './node-transform-validation';
+import { requestDeferredDestroy } from './deferred-destroy-control';
+import { assertMutationAllowed, assertMutationBatchAllowed } from '../core/data/mutation-guard';
+import { installComponentActivityNodeSource } from './component-activity-control';
+import { validateTransformValues, assertNodeTransformEntry, assertNodeTransformWrite } from './node-transform-validation';
 import { ccclass, editable, serializable, type } from 'cc.decorator';
 import { DEV, DEBUG, EDITOR, EDITOR_NOT_IN_PREVIEW, USE_UI_SKEW, NODEJS } from 'internal:constants';
 import { Layers } from './layers';
@@ -194,6 +197,7 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
         return this._active;
     }
     set active (isActive: boolean) {
+        assertMutationAllowed(this, 'Node.active');
         isActive = !!isActive;
 
         if (this._active !== isActive) {
@@ -481,6 +485,7 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
      * @mangle
      */
     public modifyParent (parent: this | null): void {
+        assertNodeTransformEntry(this, 'modifyParent');
         this._parent = parent;
     }
 
@@ -491,6 +496,7 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
      * @param keepWorldTransform Whether keep node's current world transform unchanged after this operation
      */
     public setParent (value: Node | null, keepWorldTransform = false): void {
+        assertNodeTransformEntry(this, 'setParent');
         if (keepWorldTransform) { this.updateWorldTransform(); }
 
         if (this._parent === value) {
@@ -817,6 +823,10 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
     public removeAllChildren (): void {
         // not using detachChild improves speed here
         const children = this._children;
+        // Check the whole detach batch before removing any unprotected sibling.
+        for (const child of children) {
+            if (child) assertNodeTransformEntry(child, 'setParent');
+        }
         for (let i = children.length - 1; i >= 0; i--) {
             const node = children[i];
             if (node) {
@@ -1061,6 +1071,7 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
     public addComponent<T extends Component>(className: string): T;
 
     public addComponent<T extends Component> (typeOrClassName: string | Constructor<T>): T {
+        assertMutationAllowed(Node.prototype, 'Node.addComponent');
         if (EDITOR && (this._objFlags & Destroying)) {
             throw Error('isDestroying');
         }
@@ -1366,6 +1377,9 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
     }
 
     public destroy (): boolean {
+        const deferred = requestDeferredDestroy(this, 'Node.destroy', (this._objFlags & (CCObjectFlags.Destroyed | CCObjectFlags.ToDestroy)) !== 0);
+        if (deferred !== undefined) return deferred;
+        assertMutationAllowed(this, 'Node.destroy');
         if (super.destroy()) {
             this.active = false;
             return true;
@@ -1383,7 +1397,9 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
      * 实际销毁操作会延迟到当前帧渲染前执行。
      */
     public destroyAllChildren (): void {
+        assertMutationAllowed(this, 'Node.destroyAllChildren');
         const children = this._children;
+        assertMutationBatchAllowed(children, 'Node.destroyAllChildren');
         for (let i = 0; i < children.length; ++i) {
             children[i].destroy();
         }
@@ -1653,6 +1669,7 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
     constructor (name?: string) {
         if (name === undefined) name = 'New Node';
         super(name);
+        installComponentActivityNodeSource(this, () => this._activeInHierarchy);
 
         this._pos = new Vec3();
         this._rot = new Quat();
@@ -1838,6 +1855,7 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
     }
 
     set angle (val: number) {
+        assertNodeTransformEntry(this, 'angle');
         Vec3.set(this._euler, 0, 0, val);
         Quat.fromAngleZ(this._lrot, val);
         this._eulerDirty = false;
@@ -1894,6 +1912,7 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
      * @zh 本地坐标系变换矩阵
      */
     public set matrix (val: Readonly<Mat4>) {
+        assertNodeTransformEntry(this, 'matrix');
         Mat4.toSRT(val, this._lrot, this._lpos, this._lscale);
         this.invalidateChildren(TransformBit.TRS);
         this._eulerDirty = true;
@@ -2205,6 +2224,7 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
      * @param ns The operation coordinate space
      */
     public translate (trans: Vec3, ns?: NodeSpace): void {
+        assertNodeTransformEntry(this, 'translate');
         const space = ns || NodeSpace.LOCAL;
         if (space === NodeSpace.LOCAL) {
             Vec3.transformQuat(v3_a, trans, this._lrot);
@@ -2238,6 +2258,7 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
      * @param ns The operation coordinate space
      */
     public rotate (rot: Quat, ns?: NodeSpace): void {
+        assertNodeTransformEntry(this, 'rotate');
         const space = ns || NodeSpace.LOCAL;
         Quat.normalize(q_a, rot);
 
@@ -2264,6 +2285,7 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
      * @param up Up direction
      */
     public lookAt (pos: Readonly<Vec3>, up?: Readonly<Vec3>): void {
+        assertNodeTransformEntry(this, 'lookAt');
         this.getWorldPosition(v3_a);
         Vec3.subtract(v3_a, v3_a, pos);
         Vec3.normalize(v3_a, v3_a);
@@ -2421,6 +2443,7 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
     public setPosition(x: number, y: number, z?: number): void;
 
     public setPosition (val: Readonly<Vec3> | number, y?: number, z?: number): void {
+        assertNodeTransformEntry(this, 'setPosition');
         validateTransformValues('setPosition', y === undefined ? [(val as Vec3)?.x, (val as Vec3)?.y, (val as Vec3)?.z] : [val, y, z === undefined ? this._lpos.z : z], this.uuid);
         const localPosition = this._lpos;
 
@@ -2473,6 +2496,7 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
     public setRotation(x: number, y: number, z: number, w: number): void;
 
     public setRotation (val: Readonly<Quat> | number, y?: number, z?: number, w?: number): void {
+        assertNodeTransformEntry(this, 'setRotation');
         validateTransformValues('setRotation', y === undefined ? [(val as Quat)?.x, (val as Quat)?.y, (val as Quat)?.z, (val as Quat)?.w] : [val, y, z, w], this.uuid);
         if (y === undefined) {
             Quat.copy(this._lrot, val as Quat);
@@ -2504,6 +2528,7 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
     public setRotationFromEuler(x: number, y: number, zOpt?: number): void;
 
     public setRotationFromEuler (val: Vec3 | number, y?: number, zOpt?: number): void {
+        assertNodeTransformEntry(this, 'setRotationFromEuler');
         validateTransformValues('setRotationFromEuler', y === undefined ? [(val as Vec3)?.x, (val as Vec3)?.y, (val as Vec3)?.z] : [val, y, zOpt === undefined ? this._euler.z : zOpt], this.uuid);
         if (y === undefined) {
             Vec3.copy(this._euler, val as Vec3);
@@ -2552,6 +2577,7 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
     public setScale(x: number, y: number, z?: number): void;
 
     public setScale (val: Readonly<Vec3> | number, y?: number, z?: number): void {
+        assertNodeTransformEntry(this, 'setScale');
         validateTransformValues('setScale', y === undefined ? [(val as Vec3)?.x, (val as Vec3)?.y, (val as Vec3)?.z] : [val, y, z === undefined ? this._lscale.z : z], this.uuid);
         const localScale = this._lscale;
 
@@ -2624,6 +2650,11 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
     public setWorldPosition(x: number, y: number, z?: number): void;
 
     public setWorldPosition (val: Vec3 | number, y?: number, z?: number): void {
+        const ownedValues = assertNodeTransformEntry(this, 'setWorldPosition', () => y === undefined ? [(val as Vec3)?.x, (val as Vec3)?.y, (val as Vec3)?.z] : [val, y, z]);
+        if (ownedValues) {
+            assertNodeTransformWrite(this, 'setWorldPosition', ownedValues);
+            val = ownedValues[0]; y = ownedValues[1]; z = ownedValues[2];
+        }
         validateTransformValues('setWorldPosition', y === undefined ? [(val as Vec3)?.x, (val as Vec3)?.y, (val as Vec3)?.z] : [val, y, z === undefined ? this.worldPosition.z : z], this.uuid);
         const worldPosition = this._pos;
 
@@ -2689,6 +2720,11 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
     public setWorldRotation(x: number, y: number, z: number, w: number): void;
 
     public setWorldRotation (val: Quat | number, y?: number, z?: number, w?: number): void {
+        const ownedValues = assertNodeTransformEntry(this, 'setWorldRotation', () => y === undefined ? [(val as Quat)?.x, (val as Quat)?.y, (val as Quat)?.z, (val as Quat)?.w] : [val, y, z, w]);
+        if (ownedValues) {
+            assertNodeTransformWrite(this, 'setWorldRotation', ownedValues);
+            val = ownedValues[0]; y = ownedValues[1]; z = ownedValues[2]; w = ownedValues[3];
+        }
         validateTransformValues('setWorldRotation', y === undefined ? [(val as Quat)?.x, (val as Quat)?.y, (val as Quat)?.z, (val as Quat)?.w] : [val, y, z, w], this.uuid);
         const worldRotation = this._rot;
         if (y === undefined) {
@@ -2754,6 +2790,7 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
     public setWorldScale(x: number, y: number, z: number): void;
 
     public setWorldScale (val: Vec3 | number, y?: number, z?: number): void {
+        assertNodeTransformEntry(this, 'setWorldScale');
         validateTransformValues('setWorldScale', y === undefined ? [(val as Vec3)?.x, (val as Vec3)?.y, (val as Vec3)?.z] : [val, y, z === undefined ? this.worldScale.z : z], this.uuid);
         const self = this;
         const parent = self._parent;
@@ -2885,6 +2922,7 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
      * @param scale The scale
      */
     public setRTS (rot?: Quat | Vec3, pos?: Vec3, scale?: Vec3): void {
+        if (rot || pos || scale) assertNodeTransformEntry(this, 'setRTS');
         if (rot) validateTransformValues('setRTS.rotation', (rot as Quat).w === undefined ? [rot.x, rot.y, rot.z] : [rot.x, rot.y, rot.z, (rot as Quat).w], this.uuid);
         if (pos) validateTransformValues('setRTS.position', [pos.x, pos.y, pos.z], this.uuid);
         if (scale) validateTransformValues('setRTS.scale', [scale.x, scale.y, scale.z], this.uuid);
@@ -3008,6 +3046,7 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
      * @engineInternal
      */
     set isSkipTransformUpdate (skip: boolean) {
+        assertNodeTransformEntry(this, 'isSkipTransformUpdate');
         if (skip) {
             this._objFlags |= CCObjectFlags.IsSkipTransformUpdate;
         } else {

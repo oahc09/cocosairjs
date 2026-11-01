@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>Box3D · Compound Bowling</title>
+        <link rel="stylesheet" href="./style.css" />
+        <script type="importmap">
+            { "imports": { "cocosair": "./runtime/cocosair.module.js" } }
+        </script>
+    </head>
+    <body>
+        <header>
+            <span>BOX3D / EX02</span>
+            <h1>复合保龄球 · 原生 COM</h1>
+            <p>10 瓶，每瓶同 Node 的 box + sphere；真实 Box3D，无模拟回退。</p>
+        </header>
+        <main>
+            <section id="scene-host"><canvas id="GameCanvas"></canvas></section>
+            <aside>
+                <p>
+                    青色十字与小球：公开原生 worldCOM（仅视觉，无 collider）。平台使用 kinematic target
+                    横移与旋转，不逐帧 teleport。
+                </p>
+                <label
+                    >瓶质量
+                    <select id="mass">
+                        <option value="0.5">0.5 kg</option>
+                        <option value="1" selected>1 kg</option>
+                        <option value="2">2 kg</option>
+                    </select></label
+                >
+                <div class="buttons">
+                    <button id="start" disabled>开始 / 全新重置</button
+                    ><button id="mass-apply" disabled>应用瓶质量</button><button id="center" disabled>球中心冲量</button
+                    ><button id="offcenter" disabled>球偏心冲量</button><button id="reset" disabled>停止并释放</button
+                    ><button id="export">导出证据</button><button id="close" disabled>关闭</button>
+                </div>
+                <p class="boundary">
+                    球每局只能发射一次。中心与偏心请分局比较；偏心为世界 +X 0.2 m 的 COM
+                    相对偏移。倒伏判据：原生姿态的局部 +Y 与世界 +Y 夹角
+                    &gt;60°，本局累计、不回扣。地面接触也会产生旋转，结果不是隔离冲量证明。
+                </p>
+                <p id="status" role="status">初始化 · NOT_RUN</p>
+                <pre id="counts"></pre>
+                <details open>
+                    <summary>最近原生姿态 / COM</summary>
+                    <pre id="observation">NOT_RUN</pre>
+                </details>
+                <p>
+                    600 个固定步后停止观察；20 次重置泄漏、C04/C06–C12/C18、浏览器验收均 NOT_RUN。无 static baked
+                    compound 资格声明。
+                </p>
+            </aside>
+        </main>
+        <script type="module" src="./src/main.ts"></script>
+    </body>
+</html>

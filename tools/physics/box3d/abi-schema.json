@@ -1,0 +1,1544 @@
+{
+  "schemaVersion": 1,
+  "status": "EXPERIMENTAL_FOUNDATION_NOT_FULL_BINDING",
+  "coreSha": "efca0c184d40fd6a82016983f1601c4d23965867",
+  "abiVersion": 1,
+  "byteOrder": "little-endian",
+  "precision": "float32",
+  "worldId": "uint32 via b3StoreWorldId; never a pointer",
+  "bodyShapeId": "two uint32 words [low, high] via official b3Store/Load ID helpers; never JS Number packed",
+  "statuses": {
+    "0": "OK",
+    "1": "INVALID_ID",
+    "2": "INVALID_ARGUMENT",
+    "3": "NATIVE_CREATION_FAILED",
+    "4": "INSUFFICIENT_CAPACITY",
+    "5": "ALLOCATION_FAILED",
+    "6": "GEOMETRY_BASIS_UNAVAILABLE",
+    "7": "UNSUPPORTED_GEOMETRY_FAMILY",
+    "8": "UNSUPPORTED_WORLD_BRIDGE_CAPABILITY",
+    "9": "WORLD_LOCKED",
+    "10": "BODY_MASS_PENDING",
+    "11": "MOTION_LOCK_CONFLICT",
+    "12": "MOTION_SPEED_CAP",
+    "13": "MEMORY_DIAGNOSTIC_INCONSISTENT",
+    "14": "WORLD_NONEMPTY: read-only trim skip; no mutation",
+    "15": "IDENTITY_EXHAUSTED: no identity reuse; step may fault and only teardown is guaranteed",
+    "16": "TRIM_UNSAFE: empty-storage preflight refusal; no mutation"
+  },
+  "bodyInput": [
+    "position.xyz",
+    "rotation.xyzw",
+    "linearVelocity.xyz",
+    "angularVelocity.xyz",
+    "linearDamping",
+    "angularDamping",
+    "gravityScale"
+  ],
+  "bodyInputFloats": 16,
+  "bodySnapshot": [
+    "origin.xyz",
+    "rotation.xyzw",
+    "linearVelocity.xyz",
+    "angularVelocity.xyz",
+    "worldCenter.xyz",
+    "mass",
+    "localCenter.xyz",
+    "inertia.cx.xyz",
+    "inertia.cy.xyz",
+    "inertia.cz.xyz"
+  ],
+  "bodySnapshotFloats": 29,
+  "worldCountsUint32": ["bodyCount", "shapeCount", "contactCount", "jointCount", "byteCount.low", "byteCount.high"],
+  "rayInputFloats": ["origin.x", "origin.y", "origin.z", "translation.x", "translation.y", "translation.z"],
+  "rayOutputFloats": ["hit", "point.x", "point.y", "point.z", "normal.x", "normal.y", "normal.z", "fraction"],
+  "shapeIdWords": 2,
+  "lifetime": "All returned JS snapshots own copied data. No borrowed native view may cross a public call. Caller-owned scratch storage is allocated per facade; heap views are reacquired after every native call.",
+  "excluded": [
+    "proven same-epoch contact world/local reconstruction, full C21 and transient-sensor C22 acceptance",
+    "non-convex triangle mesh/compound cooking",
+    "Hinge/P2P/other joints; Fixed native bridge is candidate, not T17 acceptance",
+    "MT",
+    "replay",
+    "complete AIR adapter",
+    "release gate PASS"
+  ],
+  "bodyTransformBatch": {
+    "input": "count body IDs, two uint32 words each; every ID/world validated before any output write",
+    "outputFloatsPerBody": 10,
+    "output": ["origin.xyz", "rotation.xyzw", "worldCenter.xyz"]
+  },
+  "eventSnapshot": {
+    "unit": "32-bit words; float fields copied by memcpy, uint32 identity words unchanged",
+    "header": [
+      "bodyMoveCount",
+      "contactBeginCount",
+      "contactEndCount",
+      "contactHitCount",
+      "sensorBeginCount",
+      "sensorEndCount"
+    ],
+    "bodyMoveWords": 11,
+    "bodyMove": ["bodyId.low/high", "valid:u32", "fellAsleep:u32", "origin.xyz:f32", "rotation.xyzw:f32"],
+    "contactBeginEndWords": 8,
+    "contactBeginEnd": [
+      "shapeA.low/high",
+      "shapeB.low/high",
+      "contactId.index1/world0/generation",
+      "validFlags:shapeA=1,shapeB=2,contact=4"
+    ],
+    "contactHitWords": 19,
+    "contactHit": [
+      "contactBeginEnd[8]",
+      "nativeHitPoint.xyz:f32",
+      "normalAtoB.xyz:f32",
+      "approachSpeed:f32",
+      "userMaterialA.low/high",
+      "userMaterialB.low/high"
+    ],
+    "sensorWords": 5,
+    "sensor": ["sensor.low/high", "visitor.low/high", "validFlags:sensor=1,visitor=2"],
+    "lifetime": "C17 call copies current native arrays; facade step copies immediately before returning. Frozen JS snapshot repeats without consuming events and never borrows HEAP views. End IDs may already be invalid."
+  },
+  "contactSnapshot": {
+    "header": "contact count:u32",
+    "contactHeaderWords": 34,
+    "contactHeader": [
+      "contactId[3]",
+      "shapeA[2]",
+      "shapeB[2]",
+      "bodyA[2]",
+      "bodyB[2]",
+      "manifoldCount:u32",
+      "awakeA:u32",
+      "awakeB:u32",
+      "postPoseA[10]:f32",
+      "postPoseB[10]:f32"
+    ],
+    "manifoldWords": 11,
+    "manifold": [
+      "pointCount:u32",
+      "normalAtoB.xyz:f32",
+      "twistImpulse:f32",
+      "frictionImpulse.xyz:f32",
+      "rollingImpulse.xyz:f32"
+    ],
+    "pointWords": 14,
+    "point": [
+      "anchorA.xyz:f32",
+      "anchorB.xyz:f32",
+      "separation:f32",
+      "normalImpulse:f32",
+      "totalNormalImpulse:f32",
+      "normalVelocity:f32",
+      "baseSeparation:f32",
+      "featureId:u32",
+      "triangleIndex:i32",
+      "persisted:u32"
+    ],
+    "collection": "Public b3Body_GetContactData touching contacts for facade-owned bodies, deduplicated by full contact ID; includes sleeping pairs, not just begin/hit events. Native contact/manifold pointers never escape a C call.",
+    "anchorEpoch": "UNRESOLVED_CACHED_NATIVE: pre/post poses are diagnostics, NOT an asserted anchor basis. Recycling retains earlier anchors while updating separation.",
+    "worldLocalPoints": "Explicit AIR_E_BOX3D_UNSUPPORTED_SNAPSHOT_EPOCH; native hit point is a separate raw event field, not general C21 worldPoint.",
+    "handleLifetime": "Opaque facade WeakMap capability scoped to world+successful step+mutation revision. Next step, successful mutation, disposal or foreign token rejects. Returned frozen data remains unchanged."
+  },
+  "additiveSnapshotScope": "Existing ABI-1 wire/signatures retained. New schema hash must match facade/runtime; old e schema is not accepted by this facade.",
+  "contactGeometry": {
+    "wireWords": 25,
+    "layout": [
+      "source:u32=1 CACHED_MANIFOLD_GENERATION",
+      "geometryRevision.low/high:u32",
+      "generatedAfterStep.low/high:u32",
+      "generationPoseA[10]:f32 origin.xyz/rotation.xyzw/COM.xyz",
+      "generationPoseB[10]:f32 origin.xyz/rotation.xyzw/COM.xyz"
+    ],
+    "epoch": "Actual b3UpdateContact completed generation, after flip/COM adjustment, before solve increments native stepIndex. Recycle/sleep/solve/CCD retain it. Not a current intersection or TOI point.",
+    "admittedFamilies": [
+      "sphere-sphere",
+      "sphere-hull",
+      "hull-hull",
+      "capsule-hull",
+      "capsule-capsule",
+      "sphere-capsule"
+    ],
+    "unqualifiedFamilies": [
+      "arbitrary convex hull feature qualification beyond public Box",
+      "mesh",
+      "baked compound",
+      "heightfield"
+    ],
+    "lifetime": "Read immediately into independent JS storage associated with the matching raw contact/full ID/world lifetime/step/mutation revision. Missing basis or unsupported family gives explicit error, never empty success.",
+    "solverObservations": "Raw separation/normalVelocity/impulses retain separate native sampling semantics; no same-epoch claim.",
+    "nativeSnapshotCompatibility": "b3Contact stride changes; native layoutHash incompatible with previous snapshots. No AIR replay claim.",
+    "revisionExhaustion": "When an additional generation would wrap UINT64_MAX, geometry is permanently unavailable for that contact lifetime; physics continues unchanged. Contact slot allocation zeroes all geometry storage and advances full contact ID generation.",
+    "publicDescriptorCandidates": [
+      "Sphere-Sphere",
+      "Sphere-Box",
+      "Box-Box",
+      "Capsule-Box",
+      "Capsule-Capsule, including one exact-zero segment represented by a native sphere",
+      "Sphere-Capsule"
+    ],
+    "qualificationBoundary": "Native AVAILABLE means copied cached-generation basis exists, not whole-family numerical qualification. Native hull includes arbitrary convex Hull, but public events only admit exact Box/Sphere/Capsule descriptors. Runtime compound is per-shape; baked compound excluded. Finite analytic and EX09 descriptor oracles are separate evidence; no formal T15/C21/Gate claim. Sphere-Capsule uses independent finite closest-segment generation cases; AVAILABLE alone is not whole-family/public callback qualification."
+  },
+  "geometryCounters": [
+    "awakeContactCount",
+    "recycledContactCount",
+    "distanceIterations",
+    "pushBackIterations",
+    "rootIterations"
+  ],
+  "worldBridge": {
+    "gravity": "copied float32 xyz; finite validation before native mutation",
+    "sleeping": "exact boolean; disabling calls real b3World_EnableSleeping and wakes sleeping solver sets",
+    "material": "exact-world shape token; finite nonnegative friction/restitution, both validated before writes; compound rejected",
+    "stepDiagnostics": {
+      "nativeStepIndex": "safe JS integer count of confirmed successful native step calls; distinct from core generationStep; exhaustion rejected before invocation",
+      "nativeCompleted": "last admitted native attempt returned success; prevalidation rejection preserves previous record",
+      "snapshotAvailable": "false after mutation or copy failure; native success increments index even when subsequent copy fails",
+      "dt": "must remain positive finite after float32 conversion; underflow to zero rejected before native attempt and preserves previous diagnostics"
+    },
+    "debug": {
+      "flags": {
+        "WIRE_FRAME": 1,
+        "CONSTRAINT": 2,
+        "AABB": 4
+      },
+      "supportedFlags": 5,
+      "unsupported": "CONSTRAINT and unknown bits fail before capture; unsupported shape callback returns error, never empty success",
+      "jointScale": "finite nonnegative float32 validated and echoed; no effect on available shape/AABB geometry, no joint qualification",
+      "primitiveWords": 8,
+      "header": ["primitiveCount"],
+      "primitive": ["kind:1 line,2 bounds", "uint32 color", "from/lower.xyz float32", "to/upper.xyz float32"],
+      "sphere": "three orthogonal 24-segment great-circle wireframes from copied native local sphere",
+      "hull": "One line per native half-edge twin pair; up to 256 half-edges / 128 full edges. Arbitrary cooked hull source integrated; execution qualification pending.",
+      "bounds": "real core fat broadphase AABB callback, not exact shape local extents",
+      "maximumPrimitives": 65536,
+      "ownership": "per-world copied local geometry handles owned until real core destroy callback; temporary capture buffer explicitly released in facade finally; no borrowed heap view or pointer escapes",
+      "drawingBounds": "finite float32 full range; no default +/-100 clipping",
+      "capsule": "Candidate: two 24-segment end rings, four cylinder generators and four 12-segment outward hemisphere arcs, 100 surface lines total; exact zero-segment shape uses native sphere callback."
+    },
+    "memory": [
+      "liveBytes.uint64 of bridge context/callback copies/capture capacity only",
+      "liveAllocations",
+      "shapeHandles",
+      "primitiveCapacity",
+      "capturedPrimitives"
+    ],
+    "memoryScope": "facade sums its owned worlds only; separate from core byteCount, JS objects and entire WASM heap capacity"
+  },
+  "bodyControls": {
+    "stateFloats": 49,
+    "stateLayout": [
+      "type",
+      "enabled",
+      "awake",
+      "sleeping",
+      "sleepy",
+      "sleepEnabled",
+      "ccd",
+      "sleepTime",
+      "sleepVelocity",
+      "sleepThreshold",
+      "linearDamping",
+      "angularDamping",
+      "gravityScale",
+      "linearVelocity.xyz",
+      "angularVelocity.xyz",
+      "force.xyz",
+      "torque.xyz",
+      "linearFactor.xyz",
+      "angularFactor.xyz",
+      "mass",
+      "localCenter.xyz",
+      "inertia.columns[9]",
+      "worldCenter.xyz",
+      "massPending",
+      "sensorMassFallback"
+    ],
+    "operations": {
+      "1": "type",
+      "2": "enabled",
+      "3": "damping linear/angular",
+      "4": "gravityScale",
+      "5": "sleepEnabled",
+      "6": "sleepThreshold",
+      "7": "awake",
+      "8": "bullet CCD",
+      "9": "six binary motion factors",
+      "10": "linearVelocity",
+      "11": "angularVelocity",
+      "12": "clear accumulated force/torque",
+      "13": "clear current velocities",
+      "14": "clear forces and velocities"
+    },
+    "applicationKinds": {
+      "0": "force",
+      "1": "linear impulse",
+      "2": "torque",
+      "3": "angular impulse"
+    },
+    "forceOffset": "relative to COM; local mode rotates vector and relative offset by body rotation; never body origin",
+    "ownership": "Exact facade world/body capabilities plus native full generation/world ID and unlocked validation. Copied deep-frozen 49-float state; existing 29-float bodySnapshot unchanged.",
+    "privateLayout": "Strict staged fixed-core body.h and physics_world.h. Actual sleepTime/sleepVelocity read; actual bodySim.force/torque clear. No persistent private pointer or added native allocation.",
+    "sleepy": "enabled awake nonstatic, world/body sleep enabled, actual sleepTime > 0; last-step observation, not speed inference; no <0.5 cutoff",
+    "mass": "Positive finite total mass. Relative solid geometry density weights; sensor-only fallback explicitly reported. No geometry pending until enabled dynamic step preflight rejects. Shape/type/lock operations restore requested mass.",
+    "massVelocityRule": "Geometry/mass changes preserve body origin, COM linear velocity and angular velocity, not momentum; locks zero locked components. Static/disabled transitions use native state semantics.",
+    "strictBoolean": "All new booleans and createBody.enableSleep reject numbers/strings/null before native mutation.",
+    "qualificationScope": "Finite box/sphere only; arbitrary hull, mesh/compound, replay, full CCD/T10/G1 not implied.",
+    "motionLocks": "Immediate world-axis velocity constraints: velocity setters and successful linear/angular impulses mask locked components before readback. Real force/torque accumulators remain pending until native solve. Legacy facade velocity/center-impulse methods route through these checks; C signatures unchanged.",
+    "boxMinimumHalfExtent": "Each half extent must be >= 0.2f * B3_LINEAR_SLOP (0.001m in this pinned core). Reject smaller values before core helper silently enlarges them; applies both legacy and additive box facade/native creation.",
+    "capsuleCreation": {
+      "status": "SOURCE_CANDIDATE_NOT_FORMALLY_QUALIFIED",
+      "operation": "air_b3_mass_shape_create kind=2; no new export; schema identity changes",
+      "inputFloats": ["center.x", "center.y", "center.z", "radius", "halfSegment", "direction", "density"],
+      "direction": "Exact 0/X, 1/Y or 2/Z",
+      "dimensions": "radius>0, halfSegment>=0; cylinderHeight=2*halfSegment, totalHeight=cylinderHeight+2*radius",
+      "zero": "Exact zero segment explicitly creates actual sphere geometry and sphere mass",
+      "shortPositive": "Actual float32 endpoint squared distance <= B3_LINEAR_SLOP squared returns UNSUPPORTED before creation. No clamping or sphere fallback for positive segment.",
+      "preflight": "Finite derived endpoints/mass/COM/inertia/transformed AABB/extents; requested-mass plan or native density-based added-first aggregation validated before native create.",
+      "replacement": "Old shape is retained until new candidate is successfully created. Native or JS post-create failure is not described as rollback.",
+      "scope": "Capsule creation/mass/motion/command and debug source support only; capsule contact snapshot, full EX01 family acceptance, browser and formal Gates remain unqualified.",
+      "decisionContract": {
+        "path": "tools/physics/box3d/capsule-bridge-contract.md",
+        "sha256": "e6bf95eae06a2e469890bdd14ff1db2133be115d339376eaca3942adb1d64193"
+      }
+    }
+  },
+  "shapeFilters": {
+    "resultWords": 2,
+    "resultLayout": ["uint32 group/categoryBits", "uint32 maskBits"],
+    "batchInput": "count consecutive low/high uint32 full shape IDs; maximum4096; output must not overlap input",
+    "batchOutput": "count consecutive 2-word native readbacks; all admission precedes mutation/output writes",
+    "emptyBatch": "world/filter admission, no mutation/snapshot invalidation",
+    "inputDomain": "signed32 or uint32 integer bitset; normalize >>>0 then zero-extend native uint64; groupIndex always0",
+    "managedShapeDefault": {
+      "group": 1,
+      "mask": 4294967295,
+      "groupIndex": 0
+    },
+    "unsupportedNativeRead": "nonzero upper32 category/mask or nonzero groupIndex fails without truncation",
+    "contactTiming": "invokeContacts=true; current snapshot invalidated only after success; real new contact/sensor observations on next step, retained snapshots immutable",
+    "ownership": "full-generation IDs, exact world, unlocked, whole batch validation, duplicates rejected, capacity checked; no persistent allocation or exposed pointer"
+  },
+  "mutationOutcome": {
+    "scope": "reviewed body controls/mass/force and legacy velocity/center impulse plus filter setters only plus motion apply/known validation rejection; pure validation unknown throw remains unannotated without snapshot invalidation",
+    "not-mutated": "known admission failure including native nonzero status before any mutation",
+    "committed": "native mutator returned0 including post-call readback failure; not a numerical-change claim",
+    "unknown": "missing property on native throw/trap or unreviewed path; reviewed native-call exceptions conservatively invalidate current snapshot without changing step count; never inferred from error code",
+    "descriptor": "optional readonly nonconfigurable enumerable property on Error"
+  },
+  "motionBatch": {
+    "decisionContract": {
+      "path": "docs/physics/box3d/contracts/motion-command-decisions-v1.md",
+      "sha256": "30951da3f296ac17acac9ff594c91ee96db62d5b3a3a1bdaf1ec0feb8f2f7a6a"
+    },
+    "inputWords": 18,
+    "maximumBodies": 4096,
+    "inputLayout": [
+      "body.low.uint32",
+      "body.high.uint32",
+      "flags.uint32: reset1 preserve2 wake4 scene8",
+      "intent.uint32: none0 target1 clear2",
+      "reset origin.xyz rotation.xyzw float32",
+      "target origin.xyz rotation.xyzw float32"
+    ],
+    "outputFloats": 61,
+    "outputLayout": [
+      "actual origin.xyz rotation.xyzw COM.xyz [10]",
+      "actual linear/angular velocity [6]",
+      "planned linear/angular velocity [6]",
+      "projected numeric-zero linear/angular lock residue [6]",
+      "linear/angular damping [2]",
+      "native maximum linear speed",
+      "native angular cap; 0 if fast rotation",
+      "allowFastRotation",
+      "type",
+      "enabled",
+      "awake",
+      "actual force.xyz torque.xyz localCenter.xyz [9]",
+      "before origin.xyz rotation.xyzw COM.xyz [10]",
+      "before linear/angular velocity [6]"
+    ],
+    "admission": "Exact facade capabilities plus native full-ID/world/lock checks, duplicate body rejection, exact input word count, output capacity/nonoverlap, normalized quaternion, finite derived COM/inertia/AABB/dt/velocity. All records planned before first mutation; apply revalidates independently of earlier validate. No pending command ownership in native.",
+    "reset": "teleport dynamic/kinematic including disabled; scene static only; preserveVelocity false and wake true defaults; disabled stays disabled and does not wake; forces/torques preserved",
+    "target": "Enabled kinematic only; approximate fixed-core target COM/quaternion-difference formula. Actual damping unchanged, no SetTransform correction. Nonzero admitted motion wakes below sleep threshold; stationary target/clear zero both velocities without unnecessary wake. Target uses post-reset origin/COM when same record has reset.",
+    "limits": {
+      "lockedComponentAbsoluteMax": 1e-6,
+      "capMarginFloatEpsilonMultiplier": 8,
+      "capMarginScale": "max(1,nativeCap)",
+      "speedAdmission": "nonzero velocity rejects magnitude >= cap-margin before damping and before lock residue projection; exactly zero velocity is admitted for any valid native positive cap, even cap < margin; angular cap omitted only for actual native allowFastRotation",
+      "substeps": "AIR integer 1, 2, 4 or 8; float32 dt/h/inv_dt/inv_h and 2*inv_dt finite, dt/h positive; this is a subset of legacy foundation.step positive-int32 admission"
+    },
+    "unusedPoseWords": "canonical uint32 zero; no NaN/negative-zero hidden in unused fields",
+    "emptyBatch": "world/dt/substeps validated, no mutation or snapshot invalidation",
+    "memory": "Native plans allocated/freed through per-world owned bridge scratch, including allocation header, and included in bridgeMemory during the call; all known exits free scratch. World destruction reclaims tracked orphan scratch if teardown remains possible after unknown failure; no universal cleanup claim for corrupted/locked core. Facade input/output temporary buffers freed in finally. No persistent plan/pointer. Allocator capacity need not shrink.",
+    "phases": "validate never invalidates snapshot or consumes intent, even on unknown validation status-delivery throw. Empty apply is likewise nonmutating. Nonempty apply status zero then copy/readback failure=committed; native throw/trap=unknown and invalidates current observation; known nonzero status=not-mutated. No rollback claim after unknown partial apply.",
+    "scope": "Internal foundation candidate only, not public target lifetime/queue/Node synchronization or completed T11."
+  },
+  "commandBatch": {
+    "status": "SOURCE_CONTRACT_NOT_RUNTIME_QUALIFIED",
+    "export": "_air_b3_command_batch",
+    "wireVersion": 1,
+    "wireContract": {
+      "path": "docs/physics/box3d/contracts/unified-command-wire-v1.md",
+      "sha256": "f88641a6e924ae3de4f4fe1d1cba20a1d8b82ac01bea28c221e1a6bf7d5079b9"
+    },
+    "decisionContract": {
+      "path": "docs/physics/box3d/contracts/unified-command-decisions-v1.md",
+      "sha256": "56303d162e12346729c66461c1fa9976e69c941fb549804c7a110d1887c695d6"
+    },
+    "inputMagic": 827147093,
+    "outputMagic": 827474773,
+    "headerWords": 12,
+    "bodyInputWords": 4,
+    "operationWords": 16,
+    "bodyResultWords": 160,
+    "operationResultWords": 80,
+    "maximumBodies": 4096,
+    "maximumOperations": 16384,
+    "maximumInputWords": 278540,
+    "maximumOutputWords": 1966092,
+    "inputHeader": [
+      "magic",
+      "version",
+      "totalWords",
+      "bodyCount",
+      "operationCount",
+      "bodyStride=4",
+      "operationStride=16",
+      "bodyOffset=12",
+      "operationOffset=12+4B",
+      "dt.f32",
+      "substeps.u32",
+      "reserved0"
+    ],
+    "bodyInput": ["id.low", "id.high", "managedRequestedMass.f32 or unmanaged0", "reserved0"],
+    "operationInput": ["bodyIndex", "opcode", "flags", "sequence.low", "sequence.high", "payload[11]"],
+    "opcodes": {
+      "1": "FORCE",
+      "2": "TORQUE",
+      "3": "LINEAR_IMPULSE",
+      "4": "ANGULAR_IMPULSE",
+      "5": "CLEAR_FORCES",
+      "6": "CLEAR_VELOCITY",
+      "7": "CLEAR_STATE",
+      "8": "RESET",
+      "9": "TARGET",
+      "10": "PAIRED_CLEAR"
+    },
+    "flags": {
+      "LOCAL": 1,
+      "PRESERVE_VELOCITY": 2,
+      "WAKE": 4,
+      "SCENE": 8,
+      "IDLE_ZERO": 16,
+      "CLEANUP_ZERO": 32
+    },
+    "bodyResult": {
+      "0:2": "full ID",
+      "2:3": "operationCount",
+      "3:4": "reserved",
+      "4:14": "actual before Pose10",
+      "14:63": "actual before State49",
+      "63:73": "planned final Pose10",
+      "73:85": "planned v,w,F,T",
+      "85:95": "actual final Pose10",
+      "95:144": "actual final State49",
+      "144:153": "planned world inverse inertia columns",
+      "153:157": "inverseMass,requestedMass,linearCap,angularCap",
+      "157:158": "fastRotation u32",
+      "158:160": "last sequence low/high"
+    },
+    "operationResult": {
+      "0:5": "body,opcode,flags,sequence lo/hi",
+      "5:6": "planned action bits",
+      "6:8": "reserved",
+      "8:18": "shadow pre Pose10",
+      "18:21": "world vector",
+      "21:24": "absolute point",
+      "24:27": "rounded point-COM",
+      "27:30": "angular effect",
+      "30:42": "planned post v,w,F,T",
+      "42:48": "linear/angular lock residue",
+      "48:60": "actual post v,w,F,T",
+      "60:62": "actual awake/enabled u32",
+      "62:64": "reserved",
+      "64:74": "actual post Pose10",
+      "74:80": "reserved"
+    },
+    "plannedActionBits": {
+      "linearClamp": 1,
+      "wakeRequest": 2,
+      "immediateImpulseMasks": 4,
+      "stationaryTarget": 8,
+      "reset": 16
+    },
+    "sequence": "User safe integer1..2^53-1 increasing in packet; flagged internal scene/idle/cleanup0; native does not de-duplicate packets",
+    "arithmetic": "Pure complete stream, strict fixed-core float helper order; no sorting/summing impulses. RESET updates shadow origin/COM/world inverse inertia, TARGET changes velocities only. Each operation has copied actual observations.",
+    "ownership": "Full world/generation plus facade capabilities; preallocated tracked native scratch; input/output no overlap; no pointer or persistent plan escapes. Wake may affect bodies outside table.",
+    "mutationPhase": "Only statuses1,2,4,5,8,9,10,11,12 from this export prove prewrite refusal. Nonempty apply0 means committed before copy; other status/throw unknown. Validate/empty delivery throws do not invalidate observations.",
+    "empty": "Valid header/dt/N, NULL/0 output; no invalidation or native step increment",
+    "legacy": "ABI1 and all earlier wire layouts unchanged; new schema required; patch chain unchanged"
+  },
+  "rayQuery": {
+    "status": "SOURCE_CONTRACT_NOT_RUNTIME_QUALIFIED",
+    "export": "_air_b3_ray_query",
+    "facade": "rayAllRaw",
+    "inputFloats": 6,
+    "inputLayout": ["origin.xyz", "translation.xyz"],
+    "hitWords": 11,
+    "hitLayout": [
+      "shape.low.u32",
+      "shape.high.u32",
+      "point.xyz.f32",
+      "normal.xyz.f32",
+      "fraction.f32",
+      "triangle.i32",
+      "child.i32"
+    ],
+    "call": "world, input, group.u32, mask.u32, queryTrigger.bool-int, outWords, capacityWords, countOut",
+    "collector": "b3World_CastRay generic callback; no clipping; sensors ignored before collection when queryTrigger=false; fraction in [0,1); zero fraction/normal retained",
+    "capacity": "NULL output and zero capacity sizes hits; copied output requires complete capacity. Count pass before writes, no native allocation, no persistent state. Invalid/capacity admission leaves output/count unchanged.",
+    "filter": "signed32 or unsigned32 facade bitsets normalized >>>0, zero-extended to native uint64; bilateral category/mask semantics",
+    "zero": "Zero float32 translation or zero group/mask returns empty without core cast; facade avoids native ABI call too",
+    "ownership": "Exact unlocked world, full-generation copied shape observations, not ownership tokens; copied immutable arrays, no linear-memory views",
+    "adapter": "Owns input normalization/maxDistance, logicalColliderID lookup, nearest-per-collider dedup and distance/logicalID sort; both all and closest use this same result stream",
+    "legacy": "Legacy rayClosest and ABI1 unchanged. New schema requires a new module; not compatible with N4 and not a promotion."
+  },
+  "hullCooking": {
+    "status": "NATIVE_SOURCE_INTEGRATED_NOT_RUNTIME_QUALIFIED",
+    "abiVersion": 1,
+    "newExport": "_air_b3_mass_hull_create",
+    "signature": [
+      "world.u32",
+      "bodyLo.u32",
+      "bodyHi.u32",
+      "positions.ptr",
+      "pointCount.i32",
+      "positionFloatCount.i32",
+      "density.f32",
+      "sensor.bool-int",
+      "requestedMass.f32",
+      "outId.ptr"
+    ],
+    "input": "Exactly 3*N finite float32 body-local XYZ positions. N>=4, checked N*3 and N*sizeof(b3Vec3). No raw count 128 cap. Convex envelope, not triangle mesh.",
+    "output": "Two uint32 full shape ID words; unchanged on all known prewrite refusals.",
+    "limits": {
+      "topology": {
+        "vertices": 128,
+        "faces": 128,
+        "fullEdges": 128,
+        "halfEdges": 256
+      },
+      "workspace": "Exact checked actual private sizeof arrays with align8, pointCount+4 int safety, each multiply/add/align and total<=INT_MAX accounting limit.",
+      "wasmCapacity": "Input bytes + align8(input bytes) + exact core work bytes + output 8 bytes <= emscripten_get_heap_max(); current heap ranges validated before reading. Necessary address-space condition, not free-memory promise.",
+      "hostCapacity": "Same checked formula with SIZE_MAX address limit and INT_MAX core-accounting/workspace cap.",
+      "allocations": "Bridge scratch malloc may return ALLOCATION before world mutation. Core final hull, world database clone/map and body/shape allocations retain assert/trap semantics; no all-OOM recovery claim."
+    },
+    "containment": "All points vs final builder planes before origin restoration using identical core b3PlaneSeparation and exact minOutside; equality accepted, next representable value above rejected. Then final restored planes checked against original copied points with same bound. No added epsilon.",
+    "statuses": {
+      "notMutated": [1, 2, 4, 5, 8, 9],
+      "committed": 0,
+      "notRollbackEvidence": [3, "unexpected status", "native trap"]
+    },
+    "memory": "Point scratch and exact workspace in one per-world tracked temporary allocation. Core cooked hull always destroyed on normal exit. No native hull pointer or borrowed buffer escapes; world clones/interns on success.",
+    "validation": {
+      "export": "_air_b3_hull_validate",
+      "signature": ["world.u32", "positions.ptr", "pointCount.i32", "positionFloatCount.i32"],
+      "behavior": "Same real cook, topology and all-input containment path as create; releases all temporary resources on ordinary return. Never creates a body or shape. World only supplies lock and tracked temporary ownership. Does not preflight body-specific mass/inertia aggregation.",
+      "success": "Status0 validates geometry only; no world/body mutation and no cached native hull survives.",
+      "capacity": "Uses the same creation scratch planner, including its 8-byte wire-result reservation, so disabled admission matches create capacity.",
+      "failure": "Known statuses1,2,4,5,8,9 are prewrite refusals. Unexpected status3/native trap is UNKNOWN and must fault the facade world; cleanup after trap is not promised."
+    }
+  },
+  "fixedJointBridge": {
+    "status": "UNQUALIFIED_FIXED_CANDIDATE",
+    "id": "two uint32 low/high via official b3Store/LoadJointId; exact world and both live body capabilities required",
+    "creation": "native weld captures current body-origin relative pose without writes; common frame orientation=current originA rotation; position=sole dynamic endpoint world COM, otherwise midpoint of both world COMs; local frames=inverse(current body origin)*common world frame",
+    "configuration": "collideConnected exact bool; breakForce finite nonnegative f32 N; breakTorque finite nonnegative f32 N*m; changing thresholds/collision does not recapture frames",
+    "stateWords": 30,
+    "state": [
+      "kind=1:u32",
+      "bodyA.low/high:u32",
+      "bodyB.low/high:u32",
+      "collideConnected:u32",
+      "frameA.position.xyz/rotation.xyzw:f32",
+      "frameB.position.xyz/rotation.xyzw:f32",
+      "breakForce/breakTorque:f32",
+      "constraintForce.xyz:f32",
+      "constraintTorque.xyz:f32",
+      "linearSeparation/angularSeparation:f32"
+    ],
+    "events": "separate copied count:u32 + count * [joint.low/high:u32, valid:u32]; facade copies immediately after step before callbacks/mutations; no native pointers or userdata",
+    "breakSemantics": "native reports threshold met/exceeded during solver bias substeps but never auto destroys; observation omits force/torque magnitude; adapter latches and safe-destroys explicitly",
+    "lifetime": "all reads copied; native events invalidated by next step/destruction. Body/world destruction invalidates joint capability. No pointer/generation truncation."
+  },
+  "hingeJointBridge": {
+    "status": "UNQUALIFIED_HINGE_CANDIDATE",
+    "geometryFloats": 9,
+    "geometry": [
+      "pivotA.xyz local scaled metres",
+      "pivotB.xyz local scaled metres",
+      "axisA.xyz finite nonzero; normalized internally"
+    ],
+    "autoPivotB": "bool: capture current world anchor of A in B instead of pivotB; Cocos null connectedBody uses this",
+    "configWords": 7,
+    "configuration": [
+      "collide:u32 bool",
+      "limit:u32 bool",
+      "lowerRadians:f32",
+      "upperRadians:f32",
+      "motor:u32 bool",
+      "motorSpeedRadians:f32 B-minus-A",
+      "maxMotorTorque:f32 N*m nonnegative"
+    ],
+    "stateWords": 36,
+    "state": [
+      "kind=2:u32",
+      "bodyA.low/high:u32",
+      "bodyB.low/high:u32",
+      "collide:u32",
+      "frameA.position.xyz/rotation.xyzw:f32",
+      "frameB.position.xyz/rotation.xyzw:f32",
+      "limit:u32",
+      "lower/upper:f32 radians",
+      "motor:u32",
+      "speed/maxTorque/angle/motorTorque:f32",
+      "constraintForce.xyz:f32",
+      "constraintTorque.xyz:f32",
+      "linearSeparation/axisAlignmentRadians:f32"
+    ],
+    "frames": "local +Z maps to normalized axisA. Initial world orientations equal establish zero. No body pose writes. Explicit geometry changes recreate at safe commit; config-only updates preserve frames. Spring remains disabled.",
+    "admission": "Exact counts, booleans, copied finite fields, nonzero axis, distinct valid full-generation endpoints in exact world. Raw bounds ordered and within +/-0.99f*B3_PI even when disabled, never silently clamped or sorted. All validation before first mutation; bad output capacity untouched.",
+    "publicConvention": "Derived documented Box3D coordinate decision: A-relative-B angle, degrees and degrees/second; native speed=-publicSpeed*pi/180, native bounds=[-publicUpper,-publicLower]*pi/180. Original C30 literal positive native target retained with clarification, not silently rewritten.",
+    "lifetime": "Copied state only, owned joint capability; generic joint destruction. Body/world destruction invalidates joint. No invented Cocos spring/break event.",
+    "reactionTorqueReadback": {
+      "revision": 2,
+      "coordinates": "world",
+      "actsOn": "body B; A receives opposite angular couple",
+      "units": "N.m",
+      "temporalScope": "Current retained solver impulse/basis cache times latest world inv_h. Configuration may clear terms; sleeping cache may be rescaled without a solve. Not a live load, historical frozen sample or outer-step average.",
+      "excludes": "linear constraint force lever-arm r cross F about body COM",
+      "implementation": "Read-only pinned b3RevoluteJoint final perpImpulse/perpAxisX/perpAxisY plus spring+motor+lower-upper impulse along rotationAxisZ, exactly once, times world.inv_h. Never call upstream b3GetRevoluteJointTorque.",
+      "guards": "Existing full joint/world generation/type and unlocked-world guards; fixed core source SHA and patch-chain audit; compiled field-size assertions; native fixture verifies unchanged solver/body bytes.",
+      "machineReadableSemantics": {
+        "quantity": "angular-constraint-couple",
+        "coordinates": "world",
+        "actsOn": "B",
+        "source": "current-solver-impulse-cache",
+        "timeBasis": "latest-world-inverse-substep",
+        "freshness": "not-tracked",
+        "usableForLoadOrBreak": false
+      }
+    }
+  },
+  "pointToPointJointBridge": {
+    "status": "UNQUALIFIED_POINT_TO_POINT_CANDIDATE",
+    "geometryFloats": 6,
+    "geometry": "pivotA.xyz, pivotB.xyz in body-origin admitted-scale local metres; finite float32",
+    "autoPivotB": "exact bool; capture current A world pivot in B instead of pivotB; no body pose writes",
+    "configuration": "collideConnected exact bool; collision-only configure does not recapture anchors",
+    "stateWords": 25,
+    "state": [
+      "kind=3:u32",
+      "bodyA.low/high:u32",
+      "bodyB.low/high:u32",
+      "collide:u32",
+      "frameA.position.xyz/rotation.xyzw:f32",
+      "frameB.position.xyz/rotation.xyzw:f32",
+      "spring/motor/coneLimit/twistLimit:u32 all false",
+      "linearSeparation:f32 metres"
+    ],
+    "angularFreedom": "Native spherical spring, motor, cone and twist limits disabled; native default positional softness retained. No reaction force/torque/angle diagnostic exposed.",
+    "lifetime": "Owned full-generation exact-world joint capability, copied state; generic destroy; joint-before-owned-static-anchor cleanup. Public explicit pivot setter with nullB recaptures current world anchor at next safe commit, including identical values; collision-only updates preserve capture."
+  },
+  "convexQueries": {
+    "status": "SOURCE_CONTRACT_NOT_RUNTIME_QUALIFIED",
+    "exports": ["_air_b3_shape_query", "_air_b3_overlap_query"],
+    "facade": ["shapeAllRaw", "overlapAllRaw", "readQueryEpoch"],
+    "pointCount": "1..128; reject overflow, never truncate",
+    "points": "copied world-oriented XYZ relative to supplied origin; convex hull plus nonnegative radius",
+    "castInput": "origin3 + translation3",
+    "overlapInput": "origin3",
+    "castHitWords": 11,
+    "overlapHitWords": 2,
+    "filter": "bilateral uint32 category/mask zero-extended to native64; trigger filtering continues traversal",
+    "capacity": "count-only then full capacity verified before output; no persistent allocation or implicit hit cap",
+    "ownership": "unlocked exact world; all four pointer regions aligned and nonoverlapping; complete full shape IDs copied, never ownership capabilities",
+    "zero": "zero cast translation avoids core and facade native call; overlap remains a separate query",
+    "initialOverlap": "native conservative overlap (including distance slop), not MTD or permission to move; inside cast fraction0 preserved",
+    "epoch": "facade committed stepIndex/mutationRevision copied; queries do not mutate them",
+    "public": "six primitive Cocos sweeps plus exact live before-step context copied whole-group queries; no mutation guard relaxation"
+  },
+  "staticMeshResource": {
+    "status": "NATIVE_HOST_CANDIDATE_NOT_PUBLIC_QUALIFIED",
+    "exports": [
+      "_air_b3_mesh_cook",
+      "_air_b3_mesh_retain",
+      "_air_b3_mesh_release",
+      "_air_b3_mesh_state",
+      "_air_b3_mesh_lifetime_counters",
+      "_air_b3_mesh_shape_create",
+      "_air_b3_mesh_face_read"
+    ],
+    "resourceToken": "two uint32 words monotonic within exact WASM binding; facade brands each separately owned cache lease",
+    "worldScope": "exact full world ID; no cross-world native data sharing",
+    "cook": "copied body-local float32 XYZ / int32 triangle list; CCW normalized once; no welding; SAH/adjacency; reject degenerate and duplicate oriented indices",
+    "lifetime": "cache leases and native shape borrows separately counted; free once after both zero; world destroys core shapes before freeing data",
+    "stateWords": ["cacheLeases", "nativeShapeBorrows", "vertexCount", "triangleCount", "coreMeshBytes", "fullWorldId"],
+    "lifetimeCounterWords": ["successfulCookLow", "successfulCookHigh", "completedDestroyLow", "completedDestroyHigh"],
+    "lifetimeCounterScope": "ST module cumulative uint64; b3CreateMesh nonnull returns and completed b3DestroyMesh calls including rollback; not allocator free counts; no reset/tombstone/pointer; separate liveBytes baseline required; exclusive fixture takes deltas",
+    "lifetimeCounterOverflow": "cook refuses CAPACITY before native creation at UINT64_MAX or sticky overflow; destroy always proceeds and sets sticky on overflow; snapshot returns CAPACITY without output write if sticky",
+    "sourceFace": "read cooked triangle index -> original flattened source ordinal; preserve existing query 11-word cooked index ABI",
+    "admission": "static only; nonstatic create or SetType rejected before native mutation; sensor/contact not qualified",
+    "copiedDebug": "actual cooked triangle edges; bounded debug allocation, no Hull substitution"
+  },
+  "memoryDiagnosticsV2": {
+    "profile": "air-box3d-memory-diagnostics-v2",
+    "version": 2,
+    "status": "SOURCE_CANDIDATE_NO_NATIVE_EXECUTION",
+    "export": "_air_b3_world_memory_diagnostics_v2",
+    "headerWords": 44,
+    "rowWords": 8,
+    "rowCount": 89,
+    "wireWords": 756,
+    "wireHeader": [
+      "version",
+      "wireWords",
+      "rowCount",
+      "worldId",
+      "stepIndex.low",
+      "stepIndex.high",
+      "worldLedgerBytes.low",
+      "worldLedgerBytes.high",
+      "bodies",
+      "shapes",
+      "contacts",
+      "joints",
+      "islands",
+      "maxStaticShapes",
+      "maxDynamicShapes",
+      "maxStaticBodies",
+      "maxDynamicBodies",
+      "maxContacts",
+      "workerCount",
+      "arenaPeakDemand",
+      "workerArenaBackingCapacity.low",
+      "workerArenaBackingCapacity.high",
+      "moduleCoreTrackedRequestedBytes.low",
+      "moduleCoreTrackedRequestedBytes.high",
+      "worldBridge.bytes.low",
+      "worldBridge.bytes.high",
+      "worldBridge.allocations",
+      "worldBridge.debugShapeHandles",
+      "worldBridge.primitiveCapacity",
+      "worldBridge.capturedPrimitives",
+      "globalBridge.bytes.low",
+      "globalBridge.bytes.high",
+      "globalBridge.allocations",
+      "globalBridge.debugShapeHandles",
+      "globalBridge.primitiveCapacity",
+      "globalBridge.capturedPrimitives",
+      "meshSuccessfulCooks.low",
+      "meshSuccessfulCooks.high",
+      "meshDestroys.low",
+      "meshDestroys.high",
+      "formulaComplete=1",
+      "reserved=0",
+      "reserved=0",
+      "reserved=0"
+    ],
+    "wireRow": [
+      "stableId",
+      "knownFlags:count=1,capacity=2",
+      "count.low",
+      "count.high",
+      "capacity.low",
+      "capacity.high",
+      "bytes.low",
+      "bytes.high"
+    ],
+    "rows": [
+      {
+        "id": 1,
+        "name": "idFreeList.body",
+        "countUnit": "free-ids",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "id-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 2,
+        "name": "idFreeList.solverSet",
+        "countUnit": "free-ids",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "id-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 3,
+        "name": "idFreeList.joint",
+        "countUnit": "free-ids",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "id-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 4,
+        "name": "idFreeList.contact",
+        "countUnit": "free-ids",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "id-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 5,
+        "name": "idFreeList.island",
+        "countUnit": "free-ids",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "id-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 6,
+        "name": "idFreeList.shape",
+        "countUnit": "free-ids",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "id-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 7,
+        "name": "worldArray.bodies",
+        "countUnit": "addressable-slots",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 8,
+        "name": "worldArray.solverSets",
+        "countUnit": "addressable-slots",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 9,
+        "name": "worldArray.joints",
+        "countUnit": "addressable-slots",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 10,
+        "name": "worldArray.contacts",
+        "countUnit": "addressable-slots",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 11,
+        "name": "worldArray.islands",
+        "countUnit": "addressable-slots",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 12,
+        "name": "worldArray.shapes",
+        "countUnit": "addressable-slots",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 13,
+        "name": "worldArray.sensors",
+        "countUnit": "addressable-slots",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 14,
+        "name": "islandLinks.bodies",
+        "countUnit": "elements",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "elements",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 15,
+        "name": "islandLinks.contacts",
+        "countUnit": "elements",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "elements",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 16,
+        "name": "islandLinks.joints",
+        "countUnit": "elements",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "elements",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 17,
+        "name": "sensorOwned.hits",
+        "countUnit": "visitors",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "visitor-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 18,
+        "name": "sensorOwned.overlaps1",
+        "countUnit": "visitors",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "visitor-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 19,
+        "name": "sensorOwned.overlaps2",
+        "countUnit": "visitors",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "visitor-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 20,
+        "name": "hulls.map",
+        "countUnit": "stored-hulls",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "buckets",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 21,
+        "name": "hulls.data",
+        "countUnit": "stored-hulls",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "bytes",
+        "capacityMeaning": "sum of owned hull byteCount, not spare capacity"
+      },
+      {
+        "id": 22,
+        "name": "tree.static.inlineStruct",
+        "countUnit": "structs",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "structs",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 23,
+        "name": "tree.static.nodes",
+        "countUnit": "addressable-node-slots",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 24,
+        "name": "tree.static.parents",
+        "countUnit": "addressable-node-slots",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 25,
+        "name": "tree.static.proxies",
+        "countUnit": "proxies",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "proxy-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 26,
+        "name": "tree.static.swapNodes",
+        "countUnit": "unavailable",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 27,
+        "name": "tree.static.leafIndices",
+        "countUnit": "unavailable",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 28,
+        "name": "tree.static.leafNodes",
+        "countUnit": "unavailable",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 29,
+        "name": "tree.static.leafBoxes",
+        "countUnit": "unavailable",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "Shared rebuildCapacity ledger estimate; backing is unallocated in pinned B3_TREE_HEURISTIC=0"
+      },
+      {
+        "id": 30,
+        "name": "tree.static.leafCenters",
+        "countUnit": "unavailable",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 31,
+        "name": "tree.static.binIndices",
+        "countUnit": "unavailable",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "Shared rebuildCapacity ledger estimate; backing is unallocated in pinned B3_TREE_HEURISTIC=0"
+      },
+      {
+        "id": 32,
+        "name": "tree.kinematic.inlineStruct",
+        "countUnit": "structs",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "structs",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 33,
+        "name": "tree.kinematic.nodes",
+        "countUnit": "addressable-node-slots",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 34,
+        "name": "tree.kinematic.parents",
+        "countUnit": "addressable-node-slots",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 35,
+        "name": "tree.kinematic.proxies",
+        "countUnit": "proxies",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "proxy-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 36,
+        "name": "tree.kinematic.swapNodes",
+        "countUnit": "unavailable",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 37,
+        "name": "tree.kinematic.leafIndices",
+        "countUnit": "unavailable",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 38,
+        "name": "tree.kinematic.leafNodes",
+        "countUnit": "unavailable",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 39,
+        "name": "tree.kinematic.leafBoxes",
+        "countUnit": "unavailable",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "Shared rebuildCapacity ledger estimate; backing is unallocated in pinned B3_TREE_HEURISTIC=0"
+      },
+      {
+        "id": 40,
+        "name": "tree.kinematic.leafCenters",
+        "countUnit": "unavailable",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 41,
+        "name": "tree.kinematic.binIndices",
+        "countUnit": "unavailable",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "Shared rebuildCapacity ledger estimate; backing is unallocated in pinned B3_TREE_HEURISTIC=0"
+      },
+      {
+        "id": 42,
+        "name": "tree.dynamic.inlineStruct",
+        "countUnit": "structs",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "structs",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 43,
+        "name": "tree.dynamic.nodes",
+        "countUnit": "addressable-node-slots",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 44,
+        "name": "tree.dynamic.parents",
+        "countUnit": "addressable-node-slots",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 45,
+        "name": "tree.dynamic.proxies",
+        "countUnit": "proxies",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "proxy-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 46,
+        "name": "tree.dynamic.swapNodes",
+        "countUnit": "unavailable",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 47,
+        "name": "tree.dynamic.leafIndices",
+        "countUnit": "unavailable",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 48,
+        "name": "tree.dynamic.leafNodes",
+        "countUnit": "unavailable",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 49,
+        "name": "tree.dynamic.leafBoxes",
+        "countUnit": "unavailable",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "Shared rebuildCapacity ledger estimate; backing is unallocated in pinned B3_TREE_HEURISTIC=0"
+      },
+      {
+        "id": 50,
+        "name": "tree.dynamic.leafCenters",
+        "countUnit": "unavailable",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 51,
+        "name": "tree.dynamic.binIndices",
+        "countUnit": "unavailable",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "Shared rebuildCapacity ledger estimate; backing is unallocated in pinned B3_TREE_HEURISTIC=0"
+      },
+      {
+        "id": 52,
+        "name": "broadPhase.pairSet",
+        "countUnit": "pairs",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "hash-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 53,
+        "name": "manifold.allocatorArray",
+        "countUnit": "allocators",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "allocator-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 54,
+        "name": "manifold.blockDirectory",
+        "countUnit": "blocks",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "block-descriptor-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 55,
+        "name": "manifold.blockStorage",
+        "countUnit": "allocated-elements",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "bytes",
+        "capacityMeaning": "allocated blocks times their own element size; heterogeneous elements"
+      },
+      {
+        "id": 56,
+        "name": "solverSet.bodySims",
+        "countUnit": "elements",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "elements",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 57,
+        "name": "solverSet.bodyStates",
+        "countUnit": "elements",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "elements",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 58,
+        "name": "solverSet.jointSims",
+        "countUnit": "elements",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "elements",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 59,
+        "name": "solverSet.contactIndices",
+        "countUnit": "elements",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "elements",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 60,
+        "name": "solverSet.islandSims",
+        "countUnit": "elements",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "elements",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 61,
+        "name": "graph.bodyBits",
+        "countUnit": "64-bit-blocks",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "64-bit-blocks",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 62,
+        "name": "graph.convexContacts",
+        "countUnit": "elements",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "elements",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 63,
+        "name": "graph.contacts",
+        "countUnit": "elements",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "elements",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 64,
+        "name": "graph.jointSims",
+        "countUnit": "elements",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "elements",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 65,
+        "name": "task.contextArray",
+        "countUnit": "contexts",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "context-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 66,
+        "name": "task.sensorHits",
+        "countUnit": "elements",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "elements",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 67,
+        "name": "task.pairKeys",
+        "countUnit": "elements",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "elements",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 68,
+        "name": "task.contactStateBits",
+        "countUnit": "64-bit-blocks",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "64-bit-blocks",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 69,
+        "name": "task.jointStateBits",
+        "countUnit": "64-bit-blocks",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "64-bit-blocks",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 70,
+        "name": "task.hitEventBits",
+        "countUnit": "64-bit-blocks",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "64-bit-blocks",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 71,
+        "name": "task.awakeIslandBits",
+        "countUnit": "64-bit-blocks",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "64-bit-blocks",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 72,
+        "name": "sensorTask.contextArray",
+        "countUnit": "contexts",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "context-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 73,
+        "name": "sensorTask.eventBits",
+        "countUnit": "64-bit-blocks",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "64-bit-blocks",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 74,
+        "name": "event.bodyMoveEvents",
+        "countUnit": "events",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "event-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 75,
+        "name": "event.sensorBeginEvents",
+        "countUnit": "events",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "event-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 76,
+        "name": "event.contactBeginEvents",
+        "countUnit": "events",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "event-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 77,
+        "name": "event.sensorEndEvents0",
+        "countUnit": "events",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "event-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 78,
+        "name": "event.sensorEndEvents1",
+        "countUnit": "events",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "event-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 79,
+        "name": "event.contactEndEvents0",
+        "countUnit": "events",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "event-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 80,
+        "name": "event.contactEndEvents1",
+        "countUnit": "events",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "event-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 81,
+        "name": "event.contactHitEvents",
+        "countUnit": "events",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "event-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 82,
+        "name": "event.jointEvents",
+        "countUnit": "events",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "event-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 83,
+        "name": "debug.body",
+        "countUnit": "64-bit-blocks",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "64-bit-blocks",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 84,
+        "name": "debug.joint",
+        "countUnit": "64-bit-blocks",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "64-bit-blocks",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 85,
+        "name": "debug.contact",
+        "countUnit": "64-bit-blocks",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "64-bit-blocks",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 86,
+        "name": "debug.island",
+        "countUnit": "64-bit-blocks",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "64-bit-blocks",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 87,
+        "name": "stack",
+        "countUnit": "allocated-bytes",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "bytes",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 88,
+        "name": "worldFixed.identityHistory",
+        "countUnit": "embedded-structs",
+        "capacityUnit": "embedded-structs",
+        "countMeaning": "One fixed embedded world metadata struct; not a live entity count",
+        "capacityMeaning": "Exact sizeof embedded identityHistory metadata; 36 bytes in the qualified layout, not a separate allocator allocation"
+      },
+      {
+        "id": 89,
+        "name": "worldFixed.creationCapacity",
+        "countUnit": "embedded-structs",
+        "capacityUnit": "embedded-structs",
+        "countMeaning": "One fixed embedded world metadata struct; not a live entity count",
+        "capacityMeaning": "Exact sizeof embedded creationCapacity metadata; 20 bytes in the qualified layout, not a separate allocator allocation"
+      }
+    ],
+    "rules": {
+      "safety": "ST serialized read at ready committed safe point. Native validates full world ID and explicit locked/active task state before GetCounters; every failure leaves all caller output unchanged. No allocation, step, flush, trim, draw or mutation.",
+      "capacityLedger": "Exact pinned b3GetWorldByteCount ledger, including embedded tree sizeof terms. Not a complete malloc ledger. Sum of every row must equal GetCounters.byteCount. No residual, unknown-as-zero or partial success.",
+      "integers": "Checked uint64 arithmetic; core int-sized intermediate groups are preflighted before core GetCounters. Overflow or inconsistent accounting returns non-OK.",
+      "globals": "b3GetByteCount requested-size accounting and actual native air_b3_bridge_memory(0) are separate scopes. Never add them to worldLedger as a total.",
+      "stepIndex": "Native completed-step identity only, not an epoch of every allocation/mutation. Binding revision/generation are separate labels.",
+      "workload": "b3World_GetMaxCapacity is a step-sampled historical workload maximum, not allocation capacity, a budget or an acceptance threshold.",
+      "workerArena": "Backing capacity read independently from taskContexts[].arena.capacity; excluded from worldLedger, distinct from Counters.arenaCapacity peakDemand.",
+      "mesh": "Successful cook/completed destroy counts are module-wide call counters including rollback. Per-resource leases/borrows are separate existing backend snapshots, not a module-wide census.",
+      "afterClose": "Unavailable through this live-world backend method. No retained/replacement factory, module or new host is introduced."
+    },
+    "unavailable": [
+      "all-native-handle census",
+      "global-world census",
+      "global-mesh-lease census",
+      "after-app-close module observation"
+    ],
+    "excludedFromWorldLedger": [
+      "worker arena backing/shared/overflow allocations",
+      "fatAABBs",
+      "name cache",
+      "scheduler and mutex allocations",
+      "allocator rounding/metadata",
+      "generic malloc observer scratch",
+      "WASM memory capacity/JS heap/RSS"
+    ]
+  },
+  "emptyWorldStorage": {
+    "export": "_air_b3_world_trim_empty",
+    "arguments": ["worldId:uint32", "acknowledgeRetiredEvents:0|1"],
+    "success": "Same world object and ID, step/end-buffer role/config/history preserved; ACK invalidates all borrowed native views and retires all event buffers. Capacity restored from creationCapacity; F=H. No implicit Step.",
+    "nonempty": "Status14 only: no event ACK, no mutation, no baseline claim",
+    "ownership": "Serialized ready owner, all callbacks/tasks joined, all external views retired, no bridge temporary/debug/resource ownership. Backend additionally proves resource leases and pending event/snapshot state settled.",
+    "errors": "All returned refusals preflight before mutation; unexpected host exception is unknown and faults backend. Allocation failure is process-fatal, not a recoverable rollback.",
+    "identity": "Four-family same-world high/floor with checked exhaustion. Not cross-world raw ID ABA protection.",
+    "baseline": "Current implementation initial world ledger includes fixed identityHistory and creationCapacity metadata. Never substitute historical36040 or rewrite acceptance."
+  },
+  "moduleReleaseSnapshot": {
+    "schemaVersion": 1,
+    "export": "_air_b3_module_release_snapshot_v1",
+    "outputWords": 38,
+    "header": ["version=1", "words=38", "fields=17", "reserved=0"],
+    "fieldsU64LoHi": [
+      "core.worlds",
+      "core.trackedRequestedBytes",
+      "bridge.worlds",
+      "bridge.allocations",
+      "bridge.bytes",
+      "bridge.debugShapeHandles",
+      "bridge.temporaryNodes",
+      "bridge.temporaryBytes",
+      "bridge.wireBuffers",
+      "bridge.wireCapacityRecords",
+      "bridge.wireLengthRecords",
+      "bridge.capturedWorlds",
+      "mesh.resources",
+      "mesh.leases",
+      "mesh.references",
+      "mesh.borrowNodes",
+      "mesh.resourceStorageBytes"
+    ],
+    "rules": {
+      "phase": "Exclusive ST module access with all world tasks/callbacks joined. Loader captures once after actual factory and before binding, then after binding.dispose and before module-reference release. No retained or replacement module.",
+      "atomic": "Read-only, no allocation or mutation. Checked sums; all failure paths leave full output unchanged. A direct core world bypassing bridge still appears in b3GetWorldCount.",
+      "scope": "Core world count and b3GetByteCount requested-size tracking; registered bridge/world and mesh native chains only. Not all live handles, malloc bytes, WASM capacity, JS heap, RSS or GC.",
+      "bytes": "Bridge temporaryBytes includes BridgeTemp header and is a subset of bridge.bytes. Mesh resourceStorageBytes excludes that header and cooked mesh data; it is a subset of bridge temporary bytes. Never add these overlapping scopes. Wire capacity/length are debug primitive records, not physics shapes.",
+      "terminal": "Core worlds and every bridge/mesh field must be zero; core tracked bytes must equal the original same-module factory baseline. Collection, verification or cleanup failure never qualifies released verification. Cleanup is still attempted once."
+    }
+  }
+}

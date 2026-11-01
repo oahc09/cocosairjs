@@ -4195,7 +4195,7 @@ export class Mesh extends Asset {
      * @returns @en Return null if not found or can't read, otherwise, will create a large enough typed array to contain all data of the attribute,
      * the array type will match the data type of the attribute. @zh 读取失败返回 null， 否则返回对应的类型数组
      */
-    readAttribute(primitiveIndex: number, attributeName: gfx.AttributeName): __private.__types_globals__TypedArray | null;
+    readAttribute(primitiveIndex: number, attributeName: gfx.AttributeName): __private._types_globals__TypedArray | null;
     /**
      * @en Read the requested attribute of the given sub mesh and fill into the given buffer.
      * @zh 读取子网格的指定属性到目标缓冲区中。
@@ -4785,12 +4785,12 @@ export namespace MeshRenderer {
      * @en Shadow projection mode.
      * @zh 阴影投射方式。
      */
-    export type ShadowCastingMode = __private.__types_globals__EnumAlias<typeof __private._cocos_3d_framework_mesh_renderer__ModelShadowCastingMode>;
+    export type ShadowCastingMode = __private._types_globals__EnumAlias<typeof __private._cocos_3d_framework_mesh_renderer__ModelShadowCastingMode>;
     /**
      * @en Shadow receive mode.
      * @zh 阴影接收方式。
      */
-    export type ShadowReceivingMode = __private.__types_globals__EnumAlias<typeof __private._cocos_3d_framework_mesh_renderer__ModelShadowReceivingMode>;
+    export type ShadowReceivingMode = __private._types_globals__EnumAlias<typeof __private._cocos_3d_framework_mesh_renderer__ModelShadowReceivingMode>;
 }
 /**
  * @en The directional light component, only one real time directional light is permitted in one scene, it act as the main light of the scene.
@@ -5001,8 +5001,8 @@ export class Light extends Component {
     protected _onUpdateReceiveDirLight(): void;
 }
 export namespace Light {
-    export type Type = __private.__types_globals__EnumAlias<typeof renderer.scene.LightType>;
-    export type PhotometricTerm = __private.__types_globals__EnumAlias<typeof __private._cocos_3d_lights_light_component__PhotometricTerm>;
+    export type Type = __private._types_globals__EnumAlias<typeof renderer.scene.LightType>;
+    export type PhotometricTerm = __private._types_globals__EnumAlias<typeof __private._cocos_3d_lights_light_component__PhotometricTerm>;
 }
 /**
  * @en The sphere light component, multiple sphere lights can be added to one scene.
@@ -6326,7 +6326,7 @@ export namespace gfx {
      * @param type The target type.
      */
     export function GetTypeSize(type: Type): number;
-    export function getTypedArrayConstructor(info: FormatInfo): __private.__types_globals__TypedArrayConstructor;
+    export function getTypedArrayConstructor(info: FormatInfo): __private._types_globals__TypedArrayConstructor;
     export function formatAlignment(format: Format): FormatAlignment;
     export function alignTo(size: number, alignment: number): number;
     /**
@@ -9822,7 +9822,7 @@ export namespace renderer {
         }
         export interface IInstancedAttributeBlock {
             buffer: Uint8Array;
-            views: __private.__types_globals__TypedArray[];
+            views: __private._types_globals__TypedArray[];
             attributes: gfx.Attribute[];
         }
         /**
@@ -11469,7 +11469,7 @@ export namespace renderer {
         defines: MacroRecord;
         stateOverrides?: PassOverrides;
     }
-    export type PassOverrides = __private.__types_globals__RecursivePartial<EffectAsset.IPassStates>;
+    export type PassOverrides = __private._types_globals__RecursivePartial<EffectAsset.IPassStates>;
     export interface IMacroPatch {
         name: string;
         value: boolean | number | string;
@@ -12160,7 +12160,7 @@ export namespace renderer {
     export const CameraVisFlags: {};
     export const VisibilityFlags: {};
 }
-export type Constructor<T = unknown> = __private.__types_globals__Constructor<T>;
+export type Constructor<T = unknown> = __private._types_globals__Constructor<T>;
 export namespace math {
     export namespace bits {
         /**
@@ -12450,13 +12450,13 @@ export namespace math {
          * @zh 向量转数组
          * @param ofs Array Start Offset
          */
-        static toArray<Out extends __private.__types_globals__IWritableArrayLike<number>>(out: Out, v: IVec2Like, ofs?: number): Out;
+        static toArray<Out extends __private._types_globals__IWritableArrayLike<number>>(out: Out, v: IVec2Like, ofs?: number): Out;
         /**
          * @en Converts the given array to a vector
          * @zh 数组转向量
          * @param ofs Array Start Offset
          */
-        static fromArray<Out extends IVec2Like>(out: Out, arr: __private.__types_globals__IWritableArrayLike<number>, ofs?: number): Out;
+        static fromArray<Out extends IVec2Like>(out: Out, arr: __private._types_globals__IWritableArrayLike<number>, ofs?: number): Out;
         /**
          * @en Check the equality of the two given vectors
          * @zh 向量等价判断
@@ -12950,13 +12950,13 @@ export namespace math {
          * @zh 向量转数组
          * @param ofs Array Start Offset
          */
-        static toArray<Out extends __private.__types_globals__IWritableArrayLike<number>>(out: Out, v: IVec3Like, ofs?: number): Out;
+        static toArray<Out extends __private._types_globals__IWritableArrayLike<number>>(out: Out, v: IVec3Like, ofs?: number): Out;
         /**
          * @en Converts the given array to a vector
          * @zh 数组转向量
          * @param ofs Array Start Offset
          */
-        static fromArray<Out extends IVec3Like>(out: Out, arr: __private.__types_globals__IWritableArrayLike<number>, ofs?: number): Out;
+        static fromArray<Out extends IVec3Like>(out: Out, arr: __private._types_globals__IWritableArrayLike<number>, ofs?: number): Out;
         /**
          * @en Check the equality of the two given vectors
          * @zh 向量等价判断
@@ -13409,13 +13409,13 @@ export namespace math {
          * @zh 向量转数组
          * @param ofs Array Start Offset
          */
-        static toArray<Out extends __private.__types_globals__IWritableArrayLike<number>>(out: Out, v: IVec4Like, ofs?: number): Out;
+        static toArray<Out extends __private._types_globals__IWritableArrayLike<number>>(out: Out, v: IVec4Like, ofs?: number): Out;
         /**
          * @en Converts the given array to a vector
          * @zh 数组转向量
          * @param ofs Array Start Offset
          */
-        static fromArray<Out extends IVec4Like>(out: Out, arr: __private.__types_globals__IWritableArrayLike<number>, ofs?: number): Out;
+        static fromArray<Out extends IVec4Like>(out: Out, arr: __private._types_globals__IWritableArrayLike<number>, ofs?: number): Out;
         /**
          * @en Check the equality of the two given vectors
          * @zh 向量等价判断
@@ -13855,13 +13855,13 @@ export namespace math {
          * @zh 四元数转数组
          * @param ofs Array Start Offset
          */
-        static toArray<Out extends __private.__types_globals__IWritableArrayLike<number>>(out: Out, q: IQuatLike, ofs?: number): Out;
+        static toArray<Out extends __private._types_globals__IWritableArrayLike<number>>(out: Out, q: IQuatLike, ofs?: number): Out;
         /**
          * @en Array to a quaternion
          * @zh 数组转四元数
          * @param ofs Array Start Offset
          */
-        static fromArray(out: IQuatLike, arr: __private.__types_globals__IWritableArrayLike<number>, ofs?: number): IQuatLike;
+        static fromArray(out: IQuatLike, arr: __private._types_globals__IWritableArrayLike<number>, ofs?: number): IQuatLike;
         /**
          * @en Check whether two quaternions are equal
          * @zh 四元数等价判断
@@ -14102,13 +14102,13 @@ export namespace math {
          * @zh 矩阵转数组
          * @param ofs Array Start Offset
          */
-        static toArray<Out extends __private.__types_globals__IWritableArrayLike<number>>(out: Out, m: IMat3Like, ofs?: number): Out;
+        static toArray<Out extends __private._types_globals__IWritableArrayLike<number>>(out: Out, m: IMat3Like, ofs?: number): Out;
         /**
          * @en Generates or sets a matrix with a flat array
          * @zh 数组转矩阵
          * @param ofs Array Start Offset
          */
-        static fromArray<Out extends IMat3Like>(out: Out, arr: __private.__types_globals__IWritableArrayLike<number>, ofs?: number): Out;
+        static fromArray<Out extends IMat3Like>(out: Out, arr: __private._types_globals__IWritableArrayLike<number>, ofs?: number): Out;
         /**
          * @en Adds two matrices and save the results to out matrix
          * @zh 逐元素矩阵加法
@@ -14620,13 +14620,13 @@ export namespace math {
          * @zh 矩阵转数组
          * @param ofs Array Start Offset
          */
-        static toArray<Out extends __private.__types_globals__IWritableArrayLike<number>>(out: Out, m: IMat4Like, ofs?: number): Out;
+        static toArray<Out extends __private._types_globals__IWritableArrayLike<number>>(out: Out, m: IMat4Like, ofs?: number): Out;
         /**
          * @en Generates or sets a matrix with a flat array
          * @zh 数组转矩阵
          * @param ofs Array Start Offset
          */
-        static fromArray<Out extends IMat4Like>(out: Out, arr: __private.__types_globals__IWritableArrayLike<number>, ofs?: number): Out;
+        static fromArray<Out extends IMat4Like>(out: Out, arr: __private._types_globals__IWritableArrayLike<number>, ofs?: number): Out;
         /**
          * @en Adds two matrices and save the results to out matrix
          * @zh 逐元素矩阵加法
@@ -15355,13 +15355,13 @@ export namespace math {
          * @zh 颜色转数组
          * @param ofs Array Start Offset
          */
-        static toArray<Out extends __private.__types_globals__IWritableArrayLike<number>>(out: Out, a: IColorLike, ofs?: number): Out;
+        static toArray<Out extends __private._types_globals__IWritableArrayLike<number>>(out: Out, a: IColorLike, ofs?: number): Out;
         /**
          * @en Sets the given color with RGBA values in an array, and save the results to out color.
          * @zh 数组转颜色
          * @param ofs Array Start Offset
          */
-        static fromArray<Out extends IColorLike>(arr: __private.__types_globals__IWritableArrayLike<number>, out: Out, ofs?: number): Out;
+        static fromArray<Out extends IColorLike>(arr: __private._types_globals__IWritableArrayLike<number>, out: Out, ofs?: number): Out;
         /**
          * @zh 从无符号 32 位整数构造颜色，高 8 位为 alpha 通道，次高 8 位为蓝色通道，次低 8 位为绿色通道，低 8 位为红色通道。
          * @en Construct color from a unsigned 32 bit integer, the highest 8 bits is for alpha channel, the second highest 8 bits is for blue channel,
@@ -18057,6 +18057,264 @@ export namespace geometry {
 export const VERSION = "4.0.0";
 /**
  * @en
+ * Scheduler is responsible of triggering the scheduled callbacks.<br>
+ * You should not use NSTimer. Instead use this class.<br>
+ * <br>
+ * There are 2 different types of callbacks (selectors):<br>
+ *     - update callback: the 'update' callback will be called every frame. You can customize the priority.<br>
+ *     - custom callback: A custom callback will be called every frame, or with a custom interval of time.<br>
+ * <br>
+ * The 'custom selectors' should be avoided when possible. It is faster,<br>
+ * and consumes less memory to use the 'update callback'. *
+ * @zh
+ * Scheduler 是负责触发回调函数的类。<br>
+ * 通常情况下，建议使用 `director.getScheduler()` 来获取系统定时器。<br>
+ * 有两种不同类型的定时器：<br>
+ *     - update 定时器：每一帧都会触发。您可以自定义优先级。<br>
+ *     - 自定义定时器：自定义定时器可以每一帧或者自定义的时间间隔触发。<br>
+ * 如果希望每帧都触发，应该使用 update 定时器，使用 update 定时器更快，而且消耗更少的内存。
+ */
+export class Scheduler extends System {
+    static ID: string;
+    /**
+     * @en This method should be called for any target which needs to schedule tasks, and this method should be called before any scheduler API usage.
+     * This method will add a `id` property if it doesn't exist.
+     * @zh 任何需要用 Scheduler 管理任务的对象主体都应该调用这个方法，并且应该在调用任何 Scheduler API 之前调用这个方法。
+     * 这个方法会给对象添加一个 `id` 属性，如果这个属性不存在的话。
+     * @param target
+     * @en The target to enable, which type is ISchedulable.
+     * @zh 所作用的对象。类型为ISchedulable。
+     */
+    static enableForTarget(target: ISchedulable): void;
+    constructor();
+    /**
+     * @en
+     * Modifies the time of all scheduled callbacks.<br>
+     * You can use this property to create a 'slow motion' or 'fast forward' effect.<br>
+     * Default is 1.0. To create a 'slow motion' effect, use values below 1.0.<br>
+     * To create a 'fast forward' effect, use values higher than 1.0.<br>
+     * Note：It will affect EVERY scheduled selector / action.
+     * @zh
+     * 设置时间间隔的缩放比例。<br>
+     * 您可以使用这个方法来创建一个 “slow motion（慢动作）” 或 “fast forward（快进）” 的效果。<br>
+     * 默认是 1.0。要创建一个 “slow motion（慢动作）” 效果,使用值低于 1.0。<br>
+     * 要使用 “fast forward（快进）” 效果，使用值大于 1.0。<br>
+     * 注意：它影响该 Scheduler 下管理的所有定时器。
+     * @param timeScale
+     */
+    setTimeScale(timeScale: number): void;
+    /**
+     * @en Returns time scale of scheduler.
+     * @zh 获取时间间隔的缩放比例。
+     */
+    getTimeScale(): number;
+    /**
+     * @en 'update' the scheduler. (You should NEVER call this method, unless you know what you are doing.)
+     * @zh update 调度函数。(不应该直接调用这个方法，除非完全了解这么做的结果)
+     * @param dt
+     * @en delta time. The unit is seconds.
+     * @zh 更新间隔时间, 单位是秒。
+     */
+    update(dt: number): void;
+    /**
+     * @en Specify the callback to schedule a new timer.
+     * If the callback function is already scheduled, then only the interval parameter will be updated without re-scheduling it again.
+     * @zh 指定回调函数来规划一个新的定时器。
+     * 如果回调函数已经被定时器使用，那么只会更新之前定时器的时间间隔参数，不会设置新的定时器。
+     * @param callback
+     * @en The specified target.
+     * @zh 所指定的调用对象。
+     * @param target
+     * @en The scheduled method will be called every 'interval' seconds.
+     * If 'interval' is 0, it will be called every frame, but if so, it recommended to use 'scheduleUpdateForTarget:' instead.
+     * @zh 当时间间隔达到指定值时，设置的回调函数将会被调用。
+     * 如果 interval 值为 0，那么回调函数每一帧都会被调用，但如果是这样，建议使用 scheduleUpdateForTarget 代替。
+     * @param interval
+     * @en repeat let the action be repeated repeat + 1 times, use `macro.REPEAT_FOREVER` to let the action run continuously.
+     * @zh repeat 值可以让定时器触发 repeat + 1 次，使用 `macro.REPEAT_FOREVER` 可以让定时器一直循环触发。
+     * @param repeat
+     * @en delay is the amount of time the action will wait before it'll start. Unit: s.
+     * @zh delay 值指定延迟时间，定时器会在延迟指定的时间之后开始计时，单位: 秒。
+     * @param delay
+     * @en If paused is YES, then it won't be called until it is resumed.
+     * @zh 如果 paused 值为 true，那么直到 resume 被调用才开始计时。
+     * @param paused
+     */
+    schedule(callback: __private._cocos_core_scheduler__CallbackType, target: ISchedulable, interval: number, repeat?: number, delay?: number, paused?: boolean): void;
+    /**
+     * @en The specified target.
+     * @zh 所指定的调用对象。
+     * @param target
+     * @en Specify the callback to schedule a new timer.
+     * If the callback function is already scheduled, then only the interval parameter will be updated without re-scheduling it again.
+     * @zh 指定回调函数来规划一个新的定时器。
+     * 如果回调函数已经被定时器使用，那么只会更新之前定时器的时间间隔参数，不会设置新的定时器。
+     * @param callback
+     * @en The scheduled method will be called every 'interval' seconds.
+     * If 'interval' is 0, it will be called every frame, but if so, it recommended to use 'scheduleUpdateForTarget:' instead.
+     * @zh 当时间间隔达到指定值时，设置的回调函数将会被调用。
+     * 如果 interval 值为 0，那么回调函数每一帧都会被调用，但如果是这样，建议使用 scheduleUpdateForTarget 代替。
+     * @param interval
+     * @en repeat let the action be repeated repeat + 1 times, use `macro.REPEAT_FOREVER` to let the action run continuously.
+     * @zh repeat 值可以让定时器触发 repeat + 1 次，使用 `macro.REPEAT_FOREVER` 可以让定时器一直循环触发。
+     * @param repeat
+     * @en delay is the amount of time the action will wait before it'll start. Unit: s.
+     * @zh delay 值指定延迟时间，定时器会在延迟指定的时间之后开始计时，单位: 秒。
+     * @param delay
+     * @en If paused is YES, then it won't be called until it is resumed.
+     * @zh 如果 paused 值为 true，那么直到 resume 被调用才开始计时。
+     * @param paused
+     *
+     * @deprecated since v3.8.0, please use `Scheduler.schedule(callback, target, interval)` instead.
+     */
+    schedule(target: ISchedulable, callback: __private._cocos_core_scheduler__CallbackType, interval: number, repeat?: number, delay?: number, paused?: boolean): void;
+    /**
+     * @en
+     * Schedules the update callback for a given target,
+     * During every frame after schedule started, the "update" function of target will be invoked.
+     * @zh
+     * 使用指定的优先级为指定的对象设置 update 定时器。<br>
+     * update 定时器每一帧都会被触发，触发时自动调用指定对象的 "update" 函数。<br>
+     * 优先级的值越低，定时器被触发的越早。
+     * @param target
+     * @en The target bound to the callback. @zh 回调所绑定的目标对象。
+     * @param priority
+     * @en The priority. @zh 优先级。
+     * @param paused
+     * @en Whether is paused. @zh 是否被暂停。
+     */
+    scheduleUpdate(target: ISchedulable, priority: number, paused: boolean): void;
+    /**
+     * @en
+     * Unschedule a callback for a callback and a given target.
+     * If you want to unschedule the "update", use `unscheduleUpdate()`
+     * @zh
+     * 取消指定对象定时器。
+     * 如果需要取消 update 定时器，请使用 unscheduleUpdate()。
+     * @param callback @en The callback to be unscheduled @zh 被取消调度的回调。
+     * @param target @en The target bound to the callback. @zh 回调所绑定的目标对象。
+     */
+    unschedule(callback: __private._types_globals__AnyFunction, target: ISchedulable): void;
+    /**
+     * @en Unschedule a timer. It is invoked by CallbackTimer when a timer is finished.
+     * @param timerToUnschedule The timer to be unscheduled.
+     * @param target The target of the timer.
+     * @engineInternal
+     * @mangle
+     */
+    unscheduleForTimer(timerToUnschedule: __private._cocos_core_scheduler__CallbackTimer, target: ISchedulable): void;
+    /**
+     * @en Unschedule the update callback for a given target.
+     * @zh 取消指定对象的 update 定时器。
+     * @param target The target to be unscheduled.
+     */
+    unscheduleUpdate(target: ISchedulable): void;
+    /**
+     * @en
+     * Unschedule all scheduled callbacks for a given target.
+     * This also includes the "update" callback.
+     * @zh 取消指定对象的所有定时器，包括 update 定时器。
+     * @param target The target to be unscheduled.
+     */
+    unscheduleAllForTarget(target: ISchedulable): void;
+    /**
+     * @en
+     * Unschedule all scheduled callbacks from all targets including the system callbacks.
+     * You should NEVER call this method, unless you know what you are doing.
+     * @zh
+     * 取消所有对象的所有定时器，包括系统定时器。
+     * 不要调用此函数，除非你确定你在做什么。
+     */
+    unscheduleAll(): void;
+    /**
+     * @en
+     * Unschedule all callbacks from all targets with a minimum priority.
+     * You should only call this with `PRIORITY_NON_SYSTEM_MIN` or higher.
+     * @zh
+     * 取消所有优先级的值大于指定优先级的定时器。
+     * 你应该只取消优先级的值大于 PRIORITY_NON_SYSTEM_MIN 的定时器。
+     * @param minPriority
+     * @en The minimum priority of selector to be unscheduled.
+     * Which means, all selectors which priority is higher than minPriority will be unscheduled.
+     * @zh 要取消调度的选择器的最低优先级。
+     * 这意味着，所有优先级高于 minPriority 的选择器将被取消调度。
+     */
+    unscheduleAllWithMinPriority(minPriority: number): void;
+    /**
+     * @en Checks whether a callback for a given target is scheduled.
+     * @zh 检查指定的回调函数和回调对象组合是否存在定时器。
+     * @param callback @en The callback to check. @zh 指定检测的回调。
+     * @param target @en The target of the callback. @zh 回调的目标对象。
+     * @returns @en True if the specified callback is invoked, false if not. @zh 返回true如果指定回调被调用, 否则返回false。
+     */
+    isScheduled(callback: __private._types_globals__AnyFunction, target: ISchedulable): boolean;
+    /**
+     * @en
+     * Pause all selectors from all targets.
+     * You should NEVER call this method, unless you know what you are doing.
+     * @zh
+     * 暂停所有对象的所有定时器。
+     * 不要调用这个方法，除非你知道你正在做什么。
+     */
+    pauseAllTargets(): ISchedulable[];
+    /**
+     * @en
+     * Pause all selectors from all targets with a minimum priority.
+     * You should only call this with kCCPriorityNonSystemMin or higher.
+     * @zh
+     * 暂停所有优先级的值大于指定优先级的定时器。
+     * 你应该只暂停优先级的值大于 PRIORITY_NON_SYSTEM_MIN 的定时器。
+     * @param minPriority @en the minimum priority. @zn 最小优先级。
+     */
+    pauseAllTargetsWithMinPriority(minPriority: number): ISchedulable[];
+    /**
+     * @en
+     * Resume selectors on a set of targets.<br/>
+     * This can be useful for undoing a call to pauseAllCallbacks.
+     * @zh
+     * 恢复指定数组中所有对象的定时器。<br/>
+     * 这个函数是 pauseAllCallbacks 的逆操作。
+     * @param targetsToResume
+     */
+    resumeTargets(targetsToResume: ISchedulable[]): void;
+    /**
+     * @en
+     * Pauses the target.<br/>
+     * All scheduled selectors/update for a given target won't be 'ticked' until the target is resumed.<br/>
+     * If the target is not present, nothing happens.
+     * @zh
+     * 暂停指定对象的定时器。<br/>
+     * 指定对象的所有定时器都会被暂停。<br/>
+     * 如果指定的对象没有定时器，什么也不会发生。
+     * @param target
+     */
+    pauseTarget(target: ISchedulable): void;
+    /**
+     * @en
+     * Resumes the target.<br/>
+     * The 'target' will be unpaused, so all schedule selectors/update will be 'ticked' again.<br/>
+     * If the target is not present, nothing happens.
+     * @zh
+     * 恢复指定对象的所有定时器。<br/>
+     * 指定对象的所有定时器将继续工作。<br/>
+     * 如果指定的对象没有定时器，什么也不会发生。
+     * @param target
+     */
+    resumeTarget(target: ISchedulable): void;
+    /**
+     * @en Returns whether or not the target is paused.
+     * @zh 返回指定对象的定时器是否处于暂停状态。
+     * @param target
+     */
+    isTargetPaused(target: ISchedulable): boolean;
+}
+export interface ISchedulable {
+    id?: string;
+    uuid?: string;
+    update?(dt: number): void;
+}
+/**
+ * @en
  * The main namespace of Cocos engine, all engine core classes, functions, properties and constants are defined in this namespace.
  * @zh
  * Cocos引擎的主要命名空间，引擎代码中所有的类，函数，属性和常量都在这个命名空间中定义。
@@ -18482,9 +18740,9 @@ export namespace js {
         isChildClassOf: typeof isChildClassOf;
         clear: typeof clear;
         value: (object: Record<string | number, any>, propertyName: string, value_: any, writable?: boolean | undefined, enumerable?: boolean | undefined) => void;
-        getset: (object: Record<string | number, any>, propertyName: string, getter: __private.__types_globals__Getter, setter?: boolean | __private.__types_globals__Setter | undefined, enumerable?: boolean | undefined, configurable?: boolean | undefined) => void;
-        get: (object: Record<string | number, any>, propertyName: string, getter: __private.__types_globals__Getter, enumerable?: boolean | undefined, configurable?: boolean | undefined) => void;
-        set: (object: Record<string | number, any>, propertyName: string, setter: __private.__types_globals__Setter, enumerable?: boolean | undefined, configurable?: boolean | undefined) => void;
+        getset: (object: Record<string | number, any>, propertyName: string, getter: __private._types_globals__Getter, setter?: boolean | __private._types_globals__Setter | undefined, enumerable?: boolean | undefined, configurable?: boolean | undefined) => void;
+        get: (object: Record<string | number, any>, propertyName: string, getter: __private._types_globals__Getter, enumerable?: boolean | undefined, configurable?: boolean | undefined) => void;
+        set: (object: Record<string | number, any>, propertyName: string, setter: __private._types_globals__Setter, enumerable?: boolean | undefined, configurable?: boolean | undefined) => void;
         unregisterClass: typeof unregisterClass;
         getClassName: typeof getClassName;
         setClassName: typeof setClassName;
@@ -18510,7 +18768,7 @@ export namespace js {
          *
          * @deprecated since v3.5.0, this is an engine private interface that will be removed in the future.
          */
-        _registeredClassNames: Record<string, __private.__types_globals__Constructor<unknown>>;
+        _registeredClassNames: Record<string, __private._types_globals__Constructor<unknown>>;
         /**
          * @en All classes registered in the engine, indexed by ID.
          * @zh 引擎中已注册的所有类型，通过 ID 进行索引。
@@ -18529,7 +18787,7 @@ export namespace js {
          *
          * @deprecated since v3.5.0, this is an engine private interface that will be removed in the future.
          */
-        _registeredClassIds: Record<string, __private.__types_globals__Constructor<unknown>>;
+        _registeredClassIds: Record<string, __private._types_globals__Constructor<unknown>>;
         /**
          * @deprecated since v3.5.0, this is an engine private interface that will be removed in the future.
          */
@@ -18538,7 +18796,7 @@ export namespace js {
         /**
          * @deprecated since v3.5.0, this is an engine private interface that will be removed in the future.
          */
-        _setClassId: (id: string, constructor: __private.__types_globals__Constructor<unknown>) => void;
+        _setClassId: (id: string, constructor: __private._types_globals__Constructor<unknown>) => void;
         /**
          * @deprecated since v3.5.0, this is an engine private interface that will be removed in the future.
          */
@@ -18749,7 +19007,7 @@ export namespace js {
      * @return @en True if sub class is child of super class, or they are the same type. False else.
      * @zh 如果子类类型是父类类型的子类，或者二者是相同类型，那么返回 true，否则返回 false。
      */
-    export function isChildClassOf<T extends __private.__types_globals__Constructor>(subclass: unknown, superclass: T): subclass is T;
+    export function isChildClassOf<T extends __private._types_globals__Constructor>(subclass: unknown, superclass: T): subclass is T;
     export function isChildClassOf(subclass: unknown, superclass: unknown): boolean;
     /**
      * @en Removes all enumerable properties from a object.
@@ -18764,7 +19022,7 @@ export namespace js {
      * @param className @en Class name to register. @zh 注册的类名。
      * @param constructor @en Constructor to register. @zh 注册的构造函数。
      */
-    export function setClassName(className: string, constructor: __private.__types_globals__Constructor): void;
+    export function setClassName(className: string, constructor: __private._types_globals__Constructor): void;
     /**
      * @en Sets an alias for a class.
      * After executing `setClassAlias(target, alias)`, `alias` will be a single way short cut for class `target`.
@@ -18777,7 +19035,7 @@ export namespace js {
      * @param alias @en Alias to set. The name shall not have been set as class name or alias of another class.
      * @zh 类的别名。别名不能重复，也不能是已有类的名字。
      */
-    export function setClassAlias(target: __private.__types_globals__Constructor, alias: string): void;
+    export function setClassAlias(target: __private._types_globals__Constructor, alias: string): void;
     /**
      * @en
      * Unregister some classes from engine.
@@ -18798,14 +19056,14 @@ export namespace js {
      * @deprecated since v3.5.0, this is an engine private interface that will be removed in the future.
      * Please use `getClassById()` instead.
      */
-    export function _getClassById(classId: any): __private.__types_globals__Constructor<unknown>;
+    export function _getClassById(classId: any): __private._types_globals__Constructor<unknown>;
     /**
      * @en Gets the registered class by id.
      * @zh 通过 id 获取已注册的类型。
      * @param classId @en The class id used to get class. @zh 获取类的 id。
      * @returns @en The constructor of the registered class. @zh 注册的类构造函数。
      */
-    export function getClassById(classId: any): __private.__types_globals__Constructor<unknown>;
+    export function getClassById(classId: any): __private._types_globals__Constructor<unknown>;
     /**
      * @en
      * Gets the registered class by class name.
@@ -18814,7 +19072,7 @@ export namespace js {
      * @param classname @en The class name used to get class. @zh 获取类的类名。
      * @returns @en The constructor of the registered class. @zh 注册的类构造函数。
      */
-    export function getClassByName(classname: any): __private.__types_globals__Constructor<unknown>;
+    export function getClassByName(classname: any): __private._types_globals__Constructor<unknown>;
     /**
      * @en
      * Get class id of the object
@@ -18861,7 +19119,7 @@ export namespace js {
      * @param enumerable @en If the property is enumerable. @zh 属性是否可列举。
      * @param configurable @en If the property is configurable. @zh 属性是否可配置。
      */
-    export const getset: (object: Record<string | number, any>, propertyName: string, getter: __private.__types_globals__Getter, setter?: __private.__types_globals__Setter | boolean, enumerable?: boolean, configurable?: boolean) => void;
+    export const getset: (object: Record<string | number, any>, propertyName: string, getter: __private._types_globals__Getter, setter?: __private._types_globals__Setter | boolean, enumerable?: boolean, configurable?: boolean) => void;
     /**
      * @en A helper function to add or modify `get`, `enumerable` or `configurable` of a property.
      * @zh 添加或修改属性的 `get`, `enumerable` 或者 `configurable`。
@@ -18871,7 +19129,7 @@ export namespace js {
      * @param enumerable @en If the property is enumerable. @zh 属性是否可列举。
      * @param configurable @en If the property is configurable. @zh 属性是否可配置。
      */
-    export const get: (object: Record<string | number, any>, propertyName: string, getter: __private.__types_globals__Getter, enumerable?: boolean, configurable?: boolean) => void;
+    export const get: (object: Record<string | number, any>, propertyName: string, getter: __private._types_globals__Getter, enumerable?: boolean, configurable?: boolean) => void;
     /**
      * @en A helper function to add or modify `get`, `enumerable` or `configurable` of a property.
      * @zh 添加或修改属性的 `get`, `enumerable` 或者 `configurable`。
@@ -18881,15 +19139,15 @@ export namespace js {
      * @param enumerable @en If the property is enumerable. @zh 属性是否可列举。
      * @param configurable @en If the property is configurable. @zh 属性是否可配置。
      */
-    export const set: (object: Record<string | number, any>, propertyName: string, setter: __private.__types_globals__Setter, enumerable?: boolean, configurable?: boolean) => void;
+    export const set: (object: Record<string | number, any>, propertyName: string, setter: __private._types_globals__Setter, enumerable?: boolean, configurable?: boolean) => void;
     /**
      * @deprecated since v3.5.0, this is an engine private interface that will be removed in the future.
      */
-    export const _idToClass: Record<string, __private.__types_globals__Constructor>;
+    export const _idToClass: Record<string, __private._types_globals__Constructor>;
     /**
      * @deprecated since v3.5.0, this is an engine private interface that will be removed in the future.
      */
-    export const _nameToClass: Record<string, __private.__types_globals__Constructor>;
+    export const _nameToClass: Record<string, __private._types_globals__Constructor>;
     /**
      * @en
      * Register the class by specified id, if its classname is not defined, the class name will also be set.
@@ -18900,7 +19158,7 @@ export namespace js {
      * @param constructor
      * @deprecated since v3.5.0, this is an engine private interface that will be removed in the future.
      */
-    export const _setClassId: (id: string, constructor: __private.__types_globals__Constructor) => void;
+    export const _setClassId: (id: string, constructor: __private._types_globals__Constructor) => void;
 }
 export namespace misc {
     /**
@@ -19580,7 +19838,7 @@ export namespace CCClass {
  * @returns Judge result.
  * @engineInternal
  */
-export function isCCClassOrFastDefined<T>(constructor: __private.__types_globals__Constructor<T>): boolean;
+export function isCCClassOrFastDefined<T>(constructor: __private._types_globals__Constructor<T>): boolean;
 /**
  * @en
  * The base class of most of all the objects in Fireball.
@@ -20308,28 +20566,28 @@ declare class Screen {
      * @zh
      * 注册screen事件回调。
      */
-    on(type: sparkRuntime, callback: (...args: any) => void, target?: any): void;
+    on(type: __private._pal_screen_adapter_enum_type_screen_event__PalScreenEvent, callback: (...args: any) => void, target?: any): void;
     /**
      * @en
      * Register a callback of a specific screen event type once.
      * @zh
      * 注册单次的screen事件回调。
      */
-    once(type: sparkRuntime, callback: (...args: any) => void, target?: any): void;
+    once(type: __private._pal_screen_adapter_enum_type_screen_event__PalScreenEvent, callback: (...args: any) => void, target?: any): void;
     /**
      * @en
      * Unregister screen event callback.
      * @zh
      * 取消注册screen事件回调。
      */
-    off(type: sparkRuntime, callback?: (...args: any) => void, target?: any): void;
+    off(type: __private._pal_screen_adapter_enum_type_screen_event__PalScreenEvent, callback?: (...args: any) => void, target?: any): void;
 }
 /**
  * @en A set of system related variables.
  * @zh 一系列系统相关环境变量。
  */
 export const sys: {
-    Feature: any;
+    Feature: typeof __private._pal_system_info_enum_type_feature__Feature;
     /**
      * @en
      * Returns if the specified platform related feature is supported.
@@ -20344,35 +20602,35 @@ export const sys: {
      * @zh
      * 网络类型枚举。
      */
-    NetworkType: any;
+    NetworkType: typeof __private._pal_system_info_enum_type_network_type__NetworkType;
     /**
      * @en
      * LanguageCode type enumeration.
      * @zh
      * 语言码类型枚举。
      */
-    Language: any;
+    Language: typeof __private._pal_system_info_enum_type_language__Language;
     /**
      * @en
      * OS type enumeration.
      * @zh
      * 操作系统类型枚举。
      */
-    OS: any;
+    OS: typeof __private._pal_system_info_enum_type_operating_system__OS;
     /**
      * @en
      * Platform type enumeration.
      * @zh
      * 平台类型枚举。
      */
-    Platform: any;
+    Platform: typeof __private._pal_system_info_enum_type_platform__Platform;
     /**
      * @en
      * Browser type enumeration.
      * @zh
      * 浏览器类型枚举。
      */
-    BrowserType: any;
+    BrowserType: typeof __private._pal_system_info_enum_type_browser_type__BrowserType;
     /**
      * @en Whether the running platform is native app.
      * @zh 指示运行平台是否是原生平台。
@@ -20397,12 +20655,12 @@ export const sys: {
      * @en The running platform.
      * @zh 当前运行平台或环境。
      */
-    platform: any;
+    platform: __private._pal_system_info_enum_type_platform__Platform;
     /**
      * @en Indicate the current language of the running system.
      * @zh 指示当前运行环境的语言。
      */
-    language: any;
+    language: __private._pal_system_info_enum_type_language__Language;
     /**
      * @en
      * Get current language iso 639-1 code.
@@ -20419,7 +20677,7 @@ export const sys: {
      * @en Indicate the running os name.
      * @zh 指示当前运行系统。
      */
-    os: any;
+    os: __private._pal_system_info_enum_type_operating_system__OS;
     /**
      * @en Indicate the running os version string.
      * @zh 指示当前运行系统版本字符串。
@@ -20434,7 +20692,7 @@ export const sys: {
      * @en Indicate the running browser type.
      * @zh 指示当前运行的浏览器类型。
      */
-    browserType: any;
+    browserType: __private._pal_system_info_enum_type_browser_type__BrowserType;
     /**
      * @en Indicate the running browser version.
      * @zh 指示当前运行的浏览器版本。
@@ -20478,7 +20736,7 @@ export const sys: {
      * @zh 获取当前设备的网络类型, 如果网络类型无法获取，默认将返回 `sys.NetworkType.LAN`。
      * @return @zh 返回 LAN 或 WWAN。 @en LAN or WWAN.
      */
-    getNetworkType(): NetworkType;
+    getNetworkType(): __private._pal_system_info_enum_type_network_type__NetworkType;
     /**
      * @en Get the battery level of current device, return 1.0 if failure.
      * @zh 获取当前设备的电池电量，如果电量无法获取，默认将返回 1。
@@ -20551,7 +20809,7 @@ export namespace sys {
      * @zh
      * 平台相关的特性枚举类型。
      */
-    export type Feature = __private.__types_globals__EnumAlias<typeof sparkRuntime>;
+    export type Feature = __private._types_globals__EnumAlias<typeof __private._pal_system_info_enum_type_feature__Feature>;
 }
 /**
  * @en
@@ -20866,264 +21124,6 @@ export const visibleRect: {
      */
     init(visibleRect_: math.Rect): void;
 };
-export interface ISchedulable {
-    id?: string;
-    uuid?: string;
-    update?(dt: number): void;
-}
-/**
- * @en
- * Scheduler is responsible of triggering the scheduled callbacks.<br>
- * You should not use NSTimer. Instead use this class.<br>
- * <br>
- * There are 2 different types of callbacks (selectors):<br>
- *     - update callback: the 'update' callback will be called every frame. You can customize the priority.<br>
- *     - custom callback: A custom callback will be called every frame, or with a custom interval of time.<br>
- * <br>
- * The 'custom selectors' should be avoided when possible. It is faster,<br>
- * and consumes less memory to use the 'update callback'. *
- * @zh
- * Scheduler 是负责触发回调函数的类。<br>
- * 通常情况下，建议使用 `director.getScheduler()` 来获取系统定时器。<br>
- * 有两种不同类型的定时器：<br>
- *     - update 定时器：每一帧都会触发。您可以自定义优先级。<br>
- *     - 自定义定时器：自定义定时器可以每一帧或者自定义的时间间隔触发。<br>
- * 如果希望每帧都触发，应该使用 update 定时器，使用 update 定时器更快，而且消耗更少的内存。
- */
-export class Scheduler extends System {
-    static ID: string;
-    /**
-     * @en This method should be called for any target which needs to schedule tasks, and this method should be called before any scheduler API usage.
-     * This method will add a `id` property if it doesn't exist.
-     * @zh 任何需要用 Scheduler 管理任务的对象主体都应该调用这个方法，并且应该在调用任何 Scheduler API 之前调用这个方法。
-     * 这个方法会给对象添加一个 `id` 属性，如果这个属性不存在的话。
-     * @param target
-     * @en The target to enable, which type is ISchedulable.
-     * @zh 所作用的对象。类型为ISchedulable。
-     */
-    static enableForTarget(target: ISchedulable): void;
-    constructor();
-    /**
-     * @en
-     * Modifies the time of all scheduled callbacks.<br>
-     * You can use this property to create a 'slow motion' or 'fast forward' effect.<br>
-     * Default is 1.0. To create a 'slow motion' effect, use values below 1.0.<br>
-     * To create a 'fast forward' effect, use values higher than 1.0.<br>
-     * Note：It will affect EVERY scheduled selector / action.
-     * @zh
-     * 设置时间间隔的缩放比例。<br>
-     * 您可以使用这个方法来创建一个 “slow motion（慢动作）” 或 “fast forward（快进）” 的效果。<br>
-     * 默认是 1.0。要创建一个 “slow motion（慢动作）” 效果,使用值低于 1.0。<br>
-     * 要使用 “fast forward（快进）” 效果，使用值大于 1.0。<br>
-     * 注意：它影响该 Scheduler 下管理的所有定时器。
-     * @param timeScale
-     */
-    setTimeScale(timeScale: number): void;
-    /**
-     * @en Returns time scale of scheduler.
-     * @zh 获取时间间隔的缩放比例。
-     */
-    getTimeScale(): number;
-    /**
-     * @en 'update' the scheduler. (You should NEVER call this method, unless you know what you are doing.)
-     * @zh update 调度函数。(不应该直接调用这个方法，除非完全了解这么做的结果)
-     * @param dt
-     * @en delta time. The unit is seconds.
-     * @zh 更新间隔时间, 单位是秒。
-     */
-    update(dt: number): void;
-    /**
-     * @en Specify the callback to schedule a new timer.
-     * If the callback function is already scheduled, then only the interval parameter will be updated without re-scheduling it again.
-     * @zh 指定回调函数来规划一个新的定时器。
-     * 如果回调函数已经被定时器使用，那么只会更新之前定时器的时间间隔参数，不会设置新的定时器。
-     * @param callback
-     * @en The specified target.
-     * @zh 所指定的调用对象。
-     * @param target
-     * @en The scheduled method will be called every 'interval' seconds.
-     * If 'interval' is 0, it will be called every frame, but if so, it recommended to use 'scheduleUpdateForTarget:' instead.
-     * @zh 当时间间隔达到指定值时，设置的回调函数将会被调用。
-     * 如果 interval 值为 0，那么回调函数每一帧都会被调用，但如果是这样，建议使用 scheduleUpdateForTarget 代替。
-     * @param interval
-     * @en repeat let the action be repeated repeat + 1 times, use `macro.REPEAT_FOREVER` to let the action run continuously.
-     * @zh repeat 值可以让定时器触发 repeat + 1 次，使用 `macro.REPEAT_FOREVER` 可以让定时器一直循环触发。
-     * @param repeat
-     * @en delay is the amount of time the action will wait before it'll start. Unit: s.
-     * @zh delay 值指定延迟时间，定时器会在延迟指定的时间之后开始计时，单位: 秒。
-     * @param delay
-     * @en If paused is YES, then it won't be called until it is resumed.
-     * @zh 如果 paused 值为 true，那么直到 resume 被调用才开始计时。
-     * @param paused
-     */
-    schedule(callback: __private._cocos_core_scheduler__CallbackType, target: ISchedulable, interval: number, repeat?: number, delay?: number, paused?: boolean): void;
-    /**
-     * @en The specified target.
-     * @zh 所指定的调用对象。
-     * @param target
-     * @en Specify the callback to schedule a new timer.
-     * If the callback function is already scheduled, then only the interval parameter will be updated without re-scheduling it again.
-     * @zh 指定回调函数来规划一个新的定时器。
-     * 如果回调函数已经被定时器使用，那么只会更新之前定时器的时间间隔参数，不会设置新的定时器。
-     * @param callback
-     * @en The scheduled method will be called every 'interval' seconds.
-     * If 'interval' is 0, it will be called every frame, but if so, it recommended to use 'scheduleUpdateForTarget:' instead.
-     * @zh 当时间间隔达到指定值时，设置的回调函数将会被调用。
-     * 如果 interval 值为 0，那么回调函数每一帧都会被调用，但如果是这样，建议使用 scheduleUpdateForTarget 代替。
-     * @param interval
-     * @en repeat let the action be repeated repeat + 1 times, use `macro.REPEAT_FOREVER` to let the action run continuously.
-     * @zh repeat 值可以让定时器触发 repeat + 1 次，使用 `macro.REPEAT_FOREVER` 可以让定时器一直循环触发。
-     * @param repeat
-     * @en delay is the amount of time the action will wait before it'll start. Unit: s.
-     * @zh delay 值指定延迟时间，定时器会在延迟指定的时间之后开始计时，单位: 秒。
-     * @param delay
-     * @en If paused is YES, then it won't be called until it is resumed.
-     * @zh 如果 paused 值为 true，那么直到 resume 被调用才开始计时。
-     * @param paused
-     *
-     * @deprecated since v3.8.0, please use `Scheduler.schedule(callback, target, interval)` instead.
-     */
-    schedule(target: ISchedulable, callback: __private._cocos_core_scheduler__CallbackType, interval: number, repeat?: number, delay?: number, paused?: boolean): void;
-    /**
-     * @en
-     * Schedules the update callback for a given target,
-     * During every frame after schedule started, the "update" function of target will be invoked.
-     * @zh
-     * 使用指定的优先级为指定的对象设置 update 定时器。<br>
-     * update 定时器每一帧都会被触发，触发时自动调用指定对象的 "update" 函数。<br>
-     * 优先级的值越低，定时器被触发的越早。
-     * @param target
-     * @en The target bound to the callback. @zh 回调所绑定的目标对象。
-     * @param priority
-     * @en The priority. @zh 优先级。
-     * @param paused
-     * @en Whether is paused. @zh 是否被暂停。
-     */
-    scheduleUpdate(target: ISchedulable, priority: number, paused: boolean): void;
-    /**
-     * @en
-     * Unschedule a callback for a callback and a given target.
-     * If you want to unschedule the "update", use `unscheduleUpdate()`
-     * @zh
-     * 取消指定对象定时器。
-     * 如果需要取消 update 定时器，请使用 unscheduleUpdate()。
-     * @param callback @en The callback to be unscheduled @zh 被取消调度的回调。
-     * @param target @en The target bound to the callback. @zh 回调所绑定的目标对象。
-     */
-    unschedule(callback: __private.__types_globals__AnyFunction, target: ISchedulable): void;
-    /**
-     * @en Unschedule a timer. It is invoked by CallbackTimer when a timer is finished.
-     * @param timerToUnschedule The timer to be unscheduled.
-     * @param target The target of the timer.
-     * @engineInternal
-     * @mangle
-     */
-    unscheduleForTimer(timerToUnschedule: __private._cocos_core_scheduler__CallbackTimer, target: ISchedulable): void;
-    /**
-     * @en Unschedule the update callback for a given target.
-     * @zh 取消指定对象的 update 定时器。
-     * @param target The target to be unscheduled.
-     */
-    unscheduleUpdate(target: ISchedulable): void;
-    /**
-     * @en
-     * Unschedule all scheduled callbacks for a given target.
-     * This also includes the "update" callback.
-     * @zh 取消指定对象的所有定时器，包括 update 定时器。
-     * @param target The target to be unscheduled.
-     */
-    unscheduleAllForTarget(target: ISchedulable): void;
-    /**
-     * @en
-     * Unschedule all scheduled callbacks from all targets including the system callbacks.
-     * You should NEVER call this method, unless you know what you are doing.
-     * @zh
-     * 取消所有对象的所有定时器，包括系统定时器。
-     * 不要调用此函数，除非你确定你在做什么。
-     */
-    unscheduleAll(): void;
-    /**
-     * @en
-     * Unschedule all callbacks from all targets with a minimum priority.
-     * You should only call this with `PRIORITY_NON_SYSTEM_MIN` or higher.
-     * @zh
-     * 取消所有优先级的值大于指定优先级的定时器。
-     * 你应该只取消优先级的值大于 PRIORITY_NON_SYSTEM_MIN 的定时器。
-     * @param minPriority
-     * @en The minimum priority of selector to be unscheduled.
-     * Which means, all selectors which priority is higher than minPriority will be unscheduled.
-     * @zh 要取消调度的选择器的最低优先级。
-     * 这意味着，所有优先级高于 minPriority 的选择器将被取消调度。
-     */
-    unscheduleAllWithMinPriority(minPriority: number): void;
-    /**
-     * @en Checks whether a callback for a given target is scheduled.
-     * @zh 检查指定的回调函数和回调对象组合是否存在定时器。
-     * @param callback @en The callback to check. @zh 指定检测的回调。
-     * @param target @en The target of the callback. @zh 回调的目标对象。
-     * @returns @en True if the specified callback is invoked, false if not. @zh 返回true如果指定回调被调用, 否则返回false。
-     */
-    isScheduled(callback: __private.__types_globals__AnyFunction, target: ISchedulable): boolean;
-    /**
-     * @en
-     * Pause all selectors from all targets.
-     * You should NEVER call this method, unless you know what you are doing.
-     * @zh
-     * 暂停所有对象的所有定时器。
-     * 不要调用这个方法，除非你知道你正在做什么。
-     */
-    pauseAllTargets(): ISchedulable[];
-    /**
-     * @en
-     * Pause all selectors from all targets with a minimum priority.
-     * You should only call this with kCCPriorityNonSystemMin or higher.
-     * @zh
-     * 暂停所有优先级的值大于指定优先级的定时器。
-     * 你应该只暂停优先级的值大于 PRIORITY_NON_SYSTEM_MIN 的定时器。
-     * @param minPriority @en the minimum priority. @zn 最小优先级。
-     */
-    pauseAllTargetsWithMinPriority(minPriority: number): ISchedulable[];
-    /**
-     * @en
-     * Resume selectors on a set of targets.<br/>
-     * This can be useful for undoing a call to pauseAllCallbacks.
-     * @zh
-     * 恢复指定数组中所有对象的定时器。<br/>
-     * 这个函数是 pauseAllCallbacks 的逆操作。
-     * @param targetsToResume
-     */
-    resumeTargets(targetsToResume: ISchedulable[]): void;
-    /**
-     * @en
-     * Pauses the target.<br/>
-     * All scheduled selectors/update for a given target won't be 'ticked' until the target is resumed.<br/>
-     * If the target is not present, nothing happens.
-     * @zh
-     * 暂停指定对象的定时器。<br/>
-     * 指定对象的所有定时器都会被暂停。<br/>
-     * 如果指定的对象没有定时器，什么也不会发生。
-     * @param target
-     */
-    pauseTarget(target: ISchedulable): void;
-    /**
-     * @en
-     * Resumes the target.<br/>
-     * The 'target' will be unpaused, so all schedule selectors/update will be 'ticked' again.<br/>
-     * If the target is not present, nothing happens.
-     * @zh
-     * 恢复指定对象的所有定时器。<br/>
-     * 指定对象的所有定时器将继续工作。<br/>
-     * 如果指定的对象没有定时器，什么也不会发生。
-     * @param target
-     */
-    resumeTarget(target: ISchedulable): void;
-    /**
-     * @en Returns whether or not the target is paused.
-     * @zh 返回指定对象的定时器是否处于暂停状态。
-     * @param target
-     */
-    isTargetPaused(target: ISchedulable): boolean;
-}
 /**
  * @en
  * Real curve.
@@ -22180,7 +22180,7 @@ export class CallbacksInvoker<EventTypeClass extends __private._cocos_core_event
      * @param target - Callback callee
      * @param once - Whether invoke the callback only once (and remove it)
      */
-    on(key: EventTypeClass, callback: __private.__types_globals__AnyFunction, target?: unknown, once?: boolean): __private.__types_globals__AnyFunction;
+    on(key: EventTypeClass, callback: __private._types_globals__AnyFunction, target?: unknown, once?: boolean): __private._types_globals__AnyFunction;
     /**
      * @zh 检查指定事件是否已注册回调。
      * @en Checks whether there is correspond event listener registered on the given event
@@ -22188,7 +22188,7 @@ export class CallbacksInvoker<EventTypeClass extends __private._cocos_core_event
      * @param callback - Callback function when event triggered
      * @param target - Callback callee
      */
-    hasEventListener(key: EventTypeClass, callback?: __private.__types_globals__AnyFunction, target?: unknown): boolean;
+    hasEventListener(key: EventTypeClass, callback?: __private._types_globals__AnyFunction, target?: unknown): boolean;
     /**
      * @zh 移除在特定事件类型中注册的所有回调或在某个目标中注册的所有回调。
      * @en Removes all callbacks registered in a certain event type or all callbacks registered with a certain target
@@ -22202,7 +22202,7 @@ export class CallbacksInvoker<EventTypeClass extends __private._cocos_core_event
      * @param callback - The callback function of the event listener, if absent all event listeners for the given type will be removed
      * @param target - The callback callee of the event listener
      */
-    off(key: EventTypeClass, callback?: __private.__types_globals__AnyFunction, target?: unknown): void;
+    off(key: EventTypeClass, callback?: __private._types_globals__AnyFunction, target?: unknown): void;
     /**
      * @zh 派发一个指定事件，并传递需要的参数
      * @en Trigger an event directly with the event name and necessary arguments.
@@ -22215,7 +22215,7 @@ export class CallbacksInvoker<EventTypeClass extends __private._cocos_core_event
      */
     emit(key: EventTypeClass, arg0?: any, arg1?: any, arg2?: any, arg3?: any, arg4?: any): void;
     /** Internal policy hook. Ordinary event targets retain synchronous exception propagation. */
-    protected _invokeCallback(key: EventTypeClass, callback: __private.__types_globals__AnyFunction, target: unknown, arg0?: any, arg1?: any, arg2?: any, arg3?: any, arg4?: any): void;
+    protected _invokeCallback(key: EventTypeClass, callback: __private._types_globals__AnyFunction, target: unknown, arg0?: any, arg1?: any, arg2?: any, arg3?: any, arg4?: any): void;
     /**
      * 移除所有回调。
      */
@@ -23124,10 +23124,10 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
      * @engineInternal
      */
     static _decSkewCompCount(): void;
-    protected static _findComponent<T extends Component>(node: Node, constructor: __private.__types_globals__Constructor<T> | __private.__types_globals__AbstractedConstructor<T>): T | null;
-    protected static _findComponents<T extends Component>(node: Node, constructor: __private.__types_globals__Constructor<T> | __private.__types_globals__AbstractedConstructor<T>, components: Component[]): void;
-    protected static _findChildComponent<T extends Component>(children: Node[], constructor: __private.__types_globals__Constructor<T> | __private.__types_globals__AbstractedConstructor<T>): T | null;
-    protected static _findChildComponents<T extends Component>(children: Node[], constructor: __private.__types_globals__Constructor<T> | __private.__types_globals__AbstractedConstructor<T>, components: Component[]): void;
+    protected static _findComponent<T extends Component>(node: Node, constructor: __private._types_globals__Constructor<T> | __private._types_globals__AbstractedConstructor<T>): T | null;
+    protected static _findComponents<T extends Component>(node: Node, constructor: __private._types_globals__Constructor<T> | __private._types_globals__AbstractedConstructor<T>, components: Component[]): void;
+    protected static _findChildComponent<T extends Component>(children: Node[], constructor: __private._types_globals__Constructor<T> | __private._types_globals__AbstractedConstructor<T>): T | null;
+    protected static _findChildComponents<T extends Component>(children: Node[], constructor: __private._types_globals__Constructor<T> | __private._types_globals__AbstractedConstructor<T>, components: Component[]): void;
     protected _parent: this | null;
     protected _children: this[];
     protected _active: boolean;
@@ -23334,7 +23334,7 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
      * var sprite = node.getComponent(Sprite);
      * ```
      */
-    getComponent<T extends Component>(classConstructor: __private.__types_globals__Constructor<T> | __private.__types_globals__AbstractedConstructor<T>): T | null;
+    getComponent<T extends Component>(classConstructor: __private._types_globals__Constructor<T> | __private._types_globals__AbstractedConstructor<T>): T | null;
     /**
      * @en
      * Returns the component of supplied type if the node has one attached, null if it doesn't.
@@ -23370,7 +23370,7 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
      * @zh 返回节点上指定类型的所有组件。
      * @param classConstructor The class of the target component
      */
-    getComponents<T extends Component>(classConstructor: __private.__types_globals__Constructor<T> | __private.__types_globals__AbstractedConstructor<T>): T[];
+    getComponents<T extends Component>(classConstructor: __private._types_globals__Constructor<T> | __private._types_globals__AbstractedConstructor<T>): T[];
     /**
      * @en Returns all components of given type in the node.
      * @zh 返回节点上指定类型的所有组件。
@@ -23400,7 +23400,7 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
      * var sprite = node.getComponentInChildren(Sprite);
      * ```
      */
-    getComponentInChildren<T extends Component>(classConstructor: __private.__types_globals__Constructor<T> | __private.__types_globals__AbstractedConstructor<T>): T | null;
+    getComponentInChildren<T extends Component>(classConstructor: __private._types_globals__Constructor<T> | __private._types_globals__AbstractedConstructor<T>): T | null;
     /**
      * @en Returns the component of given type in any of its children using depth first search.
      * @zh 递归查找所有子节点中第一个匹配指定类型的组件。
@@ -23430,7 +23430,7 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
      * var sprites = node.getComponentsInChildren(Sprite);
      * ```
      */
-    getComponentsInChildren<T extends Component>(classConstructor: __private.__types_globals__Constructor<T> | __private.__types_globals__AbstractedConstructor<T>): T[];
+    getComponentsInChildren<T extends Component>(classConstructor: __private._types_globals__Constructor<T> | __private._types_globals__AbstractedConstructor<T>): T[];
     /**
      * @en Returns all components of given type in self or any of its children.
      * @zh 递归查找自身或所有子节点中指定类型的组件
@@ -23461,7 +23461,7 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
      * var sprite = node.addComponent(Sprite);
      * ```
      */
-    addComponent<T extends Component>(classConstructor: __private.__types_globals__Constructor<T>): T;
+    addComponent<T extends Component>(classConstructor: __private._types_globals__Constructor<T>): T;
     /**
      * @en Adds a component class to the node. You can also add component to node by passing in the name of the script.
      * @zh 向节点添加一个指定类型的组件类，你还可以通过传入脚本的名称来添加组件。
@@ -23498,7 +23498,7 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
      * node.removeComponent(Sprite);
      * ```
      */
-    removeComponent<T extends Component>(classConstructor: __private.__types_globals__Constructor<T> | __private.__types_globals__AbstractedConstructor<T>): void;
+    removeComponent<T extends Component>(classConstructor: __private._types_globals__Constructor<T> | __private._types_globals__AbstractedConstructor<T>): void;
     /**
      * @en
      * Removes a component identified by the given name or removes the component object given.
@@ -23556,7 +23556,7 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
      * node.on(NodeEventType.TOUCH_END, callback, this);
      * ```
      */
-    on(type: string | NodeEventType, callback: __private.__types_globals__AnyFunction, target?: unknown, useCapture?: boolean): void;
+    on(type: string | NodeEventType, callback: __private._types_globals__AnyFunction, target?: unknown, useCapture?: boolean): void;
     /**
      * @en
      * Removes the callback previously registered with the same type, callback, target and or useCapture.
@@ -23573,7 +23573,7 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
      * node.off(NodeEventType.TOUCH_START, callback, this.node);
      * ```
      */
-    off(type: string, callback?: __private.__types_globals__AnyFunction, target?: unknown, useCapture?: boolean): void;
+    off(type: string, callback?: __private._types_globals__AnyFunction, target?: unknown, useCapture?: boolean): void;
     /**
      * @en
      * Register an callback of a specific event type on the Node,
@@ -23586,7 +23586,7 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
      *                              The callback is ignored if it is a duplicate (the callbacks are unique).
      * @param target - The target (this object) to invoke the callback, can be null
      */
-    once(type: string, callback: __private.__types_globals__AnyFunction, target?: unknown, useCapture?: boolean): void;
+    once(type: string, callback: __private._types_globals__AnyFunction, target?: unknown, useCapture?: boolean): void;
     /**
      * @en
      * Trigger an event directly with the event name and necessary arguments.
@@ -23621,7 +23621,7 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
      * @param target - The callback callee of the event listener
      * @return True if a callback of the specified type is registered; false otherwise.
      */
-    hasEventListener(type: string, callback?: __private.__types_globals__AnyFunction, target?: unknown): any;
+    hasEventListener(type: string, callback?: __private._types_globals__AnyFunction, target?: unknown): any;
     /**
      * @en Removes all callbacks previously registered with the same target.
      * @zh 移除目标上的所有注册事件。
@@ -23667,7 +23667,7 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
      * @param constructor Constructor of the component.
      * @throws If one or more component of same type have been existed in this node.
      */
-    protected _checkMultipleComp?<T extends Component>(constructor: __private.__types_globals__Constructor<T>): void;
+    protected _checkMultipleComp?<T extends Component>(constructor: __private._types_globals__Constructor<T>): void;
     /**
      * @en Event types emitted by Node
      * @zh 节点可能发出的事件类型
@@ -24358,8 +24358,8 @@ export class Layers {
     static layerToName(bitNum: number): string;
 }
 export namespace Layers {
-    export type Enum = __private.__types_globals__EnumAlias<typeof Layers.Enum>;
-    export type BitMask = __private.__types_globals__EnumAlias<typeof Layers.BitMask>;
+    export type Enum = __private._types_globals__EnumAlias<typeof Layers.Enum>;
+    export type BitMask = __private._types_globals__EnumAlias<typeof Layers.BitMask>;
 }
 /**
  * @en
@@ -24473,7 +24473,7 @@ export class Component extends CCObject {
     /**
      * @engineInternal
      */
-    static _requireComponent: __private.__types_globals__Constructor<Component> | null;
+    static _requireComponent: __private._types_globals__Constructor<Component> | null;
     constructor();
     get name(): string;
     set name(value: string);
@@ -24571,7 +24571,7 @@ export class Component extends CCObject {
      * const sprite = node.addComponent(Sprite);
      * ```
      */
-    addComponent<T extends Component>(classConstructor: __private.__types_globals__Constructor<T>): T | null;
+    addComponent<T extends Component>(classConstructor: __private._types_globals__Constructor<T>): T | null;
     /**
      * @en Adds a component class to the node. You can also add component to node by passing in the name of the script.
      * @zh 向节点添加一个指定类型的组件类，你还可以通过传入脚本的名称来添加组件。
@@ -24597,7 +24597,7 @@ export class Component extends CCObject {
      * var sprite = node.getComponent(Sprite);
      * ```
      */
-    getComponent<T extends Component>(classConstructor: __private.__types_globals__Constructor<T> | __private.__types_globals__AbstractedConstructor<T>): T | null;
+    getComponent<T extends Component>(classConstructor: __private._types_globals__Constructor<T> | __private._types_globals__AbstractedConstructor<T>): T | null;
     /**
      * @en
      * Returns the component of supplied type if the node has one attached, null if it doesn't.<br/>
@@ -24623,7 +24623,7 @@ export class Component extends CCObject {
      * const sprites = node.getComponents(Sprite);
      * ```
      */
-    getComponents<T extends Component>(classConstructor: __private.__types_globals__Constructor<T> | __private.__types_globals__AbstractedConstructor<T>): T[];
+    getComponents<T extends Component>(classConstructor: __private._types_globals__Constructor<T> | __private._types_globals__AbstractedConstructor<T>): T[];
     /**
      * @en Returns all components of supplied type in the node.
      * @zh 返回节点上指定类型的所有组件。
@@ -24644,7 +24644,7 @@ export class Component extends CCObject {
      * const sprite = node.getComponentInChildren(Sprite);
      * ```
      */
-    getComponentInChildren<T extends Component>(classConstructor: __private.__types_globals__Constructor<T> | __private.__types_globals__AbstractedConstructor<T>): T | null;
+    getComponentInChildren<T extends Component>(classConstructor: __private._types_globals__Constructor<T> | __private._types_globals__AbstractedConstructor<T>): T | null;
     /**
      * @en Returns the component of supplied type in any of its children using depth first search.
      * @zh 递归查找所有子节点中第一个匹配指定类型的组件。
@@ -24665,7 +24665,7 @@ export class Component extends CCObject {
      * const sprites = node.getComponentsInChildren(Sprite);
      * ```
      */
-    getComponentsInChildren<T extends Component>(classConstructor: __private.__types_globals__Constructor<T> | __private.__types_globals__AbstractedConstructor<T>): T[];
+    getComponentsInChildren<T extends Component>(classConstructor: __private._types_globals__Constructor<T> | __private._types_globals__AbstractedConstructor<T>): T[];
     /**
      * @en Returns all components of supplied type in self or any of its children.
      * @zh 递归查找自身或所有子节点中指定类型的组件。
@@ -26322,12 +26322,12 @@ export class Camera extends Component {
  * @internal
  */
 export namespace Camera {
-    export type ProjectionType = __private.__types_globals__EnumAlias<typeof __private._cocos_misc_camera_component__ProjectionType>;
-    export type FOVAxis = __private.__types_globals__EnumAlias<typeof __private._cocos_misc_camera_component__FOVAxis>;
-    export type ClearFlag = __private.__types_globals__EnumAlias<typeof __private._cocos_misc_camera_component__ClearFlag>;
-    export type Aperture = __private.__types_globals__EnumAlias<typeof __private._cocos_misc_camera_component__Aperture>;
-    export type Shutter = __private.__types_globals__EnumAlias<typeof __private._cocos_misc_camera_component__Shutter>;
-    export type ISO = __private.__types_globals__EnumAlias<typeof __private._cocos_misc_camera_component__ISO>;
+    export type ProjectionType = __private._types_globals__EnumAlias<typeof __private._cocos_misc_camera_component__ProjectionType>;
+    export type FOVAxis = __private._types_globals__EnumAlias<typeof __private._cocos_misc_camera_component__FOVAxis>;
+    export type ClearFlag = __private._types_globals__EnumAlias<typeof __private._cocos_misc_camera_component__ClearFlag>;
+    export type Aperture = __private._types_globals__EnumAlias<typeof __private._cocos_misc_camera_component__Aperture>;
+    export type Shutter = __private._types_globals__EnumAlias<typeof __private._cocos_misc_camera_component__Shutter>;
+    export type ISO = __private._types_globals__EnumAlias<typeof __private._cocos_misc_camera_component__ISO>;
 }
 /**
  * @en Base class for all rendering components containing model.
@@ -26459,7 +26459,7 @@ export class Renderer extends Component {
  * 包含无法加载的原始组件的临时回退。
  */
 export class MissingScript extends Component {
-    static safeFindClass(id: string): __private.__types_globals__Constructor<unknown> | undefined;
+    static safeFindClass(id: string): __private._types_globals__Constructor<unknown> | undefined;
     /**
      * @deprecated since v3.5.0, this is an engine private interface that will be removed in the future.
      */
@@ -27640,7 +27640,7 @@ export class Details {
     uuidTypeList: string[];
     static pool: js.Pool<Details>;
     assignAssetsBy: (getter: (uuid: string, options: {
-        type: __private.__types_globals__Constructor<Asset>;
+        type: __private._types_globals__Constructor<Asset>;
         owner: Record<string, unknown>;
         prop: string;
     }) => Asset) => void;
@@ -30340,7 +30340,7 @@ export namespace AssetManager {
          * const info = bundle.getInfoWithPath('image/a', Texture2D);
          *
          */
-        getInfoWithPath(path: string, type?: __private.__types_globals__Constructor<Asset> | null): __private._cocos_asset_asset_manager_config__IAddressableInfo | null;
+        getInfoWithPath(path: string, type?: __private._types_globals__Constructor<Asset> | null): __private._cocos_asset_asset_manager_config__IAddressableInfo | null;
         /**
          * @en
          * Gets all asset's info within specific folder.
@@ -30359,7 +30359,7 @@ export namespace AssetManager {
          * const infos = [];
          * bundle.getDirWithPath('images', Texture2D, infos);
          */
-        getDirWithPath(path: string, type?: __private.__types_globals__Constructor<Asset> | null, out?: __private._cocos_asset_asset_manager_config__IAddressableInfo[]): __private._cocos_asset_asset_manager_config__IAddressableInfo[];
+        getDirWithPath(path: string, type?: __private._types_globals__Constructor<Asset> | null, out?: __private._cocos_asset_asset_manager_config__IAddressableInfo[]): __private._cocos_asset_asset_manager_config__IAddressableInfo[];
         /**
          * @en
          * Get asset's information with uuid.
@@ -30443,14 +30443,14 @@ export namespace AssetManager {
          * bundle2.load('imgs/cocos', SpriteFrame, null, (err, spriteFrame) => console.log(err));
          *
          */
-        load<T extends Asset>(paths: string, type: __private.__types_globals__Constructor<T> | null, onProgress: ((finished: number, total: number, item: RequestItem) => void) | null, onComplete: ((err: Error | null, data: T) => void) | null): void;
-        load<T extends Asset>(paths: string[], type: __private.__types_globals__Constructor<T> | null, onProgress: ((finished: number, total: number, item: RequestItem) => void) | null, onComplete: ((err: Error | null, data: T[]) => void) | null): void;
+        load<T extends Asset>(paths: string, type: __private._types_globals__Constructor<T> | null, onProgress: ((finished: number, total: number, item: RequestItem) => void) | null, onComplete: ((err: Error | null, data: T) => void) | null): void;
+        load<T extends Asset>(paths: string[], type: __private._types_globals__Constructor<T> | null, onProgress: ((finished: number, total: number, item: RequestItem) => void) | null, onComplete: ((err: Error | null, data: T[]) => void) | null): void;
         load<T extends Asset>(paths: string, onProgress: ((finished: number, total: number, item: RequestItem) => void) | null, onComplete: ((err: Error | null, data: T) => void) | null): void;
         load<T extends Asset>(paths: string[], onProgress: ((finished: number, total: number, item: RequestItem) => void) | null, onComplete: ((err: Error | null, data: T[]) => void) | null): void;
         load<T extends Asset>(paths: string, onComplete?: ((err: Error | null, data: T) => void) | null): void;
         load<T extends Asset>(paths: string[], onComplete?: ((err: Error | null, data: T[]) => void) | null): void;
-        load<T extends Asset>(paths: string, type: __private.__types_globals__Constructor<T> | null, onComplete?: ((err: Error | null, data: T) => void) | null): void;
-        load<T extends Asset>(paths: string[], type: __private.__types_globals__Constructor<T> | null, onComplete?: ((err: Error | null, data: T[]) => void) | null): void;
+        load<T extends Asset>(paths: string, type: __private._types_globals__Constructor<T> | null, onComplete?: ((err: Error | null, data: T) => void) | null): void;
+        load<T extends Asset>(paths: string[], type: __private._types_globals__Constructor<T> | null, onComplete?: ((err: Error | null, data: T[]) => void) | null): void;
         /**
          * @en
          * Preloads the asset within this bundle by the path which is relative to bundle's path.
@@ -30500,10 +30500,10 @@ export namespace AssetManager {
          * bundle2.load('imgs/cocos', SpriteFrame, (err, spriteFrame) => {});
          *
          */
-        preload(paths: string | string[], type: __private.__types_globals__Constructor<Asset> | null, onProgress: ((finished: number, total: number, item: RequestItem) => void) | null, onComplete: ((err: Error | null, data: RequestItem[]) => void) | null): void;
+        preload(paths: string | string[], type: __private._types_globals__Constructor<Asset> | null, onProgress: ((finished: number, total: number, item: RequestItem) => void) | null, onComplete: ((err: Error | null, data: RequestItem[]) => void) | null): void;
         preload(paths: string | string[], onProgress: ((finished: number, total: number, item: RequestItem) => void) | null, onComplete: ((err: Error | null, data: RequestItem[]) => void) | null): void;
         preload(paths: string | string[], onComplete?: ((err: Error | null, data: RequestItem[]) => void) | null): void;
-        preload(paths: string | string[], type: __private.__types_globals__Constructor<Asset> | null, onComplete?: ((err: Error | null, data: RequestItem[]) => void) | null): void;
+        preload(paths: string | string[], type: __private._types_globals__Constructor<Asset> | null, onComplete?: ((err: Error | null, data: RequestItem[]) => void) | null): void;
         /**
          * @en
          * Loads all assets under a folder inside the bundle folder.<br>
@@ -30546,10 +30546,10 @@ export namespace AssetManager {
          * bundle2.loadDir('skills', SpriteFrame, null, (err, spriteFrames) => console.log(err));
          *
          */
-        loadDir<T extends Asset>(dir: string, type: __private.__types_globals__Constructor<T> | null, onProgress: ((finished: number, total: number, item: RequestItem) => void) | null, onComplete: ((err: Error | null, data: T[]) => void) | null): void;
+        loadDir<T extends Asset>(dir: string, type: __private._types_globals__Constructor<T> | null, onProgress: ((finished: number, total: number, item: RequestItem) => void) | null, onComplete: ((err: Error | null, data: T[]) => void) | null): void;
         loadDir<T extends Asset>(dir: string, onProgress: ((finished: number, total: number, item: RequestItem) => void) | null, onComplete: ((err: Error | null, data: T[]) => void) | null): void;
         loadDir<T extends Asset>(dir: string, onComplete?: ((err: Error | null, data: T[]) => void) | null): void;
-        loadDir<T extends Asset>(dir: string, type: __private.__types_globals__Constructor<T> | null, onComplete?: ((err: Error | null, data: T[]) => void) | null): void;
+        loadDir<T extends Asset>(dir: string, type: __private._types_globals__Constructor<T> | null, onComplete?: ((err: Error | null, data: T[]) => void) | null): void;
         /**
          * @en
          * Preloads all assets under a folder inside the bundle folder.<br> After calling this method, you still need to
@@ -30593,10 +30593,10 @@ export namespace AssetManager {
          * // wait for while
          * bundle2.loadDir('skills', SpriteFrame, (err, spriteFrames) => {});
          */
-        preloadDir(dir: string, type: __private.__types_globals__Constructor<Asset> | null, onProgress: ((finished: number, total: number, item: RequestItem) => void) | null, onComplete: ((err: Error | null, data: RequestItem[]) => void) | null): void;
+        preloadDir(dir: string, type: __private._types_globals__Constructor<Asset> | null, onProgress: ((finished: number, total: number, item: RequestItem) => void) | null, onComplete: ((err: Error | null, data: RequestItem[]) => void) | null): void;
         preloadDir(dir: string, onProgress: ((finished: number, total: number, item: RequestItem) => void) | null, onComplete: ((err: Error | null, data: RequestItem[]) => void) | null): void;
         preloadDir(dir: string, onComplete?: ((err: Error | null, data: RequestItem[]) => void) | null): void;
-        preloadDir(dir: string, type: __private.__types_globals__Constructor<Asset> | null, onComplete?: ((err: Error | null, data: RequestItem[]) => void) | null): void;
+        preloadDir(dir: string, type: __private._types_globals__Constructor<Asset> | null, onComplete?: ((err: Error | null, data: RequestItem[]) => void) | null): void;
         /**
          * @en
          * Loads the scene asset within this bundle by its name.
@@ -30698,7 +30698,7 @@ export namespace AssetManager {
          * @example
          * bundle1.get('music/hit', AudioClip);
          */
-        get<T extends Asset>(path: string, type?: __private.__types_globals__Constructor<T> | null): T | null;
+        get<T extends Asset>(path: string, type?: __private._types_globals__Constructor<T> | null): T | null;
         /**
          * @en
          * Releases the asset loaded by [[load]] or [[loadDir]].
@@ -30722,7 +30722,7 @@ export namespace AssetManager {
          * bundle1.release('misc/character/cocos');
          *
          */
-        release(path: string, type?: __private.__types_globals__Constructor<Asset> | null): void;
+        release(path: string, type?: __private._types_globals__Constructor<Asset> | null): void;
         /**
          * @en
          * Release all unused assets within this bundle. Refer to [[AssetManager.releaseAll]] for detailed information.
@@ -31407,8 +31407,8 @@ export class CCLoader {
      * });
      *
      */
-    loadRes<T extends Asset>(url: string, type: __private.__types_globals__Constructor<T>, progressCallback: __private._cocos_asset_asset_manager_deprecated__LoadProgressCallback, completeCallback: __private._cocos_asset_asset_manager_deprecated__LoadCompleteCallback<T>): any;
-    loadRes<T extends Asset>(url: string, type: __private.__types_globals__Constructor<T>, completeCallback: __private._cocos_asset_asset_manager_deprecated__LoadCompleteCallback<T>): any;
+    loadRes<T extends Asset>(url: string, type: __private._types_globals__Constructor<T>, progressCallback: __private._cocos_asset_asset_manager_deprecated__LoadProgressCallback, completeCallback: __private._cocos_asset_asset_manager_deprecated__LoadCompleteCallback<T>): any;
+    loadRes<T extends Asset>(url: string, type: __private._types_globals__Constructor<T>, completeCallback: __private._cocos_asset_asset_manager_deprecated__LoadCompleteCallback<T>): any;
     loadRes<T extends Asset>(url: string, progressCallback: __private._cocos_asset_asset_manager_deprecated__LoadProgressCallback, completeCallback: __private._cocos_asset_asset_manager_deprecated__LoadCompleteCallback<T>): any;
     loadRes<T extends Asset>(url: string, completeCallback: __private._cocos_asset_asset_manager_deprecated__LoadCompleteCallback<T>): any;
     /**
@@ -31443,7 +31443,7 @@ export class CCLoader {
      * });
      * ```
      */
-    loadResArray<T extends Asset>(urls: string[], type?: __private.__types_globals__Constructor<T>, progressCallback?: __private._cocos_asset_asset_manager_deprecated__LoadProgressCallback, completeCallback?: __private._cocos_asset_asset_manager_deprecated__LoadCompleteCallback<T[]>): void;
+    loadResArray<T extends Asset>(urls: string[], type?: __private._types_globals__Constructor<T>, progressCallback?: __private._cocos_asset_asset_manager_deprecated__LoadProgressCallback, completeCallback?: __private._cocos_asset_asset_manager_deprecated__LoadCompleteCallback<T[]>): void;
     /**
      * @en
      * Load all assets in a folder inside the "assets/resources" folder of your project.<br>
@@ -31492,8 +31492,8 @@ export class CCLoader {
      * });
      * ```
      */
-    loadResDir<T extends Asset>(url: string, type: __private.__types_globals__Constructor<T>, progressCallback: __private._cocos_asset_asset_manager_deprecated__LoadProgressCallback, completeCallback: __private._cocos_asset_asset_manager_deprecated__LoadDirCompleteCallback<T>): any;
-    loadResDir<T extends Asset>(url: string, type: __private.__types_globals__Constructor<T>, completeCallback: __private._cocos_asset_asset_manager_deprecated__LoadDirCompleteCallback<T>): any;
+    loadResDir<T extends Asset>(url: string, type: __private._types_globals__Constructor<T>, progressCallback: __private._cocos_asset_asset_manager_deprecated__LoadProgressCallback, completeCallback: __private._cocos_asset_asset_manager_deprecated__LoadDirCompleteCallback<T>): any;
+    loadResDir<T extends Asset>(url: string, type: __private._types_globals__Constructor<T>, completeCallback: __private._cocos_asset_asset_manager_deprecated__LoadDirCompleteCallback<T>): any;
     loadResDir<T extends Asset>(url: string, progressCallback: __private._cocos_asset_asset_manager_deprecated__LoadProgressCallback, completeCallback: __private._cocos_asset_asset_manager_deprecated__LoadDirCompleteCallback<T>): any;
     loadResDir<T extends Asset>(url: string, completeCallback: __private._cocos_asset_asset_manager_deprecated__LoadDirCompleteCallback<T>): any;
     /**
@@ -31512,7 +31512,7 @@ export class CCLoader {
      * @param type - Only asset of type will be returned if this argument is supplied.
      * @deprecated since v3.0 loader.getRes is deprecated, please use resources.get instead
      */
-    getRes<T extends Asset>(url: string, type?: __private.__types_globals__Constructor<T>): T | null;
+    getRes<T extends Asset>(url: string, type?: __private._types_globals__Constructor<T>): T | null;
     /**
      * @en Get total resources count in loader.
      * @zh 获取加载的总资源数量
@@ -31676,7 +31676,7 @@ export class CCLoader {
      *
      * @deprecated since v3.0 loader.releaseRes is deprecated, please use assetManager.releaseRes instead
      */
-    releaseRes(res: string, type?: __private.__types_globals__Constructor<Asset>): void;
+    releaseRes(res: string, type?: __private._types_globals__Constructor<Asset>): void;
     /**
      *
      * @en Resource all assets. Refer to [[release]] for detailed informations.
@@ -33627,7 +33627,7 @@ export class Input {
     _frameDispatchEvents(): void;
 }
 export namespace Input {
-    export type EventType = __private.__types_globals__EnumAlias<typeof __private._cocos_input_types_event_enum__InputEventType>;
+    export type EventType = __private._types_globals__EnumAlias<typeof __private._cocos_input_types_event_enum__InputEventType>;
 }
 /**
  * @module cc
@@ -33705,7 +33705,7 @@ export namespace SystemEvent {
      * @en The event type supported by SystemEvent and Node events
      * @zh SystemEvent 支持的事件类型以及节点事件类型
      */
-    export type EventType = __private.__types_globals__EnumAlias<typeof SystemEventType>;
+    export type EventType = __private._types_globals__EnumAlias<typeof SystemEventType>;
 }
 /**
  * @zh 该对象提供由原生绑定出来的 JavaScript 接口。
@@ -34282,7 +34282,7 @@ export namespace native {
          *
          * @return @en The deflated buffer. @zh 解压后的数据缓存区
          */
-        function inflateMemory(input: string | ArrayBuffer | __private.__types_globals__TypedArray, outLengthHint?: number): ArrayBuffer | null;
+        function inflateMemory(input: string | ArrayBuffer | __private._types_globals__TypedArray, outLengthHint?: number): ArrayBuffer | null;
         /**
          * @en Inflates a GZip file into memory.
          * @zh 将 GZip 压缩文件解压缩到内存中。
@@ -34309,7 +34309,7 @@ export namespace native {
          *
          * @return @en True is GZip format. false is not. @zh 返回true表示是 GZip 格式，否则不是。
          */
-        function isGZipBuffer(buffer: string | ArrayBuffer | __private.__types_globals__TypedArray): boolean;
+        function isGZipBuffer(buffer: string | ArrayBuffer | __private._types_globals__TypedArray): boolean;
         /**
          * @en Inflates a CCZ file into memory.
          * @zh 将 CCZ 格式压缩文件解压缩到内存中。
@@ -34326,7 +34326,7 @@ export namespace native {
          *
          * @return @en The deflated buffer. @zh 解压后的数据缓存区
          */
-        function inflateCCZBuffer(buffer: string | ArrayBuffer | __private.__types_globals__TypedArray): ArrayBuffer | null;
+        function inflateCCZBuffer(buffer: string | ArrayBuffer | __private._types_globals__TypedArray): ArrayBuffer | null;
         /**
          * @en Test a file is a CCZ format file or not.
          * @zh 判断一个文件是否是 CCZ 格式。
@@ -34342,7 +34342,7 @@ export namespace native {
          *
          * @return @en True is CCZ format. false is not. @zh 返回true表示是 CCZ 格式，否则不是。
          */
-        function isCCZBuffer(buffer: string | ArrayBuffer | __private.__types_globals__TypedArray): boolean;
+        function isCCZBuffer(buffer: string | ArrayBuffer | __private._types_globals__TypedArray): boolean;
         /**
          * @en
          * Sets the pvr.ccz encryption key parts separately for added security.
@@ -36098,7 +36098,7 @@ export namespace animation {
          * @param constructor @en The constructor of the component. @zh 组件的构造函数。
          * @returns `this`
          */
-        toComponent<T extends Component>(constructor: __private.__types_globals__Constructor<T> | string): TrackPath;
+        toComponent<T extends Component>(constructor: __private._types_globals__Constructor<T> | string): TrackPath;
         /**
          * @internal Reserved for backward compatibility. DO NOT USE IT IN YOUR CODE.
          */
@@ -36316,7 +36316,7 @@ export namespace animation {
     /**
      * @deprecated Since V3.3, use [[TrackPath]] instead.
      */
-    export function isCustomPath<T extends ICustomTargetPath>(path: TargetPath, constructor: __private.__types_globals__Constructor<T>): path is T;
+    export function isCustomPath<T extends ICustomTargetPath>(path: TargetPath, constructor: __private._types_globals__Constructor<T>): path is T;
     /**
      * @deprecated Since V3.3, use [[TrackPath]] instead.
      */
@@ -37066,7 +37066,7 @@ export namespace primitives {
      * @param height @zh 圆锥高度。 @en The height of cone
      * @param opts @zh 圆锥参数选项。@en The optional creation parameters of the cone
      */
-    export function cone(radius?: number, height?: number, opts?: __private.__types_globals__RecursivePartial<__private._cocos_primitive_cone__IConeOptions>): IGeometry;
+    export function cone(radius?: number, height?: number, opts?: __private._types_globals__RecursivePartial<__private._cocos_primitive_cone__IConeOptions>): IGeometry;
     /**
      * @en
      * Generate a cylinder with radiusTop radiusBottom 0.5, height 2 and centered at origin,
@@ -37078,7 +37078,7 @@ export namespace primitives {
      * @param height @en The cylinder height.  @zh 圆柱的高
      * @param opts @en The optional creation parameters of the cylinder.  @zh 圆柱参数选项。
      */
-    export function cylinder(radiusTop?: number, radiusBottom?: number, height?: number, opts?: __private.__types_globals__RecursivePartial<__private._cocos_primitive_cylinder__ICylinderOptions>): IGeometry;
+    export function cylinder(radiusTop?: number, radiusBottom?: number, height?: number, opts?: __private._types_globals__RecursivePartial<__private._cocos_primitive_cylinder__ICylinderOptions>): IGeometry;
     /**
      * @en
      * This function generates a plane on XOZ plane with positive Y direction.
@@ -37103,7 +37103,7 @@ export namespace primitives {
      * @param radius @en The radius. @zh 球半径。
      * @param options @en The sphere creation options. @zh 参数选项。
      */
-    export function sphere(radius?: number, opts?: __private.__types_globals__RecursivePartial<__private._cocos_primitive_sphere__ISphereOptions>): IGeometry;
+    export function sphere(radius?: number, opts?: __private._types_globals__RecursivePartial<__private._cocos_primitive_sphere__ISphereOptions>): IGeometry;
     /**
      * @en
      * Generate a torus with radius 0.4, tube 0.1 and centered at origin.
@@ -37113,7 +37113,7 @@ export namespace primitives {
      * @param tube @zh 管形大小。@en The radius of tube
      * @param opts @zh 参数选项。@en The optional creation parameters of the torus
      */
-    export function torus(radius?: number, tube?: number, opts?: __private.__types_globals__RecursivePartial<__private._cocos_primitive_torus__ITorusOptions>): {
+    export function torus(radius?: number, tube?: number, opts?: __private._types_globals__RecursivePartial<__private._cocos_primitive_torus__ITorusOptions>): {
         positions: number[];
         normals: number[];
         uvs: number[];
@@ -37131,7 +37131,7 @@ export namespace primitives {
      * @param radiusBottom @zh 底部半径。@en The radius of bottom sphere
      * @param opts @zh 胶囊体参数选项。@en The optional creation parameters of the capsule
      */
-    export function capsule(radiusTop?: number, radiusBottom?: number, height?: number, opts?: __private.__types_globals__RecursivePartial<__private._cocos_primitive_capsule__ICapsuteOptions>): {
+    export function capsule(radiusTop?: number, radiusBottom?: number, height?: number, opts?: __private._types_globals__RecursivePartial<__private._cocos_primitive_capsule__ICapsuteOptions>): {
         positions: number[];
         normals: number[];
         uvs: number[];
@@ -37148,7 +37148,7 @@ export namespace primitives {
      * 生成一个圆，其半径是单位1，中心点在原点。
      * @param options @zh 参数选项。 @en The optional creation parameters of the circle
      */
-    export function circle(options?: __private.__types_globals__RecursivePartial<__private._cocos_primitive_circle__ICircleOptions> | __private._cocos_primitive_circle__ICircleOptions): IGeometry;
+    export function circle(options?: __private._types_globals__RecursivePartial<__private._cocos_primitive_circle__ICircleOptions> | __private._cocos_primitive_circle__ICircleOptions): IGeometry;
     /**
      * @en
      * Translate the geometry.
@@ -37205,7 +37205,7 @@ export namespace primitives {
      * @zh
      * 应用默认的几何参数选项。
      */
-    export function applyDefaultGeometryOptions<GeometryOptions = IGeometryOptions>(options?: __private.__types_globals__RecursivePartial<IGeometryOptions>): GeometryOptions;
+    export function applyDefaultGeometryOptions<GeometryOptions = IGeometryOptions>(options?: __private._types_globals__RecursivePartial<IGeometryOptions>): GeometryOptions;
     /**
      * @en
      * The definition of the parameter for building a primitive geometry.
@@ -37492,7 +37492,7 @@ export class Primitive extends Mesh {
     onLoaded(): void;
 }
 export namespace Primitive {
-    export type PrimitiveType = __private.__types_globals__EnumAlias<typeof __private._cocos_primitive_primitive__PrimitiveType>;
+    export type PrimitiveType = __private._types_globals__EnumAlias<typeof __private._cocos_primitive_primitive__PrimitiveType>;
 }
 /**
  * @en
@@ -40544,9 +40544,9 @@ export interface ITiledLayerCullingRect {
  * @extends Component
  */
 export class TiledLayer extends UIRenderer {
-    protected _userNodeGrid: __private.__types_globals__SafeRecord<number, {
+    protected _userNodeGrid: __private._types_globals__SafeRecord<number, {
         count: number;
-    } & __private.__types_globals__SafeRecord<number, {
+    } & __private._types_globals__SafeRecord<number, {
         count: number;
         list: (TiledUserNodeData | null)[];
     }>>;
@@ -40579,14 +40579,14 @@ export class TiledLayer extends UIRenderer {
     protected _leftOffset: number;
     protected _rightOffset: number;
     tiles: __private._cocos_tiledmap_tiled_types__MixedGID[];
-    vertices: SafeArray<{
+    vertices: Array<({
         minCol: number;
         maxCol: number;
-    } & __private.__types_globals__SafeRecord<number, {
+    } & __private._types_globals__SafeRecord<number, {
         left: number;
         bottom: number;
         index: number;
-    }>>;
+    }>) | undefined>;
     protected _verticesDirty: boolean;
     protected _layerName: string;
     protected _layerSize?: math.Size;
@@ -43104,7 +43104,7 @@ export class Widget extends Component {
     protected _setDirtyByMode(): void;
 }
 export namespace Widget {
-    export type AlignMode = __private.__types_globals__EnumAlias<typeof __private._cocos_ui_widget__AlignMode>;
+    export type AlignMode = __private._types_globals__EnumAlias<typeof __private._cocos_ui_widget__AlignMode>;
 }
 /**
  * @en
@@ -44062,10 +44062,10 @@ export namespace sp {
         }
         export class SPVectorFloat {
             size(): number;
-            resize(newSize: number, defaultValue: number);
-            set(index: number, value: number);
+            resize(newSize: number, defaultValue: number): void;
+            set(index: number, value: number): void;
             get(index: number): number;
-            delete();
+            delete(): void;
         }
         /**
          * @version 4.2
@@ -44073,7 +44073,7 @@ export namespace sp {
         export class SPVectorPhysicsConstraintPtr {
             size(): number;
             get(index: number): PhysicsConstraint;
-            delete();
+            delete(): void;
         }
         /**
          * @version 4.2
@@ -44081,7 +44081,7 @@ export namespace sp {
         export class SPVectorPhysicsConstraintDataPtr {
             size(): number;
             get(index: number): PhysicsConstraintData;
-            delete();
+            delete(): void;
         }
         export class Animation {
             constructor(name: string, timelines: Array<Timeline>, duration: number);
@@ -45401,8 +45401,8 @@ export namespace sp {
             centerY: number;
             radius: number;
             angle: number;
-            worldX;
-            worldY;
+            worldX: number;
+            worldY: number;
             constructor(radius: number, interpolation?: Interpolation);
             begin(skeleton: Skeleton): void;
             transform(x: number, y: number): void;
@@ -45414,31 +45414,51 @@ export namespace sp {
             public static updateRenderData(): void;
             public static getCount(): number;
         }
+        /** Borrowed WASM vector view; not a JavaScript array. */
+        export interface VectorView<T> {
+            size(): number;
+            get(index: number): T;
+        }
+        export interface SpineModel {
+            vCount: number;
+            iCount: number;
+            vPtr: number;
+            iPtr: number;
+            getData(): VectorView<number>;
+            getTextures(): VectorView<string>;
+        }
+        export interface SpineDebugShape {
+            type: number;
+            vOffset: number;
+            vCount: number;
+            iOffset: number;
+            iCount: number;
+        }
         export class SkeletonInstance {
             dtRate: number;
             isCache: boolean;
             isDelete: boolean;
             enable: boolean;
             setTrackEntryListener: any;
-            destroy();
-            initSkeleton(data: SkeletonData);
-            getAnimationState();
+            destroy(): void;
+            initSkeleton(data: SkeletonData): Skeleton;
+            getAnimationState(): AnimationState | null;
             setAnimation(trackIndex: number, name: string, loop: boolean): spine.TrackEntry | null;
-            setSkin(name: string);
-            setPremultipliedAlpha(usePremultipliedAlpha: boolean);
-            setColor(r: number, g: number, b: number, a: number);
-            setMix(fromName: string, toName: string, duration: number);
-            updateAnimation(dt: number);
-            setUseTint(useTint: boolean);
-            clearEffect();
-            setJitterEffect(jitter: spine.VertexEffect);
-            setSwirlEffect(swirl: spine.VertexEffect);
-            updateRenderData();
-            setListener(id: number);
-            setDebugMode(debug: boolean);
-            getDebugShapes();
-            resizeSlotRegion(slotName: string, width: number, height: number, createNew: boolean);
-            setSlotTexture(slotName: string, uuid: string);
+            setSkin(name: string): void;
+            setPremultipliedAlpha(usePremultipliedAlpha: boolean): void;
+            setColor(r: number, g: number, b: number, a: number): void;
+            setMix(fromName: string, toName: string, duration: number): void;
+            updateAnimation(dt: number): void;
+            setUseTint(useTint: boolean): void;
+            clearEffect(): void;
+            setJitterEffect(jitter: spine.VertexEffect): void;
+            setSwirlEffect(swirl: spine.VertexEffect): void;
+            updateRenderData(): SpineModel;
+            setListener(id: number): void;
+            setDebugMode(debug: boolean): void;
+            getDebugShapes(): VectorView<SpineDebugShape>;
+            resizeSlotRegion(slotName: string, width: number, height: number, createNew: boolean): void;
+            setSlotTexture(slotName: string, uuid: string): void;
         }
         export class wasmUtil {
             static spineWasmInit(): void;
@@ -45448,8 +45468,8 @@ export namespace sp {
             static querySpineSkeletonDataByUUID(uuid: string): SkeletonData;
             static createSpineSkeletonDataWithJson(jsonStr: string, atlasText: string, textureNames: string[], textureUUIDs: string[]): SkeletonData;
             static createSpineSkeletonDataWithBinary(byteSize: number, atlasText: string, textureNames: string[], textureUUIDs: string[]): SkeletonData;
-            static registerSpineSkeletonDataWithUUID(data: SkeletonData, uuid: string);
-            static destroySpineSkeletonDataWithUUID(uuid: string);
+            static registerSpineSkeletonDataWithUUID(data: SkeletonData, uuid: string): void;
+            static destroySpineSkeletonDataWithUUID(uuid: string): void;
             static destroySpineSkeleton(skeleton: Skeleton): void;
             static getCurrentListenerID(): number;
             static getCurrentEventType(): EventType;
@@ -46936,7 +46956,7 @@ export namespace dragonBones {
         _inited: boolean;
         _invalid: boolean;
         _enableCacheAttachedInfo: boolean;
-        frames: SafeArray<ArmatureFrame>;
+        frames: Array<ArmatureFrame | undefined>;
         totalTime: number;
         isCompleted: boolean;
         _frameIdx: number;
@@ -47396,7 +47416,7 @@ export namespace dragonBones {
          * transformation with bones.
          * @zh 获取 socket nodes，socket nodes 被注册到组件上，可以随骨骼做同步运动变换。
          */
-        get socketNodes(): Map<string, Node>;
+        get socketNodes(): globalThis.Map<string, Node>;
         /**
          * @en The armature is the core of the skeletal animation system.
          * @zh 骨架是骨骼动画系统的核心。
@@ -47482,8 +47502,8 @@ export namespace dragonBones {
         };
         protected _enumArmatures: any;
         protected _enumAnimations: any;
-        protected _socketNodes: Map<string, Node>;
-        protected _cachedSockets: Map<string, __private._cocos_dragon_bones_ArmatureDisplay__BoneIndex>;
+        protected _socketNodes: globalThis.Map<string, Node>;
+        protected _cachedSockets: globalThis.Map<string, __private._cocos_dragon_bones_ArmatureDisplay__BoneIndex>;
         protected _sockets: DragonBoneSocket[];
         constructor();
         /**
@@ -49913,7 +49933,7 @@ export namespace dragonBones {
          * @version DragonBones 5.0
          * @language zh_CN
          */
-        fadeOutMode: __private.___node_modules_cocos_dragonbones_js_out_dragonBones__AnimationFadeOutMode;
+        fadeOutMode: __private.___external_types_dragonBones__AnimationFadeOutMode;
         /**
          * @private
          */
@@ -50359,7 +50379,7 @@ export namespace dragonBones {
          */
         _cacheFrameIndex: number;
         /* private */
-        readonly _bones;
+        readonly _bones: Array<Bone>;
         /* private */
         public readonly _slots: Array<Slot>;
         /**
@@ -50378,7 +50398,7 @@ export namespace dragonBones {
          */
         _armatureData: ArmatureData;
         /* private */
-        _animation;
+        _animation: Animation | null;
         public _display: DisplayData;
         /* private */
         _skinData: SkinData;
@@ -52173,7 +52193,7 @@ export namespace dragonBones {
          * @version DragonBones 4.5
          * @language zh_CN
          */
-        fadeIn(animationName: string, fadeInTime?: number, playTimes?: number, layer?: number, group?: string | null, fadeOutMode?: __private.___node_modules_cocos_dragonbones_js_out_dragonBones__AnimationFadeOutMode): AnimationState | null;
+        fadeIn(animationName: string, fadeInTime?: number, playTimes?: number, layer?: number, group?: string | null, fadeOutMode?: __private.___external_types_dragonBones__AnimationFadeOutMode): AnimationState | null;
         /**
          * - Play a specific animation from the specific time.
          * @param animationName - The name of animation data.
@@ -52430,7 +52450,7 @@ export namespace dragonBones {
          * @deprecated
          * @language zh_CN
          */
-        gotoAndPlay(animationName: string, fadeInTime?: number, duration?: number, playTimes?: number, layer?: number, group?: string | null, fadeOutMode?: __private.___node_modules_cocos_dragonbones_js_out_dragonBones__AnimationFadeOutMode, pauseFadeOut?: boolean, pauseFadeIn?: boolean): AnimationState | null;
+        gotoAndPlay(animationName: string, fadeInTime?: number, duration?: number, playTimes?: number, layer?: number, group?: string | null, fadeOutMode?: __private.___external_types_dragonBones__AnimationFadeOutMode, pauseFadeOut?: boolean, pauseFadeIn?: boolean): AnimationState | null;
         /**
          * - Deprecated, please refer to {@link #gotoAndStopByTime()}.
          * @deprecated
@@ -55037,8 +55057,8 @@ export namespace physics {
         protected onDestroy(): void;
     }
     export namespace Collider {
-        export type Type = __private.__types_globals__EnumAlias<typeof EColliderType>;
-        export type Axis = __private.__types_globals__EnumAlias<typeof EAxisDirection>;
+        export type Type = __private._types_globals__EnumAlias<typeof EColliderType>;
+        export type Axis = __private._types_globals__EnumAlias<typeof EAxisDirection>;
     }
     /**
      * @en
@@ -55299,7 +55319,7 @@ export namespace physics {
         updateVertices(): void;
     }
     export namespace SimplexCollider {
-        export type ESimplexType = __private.__types_globals__EnumAlias<typeof physics.ESimplexType>;
+        export type ESimplexType = __private._types_globals__EnumAlias<typeof physics.ESimplexType>;
     }
     /**
      * @en
@@ -55382,13 +55402,14 @@ export namespace physics {
         protected _connectedBody: RigidBody | null;
         protected _constraint: __private._cocos_physics_spec_i_physics_constraint__IBaseConstraint | null;
         constructor(type: EConstraintType);
+        destroy(): boolean;
         protected onLoad(): void;
         protected onEnable(): void;
         protected onDisable(): void;
         protected onDestroy(): void;
     }
     export namespace Constraint {
-        export type Type = __private.__types_globals__EnumAlias<typeof EConstraintType>;
+        export type Type = __private._types_globals__EnumAlias<typeof EConstraintType>;
     }
     /**
      * @en Hinge constraint.
@@ -55966,7 +55987,7 @@ export namespace physics {
         removeMask(v: number): void;
     }
     export namespace RigidBody {
-        export type Type = __private.__types_globals__EnumAlias<typeof ERigidBodyType>;
+        export type Type = __private._types_globals__EnumAlias<typeof ERigidBodyType>;
     }
     /**
      * @en
@@ -57632,11 +57653,11 @@ export type AudioPlaybackStartResult = AudioPlaybackResult | Readonly<{
 }>;
 export class AudioPCMDataView {
     constructor(arrayBufferView: __private._pal_audio_type__AudioBufferView, normalizeFactor: number);
-    constructor(arrayBuffer: ArrayBuffer, Ctor: __private.__types_globals__Constructor<__private._pal_audio_type__AudioBufferView>, normalizeFactor: number);
+    constructor(arrayBuffer: ArrayBuffer, Ctor: __private._types_globals__Constructor<__private._pal_audio_type__AudioBufferView>, normalizeFactor: number);
     get length(): number;
     getData(offset: number): number;
 }
-/** Load the optional pinned 3.2.0 module. Does not select a backend or create a world. */
+/** Load and persistently pin the optional module. Does not select a backend or create a world. */
 export function loadBox2D3(options?: Box2D3Options): Promise<void>;
 /** Select once, before the 2D system creates its world. Called by createAirApp. */
 export function selectPhysics2DBackend(backend: "box2d" | "box2d-v3-wasm"): void;
@@ -57743,8 +57764,91 @@ export const AIR_INSTANCE_ATTRIBUTES: readonly [
     "i_airMat2",
     "i_airColor"
 ];
+/**
+ * Create an independently owned local-Y two-color gradient EffectAsset after AIR
+ * startup. Use native Material.initialize({ effectAsset, technique, defines }).
+ *
+ * Techniques: 0 opaque/depth-writing; 1 straight-alpha blending/no depth writes.
+ * Properties: topColor/bottomColor (linear Vec4 or Color), offset (0), scale (1),
+ * smoothness (1, shader minimum .01), alpha (1). Colors default to red/blue.
+ * The weight is pow(max(localY * scale + offset, 0), max(smoothness, .01));
+ * it extrapolates above one. Supply finite properties; use alpha in [0, 1].
+ *
+ * Defines (all false unless supplied): AIR_GRADIENT_UNLIT bypasses scene light;
+ * AIR_GRADIENT_BABYLON_RESPONSE opts into the reference's extra RGB multiply;
+ * AIR_GRADIENT_SRGB_OUTPUT encodes linear RGB for an LDR display target.
+ * Raw output is the default, matching the reference and linear render targets.
+ * Scene lighting is native ambient hemisphere + main directional diffuse only.
+ * No shadows, fog, additional lights, skinning, morphing, instancing or textures.
+ * Detach consumers, destroy materials, then remove/destroy the owned effect.
+ */
+export function createAirGradientEffect(): EffectAsset;
+/**
+ * Called once by the existing Box3D owner per attempted fixed tick, after scene sync
+ * and before batch validation/commit. Must synchronously return undefined.
+ * enable/disable/dispose are configuration operations, not callable from this callback.
+ * Pausing invokes no hooks; existing enabled hook registrations persist across resume.
+ * This hook is not a joint, independent clock, post-step event or solver substep hook.
+ */
+export function registerBox3DBeforeStep(callback: Box3DBeforeStepCallback, options?: {
+    enabled?: boolean;
+}): Box3DBeforeStepHandle;
+/**
+ * Reads the actual current world's initialized RigidBody without synchronizing the
+ * scene, stepping, or committing queued commands. Valid in before-step callbacks:
+ * queued commands have not yet affected this committed native snapshot. Disabled
+ * and mass-pending bodies are observable; callers must check those flags before use.
+ * Foreign, uninitialized, destroyed, stale-generation and faulted ownership reject.
+ * No adapter, native handle, Node/renderer estimate or shape restriction is exposed.
+ */
+export function readBox3DBodyMotion(body: physics.RigidBody): Readonly<Box3DBodyMotion>;
+export function readBox3DConstraintState(target: object): Readonly<Record<string, unknown>>;
+/** Formal fixed-tick context. See before-step-api-v1.md for qualification boundaries. */
+export interface Box3DBeforeStepContext {
+    readonly tickIndex: number;
+    readonly attemptId: number;
+    readonly fixedDt: number;
+    readonly solverSubSteps: 1 | 2 | 4 | 8;
+}
+export interface Box3DBeforeStepHandle {
+    readonly enabled: boolean;
+    readonly disposed: boolean;
+    enable(): void;
+    disable(): void;
+    dispose(): void;
+}
+export type Box3DBeforeStepCallback = (context: Readonly<Box3DBeforeStepContext>) => void;
+/** Actual committed native body motion; every nested value is copied and frozen. */
+export interface Box3DBodyMotion {
+    /** World-space body origin, not the center of mass or a pending Node transform. */
+    readonly position: Box3DBodyMotionVector;
+    readonly rotation: Box3DBodyMotionRotation;
+    readonly worldCOM: Box3DBodyMotionVector;
+    /** Native body-frame COM offset; shape scale is already baked into this value. */
+    readonly localCenter: Box3DBodyMotionVector;
+    /** World-space velocity of the COM, not the velocity of the body origin. */
+    readonly linearVelocity: Box3DBodyMotionVector;
+    /** World-space angular velocity in radians per second. */
+    readonly angularVelocity: Box3DBodyMotionVector;
+    readonly mass: number;
+    readonly enabled: boolean;
+    /** Native Box3D type: 0 = static, 1 = kinematic, 2 = dynamic (not ERigidBodyType). */
+    readonly type: 0 | 1 | 2;
+    readonly massPending: boolean;
+}
+/** Copied native vector, not a mutable Cocos Vec3 or a reference into WASM memory. */
+export interface Box3DBodyMotionVector {
+    readonly x: number;
+    readonly y: number;
+    readonly z: number;
+}
+export interface Box3DBodyMotionRotation extends Box3DBodyMotionVector {
+    readonly w: number;
+}
 export interface AirSceneReleaseReceipt extends AirCleanupReceipt {
     readonly scene: string | null;
+    readonly physicsPreparation?: __private._air_physics_preparation__AirPhysicsPreparationReceipt;
+    readonly physicsSceneRelease?: __private._air_physics_preparation__AirPhysicsSceneReleaseResult;
     readonly retained: readonly string[];
     readonly measurements: Readonly<{
         gpuMemory: "unavailable";
@@ -57799,7 +57903,11 @@ export interface AirAppOptions {
      * `'cannon'` 使用 cannon.js 全量刚体模拟（纯 JS，默认 bundle 已编入）；
      * `'builtin'` 为官方内置离散碰撞检测器（不模拟）。须在 createAirApp 内 game.init 前生效。
      */
-    physics?: "builtin" | "cannon";
+    physics?: "builtin" | "cannon" | "box3d";
+    /** Optional Box3D feature settings, copied and frozen during application admission. */
+    physicsOptions?: {
+        box3d?: __private._air_physics_box3d_config__AirBox3DOptions;
+    };
     /** Optional 2D backend. Existing JavaScript Box2D remains the default. */
     physics2D?: "box2d" | "box2d-v3-wasm";
     /** Separate WASM deployment and solver configuration, used only by box2d-v3-wasm. */
@@ -57856,7 +57964,7 @@ export class AirAppImpl implements AirApp {
     readonly contextHealth: AirContextHealth;
     readonly diagnostics?: AirDiagnostics | undefined;
     get session(): AirSessionScope;
-    constructor(canvas: HTMLCanvasElement, contextHealth: AirContextHealth, diagnostics?: AirDiagnostics | undefined);
+    constructor(canvas: HTMLCanvasElement, contextHealth: AirContextHealth, diagnostics?: AirDiagnostics | undefined, physicsPreparation?: __private._air_physics_preparation__AirPhysicsPreparation | undefined);
     /**
      * @en Run the given scene and start the main loop (idempotent for the loop).
      * @zh 运行传入的场景并启动主循环（主循环只启动一次）。
@@ -57948,7 +58056,7 @@ export function selectPhysicsBackend(backend: AirPhysicsBackend): void;
  * - `'builtin'`：官方内置离散碰撞检测器（非完整模拟器，零外部依赖）。
  * - `'cannon'`：cannon.js 全量刚体模拟（纯 JS，来自 vendored `@cocos/cannon`）。
  */
-export type AirPhysicsBackend = "builtin" | "cannon";
+export type AirPhysicsBackend = "builtin" | "cannon" | "box3d";
 /**
  * @en Attach the W01 context-health state machine to a canvas.
  * @zh 在画布上挂接 W01 上下文健康状态机。createAirApp 内部调用；HEADLESS 等无 GL
@@ -58048,10 +58156,12 @@ export function createStepClock(options?: AirStepClockOptions): AirStepClock;
  * `game.step()` 只做 `director.tick(fixedDT)`，不会先暂停主循环——运行中直接调用等于
  * 真实 rAF 与手动步进双时钟并发（任务书明令禁止）。本封装把三步合同固化：
  *
- *   begin()  — game.pause()（停真实 pacer：rAF/渲染/业务时钟/音频）
+ *   begin()  — 停真实 pacer；被观察的 Game 使用独占 lease，不等同 application pause
  *   step(dt) — director.tick(dt ?? 1/frameRate)，等待本帧 AFTER_DRAW 后返回；
  *              未处于暂停态调用直接抛错（反双时钟门卫）
- *   end()    — game.resume()（恢复真实时钟）
+ *   end()    — 释放自己的时钟原因；只有没有其他暂停原因才恢复 pacer
+ *
+ * 未观察路径保留原 game.pause/resume 与 Promise 行为。被观察路径等完整 tick 返回才确认 AFTER_DRAW。
  *
  * 用法（测试/验收页）：
  *   const clock = createStepClock();
@@ -59034,7 +59144,7 @@ export class AudioService {
  * const m = await loadAssetAsync('models/robot/mesh', Mesh);
  * ```
  */
-export function loadAssetAsync<T extends Asset>(path: string, type: __private.__types_globals__Constructor<T>): Promise<T>;
+export function loadAssetAsync<T extends Asset>(path: string, type: __private._types_globals__Constructor<T>): Promise<T>;
 /**
  * @en Fetch a JSON/binary runtime asset over HTTP and deserialize it with the engine serializer
  *     (V0.1 compatible form; non-serialized payloads fall back to plain JSON).
@@ -61990,6 +62100,88 @@ export class AirTypewriter extends Component {
     protected start(): void;
     protected update(dt: number): void;
 }
+/** Exact current before-step callback context only. Queries committed native geometry,
+ * not pending commands/Node poses. All active child colliders of every included body are required and checked before native reads.
+ * Only the supplied group is excluded. Results are complete copied observations. */
+export function queryBox3DCommittedColliders(context: Readonly<Box3DBeforeStepContext>, colliders: readonly physics.Collider[], translation: Box3DBodyMotionVector, options: Box3DQueryOptions): Box3DCommittedColliderQuery;
+/** Same live callback lease; full generic ray results, no automatic ignore list. */
+export function queryBox3DCommittedRay(context: Readonly<Box3DBeforeStepContext>, origin: Box3DBodyMotionVector, translation: Box3DBodyMotionVector, options: Box3DQueryOptions): Box3DCommittedRayQuery;
+/** Acquires the existing exclusive native kinematic command lease while idle.
+ * setTarget queues for the next safe fixed tick; it never changes Node pose directly.
+ * Dispose/clear obey the owner's existing paired velocity cleanup and phase guards. */
+export function createBox3DKinematicTarget(body: physics.RigidBody): Box3DKinematicTargetHandle;
+export interface Box3DQueryOptions {
+    readonly group: number;
+    readonly mask: number;
+    readonly queryTrigger: boolean;
+}
+export interface Box3DQueryStamp {
+    readonly worldGeneration: number;
+    readonly tickIndex: number;
+    readonly attemptId: number;
+    readonly nativeStepIndex: number;
+    readonly nativeMutationRevision: number;
+    readonly complete: true;
+}
+export interface Box3DCommittedQueryHit {
+    /** Original Mesh submesh/triangle ordinal, composed from the cooked native face map. Non-Mesh hits omit it. */
+    readonly meshFace?: Readonly<{
+        submesh: number;
+        primitive: number;
+        flatFace: number;
+    }>;
+    readonly collider: physics.Collider;
+    readonly logicalId: number;
+    readonly distance: number;
+    readonly fraction: number;
+    readonly point: Box3DBodyMotionVector;
+    readonly normal: Box3DBodyMotionVector;
+}
+export interface Box3DCommittedQueryChild {
+    readonly collider: physics.Collider;
+    readonly kind: "box" | "sphere" | "capsule";
+    readonly origin: Box3DBodyMotionVector;
+    readonly rotation: Box3DBodyMotionRotation;
+    /** Baked box halfXYZ, sphere radius, or capsule [radius, halfCylinder, axis0/1/2]. */
+    readonly dimensions: readonly number[];
+    /** Exact copied convex support proxy. Points are world-oriented relative to body origin. */
+    readonly support: Readonly<{
+        origin: Box3DBodyMotionVector;
+        points: readonly Box3DBodyMotionVector[];
+        radius: number;
+    }>;
+}
+export interface Box3DCommittedColliderQuery extends Box3DQueryStamp {
+    readonly translation: Box3DBodyMotionVector;
+    readonly children: readonly Box3DCommittedQueryChild[];
+    readonly overlaps: readonly Readonly<{
+        queryCollider: physics.Collider;
+        collider: physics.Collider;
+        blockingGeometry: Box3DCommittedQueryChild | null;
+    }>[];
+    /** Same-epoch blocker geometry also accompanies cast-only initial slop hits.
+     * This is an observation, not automatic permission to ignore a zero hit. */
+    readonly hits: readonly Readonly<Box3DCommittedQueryHit & {
+        queryCollider: physics.Collider;
+        blockingGeometry: Box3DCommittedQueryChild | null;
+    }>[];
+    /** Conservative native overlap/slop observation, NOT an MTD or a departure permission. */
+    readonly initialOverlap: boolean;
+    readonly nearestDistance: number | null;
+}
+export interface Box3DCommittedRayQuery extends Box3DQueryStamp {
+    readonly origin: Box3DBodyMotionVector;
+    readonly translation: Box3DBodyMotionVector;
+    readonly hits: readonly Box3DCommittedQueryHit[];
+}
+export interface Box3DKinematicTargetHandle {
+    setTarget(pose: Readonly<{
+        position: Box3DBodyMotionVector;
+        rotation: Box3DBodyMotionRotation;
+    }>): void;
+    clear(): void;
+    dispose(): void;
+}
 export namespace rendering {
     export function createCustomPipeline(): BasicPipeline;
     export function setCustomPipeline(name: string, builder: PipelineBuilder): void;
@@ -64392,7 +64584,546 @@ declare class CocosRenderer {
         ]): void;
         reset(): void;
     };
-    constructor(cc: typeof __private._index, app: AirApp, canvas: HTMLCanvasElement, options?: __private._air_spark_cocos_renderer__CocosRendererOptions);
+    constructor(cc: {
+        readonly "AIR_BUILD_DATE": typeof AIR_BUILD_DATE;
+        readonly "AIR_BUILD_NUMBER": typeof AIR_BUILD_NUMBER;
+        readonly "AIR_ICON_PLACEHOLDER": typeof AIR_ICON_PLACEHOLDER;
+        readonly "AIR_INSTANCE_ATTRIBUTES": typeof AIR_INSTANCE_ATTRIBUTES;
+        readonly "AIR_REVISION": typeof AIR_REVISION;
+        readonly "AIR_SCREEN_PASS_LAYER": typeof AIR_SCREEN_PASS_LAYER;
+        readonly "AIR_VERSION": typeof AIR_VERSION;
+        readonly "Acceleration": typeof Acceleration;
+        readonly "AirActionError": typeof AirActionError;
+        readonly "AirAppImpl": typeof AirAppImpl;
+        readonly "AirAssetError": typeof AirAssetError;
+        readonly "AirColorContractError": typeof AirColorContractError;
+        readonly "AirContentSizeFitter": typeof AirContentSizeFitter;
+        readonly "AirGlyphIconLayer": typeof AirGlyphIconLayer;
+        readonly "AirGlyphText": typeof AirGlyphText;
+        readonly "AirPixelGrid": typeof AirPixelGrid;
+        readonly "AirPixelPerfect": typeof AirPixelPerfect;
+        readonly "AirRenderTarget": typeof AirRenderTarget;
+        readonly "AirTransmissionCapture": typeof AirTransmissionCapture;
+        readonly "AirTypewriter": typeof AirTypewriter;
+        readonly "AirUIMesh": typeof AirUIMesh;
+        readonly "AlphaKey": typeof AlphaKey;
+        readonly "AmbientInfo": typeof AmbientInfo;
+        readonly "AnimCurve": typeof AnimCurve;
+        readonly "Animation": typeof Animation;
+        readonly "AnimationClip": typeof AnimationClip;
+        readonly "AnimationComponent": typeof Animation;
+        readonly "AnimationManager": typeof AnimationManager;
+        readonly "AnimationState": typeof AnimationState;
+        readonly "Asset": typeof Asset;
+        readonly "AssetBank": typeof AssetBank;
+        readonly "AssetLibrary": typeof AssetLibrary;
+        readonly "AssetManager": typeof AssetManager;
+        readonly "AsyncDelegate": typeof AsyncDelegate;
+        readonly "Atlas": typeof Atlas;
+        readonly "AudioService": typeof AudioService;
+        readonly "BASELINE_RATIO": typeof BASELINE_RATIO;
+        readonly "BITMASK_TAG": typeof BITMASK_TAG;
+        readonly "BaseNode": typeof Node;
+        readonly "BaseRenderData": typeof BaseRenderData;
+        readonly "BatchedSkinningModelComponent": typeof SkinnedMeshBatchRenderer;
+        readonly "BatchingUtility": typeof BatchingUtility;
+        readonly "Billboard": typeof Billboard;
+        readonly "BitMask": typeof BitMask;
+        readonly "BitmapFont": typeof BitmapFont;
+        readonly "BufferAsset": typeof BufferAsset;
+        readonly "BuiltinResMgr": typeof BuiltinResMgr;
+        readonly "Burst": typeof Burst;
+        readonly "CCBoolean": typeof CCBoolean;
+        readonly "CCClass": typeof CCClass;
+        readonly "CCFloat": typeof CCFloat;
+        readonly "CCInteger": typeof CCInteger;
+        readonly "CCLoader": typeof CCLoader;
+        readonly "CCObject": typeof CCObject;
+        readonly "CCObjectFlags": typeof CCObjectFlags;
+        readonly "CCString": typeof CCString;
+        readonly "CacheMode": typeof CacheMode;
+        readonly "CachedArray": typeof memop.CachedArray;
+        readonly "CallbacksInvoker": typeof CallbacksInvoker;
+        readonly "Camera": typeof Camera;
+        readonly "CameraComponent": typeof Camera;
+        readonly "Canvas": typeof Canvas;
+        readonly "CanvasComponent": typeof Canvas;
+        readonly "Color": typeof math.Color;
+        readonly "ColorKey": typeof ColorKey;
+        readonly "ColorOvertimeModule": typeof ColorOvertimeModule;
+        readonly "CompactValueTypeArray": typeof CompactValueTypeArray;
+        readonly "Component": typeof Component;
+        readonly "CurveRange": typeof CurveRange;
+        readonly "DEFAULT_OCTREE_DEPTH": typeof DEFAULT_OCTREE_DEPTH;
+        readonly "DEFAULT_WORLD_MAX_POS": typeof DEFAULT_WORLD_MAX_POS;
+        readonly "DEFAULT_WORLD_MIN_POS": typeof DEFAULT_WORLD_MIN_POS;
+        readonly "DebugMode": typeof DebugMode;
+        readonly "DebugView": typeof DebugView;
+        readonly "Details": typeof Details;
+        readonly "DirectionalLight": typeof DirectionalLight;
+        readonly "DirectionalLightComponent": typeof DirectionalLight;
+        readonly "Director": typeof Director;
+        readonly "DirectorEvent": typeof DirectorEvent;
+        readonly "DynamicAtlasManager": typeof DynamicAtlasManager;
+        readonly "ENUM_TAG": typeof ENUM_TAG;
+        readonly "EPSILON": typeof math.EPSILON;
+        readonly "EXT_MESHOPT_COMPRESSION": typeof EXT_MESHOPT_COMPRESSION;
+        readonly "EasingMethod": typeof EasingMethod;
+        readonly "EditorExtendable": typeof EditorExtendable;
+        readonly "EffectAsset": typeof EffectAsset;
+        readonly "Enum": typeof Enum;
+        readonly "Event": typeof Event;
+        readonly "EventAcceleration": typeof EventAcceleration;
+        readonly "EventGamepad": typeof EventGamepad;
+        readonly "EventHMD": typeof EventHMD;
+        readonly "EventHandheld": typeof EventHandheld;
+        readonly "EventHandle": typeof EventHandle;
+        readonly "EventHandler": typeof EventHandler;
+        readonly "EventInfo": typeof EventInfo;
+        readonly "EventKeyboard": typeof EventKeyboard;
+        readonly "EventMouse": typeof EventMouse;
+        readonly "EventTarget": typeof EventTarget;
+        readonly "EventTouch": typeof EventTouch;
+        readonly "Eventify": typeof Eventify;
+        readonly "ExtrapolationMode": typeof ExtrapolationMode;
+        readonly "FeedStatusController": typeof FeedStatusController;
+        readonly "FogInfo": typeof FogInfo;
+        readonly "Font": typeof Font;
+        readonly "ForceOvertimeModule": typeof ForceOvertimeModule;
+        readonly "GCObject": typeof GCObject;
+        readonly "GLTFAsset": typeof GLTFAsset;
+        readonly "GLTFError": typeof GLTFError;
+        readonly "GLTFExtensionRegistry": typeof GLTFExtensionRegistry;
+        readonly "GLTFLoader": typeof GLTFLoader;
+        readonly "Game": typeof Game;
+        readonly "Gradient": typeof Gradient;
+        readonly "GradientRange": typeof GradientRange;
+        readonly "GraphicsComponent": typeof GraphicsComponent;
+        readonly "HALF_PI": typeof math.HALF_PI;
+        readonly "HorizontalTextAlignment": typeof HorizontalTextAlignment;
+        readonly "HtmlTextParser": typeof HtmlTextParser;
+        readonly "ImageAsset": typeof ImageAsset;
+        readonly "Input": typeof Input;
+        readonly "InstanceMaterialType": typeof InstanceMaterialType;
+        readonly "InstancedBuffer": typeof InstancedBuffer;
+        readonly "JavaScript": typeof JavaScript;
+        readonly "JsonAsset": typeof JsonAsset;
+        readonly "KHR_DRACO_MESH_COMPRESSION": typeof KHR_DRACO_MESH_COMPRESSION;
+        readonly "KHR_MESHOPT_COMPRESSION": typeof KHR_MESHOPT_COMPRESSION;
+        readonly "KHR_MESH_QUANTIZATION": typeof KHR_MESH_QUANTIZATION;
+        readonly "KTX2_RAW_MIME": typeof KTX2_RAW_MIME;
+        readonly "KeyCode": typeof KeyCode;
+        readonly "LOD": typeof LOD;
+        readonly "LODGroup": typeof LODGroup;
+        readonly "LRUCache": typeof LRUCache;
+        readonly "Label": typeof Label;
+        readonly "LabelAtlas": typeof LabelAtlas;
+        readonly "LabelComponent": typeof Label;
+        readonly "LabelOutline": typeof LabelOutline;
+        readonly "LabelOutlineComponent": typeof LabelOutline;
+        readonly "LabelShadow": typeof LabelShadow;
+        readonly "Layers": typeof Layers;
+        readonly "Light": typeof Light;
+        readonly "LightComponent": typeof Light;
+        readonly "LightProbeInfo": typeof LightProbeInfo;
+        readonly "LimitVelocityOvertimeModule": typeof LimitVelocityOvertimeModule;
+        readonly "MATH_FLOAT_ARRAY": typeof math.MATH_FLOAT_ARRAY;
+        readonly "MIDDLE_RATIO": typeof MIDDLE_RATIO;
+        readonly "MaskComponent": typeof MaskComponent;
+        readonly "Mat3": typeof math.Mat3;
+        readonly "Mat4": typeof math.Mat4;
+        readonly "Material": typeof Material;
+        readonly "MathBase": typeof math.MathBase;
+        readonly "Mesh": typeof Mesh;
+        readonly "MeshBuffer": typeof MeshBuffer;
+        readonly "MeshRenderData": typeof MeshRenderData;
+        readonly "MeshRenderer": typeof MeshRenderer;
+        readonly "MissingScript": typeof MissingScript;
+        readonly "MobilityMode": typeof MobilityMode;
+        readonly "ModelComponent": typeof MeshRenderer;
+        readonly "ModelRenderer": typeof ModelRenderer;
+        readonly "Node": typeof Node;
+        readonly "NodeActivator": typeof NodeActivator;
+        readonly "NodeEventType": typeof NodeEventType;
+        readonly "NodePool": typeof NodePool;
+        readonly "NodeSpace": typeof NodeSpace;
+        readonly "NoiseModule": typeof NoiseModule;
+        readonly "ObjectCurve": typeof ObjectCurve;
+        readonly "OctreeInfo": typeof OctreeInfo;
+        readonly "Overflow": typeof Overflow;
+        readonly "ParticleAlignmentSpace": typeof ParticleAlignmentSpace;
+        readonly "ParticleArcMode": typeof ParticleArcMode;
+        readonly "ParticleCullingMode": typeof ParticleCullingMode;
+        readonly "ParticleCurveMode": typeof ParticleCurveMode;
+        readonly "ParticleEmitLocation": typeof ParticleEmitLocation;
+        readonly "ParticleModuleRandSeed": typeof ParticleModuleRandSeed;
+        readonly "ParticleRenderMode": typeof ParticleRenderMode;
+        readonly "ParticleShapeType": typeof ParticleShapeType;
+        readonly "ParticleSpace": typeof ParticleSpace;
+        readonly "ParticleSystem": typeof ParticleSystem;
+        readonly "ParticleTextureMode": typeof ParticleTextureMode;
+        readonly "ParticleTrailMode": typeof ParticleTrailMode;
+        readonly "ParticleUtils": typeof ParticleUtils;
+        readonly "PipelineEventProcessor": typeof PipelineEventProcessor;
+        readonly "PipelineEventType": typeof PipelineEventType;
+        readonly "PipelineInputAssemblerData": typeof PipelineInputAssemblerData;
+        readonly "PipelineSceneData": typeof PipelineSceneData;
+        readonly "PipelineStateManager": typeof PipelineStateManager;
+        readonly "PointLight": typeof PointLight;
+        readonly "Pool": typeof memop.Pool;
+        readonly "PostSettingsInfo": typeof PostSettingsInfo;
+        readonly "Prefab": typeof Prefab;
+        readonly "PrefabLink": typeof PrefabLink;
+        readonly "Primitive": typeof Primitive;
+        readonly "PrivateNode": typeof PrivateNode;
+        readonly "QuadRenderData": typeof QuadRenderData;
+        readonly "Quat": typeof math.Quat;
+        readonly "QuatCurve": typeof QuatCurve;
+        readonly "QuatInterpolationMode": typeof QuatInterpolationMode;
+        readonly "QuatKeyframeValue": typeof QuatKeyframeValue;
+        readonly "RangedDirectionalLight": typeof RangedDirectionalLight;
+        readonly "RatioSampler": typeof RatioSampler;
+        readonly "RealCurve": typeof RealCurve;
+        readonly "RealInterpolationMode": typeof RealInterpolationMode;
+        readonly "RealKeyframeValue": typeof RealKeyframeValue;
+        readonly "Rect": typeof math.Rect;
+        readonly "RecyclePool": typeof memop.RecyclePool;
+        readonly "ReflectionProbe": typeof ReflectionProbe;
+        readonly "ReflectionProbeManager": typeof ReflectionProbeManager;
+        readonly "ReflectionProbeType": typeof ReflectionProbeType;
+        readonly "RenderComponent": typeof UIRenderer;
+        readonly "RenderData": typeof RenderData;
+        readonly "RenderRoot2D": typeof RenderRoot2D;
+        readonly "RenderTexture": typeof RenderTexture;
+        readonly "Renderable2D": typeof UIRenderer;
+        readonly "RenderableComponent": typeof ModelRenderer;
+        readonly "Renderer": typeof Renderer;
+        readonly "RenderingSubMesh": typeof RenderingSubMesh;
+        readonly "RichTextComponent": typeof RichTextComponent;
+        readonly "Root": typeof Root;
+        readonly "RotationOvertimeModule": typeof RotationOvertimeModule;
+        readonly "SUPPORTED_IMAGE_MIMES": typeof SUPPORTED_IMAGE_MIMES;
+        readonly "Scene": typeof Scene;
+        readonly "SceneAsset": typeof SceneAsset;
+        readonly "SceneGlobals": typeof SceneGlobals;
+        readonly "SceneStack": typeof SceneStack;
+        readonly "Scheduler": typeof Scheduler;
+        readonly "Screen": typeof Screen;
+        readonly "Script": typeof Script;
+        readonly "Settings": typeof Settings;
+        readonly "SettingsCategory": typeof SettingsCategory;
+        readonly "ShadowsInfo": typeof ShadowsInfo;
+        readonly "ShapeModule": typeof ShapeModule;
+        readonly "Size": typeof math.Size;
+        readonly "SizeOvertimeModule": typeof SizeOvertimeModule;
+        readonly "SkelAnimDataHub": typeof SkelAnimDataHub;
+        readonly "SkeletalAnimation": typeof SkeletalAnimation;
+        readonly "SkeletalAnimationComponent": typeof SkeletalAnimation;
+        readonly "SkeletalAnimationState": typeof SkeletalAnimationState;
+        readonly "Skeleton": typeof Skeleton;
+        readonly "SkinInfo": typeof SkinInfo;
+        readonly "SkinnedMeshBatchRenderer": typeof SkinnedMeshBatchRenderer;
+        readonly "SkinnedMeshRenderer": typeof SkinnedMeshRenderer;
+        readonly "SkinnedMeshUnit": typeof SkinnedMeshUnit;
+        readonly "SkinningModelComponent": typeof SkinnedMeshRenderer;
+        readonly "SkinningModelUnit": typeof SkinnedMeshUnit;
+        readonly "SkyboxInfo": typeof SkyboxInfo;
+        readonly "Socket": typeof Socket;
+        readonly "SphereLight": typeof SphereLight;
+        readonly "SphereLightComponent": typeof SphereLight;
+        readonly "SpotLight": typeof SpotLight;
+        readonly "SpotLightComponent": typeof SpotLight;
+        readonly "Sprite": typeof Sprite;
+        readonly "SpriteAtlas": typeof SpriteAtlas;
+        readonly "SpriteComponent": typeof Sprite;
+        readonly "SpriteFrame": typeof SpriteFrame;
+        readonly "SpriteFrameEvent": typeof SpriteFrameEvent;
+        readonly "SpriteRenderer": typeof SpriteRenderer;
+        readonly "StencilManager": typeof StencilManager;
+        readonly "System": typeof System;
+        readonly "SystemEvent": typeof SystemEvent;
+        readonly "SystemEventType": typeof SystemEventType;
+        readonly "SystemPriority": typeof SystemPriority;
+        readonly "TRANSMISSION_LAYER": typeof TRANSMISSION_LAYER;
+        readonly "TTFFont": typeof TTFFont;
+        readonly "TWO_PI": typeof math.TWO_PI;
+        readonly "TangentWeightMode": typeof TangentWeightMode;
+        readonly "TextAsset": typeof TextAsset;
+        readonly "Texture2D": typeof Texture2D;
+        readonly "TextureAnimationModule": typeof TextureAnimationModule;
+        readonly "TextureCube": typeof TextureCube;
+        readonly "Touch": typeof Touch;
+        readonly "TrailModule": typeof TrailModule;
+        readonly "TransformBit": typeof TransformBit;
+        readonly "Tween": typeof Tween;
+        readonly "TweenAction": typeof TweenAction;
+        readonly "TweenSystem": typeof TweenSystem;
+        readonly "TypeScript": typeof TypeScript;
+        readonly "UI": typeof UI;
+        readonly "UIComponent": typeof UIComponent;
+        readonly "UIDrawBatch": typeof UIDrawBatch;
+        readonly "UIMeshRenderer": typeof UIMeshRenderer;
+        readonly "UIModelComponent": typeof UIMeshRenderer;
+        readonly "UIOpacity": typeof UIOpacity;
+        readonly "UIOpacityComponent": typeof UIOpacity;
+        readonly "UIRenderable": typeof UIRenderer;
+        readonly "UIRenderer": typeof UIRenderer;
+        readonly "UIStaticBatch": typeof UIStaticBatch;
+        readonly "UIStaticBatchComponent": typeof UIStaticBatch;
+        readonly "UITransform": typeof UITransform;
+        readonly "UITransformComponent": typeof UITransform;
+        readonly "UIVertexFormat": typeof UIVertexFormat;
+        readonly "VERSION": typeof VERSION;
+        readonly "ValueType": typeof ValueType;
+        readonly "Vec2": typeof math.Vec2;
+        readonly "Vec3": typeof math.Vec3;
+        readonly "Vec4": typeof math.Vec4;
+        readonly "VelocityOvertimeModule": typeof VelocityOvertimeModule;
+        readonly "VerticalTextAlignment": typeof VerticalTextAlignment;
+        readonly "WorldNode3DToLocalNodeUI": typeof WorldNode3DToLocalNodeUI;
+        readonly "WorldNode3DToWorldNodeUI": typeof WorldNode3DToWorldNodeUI;
+        readonly "__checkObsoleteInNamespace__": typeof __checkObsoleteInNamespace__;
+        readonly "__checkObsolete__": typeof __checkObsolete__;
+        readonly "_decorator": typeof _decorator;
+        readonly "_resetDebugSetting": typeof _resetDebugSetting;
+        readonly "absMax": typeof math.absMax;
+        readonly "absMaxComponent": typeof math.absMaxComponent;
+        readonly "airActionSourceKey": typeof airActionSourceKey;
+        readonly "airGraphicsCommandsToSvg": typeof airGraphicsCommandsToSvg;
+        readonly "airPixelOrtho": typeof airPixelOrtho;
+        readonly "animation": typeof animation;
+        readonly "applyMixins": typeof applyMixins;
+        readonly "approx": typeof math.approx;
+        readonly "approxGE": typeof math.approxGE;
+        readonly "approxGT": typeof math.approxGT;
+        readonly "approxLE": typeof math.approxLE;
+        readonly "approxLT": typeof math.approxLT;
+        readonly "assert": typeof assert;
+        readonly "assertID": typeof assertID;
+        readonly "assertIsNonNullable": typeof assertIsNonNullable;
+        readonly "assertIsTrue": typeof assertIsTrue;
+        readonly "assertValidSource": typeof assertValidSource;
+        readonly "assertsArrayIndex": typeof assertsArrayIndex;
+        readonly "assetManager": typeof assetManager;
+        readonly "attachAirBloom": typeof attachAirBloom;
+        readonly "attachAirSpriteMask": typeof attachAirSpriteMask;
+        readonly "attachAirVignette": typeof attachAirVignette;
+        readonly "attachContextHealth": typeof attachContextHealth;
+        readonly "bezier": typeof bezier;
+        readonly "bezierByTime": typeof bezierByTime;
+        readonly "binarySearch": typeof binarySearch;
+        readonly "binarySearchBy": typeof binarySearchBy;
+        readonly "binarySearchEpsilon": typeof binarySearchEpsilon;
+        readonly "bindAirPrefilteredEnvironment": typeof bindAirPrefilteredEnvironment;
+        readonly "bits": typeof math.bits;
+        readonly "buildSkeletonTree": typeof buildSkeletonTree;
+        readonly "builtinResMgr": typeof builtinResMgr;
+        readonly "ccenum": typeof ccenum;
+        readonly "cclegacy": typeof cclegacy;
+        readonly "clamp": typeof math.clamp;
+        readonly "clamp01": typeof math.clamp01;
+        readonly "color": typeof math.color;
+        readonly "computeRatioByType": typeof computeRatioByType;
+        readonly "configureGLTFLoaderDefaults": typeof configureGLTFLoaderDefaults;
+        readonly "convertUtils": typeof convertUtils;
+        readonly "createActionInput": typeof createActionInput;
+        readonly "createActionState": typeof createActionState;
+        readonly "createAirApp": typeof createAirApp;
+        readonly "createAirDOMOverlay": typeof createAirDOMOverlay;
+        readonly "createAirGradientEffect": typeof createAirGradientEffect;
+        readonly "createAirHTMLSource": typeof createAirHTMLSource;
+        readonly "createAirInstanceBatch": typeof createAirInstanceBatch;
+        readonly "createAirInstanceMaterial": typeof createAirInstanceMaterial;
+        readonly "createAirMorphField": typeof createAirMorphField;
+        readonly "createAirParticleSystem": typeof createAirParticleSystem;
+        readonly "createAirPostProcess": typeof createAirPostProcess;
+        readonly "createAirRenderTarget": typeof createAirRenderTarget;
+        readonly "createAirScreenEffect": typeof createAirScreenEffect;
+        readonly "createAirScreenPass": typeof createAirScreenPass;
+        readonly "createAirTextureSprite": typeof createAirTextureSprite;
+        readonly "createAirUIBlendScope": typeof createAirUIBlendScope;
+        readonly "createAirUnlitFogEffect": typeof createAirUnlitFogEffect;
+        readonly "createAtlasHandle": typeof createAtlasHandle;
+        readonly "createAtlasSpriteFrame": typeof createAtlasSpriteFrame;
+        readonly "createBitmapFont": typeof createBitmapFont;
+        readonly "createBox3DKinematicTarget": typeof createBox3DKinematicTarget;
+        readonly "createDracoDecoder": typeof createDracoDecoder;
+        readonly "createKTX2Transcoder": typeof createKTX2Transcoder;
+        readonly "createMeshoptDecoder": typeof createMeshoptDecoder;
+        readonly "createPrimitiveGeometry": typeof createPrimitiveGeometry;
+        readonly "createSessionGate": typeof createSessionGate;
+        readonly "createSessionScope": typeof createSessionScope;
+        readonly "createStepClock": typeof createStepClock;
+        readonly "createUICanvas": typeof createUICanvas;
+        readonly "debug": typeof debug;
+        readonly "debugID": typeof debugID;
+        readonly "defaultTransmissionVisibility": typeof defaultTransmissionVisibility;
+        readonly "deprecateModuleExportedName": typeof deprecateModuleExportedName;
+        readonly "describeAirTextureFormat": typeof describeAirTextureFormat;
+        readonly "deserialize": typeof deserialize;
+        readonly "deserializeTag": typeof deserializeTag;
+        readonly "detectImageMime": typeof detectImageMime;
+        readonly "director": typeof director;
+        readonly "disallowAnimation": typeof _decorator.disallowAnimation;
+        readonly "displayName": typeof _decorator.displayName;
+        readonly "displayOrder": typeof _decorator.displayOrder;
+        readonly "dracoCompressionFactory": typeof dracoCompressionFactory;
+        readonly "drawAirGraphics": typeof drawAirGraphics;
+        readonly "dynamicAtlasManager": typeof dynamicAtlasManager;
+        readonly "easing": typeof easing;
+        readonly "editable": typeof _decorator.editable;
+        readonly "editorExtrasTag": typeof editorExtrasTag;
+        readonly "enumerableProps": typeof math.enumerableProps;
+        readonly "equals": typeof math.equals;
+        readonly "error": typeof error;
+        readonly "errorID": typeof errorID;
+        readonly "find": typeof utils.find;
+        readonly "flattenCodeArray": typeof flattenCodeArray;
+        readonly "floatToHalf": typeof math.floatToHalf;
+        readonly "formerlySerializedAs": typeof _decorator.formerlySerializedAs;
+        readonly "fragmentText": typeof fragmentText;
+        readonly "frameObject": typeof frameObject;
+        readonly "game": typeof game;
+        readonly "garbageCollectionManager": typeof garbageCollectionManager;
+        readonly "geometry": typeof geometry;
+        readonly "getAirHTMLSourceSupport": typeof getAirHTMLSourceSupport;
+        readonly "getBaselineOffset": typeof getBaselineOffset;
+        readonly "getBox2D3Stats": typeof getBox2D3Stats;
+        readonly "getEnglishWordPartAtFirst": typeof getEnglishWordPartAtFirst;
+        readonly "getEnglishWordPartAtLast": typeof getEnglishWordPartAtLast;
+        readonly "getError": typeof getError;
+        readonly "getPathFromRoot": typeof getPathFromRoot;
+        readonly "getPhaseID": typeof getPhaseID;
+        readonly "getSerializationMetadata": typeof getSerializationMetadata;
+        readonly "getSymbolAt": typeof getSymbolAt;
+        readonly "getSymbolCodeAt": typeof getSymbolCodeAt;
+        readonly "getSymbolLength": typeof getSymbolLength;
+        readonly "getWorldTransformUntilRoot": typeof getWorldTransformUntilRoot;
+        readonly "gfx": typeof gfx;
+        readonly "halfToFloat": typeof math.halfToFloat;
+        readonly "input": typeof input;
+        readonly "inspectAirAnimationControllers": typeof inspectAirAnimationControllers;
+        readonly "inspectAirDirectionalLights": typeof inspectAirDirectionalLights;
+        readonly "inspectAirGeometry": typeof inspectAirGeometry;
+        readonly "inspectAirMaterial": typeof inspectAirMaterial;
+        readonly "inspectAirMeshMaterial": typeof inspectAirMeshMaterial;
+        readonly "instantiate": typeof instantiate;
+        readonly "inverseLerp": typeof math.inverseLerp;
+        readonly "isAirDepthFormat": typeof isAirDepthFormat;
+        readonly "isAirSRGBFormat": typeof isAirSRGBFormat;
+        readonly "isCCClassOrFastDefined": typeof isCCClassOrFastDefined;
+        readonly "isCCObject": typeof isCCObject;
+        readonly "isDisplayStats": typeof isDisplayStats;
+        readonly "isEnglishWordPartAtFirst": typeof isEnglishWordPartAtFirst;
+        readonly "isEnglishWordPartAtLast": typeof isEnglishWordPartAtLast;
+        readonly "isKTX2": typeof isKTX2;
+        readonly "isKTX2Available": typeof isKTX2Available;
+        readonly "isMeshoptAvailable": typeof isMeshoptAvailable;
+        readonly "isTransmissionMaterial": typeof isTransmissionMaterial;
+        readonly "isUnicodeCJK": typeof isUnicodeCJK;
+        readonly "isUnicodeSpace": typeof isUnicodeSpace;
+        readonly "isValid": typeof isValid;
+        readonly "js": typeof js;
+        readonly "labelAssembler": typeof labelAssembler;
+        readonly "labelNode": typeof labelNode;
+        readonly "layoutAirGlyphs": typeof layoutAirGlyphs;
+        readonly "lerp": typeof math.lerp;
+        readonly "loadAssetAsync": typeof loadAssetAsync;
+        readonly "loadAtlas": typeof loadAtlas;
+        readonly "loadBitmapFont": typeof loadBitmapFont;
+        readonly "loadBox2D3": typeof loadBox2D3;
+        readonly "loader": typeof loader;
+        readonly "log": typeof log;
+        readonly "logID": typeof logID;
+        readonly "macro": typeof macro;
+        readonly "markAsWarning": typeof markAsWarning;
+        readonly "mat4": typeof math.mat4;
+        readonly "math": typeof math;
+        readonly "measureAirGlyphFallback": typeof measureAirGlyphFallback;
+        readonly "memop": typeof memop;
+        readonly "meshQuantizationFactory": typeof meshQuantizationFactory;
+        readonly "meshoptCompressionFactory": typeof meshoptCompressionFactory;
+        readonly "misc": typeof misc;
+        readonly "murmurhash2_32_gc": typeof murmurhash2_32_gc;
+        readonly "native": typeof native;
+        readonly "nextPow2": typeof math.nextPow2;
+        readonly "override": typeof _decorator.override;
+        readonly "parseAirGlyphTags": typeof parseAirGlyphTags;
+        readonly "parseAtlasText": typeof parseAtlasText;
+        readonly "parseFnt": typeof parseFnt;
+        readonly "path": typeof path;
+        readonly "pingPong": typeof math.pingPong;
+        readonly "pipeline": typeof pipeline;
+        readonly "preTransforms": typeof math.preTransforms;
+        readonly "primitives": typeof primitives;
+        readonly "pseudoRandom": typeof math.pseudoRandom;
+        readonly "pseudoRandomRange": typeof math.pseudoRandomRange;
+        readonly "pseudoRandomRangeInt": typeof math.pseudoRandomRangeInt;
+        readonly "quat": typeof math.quat;
+        readonly "queryBox3DCommittedColliders": typeof queryBox3DCommittedColliders;
+        readonly "queryBox3DCommittedRay": typeof queryBox3DCommittedRay;
+        readonly "random": typeof math.random;
+        readonly "randomRange": typeof math.randomRange;
+        readonly "randomRangeInt": typeof math.randomRangeInt;
+        readonly "range": typeof _decorator.range;
+        readonly "rangeStep": typeof _decorator.rangeStep;
+        readonly "rasterizeAirGraphics": typeof rasterizeAirGraphics;
+        readonly "readBox3DBodyMotion": typeof readBox3DBodyMotion;
+        readonly "readBox3DConstraintState": typeof readBox3DConstraintState;
+        readonly "rect": typeof math.rect;
+        readonly "registerBox3DBeforeStep": typeof registerBox3DBeforeStep;
+        readonly "registerGLTFLoader": typeof registerGLTFLoader;
+        readonly "removeProperty": typeof removeProperty;
+        readonly "renderer": typeof renderer;
+        readonly "repeat": typeof math.repeat;
+        readonly "replaceProperty": typeof replaceProperty;
+        readonly "resolveAirPixelRatio": typeof resolveAirPixelRatio;
+        readonly "resolveAirTextureFormat": typeof resolveAirTextureFormat;
+        readonly "resources": typeof resources;
+        readonly "restoreBindPose": typeof restoreBindPose;
+        readonly "safeMeasureText": typeof safeMeasureText;
+        readonly "sampleAirImageShape": typeof sampleAirImageShape;
+        readonly "sampleAirTextShape": typeof sampleAirTextShape;
+        readonly "sampleAirTriangleShape": typeof sampleAirTriangleShape;
+        readonly "sampleAnimationCurve": typeof sampleAnimationCurve;
+        readonly "screen": typeof screen;
+        readonly "selectPhysics2DBackend": typeof selectPhysics2DBackend;
+        readonly "selectPhysicsBackend": typeof selectPhysicsBackend;
+        readonly "serializable": typeof _decorator.serializable;
+        readonly "serializeTag": typeof serializeTag;
+        readonly "setDefaultLogTimes": typeof setDefaultLogTimes;
+        readonly "setDisplayStats": typeof setDisplayStats;
+        readonly "setPropertyEnumType": typeof setPropertyEnumType;
+        readonly "setPropertyEnumTypeOnAttrs": typeof setPropertyEnumTypeOnAttrs;
+        readonly "setRandGenerator": typeof math.setRandGenerator;
+        readonly "setTextureSupportForTesting": typeof setTextureSupportForTesting;
+        readonly "settings": typeof settings;
+        readonly "shift": typeof shift;
+        readonly "size": typeof math.size;
+        readonly "slide": typeof _decorator.slide;
+        readonly "spriteAssembler": typeof spriteAssembler;
+        readonly "spriteNode": typeof spriteNode;
+        readonly "sys": typeof sys;
+        readonly "systemEvent": typeof systemEvent;
+        readonly "toDegree": typeof math.toDegree;
+        readonly "toRadian": typeof math.toRadian;
+        readonly "tooltip": typeof _decorator.tooltip;
+        readonly "tween": typeof tween;
+        readonly "tweenProgress": typeof tweenProgress;
+        readonly "tweenUtil": typeof tweenUtil;
+        readonly "url": typeof url;
+        readonly "utils": typeof utils;
+        readonly "v2": typeof math.v2;
+        readonly "v3": typeof math.v3;
+        readonly "v4": typeof math.v4;
+        readonly "validateAirGraphicsCommands": typeof validateAirGraphicsCommands;
+        readonly "validateAirPrefilteredEnvironment": typeof validateAirPrefilteredEnvironment;
+        readonly "validateAirTextureColorContract": typeof validateAirTextureColorContract;
+        readonly "visible": typeof _decorator.visible;
+        readonly "visibleRect": typeof visibleRect;
+        readonly "warn": typeof warn;
+        readonly "warnID": typeof warnID;
+    }, app: AirApp, canvas: HTMLCanvasElement, options?: __private._air_spark_cocos_renderer__CocosRendererOptions);
     constructor(cc: __private._air_spark_cocos_renderer__AirEngineSurface, app: __private._air_spark_cocos_renderer__AirAppSurface, canvas: HTMLCanvasElement, options?: __private._air_spark_cocos_renderer__CocosRendererOptions);
     getContext(): WebGL2RenderingContext;
     getPixelRatio(): number;
@@ -64470,11 +65201,11 @@ declare class CocosSparkLayer {
     nativeCamera: any;
     scene: __private._air_spark_spark_api_adapter__Scene;
     camera: __private._air_spark_spark_api_adapter__Camera;
-    bindings: Map<sparkRuntime, __private._air_spark_cocos_spark_layer__SplatBinding>;
+    bindings: Map<sparkRuntime.SplatMesh, __private._air_spark_cocos_spark_layer__SplatBinding>;
     autoRender: boolean;
     renderHook: string;
     renderer: CocosRenderer;
-    spark: sparkRuntime;
+    spark: sparkRuntime.SparkRenderer;
     renderTarget: __private._air_spark_cocos_spark_layer__SparkTarget | null;
     _disposed: boolean;
     _onRender: () => void;
@@ -64485,9 +65216,9 @@ declare class CocosSparkLayer {
         node: any;
         visible?: boolean;
         [key: string]: any;
-    }): sparkRuntime;
-    setVisible(mesh: sparkRuntime, visible: boolean): void;
-    remove(mesh: sparkRuntime, { dispose }?: {
+    }): sparkRuntime.SplatMesh;
+    setVisible(mesh: sparkRuntime.SplatMesh, visible: boolean): void;
+    remove(mesh: sparkRuntime.SplatMesh, { dispose }?: {
         dispose?: boolean;
     }): void;
     _matrix(native: any, dest: any): any;
@@ -64536,6 +65267,150 @@ declare class PMREMGenerator {
 }
 declare function pmremLayout(requestedSize: number): __private._air_spark_pmrem__PMREMLayout;
 declare const CUBEUV_SAMPLING_GLSL = "\nfloat airCubeFace(vec3 d){\n vec3 a=abs(d);\n if(a.x>a.z){if(a.x>a.y)return d.x>0.0?0.0:3.0;else return d.y>0.0?1.0:4.0;}\n else{if(a.z>a.y)return d.z>0.0?2.0:5.0;else return d.y>0.0?1.0:4.0;}\n}\nvec2 airCubeFaceUV(vec3 d,float f){\n vec2 uv;\n if(f==0.0)uv=vec2(d.z,d.y)/abs(d.x);\n else if(f==1.0)uv=vec2(-d.x,-d.z)/abs(d.y);\n else if(f==2.0)uv=vec2(-d.x,d.y)/abs(d.z);\n else if(f==3.0)uv=vec2(-d.z,d.y)/abs(d.x);\n else if(f==4.0)uv=vec2(-d.x,d.z)/abs(d.y);\n else uv=vec2(d.x,d.y)/abs(d.z);\n return 0.5*(uv+1.0);\n}\nvec3 airBilinearCubeUV(sampler2D atlas,vec3 d,float mip){\n float face=airCubeFace(d);\n float extra=max(4.0-mip,0.0);\n mip=max(mip,4.0);\n float size=exp2(mip);\n highp vec2 uv=airCubeFaceUV(d,face)*(size-2.0)+1.0;\n if(face>2.0){uv.y+=size;face-=3.0;}\n uv.x+=face*size;\n uv.x+=extra*3.0*16.0;\n uv.y+=4.0*(exp2(CUBEUV_MAX_MIP)-size);\n uv.x*=CUBEUV_TEXEL_WIDTH;\n uv.y*=CUBEUV_TEXEL_HEIGHT;\n return textureGrad(atlas,uv,vec2(0.0),vec2(0.0)).rgb;\n}\nfloat airRoughnessToMip(float r){\n if(r>=0.8)return (1.0-r)*(-1.0-(-2.0))/(1.0-0.8)+(-2.0);\n if(r>=0.4)return (0.8-r)*(2.0-(-1.0))/(0.8-0.4)+(-1.0);\n if(r>=0.305)return (0.4-r)*(3.0-2.0)/(0.4-0.305)+2.0;\n if(r>=0.21)return (0.305-r)*(4.0-3.0)/(0.305-0.21)+3.0;\n return -2.0*log2(1.16*r);\n}\nvec4 airTextureCubeUV(sampler2D atlas,vec3 d,float roughness){\n float mip=clamp(airRoughnessToMip(roughness),-2.0,CUBEUV_MAX_MIP);\n float fraction=fract(mip),whole=floor(mip);\n vec3 c=airBilinearCubeUV(atlas,d,whole);\n if(fraction==0.0)return vec4(c,1.0);\n return vec4(mix(c,airBilinearCubeUV(atlas,d,whole+1.0),fraction),1.0);\n}\n";
+declare namespace sparkRuntime {
+    /*
+     Copyright (c) 2026-2027 oahc09@gmail.com
+    
+     Permission is hereby granted, free of charge, to any person obtaining a copy
+     of this software and associated documentation files (the "Software"), to deal
+     in the Software without restriction, including without limitation the rights
+     to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+     copies of the Software, and to permit persons to whom the Software is
+     furnished to do so, subject to the following conditions:
+    
+     The above copyright notice and this permission notice shall be included in
+     all copies or substantial portions of the Software.
+    
+     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+     IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+     FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+     AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+     LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+     THE SOFTWARE.
+     */
+    /**
+     * SPK-11 生成物：冻结 Spark 运行时子图（`vendor/spark/src/**` 经 esbuild 预打包）的类型边界。
+     *
+     * 边界说明（勿手改，改生成器 `tools/build/spark-runtime-tree.cjs`）：
+     * - 运行时值全部来自冻结上游，本仓不重导出其 TS 类型面，以免 182 处上游类型错误进入本仓 tsc 程序
+     *   （该接入形态的判定与证据见 `ai/ledgers/spark-integration.md` SPK-11 条目）；
+     * - 相对上游 `index.ts` 的导出面已按 §SPK-10 收窄：剔除 `SparkXr` 与 `hands`（XR 会话/手部子图），
+     *   复议条件同计划；生成期以 `metafile.inputs` 断言两者确实未进入子图；
+     * - 此处标为 `any` 的符号即打包器在构建期校验过的运行时可用面，AIR 集成层按需再包一层带类型的门面。
+     */
+    export const DISK_PORTAL_FRAGMENT_SHADER: any;
+    export type DISK_PORTAL_FRAGMENT_SHADER = any;
+    export const ExtSplats: any;
+    export type ExtSplats = any;
+    export const FpsMovement: any;
+    export type FpsMovement = any;
+    export const LN_SCALE_MAX: any;
+    export type LN_SCALE_MAX = any;
+    export const LN_SCALE_MIN: any;
+    export type LN_SCALE_MIN = any;
+    export const PackedSplats: any;
+    export type PackedSplats = any;
+    export const PagedSplats: any;
+    export type PagedSplats = any;
+    export const PointerControls: any;
+    export type PointerControls = any;
+    export const Readback: any;
+    export type Readback = any;
+    export const RgbaArray: any;
+    export type RgbaArray = any;
+    export const Sint8ToFloat: any;
+    export type Sint8ToFloat = any;
+    export const SparkControls: any;
+    export type SparkControls = any;
+    export const SparkPortals: any;
+    export type SparkPortals = any;
+    export const SparkRenderer: any;
+    export type SparkRenderer = any;
+    export const SplatAccumulator: any;
+    export type SplatAccumulator = any;
+    export const SplatEdit: any;
+    export type SplatEdit = any;
+    export const SplatEditRgbaBlendMode: any;
+    export type SplatEditRgbaBlendMode = any;
+    export const SplatEditSdf: any;
+    export type SplatEditSdf = any;
+    export const SplatEditSdfType: any;
+    export type SplatEditSdfType = any;
+    export const SplatEdits: any;
+    export type SplatEdits = any;
+    export const SplatFileType: any;
+    export type SplatFileType = any;
+    export const SplatGenerator: any;
+    export type SplatGenerator = any;
+    export const SplatLoader: any;
+    export type SplatLoader = any;
+    export const SplatMesh: any;
+    export type SplatMesh = any;
+    export const SplatModifier: any;
+    export type SplatModifier = any;
+    export const SplatPager: any;
+    export type SplatPager = any;
+    export const SplatSkinning: any;
+    export type SplatSkinning = any;
+    export const SplatSkinningMode: any;
+    export type SplatSkinningMode = any;
+    export const SplatTransformer: any;
+    export type SplatTransformer = any;
+    export const Uint8ToFloat: any;
+    export type Uint8ToFloat = any;
+    export const constructAxes: any;
+    export type constructAxes = any;
+    export const constructGrid: any;
+    export type constructGrid = any;
+    export const constructSpherePoints: any;
+    export type constructSpherePoints = any;
+    export const flipPixels: any;
+    export type flipPixels = any;
+    export const floatToSint8: any;
+    export type floatToSint8 = any;
+    export const floatToUint8: any;
+    export type floatToUint8 = any;
+    export const fromHalf: any;
+    export type fromHalf = any;
+    export const getSplatFileType: any;
+    export type getSplatFileType = any;
+    export const imageSplats: any;
+    export type imageSplats = any;
+    export const isAndroid: any;
+    export type isAndroid = any;
+    export const isIos: any;
+    export type isIos = any;
+    export const isMobile: any;
+    export type isMobile = any;
+    export const isOculus: any;
+    export type isOculus = any;
+    export const isQuest2: any;
+    export type isQuest2 = any;
+    export const isVisionPro: any;
+    export type isVisionPro = any;
+    export const pixelsToPngUrl: any;
+    export type pixelsToPngUrl = any;
+    export const readRgbaArray: any;
+    export type readRgbaArray = any;
+    export const setPackedSplat: any;
+    export type setPackedSplat = any;
+    export const textSplats: any;
+    export type textSplats = any;
+    export const toHalf: any;
+    export type toHalf = any;
+    export const transcodeSpz: any;
+    export type transcodeSpz = any;
+    export const unpackSplat: any;
+    export type unpackSplat = any;
+    export const writeSpz: any;
+    export type writeSpz = any;
+    export const defines: Record<string, any>;
+    export const dyno: Record<string, any>;
+    export const generators: Record<string, any>;
+    export const modifiers: Record<string, any>;
+    export const utils: Record<string, any>;
+}
 declare namespace sparkMath {
     export const clamp: (value: number, min: number, max: number) => number;
     export class Vector2 {
@@ -65194,13 +66069,13 @@ export import EAxisDirection = physics.EAxisDirection;
 export import EColliderType = physics.EColliderType;
 export import EPhysicsDrawFlags = physics.EPhysicsDrawFlags;
 declare namespace __private {
-    export type __types_globals__TypedArray = Uint8Array | Uint8ClampedArray | Int8Array | Uint16Array | Int16Array | Uint32Array | Int32Array | Float32Array | Float64Array;
+    export type _types_globals__TypedArray = Uint8Array | Uint8ClampedArray | Int8Array | Uint16Array | Int16Array | Uint32Array | Int32Array | Float32Array | Float64Array;
     export class _cocos_2d_renderer_native_2d__NativeUIMeshBuffer {
         get vData(): Float32Array;
         set vData(val: Float32Array);
         get iData(): Uint16Array;
         set iData(val: Uint16Array);
-        syncSharedBufferToNative(data: __types_globals__TypedArray): any;
+        syncSharedBufferToNative(data: _types_globals__TypedArray): any;
         initialize(attrs: gfx.Attribute[]): any;
         reset(): any;
         destroy(): any;
@@ -65924,8 +66799,8 @@ declare namespace __private {
         get subNode(): Node;
         set subNode(node: Node);
         changeMeshBuffer(): any;
-        setRender2dBufferToNative(data: __types_globals__TypedArray): any;
-        syncSharedBufferToNative(data: __types_globals__TypedArray): any;
+        setRender2dBufferToNative(data: _types_globals__TypedArray): any;
+        syncSharedBufferToNative(data: _types_globals__TypedArray): any;
         getAttrSharedBufferForJS(): ArrayBufferLike;
     }
     export class _cocos_2d_renderer_native_2d__NativeRenderEntity {
@@ -66583,7 +67458,7 @@ declare namespace __private {
          */
         ON: number;
     };
-    export type __types_globals__EnumAlias<EnumT> = EnumT[keyof EnumT];
+    export type _types_globals__EnumAlias<EnumT> = EnumT[keyof EnumT];
     /**
      * @en Shadow receive mode.
      * @zh 阴影接收方式。
@@ -66872,7 +67747,7 @@ declare namespace __private {
         constructor(info: Readonly<gfx.BufferBarrierInfo>, hash: number);
         static computeHash(info: Readonly<gfx.BufferBarrierInfo>): number;
     }
-    export type __types_globals__TypedArrayConstructor = Uint8ArrayConstructor | Uint8ClampedArrayConstructor | Int8ArrayConstructor | Uint16ArrayConstructor | Int16ArrayConstructor | Uint32ArrayConstructor | Int32ArrayConstructor | Float32ArrayConstructor | Float64ArrayConstructor;
+    export type _types_globals__TypedArrayConstructor = Uint8ArrayConstructor | Uint8ClampedArrayConstructor | Int8ArrayConstructor | Uint16ArrayConstructor | Int16ArrayConstructor | Uint32ArrayConstructor | Int32ArrayConstructor | Float32ArrayConstructor | Float64ArrayConstructor;
     export interface _cocos_gfx_base_define__GPUTexture {
     }
     export interface _cocos_render_scene_core_program_lib__IDefineRecord extends EffectAsset.IDefineInfo {
@@ -66986,8 +67861,8 @@ declare namespace __private {
         getOrCreateDescriptorSet(light: renderer.scene.Light): gfx.DescriptorSet | undefined;
         destroy(): void;
     }
-    export type __types_globals__RecursivePartial<T> = {
-        [P in keyof T]?: T[P] extends Array<infer U> ? Array<__types_globals__RecursivePartial<U>> : T[P] extends ReadonlyArray<infer V> ? ReadonlyArray<__types_globals__RecursivePartial<V>> : __types_globals__RecursivePartial<T[P]>;
+    export type _types_globals__RecursivePartial<T> = {
+        [P in keyof T]?: T[P] extends Array<infer U> ? Array<_types_globals__RecursivePartial<U>> : T[P] extends ReadonlyArray<infer V> ? ReadonlyArray<_types_globals__RecursivePartial<V>> : _types_globals__RecursivePartial<T[P]>;
     };
     export interface _cocos_render_scene_core_pass__IPassDynamics {
         [type: number]: {
@@ -67024,8 +67899,8 @@ declare namespace __private {
         getTypedArray<K extends E[keyof E]>(handle: _cocos_render_scene_core_memory_pools__IHandle<P>, element: K): _cocos_render_scene_core_memory_pools__BufferArrayType;
         free(handle: _cocos_render_scene_core_memory_pools__IHandle<P>): void;
     }
-    export type __types_globals__Constructor<T = unknown> = new (...args: any[]) => T;
-    export interface __types_globals__IWritableArrayLike<T> {
+    export type _types_globals__Constructor<T = unknown> = new (...args: any[]) => T;
+    export interface _types_globals__IWritableArrayLike<T> {
         readonly length: number;
         [index: number]: T;
     }
@@ -67068,6 +67943,48 @@ declare namespace __private {
      * @returns @zh 如果没有相交，返回 0 ，否则返回非 0。 @en zero if no intersection, otherwise returns a non-zero value.no intersection
      */
     function _cocos_core_geometry_intersect__lineOBB(line: geometry.Line, obb: geometry.OBB): number;
+    export type _cocos_core_scheduler__CallbackType = (dt?: number) => void;
+    /**
+     * Alias of `Function` but suppress eslint warning.
+     * Please avoid using it and explicitly specify function signatures as possible.
+     */
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    export type _types_globals__AnyFunction = Function;
+    /**
+     * Light weight timer
+     * @mangle
+     */
+    export class _cocos_core_scheduler__CallbackTimer {
+        static _timers: _cocos_core_scheduler__CallbackTimer[];
+        static get(): _cocos_core_scheduler__CallbackTimer;
+        static put(timer: _cocos_core_scheduler__CallbackTimer): void;
+        constructor();
+        initWithCallback(scheduler: Scheduler, callback: _cocos_core_scheduler__CallbackType, target: ISchedulable, seconds: number, repeat: number, delay: number): boolean;
+        /**
+         * @en get interval for timer in seconds.
+         * @zh 获取计时器的时间间隔, 以秒为单位。
+         * @returns
+         * @en returns interval of timer in seconds.
+         * @zh 返回计时器的时间间隔, 以秒为单位。
+         */
+        getInterval(): number;
+        /**
+         * @en Set interval in seconds.
+         * @zh 以秒为单位设置时间间隔。
+         */
+        setInterval(interval: number): void;
+        /**
+         * @en Update function which triggers the timer.
+         * @zh 计时更新函数，用来触发计时器。
+         * @param dt
+         * @en delta time. The unit is seconds.
+         * @zh 更新间隔时间, 单位是秒。
+         */
+        update(dt: number): void;
+        getCallback(): _cocos_core_scheduler__CallbackType | null | undefined;
+        trigger(): void;
+        cancel(): void;
+    }
     /**
      * @en
      * Define an enum type. <br/>
@@ -67103,8 +68020,8 @@ declare namespace __private {
         }
     }
     export type _cocos_core_utils_pool__CleanUpFunction<T> = (value: T) => boolean | void;
-    export type __types_globals__Getter = () => any;
-    export type __types_globals__Setter = (value: any) => void;
+    export type _types_globals__Getter = () => any;
+    export type _types_globals__Setter = (value: any) => void;
     export type _cocos_core_platform_debug__StringSubstitution = number | string;
     /**
      * @engineInternal
@@ -67580,6 +68497,407 @@ declare namespace __private {
         emit(type: _cocos_core_event_eventify__EventType, arg0?: any, arg1?: any, arg2?: any, arg3?: any, arg4?: any): void;
     }
     export type _cocos_core_event_eventify__Constructor<T> = new (...args: any[]) => T;
+    export type _pal_screen_adapter_enum_type_screen_event__PalScreenEvent = "window-resize" | "orientation-change" | "fullscreen-change";
+    export enum _pal_system_info_enum_type_feature__Feature {
+        /**
+         * @en Feature to support Webp.
+         * @zh 是否支持 Webp 特性。
+         */
+        WEBP = "WEBP",
+        /**
+         * @en Feature to support Image Bitmap.
+         * @zh 是否支持 Image Bitmap 特性。
+         */
+        IMAGE_BITMAP = "IMAGE_BITMAP",
+        /**
+         * @en Feature to support Web View.
+         * @zh 是否支持 Web View 特性。
+         */
+        WEB_VIEW = "WEB_VIEW",
+        /**
+         * @en Feature to support Video Player.
+         * @zh 是否支持 Video Player 特性。
+         */
+        VIDEO_PLAYER = "VIDEO_PLAYER",
+        /**
+         * @en Feature to support Safe Area.
+         * @zh 是否支持 Safe Area 特性。
+         */
+        SAFE_AREA = "SAFE_AREA",
+        /**
+         * @en Feature to support HPE (high performance emulator) platforms, such as Google Play Games For PC.
+         * @zh 是否支持 HPE 平台, 比如: Android 的 Google Play Games 在 PC 上的模拟器.
+         */
+        HPE = "HPE",
+        /**
+         * @en Feature to support Touch Input.
+         * Touch Input is only supported on some devices with touch screen.
+         * This feature tells that whether the device has a touch screen.
+         * @zh 是否支持触摸输入。
+         * 触摸输入只在一些带触摸屏的设备上支持。
+         * 这个特性旨在说明设备上是否带触摸屏。
+         */
+        INPUT_TOUCH = "INPUT_TOUCH",
+        /**
+         * @en Feature to support dispatching EventKeyboard.
+         * @zh 是否支持派发 EventKeyboard。
+         */
+        EVENT_KEYBOARD = "EVENT_KEYBOARD",
+        /**
+         * @en Feature to support dispatching EventMouse.
+         * @zh 是否支持派发 EventMouse。
+         */
+        EVENT_MOUSE = "EVENT_MOUSE",
+        /**
+         * @en Feature to support dispatching EventTouch.
+         * On some devices without touch screen, we still can simulate dispatching EventTouch from EventMouse.
+         * @zh 是否支持派发 EventTouch。
+         * 在一些不带触摸屏的设备上，我们仍然会从 EventMouse 模拟派发 EventTouch。
+         */
+        EVENT_TOUCH = "EVENT_TOUCH",
+        /**
+         * @en Feature to support dispatching EventAcceleration.
+         * @zh 是否支持派发 EventAcceleration。
+         */
+        EVENT_ACCELEROMETER = "EVENT_ACCELEROMETER",
+        /**
+         * @en Feature to support dispatching EventGamepad.
+         * @zh 是否支持派发 EventGamepad.
+         */
+        EVENT_GAMEPAD = "EVENT_GAMEPAD",
+        /**
+         * @en Feature to support dispatching EventHandle.
+         * @zh 是否支持派发 EventHandle
+         */
+        EVENT_HANDLE = "EVENT_HANDLE",
+        /**
+         * @en Feature to support dispatching EventHMD.
+         * @zh 是否支持派发 EventHMD
+         */
+        EVENT_HMD = "EVENT_HMD",
+        /**
+         * @en Feature to support dispatching EventHandheld.
+         * @zh 是否支持派发 EventHandheld
+         */
+        EVENT_HANDHELD = "EVENT_HANDHELD",
+        /**
+         * @en Check whether Webassembly is supported at runtime. Generally, it needs to be checked when the constant `NATIVE_CODE_BUNDLE_MODE` is 2.
+         * If it is not supported, you need to fallback to the Asm solution.
+         * @zh 运行时检测是否支持 Webassembly，一般在宏 `NATIVE_CODE_BUNDLE_MODE` 为 2 时需要检测，如果不支持，需要回滚到 Asm 方案
+         */
+        WASM = "WASM"
+    }
+    export enum _pal_system_info_enum_type_network_type__NetworkType {
+        /**
+         * @en Network is unreachable.
+         * @zh 网络不通
+         */
+        NONE = 0,
+        /**
+         * @en Network is reachable via WiFi or cable.
+         * @zh 通过无线或者有线本地网络连接因特网
+         */
+        LAN = 1,
+        /**
+         * @en Network is reachable via Wireless Wide Area Network
+         * @zh 通过蜂窝移动网络连接因特网
+         */
+        WWAN = 2
+    }
+    export enum _pal_system_info_enum_type_language__Language {
+        /**
+         * @en Unknown language code
+         * @zh 语言代码 - 未知
+         */
+        UNKNOWN = "unknown",
+        /**
+         * @en English language code
+         * @zh 语言代码 - 英语
+         */
+        ENGLISH = "en",
+        /**
+         * @en Chinese language code
+         * @zh 语言代码 - 中文
+         */
+        CHINESE = "zh",
+        /**
+         * @en French language code
+         * @zh 语言代码 - 法语
+         */
+        FRENCH = "fr",
+        /**
+         * @en Italian language code
+         * @zh 语言代码 - 意大利语
+         */
+        ITALIAN = "it",
+        /**
+         * @en German language code
+         * @zh 语言代码 - 德语
+         */
+        GERMAN = "de",
+        /**
+         * @en Spanish language code
+         * @zh 语言代码 - 西班牙语
+         */
+        SPANISH = "es",
+        /**
+         * @en Spanish language code
+         * @zh 语言代码 - 荷兰语
+         */
+        DUTCH = "du",
+        /**
+         * @en Russian language code
+         * @zh 语言代码 - 俄罗斯语
+         */
+        RUSSIAN = "ru",
+        /**
+         * @en Korean language code
+         * @zh 语言代码 - 韩语
+         */
+        KOREAN = "ko",
+        /**
+         * @en Japanese language code
+         * @zh 语言代码 - 日语
+         */
+        JAPANESE = "ja",
+        /**
+         * @en Hungarian language code
+         * @zh 语言代码 - 匈牙利语
+         */
+        HUNGARIAN = "hu",
+        /**
+         * @en Portuguese language code
+         * @zh 语言代码 - 葡萄牙语
+         */
+        PORTUGUESE = "pt",
+        /**
+         * @en Arabic language code
+         * @zh 语言代码 - 阿拉伯语
+         */
+        ARABIC = "ar",
+        /**
+         * @en Norwegian language code
+         * @zh 语言代码 - 挪威语
+         */
+        NORWEGIAN = "no",
+        /**
+         * @en Polish language code
+         * @zh 语言代码 - 波兰语
+         */
+        POLISH = "pl",
+        /**
+         * @en Turkish language code
+         * @zh 语言代码 - 土耳其语
+         */
+        TURKISH = "tr",
+        /**
+         * @en Ukrainian language code
+         * @zh 语言代码 - 乌克兰语
+         */
+        UKRAINIAN = "uk",
+        /**
+         * @en Romanian language code
+         * @zh 语言代码 - 罗马尼亚语
+         */
+        ROMANIAN = "ro",
+        /**
+         * @en Bulgarian language code
+         * @zh 语言代码 - 保加利亚语
+         */
+        BULGARIAN = "bg",
+        /**
+         * @en Hindi language code
+         * @zh 语言代码 - 印度语
+         */
+        HINDI = "hi"
+    }
+    export enum _pal_system_info_enum_type_operating_system__OS {
+        /**
+         * @en Operating System - Unknown
+         * @zh 操作系统 - 未知
+         */
+        UNKNOWN = "Unknown",
+        /**
+         * @en Operating System - iOS
+         * @zh 操作系统 - iOS
+         */
+        IOS = "iOS",
+        /**
+         * @en Operating System - Android
+         * @zh 操作系统 - 安卓
+         */
+        ANDROID = "Android",
+        /**
+         * @en Operating System - Windows
+         * @zh 操作系统 - Windows
+         */
+        WINDOWS = "Windows",
+        /**
+         * @en Operating System - Linux
+         * @zh 操作系统 - Linux
+         */
+        LINUX = "Linux",
+        /**
+         * @en Operating System - Mac OS X
+         * @zh 操作系统 - Mac OS X
+         */
+        OSX = "OS X",
+        /**
+         * @en Operating System - HarmonyOS
+         * @zh 操作系统 - 鸿蒙
+         */
+        OHOS = "OHOS",
+        /**
+         * @en Operating System - OpenHarmony
+         * @zh 操作系统 - OpenHarmony
+         */
+        OPENHARMONY = "OpenHarmony"
+    }
+    export enum _pal_system_info_enum_type_platform__Platform {
+        UNKNOWN = "UNKNOWN",
+        EDITOR_PAGE = "EDITOR_PAGE",
+        EDITOR_CORE = "EDITOR_CORE",
+        NODEJS_PAGE = "NODEJS_PAGE",
+        MOBILE_BROWSER = "MOBILE_BROWSER",
+        DESKTOP_BROWSER = "DESKTOP_BROWSER",
+        WIN32 = "WIN32",
+        ANDROID = "ANDROID",
+        IOS = "IOS",
+        MACOS = "MACOS",
+        OHOS = "OHOS",
+        OPENHARMONY = "OPENHARMONY",
+        WECHAT_GAME = "WECHAT_GAME",
+        WECHAT_MINI_PROGRAM = "WECHAT_MINI_PROGRAM",
+        XIAOMI_QUICK_GAME = "XIAOMI_QUICK_GAME",
+        ALIPAY_MINI_GAME = "ALIPAY_MINI_GAME",
+        TAOBAO_CREATIVE_APP = "TAOBAO_CREATIVE_APP",
+        TAOBAO_MINI_GAME = "TAOBAO_MINI_GAME",
+        BYTEDANCE_MINI_GAME = "BYTEDANCE_MINI_GAME",
+        OPPO_MINI_GAME = "OPPO_MINI_GAME",
+        VIVO_MINI_GAME = "VIVO_MINI_GAME",
+        HUAWEI_QUICK_GAME = "HUAWEI_QUICK_GAME",
+        MIGU_MINI_GAME = "MIGU_MINI_GAME",
+        HONOR_MINI_GAME = "HONOR_MINI_GAME",
+        SUD_MINI_GAME = "SUD_MINI_GAME",
+        SUDV2_MINI_GAME = "SUDV2_MINI_GAME"
+    }
+    export enum _pal_system_info_enum_type_browser_type__BrowserType {
+        /**
+         * @en Browser Type - Unknown
+         * @zh 浏览器类型 - 未知
+         */
+        UNKNOWN = "unknown",
+        /**
+         * @en Browser Type - WeChat inner browser
+         * @zh 浏览器类型 - 微信内置浏览器
+         */
+        WECHAT = "wechat",
+        /**
+         * @en Browser Type - Android Browser
+         * @zh 浏览器类型 - 安卓浏览器
+         */
+        ANDROID = "androidbrowser",
+        /**
+         * @en Browser Type - Internet Explorer
+         * @zh 浏览器类型 - 微软 IE
+         */
+        IE = "ie",
+        /**
+         * @en Browser Type - Microsoft Edge
+         * @zh 浏览器类型 - 微软 Edge
+         */
+        EDGE = "edge",
+        /**
+         * @en Browser Type - QQ Browser
+         * @zh 浏览器类型 - QQ 浏览器
+         */
+        QQ = "qqbrowser",
+        /**
+         * @en Browser Type - Mobile QQ Browser
+         * @zh 浏览器类型 - 手机 QQ 浏览器
+         */
+        MOBILE_QQ = "mqqbrowser",
+        /**
+         * @en Browser Type - UC Browser
+         * @zh 浏览器类型 - UC 浏览器
+         */
+        UC = "ucbrowser",
+        /**
+         * @en Browser Type - Third party integrated UC browser
+         * @zh 浏览器类型 - 第三方应用中集成的 UC 浏览器
+         */
+        UCBS = "ucbs",
+        /**
+         * @en Browser Type - 360 Browser
+         * @zh 浏览器类型 - 360 浏览器
+         */
+        BROWSER_360 = "360browser",
+        /**
+         * @en Browser Type - Baidu Box App
+         * @zh 浏览器类型 - Baidu Box App
+         */
+        BAIDU_APP = "baiduboxapp",
+        /**
+         * @en Browser Type - Baidu Browser
+         * @zh 浏览器类型 - 百度浏览器
+         */
+        BAIDU = "baidubrowser",
+        /**
+         * @en Browser Type - Maxthon Browser
+         * @zh 浏览器类型 - 傲游浏览器
+         */
+        MAXTHON = "maxthon",
+        /**
+         * @en Browser Type - Opera Browser
+         * @zh 浏览器类型 - Opera 浏览器
+         */
+        OPERA = "opera",
+        /**
+         * @en Browser Type - Oupeng Browser
+         * @zh 浏览器类型 - 欧朋浏览器
+         */
+        OUPENG = "oupeng",
+        /**
+         * @en Browser Type - MI UI Browser
+         * @zh 浏览器类型 - MIUI 内置浏览器
+         */
+        MIUI = "miuibrowser",
+        /**
+         * @en Browser Type - Firefox Browser
+         * @zh 浏览器类型 - Firefox 浏览器
+         */
+        FIREFOX = "firefox",
+        /**
+         * @en Browser Type - Safari Browser
+         * @zh 浏览器类型 - Safari 浏览器
+         */
+        SAFARI = "safari",
+        /**
+         * @en Browser Type - Chrome Browser
+         * @zh 浏览器类型 - Chrome 浏览器
+         */
+        CHROME = "chrome",
+        /**
+         * @en Browser Type - Cheetah Browser
+         * @zh 浏览器类型 - 猎豹浏览器
+         */
+        LIEBAO = "liebao",
+        /**
+         * @en Browser Type - QZone Inner Browser
+         * @zh 浏览器类型 - QZone 内置浏览器
+         */
+        QZONE = "qzone",
+        /**
+         * @en Browser Type - Sogou Browser
+         * @zh 浏览器类型 - 搜狗浏览器
+         */
+        SOUGOU = "sogou",
+        /**
+         * @en Browser Type - Huawei Browser
+         * @zh 浏览器类型 - 华为浏览器
+         */
+        HUAWEI = "huawei"
+    }
     export const _cocos_core_platform_macro__KEY: {
         /**
          * @en None
@@ -68279,48 +69597,6 @@ declare namespace __private {
          */
         dpadCenter: number;
     };
-    export type _cocos_core_scheduler__CallbackType = (dt?: number) => void;
-    /**
-     * Alias of `Function` but suppress eslint warning.
-     * Please avoid using it and explicitly specify function signatures as possible.
-     */
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    export type __types_globals__AnyFunction = Function;
-    /**
-     * Light weight timer
-     * @mangle
-     */
-    export class _cocos_core_scheduler__CallbackTimer {
-        static _timers: _cocos_core_scheduler__CallbackTimer[];
-        static get(): _cocos_core_scheduler__CallbackTimer;
-        static put(timer: _cocos_core_scheduler__CallbackTimer): void;
-        constructor();
-        initWithCallback(scheduler: Scheduler, callback: _cocos_core_scheduler__CallbackType, target: ISchedulable, seconds: number, repeat: number, delay: number): boolean;
-        /**
-         * @en get interval for timer in seconds.
-         * @zh 获取计时器的时间间隔, 以秒为单位。
-         * @returns
-         * @en returns interval of timer in seconds.
-         * @zh 返回计时器的时间间隔, 以秒为单位。
-         */
-        getInterval(): number;
-        /**
-         * @en Set interval in seconds.
-         * @zh 以秒为单位设置时间间隔。
-         */
-        setInterval(interval: number): void;
-        /**
-         * @en Update function which triggers the timer.
-         * @zh 计时更新函数，用来触发计时器。
-         * @param dt
-         * @en delta time. The unit is seconds.
-         * @zh 更新间隔时间, 单位是秒。
-         */
-        update(dt: number): void;
-        getCallback(): _cocos_core_scheduler__CallbackType | null | undefined;
-        trigger(): void;
-        cancel(): void;
-    }
     /**
      * @en
      * The parameter describing a real keyframe value.
@@ -68530,11 +69806,11 @@ declare namespace __private {
     export type _cocos_core_value_types_enum__EnumType = Record<string, string | number>;
     /// <reference types="./@types/globals" />
     export class _cocos_core_event_callbacks_invoker__CallbackInfo {
-        callback: __types_globals__AnyFunction;
+        callback: _types_globals__AnyFunction;
         target: unknown;
         once: boolean;
         constructor();
-        set(callback: __types_globals__AnyFunction, target?: unknown, once?: boolean): void;
+        set(callback: _types_globals__AnyFunction, target?: unknown, once?: boolean): void;
         reset(): void;
         check(): boolean;
     }
@@ -68553,7 +69829,7 @@ declare namespace __private {
          *
          * @param cb - The callback to be removed
          */
-        removeByCallback(cb: __types_globals__AnyFunction): void;
+        removeByCallback(cb: _types_globals__AnyFunction): void;
         /**
          * @zh 从列表中移除与指定目标相同调用者的事件。
          * @en Remove the event listeners with the given target from the list
@@ -69018,7 +70294,7 @@ declare namespace __private {
         /**
          * @internal
          */
-        static _maskComp: __types_globals__Constructor<Component> | null;
+        static _maskComp: _types_globals__Constructor<Component> | null;
         /**
          * @internal
          */
@@ -69073,13 +70349,13 @@ declare namespace __private {
         setEnabled(value: boolean, recursive?: boolean): void;
         reattach(): void;
         destroy(): void;
-        on(type: NodeEventType, callback: __types_globals__AnyFunction, target?: unknown, useCapture?: boolean): __types_globals__AnyFunction;
-        once(type: NodeEventType, callback: __types_globals__AnyFunction, target?: unknown, useCapture?: boolean): __types_globals__AnyFunction;
-        off(type: NodeEventType, callback?: __types_globals__AnyFunction, target?: unknown, useCapture?: boolean): void;
+        on(type: NodeEventType, callback: _types_globals__AnyFunction, target?: unknown, useCapture?: boolean): _types_globals__AnyFunction;
+        once(type: NodeEventType, callback: _types_globals__AnyFunction, target?: unknown, useCapture?: boolean): _types_globals__AnyFunction;
+        off(type: NodeEventType, callback?: _types_globals__AnyFunction, target?: unknown, useCapture?: boolean): void;
         targetOff(target: unknown): void;
         emit(type: _cocos_input_types_event_enum__SystemEventTypeUnion, arg0?: any, arg1?: any, arg2?: any, arg3?: any, arg4?: any): void;
         dispatchEvent(event: Event): void;
-        hasEventListener(type: _cocos_input_types_event_enum__SystemEventTypeUnion, callback?: __types_globals__AnyFunction, target?: unknown): boolean;
+        hasEventListener(type: _cocos_input_types_event_enum__SystemEventTypeUnion, callback?: _types_globals__AnyFunction, target?: unknown): boolean;
         /**
          * @zh
          * 获得所提供的事件类型在目标捕获阶段监听的所有目标。
@@ -69112,7 +70388,7 @@ declare namespace __private {
          */
         _handleEventTouch(eventTouch: EventTouch): boolean | void;
     }
-    export type __types_globals__AbstractedConstructor<T = unknown> = abstract new (...args: any[]) => T;
+    export type _types_globals__AbstractedConstructor<T = unknown> = abstract new (...args: any[]) => T;
     export class _cocos_2d_framework_ui_skew__UISkew extends Component {
         constructor();
         /**
@@ -69508,7 +70784,7 @@ declare namespace __private {
          */
         _deserializeFastDefinedObject(instance: Record<PropertyKey, unknown>, serialized: _cocos_serialization_deserialize_dynamic__SerializedGeneralTypedObject, klass: _cocos_serialization_deserialize_dynamic__SerializableClassConstructor): void;
     }
-    export type _cocos_serialization_deserialize_dynamic__CompiledDeserializeFn = (deserializer: _cocos_serialization_deserialize_dynamic___Deserializer, object: Record<string, unknown>, deserialized: Record<string, unknown>, constructor: __types_globals__AnyFunction) => void;
+    export type _cocos_serialization_deserialize_dynamic__CompiledDeserializeFn = (deserializer: _cocos_serialization_deserialize_dynamic___Deserializer, object: Record<string, unknown>, deserialized: Record<string, unknown>, constructor: _types_globals__AnyFunction) => void;
     export interface _cocos_serialization_deserialize__CCClassConstructor<T> extends _cocos_serialization_deserialize__Ctor<T> {
         __values__: string[];
         __deserialize__?: _cocos_serialization_deserialize_dynamic__CompiledDeserializeFn;
@@ -70453,7 +71729,7 @@ declare namespace __private {
          * @en The type of the asset.
          * @zh 此资源的类型。
          */
-        ctor: __types_globals__Constructor<Asset>;
+        ctor: _types_globals__Constructor<Asset>;
     }
     export interface _cocos_asset_asset_manager_config__IConfigOption {
         importBase: string;
@@ -70484,8 +71760,8 @@ declare namespace __private {
         scenes: AssetManager.Cache<_cocos_asset_asset_manager_config__ISceneInfo>;
         paths: AssetManager.Cache<_cocos_asset_asset_manager_config__IAddressableInfo[]>;
         init(options: _cocos_asset_asset_manager_config__IConfigOption): void;
-        getInfoWithPath(path: string, type?: __types_globals__Constructor<Asset> | null): _cocos_asset_asset_manager_config__IAddressableInfo | null;
-        getDirWithPath(path: string, type?: __types_globals__Constructor<Asset> | null, out?: _cocos_asset_asset_manager_config__IAddressableInfo[]): _cocos_asset_asset_manager_config__IAddressableInfo[];
+        getInfoWithPath(path: string, type?: _types_globals__Constructor<Asset> | null): _cocos_asset_asset_manager_config__IAddressableInfo | null;
+        getDirWithPath(path: string, type?: _types_globals__Constructor<Asset> | null, out?: _cocos_asset_asset_manager_config__IAddressableInfo[]): _cocos_asset_asset_manager_config__IAddressableInfo[];
         getAssetInfo(uuid: string): _cocos_asset_asset_manager_config__IAssetInfo | null;
         getSceneInfo(name: string): _cocos_asset_asset_manager_config__ISceneInfo | null;
         destroy(): void;
@@ -70509,12 +71785,12 @@ declare namespace __private {
         reuse(args: any): void;
     }
     export type _extensions_ccpool_node_pool__Constructor<T = {}> = new (...args: any[]) => T;
-    export type _pal_input__GamepadCallback = (res: import('cocos/input/types/event').EventGamepad) => void;
+    export type _pal_input__GamepadCallback = (res: EventGamepad) => void;
     /**
      * @en The abstract class for input source, which is used to control the input signal of a mono input source
      * @zh InputSource 抽象类，该类用于控制单一输入源的输入信号
      */
-    export abstract class __pal_input_input_source__InputSource<T> {
+    export abstract class _pal_input_input_source__InputSource<T> {
         /**
          * @en Get the signal value of the input source
          * @zh 获取输入源的信号值
@@ -70525,7 +71801,7 @@ declare namespace __private {
      * @en The class for input source of 1D Axis, which is used to control the input signal of a mono input source
      * @zh 1D 轴的 InputSource 类，该类用于控制单一输入源的输入信号
      */
-    export class __pal_input_input_source__InputSourceAxis1D extends __pal_input_input_source__InputSource<number> {
+    export class _pal_input_input_source__InputSourceAxis1D extends _pal_input_input_source__InputSource<number> {
         /**
          * @en Get the signal value of the input source, ranged from -1 to 1
          * @zh 获取输入源的信号值，取值范围从 -1 到 1
@@ -70536,32 +71812,32 @@ declare namespace __private {
      * @en The class for input source of mono button, whose input signal value is ranged from 0 to 1
      * @zh 单一按键输入源类, 输入信号源的取值范围是 0 到 1
      */
-    export class __pal_input_input_source__InputSourceButton extends __pal_input_input_source__InputSourceAxis1D {
+    export class _pal_input_input_source__InputSourceButton extends _pal_input_input_source__InputSourceAxis1D {
         /**
          * @en Get the signal value of the input source, ranged from 0 to 1
          * @zh 获取输入源的信号值，取值范围从 0 到 1
          */
         getValue(): number;
     }
-    export type _pal_input__InputSourceButton = __pal_input_input_source__InputSourceButton;
+    export type _pal_input__InputSourceButton = _pal_input_input_source__InputSourceButton;
     /**
      * @en The class for input source of 1D Axis, which is used to control the input signal of a composite of multi input source
      * @zh 1D 轴的 InputSource 类，该类用于控制多个输入源组合的输入信号
      */
-    export class __pal_input_input_source__CompositeInputSourceAxis1D extends __pal_input_input_source__InputSourceAxis1D {
+    export class _pal_input_input_source__CompositeInputSourceAxis1D extends _pal_input_input_source__InputSourceAxis1D {
         /**
          * @en The input source object of positive 1D axis
          * @zh 1D 轴的正向的输入源对象
          */
-        positive: __pal_input_input_source__InputSourceButton;
+        positive: _pal_input_input_source__InputSourceButton;
         /**
          * @en The input source object of negative 1D axis
          * @zh 1D 轴的负向的输入源对象
          */
-        negative: __pal_input_input_source__InputSourceButton;
+        negative: _pal_input_input_source__InputSourceButton;
         constructor(options: {
-            positive: __pal_input_input_source__InputSourceButton;
-            negative: __pal_input_input_source__InputSourceButton;
+            positive: _pal_input_input_source__InputSourceButton;
+            negative: _pal_input_input_source__InputSourceButton;
         });
         /**
          * @en Get the signal value of the input source, ranged from -1 to 1.
@@ -70569,2448 +71845,124 @@ declare namespace __private {
          */
         getValue(): number;
     }
-    export interface __cocos_core_math_type_define__IVec2Like {
-        x: number;
-        y: number;
-    }
-    export interface __cocos_core_math_type_define__IVec3Like {
-        x: number;
-        y: number;
-        z: number;
-    }
-    export interface __cocos_core_math_type_define__IMat4Like {
-        m00: number;
-        m01: number;
-        m02: number;
-        m03: number;
-        m04: number;
-        m05: number;
-        m06: number;
-        m07: number;
-        m08: number;
-        m09: number;
-        m10: number;
-        m11: number;
-        m12: number;
-        m13: number;
-        m14: number;
-        m15: number;
-    }
-    export interface __cocos_core_math_type_define__IMat3Like {
-        m00: number;
-        m01: number;
-        m02: number;
-        m03: number;
-        m04: number;
-        m05: number;
-        m06: number;
-        m07: number;
-        m08: number;
-    }
-    export interface __cocos_core_math_type_define__IQuatLike {
-        x: number;
-        y: number;
-        z: number;
-        w: number;
-    }
-    /**
-     * @en The base class of all value types.
-     * @zh 所有值类型的基类。
-     */
-    export class __cocos_core_value_types_value_type__ValueType {
-        constructor();
-        /**
-         * @en
-         * Clone the current object. The clone result of the object should be equal to the current object,
-         * i.e. satisfy `this.equals(this, value.clone())`.
-         * The base version of this method do nothing and returns `this'.
-         * The derived class **must** rewrite this method and the returned object should not be `this`, i.e. satisfy `this !== this.clone()`.
-         * @zh
-         * 克隆当前值。克隆的结果值应与当前值相等，即满足 `this.equals(this, value.clone())`。
-         * 本方法的基类版本简单地返回 `this`；
-         * 派生类**必须**重写本方法，并且返回的对象不应当为 `this`，即满足 `this !== this.clone()`。
-         * @returns @en The cloned object. @zh 克隆的对象。
-         */
-        public clone(): __cocos_core_value_types_value_type__ValueType;
-        /**
-         * @en
-         * Check whether the current object is equal to the specified object.
-         * This check should be interchangeable, i.e. satisfy `this.equals(other) === other.equals(this)`.
-         * The base version of this method will returns `false'.
-         * @zh
-         * 判断当前值是否与指定值相等。此判断应当具有交换性，即满足 `this.equals(other) === other.equals(this)`。
-         * 本方法的基类版本简单地返回 `false`。
-         * @param other @en The other object @zh 指定值。
-         * @returns @en `true` if equal, otherwise returns `false` @zh 如果相等，则返回 `true`，否则返回 `false`。
-         */
-        public equals(other: this): boolean;
-        /**
-         * @en
-         * Set the property values of the current object with the given object.
-         * The base version of this method will returns `this' and the derived class **must** rewrite this method.
-         * @zh
-         * 赋值当前值使其与指定值相等。
-         * 本方法的基类版本简单地返回 `this`，派生类**必须**重写本方法。
-         * @param other @en The other object. @zh 指定值。
-         */
-        public set(other: this): void;
-        /**
-         * @en
-         * Convert the current object to a string.
-         * The base version of this method will returns an empty string.
-         * @zh
-         * 返回当前值的字符串表示。
-         * 本方法的基类版本返回空字符串。
-         * @returns @en The string representation of the current value. @zh 当前值的字符串表示。
-         */
-        public toString(): string;
-    }
-    /**
-     * @en Mathematical 3x3 matrix.
-     * @zh 表示三维（3x3）矩阵。
-     */
-    export class __cocos_core_math_mat3__Mat3 extends __cocos_core_value_types_value_type__ValueType {
-        public static IDENTITY = "Bad expression <Object.freeze(new Mat3())>";
-        /**
-         * @en Clone a matrix and save the results to out matrix
-         * @zh 获得指定矩阵的拷贝
-         */
-        public static clone<Out extends __cocos_core_math_type_define__IMat3Like>(a: Out): __cocos_core_math_mat3__Mat3;
-        /**
-         * @en Copy content of a matrix into another and save the results to out matrix
-         * @zh 复制目标矩阵
-         */
-        public static copy<Out extends __cocos_core_math_type_define__IMat3Like>(out: Out, a: Out): Out;
-        /**
-         * @en Sets the elements of a matrix with the given values and save the results to out matrix
-         * @zh 设置矩阵值
-         */
-        public static set<Out extends __cocos_core_math_type_define__IMat3Like>(out: Out, m00: number, m01: number, m02: number, m03: number, m04: number, m05: number, m06: number, m07: number, m08: number): Out;
-        /**
-         * @en Reset the out matrix to an identity matrix
-         * @zh 将目标赋值为单位矩阵
-         */
-        public static identity<Out extends __cocos_core_math_type_define__IMat3Like>(out: Out): Out;
-        /**
-         * @en Transposes a matrix and save the results to out matrix
-         * @zh 转置矩阵
-         */
-        public static transpose<Out extends __cocos_core_math_type_define__IMat3Like>(out: Out, a: Out): Out;
-        /**
-         * @en Inverts a matrix. When matrix is not invertible the matrix will be set to zeros.
-         * @zh 矩阵求逆，注意，在矩阵不可逆时，会返回一个全为 0 的矩阵。
-         */
-        public static invert<Out extends __cocos_core_math_type_define__IMat3Like>(out: Out, a: Out): Out;
-        /**
-         * @en Calculates the determinant of a matrix
-         * @zh 矩阵行列式
-         */
-        public static determinant<Out extends __cocos_core_math_type_define__IMat3Like>(a: Out): number;
-        /**
-         * @en Multiply two matrices explicitly and save the results to out matrix: a * b
-         * @zh 矩阵乘法：a * b
-         */
-        public static multiply<Out extends __cocos_core_math_type_define__IMat3Like>(out: Out, a: Out, b: Out): Out;
-        /**
-         * @en Take the first third order of the fourth order matrix and multiply by the third order matrix: a * b
-         * @zh 取四阶矩阵的前三阶，与三阶矩阵相乘：a * b
-         */
-        public static multiplyMat4<Out extends __cocos_core_math_type_define__IMat3Like>(out: Out, a: Out, b: __cocos_core_math_type_define__IMat4Like): Out;
-        /**
-         * @en Multiply a matrix with a translation vector given by a translation offset, first translate, then transform：a * T(v).
-         * @zh 在给定矩阵变换基础上加入位移变换，先位移，再变换，即a * T(v)。
-         */
-        /**
-         * @deprecated since v3.8.0, the function name is misleading, please use translate instead.
-         */
-        public static transform<Out extends __cocos_core_math_type_define__IMat3Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: Out, v: VecLike): void;
-        /**
-         * @en Multiply a matrix with a translation vector given by a translation offset, first translate, then transform：a * T(v).
-         * @zh 在给定矩阵变换基础上加入位移变换，先位移，再变换，即a * T(v)。
-         */
-        public static translate<Out extends __cocos_core_math_type_define__IMat3Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: Out, v: VecLike): Out;
-        /**
-         * @en Multiply a matrix with a scale matrix given by a scale vector and save the results to out matrix, first scale, then transform：a * S(v).
-         * @zh 在给定矩阵变换基础上加入新缩放变换，先缩放，再变换，即a * S(v)。
-         */
-        public static scale<Out extends __cocos_core_math_type_define__IMat3Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: Out, v: VecLike): Out;
-        /**
-         * @en Rotates the transform by the given angle and save the results into the out matrix, first rotate, then transform：a * R(rad).
-         * @zh 在给定矩阵变换基础上加入新旋转变换，先旋转，再变换，即a * R(rad)。
-         * @param rad radian of rotation
-         */
-        public static rotate<Out extends __cocos_core_math_type_define__IMat3Like>(out: Out, a: Out, rad: number): Out;
-        /**
-         * @en Copies the first third order matrix of a fourth order matrix to the out third order matrix
-         * @zh 取四阶矩阵的前三阶
-         */
-        public static fromMat4<Out extends __cocos_core_math_type_define__IMat3Like>(out: Out, a: __cocos_core_math_type_define__IMat4Like): Out;
-        /**
-         * @en Sets a third order matrix with view direction and up direction. Then save the results to out matrix
-         * @zh 根据视口前方向和上方向计算矩阵
-         * @param view The view direction, it`s must be normalized.
-         * @param up The view up direction, it`s must be normalized, default value is (0, 1, 0).
-         */
-        public static fromViewUp<Out extends __cocos_core_math_type_define__IMat3Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, view: VecLike, up?: __cocos_core_math_vec3__Vec3): Out;
-        /**
-         * @en Sets the given matrix with a translation vector and save the results to out matrix
-         * @zh 计算位移矩阵
-         */
-        public static fromTranslation<Out extends __cocos_core_math_type_define__IMat3Like, VecLike extends __cocos_core_math_type_define__IVec2Like>(out: Out, v: VecLike): Out;
-        /**
-         * @en Sets the given matrix with a scale vector and save the results to out matrix
-         * @zh 计算缩放矩阵
-         */
-        public static fromScaling<Out extends __cocos_core_math_type_define__IMat3Like, VecLike extends __cocos_core_math_type_define__IVec2Like>(out: Out, v: VecLike): Out;
-        /**
-         * @en Sets the given matrix with a given angle and save the results to out matrix
-         * @zh 计算旋转矩阵
-         */
-        public static fromRotation<Out extends __cocos_core_math_type_define__IMat3Like>(out: Out, rad: number): Out;
-        /**
-         * @en Sets the given matrix with the given quaternion and save the results to out matrix
-         * @zh 根据四元数旋转信息计算矩阵
-         */
-        public static fromQuat<Out extends __cocos_core_math_type_define__IMat3Like>(out: Out, q: __cocos_core_math_type_define__IQuatLike): Out;
-        /**
-         * @deprecated since v3.8.0, this function is too complicated, and should be split into several functions.
-         */
-        /**
-         * @en Calculates the upper-left 3x3 matrix of a 4x4 matrix's inverse transpose
-         * @zh 计算指定四维矩阵的逆转置三维矩阵
-         */
-        public static inverseTransposeMat4<Out extends __cocos_core_math_type_define__IMat3Like>(out: Out, a: __cocos_core_math_type_define__IMat4Like): Out | null;
-        /**
-         * @en Transform a matrix object to a flat array
-         * @zh 矩阵转数组
-         * @param ofs Array Start Offset
-         */
-        public static toArray<Out extends __types_globals__IWritableArrayLike<number>>(out: Out, m: __cocos_core_math_type_define__IMat3Like, ofs): Out;
-        /**
-         * @en Generates or sets a matrix with a flat array
-         * @zh 数组转矩阵
-         * @param ofs Array Start Offset
-         */
-        public static fromArray<Out extends __cocos_core_math_type_define__IMat3Like>(out: Out, arr: __types_globals__IWritableArrayLike<number>, ofs): Out;
-        /**
-         * @en Adds two matrices and save the results to out matrix
-         * @zh 逐元素矩阵加法
-         */
-        public static add<Out extends __cocos_core_math_type_define__IMat3Like>(out: Out, a: Out, b: Out): Out;
-        /**
-         * @en Subtracts matrix b from matrix a and save the results to out matrix
-         * @zh 逐元素矩阵减法
-         */
-        public static subtract<Out extends __cocos_core_math_type_define__IMat3Like>(out: Out, a: Out, b: Out): Out;
-        /**
-         * @en Multiply each element of a matrix by a scalar number and save the results to out matrix
-         * @zh 矩阵标量乘法
-         */
-        public static multiplyScalar<Out extends __cocos_core_math_type_define__IMat3Like>(out: Out, a: Out, b: number): Out;
-        /**
-         * @en Adds two matrices after multiplying each element of the second operand by a scalar number. And save the results to out matrix.
-         * @zh 逐元素矩阵标量乘加: A + B * scale
-         */
-        public static multiplyScalarAndAdd<Out extends __cocos_core_math_type_define__IMat3Like>(out: Out, a: Out, b: Out, scale: number): Out;
-        /**
-         * @en Returns whether the specified matrices are equal.
-         * @zh 矩阵等价判断
-         */
-        public static strictEquals<Out extends __cocos_core_math_type_define__IMat3Like>(a: Out, b: Out): boolean;
-        /**
-         * @en Returns whether the specified matrices are approximately equal.
-         * @zh 排除浮点数误差的矩阵近似等价判断
-         */
-        public static equals<Out extends __cocos_core_math_type_define__IMat3Like>(a: Out, b: Out, epsilon): boolean;
-        /**
-         * @en Convert Matrix to euler angle, resulting angle y, z in the range of [-PI, PI],
-         *  x in the range of [-PI/2, PI/2], the rotation order is YXZ, first rotate around Y, then around X, and finally around Z.
-         * @zh 将矩阵转换成欧拉角, 返回角度 y,z 在 [-PI, PI] 区间内, x 在 [-PI/2, PI/2] 区间内，旋转顺序为 YXZ，即先绕Y旋转，再绕X，最后绕Z旋转。
-         */
-        public static toEuler<InType extends __cocos_core_math_type_define__IMat3Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(matrix: InType, v: VecLike): boolean;
-        /**
-         * matrix layout
-         * |m00  m03  m06|
-         * |m01  m04  m07|
-         * |m02  m05  m08|
-         */
-        /**
-         * @en Value at column 0 row 0 of the matrix.
-         * @zh 矩阵第 0 列第 0 行的元素。
-         */
-        public m00: number;
-        /**
-         * @en Value at column 0 row 1 of the matrix.
-         * @zh 矩阵第 0 列第 1 行的元素。
-         */
-        public m01: number;
-        /**
-         * @en Value at column 0 row 2 of the matrix.
-         * @zh 矩阵第 0 列第 2 行的元素。
-         */
-        public m02: number;
-        /**
-         * @en Value at column 1 row 0 of the matrix.
-         * @zh 矩阵第 1 列第 0 行的元素。
-         */
-        public m03: number;
-        /**
-         * @en Value at column 1 row 1 of the matrix.
-         * @zh 矩阵第 1 列第 1 行的元素。
-         */
-        public m04: number;
-        /**
-         * @en Value at column 1 row 2 of the matrix.
-         * @zh 矩阵第 1 列第 2 行的元素。
-         */
-        public m05: number;
-        /**
-         * @en Value at column 2 row 0 of the matrix.
-         * @zh 矩阵第 2 列第 0 行的元素。
-         */
-        public m06: number;
-        /**
-         * @en Value at column 2 row 1 of the matrix.
-         * @zh 矩阵第 2 列第 1 行的元素。
-         */
-        public m07: number;
-        /**
-         * @en Value at column 2 row 2 of the matrix.
-         * @zh 矩阵第 2 列第 2 行的元素。
-         */
-        public m08: number;
-        constructor(other: __cocos_core_math_mat3__Mat3);
-        constructor(m00?: number, m01?: number, m02?: number, m03?: number, m04?: number, m05?: number, m06?: number, m07?: number, m08?: number);
-        constructor(m00: number | __cocos_core_math_mat3__Mat3, m01, m02, m03, m04, m05, m06, m07, m08);
-        /**
-         * @en Clone a new matrix from the current matrix.
-         * @zh 克隆当前矩阵。
-         */
-        public clone(): __cocos_core_math_mat3__Mat3;
-        /**
-         * @en Sets the matrix with another one's value.
-         * @zh 设置当前矩阵使其与指定矩阵相等。
-         * @param other Specified matrix
-         * @return this
-         */
-        public set(other: __cocos_core_math_mat3__Mat3): __cocos_core_math_mat3__Mat3;
-        /**
-         * @en Set the matrix with values of all elements
-         * @zh 设置当前矩阵指定元素值。
-         * @return this
-         */
-        public set(m00?: number, m01?: number, m02?: number, m03?: number, m04?: number, m05?: number, m06?: number, m07?: number, m08?: number): __cocos_core_math_mat3__Mat3;
-        public set(m00: number | __cocos_core_math_mat3__Mat3, m01, m02, m03, m04, m05, m06, m07, m08): __cocos_core_math_mat3__Mat3;
-        /**
-         * @en Returns whether the specified matrices are approximately equal.
-         * @zh 判断当前矩阵是否在误差范围内与指定矩阵相等。
-         * @param other Comparative matrix
-         * @param epsilon The error allowed. It`s should be a non-negative number.
-         * @return Returns `true' when the elements of both matrices are equal; otherwise returns `false'.
-         */
-        public equals(other: __cocos_core_math_mat3__Mat3, epsilon): boolean;
-        /**
-         * @en Returns whether the specified matrices are equal.
-         * @zh 判断当前矩阵是否与指定矩阵相等。
-         * @param other Comparative matrix
-         * @return Returns `true' when the elements of both matrices are equal; otherwise returns `false'.
-         */
-        public strictEquals(other: __cocos_core_math_mat3__Mat3): boolean;
-        /**
-         * @en Returns a string representation of a matrix.
-         * @zh 返回当前矩阵的字符串表示。
-         * @return The string representation of this matrix
-         */
-        public toString(): string;
-        /**
-         * @en set the current matrix to an identity matrix.
-         * @zh 将当前矩阵设为单位矩阵。
-         * @return `this`
-         */
-        public identity(): __cocos_core_math_mat3__Mat3;
-        /**
-         * @en Transposes the current matrix.
-         * @zh 计算当前矩阵的转置矩阵。
-         */
-        public transpose(): __cocos_core_math_mat3__Mat3;
-        /**
-         * @en Inverts the current matrix. When matrix is not invertible the matrix will be set to zeros.
-         * @zh 计算当前矩阵的逆矩阵。注意，在矩阵不可逆时，会返回一个全为 0 的矩阵。
-         */
-        public invert(): __cocos_core_math_mat3__Mat3;
-        /**
-         * @en Calculates the determinant of the current matrix.
-         * @zh 计算当前矩阵的行列式。
-         * @return 当前矩阵的行列式。
-         */
-        public determinant(): number;
-        /**
-         * @en Adds the current matrix and another matrix to the current matrix.
-         * @zh 矩阵加法。将当前矩阵与指定矩阵的相加，结果返回给当前矩阵。
-         * @param mat the second operand
-         */
-        public add(mat: __cocos_core_math_mat3__Mat3): __cocos_core_math_mat3__Mat3;
-        /**
-         * @en Subtracts another matrix from the current matrix.
-         * @zh 计算矩阵减法。将当前矩阵减去指定矩阵的结果赋值给当前矩阵。
-         * @param mat the second operand
-         */
-        public subtract(mat: __cocos_core_math_mat3__Mat3): __cocos_core_math_mat3__Mat3;
-        /**
-         * @en Multiply the current matrix with another matrix.
-         * @zh 矩阵乘法。将当前矩阵左乘指定矩阵的结果赋值给当前矩阵。
-         * @param mat the second operand
-         */
-        public multiply(mat: __cocos_core_math_mat3__Mat3): __cocos_core_math_mat3__Mat3;
-        /**
-         * @en Multiply each element of the current matrix by a scalar number.
-         * @zh 矩阵数乘。将当前矩阵与指定标量的数乘结果赋值给当前矩阵。
-         * @param scalar amount to scale the matrix's elements by
-         */
-        public multiplyScalar(scalar: number): __cocos_core_math_mat3__Mat3;
-        /**
-         * @en Multiply the current matrix with a scale matrix given by a scale vector, that is M * S(vec).
-         * @zh 将当前矩阵左乘缩放矩阵的结果赋值给当前矩阵，缩放矩阵由各个轴的缩放给出，即M * S(vec)。
-         * @param vec vector to scale by
-         */
-        public scale(vec: __cocos_core_math_vec3__Vec3): __cocos_core_math_mat3__Mat3;
-        /**
-         * @en Rotates the current matrix by the given angle, that is M * R(rad).
-         * @zh 将当前矩阵左乘旋转矩阵的结果赋值给当前矩阵，旋转矩阵由旋转轴和旋转角度给出，即M * R(rad)。
-         * @param rad radian of rotation
-         */
-        public rotate(rad: number): __cocos_core_math_mat3__Mat3;
-        /**
-         * @en Resets the current matrix from the given quaternion.
-         * @zh 重置当前矩阵的值，使其表示指定四元数表示的旋转变换。
-         * @param q The quaternion.
-         * @returns this
-         */
-        public fromQuat(q: __cocos_core_math_quat__Quat): __cocos_core_math_mat3__Mat3;
-    }
-    /**
-     * @en quaternion
-     * @zh 四元数
-     */
-    export class __cocos_core_math_quat__Quat extends __cocos_core_value_types_value_type__ValueType {
-        public static IDENTITY = "Bad expression <Object.freeze(new Quat())>";
-        /**
-         * @en Obtain a copy of the given quaternion
-         * @zh 获得指定四元数的拷贝
-         */
-        public static clone<Out extends __cocos_core_math_type_define__IQuatLike>(a: Out): __cocos_core_math_quat__Quat;
-        /**
-         * @en Copy the given quaternion to the out quaternion
-         * @zh 复制目标四元数
-         */
-        public static copy<Out extends __cocos_core_math_type_define__IQuatLike, QuatLike extends __cocos_core_math_type_define__IQuatLike>(out: Out, a: QuatLike): Out;
-        /**
-         * @en Sets the out quaternion with values of each component
-         * @zh 设置四元数值
-         */
-        public static set<Out extends __cocos_core_math_type_define__IQuatLike>(out: Out, x: number, y: number, z: number, w: number): Out;
-        /**
-         * @en Sets the out quaternion to an identity quaternion
-         * @zh 将目标赋值为单位四元数
-         */
-        public static identity<Out extends __cocos_core_math_type_define__IQuatLike>(out: Out): Out;
-        /**
-         * @en Sets the out quaternion with the shortest path orientation between two vectors, considering both vectors normalized
-         * @zh 设置四元数为两向量间的最短路径旋转，默认两向量都已归一化
-         */
-        public static rotationTo<Out extends __cocos_core_math_type_define__IQuatLike, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: VecLike, b: VecLike): Out;
-        /**
-         * @en Gets the rotation axis and the arc of rotation from the quaternion
-         * @zh 获取四元数的旋转轴和旋转弧度
-         * @param outAxis output axis
-         * @param q input quaternion
-         * @return radian of rotation
-         */
-        public static getAxisAngle<Out extends __cocos_core_math_type_define__IQuatLike, VecLike extends __cocos_core_math_type_define__IVec3Like>(outAxis: VecLike, q: Out): number;
-        /**
-         * @en Quaternion multiplication and save the results to out quaternion, that is a * b.
-         * @zh 四元数乘法，即a * b。
-         */
-        public static multiply<Out extends __cocos_core_math_type_define__IQuatLike, QuatLike_1 extends __cocos_core_math_type_define__IQuatLike, QuatLike_2 extends __cocos_core_math_type_define__IQuatLike>(out: Out, a: QuatLike_1, b: QuatLike_2): Out;
-        /**
-         * @en Quaternion scalar multiplication and save the results to out quaternion
-         * @zh 四元数标量乘法
-         */
-        public static multiplyScalar<Out extends __cocos_core_math_type_define__IQuatLike>(out: Out, a: Out, b: number): Out;
-        /**
-         * @en Quaternion multiplication and addition: A + B * scale
-         * @zh 四元数乘加：A + B * scale
-         */
-        public static scaleAndAdd<Out extends __cocos_core_math_type_define__IQuatLike>(out: Out, a: Out, b: Out, scale: number): Out;
-        /**
-         * @en Sets the out quaternion to represent a radian rotation around x axis
-         * @zh 绕 X 轴旋转指定四元数
-         * @param rad radian of rotation
-         */
-        public static rotateX<Out extends __cocos_core_math_type_define__IQuatLike>(out: Out, a: Out, rad: number): Out;
-        /**
-         * @en Sets the out quaternion to represent a radian rotation around y axis
-         * @zh 绕 Y 轴旋转指定四元数
-         * @param rad radian of rotation
-         */
-        public static rotateY<Out extends __cocos_core_math_type_define__IQuatLike>(out: Out, a: Out, rad: number): Out;
-        /**
-         * @en Sets the out quaternion to represent a radian rotation around z axis
-         * @zh 绕 Z 轴旋转指定四元数
-         * @param rad radian of rotation
-         */
-        public static rotateZ<Out extends __cocos_core_math_type_define__IQuatLike>(out: Out, a: Out, rad: number): Out;
-        /**
-         * @en Sets the out quaternion to represent a radian rotation around a given rotation axis in world space
-         * @zh 绕世界空间下指定轴旋转四元数
-         * @param axis axis of rotation, normalized by default
-         * @param rad radian of rotation
-         */
-        public static rotateAround<Out extends __cocos_core_math_type_define__IQuatLike, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, rot: Out, axis: VecLike, rad: number): Out;
-        /**
-         * @en Sets the out quaternion to represent a radian rotation around a given rotation axis in local space
-         * @zh 绕本地空间下指定轴旋转四元数
-         * @param axis axis of rotation
-         * @param rad radian of rotation
-         */
-        public static rotateAroundLocal<Out extends __cocos_core_math_type_define__IQuatLike, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, rot: Out, axis: VecLike, rad: number): Out;
-        /**
-         * @en Calculates the w component with xyz components, considering the given quaternion normalized
-         * @zh 根据 xyz 分量计算 w 分量，默认已归一化
-         */
-        public static calculateW<Out extends __cocos_core_math_type_define__IQuatLike>(out: Out, a: Out): Out;
-        /**
-         * @en Quaternion dot product (scalar product)
-         * @zh 四元数点积（数量积）
-         */
-        public static dot<Out extends __cocos_core_math_type_define__IQuatLike>(a: Out, b: Out): number;
-        /**
-         * @en Element by element linear interpolation: A + t * (B - A)
-         * @zh 逐元素线性插值： A + t * (B - A)
-         */
-        public static lerp<Out extends __cocos_core_math_type_define__IQuatLike>(out: Out, a: Out, b: Out, t: number): Out;
-        /**
-         * @en Spherical quaternion interpolation
-         * @zh 四元数球面插值
-         */
-        public static slerp<Out extends __cocos_core_math_type_define__IQuatLike, QuatLike_1 extends __cocos_core_math_type_define__IQuatLike, QuatLike_2 extends __cocos_core_math_type_define__IQuatLike>(out: Out, a: QuatLike_1, b: QuatLike_2, t: number): Out;
-        /**
-         * @en Spherical quaternion interpolation with two control points
-         * @zh 带两个控制点的四元数球面插值
-         * @param out the receiving quaternion
-         * @param a the first operand
-         * @param b the second operand
-         * @param c the third operand
-         * @param d the fourth operand
-         * @param t interpolation amount, in the range [0-1], between the two inputs
-         * @returns out
-         */
-        public static sqlerp<Out extends __cocos_core_math_type_define__IQuatLike>(out: Out, a: Out, b: Out, c: Out, d: Out, t: number): Out;
-        /**
-         * @en Sets the inverse of the given quaternion to out quaternion
-         * @zh 四元数求逆
-         */
-        public static invert<Out extends __cocos_core_math_type_define__IQuatLike, QuatLike extends __cocos_core_math_type_define__IQuatLike>(out: Out, a: QuatLike): Out;
-        /**
-         * @en Conjugating a quaternion, it's equivalent to the inverse of the unit quaternion, but more efficient
-         * @zh 求共轭四元数，对单位四元数与求逆等价，但更高效
-         */
-        public static conjugate<Out extends __cocos_core_math_type_define__IQuatLike>(out: Out, a: Out): Out;
-        /**
-         * @en Calculates the length of the quaternion
-         * @zh 求四元数长度
-         */
-        public static len<Out extends __cocos_core_math_type_define__IQuatLike>(a: Out): number;
-        /**
-         * @en Calculates the squared length of the quaternion
-         * @zh 求四元数长度平方
-         */
-        public static lengthSqr<Out extends __cocos_core_math_type_define__IQuatLike>(a: Out): number;
-        /**
-         * @en Normalize the given quaternion, returns a zero quaternion if input is a zero quaternion.
-         * @zh 归一化四元数，输入零四元数将会返回零四元数。
-         */
-        public static normalize<Out extends __cocos_core_math_type_define__IQuatLike>(out: Out, a: Out): Out;
-        /**
-         * @en Calculated the quaternion represents the given coordinates, considering all given vectors are normalized and mutually perpendicular
-         * @zh 根据本地坐标轴朝向计算四元数，默认三向量都已归一化且相互垂直
-         */
-        public static fromAxes<Out extends __cocos_core_math_type_define__IQuatLike, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, xAxis: VecLike, yAxis: VecLike, zAxis: VecLike): Out;
-        /**
-         * @en Calculates the quaternion with the up direction and the direction of the viewport
-         * @zh 根据视口的前方向和上方向计算四元数
-         * @param view The view direction, it`s must be normalized.
-         * @param up The view up direction, it`s must be normalized, default value is (0, 1, 0).
-         */
-        public static fromViewUp<Out extends __cocos_core_math_type_define__IQuatLike, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, view: VecLike, up?: __cocos_core_math_vec3__Vec3): Out;
-        /**
-         * @en Calculates the quaternion from a given rotary shaft and a radian rotation around it.
-         * @zh 根据旋转轴和旋转弧度计算四元数
-         */
-        public static fromAxisAngle<Out extends __cocos_core_math_type_define__IQuatLike, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, axis: VecLike, rad: number): Out;
-        /**
-         * @en Calculates the quaternion with the three-dimensional transform matrix, considering no scale included in the matrix
-         * @zh 根据三维矩阵信息计算四元数，默认输入矩阵不含有缩放信息
-         */
-        public static fromMat3<Out extends __cocos_core_math_type_define__IQuatLike>(out: Out, m: __cocos_core_math_mat3__Mat3): Out;
-        /**
-         * @en Calculates the quaternion with Euler angles, the rotation order is YZX, first rotate around Y, then around Z, and finally around X.
-         * @zh 根据欧拉角信息计算四元数，旋转顺序为 YZX，即先绕Y旋转，再绕Z，最后绕X旋转。
-         */
-        public static fromEuler<Out extends __cocos_core_math_type_define__IQuatLike>(out: Out, x: number, y: number, z: number): Out;
-        /**
-         * @en Calculates the quaternion with given 2D angle (0, 0, z).
-         * @zh 根据 2D 角度（0, 0, z）计算四元数
-         *
-         * @param out Output quaternion
-         * @param z Angle to rotate around Z axis in degrees.
-         */
-        public static fromAngleZ<Out extends __cocos_core_math_type_define__IQuatLike>(out: Out, z: number): Out;
-        /**
-         * @en This returns the X-axis vector of the quaternion
-         * @zh 返回定义此四元数的坐标系 X 轴向量
-         */
-        public static toAxisX(out: __cocos_core_math_type_define__IVec3Like, q: __cocos_core_math_type_define__IQuatLike): __cocos_core_math_type_define__IVec3Like;
-        /**
-         * @en This returns the Y-axis vector of the quaternion
-         * @zh 返回定义此四元数的坐标系 Y 轴向量
-         */
-        public static toAxisY(out: __cocos_core_math_type_define__IVec3Like, q: __cocos_core_math_type_define__IQuatLike): __cocos_core_math_type_define__IVec3Like;
-        /**
-         * @en This returns the Z-axis vector of the quaternion
-         * @zh 返回定义此四元数的坐标系 Z 轴向量
-         */
-        public static toAxisZ(out: __cocos_core_math_type_define__IVec3Like, q: __cocos_core_math_type_define__IQuatLike): __cocos_core_math_type_define__IVec3Like;
-        /**
-         * @en Converts the quaternion to angles, result angle x, y in the range of [-180, 180], z in the range of [-90, 90] interval,
-         * the rotation order is YZX, first rotate around Y, then around Z, and finally around X
-         * @zh 根据四元数计算欧拉角，返回角度 x, y 在 [-180, 180] 区间内, z 默认在 [-90, 90] 区间内，旋转顺序为 YZX，即先绕Y旋转，再绕Z，最后绕X旋转。
-         * @param outerZ change z value range to [-180, -90] U [90, 180]
-         */
-        public static toEuler(out: __cocos_core_math_type_define__IVec3Like, q: __cocos_core_math_type_define__IQuatLike, outerZ?: boolean): __cocos_core_math_type_define__IVec3Like;
-        /**
-         * @en Converts the quaternion to euler angles, result angle y, z in the range of [-180, 180], x in the range of [-90, 90],
-         * the rotation order is YXZ, first rotate around Y, then around X, and finally around Z.
-         * @zh 根据四元数计算欧拉角，返回角度 yz 在 [-180, 180], x 在 [-90, 90]，旋转顺序为 YXZ，即先绕Y旋转，再绕X，最后绕Z旋转。
-         */
-        public static toEulerInYXZOrder(out: __cocos_core_math_vec3__Vec3, q: __cocos_core_math_type_define__IQuatLike): void;
-        /**
-         * @en Converts quaternion to an array
-         * @zh 四元数转数组
-         * @param ofs Array Start Offset
-         */
-        public static toArray<Out extends __types_globals__IWritableArrayLike<number>>(out: Out, q: __cocos_core_math_type_define__IQuatLike, ofs): Out;
-        /**
-         * @en Array to a quaternion
-         * @zh 数组转四元数
-         * @param ofs Array Start Offset
-         */
-        public static fromArray(out: __cocos_core_math_type_define__IQuatLike, arr: __types_globals__IWritableArrayLike<number>, ofs): __cocos_core_math_type_define__IQuatLike;
-        /**
-         * @en Check whether two quaternions are equal
-         * @zh 四元数等价判断
-         */
-        public static strictEquals(a: __cocos_core_math_type_define__IQuatLike, b: __cocos_core_math_type_define__IQuatLike): boolean;
-        /**
-         * @en Check whether two quaternions are approximately equal
-         * @zh 排除浮点数误差的四元数近似等价判断
-         */
-        public static equals(a: __cocos_core_math_type_define__IQuatLike, b: __cocos_core_math_type_define__IQuatLike, epsilon): boolean;
-        /**
-         * @en Gets the angular distance between two unit quaternions
-         * @zh 获取两个单位四元数的夹角
-         * @param a The first unit quaternion
-         * @param b The second unit quaternion
-         * @returns Angle between the two quaternions in radians
-         */
-        public static angle(a: __cocos_core_math_type_define__IQuatLike, b: __cocos_core_math_type_define__IQuatLike): number;
-        /**
-         * @en Rotate a `from` unit quaternion towards `to` unit quaternion
-         * @zh 将一个起始单位四元数旋转到一个目标单位四元数
-         * @param from The first unit quaternion
-         * @param to The second unit quaternion
-         * @param maxStep The maximum angle of rotation in degrees
-         * @returns new unit quaternion generated during rotation
-         */
-        public static rotateTowards(out: __cocos_core_math_type_define__IQuatLike, from: __cocos_core_math_type_define__IQuatLike, to: __cocos_core_math_type_define__IQuatLike, maxStep: number): __cocos_core_math_type_define__IQuatLike;
-        /**
-         * @en x component.
-         * @zh x 分量。
-         */
-        public x: number;
-        /**
-         * @en y component.
-         * @zh y 分量。
-         */
-        public y: number;
-        /**
-         * @en z component.
-         * @zh z 分量。
-         */
-        public z: number;
-        /**
-         * @en w component.
-         * @zh w 分量。
-         */
-        public w: number;
-        constructor(other: __cocos_core_math_quat__Quat);
-        constructor(x?: number, y?: number, z?: number, w?: number);
-        constructor(x?: number | __cocos_core_math_type_define__IQuatLike, y?: number, z?: number, w?: number);
-        /**
-         * @en clone the current Quat
-         * @zh 克隆当前四元数。
-         */
-        public clone(): __cocos_core_math_quat__Quat;
-        /**
-         * @en Set values with another quaternion
-         * @zh 设置当前四元数使其与指定四元数相等。
-         * @param other Specified quaternion
-         * @returns `this`
-         */
-        public set(other: __cocos_core_math_quat__Quat): __cocos_core_math_quat__Quat;
-        /**
-         * @en Set the value of each component of the current quaternion
-         * @zh 设置当前四元数指定元素值。
-         * @returns `this`
-         */
-        public set(x?: number, y?: number, z?: number, w?: number): __cocos_core_math_quat__Quat;
-        public set(x?: number | __cocos_core_math_quat__Quat, y?: number, z?: number, w?: number): __cocos_core_math_quat__Quat;
-        /**
-         * @en Check whether the quaternion approximately equals another one
-         * @zh 判断当前四元数是否在误差范围内与指定向量相等。
-         * @param other Comparative quaternion
-         * @param epsilon The error allowed. It`s should be a non-negative number.
-         * @returns Returns `true' when the components of the two quaternions are equal within the specified error range; otherwise, returns `false'.
-         */
-        public equals(other: __cocos_core_math_quat__Quat, epsilon): boolean;
-        /**
-         * @en Check whether the current quaternion strictly equals other quaternion
-         * @zh 判断当前四元数是否与指定四元数相等。
-         * @param other Comparative quaternion
-         * @returns Returns `true' when the components of the two quaternions are equal within the specified error range; otherwise, returns `false'.
-         */
-        public strictEquals(other: __cocos_core_math_quat__Quat): boolean;
-        /**
-         * @en Convert quaternion to Euler angles
-         * @zh 将当前四元数转化为欧拉角（x-y-z）并赋值给输出向量。
-         * @param out the output vector
-         */
-        public getEulerAngles(out: __cocos_core_math_vec3__Vec3): __cocos_core_math_type_define__IVec3Like;
-        /**
-         * @en Calculate the linear interpolation result between this quaternion and another one with given ratio
-         * @zh 根据指定的插值比率，从当前四元数到目标四元数之间做线性插值。
-         * @param to The target quaternion
-         * @param ratio The interpolation coefficient. The range is [0,1].
-         */
-        public lerp(to: __cocos_core_math_quat__Quat, ratio: number): __cocos_core_math_quat__Quat;
-        /**
-         * @en Calculates the spherical interpolation result between this quaternion and another one with the given ratio
-         * @zh 根据指定的插值比率，从当前四元数到目标四元数之间做球面插值。
-         * @param to The target quaternion
-         * @param ratio The interpolation coefficient. The range is [0,1].
-         */
-        public slerp(to: __cocos_core_math_quat__Quat, ratio: number): __cocos_core_math_quat__Quat;
-        /**
-         * @en Calculates the length of the quaternion
-         * @zh 求四元数长度
-         */
-        public length(): number;
-        /**
-         * @en Calculates the squared length of the quaternion
-         * @zh 求四元数长度平方
-         */
-        public lengthSqr(): number;
-        /**
-         * @en Return the information of the quaternion in string.
-         * @zh 返回当前四元数的字符串表示。
-         */
-        public toString(): string;
-    }
-    export class __cocos_core_math_mat4__Mat4 extends __cocos_core_value_types_value_type__ValueType {
-        public static IDENTITY = "Bad expression <Object.freeze(new Mat4())>";
-        /**
-         * @en Clone a matrix and save the results to out matrix
-         * @zh 获得指定矩阵的拷贝
-         */
-        public static clone(a: __cocos_core_math_type_define__IMat4Like): __cocos_core_math_mat4__Mat4;
-        /**
-         * @en Copy a matrix into the out matrix
-         * @zh 复制目标矩阵
-         */
-        public static copy<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out, a: Out): Out;
-        /**
-         * @en Sets a matrix with the given values and save the results to out matrix
-         * @zh 设置矩阵值
-         *
-         * @param out The receive matrix
-         * @param m00 Component in column 0, row 0 position (index 0)
-         * @param m01 Component in column 0, row 1 position (index 1)
-         * @param m02 Component in column 0, row 2 position (index 2)
-         * @param m03 Component in column 0, row 3 position (index 3)
-         * @param m10 Component in column 1, row 0 position (index 4)
-         * @param m11 Component in column 1, row 1 position (index 5)
-         * @param m12 Component in column 1, row 2 position (index 6)
-         * @param m13 Component in column 1, row 3 position (index 7)
-         * @param m20 Component in column 2, row 0 position (index 8)
-         * @param m21 Component in column 2, row 1 position (index 9)
-         * @param m22 Component in column 2, row 2 position (index 10)
-         * @param m23 Component in column 2, row 3 position (index 11)
-         * @param m30 Component in column 3, row 0 position (index 12)
-         * @param m31 Component in column 3, row 1 position (index 13)
-         * @param m32 Component in column 3, row 2 position (index 14)
-         * @param m33 Component in column 3, row 3 position (index 15)
-         * @returns The receive matrix
-         */
-        public static set<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out, m00: number, m01: number, m02: number, m03: number, m10: number, m11: number, m12: number, m13: number, m20: number, m21: number, m22: number, m23: number, m30: number, m31: number, m32: number, m33: number): Out;
-        /**
-         * @en return an identity matrix.
-         * @zh 将目标赋值为单位矩阵
-         */
-        public static identity<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out): Out;
-        /**
-         * @en return an zero matrix.
-         * @zh 将目标赋值为0矩阵
-         */
-        public static zero<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out): Out;
-        /**
-         * @en Transposes a matrix and save the results to out matrix
-         * @zh 转置矩阵
-         */
-        public static transpose<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out, a: Out): Out;
-        /**
-         * @en Inverts a matrix. When matrix is not invertible the matrix will be set to zeros.
-         * @zh 矩阵求逆，注意，在矩阵不可逆时，会返回一个全为 0 的矩阵。
-         */
-        public static invert<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out, a: Out): Out;
-        /**
-         * @en Calculates the determinant of a matrix
-         * @zh 矩阵行列式
-         */
-        public static determinant<InType extends __cocos_core_math_type_define__IMat4Like>(a: InType): number;
-        /**
-         * @en Multiply two matrices and save the results to out matrix, (out = a * b)
-         * @zh 矩阵乘法 (out = a * b)
-         *
-         * @param out The out matrix
-         * @param a The first operand
-         * @param b The second operand
-         * @returns out matrix
-         */
-        public static multiply<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out, a: Out, b: Out): Out;
-        /**
-         * @en Translate a matrix with the given vector and save results to the out matrix, the translate is applied before the matrix, i.e. (out = a * T)
-         * @zh 在给定矩阵变换基础上加入平移变换，并将结果保存到 out 矩阵中，平移变换将应用在矩阵变换之前，即 (out = a * T)
-         *
-         * @param out The out matrix
-         * @param a The matrix to translate
-         * @param v The vector to translate with
-         */
-        public static transform<Out extends __cocos_core_math_type_define__IMat4Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: Out, v: VecLike): Out;
-        /**
-         * @en Transform a matrix with the given translation vector and save results to the out matrix,
-         * the translate is applied after the transformation, i.e. (out = T * a)
-         * @zh 在给定矩阵变换基础上加入新位移变换，平移变换在变换之后应用，即 (out = T * a)
-         *
-         * @param out The out matrix
-         * @param a The matrix to translate
-         * @param v The vector to translate with
-         * @deprecated Since 3.8.0, please use [[transform]] instead
-         */
-        public static translate<Out extends __cocos_core_math_type_define__IMat4Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: Out, v: VecLike): Out;
-        /**
-         * @en Multiply a matrix with a scale matrix given by a scale vector and save the results into the out matrix,
-         * the scale is applied before the matrix, i.e. (out = a * S)
-         * @zh 在给定矩阵变换基础上加入新缩放变换，并将结果保存到 out 矩阵中，缩放变换将应用在矩阵变换之前，即 (out = a * S)
-         */
-        public static scale<Out extends __cocos_core_math_type_define__IMat4Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: Out, v: VecLike): Out;
-        /**
-         * @en Rotates the transform by the given angle and save the results into the out matrix, the rotate is applied before
-         * the matrix, i.e. (out = a * R)
-         * @zh 在给定矩阵变换基础上加入新旋转变换, 并将结果保存到 out 矩阵中，旋转变换将应用在矩阵变换之前，即 (out = a * R)
-         * @param rad Angle of rotation (in radians)
-         * @param axis axis of rotation
-         */
-        public static rotate<Out extends __cocos_core_math_type_define__IMat4Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: Out, rad: number, axis: VecLike): Out | null;
-        /**
-         * @en Transform a matrix with a given angle around X axis and save the results to the out matrix, the rotate is applied
-         * before the matrix, i.e. (out = a * R)
-         * @zh 在给定矩阵变换基础上加入绕 X 轴的旋转变换, 并将结果保存到 out 矩阵中，旋转变换将应用在矩阵变换之前，即 (out = a * R)
-         * @param rad Angle of rotation (in radians)
-         */
-        public static rotateX<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out, a: Out, rad: number): Out;
-        /**
-         * @en Transform a matrix with a given angle around Y axis and save the results to the out matrix
-         * @zh 在给定矩阵变换基础上加入绕 Y 轴的旋转变换
-         * @param rad Angle of rotation (in radians)
-         */
-        public static rotateY<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out, a: Out, rad: number): Out;
-        /**
-         * @en Transform a matrix with a given angle around Z axis and save the results to the out matrix
-         * @zh 在给定矩阵变换基础上加入绕 Z 轴的旋转变换
-         * @param rad Angle of rotation (in radians)
-         */
-        public static rotateZ<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out, a: Out, rad: number): Out;
-        /**
-         * @en Sets the out matrix with a translation vector
-         * @zh 计算位移矩阵
-         */
-        public static fromTranslation<Out extends __cocos_core_math_type_define__IMat4Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, v: VecLike): Out;
-        /**
-         * @en Sets the out matrix with a scale vector
-         * @zh 计算缩放矩阵
-         */
-        public static fromScaling<Out extends __cocos_core_math_type_define__IMat4Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, v: VecLike): Out;
-        /**
-         * @en Sets the out matrix with rotation angle
-         * @zh 计算旋转矩阵
-         */
-        public static fromRotation<Out extends __cocos_core_math_type_define__IMat4Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, rad: number, axis: VecLike): Out | null;
-        /**
-         * @en Calculates the matrix representing a rotation around the X axis
-         * @zh 计算绕 X 轴的旋转矩阵
-         */
-        public static fromXRotation<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out, rad: number): Out;
-        /**
-         * @en Calculates the matrix representing a rotation around the Y axis
-         * @zh 计算绕 Y 轴的旋转矩阵
-         */
-        public static fromYRotation<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out, rad: number): Out;
-        /**
-         * @en Calculates the matrix representing a rotation around the Z axis
-         * @zh 计算绕 Z 轴的旋转矩阵
-         */
-        public static fromZRotation<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out, rad: number): Out;
-        /**
-         * @en Calculates the transform representing the combination of a rotation and a translation, and stores the result in out.
-         * The order is rotation then translation.
-         * @zh 根据旋转和位移信息计算矩阵
-         */
-        public static fromRT<Out extends __cocos_core_math_type_define__IMat4Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, q: __cocos_core_math_quat__Quat, v: VecLike): Out;
-        /**
-         * @en Extracts the translation from the matrix, assuming it's composed in order of scale, rotation, translation
-         * @zh 提取矩阵的位移信息, 默认矩阵中的变换以 S->R->T 的顺序应用
-         */
-        public static getTranslation<InType extends __cocos_core_math_type_define__IMat4Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: VecLike, mat: InType): VecLike;
-        /**
-         * @en Extracts the scale vector from the matrix, assuming it's composed in order of scale, rotation, translation
-         * @zh 提取矩阵的缩放信息, 默认矩阵中的变换以 S->R->T 的顺序应用
-         */
-        public static getScaling<InType extends __cocos_core_math_type_define__IMat4Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: VecLike, mat: InType): VecLike;
-        /**
-         * @en Extracts the rotation from the matrix, assuming it's composed in order of scale, rotation, translation
-         * @zh 提取矩阵的旋转信息, 默认输入矩阵不含有缩放信息，如考虑缩放应使用 `toRTS` 函数。
-         */
-        public static getRotation<InType extends __cocos_core_math_type_define__IMat4Like>(out: __cocos_core_math_quat__Quat, mat: InType): __cocos_core_math_quat__Quat;
-        /**
-         * @en Extracts the scale, rotation and translation from the matrix, assuming it's composed in order of scale, rotation, translation
-         * @zh 提取旋转、位移、缩放信息， 默认矩阵中的变换以 S->R->T 的顺序应用
-         *
-         * @param m The input transform matrix
-         * @param q The corresponding rotation quat
-         * @param v The corresponding translate vector
-         * @param s The corresponding scaling vector
-         *
-         * @deprecated Since 3.8.0, please use toSRT instead
-         */
-        public static toRTS<InType extends __cocos_core_math_type_define__IMat4Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(m: InType, q: __cocos_core_math_quat__Quat | null, v: VecLike | null, s: VecLike | null): void;
-        /**
-         * @en Extracts the scale, rotation and translation from the matrix, assuming it's composed in order of scale, rotation, translation
-         * @zh 提取旋转、位移、缩放信息， 默认矩阵中的变换以 S->R->T 的顺序应用
-         *
-         * @param m The input transform matrix
-         * @param q The corresponding rotation quat
-         * @param v The corresponding translate vector
-         * @param s The corresponding scaling vector
-         */
-        public static toSRT<InType extends __cocos_core_math_type_define__IMat4Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(m: InType, q: __cocos_core_math_quat__Quat | null, v: VecLike | null, s: VecLike | null): void;
-        /**
-         * @en Convert Matrix to euler angle, resulting angle y, z in the range of [-PI, PI],
-         *  x in the range of [-PI/2, PI/2], the rotation order is YXZ.
-         * @zh 将矩阵转换为欧拉角，结果角度 y, z 在 [-PI, PI] 范围内，x 在 [-PI/2, PI/2] 区间内，旋转顺序为 YXZ.
-         */
-        public static toEuler<InType extends __cocos_core_math_type_define__IMat4Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(m: InType, v: VecLike): boolean;
-        /**
-         * @en Compose a matrix from scale, rotation and translation, applied in order.
-         * @zh 根据旋转、位移、缩放信息计算矩阵，以 S->R->T 的顺序应用
-         * @deprecated Since 3.8.0, please use [[fromSRT]] instead.
-         */
-        public static fromRTS<Out extends __cocos_core_math_type_define__IMat4Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, q: __cocos_core_math_quat__Quat, v: VecLike, s: VecLike): Out;
-        /**
-         * @en Compose a matrix from scale, rotation and translation, applied in order.
-         * @zh 根据旋转、位移、缩放信息计算矩阵，以 S->R->T 的顺序应用
-         * @param out The receiving matrix
-         * @param q Rotation quaternion
-         * @param v Translation vector
-         * @param s Scaling vector
-         * @returns The receiving matrix
-         */
-        public static fromSRT<Out extends __cocos_core_math_type_define__IMat4Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, q: __cocos_core_math_quat__Quat, v: VecLike, s: VecLike): Out;
-        /**
-         * @en Compose a matrix from scale, rotation and translation, applied in order, from a given origin
-         * @zh 根据指定的旋转、位移、缩放及变换中心信息计算矩阵，以 S->R->T 的顺序应用
-         * @param q Rotation quaternion
-         * @param v Translation vector
-         * @param s Scaling vector
-         * @param o transformation Center
-         * @deprecated Please use [[fromSRTOrigin]] instead.
-         */
-        public static fromRTSOrigin<Out extends __cocos_core_math_type_define__IMat4Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, q: __cocos_core_math_quat__Quat, v: VecLike, s: VecLike, o: VecLike): Out;
-        /**
-         * @en Compose a matrix from scale, rotation and translation, applied in order, from a given origin
-         * @zh 根据指定的旋转、位移、缩放及变换中心信息计算矩阵，以 O^{-1}->S->R->O->T 的顺序应用
-         * @param out The receiving matrix
-         * @param q Rotation quaternion
-         * @param v Translation vector
-         * @param s Scaling vector
-         * @param o transformation Center
-         * @returns The receiving matrix
-         */
-        public static fromSRTOrigin<Out extends __cocos_core_math_type_define__IMat4Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, q: __cocos_core_math_quat__Quat, v: VecLike, s: VecLike, o: VecLike): Out;
-        /**
-         * @en Sets the out matrix with the given quaternion
-         * @zh 根据指定的旋转信息计算矩阵
-         */
-        public static fromQuat<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out, q: __cocos_core_math_quat__Quat): Out;
-        /**
-         * @en Calculates the matrix representing the given frustum
-         * @zh 根据指定的视锥体信息计算矩阵
-         * @param out The receiving matrix.
-         * @param left The X coordinate of the left side of the near projection plane in view space.
-         * @param right The X coordinate of the right side of the near projection plane in view space.
-         * @param bottom The Y coordinate of the bottom side of the near projection plane in view space.
-         * @param top The Y coordinate of the top side of the near projection plane in view space.
-         * @param near Z distance to the near plane from the origin in view space.
-         * @param far Z distance to the far plane from the origin in view space.
-         *
-         * @return The receiving matrix.
-         */
-        public static frustum<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out, left: number, right: number, bottom: number, top: number, near: number, far: number): Out;
-        /**
-         * @en Calculates perspective projection matrix
-         * @zh 计算透视投影矩阵
-         * @param out The receiving matrix.
-         * @param fovy Vertical field-of-view in degrees.
-         * @param aspect Aspect ratio
-         * @param near Near depth clipping plane value.
-         * @param far Far depth clipping plane value.
-         * @param isFOVY Whether the fovy is based on the vertical field-of-view.
-         * @param minClipZ The minimum value of the near clipping plane, e.g. -1 for OpenGL, 0 for Vulkan and Metal.
-         * @param projectionSignY The sign of the Y axis of the projection matrix, which is used to flip the Y axis.
-         * @param orientation The orientation of the projection matrix, which is used to rotate the projection matrix.
-         *
-         * @return The receiving matrix.
-         */
-        public static perspective<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out, fov: number, aspect: number, near: number, far: number, isFOVY, minClipZ, projectionSignY, orientation): Out;
-        /**
-         * @en Calculates orthogonal projection matrix
-         * @zh 计算正交投影矩阵
-         * @param out The receiving matrix.
-         * @param left Left-side x-coordinate.
-         * @param right Right-side x-coordinate.
-         * @param bottom Bottom y-coordinate.
-         * @param top Top y-coordinate.
-         * @param near Near depth clipping plane value.
-         * @param far Far depth clipping plane value.
-         * @param minClipZ The minimum value of the near clipping plane, e.g. -1 for OpenGL, 0 for Vulkan and Metal.
-         * @param projectionSignY The sign of the Y axis of the projection matrix, which is used to flip the Y axis.
-         * @param orientation The orientation of the projection matrix, which is used to rotate the projection matrix.
-         *
-         * @return The receiving matrix.
-         */
-        public static ortho<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out, left: number, right: number, bottom: number, top: number, near: number, far: number, minClipZ, projectionSignY, orientation): Out;
-        /**
-         * @en
-         * Calculates the matrix with the view point information, given by eye position, target center and the up vector.
-         * Note that center to eye vector can't be zero or parallel to the up vector
-         * @zh
-         * 计算视图矩阵，给定眼睛位置、目标中心和上向量。注意，中心到眼睛向量不能为零或与上向量平行。
-         * @out The receiving matrix.
-         * @param eye The source point.
-         * @param center The target point.
-         * @param up The vector describing the up direction.
-         * @return The receiving matrix.
-         */
-        public static lookAt<Out extends __cocos_core_math_type_define__IMat4Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, eye: VecLike, center: VecLike, up: VecLike): Out;
-        /**
-         * @en Calculates the inverse transpose of a matrix and save the results to out matrix
-         * @zh 计算逆转置矩阵
-         *
-         * @deprecated This function is too complicated, and should be split into several functions.
-         */
-        public static inverseTranspose<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out, a: Out): Out | null;
-        /**
-         * @en Transform a matrix object to a flat array
-         * @zh 矩阵转数组
-         * @param ofs Array Start Offset
-         */
-        public static toArray<Out extends __types_globals__IWritableArrayLike<number>>(out: Out, m: __cocos_core_math_type_define__IMat4Like, ofs): Out;
-        /**
-         * @en Generates or sets a matrix with a flat array
-         * @zh 数组转矩阵
-         * @param ofs Array Start Offset
-         */
-        public static fromArray<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out, arr: __types_globals__IWritableArrayLike<number>, ofs): Out;
-        /**
-         * @en Adds two matrices and save the results to out matrix
-         * @zh 逐元素矩阵加法
-         */
-        public static add<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out, a: Out, b: Out): Out;
-        /**
-         * @en Subtracts matrix b from matrix a and save the results to out matrix
-         * @zh 逐元素矩阵减法
-         */
-        public static subtract<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out, a: Out, b: Out): Out;
-        /**
-         * @en Multiply each element of a matrix by a scalar number and save the results to out matrix
-         * @zh 矩阵标量乘法
-         */
-        public static multiplyScalar<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out, a: Out, b: number): Out;
-        /**
-         * @en Adds two matrices after multiplying each element of the second operand by a scalar number. And save the results to out matrix.
-         * @zh 逐元素矩阵标量乘加: A + B * scale
-         */
-        public static multiplyScalarAndAdd<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out, a: Out, b: Out, scale: number): Out;
-        /**
-         * @en Returns whether the specified matrices are equal.
-         * @zh 矩阵等价判断
-         */
-        public static strictEquals<InType extends __cocos_core_math_type_define__IMat4Like>(a: InType, b: InType): boolean;
-        /**
-         * @en Returns whether the specified matrices are approximately equal.
-         * @zh 排除浮点数误差的矩阵近似等价判断
-         *
-         * @param a The first matrix to be compared.
-         * @param b The second matrix to be compared.
-         * @param epsilon The tolerance value.
-         * @return
-         */
-        public static equals<InType extends __cocos_core_math_type_define__IMat4Like>(a: InType, b: InType, epsilon): boolean;
-        /**
-         * matrix layout
-         * |m00  m04  m08 m12|
-         * |m01  m05  m09 m13|
-         * |m02  m06  m10 m14|
-         * |m03  m07  m11 m15|
-         */
-        /**
-         * @en Value at column 0 row 0 of the matrix.
-         * @zh 矩阵第 0 列第 0 行的元素。
-         */
-        public m00: number;
-        /**
-         * @en Value at column 0 row 1 of the matrix.
-         * @zh 矩阵第 0 列第 1 行的元素。
-         */
-        public m01: number;
-        /**
-         * @en Value at column 0 row 2 of the matrix.
-         * @zh 矩阵第 0 列第 2 行的元素。
-         */
-        public m02: number;
-        /**
-         * @en Value at column 0 row 3 of the matrix.
-         * @zh 矩阵第 0 列第 3 行的元素。
-         */
-        public m03: number;
-        /**
-         * @en Value at column 1 row 0 of the matrix.
-         * @zh 矩阵第 1 列第 0 行的元素。
-         */
-        public m04: number;
-        /**
-         * @en Value at column 1 row 1 of the matrix.
-         * @zh 矩阵第 1 列第 1 行的元素。
-         */
-        public m05: number;
-        /**
-         * @en Value at column 1 row 2 of the matrix.
-         * @zh 矩阵第 1 列第 2 行的元素。
-         */
-        public m06: number;
-        /**
-         * @en Value at column 1 row 3 of the matrix.
-         * @zh 矩阵第 1 列第 3 行的元素。
-         */
-        public m07: number;
-        /**
-         * @en Value at column 2 row 0 of the matrix.
-         * @zh 矩阵第 2 列第 0 行的元素。
-         */
-        public m08: number;
-        /**
-         * @en Value at column 2 row 1 of the matrix.
-         * @zh 矩阵第 2 列第 1 行的元素。
-         */
-        public m09: number;
-        /**
-         * @en Value at column 2 row 2 of the matrix.
-         * @zh 矩阵第 2 列第 2 行的元素。
-         */
-        public m10: number;
-        /**
-         * @en Value at column 2 row 3 of the matrix.
-         * @zh 矩阵第 2 列第 3 行的元素。
-         */
-        public m11: number;
-        /**
-         * @en Value at column 3 row 0 of the matrix.
-         * @zh 矩阵第 3 列第 0 行的元素。
-         */
-        public m12: number;
-        /**
-         * @en Value at column 3 row 1 of the matrix.
-         * @zh 矩阵第 3 列第 1 行的元素。
-         */
-        public m13: number;
-        /**
-         * @en Value at column 3 row 2 of the matrix.
-         * @zh 矩阵第 3 列第 2 行的元素。
-         */
-        public m14: number;
-        /**
-         * @en Value at column 3 row 3 of the matrix.
-         * @zh 矩阵第 3 列第 3 行的元素。
-         */
-        public m15: number;
-        constructor(other: __cocos_core_math_mat4__Mat4);
-        constructor(m00?: number, m01?: number, m02?: number, m03?: number, m04?: number, m05?: number, m06?: number, m07?: number, m08?: number, m09?: number, m10?: number, m11?: number, m12?: number, m13?: number, m14?: number, m15?: number);
-        constructor(m00: __cocos_core_math_mat4__Mat4 | number, m01, m02, m03, m04, m05, m06, m07, m08, m09, m10, m11, m12, m13, m14, m15);
-        /**
-         * @en Clone a new matrix from the current matrix.
-         * @zh 克隆当前矩阵。
-         */
-        public clone(): __cocos_core_math_mat4__Mat4;
-        /**
-         * @en Sets the matrix with another one's value.
-         * @zh 设置当前矩阵使其与指定矩阵相等。
-         * @param other Specified matrix.
-         * @return this
-         */
-        public set(other: __cocos_core_math_mat4__Mat4): __cocos_core_math_mat4__Mat4;
-        /**
-         * @en Set the matrix with values of all elements
-         * @zh 设置当前矩阵指定元素值。
-         *
-         * @return this
-         */
-        public set(m00?: number, m01?: number, m02?: number, m03?: number, m04?: number, m05?: number, m06?: number, m07?: number, m08?: number, m09?: number, m10?: number, m11?: number, m12?: number, m13?: number, m14?: number, m15?: number): __cocos_core_math_mat4__Mat4;
-        public set(m00: __cocos_core_math_mat4__Mat4 | number, m01, m02, m03, m04, m05, m06, m07, m08, m09, m10, m11, m12, m13, m14, m15): __cocos_core_math_mat4__Mat4;
-        /**
-         * @en Returns whether the specified matrices are approximately equal.
-         * @zh 判断当前矩阵是否在误差范围内与指定矩阵相等。
-         * @param other Comparative matrix
-         * @param epsilon The error allowed. It`s should be a non-negative number.
-         * @return Returns `true' when the elements of both matrices are equal; otherwise returns `false'.
-         */
-        public equals(other: __cocos_core_math_mat4__Mat4, epsilon): boolean;
-        /**
-         * @en Returns whether the specified matrices are equal.
-         * @zh 判断当前矩阵是否与指定矩阵相等。
-         * @param other Comparative matrix
-         * @return Returns `true' when the elements of both matrices are equal; otherwise returns `false'.
-         */
-        public strictEquals(other: __cocos_core_math_mat4__Mat4): boolean;
-        /**
-         * @en Returns a string representation of a matrix.
-         * @zh 返回当前矩阵的字符串表示。
-         * @return 当前矩阵的字符串表示。
-         */
-        public toString(): string;
-        /**
-         * @en set the current matrix to an identity matrix.
-         * @zh 将当前矩阵设为单位矩阵。
-         * @return `this`
-         */
-        public identity(): __cocos_core_math_mat4__Mat4;
-        /**
-         * @en set the current matrix to an zero matrix.
-         * @zh 将当前矩阵设为 0矩阵。
-         * @return `this`
-         */
-        public zero(): __cocos_core_math_mat4__Mat4;
-        /**
-         * @en Transposes the current matrix.
-         * @zh 计算当前矩阵的转置矩阵。
-         */
-        public transpose(): __cocos_core_math_mat4__Mat4;
-        /**
-         * @en Inverts the current matrix. When matrix is not invertible the matrix will be set to zeros.
-         * @zh 计算当前矩阵的逆矩阵。注意，在矩阵不可逆时，会返回一个全为 0 的矩阵。
-         */
-        public invert(): __cocos_core_math_mat4__Mat4;
-        /**
-         * @en Calculates the determinant of the current matrix.
-         * @zh 计算当前矩阵的行列式。
-         * @return 当前矩阵的行列式。
-         */
-        public determinant(): number;
-        /**
-         * @en Adds the current matrix and another matrix to the current matrix.
-         * @zh 矩阵加法。将当前矩阵与指定矩阵的相加，结果返回给当前矩阵。
-         * @param mat the second operand
-         */
-        public add(mat: __cocos_core_math_mat4__Mat4): __cocos_core_math_mat4__Mat4;
-        /**
-         * @en Subtracts another matrix from the current matrix.
-         * @zh 计算矩阵减法。将当前矩阵减去指定矩阵的结果赋值给当前矩阵。
-         * @param mat the second operand
-         */
-        public subtract(mat: __cocos_core_math_mat4__Mat4): __cocos_core_math_mat4__Mat4;
-        /**
-         * @en Multiply the current matrix with another matrix.
-         * @zh 矩阵乘法。将当前矩阵左乘指定矩阵的结果赋值给当前矩阵。
-         * @param mat the second operand
-         */
-        public multiply(mat: __cocos_core_math_mat4__Mat4): __cocos_core_math_mat4__Mat4;
-        /**
-         * @en Multiply each element of the current matrix by a scalar number.
-         * @zh 矩阵数乘。将当前矩阵与指定标量的数乘结果赋值给当前矩阵。
-         * @param scalar amount to scale the matrix's elements by
-         */
-        public multiplyScalar(scalar: number): __cocos_core_math_mat4__Mat4;
-        /**
-         * @en Translate the current matrix by the given vector
-         * @zh 将当前矩阵左乘位移矩阵的结果赋值给当前矩阵，位移矩阵由各个轴的位移给出。
-         * @param vec vector to translate by
-         *
-         * @deprecated since v3.0, please use [[transform]] instead
-         */
-        public translate(vec: __cocos_core_math_vec3__Vec3): __cocos_core_math_mat4__Mat4;
-        /**
-         * @en Translate the current matrix by the given vector
-         * @zh 将当前矩阵左乘位移矩阵的结果赋值给当前矩阵，位移矩阵由各个轴的位移给出。
-         * @param vec vector to translate by
-         */
-        public transform(vec: __cocos_core_math_vec3__Vec3): __cocos_core_math_mat4__Mat4;
-        /**
-         * @en Multiply the current matrix with a scale vector.
-         * @zh 将当前矩阵左乘缩放矩阵的结果赋值给当前矩阵，缩放矩阵由各个轴的缩放给出。
-         * @param vec vector to scale by
-         */
-        public scale(vec: __cocos_core_math_vec3__Vec3): __cocos_core_math_mat4__Mat4;
-        /**
-         * @en Rotates the current matrix by the given angle around the given axis
-         * @zh 将当前矩阵左乘旋转矩阵的结果赋值给当前矩阵，旋转矩阵由旋转轴和旋转角度给出。
-         * @param rad Angle of rotation (in radians)
-         * @param axis Axis of rotation
-         */
-        public rotate(rad: number, axis: __cocos_core_math_vec3__Vec3): __cocos_core_math_mat4__Mat4 | null;
-        /**
-         * @en Returns the translation vector component of a transformation matrix.
-         * @zh 从当前矩阵中计算出位移变换的部分，并以各个轴上位移的形式赋值给输出向量。
-         * @param out Vector to receive translation component.
-         */
-        public getTranslation(out: __cocos_core_math_vec3__Vec3): __cocos_core_math_vec3__Vec3;
-        /**
-         * @en Returns the scale factor component of a transformation matrix
-         * @zh 从当前矩阵中计算出缩放变换的部分，并以各个轴上缩放的形式赋值给输出向量。
-         * @param out Vector to receive scale component
-         */
-        public getScale(out: __cocos_core_math_vec3__Vec3): __cocos_core_math_vec3__Vec3;
-        /**
-         * @en Returns the rotation factor component of a transformation matrix
-         * @zh 从当前矩阵中计算出旋转变换的部分，并以四元数的形式赋值给输出四元数。
-         * @param out Vector to receive rotation component
-         */
-        public getRotation(out: __cocos_core_math_quat__Quat): __cocos_core_math_quat__Quat;
-        /**
-         * @en Resets the matrix values by the given rotation quaternion, translation vector and scale vector
-         * @zh 重置当前矩阵的值，使其表示指定的旋转、缩放、位移依次组合的变换。
-         * @param q Rotation quaternion
-         * @param v Translation vector
-         * @param s Scaling vector
-         * @return `this`
-         *
-         * @deprecated Since 3.8.0, please use [[fromSRT]] instead
-         */
-        public fromRTS(q: __cocos_core_math_quat__Quat, v: __cocos_core_math_vec3__Vec3, s: __cocos_core_math_vec3__Vec3): __cocos_core_math_mat4__Mat4;
-        /**
-         * @en Resets the matrix values by the given rotation quaternion, translation vector and scale vector
-         * @zh 重置当前矩阵的值，使其表示指定的旋转、缩放、位移依次组合的变换。
-         * @param q Rotation quaternion
-         * @param v Translation vector
-         * @param s Scaling vector
-         * @return `this`
-         */
-        public fromSRT(q: __cocos_core_math_quat__Quat, v: __cocos_core_math_vec3__Vec3, s: __cocos_core_math_vec3__Vec3): __cocos_core_math_mat4__Mat4;
-        /**
-         * @en Resets the current matrix from the given quaternion.
-         * @zh 重置当前矩阵的值，使其表示指定四元数表示的旋转变换。
-         * @param q Rotation quaternion
-         * @return `this`
-         */
-        public fromQuat(q: __cocos_core_math_quat__Quat): __cocos_core_math_mat4__Mat4;
-    }
-    /**
-     * @en Representation of 3D vectors and points.
-     * @zh 三维向量。
-     */
-    export class __cocos_core_math_vec3__Vec3 extends __cocos_core_value_types_value_type__ValueType {
-        public static UNIT_X = "Bad expression <freezeVec3(1, 0, 0)>";
-        public static UNIT_Y = "Bad expression <freezeVec3(0, 1, 0)>";
-        public static UNIT_Z = "Bad expression <freezeVec3(0, 0, 1)>";
-        public static RIGHT = "Bad expression <freezeVec3(1, 0, 0)>";
-        public static UP = "Bad expression <freezeVec3(0, 1, 0)>";
-        public static FORWARD = "Bad expression <freezeVec3(0, 0, -1)>";
-        public static ZERO = "Bad expression <freezeVec3(0, 0, 0)>";
-        public static ONE = "Bad expression <freezeVec3(1, 1, 1)>";
-        public static NEG_ONE = "Bad expression <freezeVec3(-1, -1, -1)>";
-        /**
-         * @en return a Vec3 object with x = 0, y = 0, z = 0.
-         * @zh 将目标赋值为零向量
-         */
-        public static zero<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out): Out;
-        /**
-         * @en Obtains a clone of the given vector object
-         * @zh 获得指定向量的拷贝
-         */
-        public static clone<Out extends __cocos_core_math_type_define__IVec3Like>(a: Out): __cocos_core_math_vec3__Vec3;
-        /**
-         * @en Copy the target vector and save the results to out vector object
-         * @zh 复制目标向量
-         */
-        public static copy<Out extends __cocos_core_math_type_define__IVec3Like, Vec3Like extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: Vec3Like): Out;
-        /**
-         * @en Sets the out vector with the given x, y and z values
-         * @zh 设置向量值
-         */
-        public static set<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, x: number, y: number, z: number): Out;
-        /**
-         * @en Element-wise vector addition and save the results to out vector object
-         * @zh 逐元素向量加法
-         */
-        public static add<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like, b: __cocos_core_math_type_define__IVec3Like): Out;
-        /**
-         * @en Element-wise vector subtraction and save the results to out vector object
-         * @zh 逐元素向量减法
-         */
-        public static subtract<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like, b: __cocos_core_math_type_define__IVec3Like): Out;
-        /**
-         * @en Element-wise vector multiplication and save the results to out vector object
-         * @zh 逐元素向量乘法 (分量积)
-         */
-        public static multiply<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like, b: __cocos_core_math_type_define__IVec3Like): Out;
-        /**
-         * @en Element-wise vector division and save the results to out vector object
-         * @zh 逐元素向量除法
-         */
-        public static divide<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like, b: __cocos_core_math_type_define__IVec3Like): Out;
-        /**
-         * @en Rounds up by elements of the vector and save the results to out vector object
-         * @zh 逐元素向量向上取整
-         */
-        public static ceil<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like): Out;
-        /**
-         * @en Element-wise rounds down of the current vector and save the results to the out vector
-         * @zh 逐元素向量向下取整
-         */
-        public static floor<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like): Out;
-        /**
-         * @en Calculates element-wise minimum values and save to the out vector
-         * @zh 逐元素向量最小值
-         */
-        public static min<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like, b: __cocos_core_math_type_define__IVec3Like): Out;
-        /**
-         * @en Calculates element-wise maximum values and save to the out vector
-         * @zh 逐元素向量最大值
-         */
-        public static max<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like, b: __cocos_core_math_type_define__IVec3Like): Out;
-        /**
-         * @en Calculates element-wise round results and save to the out vector
-         * @zh 逐元素向量四舍五入取整
-         */
-        public static round<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like): Out;
-        /**
-         * @en Vector scalar multiplication and save the results to out vector object
-         * @zh 向量标量乘法
-         */
-        public static multiplyScalar<Out extends __cocos_core_math_type_define__IVec3Like, Vec3Like extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: Vec3Like, b: number): Out;
-        /**
-         * @en Element-wise multiplication and addition with the equation: a + b * scale
-         * @zh 逐元素向量乘加: A + B * scale
-         */
-        public static scaleAndAdd<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like, b: __cocos_core_math_type_define__IVec3Like, scale: number): Out;
-        /**
-         * @en Calculates the euclidean distance of two vectors
-         * @zh 求两向量的欧氏距离
-         */
-        public static distance(a: __cocos_core_math_type_define__IVec3Like, b: __cocos_core_math_type_define__IVec3Like): number;
-        /**
-         * @en Calculates the squared euclidean distance of two vectors
-         * @zh 求两向量的欧氏距离平方
-         */
-        public static squaredDistance(a: __cocos_core_math_type_define__IVec3Like, b: __cocos_core_math_type_define__IVec3Like): number;
-        /**
-         * @en Calculates the length of the vector
-         * @zh 求向量长度
-         */
-        public static len(a: __cocos_core_math_type_define__IVec3Like): number;
-        /**
-         * @en Calculates the squared length of the vector
-         * @zh 求向量长度平方
-         */
-        public static lengthSqr(a: __cocos_core_math_type_define__IVec3Like): number;
-        /**
-         * @en Sets each element to its negative value
-         * @zh 逐元素向量取负
-         */
-        public static negate<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like): Out;
-        /**
-         * @en Sets each element to its inverse value, zero value will become Infinity
-         * @zh 逐元素向量取倒数，接近 0 时返回 Infinity
-         */
-        public static invert<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like): Out;
-        /**
-         * @en Sets each element to its inverse value, zero value will remain zero
-         * @zh 逐元素向量取倒数，接近 0 时返回 0
-         */
-        public static invertSafe<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like): Out;
-        /**
-         * @en Sets the normalized vector to the out vector, returns a zero vector if input is a zero vector.
-         * @zh 归一化向量，输入零向量将会返回零向量。
-         */
-        public static normalize<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like): Out;
-        /**
-         * @en Calculates the dot product of the vector
-         * @zh 向量点积（数量积）
-         */
-        public static dot<Out extends __cocos_core_math_type_define__IVec3Like>(a: Out, b: __cocos_core_math_type_define__IVec3Like): number;
-        /**
-         * @en Calculates the cross product of the vector
-         * @zh 向量叉积（向量积）
-         */
-        public static cross<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like, b: __cocos_core_math_type_define__IVec3Like): Out;
-        /**
-         * @en Calculates the linear interpolation between two vectors with a given ratio: A + t * (B - A)
-         * @zh 逐元素向量线性插值： A + t * (B - A)
-         */
-        public static lerp<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like, b: __cocos_core_math_type_define__IVec3Like, t: number): Out;
-        /**
-         * @zh 球面线性插值。多用于插值两个方向向量。
-         * @en Spherical linear interpolation. Commonly used in interpolation between directional vectors.
-         * @param out @zh 输出向量。 @en Output vector.
-         * @param from @zh 起点向量。 @en Start vector.
-         * @param to @zh 终点向量。 @en Destination vector.
-         * @param t @zh 插值参数。@en Interpolation parameter.
-         * @returns `out`
-         * @description
-         * @zh
-         * - 如果 `from`、`to` 中任何一个接近零向量，则结果就是 `from` 到 `to` 线性插值的结果；
-         *
-         * - 否则，如果 `from`、`to` 方向刚好接近相反，
-         * 则结果向量是满足以下条件的一个向量：结果向量和两个输入向量的夹角之比是 `t`，其长度是 `from` 到 `to` 的长度线性插值的结果；
-         *
-         * - 否则，结果是从标准化后的 `from` 到 标准化后的 `to`
-         * 进行球面线性插值的结果乘以 `from` 到 `to` 的长度线性插值后的长度。
-         * @en
-         * - If either `from` or `to` is close to zero vector,
-         * the result would be the (non-spherical) linear interpolation result from `from` to `to`.
-         *
-         * - Otherwise, if `from` and `to` have almost opposite directions,
-         * the result would be such a vector so that:
-         * The angle ratio between result vector and input vectors is `t`,
-         * the length of result vector is the linear interpolation of lengths from `from` to `to`.
-         *
-         * - Otherwise, the result would be the spherical linear interpolation result
-         * from normalized `from` to normalized `to`,
-         * then scaled by linear interpolation of lengths from `from` to `to`.
-         */
-        public static slerp = "Bad expression <((): <Out extends IVec3Like>(out: Out, from: Readonly<IVec3Like>, to: Readonly<IVec3Like>, t: number) => Out => {\n        const cacheV1 = new Vec3();\n        const cacheV2 = new Vec3();\n        const cacheV3 = new Vec3();\n        return <Out extends IVec3Like> (out: Out, from: Readonly<IVec3Like>, to: Readonly<IVec3Like>, t: number): Out => {\n            const EPSILON = 1e-5;\n            const lenFrom = Vec3.len(from);\n            const lenTo = Vec3.len(to);\n            if (lenFrom < EPSILON || lenTo < EPSILON) {\n                return Vec3.lerp(out, from, to, t);\n            }\n            const lenLerped = lerp(lenFrom, lenTo, t);\n            const dot = Vec3.dot(from, to) / (lenFrom * lenTo);\n            if (dot > 1.0 - EPSILON) {\n                // If the directions are almost same, slerp should be close to lerp.\n                return Vec3.lerp(out, from, to, t);\n            } else if (dot < -1.0 + EPSILON) {\n                // If the directions are almost opposite,\n                // every vector that orthonormal to the directions can be the rotation axis.\n                const fromNormalized = Vec3.multiplyScalar(cacheV1, from, 1.0 / lenFrom);\n                const axis = Vec3.generateOrthogonal(cacheV2, fromNormalized);\n                const angle = PI * t;\n                rotateAxisAngle(cacheV3, fromNormalized, axis, angle);\n                Vec3.multiplyScalar(out, cacheV3, lenLerped);\n                return out;\n            } else {\n                // Do not have to clamp. We done it before.\n                const dotClamped = dot;\n                const theta = acos(dotClamped) * t;\n                const fromNormalized = Vec3.multiplyScalar(cacheV1, from, 1.0 / lenFrom);\n                const toNormalized = Vec3.multiplyScalar(cacheV2, to, 1.0 / lenTo);\n                Vec3.scaleAndAdd(cacheV3, toNormalized, fromNormalized, -dotClamped);\n                Vec3.normalize(cacheV3, cacheV3);\n                Vec3.multiplyScalar(cacheV3, cacheV3, sin(theta));\n                Vec3.scaleAndAdd(cacheV3, cacheV3, fromNormalized, cos(theta));\n                Vec3.multiplyScalar(out, cacheV3, lenLerped);\n                return out;\n            }\n        };\n    })()>";
-        /**
-         * @en Generates a uniformly distributed random vector points from center to the surface of the unit sphere
-         * @zh 生成一个在单位球体上均匀分布的随机向量
-         * @param scale vector length
-         */
-        public static random<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, scale?: number): Out;
-        /**
-         * @en Vector and fourth order matrix multiplication, will complete the vector with a fourth value as one
-         * @zh 向量与四维矩阵乘法，默认向量第四位为 1。
-         */
-        public static transformMat4<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like, m: __cocos_core_math_type_define__IMat4Like): Out;
-        /**
-         * @en Vector and fourth order matrix multiplication, will complete the vector with a fourth element as one
-         * @zh 向量与四维矩阵乘法，默认向量第四位为 0。
-         */
-        public static transformMat4Normal<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like, m: __cocos_core_math_type_define__IMat4Like): Out;
-        /**
-         * @en Vector and third order matrix multiplication
-         * @zh 向量与三维矩阵乘法
-         */
-        public static transformMat3<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like, m: __cocos_core_math_type_define__IMat3Like): Out;
-        /**
-         * @en Affine transformation vector
-         * @zh 向量仿射变换
-         */
-        public static transformAffine<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, v: __cocos_core_math_type_define__IVec3Like, m: __cocos_core_math_type_define__IMat4Like): Out;
-        /**
-         * @en Vector quaternion multiplication: q*a*q^{-1}.
-         * @zh 向量四元数乘法：q*a*q^{-1}。
-         */
-        public static transformQuat<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like, q: __cocos_core_math_type_define__IQuatLike): Out;
-        /**
-         * @en Transforms the current vector with given scale, rotation and translation in order
-         * @zh 以缩放 -> 旋转 -> 平移顺序变换向量
-         */
-        public static transformRTS<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like, r: __cocos_core_math_type_define__IQuatLike, t: __cocos_core_math_type_define__IVec3Like, s: __cocos_core_math_type_define__IVec3Like): Out;
-        /**
-         * @en Transforms the current vector with given scale, rotation and translation in reverse order
-         * @zh 以平移 -> 旋转 -> 缩放顺序逆变换向量
-         */
-        public static transformInverseRTS<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like, r: __cocos_core_math_type_define__IQuatLike, t: __cocos_core_math_type_define__IVec3Like, s: __cocos_core_math_type_define__IVec3Like): Out;
-        /**
-         * @en Rotates the vector with specified angle around X axis
-         * @zh 绕 X 轴旋转向量指定弧度
-         * @param v rotation vector
-         * @param o center of rotation
-         * @param a radiance of rotation
-         */
-        public static rotateX<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, v: __cocos_core_math_type_define__IVec3Like, o: __cocos_core_math_type_define__IVec3Like, a: number): Out;
-        /**
-         * @en Rotates the vector with specified angle around Y axis
-         * @zh 绕 Y 轴旋转向量指定弧度
-         * @param v rotation vector
-         * @param o center of rotation
-         * @param a radiance of rotation
-         */
-        public static rotateY<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, v: __cocos_core_math_type_define__IVec3Like, o: __cocos_core_math_type_define__IVec3Like, a: number): Out;
-        /**
-         * @en Rotates the vector with specified angle around Z axis
-         * @zh 绕 Z 轴旋转向量指定弧度
-         * @param v rotation vector
-         * @param o center of rotation
-         * @param a radiance of rotation
-         */
-        public static rotateZ<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, v: __cocos_core_math_type_define__IVec3Like, o: __cocos_core_math_type_define__IVec3Like, a: number): Out;
-        /**
-         * @en Rotates the vector with specified angle around any n axis
-         * @zh 绕任意 n 轴旋转向量指定弧度
-         * @param v rotation vector
-         * @param o center of rotation
-         * @param n axis of rotation
-         * @param a radiance of rotation
-         */
-        public static rotateN<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, v: __cocos_core_math_type_define__IVec3Like, o: __cocos_core_math_type_define__IVec3Like, n: __cocos_core_math_type_define__IVec3Like, a: number): Out;
-        /**
-         * @en Converts the given vector to an array
-         * @zh 向量转数组
-         * @param ofs Array Start Offset
-         */
-        public static toArray<Out extends __types_globals__IWritableArrayLike<number>>(out: Out, v: __cocos_core_math_type_define__IVec3Like, ofs): Out;
-        /**
-         * @en Converts the given array to a vector
-         * @zh 数组转向量
-         * @param ofs Array Start Offset
-         */
-        public static fromArray<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, arr: __types_globals__IWritableArrayLike<number>, ofs): Out;
-        /**
-         * @en Check the equality of the two given vectors
-         * @zh 向量等价判断
-         */
-        public static strictEquals(a: __cocos_core_math_type_define__IVec3Like, b: __cocos_core_math_type_define__IVec3Like): boolean;
-        /**
-         * @en Check whether the two given vectors are approximately equivalent
-         * @zh 排除浮点数误差的向量近似等价判断
-         */
-        public static equals(a: __cocos_core_math_type_define__IVec3Like, b: __cocos_core_math_type_define__IVec3Like, epsilon): boolean;
-        /**
-         * @en Calculates the radian angle between two vectors
-         * @zh 求两向量夹角弧度
-         */
-        public static angle(a: __cocos_core_math_type_define__IVec3Like, b: __cocos_core_math_type_define__IVec3Like): number;
-        /**
-         * @zh 计算 `a`、`b` 两向量之间的有符号夹角。
-         *
-         * 不妨假设 `a`、`b` 是钟表上的两根指针，其中 `a` 指向 12 点整，`normal` 是任何从钟表正面指出的向量。
-         * 当 `b` **逆时针** 从 12 点走到 6 点的过程中，它们的角度变化范围为 (0°, 180°)；
-         * 当 `b` **顺时针** 从 12 点走到 6 点的过程中，它们的角度变化范围为 (0°, -180°)。
-         *
-         * 反之，如果 `normal` 是任何从钟表反面指出的向量，两种范围将对调。
-         *
-         * @en Calculates the signed angle between the two vectors `a`, `b`.
-         *
-         * Suppose that `a` and `b` are two hands on a clock, where pointing at 12 o'clock,
-         * and `normal` is arbitrary vector pointing out from the dial side of the clock.
-         * As `b` goes counterclockwise from 12 o'clock to 6 o'clock, their angle varies in the range (0°, 180°);
-         * As `b` goes clockwise from 12 o'clock to 6 o'clock, their angle varies in the range (0°, -180°).
-         *
-         * Instead, if `normal` is arbitrary vector pointing out from the opposite side of the clock,
-         * the two ranges would swap.
-         *
-         * @param a @zh 向量 `a`。 @en The vector `a`.
-         * @param b @zh 向量 `b`。 @en The vector `b`.
-         * @param normal @zh 参考向量。 @en The reference vector.
-         * @returns @zh 向量 `a` 和 `b` 之间的有符号夹角。 @en The signed angle between `a`, `b`.
-         */
-        public static signedAngle = "Bad expression <(() => {\n        const cacheCross = new Vec3();\n        return (a: Readonly<IVec3Like>, b: Readonly<IVec3Like>, normal: Readonly<IVec3Like>): number => {\n            const angle = Vec3.angle(a, b);\n            const cross = Vec3.cross(cacheCross, a, b);\n            const dot = Vec3.dot(cross, normal);\n            return dot < 0 ? -angle : angle;\n        };\n    })()>";
-        /**
-         * @en Calculates the projection vector on the specified plane
-         * @zh 计算向量在指定平面上的投影
-         * @param a projection vector
-         * @param n the normal line of specified plane
-         */
-        public static projectOnPlane<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like, n: __cocos_core_math_type_define__IVec3Like): Out;
-        /**
-         * @en Calculates the projection on the specified vector
-         * @zh 计算向量在指定向量上的投影
-         * @param a projection vector
-         * @param b target vector
-         */
-        public static project<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like, b: __cocos_core_math_type_define__IVec3Like): Out;
-        /**
-         * @en Calculates a new position from current to target no more than `maxStep` distance.
-         * @zh 计算一个新位置从当前位置移动不超过 `maxStep` 距离到目标位置。
-         * @param current current position
-         * @param target target position
-         * @param maxStep maximum moving distance
-         */
-        public static moveTowards<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, current: __cocos_core_math_type_define__IVec3Like, target: __cocos_core_math_type_define__IVec3Like, maxStep: number): Out;
-        /**
-         * @zh 生成指定向量的一个正交单位向量。如果指定的向量 **精确地** 是零向量，则返回 **精确的** 零向量。
-         * @en Generates an unit vector orthogonal to specified vector.
-         * If the specified vector is **strictly** zero vector, the result is **strict** zero vector.
-         * @param out @zh 生成的向量。@en The generated vector.
-         * @param n @zh 输入向量。该向量 **不必** 是标准化的。 @en The input vector. **Need not** to be normalized.
-         * @returns `out`
-         */
-        public static generateOrthogonal<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, n: Readonly<__cocos_core_math_type_define__IVec3Like>): Out;
-        /**
-         * @en x component.
-         * @zh x 分量。
-         */
-        public x: number;
-        /**
-         * @en y component.
-         * @zh y 分量。
-         */
-        public y: number;
-        /**
-         * @en z component.
-         * @zh z 分量。
-         */
-        public z: number;
-        constructor(v: __cocos_core_math_vec3__Vec3);
-        constructor(x?: number, y?: number, z?: number);
-        constructor(x?: number | __cocos_core_math_vec3__Vec3, y?: number, z?: number);
-        /**
-         * @en clone a Vec3 value
-         * @zh 克隆当前向量。
-         */
-        public clone(): __cocos_core_math_vec3__Vec3;
-        /**
-         * @en Set the current vector value with the given vector.
-         * @zh 设置当前向量使其与指定向量相等。
-         * @param other Specified vector
-         * @returns `this`
-         */
-        public set(other: __cocos_core_math_vec3__Vec3): __cocos_core_math_vec3__Vec3;
-        /**
-         * @en Set the value of each component of the current vector.
-         * @zh 设置当前向量的具体分量值。
-         * @param x x value
-         * @param y y value
-         * @param z z value
-         * @returns `this`
-         */
-        public set(x?: number, y?: number, z?: number): __cocos_core_math_vec3__Vec3;
-        public set(x?: number | __cocos_core_math_vec3__Vec3, y?: number, z?: number): __cocos_core_math_vec3__Vec3;
-        /**
-         * @en Check whether the vector approximately equals another one.
-         * @zh 判断当前向量是否在误差范围内与指定向量相等。
-         * @param other Specified vector
-         * @param epsilon The error allowed. It`s should be a non-negative number.
-         * @returns Returns `true` when the components of both vectors are equal within the specified range of error; otherwise it returns `false`.
-         */
-        public equals(other: __cocos_core_math_vec3__Vec3, epsilon): boolean;
-        /**
-         * @en Check whether the vector approximately equals another one.
-         * @zh 判断当前向量是否在误差范围内与指定分量的向量相等。
-         * @param x The x value of specified vector
-         * @param y The y value of specified vector
-         * @param z The z value of specified vector
-         * @param epsilon The error allowed. It`s should be a non-negative number.
-         * @returns Returns `true` when the components of both vectors are equal within the specified range of error; otherwise it returns `false`.
-         */
-        public equals3f(x: number, y: number, z: number, epsilon): boolean;
-        /**
-         * @en Check whether the current vector strictly equals another Vec3.
-         * @zh 判断当前向量是否与指定向量相等。
-         * @param other specified vector
-         * @returns Returns `true` when the components of both vectors are equal within the specified range of error; otherwise it returns `false`.
-         */
-        public strictEquals(other: __cocos_core_math_vec3__Vec3): boolean;
-        /**
-         * @en Check whether the current vector strictly equals another Vec3.
-         * @zh 判断当前向量是否与指定分量的向量相等。
-         * @param x The x value of specified vector
-         * @param y The y value of specified vector
-         * @param z The z value of specified vector
-         * @returns Returns `true` when the components of both vectors are equal within the specified range of error; otherwise it returns `false`.
-         */
-        public strictEquals3f(x: number, y: number, z: number): boolean;
-        /**
-         * @en Transform to string with vector information.
-         * @zh 返回当前向量的字符串表示。
-         * @returns The string with vector information
-         */
-        public toString(): string;
-        /**
-         * @en Calculate linear interpolation result between this vector and another one with given ratio.
-         * @zh 根据指定的插值比率，从当前向量到目标向量之间做插值。
-         * @param to Target vector
-         * @param ratio The interpolation coefficient.The range is [0,1].
-         */
-        public lerp(to: __cocos_core_math_vec3__Vec3, ratio: number): __cocos_core_math_vec3__Vec3;
-        /**
-         * @en Adds the current vector with another one and return this
-         * @zh 向量加法。将当前向量与指定向量的相加
-         * @param other specified vector
-         */
-        public add(other: __cocos_core_math_vec3__Vec3): __cocos_core_math_vec3__Vec3;
-        /**
-         * @en Adds the current vector with another one and return this
-         * @zh 向量加法。将当前向量与指定分量的向量相加
-         * @param x The x value of specified vector
-         * @param y The y value of specified vector
-         * @param z The z value of specified vector
-         */
-        public add3f(x: number, y: number, z: number): __cocos_core_math_vec3__Vec3;
-        /**
-         * @en Subtracts one vector from this, and returns this.
-         * @zh 向量减法。将当前向量减去指定向量的结果。
-         * @param other specified vector
-         */
-        public subtract(other: __cocos_core_math_vec3__Vec3): __cocos_core_math_vec3__Vec3;
-        /**
-         * @en Subtracts one vector from this, and returns this.
-         * @zh 向量减法。将当前向量减去指定分量的向量
-         * @param x The x value of specified vector
-         * @param y The y value of specified vector
-         * @param z The z value of specified vector
-         */
-        public subtract3f(x: number, y: number, z: number): __cocos_core_math_vec3__Vec3;
-        /**
-         * @en Multiplies the current vector with a number, and returns this.
-         * @zh 向量数乘。将当前向量数乘指定标量
-         * @param scalar scalar number
-         */
-        public multiplyScalar(scalar: number): __cocos_core_math_vec3__Vec3;
-        /**
-         * @en Multiplies the current vector with another one and return this
-         * @zh 向量乘法。将当前向量乘以与指定向量的结果赋值给当前向量。
-         * @param other specified vector
-         */
-        public multiply(other: __cocos_core_math_vec3__Vec3): __cocos_core_math_vec3__Vec3;
-        /**
-         * @en Multiplies the current vector with another one and return this
-         * @zh 向量乘法。将当前向量与指定分量的向量相乘的结果赋值给当前向量。
-         * @param x The x value of specified vector
-         * @param y The y value of specified vector
-         * @param z The z value of specified vector
-         */
-        public multiply3f(x: number, y: number, z: number): __cocos_core_math_vec3__Vec3;
-        /**
-         * @en Element-wisely divides this vector with another one, and return this.
-         * @zh 向量逐元素相除。将当前向量与指定分量的向量相除的结果赋值给当前向量。
-         * @param other specified vector
-         */
-        public divide(other: __cocos_core_math_vec3__Vec3): __cocos_core_math_vec3__Vec3;
-        /**
-         * @en Element-wisely divides this vector with another one, and return this.
-         * @zh 向量逐元素相除。将当前向量与指定分量的向量相除的结果赋值给当前向量。
-         * @param x The x value of specified vector
-         * @param y The y value of specified vector
-         * @param z The z value of specified vector
-         */
-        public divide3f(x: number, y: number, z: number): __cocos_core_math_vec3__Vec3;
-        /**
-         * @en Sets each component of this vector with its negative value
-         * @zh 将当前向量的各个分量取反
-         */
-        public negative(): __cocos_core_math_vec3__Vec3;
-        /**
-         * @en Clamp the vector between minInclusive and maxInclusive.
-         * @zh 设置当前向量的值，使其各个分量都处于指定的范围内。
-         * @param minInclusive Minimum value allowed
-         * @param maxInclusive Maximum value allowed
-         * @returns `this`
-         */
-        public clampf(minInclusive: __cocos_core_math_vec3__Vec3, maxInclusive: __cocos_core_math_vec3__Vec3): __cocos_core_math_vec3__Vec3;
-        /**
-         * @en Calculates the dot product with another vector
-         * @zh 向量点乘。
-         * @param other specified vector
-         * @returns The result of calculates the dot product with another vector
-         */
-        public dot(other: __cocos_core_math_vec3__Vec3): number;
-        /**
-         * @en Calculates the cross product with another vector.
-         * @zh 向量叉乘。将当前向量左叉乘指定向量
-         * @param other specified vector
-         */
-        public cross(other: __cocos_core_math_vec3__Vec3): __cocos_core_math_vec3__Vec3;
-        /**
-         * @en Returns the length of this vector.
-         * @zh 计算向量的长度（模）。
-         * @returns Length of vector
-         */
-        public length(): number;
-        /**
-         * @en Returns the squared length of this vector.
-         * @zh 计算向量长度（模）的平方。
-         * @returns the squared length of this vector
-         */
-        public lengthSqr(): number;
-        /**
-         * @en Normalize the current vector.
-         * @zh 将当前向量归一化
-         */
-        public normalize(): __cocos_core_math_vec3__Vec3;
-        /**
-         * @en Transforms the vec3 with a mat4. 4th vector component is implicitly '1'
-         * @zh 将当前向量视为 w 分量为 1 的四维向量，应用四维矩阵变换到当前矩阵
-         * @param matrix matrix to transform with
-         */
-        public transformMat4(matrix: __cocos_core_math_mat4__Mat4): __cocos_core_math_vec3__Vec3;
-        /**
-         * @en Converts the current Vec3 object to a Vec2 object by adding a z-component of 0.
-         * @zh 将当前的Vec3对象转换为一个z分量为0的Vec3对象。
-         * @returns Vec2 @en A new Vec2 object created from the current Vec3 object with z-component ignored.
-         * @zh 从当前的Vec3对象创建一个新的Vec2对象，丢弃z分量。
-         */
-        public toVec2(): __cocos_core_math_vec2__Vec2;
-    }
-    /**
-     * @en Representation of 2D vectors and points.
-     * @zh 二维向量。
-     */
-    export class __cocos_core_math_vec2__Vec2 extends __cocos_core_value_types_value_type__ValueType {
-        public static ZERO = "Bad expression <freezeVec2(0, 0)>";
-        public static ONE = "Bad expression <freezeVec2(1, 1)>";
-        public static NEG_ONE = "Bad expression <freezeVec2(-1, -1)>";
-        public static UNIT_X = "Bad expression <freezeVec2(1, 0)>";
-        public static UNIT_Y = "Bad expression <freezeVec2(0, 1)>";
-        /**
-         * @en Obtains a clone of the given vector object
-         * @zh 获得指定向量的拷贝
-         */
-        public static clone<Out extends __cocos_core_math_type_define__IVec2Like>(a: Out): __cocos_core_math_vec2__Vec2;
-        /**
-         * @en Copy the target vector and save the results to out vector object
-         * @zh 复制目标向量
-         */
-        public static copy<Out extends __cocos_core_math_type_define__IVec2Like>(out: Out, a: Out): Out;
-        /**
-         * @en Sets the out vector with the given x and y values
-         * @zh 设置向量值
-         */
-        public static set<Out extends __cocos_core_math_type_define__IVec2Like>(out: Out, x: number, y: number): Out;
-        /**
-         * @en Element-wise vector addition and save the results to out vector object
-         * @zh 逐元素向量加法
-         */
-        public static add<Out extends __cocos_core_math_type_define__IVec2Like>(out: Out, a: Out, b: Out): Out;
-        /**
-         * @en Element-wise vector subtraction and save the results to out vector object
-         * @zh 逐元素向量减法
-         */
-        public static subtract<Out extends __cocos_core_math_type_define__IVec2Like>(out: Out, a: Out, b: Out): Out;
-        /**
-         * @en Element-wise vector multiplication and save the results to out vector object
-         * @zh 逐元素向量乘法
-         */
-        public static multiply<Out extends __cocos_core_math_type_define__IVec2Like>(out: Out, a: Out, b: Out): Out;
-        /**
-         * @en Element-wise vector division and save the results to out vector object
-         * @zh 逐元素向量除法
-         */
-        public static divide<Out extends __cocos_core_math_type_define__IVec2Like>(out: Out, a: Out, b: Out): Out;
-        /**
-         * @en Rounds up by elements of the vector and save the results to out vector object
-         * @zh 逐元素向量向上取整
-         */
-        public static ceil<Out extends __cocos_core_math_type_define__IVec2Like>(out: Out, a: Out): Out;
-        /**
-         * @en Element-wise rounds down of the current vector and save the results to the out vector
-         * @zh 逐元素向量向下取整
-         */
-        public static floor<Out extends __cocos_core_math_type_define__IVec2Like>(out: Out, a: Out): Out;
-        /**
-         * @en Calculates element-wise minimum values and save to the out vector
-         * @zh 逐元素向量最小值
-         */
-        public static min<Out extends __cocos_core_math_type_define__IVec2Like>(out: Out, a: Out, b: Out): Out;
-        /**
-         * @en Calculates element-wise maximum values and save to the out vector
-         * @zh 逐元素向量最大值
-         */
-        public static max<Out extends __cocos_core_math_type_define__IVec2Like>(out: Out, a: Out, b: Out): Out;
-        /**
-         * @en Calculates element-wise round results and save to the out vector
-         * @zh 逐元素向量四舍五入取整
-         */
-        public static round<Out extends __cocos_core_math_type_define__IVec2Like>(out: Out, a: Out): Out;
-        /**
-         * @en Vector scalar multiplication and save the results to out vector object
-         * @zh 向量标量乘法
-         */
-        public static multiplyScalar<Out extends __cocos_core_math_type_define__IVec2Like>(out: Out, a: Out, b: number): Out;
-        /**
-         * @en Element-wise multiplication and addition with the equation: a + b * scale
-         * @zh 逐元素向量乘加: A + B * scale
-         */
-        public static scaleAndAdd<Out extends __cocos_core_math_type_define__IVec2Like>(out: Out, a: Out, b: Out, scale: number): Out;
-        /**
-         * @en Calculates the euclidean distance of two vectors
-         * @zh 求两向量的欧氏距离
-         */
-        public static distance<Out extends __cocos_core_math_type_define__IVec2Like>(a: Out, b: Out): number;
-        /**
-         * @en Calculates the squared euclidean distance of two vectors
-         * @zh 求两向量的欧氏距离平方
-         */
-        public static squaredDistance<Out extends __cocos_core_math_type_define__IVec2Like>(a: Out, b: Out): number;
-        /**
-         * @en Calculates the length of the vector
-         * @zh 求向量长度
-         */
-        public static len<Out extends __cocos_core_math_type_define__IVec2Like>(a: Out): number;
-        /**
-         * @en Calculates the squared length of the vector
-         * @zh 求向量长度平方
-         */
-        public static lengthSqr<Out extends __cocos_core_math_type_define__IVec2Like>(a: Out): number;
-        /**
-         * @en Sets each element to its negative value
-         * @zh 逐元素向量取负
-         */
-        public static negate<Out extends __cocos_core_math_type_define__IVec2Like>(out: Out, a: Out): Out;
-        /**
-         * @en Sets each element to its inverse value, zero value will become Infinity
-         * @zh 逐元素向量取倒数，接近 0 时返回 Infinity
-         */
-        public static inverse<Out extends __cocos_core_math_type_define__IVec2Like>(out: Out, a: Out): Out;
-        /**
-         * @en Sets each element to its inverse value, zero value will remain zero
-         * @zh 逐元素向量取倒数，接近 0 时返回 0
-         */
-        public static inverseSafe<Out extends __cocos_core_math_type_define__IVec2Like>(out: Out, a: Out): Out;
-        /**
-         * @en Sets the normalized vector to the out vector, returns a zero vector if input is a zero vector.
-         * @zh 归一化向量，输入零向量将会返回零向量。
-         */
-        public static normalize<Out extends __cocos_core_math_type_define__IVec2Like, Vec2Like extends __cocos_core_math_type_define__IVec2Like>(out: Out, a: Vec2Like): Out;
-        /**
-         * @en Calculates the dot product of the vector
-         * @zh 向量点积（数量积）
-         */
-        public static dot<Out extends __cocos_core_math_type_define__IVec2Like>(a: Out, b: Out): number;
-        /**
-         * @en Calculates the cross product of the vector
-         * @zh 向量叉积（向量积），注意二维向量的叉积为与 Z 轴平行的三维向量
-         * @override (a:Vec2, b:Vec2) => number
-         * @override [deprecated] (out:Vec3, a:Vec2, b:Vec2) => Vec3
-         */
-        public static cross(a: __cocos_core_math_type_define__IVec2Like, b: __cocos_core_math_type_define__IVec2Like): number;
-        /**
-         * @deprecated Consider use another overrides please.
-         */
-        public static cross<Out extends __cocos_core_math_type_define__IVec2Like>(out: __cocos_core_math_vec3__Vec3, a: Out, b: Out): __cocos_core_math_vec3__Vec3;
-        public static cross(out: __cocos_core_math_type_define__IVec2Like | __cocos_core_math_vec3__Vec3, a: __cocos_core_math_type_define__IVec2Like, b?: __cocos_core_math_type_define__IVec2Like): number | __cocos_core_math_vec3__Vec3;
-        /**
-         * @en Calculates the linear interpolation between two vectors with a given ratio: A + t * (B - A)
-         * @zh 逐元素向量线性插值： A + t * (B - A)
-         */
-        public static lerp<Out extends __cocos_core_math_type_define__IVec2Like>(out: Out, a: Out, b: Out, t: number): Out;
-        /**
-         * @en Generates a uniformly distributed random vector points from center to the surface of the unit sphere
-         * @zh 生成一个在单位圆上均匀分布的随机向量
-         * @param scale vector length
-         */
-        public static random<Out extends __cocos_core_math_type_define__IVec2Like>(out: Out, scale?: number): Out;
-        /**
-         * @en Vector and third order matrix multiplication, will complete the vector with a third value as one
-         * @zh 向量与三维矩阵乘法，默认向量第三位为 1。
-         */
-        public static transformMat3<Out extends __cocos_core_math_type_define__IVec2Like, MatLike extends __cocos_core_math_type_define__IMat3Like>(out: Out, a: Out, m: __cocos_core_math_type_define__IMat3Like): Out;
-        /**
-         * @en Vector and third order matrix multiplication, will complete the vector with a third and a fourth element as one
-         * @zh 向量与四维矩阵乘法，默认向量第三位为 0，第四位为 1。
-         */
-        public static transformMat4<Out extends __cocos_core_math_type_define__IVec2Like, MatLike extends __cocos_core_math_type_define__IMat4Like>(out: Out, a: Out, m: __cocos_core_math_type_define__IMat4Like): Out;
-        /**
-         * @en Gets the string representation of the given vector
-         * @zh 返回向量的字符串表示
-         */
-        public static str<Out extends __cocos_core_math_type_define__IVec2Like>(a: Out): string;
-        /**
-         * @en Converts the given vector to an array
-         * @zh 向量转数组
-         * @param ofs Array Start Offset
-         */
-        public static toArray<Out extends __types_globals__IWritableArrayLike<number>>(out: Out, v: __cocos_core_math_type_define__IVec2Like, ofs): Out;
-        /**
-         * @en Converts the given array to a vector
-         * @zh 数组转向量
-         * @param ofs Array Start Offset
-         */
-        public static fromArray<Out extends __cocos_core_math_type_define__IVec2Like>(out: Out, arr: __types_globals__IWritableArrayLike<number>, ofs): Out;
-        /**
-         * @en Check the equality of the two given vectors
-         * @zh 向量等价判断
-         */
-        public static strictEquals<Out extends __cocos_core_math_type_define__IVec2Like>(a: Out, b: Out): boolean;
-        /**
-         * @en Check whether the two given vectors are approximately equivalent
-         * @zh 排除浮点数误差的向量近似等价判断
-         */
-        public static equals<Out extends __cocos_core_math_type_define__IVec2Like>(a: Out, b: Out, epsilon): boolean;
-        /**
-         * @en Calculates the radian angle between two vectors, returns zero if either vector is a zero vector.
-         * @zh 求两向量夹角弧度，任意一个向量是零向量则返回零。
-         */
-        public static angle<Out extends __cocos_core_math_type_define__IVec2Like>(a: Out, b: Out): number;
-        /**
-         * @en x component.
-         * @zh x 分量。
-         */
-        public x: number;
-        /**
-         * @en y component.
-         * @zh y 分量。
-         */
-        public y: number;
-        constructor(other: __cocos_core_math_vec2__Vec2);
-        constructor(x?: number, y?: number);
-        constructor(x?: number | __cocos_core_math_vec2__Vec2, y?: number);
-        /**
-         * @en clone a Vec2 value
-         * @zh 克隆当前向量。
-         */
-        public clone(): __cocos_core_math_vec2__Vec2;
-        /**
-         * @en Set the current vector value with the given vector.
-         * @zh 设置当前向量使其与指定向量相等。
-         * @param other Specified vector
-         * @return `this`
-         */
-        public set(other: __cocos_core_math_vec2__Vec2): __cocos_core_math_vec2__Vec2;
-        /**
-         * @en Set the value of each component of the current vector.
-         * @zh 设置当前向量的具体分量值。
-         * @param x x value
-         * @param y y value
-         * @return `this`
-         */
-        public set(x?: number, y?: number): __cocos_core_math_vec2__Vec2;
-        public set(x?: number | __cocos_core_math_vec2__Vec2, y?: number): __cocos_core_math_vec2__Vec2;
-        /**
-         * @en Check whether the vector approximately equals another one.
-         * @zh 判断当前向量是否在误差范围内与指定向量相等。
-         * @param other Specified vector
-         * @param epsilon The error allowed. It`s should be a non-negative number.
-         * @return Returns `true` when the components of both vectors are equal within the specified range of error; otherwise it returns `false`.
-         */
-        public equals(other: __cocos_core_math_vec2__Vec2, epsilon): boolean;
-        /**
-         * @en Check whether the vector approximately equals another one.
-         * @zh 判断当前向量是否在误差范围内与指定分量的向量相等。
-         * @param x The x value of specified vector
-         * @param y The y value of specified vector
-         * @param epsilon The error allowed. It`s should be a non-negative number.
-         * @return Returns `true` when the components of both vectors are equal within the specified range of error; otherwise it returns `false`.
-         */
-        public equals2f(x: number, y: number, epsilon): boolean;
-        /**
-         * @en Check whether the current vector strictly equals another Vec2.
-         * @zh 判断当前向量是否与指定向量相等。
-         * @param other specified vector
-         * @return Returns `true` when the components of both vectors are equal within the specified range of error; otherwise it returns `false`.
-         */
-        public strictEquals(other: __cocos_core_math_vec2__Vec2): boolean;
-        /**
-         * @en Check whether the current vector strictly equals another Vec2.
-         * @zh 判断当前向量是否与指定分量的向量相等。
-         * @param x The x value of specified vector
-         * @param y The y value of specified vector
-         * @return Returns `true` when the components of both vectors are equal within the specified range of error; otherwise it returns `false`.
-         */
-        public strictEquals2f(x: number, y: number): boolean;
-        /**
-         * @en Transform to string with vector information.
-         * @zh 返回当前向量的字符串表示。
-         * @returns The string with vector information
-         */
-        public toString(): string;
-        /**
-         * @en Calculate linear interpolation result between this vector and another one with given ratio.
-         * @zh 根据指定的插值比率，从当前向量到目标向量之间做插值。
-         * @param to Target vector
-         * @param ratio The interpolation coefficient.The range is [0,1].
-         */
-        public lerp(to: __cocos_core_math_vec2__Vec2, ratio: number): __cocos_core_math_vec2__Vec2;
-        /**
-         * @en Clamp the vector between minInclusive and maxInclusive.
-         * @zh 设置当前向量的值，使其各个分量都处于指定的范围内。
-         * @param minInclusive Minimum value allowed
-         * @param maxInclusive Maximum value allowed
-         * @return `this`
-         */
-        public clampf(minInclusive: __cocos_core_math_vec2__Vec2, maxInclusive: __cocos_core_math_vec2__Vec2): __cocos_core_math_vec2__Vec2;
-        /**
-         * @en Adds the current vector with another one and return this
-         * @zh 向量加法。将当前向量与指定向量的相加
-         * @param other specified vector
-         */
-        public add(other: __cocos_core_math_vec2__Vec2): __cocos_core_math_vec2__Vec2;
-        /**
-         * @en Adds the current vector with another one and return this
-         * @zh 向量加法。将当前向量与指定分量的向量相加
-         * @param x The x value of specified vector
-         * @param y The y value of specified vector
-         */
-        public add2f(x: number, y: number): __cocos_core_math_vec2__Vec2;
-        /**
-         * @en Subtracts one vector from this, and returns this.
-         * @zh 向量减法。将当前向量减去指定向量
-         * @param other specified vector
-         */
-        public subtract(other: __cocos_core_math_vec2__Vec2): __cocos_core_math_vec2__Vec2;
-        /**
-         * @en Subtracts one vector from this, and returns this.
-         * @zh 向量减法。将当前向量减去指定分量的向量
-         * @param x The x value of specified vector
-         * @param y The y value of specified vector
-         */
-        public subtract2f(x: number, y: number): __cocos_core_math_vec2__Vec2;
-        /**
-         * @en Multiplies the current vector with a number, and returns this.
-         * @zh 向量数乘。将当前向量数乘指定标量
-         * @param scalar scalar number
-         */
-        public multiplyScalar(scalar: number): __cocos_core_math_vec2__Vec2;
-        /**
-         * @en Multiplies the current vector with another one and return this
-         * @zh 向量乘法。将当前向量乘以与指定向量的结果赋值给当前向量。
-         * @param other specified vector
-         */
-        public multiply(other: __cocos_core_math_vec2__Vec2): __cocos_core_math_vec2__Vec2;
-        /**
-         * @en Multiplies the current vector with another one and return this
-         * @zh 向量乘法。将当前向量与指定分量的向量相乘的结果赋值给当前向量。
-         * @param x The x value of specified vector
-         * @param y The y value of specified vector
-         */
-        public multiply2f(x: number, y: number): __cocos_core_math_vec2__Vec2;
-        /**
-         * @en Element-wisely divides this vector with another one, and return this.
-         * @zh 向量逐元素相除。将当前向量与指定分量的向量相除的结果赋值给当前向量。
-         * @param other specified vector
-         */
-        public divide(other: __cocos_core_math_vec2__Vec2): __cocos_core_math_vec2__Vec2;
-        /**
-         * @en Element-wisely divides this vector with another one, and return this.
-         * @zh 向量逐元素相除。将当前向量与指定分量的向量相除的结果赋值给当前向量。
-         * @param x The x value of specified vector
-         * @param y The y value of specified vector
-         */
-        public divide2f(x: number, y: number): __cocos_core_math_vec2__Vec2;
-        /**
-         * @en Sets each component of this vector with its negative value
-         * @zh 将当前向量的各个分量取反
-         */
-        public negative(): __cocos_core_math_vec2__Vec2;
-        /**
-         * @en Calculates the dot product with another vector
-         * @zh 向量点乘。
-         * @param other specified vector
-         * @return The result of calculates the dot product with another vector
-         */
-        public dot(other: __cocos_core_math_vec2__Vec2): number;
-        /**
-         * @en Calculates the cross product with another vector.
-         * @zh 向量叉乘。
-         * @param other specified vector
-         * @return `out`
-         */
-        public cross(other: __cocos_core_math_vec2__Vec2): number;
-        /**
-         * @en Returns the length of this vector.
-         * @zh 计算向量的长度（模）。
-         * @return Length of vector
-         */
-        public length(): number;
-        /**
-         * @en Returns the squared length of this vector.
-         * @zh 计算向量长度（模）的平方。
-         * @return the squared length of this vector
-         */
-        public lengthSqr(): number;
-        /**
-         * @en Normalize the current vector.
-         * @zh 将当前向量归一化。
-         */
-        public normalize(): __cocos_core_math_vec2__Vec2;
-        /**
-         * @en Calculates radian angle between two vectors, returns zero if either vector is a zero vector.
-         * @zh 获取当前向量和指定向量之间的弧度，任意一个向量是零向量则返回零。
-         * @param other specified vector.
-         * @return The angle between the current vector and the specified vector.
-         */
-        public angle(other: __cocos_core_math_vec2__Vec2): number;
-        /**
-         * @en Get angle in radian between this and vector with direction.
-         * @zh 获取当前向量和指定向量之间的有符号弧度。<br/>
-         * 有符号弧度的取值范围为 (-PI, PI]，当前向量可以通过逆时针旋转有符号角度与指定向量同向。<br/>
-         * @param other specified vector
-         * @return The signed angle between the current vector and the specified vector (in radians);
-         * if there is a zero vector in the current vector and the specified vector, 0 is returned.
-         */
-        public signAngle(other: __cocos_core_math_vec2__Vec2): number;
-        /**
-         * @en Rotates the current vector by an angle in radian value. Counterclockwise is the positive direction.
-         * @zh 将当前向量进行旋转，逆时针为正方向。
-         * @param radians radians of rotation.
-         */
-        public rotate(radians: number): __cocos_core_math_vec2__Vec2;
-        /**
-         * @en Projects the current vector on another one
-         * @zh 计算当前向量在指定向量上的投影向量。
-         * @param other specified vector
-         */
-        public project(other: __cocos_core_math_vec2__Vec2): __cocos_core_math_vec2__Vec2;
-        /**
-         * @en Transforms the vec2 with a mat4. 3rd vector component is implicitly '0', 4th vector component is implicitly '1'
-         * @zh 将当前向量视为 z 分量为 0、w 分量为 1 的四维向量，<br/>
-         * 应用四维矩阵变换到当前矩阵<br/>
-         * @param matrix matrix to transform with
-         */
-        public transformMat4(matrix: __cocos_core_math_mat4__Mat4): __cocos_core_math_vec2__Vec2;
-        /**
-         * @en Converts the current Vec2 object to a Vec3 object by adding a z-component of 0.
-         * @zh 将当前的Vec2对象转换为一个z分量为0的Vec3对象。
-         * @returns Vec3 @en A new Vec3 object created from the current Vec2 object with z-component set to 0.
-         * @zh 从当前的Vec2对象创建一个新的Vec3对象，其中z分量设置为0。
-         */
-        public toVec3(): __cocos_core_math_vec3__Vec3;
-    }
     /**
      * @en The class for input source of 2D Axis, which is used to control the input signal of a mono input source
      * @zh 2D 轴的 InputSource 类，该类用于控制单一输入源的输入信号
      */
-    export class __pal_input_input_source__InputSourceAxis2D extends __pal_input_input_source__InputSource<__cocos_core_math_vec2__Vec2> {
+    export class _pal_input_input_source__InputSourceAxis2D extends _pal_input_input_source__InputSource<math.Vec2> {
         /**
          * @en Get the signal value of the input source, which returns a Vec2 object.
          * @zh 获取输入源的信号值，该方法返回一个 Vec2 对象
          */
-        getValue(): __cocos_core_math_vec2__Vec2;
+        getValue(): math.Vec2;
     }
     /**
      * @en The class for input source of 2D Axis, which is used to control the input signal of a composite of multi input source
      * @zh 2D 轴的 InputSource 类，该类用于控制多个输入源组合的输入信号
      */
-    export class __pal_input_input_source__CompositeInputSourceAxis2D extends __pal_input_input_source__InputSourceAxis2D {
+    export class _pal_input_input_source__CompositeInputSourceAxis2D extends _pal_input_input_source__InputSourceAxis2D {
         /**
          * @en The input source object of up direction of 2D axis
          * @zh 2D 轴的向上的输入源对象
          */
-        up: __pal_input_input_source__InputSourceButton;
+        up: _pal_input_input_source__InputSourceButton;
         /**
          * @en The input source object of down direction of 2D axis
          * @zh 2D 轴的向下的输入源对象
          */
-        down: __pal_input_input_source__InputSourceButton;
+        down: _pal_input_input_source__InputSourceButton;
         /**
          * @en The input source object of left direction of 2D axis
          * @zh 2D 轴的向左的输入源对象
          */
-        left: __pal_input_input_source__InputSourceButton;
+        left: _pal_input_input_source__InputSourceButton;
         /**
          * @en The input source object of right direction of 2D axis
          * @zh 2D 轴的向右的输入源对象
          */
-        right: __pal_input_input_source__InputSourceButton;
+        right: _pal_input_input_source__InputSourceButton;
         /**
          * @en The composite input source object on the x axis of 2D axis
          * @zh 2D 轴在 x 轴上的组合输入源对象
          */
-        xAxis: __pal_input_input_source__CompositeInputSourceAxis1D;
+        xAxis: _pal_input_input_source__CompositeInputSourceAxis1D;
         /**
          * @en The composite input source object on the y axis of 2D axis
          * @zh 2D 轴在 y 轴上的组合输入源对象
          */
-        yAxis: __pal_input_input_source__CompositeInputSourceAxis1D;
+        yAxis: _pal_input_input_source__CompositeInputSourceAxis1D;
         constructor(options: {
-            up: __pal_input_input_source__InputSourceButton;
-            down: __pal_input_input_source__InputSourceButton;
-            left: __pal_input_input_source__InputSourceButton;
-            right: __pal_input_input_source__InputSourceButton;
+            up: _pal_input_input_source__InputSourceButton;
+            down: _pal_input_input_source__InputSourceButton;
+            left: _pal_input_input_source__InputSourceButton;
+            right: _pal_input_input_source__InputSourceButton;
         });
         /**
          * @en Get the signal value of the input source, which returns a Vec2 object.
          * @zh 获取输入源的信号值，该方法返回一个 Vec2 对象
          */
-        getValue(): __cocos_core_math_vec2__Vec2;
+        getValue(): math.Vec2;
     }
     /**
      * @en The class for input source of dpad, whose input signal value a Vec2 object
      * @zh 手柄方向键输入源类, 输入信号源的取值是一个 Vec2 对象
      */
-    export class __pal_input_input_source__InputSourceDpad extends __pal_input_input_source__CompositeInputSourceAxis2D {
+    export class _pal_input_input_source__InputSourceDpad extends _pal_input_input_source__CompositeInputSourceAxis2D {
     }
-    export type _pal_input__InputSourceDpad = __pal_input_input_source__InputSourceDpad;
+    export type _pal_input__InputSourceDpad = _pal_input_input_source__InputSourceDpad;
     /**
      * @en The class for input source of stick, whose input signal value a Vec2 object
      * @zh 摇杆输入源类, 输入信号源的取值是一个 Vec2 对象
      */
-    export class __pal_input_input_source__InputSourceStick extends __pal_input_input_source__CompositeInputSourceAxis2D {
+    export class _pal_input_input_source__InputSourceStick extends _pal_input_input_source__CompositeInputSourceAxis2D {
     }
-    export type _pal_input__InputSourceStick = __pal_input_input_source__InputSourceStick;
+    export type _pal_input__InputSourceStick = _pal_input_input_source__InputSourceStick;
     /**
      * @en The class for input source of 3D Axis, which is used to control the input signal of a mono input source
      * @zh 3D 轴的 InputSource 类，该类用于控制单一输入源的输入信号
      */
-    export class __pal_input_input_source__InputSourceAxis3D extends __pal_input_input_source__InputSource<__cocos_core_math_vec3__Vec3> {
+    export class _pal_input_input_source__InputSourceAxis3D extends _pal_input_input_source__InputSource<math.Vec3> {
         /**
          * @en Get the signal value of the input source, which returns a Vec3 object.
          * @zh 获取输入源的信号值，该方法返回一个 Vec3 对象
          */
-        getValue(): __cocos_core_math_vec3__Vec3;
+        getValue(): math.Vec3;
     }
     /**
      * @en The class for input source of position, whose input signal value a Vec3 object
      * @zh 坐标输入源类, 输入信号源的取值是一个 Vec3 对象
      */
-    export class __pal_input_input_source__InputSourcePosition extends __pal_input_input_source__InputSourceAxis3D {
+    export class _pal_input_input_source__InputSourcePosition extends _pal_input_input_source__InputSourceAxis3D {
         /**
          * @en Get the signal value of the input source, which returns a Vec3 object.
          * @zh 获取输入源的信号值，该方法返回一个 Vec3 对象
          */
-        getValue(): __cocos_core_math_vec3__Vec3;
+        getValue(): math.Vec3;
     }
-    export type _pal_input__InputSourcePosition = __pal_input_input_source__InputSourcePosition;
+    export type _pal_input__InputSourcePosition = _pal_input_input_source__InputSourcePosition;
     /**
      * @en The class for input source of Quaternion, which is used to control the input signal of a mono input source
      * @zh 四元数的 InputSource 类，该类用于控制单一输入源的输入信号
      */
-    export class __pal_input_input_source__InputSourceQuat extends __pal_input_input_source__InputSource<__cocos_core_math_quat__Quat> {
+    export class _pal_input_input_source__InputSourceQuat extends _pal_input_input_source__InputSource<math.Quat> {
         /**
          * @en Get the signal value of the input source, which returns a Quat object.
          * @zh 获取输入源的信号值，该方法返回一个 Quat 对象
          */
-        getValue(): __cocos_core_math_quat__Quat;
+        getValue(): math.Quat;
     }
     /**
      * @en The class for input source of orientation, whose input signal value a Quat object
      * @zh 方向输入源类, 输入信号源的取值是一个 Quat 对象
      */
-    export class __pal_input_input_source__InputSourceOrientation extends __pal_input_input_source__InputSourceQuat {
+    export class _pal_input_input_source__InputSourceOrientation extends _pal_input_input_source__InputSourceQuat {
         /**
          * @en Get the signal value of the input source, which returns a Quat object.
          * @zh 获取输入源的信号值，该方法返回一个 Quat 对象
          */
-        getValue(): __cocos_core_math_quat__Quat;
+        getValue(): math.Quat;
     }
-    export type _pal_input__InputSourceOrientation = __pal_input_input_source__InputSourceOrientation;
+    export type _pal_input__InputSourceOrientation = _pal_input_input_source__InputSourceOrientation;
     /**
      * Class designed for gamepad input
      */
@@ -73022,7 +71974,7 @@ declare namespace __private {
         /**
          * @engineInternal
          */
-        public static _on(eventType: import('cocos/input/types/event-enum').InputEventType, cb: _pal_input__GamepadCallback, target?: any): void;
+        public static _on(eventType: _cocos_input_types_event_enum__InputEventType, cb: _pal_input__GamepadCallback, target?: any): void;
         public static all: _pal_input__GamepadInputDevice[];
         public static xr: (_pal_input__GamepadInputDevice | null);
         /**
@@ -73168,7 +72120,7 @@ declare namespace __private {
          */
         public get aimRightOrientation(): _pal_input__InputSourceOrientation;
     }
-    export type _pal_input__HandleCallback = (res: import('cocos/input/types').EventHandle) => void;
+    export type _pal_input__HandleCallback = (res: EventHandle) => void;
     /**
      * Class designed for handle input.
      */
@@ -73177,7 +72129,7 @@ declare namespace __private {
          * Register the handle event callback.
          * @engineInternal
          */
-        public _on(eventType: import('cocos/input/types/event-enum').InputEventType, callback: _pal_input__HandleCallback, target?: any);
+        public _on(eventType: _cocos_input_types_event_enum__InputEventType, callback: _pal_input__HandleCallback, target?: any): void;
         /**
          * @en  The control button in the north direction which is generally the button Y
          * @zh 处于北向的控制按键，一般是按键 Y
@@ -73299,7 +72251,7 @@ declare namespace __private {
          */
         public get aimRightOrientation(): _pal_input__InputSourceOrientation;
     }
-    export type _pal_input__HMDCallback = (res: import('cocos/input/types').EventHMD) => void;
+    export type _pal_input__HMDCallback = (res: EventHMD) => void;
     /**
      * Class designed for HMD input.
      */
@@ -73308,7 +72260,7 @@ declare namespace __private {
          * Register the hmd event callback.
          * @engineInternal
          */
-        public _on(eventType: import('cocos/input/types/event-enum').InputEventType, callback: _pal_input__HMDCallback, target?: any);
+        public _on(eventType: _cocos_input_types_event_enum__InputEventType, callback: _pal_input__HMDCallback, target?: any): void;
         /**
          * @en The position Left view
          * @zh 左窗口位置
@@ -73340,7 +72292,7 @@ declare namespace __private {
          */
         public get headMiddleOrientation(): _pal_input__InputSourceOrientation;
     }
-    export type _pal_input__HandheldCallback = (res: import('cocos/input/types').EventHandheld) => void;
+    export type _pal_input__HandheldCallback = (res: EventHandheld) => void;
     /**
      * Class designed for Handheld input.
      */
@@ -73349,7 +72301,7 @@ declare namespace __private {
          * Register the handheld event callback.
          * @engineInternal
          */
-        public _on(eventType: import('cocos/input/types/event-enum').InputEventType, callback: _pal_input__HandheldCallback, target?: any);
+        public _on(eventType: _cocos_input_types_event_enum__InputEventType, callback: _pal_input__HandheldCallback, target?: any): void;
         /**
          * @en The position handheld
          * @zh 手持设备相机位置
@@ -74353,7 +73305,7 @@ declare namespace __private {
      * @zh
      * 立方体参数选项。
      */
-    export interface _cocos_primitive_box__IBoxOptions extends __types_globals__RecursivePartial<primitives.IGeometryOptions> {
+    export interface _cocos_primitive_box__IBoxOptions extends _types_globals__RecursivePartial<primitives.IGeometryOptions> {
         /**
          * @en
          * Box extent on X-axis.
@@ -74416,7 +73368,7 @@ declare namespace __private {
      * @zh
      * 平面参数选项。
      */
-    export interface _cocos_primitive_plane__IPlaneOptions extends __types_globals__RecursivePartial<primitives.IGeometryOptions> {
+    export interface _cocos_primitive_plane__IPlaneOptions extends _types_globals__RecursivePartial<primitives.IGeometryOptions> {
         /**
          * Plane extent on X-axis.
          */
@@ -74434,7 +73386,7 @@ declare namespace __private {
          */
         lengthSegments: number;
     }
-    export interface _cocos_primitive_quad__IQuadOptions extends __types_globals__RecursivePartial<primitives.IGeometryOptions> {
+    export interface _cocos_primitive_quad__IQuadOptions extends _types_globals__RecursivePartial<primitives.IGeometryOptions> {
         /** Width on the X axis. Defaults to 1. */
         width?: number;
         /** Height on the Y axis. Defaults to 1. */
@@ -76323,7 +75275,7 @@ declare namespace __private {
      * To provide a safe Record type, if you want to enable checking index access on Object, please use SafeRecord instead of Record.
      * we provide this type because we don't want to enable `noUncheckedIndexedAccess` in tsconfig.json for it's noisy for a lot of code.
      */
-    export type __types_globals__SafeRecord<T extends (string | number | symbol), K> = Record<T, K | undefined>;
+    export type _types_globals__SafeRecord<T extends (string | number | symbol), K> = Record<T, K | undefined>;
     export interface _cocos_tiledmap_tiled_layer__TiledSubNodeData {
         subNodes: (null | TiledUserNodeData)[];
     }
@@ -77311,7 +76263,7 @@ declare namespace __private {
      * @version DragonBones 4.5
      * @language zh_CN
      */
-    export enum ___node_modules_cocos_dragonbones_js_out_dragonBones__AnimationFadeOutMode {
+    export enum ___external_types_dragonBones__AnimationFadeOutMode {
         /**
          * - Do not fade out of any animation states.
          * @language en_US
@@ -77475,6 +76427,8 @@ declare namespace __private {
         getAABB: (v: geometry.AABB) => void;
         getBoundingSphere: (v: geometry.Sphere) => void;
         updateEventListener: () => void;
+        /** Optional read-only phase/candidate admission before Box3D callback registration. */
+        validateEventListener?: (collision: boolean, trigger: boolean) => void;
     }
     export type _cocos_physics_framework_components_colliders_collider__Callback = (...args: any[]) => any;
     export const _cocos_physics_framework_components_colliders_collider__Collider_base: new (...args: any[]) => Component & _cocos_core_event_eventify__IEventified;
@@ -77491,6 +76445,8 @@ declare namespace __private {
     }
     export interface _cocos_physics_spec_i_physics_shape__ITrimeshShape extends _cocos_physics_spec_i_physics_shape__IBaseShape {
         setMesh: (v: Mesh | null) => void;
+        /** Optional candidate-first convex configuration used by Box3D; legacy backends keep setMesh. */
+        setConvex?: (v: boolean) => void;
     }
     export interface _cocos_physics_spec_i_physics_shape__ICylinderShape extends _cocos_physics_spec_i_physics_shape__IBaseShape {
         setRadius: (v: number) => void;
@@ -77758,23 +76714,23 @@ declare namespace __private {
         setHeight(value: number): void;
     }
     export interface _cocos_physics_framework_physics_selector__IPhysicsWrapperObject {
-        PhysicsWorld?: __types_globals__Constructor<_cocos_physics_spec_i_physics_world__IPhysicsWorld>;
-        RigidBody?: __types_globals__Constructor<_cocos_physics_spec_i_rigid_body__IRigidBody>;
-        BoxCharacterController?: __types_globals__Constructor<_cocos_physics_spec_i_character_controller__IBoxCharacterController>;
-        CapsuleCharacterController?: __types_globals__Constructor<_cocos_physics_spec_i_character_controller__ICapsuleCharacterController>;
-        BoxShape?: __types_globals__Constructor<_cocos_physics_spec_i_physics_shape__IBoxShape>;
-        SphereShape?: __types_globals__Constructor<_cocos_physics_spec_i_physics_shape__ISphereShape>;
-        CapsuleShape?: __types_globals__Constructor<_cocos_physics_spec_i_physics_shape__ICapsuleShape>;
-        TrimeshShape?: __types_globals__Constructor<_cocos_physics_spec_i_physics_shape__ITrimeshShape>;
-        CylinderShape?: __types_globals__Constructor<_cocos_physics_spec_i_physics_shape__ICylinderShape>;
-        ConeShape?: __types_globals__Constructor<_cocos_physics_spec_i_physics_shape__IConeShape>;
-        TerrainShape?: __types_globals__Constructor<_cocos_physics_spec_i_physics_shape__ITerrainShape>;
-        SimplexShape?: __types_globals__Constructor<_cocos_physics_spec_i_physics_shape__ISimplexShape>;
-        PlaneShape?: __types_globals__Constructor<_cocos_physics_spec_i_physics_shape__IPlaneShape>;
-        PointToPointConstraint?: __types_globals__Constructor<_cocos_physics_spec_i_physics_constraint__IPointToPointConstraint>;
-        HingeConstraint?: __types_globals__Constructor<_cocos_physics_spec_i_physics_constraint__IHingeConstraint>;
-        FixedConstraint?: __types_globals__Constructor<_cocos_physics_spec_i_physics_constraint__IFixedConstraint>;
-        ConfigurableConstraint?: __types_globals__Constructor<_cocos_physics_spec_i_physics_constraint__IConfigurableConstraint>;
+        PhysicsWorld?: _types_globals__Constructor<_cocos_physics_spec_i_physics_world__IPhysicsWorld>;
+        RigidBody?: _types_globals__Constructor<_cocos_physics_spec_i_rigid_body__IRigidBody>;
+        BoxCharacterController?: _types_globals__Constructor<_cocos_physics_spec_i_character_controller__IBoxCharacterController>;
+        CapsuleCharacterController?: _types_globals__Constructor<_cocos_physics_spec_i_character_controller__ICapsuleCharacterController>;
+        BoxShape?: _types_globals__Constructor<_cocos_physics_spec_i_physics_shape__IBoxShape>;
+        SphereShape?: _types_globals__Constructor<_cocos_physics_spec_i_physics_shape__ISphereShape>;
+        CapsuleShape?: _types_globals__Constructor<_cocos_physics_spec_i_physics_shape__ICapsuleShape>;
+        TrimeshShape?: _types_globals__Constructor<_cocos_physics_spec_i_physics_shape__ITrimeshShape>;
+        CylinderShape?: _types_globals__Constructor<_cocos_physics_spec_i_physics_shape__ICylinderShape>;
+        ConeShape?: _types_globals__Constructor<_cocos_physics_spec_i_physics_shape__IConeShape>;
+        TerrainShape?: _types_globals__Constructor<_cocos_physics_spec_i_physics_shape__ITerrainShape>;
+        SimplexShape?: _types_globals__Constructor<_cocos_physics_spec_i_physics_shape__ISimplexShape>;
+        PlaneShape?: _types_globals__Constructor<_cocos_physics_spec_i_physics_shape__IPlaneShape>;
+        PointToPointConstraint?: _types_globals__Constructor<_cocos_physics_spec_i_physics_constraint__IPointToPointConstraint>;
+        HingeConstraint?: _types_globals__Constructor<_cocos_physics_spec_i_physics_constraint__IHingeConstraint>;
+        FixedConstraint?: _types_globals__Constructor<_cocos_physics_spec_i_physics_constraint__IFixedConstraint>;
+        ConfigurableConstraint?: _types_globals__Constructor<_cocos_physics_spec_i_physics_constraint__IConfigurableConstraint>;
     }
     export interface _cocos_physics_framework_physics_selector__IPhysicsBackend {
         [key: string]: _cocos_physics_framework_physics_selector__IPhysicsWrapperObject;
@@ -77881,20 +76837,13 @@ declare namespace __private {
         NATIVE_AUDIO = 3,
         UNKNOWN_AUDIO = 4
     }
-    export enum __pal_audio_type__AudioType {
-        DOM_AUDIO = 0,
-        WEB_AUDIO = 1,
-        MINIGAME_AUDIO = 2,
-        NATIVE_AUDIO = 3,
-        UNKNOWN_AUDIO = 4
-    }
-    export interface __pal_audio_type__AudioLoadOptions {
+    export interface _pal_audio_type__AudioLoadOptions {
         /** Total network/decode readiness deadline; default 8000ms. */
         timeoutMs?: number;
         signal?: AbortSignal;
         /** media keeps native URL loading; buffered needs CORS and owns a cancellable XHR + Blob URL. */
         transport?: "media" | "buffered";
-        audioLoadMode?: __pal_audio_type__AudioType;
+        audioLoadMode?: _pal_audio_type__AudioType;
     }
     /**
      * Each audio instance needs to be managed, but should not take up too much memory.
@@ -77920,19 +76869,12 @@ declare namespace __private {
         get onEnd(): () => void | undefined;
         set onEnd(cb: () => void | undefined);
     }
-    export enum __pal_audio_type__AudioState {
+    export enum _pal_audio_type__AudioState {
         INIT = 0,
         PLAYING = 1,
         PAUSED = 2,
         STOPPED = 3,
         INTERRUPTED = 4
-    }
-    export type __pal_audio_type__AudioBufferView = Int8Array | Uint8Array | Int16Array | Uint16Array | Int32Array | Uint32Array | Float32Array | Float64Array;
-    export class __pal_audio_type__AudioPCMDataView {
-        constructor(arrayBufferView: __pal_audio_type__AudioBufferView, normalizeFactor: number);
-        constructor(arrayBuffer: ArrayBuffer, Ctor: __types_globals__Constructor<__pal_audio_type__AudioBufferView>, normalizeFactor: number);
-        get length(): number;
-        getData(offset: number): number;
     }
     export class _pal_audio__AudioPlayer {
         /**
@@ -77945,7 +76887,7 @@ declare namespace __private {
          * @param opts Load options.
          * @returns The audio player.
          */
-        static load(url: string, opts?: __pal_audio_type__AudioLoadOptions): Promise<_pal_audio__AudioPlayer>;
+        static load(url: string, opts?: _pal_audio_type__AudioLoadOptions): Promise<_pal_audio__AudioPlayer>;
         /**
          * Asynchronously load a native audio for playing one shot.
          * This is a basic loading method for AudioPlayer.
@@ -77953,7 +76895,7 @@ declare namespace __private {
          * @param opts Load options.
          * @returns The native audio such as `HTMLAudioElement` or `AudioBuffer`.
          */
-        static loadNative(url: string, opts?: __pal_audio_type__AudioLoadOptions): Promise<unknown>;
+        static loadNative(url: string, opts?: _pal_audio_type__AudioLoadOptions): Promise<unknown>;
         /**
          * Asynchronously load an OneShotAudio instance.
          * @param url URL to the audio.
@@ -77961,7 +76903,7 @@ declare namespace __private {
          * @param opts Load options.
          * @returns The OneShotAudio instance.
          */
-        static loadOneShotAudio(url: string, volume: number, opts?: __pal_audio_type__AudioLoadOptions): Promise<_pal_audio__OneShotAudio>;
+        static loadOneShotAudio(url: string, volume: number, opts?: _pal_audio_type__AudioLoadOptions): Promise<_pal_audio__OneShotAudio>;
         /**
          * Max audio channel count allowed on current platform.
          * If the amount of playing audios exceeds the limit,
@@ -77976,12 +76918,12 @@ declare namespace __private {
          * The type of this player.
          * For WEB platform, it can be `WEB_AUDIO` or `DOM_AUDIO`.
          */
-        get type(): __pal_audio_type__AudioType;
+        get type(): _pal_audio_type__AudioType;
         /**
          * The state of this player.
          * The state would be restored to `INIT` when the audio finished its playing.
          */
-        get state(): __pal_audio_type__AudioState;
+        get state(): _pal_audio_type__AudioState;
         /**
          * Gets or sets whether if the playing audio should be looped.
          */
@@ -78009,7 +76951,7 @@ declare namespace __private {
          * Get pcm data view from specified channel.
          * @param channelIndex The channel index. 0 is left channel, 1 is right channel.
          */
-        public getPCMData(channelIndex: number): __pal_audio_type__AudioPCMDataView | undefined;
+        public getPCMData(channelIndex: number): AudioPCMDataView | undefined;
         /**
          * Asynchronously seeks the player's playing time onto specified location.
          * @param time Desired playing time.
@@ -78067,13 +77009,6 @@ declare namespace __private {
         url: string;
         type: _pal_audio_type__AudioType;
         duration: number;
-    }
-    export enum _pal_audio_type__AudioState {
-        INIT = 0,
-        PLAYING = 1,
-        PAUSED = 2,
-        STOPPED = 3,
-        INTERRUPTED = 4
     }
     export enum _cocos_audio_audio_source__AudioSourceEventType {
         STARTED = "started",
@@ -78162,6 +77097,108 @@ declare namespace __private {
         severity: "warning" | "error";
         id: number | null;
         message: string;
+    }
+    /** Resource acquisition bookkeeping. A successful mock test proves lifecycle, not physics. */
+    export type _air_physics_preparation__AirPreparedBackend = "box2d-v3-wasm" | "box3d";
+    /** Detached module evidence. Canonical public types live in emitted TS, not a private .d.mts closure. */
+    export interface _air_physics_preparation__Box3DModuleReleaseSnapshot {
+        readonly schema: "air-box3d-module-release-snapshot-v1";
+        readonly schemaVersion: 1;
+        readonly core: Readonly<{
+            worlds: number;
+            trackedRequestedBytes: number;
+        }>;
+        readonly bridge: Readonly<{
+            worlds: number;
+            allocations: number;
+            bytes: number;
+            debugShapeHandles: number;
+            temporaryNodes: number;
+            temporaryBytes: number;
+            wireBuffers: number;
+            wireCapacityRecords: number;
+            wireLengthRecords: number;
+            capturedWorlds: number;
+        }>;
+        readonly mesh: Readonly<{
+            resources: number;
+            leases: number;
+            references: number;
+            borrowNodes: number;
+            resourceStorageBytes: number;
+        }>;
+    }
+    export interface _air_physics_preparation__Box3DModuleReleaseReceipt {
+        readonly status: "NOT_ACQUIRED" | "BASELINE_CAPTURED" | "VERIFIED" | "FAILED";
+        readonly verified: boolean;
+        readonly baseline: _air_physics_preparation__Box3DModuleReleaseSnapshot | null;
+        readonly terminal: _air_physics_preparation__Box3DModuleReleaseSnapshot | null;
+        readonly errors: readonly Readonly<{
+            phase: "baseline" | "binding-dispose" | "terminal" | "verify" | "release-module";
+            code: string | null;
+            message: string;
+        }>[];
+    }
+    export interface _air_physics_preparation__AirPhysicsPreparationReceipt {
+        readonly attemptGeneration: number;
+        readonly status: "preparing" | "prepared" | "failed" | "closed" | "cleanup-failed";
+        readonly acquired: readonly Readonly<{
+            backend: _air_physics_preparation__AirPreparedBackend;
+            resource: string;
+            cleanup: "not-attempted" | "released" | "failed";
+            retained: readonly string[];
+        }>[];
+        readonly originalError: Readonly<{
+            code: string | null;
+            message: string;
+        }> | null;
+        readonly cleanupErrors: readonly Readonly<{
+            label: string;
+            message: string;
+        }>[];
+        /** Same acquired module's detached terminal evidence, captured before module release. */
+        readonly moduleRelease?: _air_physics_preparation__Box3DModuleReleaseReceipt;
+    }
+    export interface _air_physics_preparation__AirPhysicsSceneReleaseResult {
+        readonly backend: "box3d";
+        readonly status: "RESTORED" | "SKIPPED_NONEMPTY";
+    }
+    /** Requested settings are distinct from the effective ST/MT execution mode. */
+    export interface _air_physics_box3d_config__AirBox3DOptions {
+        /** HTTP(S) asset directory; omitted uses the feature's build-provided directory. */
+        assetBaseUrl?: string;
+        /** Defaults to single. The current ST feature explicitly rejects multi and auto. */
+        threading?: "single" | "multi" | "auto";
+        /** Total execution threads, including the caller. Single: 1; multi/auto: 2..4. */
+        workerCount?: number;
+        /** Solver subdivisions within one fixed tick, not PhysicsSystem.maxSubSteps. Default 4. */
+        solverSubSteps?: 1 | 2 | 4 | 8;
+    }
+    export interface _air_physics_preparation__AirPhysicsCleanupResult {
+        readonly retained?: readonly string[];
+    }
+    export interface _air_physics_preparation__AirPhysicsPreparation {
+        readonly generation: number;
+        /**
+         * Register only resources actually obtained, before the next fallible/async operation.
+         * (backend, resource) uniquely identifies one acquisition for this entire attempt, including
+         * after cleanup. Duplicate registration throws without replacing or invoking its disposer.
+         * A genuinely distinct acquisition must use a distinct resource key, including late arrivals.
+         */
+        own(backend: _air_physics_preparation__AirPreparedBackend, resource: string, dispose: () => void | _air_physics_preparation__AirPhysicsCleanupResult | Promise<void | _air_physics_preparation__AirPhysicsCleanupResult>, options?: {
+            readonly dependsOn?: readonly string[];
+        }): void;
+        /** Internal single acquired-world hook; not a public arbitrary-state trim API. */
+        installSceneReleaseHook(callback: () => _air_physics_preparation__AirPhysicsSceneReleaseResult): () => void;
+        releaseScene(): _air_physics_preparation__AirPhysicsSceneReleaseResult | undefined;
+        prepared(): void;
+        failed(error: unknown): void;
+        recordCleanupError(label: string, error: unknown): void;
+        /** Internal module disposer only; stores copied data, never a module or live getter. */
+        recordBox3DModuleRelease(receipt: _air_physics_preparation__Box3DModuleReleaseReceipt): void;
+        /** Idempotent; independent resources are attempted even after a failure. Dependencies of failed resources are retained. */
+        dispose(): Promise<_air_physics_preparation__AirPhysicsPreparationReceipt>;
+        diagnostics(): _air_physics_preparation__AirPhysicsPreparationReceipt;
     }
     export interface _air_primitive_geometry__GeometryChannels {
         includeNormal?: boolean;
@@ -78724,7 +77761,7 @@ declare namespace __private {
         readonly COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2: GLenum;
         readonly COMPRESSED_SRGB8_PUNCHTHROUGH_ALPHA1_ETC2: GLenum;
     }
-    export interface __types_webGLextras__WEBGL_compressed_texture_pvrtc {
+    export interface _types_webGLextras__WEBGL_compressed_texture_pvrtc {
         readonly COMPRESSED_RGB_PVRTC_4BPPV1_IMG: GLenum;
         readonly COMPRESSED_RGBA_PVRTC_4BPPV1_IMG: GLenum;
         readonly COMPRESSED_RGB_PVRTC_2BPPV1_IMG: GLenum;
@@ -78738,7 +77775,7 @@ declare namespace __private {
         WEBGL_multi_draw: ___node_modules_typescript_lib_libdom__WEBGL_multi_draw | null;
         WEBGL_compressed_texture_etc1: ___node_modules_typescript_lib_libdom__WEBGL_compressed_texture_etc1 | null;
         WEBGL_compressed_texture_etc: ___node_modules_typescript_lib_libdom__WEBGL_compressed_texture_etc | null;
-        WEBGL_compressed_texture_pvrtc: __types_webGLextras__WEBGL_compressed_texture_pvrtc | null;
+        WEBGL_compressed_texture_pvrtc: _types_webGLextras__WEBGL_compressed_texture_pvrtc | null;
         WEBGL_compressed_texture_astc: WEBGL_compressed_texture_astc | null;
         WEBGL_compressed_texture_s3tc: WEBGL_compressed_texture_s3tc | null;
         WEBGL_compressed_texture_s3tc_srgb: WEBGL_compressed_texture_s3tc_srgb | null;
@@ -79215,7 +78252,7 @@ declare namespace __private {
         layout: gfx.DescriptorSetLayout;
         pl: gfx.PipelineLayout;
         ds: gfx.DescriptorSet;
-        psos: Map<string, gfx.PipelineState>;
+        psos: globalThis.Map<string, gfx.PipelineState>;
         vs: string;
         fs: string;
     }
@@ -79232,7 +78269,6 @@ declare namespace __private {
         getCamera(): null;
         setAnimationLoop(callback: _air_spark_cocos_renderer__AnimationLoopCallback | null): void;
     }
-    namespace _index { }
     export interface _air_spark_cocos_renderer__SparkVector2Setter {
         set(x: number, y: number): unknown;
     }
@@ -79263,7 +78299,7 @@ declare namespace __private {
         textures: _air_spark_cocos_renderer__SparkTexture[];
         passes: _air_spark_cocos_renderer__PassSet;
         depth?: gfx.Texture | null;
-        layers?: Map<string, _air_spark_cocos_renderer__LayerEntry>;
+        layers?: globalThis.Map<string, _air_spark_cocos_renderer__LayerEntry>;
         framebuffer?: gfx.Framebuffer;
         external?: boolean;
     }
@@ -79704,14 +78740,48 @@ import { isCCClassOrFastDefined as _isCCClassOrFastDefined, Details as _Details 
 export {};
 import * as __AirDtsCompatibility from "./cocosair.module.js";
 declare namespace __private {
+    export import _cocos_2d_utils_text_utils__getEnglishWordPartAtFirst = __AirDtsCompatibility.getEnglishWordPartAtFirst;
+    export import _cocos_2d_utils_text_utils__getEnglishWordPartAtLast = __AirDtsCompatibility.getEnglishWordPartAtLast;
+    export import _cocos_2d_utils_text_utils__isEnglishWordPartAtFirst = __AirDtsCompatibility.isEnglishWordPartAtFirst;
+    export import _cocos_2d_utils_text_utils__isEnglishWordPartAtLast = __AirDtsCompatibility.isEnglishWordPartAtLast;
+    export import _cocos_core_algorithm_binary_search__binarySearch = __AirDtsCompatibility.binarySearch;
+    export import _cocos_core_algorithm_binary_search__binarySearchBy = __AirDtsCompatibility.binarySearchBy;
+    export import _cocos_core_algorithm_binary_search__binarySearchEpsilon = __AirDtsCompatibility.binarySearchEpsilon;
+    export import _cocos_core_algorithm_move__shift = __AirDtsCompatibility.shift;
     export import _cocos_core_curves_easing_method__EasingMethod = __AirDtsCompatibility.EasingMethod;
+    export import _cocos_core_data_class__BITMASK_TAG = __AirDtsCompatibility.BITMASK_TAG;
+    export import _cocos_core_data_class__ENUM_TAG = __AirDtsCompatibility.ENUM_TAG;
     export import _cocos_core_data_class__isCCClassOrFastDefined = __AirDtsCompatibility.isCCClassOrFastDefined;
     export import _cocos_core_data_custom_serializable__DeserializationContext = __AirDtsCompatibility.DeserializationContext;
+    export import _cocos_core_data_decorators_editable__disallowAnimation = __AirDtsCompatibility.disallowAnimation;
+    export import _cocos_core_data_decorators_editable__displayName = __AirDtsCompatibility.displayName;
+    export import _cocos_core_data_decorators_editable__displayOrder = __AirDtsCompatibility.displayOrder;
+    export import _cocos_core_data_decorators_editable__editable = __AirDtsCompatibility.editable;
+    export import _cocos_core_data_decorators_editable__range = __AirDtsCompatibility.range;
+    export import _cocos_core_data_decorators_editable__rangeStep = __AirDtsCompatibility.rangeStep;
+    export import _cocos_core_data_decorators_editable__slide = __AirDtsCompatibility.slide;
+    export import _cocos_core_data_decorators_editable__tooltip = __AirDtsCompatibility.tooltip;
+    export import _cocos_core_data_decorators_editable__visible = __AirDtsCompatibility.visible;
+    export import _cocos_core_data_decorators_override__override = __AirDtsCompatibility.override;
+    export import _cocos_core_data_decorators_serializable__formerlySerializedAs = __AirDtsCompatibility.formerlySerializedAs;
+    export import _cocos_core_data_decorators_serializable__serializable = __AirDtsCompatibility.serializable;
     export import _cocos_core_data_editor_extendable__EditorExtendable = __AirDtsCompatibility.EditorExtendable;
+    export import _cocos_core_data_garbage_collection__garbageCollectionManager = __AirDtsCompatibility.garbageCollectionManager;
     export import _cocos_core_data_gc_object__GCObject = __AirDtsCompatibility.GCObject;
+    export import _cocos_core_data_utils_asserts__assertIsNonNullable = __AirDtsCompatibility.assertIsNonNullable;
+    export import _cocos_core_data_utils_asserts__assertIsTrue = __AirDtsCompatibility.assertIsTrue;
+    export import _cocos_core_data_utils_asserts__assertsArrayIndex = __AirDtsCompatibility.assertsArrayIndex;
+    export import _cocos_core_data_utils_compiler__flattenCodeArray = __AirDtsCompatibility.flattenCodeArray;
     export import _cocos_core_event_callbacks_invoker__CallbacksInvoker = __AirDtsCompatibility.CallbacksInvoker;
+    export import _cocos_core_event_event_target_factory__applyMixins = __AirDtsCompatibility.applyMixins;
     export import _cocos_core_geometry_curve__OptimizedKey = __AirDtsCompatibility.geometry.OptimizedKey;
     export import _cocos_core_geometry_curve__WrapModeMask = __AirDtsCompatibility.geometry.WrapModeMask;
+    export import _cocos_core_math_mat4__preTransforms = __AirDtsCompatibility.preTransforms;
+    export import _cocos_core_platform_debug___resetDebugSetting = __AirDtsCompatibility._resetDebugSetting;
+    export import _cocos_core_platform_visible_rect__visibleRect = __AirDtsCompatibility.visibleRect;
+    export import _cocos_core_utils_x_deprecated____checkObsoleteInNamespace__ = __AirDtsCompatibility.__checkObsoleteInNamespace__;
+    export import _cocos_core_utils_x_deprecated____checkObsolete__ = __AirDtsCompatibility.__checkObsolete__;
+    export import _cocos_core_utils_x_deprecated__deprecateModuleExportedName = __AirDtsCompatibility.deprecateModuleExportedName;
     export import _cocos_dragon_bones_ArmatureCache__AnimationCache = __AirDtsCompatibility.dragonBones.AnimationCache;
     export import _cocos_dragon_bones_ArmatureCache__ArmatureFrame = __AirDtsCompatibility.dragonBones.ArmatureFrame;
     export import _cocos_dragon_bones_ArmatureCache__ArmatureFrameBoneInfo = __AirDtsCompatibility.dragonBones.ArmatureFrameBoneInfo;
@@ -79722,5 +78792,5 @@ declare namespace __private {
     export import _cocos_spine_skeleton__SkeletonDrawData = __AirDtsCompatibility.sp.SkeletonDrawData;
     export import _cocos_spine_skeleton__SpineDefaultAnimsEnum = __AirDtsCompatibility.sp.SpineDefaultAnimsEnum;
 }
-export type { AirAssetError, CUBEUV_SAMPLING_GLSL, CocosRenderer, CocosSparkLayer, PMREMGenerator, QuatKeyframeValue, RealKeyframeValue, Screen, __private, pmremLayout, sparkMath };
+export type { AirAssetError, CUBEUV_SAMPLING_GLSL, CocosRenderer, CocosSparkLayer, PMREMGenerator, QuatKeyframeValue, RealKeyframeValue, Screen, __private, pmremLayout, sparkMath, sparkRuntime };
 export {};

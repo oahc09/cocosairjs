@@ -244,6 +244,19 @@
       "BlockInputEventsComponent",
       "BloomStage",
       "Box2D3Options",
+      "Box3DBeforeStepCallback",
+      "Box3DBeforeStepContext",
+      "Box3DBeforeStepHandle",
+      "Box3DBodyMotion",
+      "Box3DBodyMotionRotation",
+      "Box3DBodyMotionVector",
+      "Box3DCommittedColliderQuery",
+      "Box3DCommittedQueryChild",
+      "Box3DCommittedQueryHit",
+      "Box3DCommittedRayQuery",
+      "Box3DKinematicTargetHandle",
+      "Box3DQueryOptions",
+      "Box3DQueryStamp",
       "BoxCharacterController",
       "BoxCollider",
       "BoxCollider2D",
@@ -776,6 +789,7 @@
       "createActionState",
       "createAirApp",
       "createAirDOMOverlay",
+      "createAirGradientEffect",
       "createAirHTMLSource",
       "createAirInstanceBatch",
       "createAirInstanceMaterial",
@@ -791,6 +805,7 @@
       "createAtlasHandle",
       "createAtlasSpriteFrame",
       "createBitmapFont",
+      "createBox3DKinematicTarget",
       "createDefaultPipeline",
       "createDracoDecoder",
       "createKTX2Transcoder",
@@ -911,13 +926,18 @@
       "pseudoRandomRange",
       "pseudoRandomRangeInt",
       "quat",
+      "queryBox3DCommittedColliders",
+      "queryBox3DCommittedRay",
       "random",
       "randomRange",
       "randomRangeInt",
       "range",
       "rangeStep",
       "rasterizeAirGraphics",
+      "readBox3DBodyMotion",
+      "readBox3DConstraintState",
       "rect",
+      "registerBox3DBeforeStep",
       "registerGLTFLoader",
       "removeProperty",
       "renderer",
@@ -1461,6 +1481,7 @@
       "createActionState",
       "createAirApp",
       "createAirDOMOverlay",
+      "createAirGradientEffect",
       "createAirHTMLSource",
       "createAirInstanceBatch",
       "createAirInstanceMaterial",
@@ -1476,6 +1497,7 @@
       "createAtlasHandle",
       "createAtlasSpriteFrame",
       "createBitmapFont",
+      "createBox3DKinematicTarget",
       "createDefaultPipeline",
       "createDracoDecoder",
       "createKTX2Transcoder",
@@ -1596,13 +1618,18 @@
       "pseudoRandomRange",
       "pseudoRandomRangeInt",
       "quat",
+      "queryBox3DCommittedColliders",
+      "queryBox3DCommittedRay",
       "random",
       "randomRange",
       "randomRangeInt",
       "range",
       "rangeStep",
       "rasterizeAirGraphics",
+      "readBox3DBodyMotion",
+      "readBox3DConstraintState",
       "rect",
+      "registerBox3DBeforeStep",
       "registerGLTFLoader",
       "removeProperty",
       "renderer",
@@ -1792,6 +1819,19 @@
       "BezierControlPoints",
       "BgmState",
       "Box2D3Options",
+      "Box3DBeforeStepCallback",
+      "Box3DBeforeStepContext",
+      "Box3DBeforeStepHandle",
+      "Box3DBodyMotion",
+      "Box3DBodyMotionRotation",
+      "Box3DBodyMotionVector",
+      "Box3DCommittedColliderQuery",
+      "Box3DCommittedQueryChild",
+      "Box3DCommittedQueryHit",
+      "Box3DCommittedRayQuery",
+      "Box3DKinematicTargetHandle",
+      "Box3DQueryOptions",
+      "Box3DQueryStamp",
       "CharacterCollisionEventType",
       "CharacterTriggerEventType",
       "CollisionCallback",
@@ -1896,16 +1936,86 @@
   },
   "compatibilityTypeGraph": {
     "source": "original-current-ccbuild-all-feature-entry",
-    "originalEntrySha256": "7af55e391db62872e9f6f88b6a31fbc37b8b931e13f7a40d12d914d9779ac6c9",
+    "originalEntrySha256": "3e42dcd34cf9666cfa2e2e33318a5a9616c7e1ba12b83431784bcefcdc85b64f",
     "optionalRuntimeValues": false,
     "historicalArtifactCopied": false,
     "retainedPrivateAliases": [
+      {
+        "name": "_cocos_2d_utils_text_utils__getEnglishWordPartAtFirst",
+        "target": [
+          "getEnglishWordPartAtFirst"
+        ],
+        "source": "cocos/2d/utils/text-utils.d.ts"
+      },
+      {
+        "name": "_cocos_2d_utils_text_utils__getEnglishWordPartAtLast",
+        "target": [
+          "getEnglishWordPartAtLast"
+        ],
+        "source": "cocos/2d/utils/text-utils.d.ts"
+      },
+      {
+        "name": "_cocos_2d_utils_text_utils__isEnglishWordPartAtFirst",
+        "target": [
+          "isEnglishWordPartAtFirst"
+        ],
+        "source": "cocos/2d/utils/text-utils.d.ts"
+      },
+      {
+        "name": "_cocos_2d_utils_text_utils__isEnglishWordPartAtLast",
+        "target": [
+          "isEnglishWordPartAtLast"
+        ],
+        "source": "cocos/2d/utils/text-utils.d.ts"
+      },
+      {
+        "name": "_cocos_core_algorithm_binary_search__binarySearch",
+        "target": [
+          "binarySearch"
+        ],
+        "source": "cocos/core/algorithm/binary-search.d.ts"
+      },
+      {
+        "name": "_cocos_core_algorithm_binary_search__binarySearchBy",
+        "target": [
+          "binarySearchBy"
+        ],
+        "source": "cocos/core/algorithm/binary-search.d.ts"
+      },
+      {
+        "name": "_cocos_core_algorithm_binary_search__binarySearchEpsilon",
+        "target": [
+          "binarySearchEpsilon"
+        ],
+        "source": "cocos/core/algorithm/binary-search.d.ts"
+      },
+      {
+        "name": "_cocos_core_algorithm_move__shift",
+        "target": [
+          "shift"
+        ],
+        "source": "cocos/core/algorithm/move.d.ts"
+      },
       {
         "name": "_cocos_core_curves_easing_method__EasingMethod",
         "target": [
           "EasingMethod"
         ],
         "source": "cocos/core/curves/easing-method.d.ts"
+      },
+      {
+        "name": "_cocos_core_data_class__BITMASK_TAG",
+        "target": [
+          "BITMASK_TAG"
+        ],
+        "source": "cocos/core/data/class.d.ts"
+      },
+      {
+        "name": "_cocos_core_data_class__ENUM_TAG",
+        "target": [
+          "ENUM_TAG"
+        ],
+        "source": "cocos/core/data/class.d.ts"
       },
       {
         "name": "_cocos_core_data_class__isCCClassOrFastDefined",
@@ -1922,11 +2032,102 @@
         "source": "cocos/core/data/custom-serializable.d.ts"
       },
       {
+        "name": "_cocos_core_data_decorators_editable__disallowAnimation",
+        "target": [
+          "disallowAnimation"
+        ],
+        "source": "cocos/core/data/decorators/editable.d.ts"
+      },
+      {
+        "name": "_cocos_core_data_decorators_editable__displayName",
+        "target": [
+          "displayName"
+        ],
+        "source": "cocos/core/data/decorators/editable.d.ts"
+      },
+      {
+        "name": "_cocos_core_data_decorators_editable__displayOrder",
+        "target": [
+          "displayOrder"
+        ],
+        "source": "cocos/core/data/decorators/editable.d.ts"
+      },
+      {
+        "name": "_cocos_core_data_decorators_editable__editable",
+        "target": [
+          "editable"
+        ],
+        "source": "cocos/core/data/decorators/editable.d.ts"
+      },
+      {
+        "name": "_cocos_core_data_decorators_editable__range",
+        "target": [
+          "range"
+        ],
+        "source": "cocos/core/data/decorators/editable.d.ts"
+      },
+      {
+        "name": "_cocos_core_data_decorators_editable__rangeStep",
+        "target": [
+          "rangeStep"
+        ],
+        "source": "cocos/core/data/decorators/editable.d.ts"
+      },
+      {
+        "name": "_cocos_core_data_decorators_editable__slide",
+        "target": [
+          "slide"
+        ],
+        "source": "cocos/core/data/decorators/editable.d.ts"
+      },
+      {
+        "name": "_cocos_core_data_decorators_editable__tooltip",
+        "target": [
+          "tooltip"
+        ],
+        "source": "cocos/core/data/decorators/editable.d.ts"
+      },
+      {
+        "name": "_cocos_core_data_decorators_editable__visible",
+        "target": [
+          "visible"
+        ],
+        "source": "cocos/core/data/decorators/editable.d.ts"
+      },
+      {
+        "name": "_cocos_core_data_decorators_override__override",
+        "target": [
+          "override"
+        ],
+        "source": "cocos/core/data/decorators/override.d.ts"
+      },
+      {
+        "name": "_cocos_core_data_decorators_serializable__formerlySerializedAs",
+        "target": [
+          "formerlySerializedAs"
+        ],
+        "source": "cocos/core/data/decorators/serializable.d.ts"
+      },
+      {
+        "name": "_cocos_core_data_decorators_serializable__serializable",
+        "target": [
+          "serializable"
+        ],
+        "source": "cocos/core/data/decorators/serializable.d.ts"
+      },
+      {
         "name": "_cocos_core_data_editor_extendable__EditorExtendable",
         "target": [
           "EditorExtendable"
         ],
         "source": "cocos/core/data/editor-extendable.d.ts"
+      },
+      {
+        "name": "_cocos_core_data_garbage_collection__garbageCollectionManager",
+        "target": [
+          "garbageCollectionManager"
+        ],
+        "source": "cocos/core/data/garbage-collection.d.ts"
       },
       {
         "name": "_cocos_core_data_gc_object__GCObject",
@@ -1936,11 +2137,46 @@
         "source": "cocos/core/data/gc-object.d.ts"
       },
       {
+        "name": "_cocos_core_data_utils_asserts__assertIsNonNullable",
+        "target": [
+          "assertIsNonNullable"
+        ],
+        "source": "cocos/core/data/utils/asserts.d.ts"
+      },
+      {
+        "name": "_cocos_core_data_utils_asserts__assertIsTrue",
+        "target": [
+          "assertIsTrue"
+        ],
+        "source": "cocos/core/data/utils/asserts.d.ts"
+      },
+      {
+        "name": "_cocos_core_data_utils_asserts__assertsArrayIndex",
+        "target": [
+          "assertsArrayIndex"
+        ],
+        "source": "cocos/core/data/utils/asserts.d.ts"
+      },
+      {
+        "name": "_cocos_core_data_utils_compiler__flattenCodeArray",
+        "target": [
+          "flattenCodeArray"
+        ],
+        "source": "cocos/core/data/utils/compiler.d.ts"
+      },
+      {
         "name": "_cocos_core_event_callbacks_invoker__CallbacksInvoker",
         "target": [
           "CallbacksInvoker"
         ],
         "source": "cocos/core/event/callbacks-invoker.d.ts"
+      },
+      {
+        "name": "_cocos_core_event_event_target_factory__applyMixins",
+        "target": [
+          "applyMixins"
+        ],
+        "source": "cocos/core/event/event-target-factory.d.ts"
       },
       {
         "name": "_cocos_core_geometry_curve__OptimizedKey",
@@ -1957,6 +2193,48 @@
           "WrapModeMask"
         ],
         "source": "cocos/core/geometry/curve.d.ts"
+      },
+      {
+        "name": "_cocos_core_math_mat4__preTransforms",
+        "target": [
+          "preTransforms"
+        ],
+        "source": "cocos/core/math/mat4.d.ts"
+      },
+      {
+        "name": "_cocos_core_platform_debug___resetDebugSetting",
+        "target": [
+          "_resetDebugSetting"
+        ],
+        "source": "cocos/core/platform/debug.d.ts"
+      },
+      {
+        "name": "_cocos_core_platform_visible_rect__visibleRect",
+        "target": [
+          "visibleRect"
+        ],
+        "source": "cocos/core/platform/visible-rect.d.ts"
+      },
+      {
+        "name": "_cocos_core_utils_x_deprecated____checkObsoleteInNamespace__",
+        "target": [
+          "__checkObsoleteInNamespace__"
+        ],
+        "source": "cocos/core/utils/x-deprecated.d.ts"
+      },
+      {
+        "name": "_cocos_core_utils_x_deprecated____checkObsolete__",
+        "target": [
+          "__checkObsolete__"
+        ],
+        "source": "cocos/core/utils/x-deprecated.d.ts"
+      },
+      {
+        "name": "_cocos_core_utils_x_deprecated__deprecateModuleExportedName",
+        "target": [
+          "deprecateModuleExportedName"
+        ],
+        "source": "cocos/core/utils/x-deprecated.d.ts"
       },
       {
         "name": "_cocos_dragon_bones_ArmatureCache__AnimationCache",

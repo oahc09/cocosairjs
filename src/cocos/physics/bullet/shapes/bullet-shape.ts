@@ -22,6 +22,7 @@
  THE SOFTWARE.
 */
 
+import { recordMaterialAcquisitionUnknown } from '../../framework/physics-material-bindings';
 import { Vec3, IVec3Like, geometry } from '../../../core';
 import { Collider, PhysicsMaterial, PhysicsSystem, RigidBody } from '../../../../exports/physics-framework';
 import { BulletWorld } from '../bullet-world';
@@ -45,6 +46,8 @@ export abstract class BulletShape implements IBaseShape {
 
     setMaterial (v: PhysicsMaterial | null): void {
         const v1 = (v == null) ? PhysicsSystem.instance.defaultMaterial : v;
+        // Public raw effects have no independently proven release/participation receipt.
+        recordMaterialAcquisitionUnknown(v1);
         if (!this._isTrigger && this._isEnabled) {
             if (this._compound) {
                 if (!ccMaterialBooks[v1._uuid]) ccMaterialBooks[v1._uuid] = bt.ccMaterial_new();

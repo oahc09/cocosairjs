@@ -41,6 +41,8 @@ export interface IBaseShape extends ILifecycle, IGroupMask {
     getAABB: (v: geometry.AABB) => void;
     getBoundingSphere: (v: geometry.Sphere) => void;
     updateEventListener: () => void;
+    /** Optional read-only phase/candidate admission before Box3D callback registration. */
+    validateEventListener?: (collision: boolean, trigger: boolean) => void;
 }
 
 export interface IBoxShape extends IBaseShape {
@@ -76,6 +78,8 @@ export interface IConeShape extends IBaseShape {
 
 export interface ITrimeshShape extends IBaseShape {
     setMesh: (v: Mesh | null) => void;
+    /** Optional candidate-first convex configuration used by Box3D; legacy backends keep setMesh. */
+    setConvex?: (v: boolean) => void;
 }
 
 export interface ITerrainShape extends IBaseShape {

@@ -1,0 +1,4952 @@
+{
+  "core": {
+    "sha": "efca0c184d40fd6a82016983f1601c4d23965867",
+    "url": "https://api.github.com/repos/erincatto/box3d/git/trees/efca0c184d40fd6a82016983f1601c4d23965867",
+    "tree": [
+      {
+        "path": ".clang-format",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e4ecbd3ea3f64820f3e8e413d1512a23dcce3bd0",
+        "size": 1054,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/e4ecbd3ea3f64820f3e8e413d1512a23dcce3bd0"
+      },
+      {
+        "path": ".gitattributes",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a04f5fa4b8ab48687e6ae1ec696bf2a4dcee3833",
+        "size": 94,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/a04f5fa4b8ab48687e6ae1ec696bf2a4dcee3833"
+      },
+      {
+        "path": ".github",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "86f150b8f9a6e384d23ea8ba090e0e2595aaa71c",
+        "url": "https://api.github.com/repos/erincatto/box3d/git/trees/86f150b8f9a6e384d23ea8ba090e0e2595aaa71c"
+      },
+      {
+        "path": ".github/CODEOWNERS",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "11219389a1f17bc8c1b9a69f34f35238bb5d0879",
+        "size": 13,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/11219389a1f17bc8c1b9a69f34f35238bb5d0879"
+      },
+      {
+        "path": ".github/DISCUSSION_TEMPLATE",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "b22ea33c02383e05102548190c8f6ba4c93ade13",
+        "url": "https://api.github.com/repos/erincatto/box3d/git/trees/b22ea33c02383e05102548190c8f6ba4c93ade13"
+      },
+      {
+        "path": ".github/DISCUSSION_TEMPLATE/general.yml",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "266b15d9811e6922f5509dc959a07d0c34dbc299",
+        "size": 844,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/266b15d9811e6922f5509dc959a07d0c34dbc299"
+      },
+      {
+        "path": ".github/FUNDING.yml",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b31f021e8ccef089282f0296a2fbc786f6d7493f",
+        "size": 732,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/b31f021e8ccef089282f0296a2fbc786f6d7493f"
+      },
+      {
+        "path": ".github/ISSUE_TEMPLATE",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "ac8cb7d8e553ac912eeb841f7dbed34321c76fc1",
+        "url": "https://api.github.com/repos/erincatto/box3d/git/trees/ac8cb7d8e553ac912eeb841f7dbed34321c76fc1"
+      },
+      {
+        "path": ".github/ISSUE_TEMPLATE/config.yml",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "65f05117629427c86b163c07eaff60c414edb47d",
+        "size": 139,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/65f05117629427c86b163c07eaff60c414edb47d"
+      },
+      {
+        "path": ".github/ISSUE_TEMPLATE/issue.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f6acf9c2a9f439d8203163ed964dbbd6c0904511",
+        "size": 503,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/f6acf9c2a9f439d8203163ed964dbbd6c0904511"
+      },
+      {
+        "path": ".github/pull_request_template.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ecc9d2a7a1a5bb874f02a106dc62eaa07550224c",
+        "size": 43,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/ecc9d2a7a1a5bb874f02a106dc62eaa07550224c"
+      },
+      {
+        "path": ".github/workflows",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "82475db863d3dc24db26d14ac602ac4661c41d88",
+        "url": "https://api.github.com/repos/erincatto/box3d/git/trees/82475db863d3dc24db26d14ac602ac4661c41d88"
+      },
+      {
+        "path": ".github/workflows/build.yml",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "32b91ed09d73df10eb338a5651129006f034941a",
+        "size": 7620,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/32b91ed09d73df10eb338a5651129006f034941a"
+      },
+      {
+        "path": ".gitignore",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "fd1da235e8382e5c8e3765daa324efc9a5091345",
+        "size": 137,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/fd1da235e8382e5c8e3765daa324efc9a5091345"
+      },
+      {
+        "path": "CMakeLists.txt",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "dc3ecb657e5abd7ffd03c7f976897686d300bedc",
+        "size": 7998,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/dc3ecb657e5abd7ffd03c7f976897686d300bedc"
+      },
+      {
+        "path": "CMakePresets.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "95a5d2c2c84fe1c379cb467ef0f06d279c6f4fe6",
+        "size": 4583,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/95a5d2c2c84fe1c379cb467ef0f06d279c6f4fe6"
+      },
+      {
+        "path": "CONTRIBUTING.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "35f53d086170f8835109e19014632b8f6e63168f",
+        "size": 3383,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/35f53d086170f8835109e19014632b8f6e63168f"
+      },
+      {
+        "path": "LICENSE",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "cfff8ec228baf292c43e69ccae22d2990a68b717",
+        "size": 1067,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/cfff8ec228baf292c43e69ccae22d2990a68b717"
+      },
+      {
+        "path": "README.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ab36b8c757b120983c05769a82e579bdf91d8c49",
+        "size": 5438,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/ab36b8c757b120983c05769a82e579bdf91d8c49"
+      },
+      {
+        "path": "benchmark",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "2ec274160afe8080a44fc74e7ec978b048ba7a01",
+        "url": "https://api.github.com/repos/erincatto/box3d/git/trees/2ec274160afe8080a44fc74e7ec978b048ba7a01"
+      },
+      {
+        "path": "benchmark/CMakeLists.txt",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "73f721017afd57e492ee0450cf3798428a6546b1",
+        "size": 307,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/73f721017afd57e492ee0450cf3798428a6546b1"
+      },
+      {
+        "path": "benchmark/amd7950x_avx2",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "a8fcfe231aae369c676ecc6565a2fc222ba197b0",
+        "url": "https://api.github.com/repos/erincatto/box3d/git/trees/a8fcfe231aae369c676ecc6565a2fc222ba197b0"
+      },
+      {
+        "path": "benchmark/amd7950x_avx2/convex_pile.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "19ef32e0bb5ca8eefce5189c06a195cded696752",
+        "size": 91,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/19ef32e0bb5ca8eefce5189c06a195cded696752"
+      },
+      {
+        "path": "benchmark/amd7950x_avx2/joint_grid.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "31fc1f6c5e607dff0e118648817d0dfbf7e4451c",
+        "size": 91,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/31fc1f6c5e607dff0e118648817d0dfbf7e4451c"
+      },
+      {
+        "path": "benchmark/amd7950x_avx2/junkyard.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8846ec11565e2d646ad21d5b31dda213e63f5041",
+        "size": 91,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/8846ec11565e2d646ad21d5b31dda213e63f5041"
+      },
+      {
+        "path": "benchmark/amd7950x_avx2/large_pyramid.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8809f8fbc1b57a03284554b306925c7d856850c4",
+        "size": 89,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/8809f8fbc1b57a03284554b306925c7d856850c4"
+      },
+      {
+        "path": "benchmark/amd7950x_avx2/large_world.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "757e17c37ac3c33a777759281e28fca5af2dc48d",
+        "size": 81,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/757e17c37ac3c33a777759281e28fca5af2dc48d"
+      },
+      {
+        "path": "benchmark/amd7950x_avx2/many_pyramids.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d950ecf31f3d540421d4b9532237e4c0c3bad316",
+        "size": 90,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/d950ecf31f3d540421d4b9532237e4c0c3bad316"
+      },
+      {
+        "path": "benchmark/amd7950x_avx2/mesh_drop.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "bcfa41980ae31ec620e90e71770a2716dbb7be61",
+        "size": 90,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/bcfa41980ae31ec620e90e71770a2716dbb7be61"
+      },
+      {
+        "path": "benchmark/amd7950x_avx2/rain.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1ead3d815a6bb5291e8212c61b1fb67f2d101221",
+        "size": 90,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/1ead3d815a6bb5291e8212c61b1fb67f2d101221"
+      },
+      {
+        "path": "benchmark/amd7950x_avx2/sleep.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8296ea753db56e60b21d8377513d987efb82e128",
+        "size": 91,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/8296ea753db56e60b21d8377513d987efb82e128"
+      },
+      {
+        "path": "benchmark/amd7950x_avx2/spinner.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ae89955bcf23b993e905dcf861e01cbfbf9d5c7e",
+        "size": 89,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/ae89955bcf23b993e905dcf861e01cbfbf9d5c7e"
+      },
+      {
+        "path": "benchmark/amd7950x_avx2/trees100.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "caf312043f647987566402af4be24b19ef3f89c4",
+        "size": 90,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/caf312043f647987566402af4be24b19ef3f89c4"
+      },
+      {
+        "path": "benchmark/amd7950x_avx2/trees25.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d3968d4ced84bd180194b6885b66f9af1f44f3e8",
+        "size": 91,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/d3968d4ced84bd180194b6885b66f9af1f44f3e8"
+      },
+      {
+        "path": "benchmark/amd7950x_avx2/trees50.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b90215e6350d9d0b1d2cc3601d30fdba4d59600f",
+        "size": 91,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/b90215e6350d9d0b1d2cc3601d30fdba4d59600f"
+      },
+      {
+        "path": "benchmark/amd7950x_avx2/washer.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "75cdfdf9b25d821f744314d15ead18b3162aab6d",
+        "size": 91,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/75cdfdf9b25d821f744314d15ead18b3162aab6d"
+      },
+      {
+        "path": "benchmark/amd7950x_scalar",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "00827a157724ab848b5175a83266a0a4321f8f50",
+        "url": "https://api.github.com/repos/erincatto/box3d/git/trees/00827a157724ab848b5175a83266a0a4321f8f50"
+      },
+      {
+        "path": "benchmark/amd7950x_scalar/convex_pile.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "61344585a9123a4407a78b452504960b1ee38b51",
+        "size": 89,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/61344585a9123a4407a78b452504960b1ee38b51"
+      },
+      {
+        "path": "benchmark/amd7950x_scalar/joint_grid.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "83d11bed20c437a72a2ca847a57c64eda22c2ad1",
+        "size": 91,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/83d11bed20c437a72a2ca847a57c64eda22c2ad1"
+      },
+      {
+        "path": "benchmark/amd7950x_scalar/junkyard.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "df2f35868c5dfd64a7e1e63391aa3810caa2c142",
+        "size": 90,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/df2f35868c5dfd64a7e1e63391aa3810caa2c142"
+      },
+      {
+        "path": "benchmark/amd7950x_scalar/large_pyramid.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "930f930d71df50d4a874696e8a2840fb7bd75e3c",
+        "size": 91,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/930f930d71df50d4a874696e8a2840fb7bd75e3c"
+      },
+      {
+        "path": "benchmark/amd7950x_scalar/large_world.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "61bc9402ff5852bb3be6ff63c6b6c9e826aca795",
+        "size": 91,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/61bc9402ff5852bb3be6ff63c6b6c9e826aca795"
+      },
+      {
+        "path": "benchmark/amd7950x_scalar/many_pyramids.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8abe61308aed49c632143620d665be17ddde09b0",
+        "size": 91,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/8abe61308aed49c632143620d665be17ddde09b0"
+      },
+      {
+        "path": "benchmark/amd7950x_scalar/rain.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "41d830ee963f12dc7a1130a6140d2b211b17cb38",
+        "size": 88,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/41d830ee963f12dc7a1130a6140d2b211b17cb38"
+      },
+      {
+        "path": "benchmark/amd7950x_scalar/trees100.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e4f26e3d2fa43c8eefd55f0129d94d6f4e2871d3",
+        "size": 91,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/e4f26e3d2fa43c8eefd55f0129d94d6f4e2871d3"
+      },
+      {
+        "path": "benchmark/amd7950x_scalar/trees25.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0d566ff15183e94eee26f23328cd3724d49dee7a",
+        "size": 91,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/0d566ff15183e94eee26f23328cd3724d49dee7a"
+      },
+      {
+        "path": "benchmark/amd7950x_scalar/trees50.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b44d02b876bcf588bcc768f8c01675423f251e87",
+        "size": 91,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/b44d02b876bcf588bcc768f8c01675423f251e87"
+      },
+      {
+        "path": "benchmark/amd7950x_scalar/washer.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "350d5613a208909dd61dad2a659282837207755c",
+        "size": 91,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/350d5613a208909dd61dad2a659282837207755c"
+      },
+      {
+        "path": "benchmark/amd7950x_sse2",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "326ee9d475ac81b6b287ff0522e6f65d8fd69b43",
+        "url": "https://api.github.com/repos/erincatto/box3d/git/trees/326ee9d475ac81b6b287ff0522e6f65d8fd69b43"
+      },
+      {
+        "path": "benchmark/amd7950x_sse2/convex_pile.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ed56bc59c1cb7cfbb180a0a8a1aa76c6d6c338ed",
+        "size": 90,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/ed56bc59c1cb7cfbb180a0a8a1aa76c6d6c338ed"
+      },
+      {
+        "path": "benchmark/amd7950x_sse2/joint_grid.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b1e757347e813e555c28c65be3208ffd4bf1b58f",
+        "size": 90,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/b1e757347e813e555c28c65be3208ffd4bf1b58f"
+      },
+      {
+        "path": "benchmark/amd7950x_sse2/junkyard.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "da36de079faf968c054d99815af30e9090fb087f",
+        "size": 91,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/da36de079faf968c054d99815af30e9090fb087f"
+      },
+      {
+        "path": "benchmark/amd7950x_sse2/large_pyramid.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b3ce44e119f0c6fc98aeda597b1b056c9e8b4d40",
+        "size": 91,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/b3ce44e119f0c6fc98aeda597b1b056c9e8b4d40"
+      },
+      {
+        "path": "benchmark/amd7950x_sse2/large_world.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "74537dbf129b7dd07e687255edd23860aa7e9d56",
+        "size": 84,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/74537dbf129b7dd07e687255edd23860aa7e9d56"
+      },
+      {
+        "path": "benchmark/amd7950x_sse2/many_pyramids.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "eb5af426b3321e241978726537dcb27cea9cf82a",
+        "size": 91,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/eb5af426b3321e241978726537dcb27cea9cf82a"
+      },
+      {
+        "path": "benchmark/amd7950x_sse2/rain.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3ab8c711966dfd87d7091e23a7e3356e13984d64",
+        "size": 90,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/3ab8c711966dfd87d7091e23a7e3356e13984d64"
+      },
+      {
+        "path": "benchmark/amd7950x_sse2/sleep.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "410101e20b5a762f4545f57e5a8176ff85fdf19d",
+        "size": 91,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/410101e20b5a762f4545f57e5a8176ff85fdf19d"
+      },
+      {
+        "path": "benchmark/amd7950x_sse2/spinner.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a76590f1f798d9a661090ec28af604b70007590b",
+        "size": 87,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/a76590f1f798d9a661090ec28af604b70007590b"
+      },
+      {
+        "path": "benchmark/amd7950x_sse2/trees100.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e806a763a00426261bb91a37cf464b40ed37b548",
+        "size": 91,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/e806a763a00426261bb91a37cf464b40ed37b548"
+      },
+      {
+        "path": "benchmark/amd7950x_sse2/trees25.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "28f489d0a31937a5fd09b981e033014dc54ef1f9",
+        "size": 91,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/28f489d0a31937a5fd09b981e033014dc54ef1f9"
+      },
+      {
+        "path": "benchmark/amd7950x_sse2/trees50.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d23b5259fa8f80d81278999b30e790abeab28905",
+        "size": 91,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/d23b5259fa8f80d81278999b30e790abeab28905"
+      },
+      {
+        "path": "benchmark/amd7950x_sse2/washer.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "010b74d0a16a92308b6a8a23d4f136786aa51b7d",
+        "size": 89,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/010b74d0a16a92308b6a8a23d4f136786aa51b7d"
+      },
+      {
+        "path": "benchmark/m2air_neon",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "ae1f394847a69d2ecb3e83f79f2ca88d3366bf6a",
+        "url": "https://api.github.com/repos/erincatto/box3d/git/trees/ae1f394847a69d2ecb3e83f79f2ca88d3366bf6a"
+      },
+      {
+        "path": "benchmark/m2air_neon/convex_pile.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "652d9793155fce9429a004598b0d8776b56e0c34",
+        "size": 51,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/652d9793155fce9429a004598b0d8776b56e0c34"
+      },
+      {
+        "path": "benchmark/m2air_neon/joint_grid.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6439c4eba7cbb51b62cb93d6056ea971b2679ebf",
+        "size": 51,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/6439c4eba7cbb51b62cb93d6056ea971b2679ebf"
+      },
+      {
+        "path": "benchmark/m2air_neon/junkyard.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9b73cc6d48fcae1921ffe936f51a0066fa6d9c01",
+        "size": 51,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/9b73cc6d48fcae1921ffe936f51a0066fa6d9c01"
+      },
+      {
+        "path": "benchmark/m2air_neon/large_pyramid.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "db510734842e0688e1607d51254fe2dc005229a2",
+        "size": 51,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/db510734842e0688e1607d51254fe2dc005229a2"
+      },
+      {
+        "path": "benchmark/m2air_neon/large_world.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "48ea5986f15a132412f1fa54d729be6013b87baf",
+        "size": 50,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/48ea5986f15a132412f1fa54d729be6013b87baf"
+      },
+      {
+        "path": "benchmark/m2air_neon/many_pyramids.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6070afb27eb1aee53d959bab3f7edb212651cdbe",
+        "size": 51,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/6070afb27eb1aee53d959bab3f7edb212651cdbe"
+      },
+      {
+        "path": "benchmark/m2air_neon/rain.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5abbe15310c18d9f7ba8ce63dcb05187a7abad09",
+        "size": 50,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/5abbe15310c18d9f7ba8ce63dcb05187a7abad09"
+      },
+      {
+        "path": "benchmark/m2air_neon/trees100.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "44df54afae7a5d413d113b3d821ae09a160b15fe",
+        "size": 51,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/44df54afae7a5d413d113b3d821ae09a160b15fe"
+      },
+      {
+        "path": "benchmark/m2air_neon/trees25.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9ef25d873f33a445d10c327e67a3f822516db48f",
+        "size": 51,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/9ef25d873f33a445d10c327e67a3f822516db48f"
+      },
+      {
+        "path": "benchmark/m2air_neon/trees50.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "04448b0ee9d64dceb5aa29d77b5e0912e1f1617e",
+        "size": 51,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/04448b0ee9d64dceb5aa29d77b5e0912e1f1617e"
+      },
+      {
+        "path": "benchmark/m2air_neon/washer.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "47a7ad1a21fece7e92715f62145b3e02fb05aea8",
+        "size": 51,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/47a7ad1a21fece7e92715f62145b3e02fb05aea8"
+      },
+      {
+        "path": "benchmark/main.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "fd7235fb51be0c6629c95d3b5117054cff2d6abd",
+        "size": 15897,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/fd7235fb51be0c6629c95d3b5117054cff2d6abd"
+      },
+      {
+        "path": "build.sh",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c5a85926ca0910f4e46783fc7e815a61befb26c5",
+        "size": 133,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/c5a85926ca0910f4e46783fc7e815a61befb26c5"
+      },
+      {
+        "path": "build_vs2022.bat",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "bf862e7da9b81186b023438dba19b59952e932e7",
+        "size": 837,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/bf862e7da9b81186b023438dba19b59952e932e7"
+      },
+      {
+        "path": "build_vs2026.bat",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "bc38e44410c5302f94a12b437be61299c638b580",
+        "size": 837,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/bc38e44410c5302f94a12b437be61299c638b580"
+      },
+      {
+        "path": "data",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "ec34b8e0d3d29a267ecde061104c6500c3e75ac6",
+        "url": "https://api.github.com/repos/erincatto/box3d/git/trees/ec34b8e0d3d29a267ecde061104c6500c3e75ac6"
+      },
+      {
+        "path": "data/hulls",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "66b7338814d686705688e77554607f22260177e3",
+        "url": "https://api.github.com/repos/erincatto/box3d/git/trees/66b7338814d686705688e77554607f22260177e3"
+      },
+      {
+        "path": "data/hulls/axe.txt",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "fe3e7ce28e543523a0af0ee795fd4818bbd4e1e9",
+        "size": 68870,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/fe3e7ce28e543523a0af0ee795fd4818bbd4e1e9"
+      },
+      {
+        "path": "data/meshes",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "09210357c1783e6a2774fb2e2b816564d3750a71",
+        "url": "https://api.github.com/repos/erincatto/box3d/git/trees/09210357c1783e6a2774fb2e2b816564d3750a71"
+      },
+      {
+        "path": "data/meshes/building.obj",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f107a27681d86ae9edf195ec5bbbc1e25e9044bc",
+        "size": 124764,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/f107a27681d86ae9edf195ec5bbbc1e25e9044bc"
+      },
+      {
+        "path": "data/meshes/collision_mesh_01.obj",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d19b396f7748bb59544787c85e3adc2a0f64d8a7",
+        "size": 102374,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/d19b396f7748bb59544787c85e3adc2a0f64d8a7"
+      },
+      {
+        "path": "data/meshes/conveyor.obj",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a8fd1db965823ebba255fd094e10d9bb4aa89628",
+        "size": 1260,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/a8fd1db965823ebba255fd094e10d9bb4aa89628"
+      },
+      {
+        "path": "data/meshes/single_triangle.obj",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "243b015ef4dbcbcbae920d84f9f32653b19e4f36",
+        "size": 35,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/243b015ef4dbcbcbae920d84f9f32653b19e4f36"
+      },
+      {
+        "path": "data/meshes/stairs.obj",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "92b90aeca155aa4a495f5f4fb1fc9af5394b0e8c",
+        "size": 986,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/92b90aeca155aa4a495f5f4fb1fc9af5394b0e8c"
+      },
+      {
+        "path": "data/meshes/test_map01.obj",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "69a633755ce855e01e7d183d6df85ab82e4bb05a",
+        "size": 6405,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/69a633755ce855e01e7d183d6df85ab82e4bb05a"
+      },
+      {
+        "path": "data/meshes/voxel_mesh_01.obj",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6acad31d5bf5568831195e9c26456bce8ba89ac8",
+        "size": 155849,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/6acad31d5bf5568831195e9c26456bce8ba89ac8"
+      },
+      {
+        "path": "data/meshes/voxel_mesh_02.obj",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1eb5f9f1224b02e6bcfe5cffcf40be0d45c0f510",
+        "size": 174982,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/1eb5f9f1224b02e6bcfe5cffcf40be0d45c0f510"
+      },
+      {
+        "path": "data/meshes/voxel_mesh_03.obj",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "61c8e3560e6f1739d20b7adc7988c540d924c448",
+        "size": 117466,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/61c8e3560e6f1739d20b7adc7988c540d924c448"
+      },
+      {
+        "path": "data/meshes/voxel_mesh_04.obj",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f7cd42be56ec4c3be8a01f8f4e3633563c1fbe32",
+        "size": 84305,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/f7cd42be56ec4c3be8a01f8f4e3633563c1fbe32"
+      },
+      {
+        "path": "data/trees",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "79e569d40a43aadc4fa3f156c995cf5cb4c7a017",
+        "url": "https://api.github.com/repos/erincatto/box3d/git/trees/79e569d40a43aadc4fa3f156c995cf5cb4c7a017"
+      },
+      {
+        "path": "data/trees/bounds01.txt",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "93b46b4956edb20f1f9e518b3bb7d83a3669841d",
+        "size": 22632,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/93b46b4956edb20f1f9e518b3bb7d83a3669841d"
+      },
+      {
+        "path": "data/trees/bounds02.txt",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2f6a8879a7dddae80eaa0624abd209ddbe12df99",
+        "size": 211898,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/2f6a8879a7dddae80eaa0624abd209ddbe12df99"
+      },
+      {
+        "path": "data/trees/bounds03.txt",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "323a10d1a9ed9cfbb98537f5cc0334f9fa755a93",
+        "size": 7907,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/323a10d1a9ed9cfbb98537f5cc0334f9fa755a93"
+      },
+      {
+        "path": "docs",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "206bae84cf7bf0f1426c0583ce6a06b1a326a05d",
+        "url": "https://api.github.com/repos/erincatto/box3d/git/trees/206bae84cf7bf0f1426c0583ce6a06b1a326a05d"
+      },
+      {
+        "path": "docs/CMakeLists.txt",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9014cdd9e7d763dfa6b5100dcba4b336f6c7a2f0",
+        "size": 2215,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/9014cdd9e7d763dfa6b5100dcba4b336f6c7a2f0"
+      },
+      {
+        "path": "docs/character.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6bd1349eeec22654eaf168b9129baa131096432b",
+        "size": 7328,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/6bd1349eeec22654eaf168b9129baa131096432b"
+      },
+      {
+        "path": "docs/collision.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "07dbef1d7bfaa753c371251798949d43ecde2db6",
+        "size": 16903,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/07dbef1d7bfaa753c371251798949d43ecde2db6"
+      },
+      {
+        "path": "docs/compound.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a5bd7a1e625c29e585b0c26727bafaf9510a277d",
+        "size": 5529,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/a5bd7a1e625c29e585b0c26727bafaf9510a277d"
+      },
+      {
+        "path": "docs/deploy_docs.sh",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1f604f86f1628dff4636b6ffa67ced237e4de540",
+        "size": 108,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/1f604f86f1628dff4636b6ffa67ced237e4de540"
+      },
+      {
+        "path": "docs/extra.css",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "fb7549175440d51cf46418f99a552f440e138eae",
+        "size": 2034,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/fb7549175440d51cf46418f99a552f440e138eae"
+      },
+      {
+        "path": "docs/faq.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "246624c249180f4ce61e67383961abdcf38ead88",
+        "size": 10639,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/246624c249180f4ce61e67383961abdcf38ead88"
+      },
+      {
+        "path": "docs/foundation.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4705c240047cbb76e8b1233bf4f410135155bbd6",
+        "size": 9661,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/4705c240047cbb76e8b1233bf4f410135155bbd6"
+      },
+      {
+        "path": "docs/hello.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d177bd76884c83f8e341c1b736ff27e5863194ad",
+        "size": 7357,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/d177bd76884c83f8e341c1b736ff27e5863194ad"
+      },
+      {
+        "path": "docs/images",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "6cdf1abbba3c21ca99b99efe62dcd36f6085d948",
+        "url": "https://api.github.com/repos/erincatto/box3d/git/trees/6cdf1abbba3c21ca99b99efe62dcd36f6085d948"
+      },
+      {
+        "path": "docs/images/capsule.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "97d65c9a81d69c3d2599ebacaff0e5bdf9424bb0",
+        "size": 11048,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/97d65c9a81d69c3d2599ebacaff0e5bdf9424bb0"
+      },
+      {
+        "path": "docs/images/captured_toi.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e5d951da36e3ff04289371d62d369c9b11719ccb",
+        "size": 4323,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/e5d951da36e3ff04289371d62d369c9b11719ccb"
+      },
+      {
+        "path": "docs/images/center_of_mass.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "00afe13e907f4ca818ff1840bdcd9b5f7ba2755f",
+        "size": 9051,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/00afe13e907f4ca818ff1840bdcd9b5f7ba2755f"
+      },
+      {
+        "path": "docs/images/distance.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "afefe85fa19c0b5c0714973f04ad5deb964717f7",
+        "size": 6299,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/afefe85fa19c0b5c0714973f04ad5deb964717f7"
+      },
+      {
+        "path": "docs/images/logo.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f002689d65aab924965d9d5b7d86837aed0bd132",
+        "size": 4555,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/f002689d65aab924965d9d5b7d86837aed0bd132"
+      },
+      {
+        "path": "docs/images/manifolds.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "30d3a518d06788008ac612ad79e0820570b78908",
+        "size": 10326,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/30d3a518d06788008ac612ad79e0820570b78908"
+      },
+      {
+        "path": "docs/images/missed_toi.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a8fbbe4fd210ab4456be8ff5ce2ee96a893bf1ab",
+        "size": 5579,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/a8fbbe4fd210ab4456be8ff5ce2ee96a893bf1ab"
+      },
+      {
+        "path": "docs/images/mover.png",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e991384efb0869c67e81eaa7ec5878d8814c746f",
+        "size": 108143,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/e991384efb0869c67e81eaa7ec5878d8814c746f"
+      },
+      {
+        "path": "docs/images/overlap_test.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "be78e9b1d6ac19785eabdf282987a6783e685a8b",
+        "size": 5038,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/be78e9b1d6ac19785eabdf282987a6783e685a8b"
+      },
+      {
+        "path": "docs/images/raycast.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "78ac5df129d468beb5316fc542a7dc98d15b1599",
+        "size": 5445,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/78ac5df129d468beb5316fc542a7dc98d15b1599"
+      },
+      {
+        "path": "docs/images/rc_parallel_crosssection.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "959c77561864235a6b3cd3b697b4582ac3b6ddc0",
+        "size": 4336,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/959c77561864235a6b3cd3b697b4582ac3b6ddc0"
+      },
+      {
+        "path": "docs/images/rc_parallel_quadratic.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "bfeeffb43f60b5195f7e87669ffa82ca587ca501",
+        "size": 3535,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/bfeeffb43f60b5195f7e87669ffa82ca587ca501"
+      },
+      {
+        "path": "docs/images/rc_parallel_setup.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1cf491a61fef6034bd4e09698b858ddc82c40769",
+        "size": 4307,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/1cf491a61fef6034bd4e09698b858ddc82c40769"
+      },
+      {
+        "path": "docs/images/samples.png",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8a19281e1121c1ba24e3d6d38cfbd5de470d9759",
+        "size": 333746,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/8a19281e1121c1ba24e3d6d38cfbd5de470d9759"
+      },
+      {
+        "path": "docs/images/simulation_loop.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c898df0e8e95ab3f2abcbe13641c2b8110dc173b",
+        "size": 20825,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/c898df0e8e95ab3f2abcbe13641c2b8110dc173b"
+      },
+      {
+        "path": "docs/images/skin_collision.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "29ac847cbb5c87730ba863966c653bae5884373b",
+        "size": 6361,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/29ac847cbb5c87730ba863966c653bae5884373b"
+      },
+      {
+        "path": "docs/images/tunneling1.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b6d68b03a75a4f7ed6adcb168da29babca491e84",
+        "size": 6645,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/b6d68b03a75a4f7ed6adcb168da29babca491e84"
+      },
+      {
+        "path": "docs/images/tunneling2.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "fa6d6096b00b8633a00396a1326e3255a7e06194",
+        "size": 5091,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/fa6d6096b00b8633a00396a1326e3255a7e06194"
+      },
+      {
+        "path": "docs/large_worlds.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "664151480e47e9593808e71f872f71f9909179a2",
+        "size": 7738,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/664151480e47e9593808e71f872f71f9909179a2"
+      },
+      {
+        "path": "docs/layout.xml",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e93b6cf3b3c19a1553ab5063327e4069a217ba85",
+        "size": 8724,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/e93b6cf3b3c19a1553ab5063327e4069a217ba85"
+      },
+      {
+        "path": "docs/loose_ends.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d7f2bbd40cd08be33a6475f9ce80337339784804",
+        "size": 5965,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/d7f2bbd40cd08be33a6475f9ce80337339784804"
+      },
+      {
+        "path": "docs/overview.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7e14fc25410d53177177ff5c179322bbe6b9587f",
+        "size": 11273,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/7e14fc25410d53177177ff5c179322bbe6b9587f"
+      },
+      {
+        "path": "docs/raycast_capsule_parallel.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "71becd37ae02cdc2938625d8d8609038be580f0a",
+        "size": 11196,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/71becd37ae02cdc2938625d8d8609038be580f0a"
+      },
+      {
+        "path": "docs/reading.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "50f675ea58799c80fa82a2d23cb53a378013a69d",
+        "size": 271,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/50f675ea58799c80fa82a2d23cb53a378013a69d"
+      },
+      {
+        "path": "docs/recording.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0119142280edca3483ab7dd12ca4e8a655e9b258",
+        "size": 11289,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/0119142280edca3483ab7dd12ca4e8a655e9b258"
+      },
+      {
+        "path": "docs/samples.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "44e58c78c3498b5c834be8be658a00e101f79211",
+        "size": 975,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/44e58c78c3498b5c834be8be658a00e101f79211"
+      },
+      {
+        "path": "docs/simulation.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "89a3fadcac67d2eadcb643ec0c83cde53d78ce84",
+        "size": 76546,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/89a3fadcac67d2eadcb643ec0c83cde53d78ce84"
+      },
+      {
+        "path": "extern",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "b95ce7dabb67b17dcb690424c1371b946e190e3c",
+        "url": "https://api.github.com/repos/erincatto/box3d/git/trees/b95ce7dabb67b17dcb690424c1371b946e190e3c"
+      },
+      {
+        "path": "extern/imguizmo",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "0cd8f2e4daafa8856e7921cefd5ade45f05ea4e5",
+        "url": "https://api.github.com/repos/erincatto/box3d/git/trees/0cd8f2e4daafa8856e7921cefd5ade45f05ea4e5"
+      },
+      {
+        "path": "extern/imguizmo/ImGuizmo.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "01ab141a53fc43cbc53c748ec3de17250bfab6d0",
+        "size": 135768,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/01ab141a53fc43cbc53c748ec3de17250bfab6d0"
+      },
+      {
+        "path": "extern/imguizmo/ImGuizmo.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ab893f191db6b85626a2b964a3fe5d6ec6b06805",
+        "size": 16992,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/ab893f191db6b85626a2b964a3fe5d6ec6b06805"
+      },
+      {
+        "path": "extern/imguizmo/LICENSE",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "dcbee451c9cefe5484c5959f456cfd103241b37f",
+        "size": 1083,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/dcbee451c9cefe5484c5959f456cfd103241b37f"
+      },
+      {
+        "path": "extern/sokol",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "69a6ca0c6391f209b885693ae914ecb385728eb6",
+        "url": "https://api.github.com/repos/erincatto/box3d/git/trees/69a6ca0c6391f209b885693ae914ecb385728eb6"
+      },
+      {
+        "path": "extern/sokol/LICENSE",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "efdc02e8faf47abd7c73b7b7373314fa682bf099",
+        "size": 897,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/efdc02e8faf47abd7c73b7b7373314fa682bf099"
+      },
+      {
+        "path": "extern/sokol/sokol_app.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8ab8baff2682f98eeee9cb6bf58fbf450a079cab",
+        "size": 579932,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/8ab8baff2682f98eeee9cb6bf58fbf450a079cab"
+      },
+      {
+        "path": "extern/sokol/sokol_gfx.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "72ad505f90f05df66f57a62f84b70a7a25118d8b",
+        "size": 1234830,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/72ad505f90f05df66f57a62f84b70a7a25118d8b"
+      },
+      {
+        "path": "extern/sokol/sokol_glue.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d9a2ad4dcf5b419a34fc69de74f821914932a673",
+        "size": 7341,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/d9a2ad4dcf5b419a34fc69de74f821914932a673"
+      },
+      {
+        "path": "extern/sokol/sokol_imgui.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2d0b58aeb7411c5f2fb0ca4913feca4ff9186e0e",
+        "size": 184154,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/2d0b58aeb7411c5f2fb0ca4913feca4ff9186e0e"
+      },
+      {
+        "path": "extern/sokol/sokol_log.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7a271a6991983b44fec2ed99517223d902873386",
+        "size": 11859,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/7a271a6991983b44fec2ed99517223d902873386"
+      },
+      {
+        "path": "include",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "50e874ba2a6c4063b0961add4daa4dc3d944b36d",
+        "url": "https://api.github.com/repos/erincatto/box3d/git/trees/50e874ba2a6c4063b0961add4daa4dc3d944b36d"
+      },
+      {
+        "path": "include/box3d",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "94a136b0fd18d2d29e3696d3052c5e7c969e149c",
+        "url": "https://api.github.com/repos/erincatto/box3d/git/trees/94a136b0fd18d2d29e3696d3052c5e7c969e149c"
+      },
+      {
+        "path": "include/box3d/base.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "eb850476f7b5618a52bc7ee2f4023e61c3bda062",
+        "size": 6315,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/eb850476f7b5618a52bc7ee2f4023e61c3bda062"
+      },
+      {
+        "path": "include/box3d/box3d.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "54d0bafda8270fedbed9e7e75b4e3bcbc83180e8",
+        "size": 83237,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/54d0bafda8270fedbed9e7e75b4e3bcbc83180e8"
+      },
+      {
+        "path": "include/box3d/collision.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "51391f189d615b4ae050672fddc007e3b270a3b8",
+        "size": 28118,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/51391f189d615b4ae050672fddc007e3b270a3b8"
+      },
+      {
+        "path": "include/box3d/config.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f39eb7e0d044fe194d87d30502cc5ecac5d94c22",
+        "size": 1211,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/f39eb7e0d044fe194d87d30502cc5ecac5d94c22"
+      },
+      {
+        "path": "include/box3d/constants.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "259dcb9a844e0366c6465ba583e58c87a071ece4",
+        "size": 6721,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/259dcb9a844e0366c6465ba583e58c87a071ece4"
+      },
+      {
+        "path": "include/box3d/id.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9f05e1287c00827dd8bfab2b1eff3d640a8f27e5",
+        "size": 5019,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/9f05e1287c00827dd8bfab2b1eff3d640a8f27e5"
+      },
+      {
+        "path": "include/box3d/math_functions.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a12f25028054b886347f86b41d55facb2f7e5d1a",
+        "size": 32105,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/a12f25028054b886347f86b41d55facb2f7e5d1a"
+      },
+      {
+        "path": "include/box3d/types.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2cbbbebaf0e87f929273698fd9e9c786ba43e925",
+        "size": 95098,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/2cbbbebaf0e87f929273698fd9e9c786ba43e925"
+      },
+      {
+        "path": "samples",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "845f1dc0a7b4c36c9e22e640e096e778282ccb63",
+        "url": "https://api.github.com/repos/erincatto/box3d/git/trees/845f1dc0a7b4c36c9e22e640e096e778282ccb63"
+      },
+      {
+        "path": "samples/CMakeLists.txt",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "257de2e8bad74c3f358a049c94ab63100b5d3efd",
+        "size": 7441,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/257de2e8bad74c3f358a049c94ab63100b5d3efd"
+      },
+      {
+        "path": "samples/earcut.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c414181e4d7ed99ce0fb295647c85cb5c82da124",
+        "size": 25236,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/c414181e4d7ed99ce0fb295647c85cb5c82da124"
+      },
+      {
+        "path": "samples/gfx",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "07d638e53667f9b21842c362f78d1bc30352fe1a",
+        "url": "https://api.github.com/repos/erincatto/box3d/git/trees/07d638e53667f9b21842c362f78d1bc30352fe1a"
+      },
+      {
+        "path": "samples/gfx/CMakeLists.txt",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "21bd4a69392a19d71f08acfaa92044aff6e132ce",
+        "size": 1315,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/21bd4a69392a19d71f08acfaa92044aff6e132ce"
+      },
+      {
+        "path": "samples/gfx/arena.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "663231a1fe0918ad63eb0aa904aa7dc53fe3e210",
+        "size": 1413,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/663231a1fe0918ad63eb0aa904aa7dc53fe3e210"
+      },
+      {
+        "path": "samples/gfx/arena.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "db535d6c3d0907b8faf34683cb4ca1526ddb7438",
+        "size": 891,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/db535d6c3d0907b8faf34683cb4ca1526ddb7438"
+      },
+      {
+        "path": "samples/gfx/debug_adapter.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b2080e4d942cfd9fdf21d8149e3aacc4bc80fd62",
+        "size": 33106,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/b2080e4d942cfd9fdf21d8149e3aacc4bc80fd62"
+      },
+      {
+        "path": "samples/gfx/debug_adapter.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "44eb0f630a3674a7c49442ce10d43ecb7cdad5d1",
+        "size": 2328,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/44eb0f630a3674a7c49442ce10d43ecb7cdad5d1"
+      },
+      {
+        "path": "samples/gfx/debug_shapes.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "61ffcaf4ae35accd80d71ac485121a184cbdb763",
+        "size": 22817,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/61ffcaf4ae35accd80d71ac485121a184cbdb763"
+      },
+      {
+        "path": "samples/gfx/debug_shapes.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ecf024bec0a84d1ad41d55767a9051ec617a2d1a",
+        "size": 2113,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/ecf024bec0a84d1ad41d55767a9051ec617a2d1a"
+      },
+      {
+        "path": "samples/gfx/draw.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a870a5b6fa384b678fe5bf62c34b9eeec52d01b2",
+        "size": 17157,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/a870a5b6fa384b678fe5bf62c34b9eeec52d01b2"
+      },
+      {
+        "path": "samples/gfx/draw.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "de5fec8fc305bc453809e88f8b5169f59fe71dc0",
+        "size": 6356,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/de5fec8fc305bc453809e88f8b5169f59fe71dc0"
+      },
+      {
+        "path": "samples/gfx/draw_overlay.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "877e1d5cdfcccc36f7a8740d5d7bd0ad4814e8a5",
+        "size": 849,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/877e1d5cdfcccc36f7a8740d5d7bd0ad4814e8a5"
+      },
+      {
+        "path": "samples/gfx/edges.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c11d23ed03762c4cf5fd930c203234a4efb99826",
+        "size": 11384,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/c11d23ed03762c4cf5fd930c203234a4efb99826"
+      },
+      {
+        "path": "samples/gfx/edges.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d38d6fdaf87cbf2f2a1b6842241b8df1a94a4ba4",
+        "size": 2708,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/d38d6fdaf87cbf2f2a1b6842241b8df1a94a4ba4"
+      },
+      {
+        "path": "samples/gfx/fonts.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7bab0c70bff6c4d7d3668fb2366e49791410eb3a",
+        "size": 54925,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/7bab0c70bff6c4d7d3668fb2366e49791410eb3a"
+      },
+      {
+        "path": "samples/gfx/fonts.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "15c812e107200336a85700acd7a523f00697006d",
+        "size": 445,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/15c812e107200336a85700acd7a523f00697006d"
+      },
+      {
+        "path": "samples/gfx/geometry_registry.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f63c156bfd3af5b275e1818778beacd53b50f951",
+        "size": 21583,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/f63c156bfd3af5b275e1818778beacd53b50f951"
+      },
+      {
+        "path": "samples/gfx/geometry_registry.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "eff0630062ff051b5c0536915929973f8c8971bf",
+        "size": 8527,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/eff0630062ff051b5c0536915929973f8c8971bf"
+      },
+      {
+        "path": "samples/gfx/gtao.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2e622d8e168eb919bda3de40edd40b7a3fbcdc39",
+        "size": 29970,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/2e622d8e168eb919bda3de40edd40b7a3fbcdc39"
+      },
+      {
+        "path": "samples/gfx/gtao.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b757dd068fd28dbbcf3b07ece4e21c7b026581ae",
+        "size": 7479,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/b757dd068fd28dbbcf3b07ece4e21c7b026581ae"
+      },
+      {
+        "path": "samples/gfx/highlight_mask.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8876826d3c3e0d930bb8e4eaf98d1274375b3ce4",
+        "size": 13553,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/8876826d3c3e0d930bb8e4eaf98d1274375b3ce4"
+      },
+      {
+        "path": "samples/gfx/highlight_mask.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "97c6d99e2755df3a032c77a94062873bd6af073d",
+        "size": 2963,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/97c6d99e2755df3a032c77a94062873bd6af073d"
+      },
+      {
+        "path": "samples/gfx/highlight_outline.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "dddbf78a0dae863c178d6eb471a0af7f8fd9aa24",
+        "size": 4738,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/dddbf78a0dae863c178d6eb471a0af7f8fd9aa24"
+      },
+      {
+        "path": "samples/gfx/highlight_outline.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "012b3a83127d43e770dc08b86223257567b8be9c",
+        "size": 1969,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/012b3a83127d43e770dc08b86223257567b8be9c"
+      },
+      {
+        "path": "samples/gfx/highlight_target.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0092c35a18c1914a154fbd39247576167d345de7",
+        "size": 1772,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/0092c35a18c1914a154fbd39247576167d345de7"
+      },
+      {
+        "path": "samples/gfx/highlight_target.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "94e5001e00887c74011fe2d79b52c22b4f8446b5",
+        "size": 1551,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/94e5001e00887c74011fe2d79b52c22b4f8446b5"
+      },
+      {
+        "path": "samples/gfx/ibl.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1c6e991525aab31d8d24cf0d419126b226717465",
+        "size": 24112,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/1c6e991525aab31d8d24cf0d419126b226717465"
+      },
+      {
+        "path": "samples/gfx/ibl.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e2ad759ceb5bb6b3b5338b4755b8a6053128bbd1",
+        "size": 2927,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/e2ad759ceb5bb6b3b5338b4755b8a6053128bbd1"
+      },
+      {
+        "path": "samples/gfx/keycodes.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a2a62c8685dce3e6ac96499d26ed2ea78262461b",
+        "size": 1746,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/a2a62c8685dce3e6ac96499d26ed2ea78262461b"
+      },
+      {
+        "path": "samples/gfx/overlay.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8927f35f8ce0d343e1e1371fc7f81bf6ce8c26b9",
+        "size": 13275,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/8927f35f8ce0d343e1e1371fc7f81bf6ce8c26b9"
+      },
+      {
+        "path": "samples/gfx/overlay.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f46ce30c9699ba8b808b20f8076062eab5f678f1",
+        "size": 3375,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/f46ce30c9699ba8b808b20f8076062eab5f678f1"
+      },
+      {
+        "path": "samples/gfx/projection.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "87282bcc8db7ae5bbd61bb534b33a2452f573141",
+        "size": 1933,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/87282bcc8db7ae5bbd61bb534b33a2452f573141"
+      },
+      {
+        "path": "samples/gfx/qsort.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "df75653d791f246dd00d47741b146f27bea5d79c",
+        "size": 7567,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/df75653d791f246dd00d47741b146f27bea5d79c"
+      },
+      {
+        "path": "samples/gfx/renderer.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d45459c060428b36e2f0a0230a6137955709ab8b",
+        "size": 110700,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/d45459c060428b36e2f0a0230a6137955709ab8b"
+      },
+      {
+        "path": "samples/gfx/renderer.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d2e07214adb66ef53a2089c09c4444f2d3dd7c75",
+        "size": 7673,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/d2e07214adb66ef53a2089c09c4444f2d3dd7c75"
+      },
+      {
+        "path": "samples/gfx/scene_target.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "703a752eda6f2a8cbaaa010040dc060a32cf4914",
+        "size": 6331,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/703a752eda6f2a8cbaaa010040dc060a32cf4914"
+      },
+      {
+        "path": "samples/gfx/scene_target.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "16d266c024cf677f531cb9be6d8ef6c169568305",
+        "size": 2842,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/16d266c024cf677f531cb9be6d8ef6c169568305"
+      },
+      {
+        "path": "samples/gfx/shadow.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5f55f35d9a207774ff13bf3b3ca36fe720718d26",
+        "size": 18453,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/5f55f35d9a207774ff13bf3b3ca36fe720718d26"
+      },
+      {
+        "path": "samples/gfx/shadow.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "409c07814710d78ecf79476754d61301a7cde91f",
+        "size": 7746,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/409c07814710d78ecf79476754d61301a7cde91f"
+      },
+      {
+        "path": "samples/gfx/sky.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a7598a108bcf8a4d8f4599ff7b7c60d57b336651",
+        "size": 4291,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/a7598a108bcf8a4d8f4599ff7b7c60d57b336651"
+      },
+      {
+        "path": "samples/gfx/sky.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "cf3b893536073b89abec80e726e224a6f36d17bf",
+        "size": 2096,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/cf3b893536073b89abec80e726e224a6f36d17bf"
+      },
+      {
+        "path": "samples/gfx/sokol_impl.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "35a5edb9a9866afd3d3783468a81c54f969d03f9",
+        "size": 350,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/35a5edb9a9866afd3d3783468a81c54f969d03f9"
+      },
+      {
+        "path": "samples/gfx/text.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8417a9c481fb5929a89c69f24cfc9219ae75cdb6",
+        "size": 3009,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/8417a9c481fb5929a89c69f24cfc9219ae75cdb6"
+      },
+      {
+        "path": "samples/gfx/text.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d127c894c1423b80a856aece432c15931aa0bb14",
+        "size": 3215,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/d127c894c1423b80a856aece432c15931aa0bb14"
+      },
+      {
+        "path": "samples/gfx/tone_map.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e24ed4b0eb520a7175c623f3b69b7777012aa635",
+        "size": 3984,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/e24ed4b0eb520a7175c623f3b69b7777012aa635"
+      },
+      {
+        "path": "samples/gfx/tone_map.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "09b2c335211e59a2db58859f08622e5e83c0089f",
+        "size": 2322,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/09b2c335211e59a2db58859f08622e5e83c0089f"
+      },
+      {
+        "path": "samples/gfx/utility.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a52c8984ac047e4eec6bfe134f6ca6a54c912e0a",
+        "size": 7820,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/a52c8984ac047e4eec6bfe134f6ca6a54c912e0a"
+      },
+      {
+        "path": "samples/gfx/world_text.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "13c3f4d5db6887dd5ab391e745ce045f6083c3d6",
+        "size": 16396,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/13c3f4d5db6887dd5ab391e745ce045f6083c3d6"
+      },
+      {
+        "path": "samples/gfx/world_text.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0d04feedf3259fc17b19539df3678dedc08e3125",
+        "size": 2477,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/0d04feedf3259fc17b19539df3678dedc08e3125"
+      },
+      {
+        "path": "samples/host",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "454d2b421f9d5bafc85aeec35833f6cad85ae834",
+        "url": "https://api.github.com/repos/erincatto/box3d/git/trees/454d2b421f9d5bafc85aeec35833f6cad85ae834"
+      },
+      {
+        "path": "samples/host/camera.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c59a2562574f290a85f784cfb9f258141c5f74d7",
+        "size": 17604,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/c59a2562574f290a85f784cfb9f258141c5f74d7"
+      },
+      {
+        "path": "samples/host/camera.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f2f1f4900f709b5529752b26f08b145ce7b3524a",
+        "size": 8794,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/f2f1f4900f709b5529752b26f08b145ce7b3524a"
+      },
+      {
+        "path": "samples/host/gui.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "619a27d1e27a90162dedf0fab410532559abae28",
+        "size": 14914,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/619a27d1e27a90162dedf0fab410532559abae28"
+      },
+      {
+        "path": "samples/host/gui.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b187fc17aaa13ca64715fd6deeb9d3e4e1957893",
+        "size": 2290,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/b187fc17aaa13ca64715fd6deeb9d3e4e1957893"
+      },
+      {
+        "path": "samples/host/imgui_impl.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "87f738794148b230467cf99c60d505ab85f94af0",
+        "size": 586,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/87f738794148b230467cf99c60d505ab85f94af0"
+      },
+      {
+        "path": "samples/host/sokol_app_impl.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "398e2d34b8afdbc4314d88bb89047ac3501f3b5a",
+        "size": 1206,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/398e2d34b8afdbc4314d88bb89047ac3501f3b5a"
+      },
+      {
+        "path": "samples/jsmn.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8ac14c1bdec9d1600ae5217550902eecce0f56e1",
+        "size": 12145,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/8ac14c1bdec9d1600ae5217550902eecce0f56e1"
+      },
+      {
+        "path": "samples/main.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a92df262b707fc28b3f7b684136dc12192919bcc",
+        "size": 16358,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/a92df262b707fc28b3f7b684136dc12192919bcc"
+      },
+      {
+        "path": "samples/mesh_loader.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "bfbb13ab5a91e53a0bee438bbb95b6fffee73d60",
+        "size": 5223,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/bfbb13ab5a91e53a0bee438bbb95b6fffee73d60"
+      },
+      {
+        "path": "samples/mesh_loader.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "960395d57bec3eb64112e93b94680a29c470b50c",
+        "size": 622,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/960395d57bec3eb64112e93b94680a29c470b50c"
+      },
+      {
+        "path": "samples/mover.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4db9a13a966420056557967213de9121d70683db",
+        "size": 9630,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/4db9a13a966420056557967213de9121d70683db"
+      },
+      {
+        "path": "samples/mover.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "724b59bb662ad1547c3957bc45459fa338a138b7",
+        "size": 1240,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/724b59bb662ad1547c3957bc45459fa338a138b7"
+      },
+      {
+        "path": "samples/sample.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5abea6b40ad510a59209954aed18acd0cf67e4a7",
+        "size": 73793,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/5abea6b40ad510a59209954aed18acd0cf67e4a7"
+      },
+      {
+        "path": "samples/sample.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6d09f4117df623fbae7f9789621df772b1fc98f5",
+        "size": 10653,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/6d09f4117df623fbae7f9789621df772b1fc98f5"
+      },
+      {
+        "path": "samples/sample_benchmark.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d70c28e9f941890eeaedb6e63f1798ca3ef761a8",
+        "size": 44609,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/d70c28e9f941890eeaedb6e63f1798ca3ef761a8"
+      },
+      {
+        "path": "samples/sample_bodies.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "cc58786681e92b7a4fbe6425277f8a77a761baea",
+        "size": 41989,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/cc58786681e92b7a4fbe6425277f8a77a761baea"
+      },
+      {
+        "path": "samples/sample_character.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "77b1c865c1fed953235dd821f1663391ac13e3c0",
+        "size": 55058,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/77b1c865c1fed953235dd821f1663391ac13e3c0"
+      },
+      {
+        "path": "samples/sample_collision.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "370315cd8349bc53aeab393f2b318d94d51cf661",
+        "size": 87329,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/370315cd8349bc53aeab393f2b318d94d51cf661"
+      },
+      {
+        "path": "samples/sample_compound.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "363dd37102282df16ec3fccf4bac76eb1787be5c",
+        "size": 22386,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/363dd37102282df16ec3fccf4bac76eb1787be5c"
+      },
+      {
+        "path": "samples/sample_continuous.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6ff45dd0328b9ac73d1e09370d2ad1bc7ae869c5",
+        "size": 29406,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/6ff45dd0328b9ac73d1e09370d2ad1bc7ae869c5"
+      },
+      {
+        "path": "samples/sample_determinism.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6370e862545a1193c1e463843bc03ad4a5b40d36",
+        "size": 6138,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/6370e862545a1193c1e463843bc03ad4a5b40d36"
+      },
+      {
+        "path": "samples/sample_events.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "db08b429f21671b6e67a592ce090f9c179bb4987",
+        "size": 35321,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/db08b429f21671b6e67a592ce090f9c179bb4987"
+      },
+      {
+        "path": "samples/sample_geometry.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "685812ff5417cab53e3c8d8e1d290584aa8322e8",
+        "size": 16306,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/685812ff5417cab53e3c8d8e1d290584aa8322e8"
+      },
+      {
+        "path": "samples/sample_issues.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "05fa85af9c5d82b69a757b1539e561ffd38547e2",
+        "size": 61501,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/05fa85af9c5d82b69a757b1539e561ffd38547e2"
+      },
+      {
+        "path": "samples/sample_joint.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "113901959dcf86fca5b4acd9a26991b4f5a887a6",
+        "size": 96433,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/113901959dcf86fca5b4acd9a26991b4f5a887a6"
+      },
+      {
+        "path": "samples/sample_manifold.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "08e88474fed34c7a8ca76523ca6eb72e6b249c71",
+        "size": 59668,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/08e88474fed34c7a8ca76523ca6eb72e6b249c71"
+      },
+      {
+        "path": "samples/sample_mesh.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9438735dcf1c6d6b2360acc9696aec3b8e9b0292",
+        "size": 40967,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/9438735dcf1c6d6b2360acc9696aec3b8e9b0292"
+      },
+      {
+        "path": "samples/sample_ragdoll.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1e4ce51b4de1acd45d9c96248e870e33bd386f93",
+        "size": 12054,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/1e4ce51b4de1acd45d9c96248e870e33bd386f93"
+      },
+      {
+        "path": "samples/sample_replay.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0a363fba0b763af25aa71951e93c26061d59bbc9",
+        "size": 60155,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/0a363fba0b763af25aa71951e93c26061d59bbc9"
+      },
+      {
+        "path": "samples/sample_restitution.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d4be176b7d57dc2a051c8fb6c1bc9f64ef470f05",
+        "size": 31995,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/d4be176b7d57dc2a051c8fb6c1bc9f64ef470f05"
+      },
+      {
+        "path": "samples/sample_robustness.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d8473ac65482a4a030b7f5fdb15c667e8a8f7a81",
+        "size": 6841,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/d8473ac65482a4a030b7f5fdb15c667e8a8f7a81"
+      },
+      {
+        "path": "samples/sample_shapes.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6bcd458eef06c8221223d00357d74bca53808c88",
+        "size": 25048,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/6bcd458eef06c8221223d00357d74bca53808c88"
+      },
+      {
+        "path": "samples/sample_stacking.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4730110bfb3156028c592cf1abe8c748ec0094e9",
+        "size": 25061,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/4730110bfb3156028c592cf1abe8c748ec0094e9"
+      },
+      {
+        "path": "samples/sample_tree.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f8ad5d65a1be1319ea7da3c0c32d281d6760a63e",
+        "size": 16256,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/f8ad5d65a1be1319ea7da3c0c32d281d6760a63e"
+      },
+      {
+        "path": "samples/sample_world.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1f8d14259b6c5719174679539ef62fc57f87c0f7",
+        "size": 9082,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/1f8d14259b6c5719174679539ef62fc57f87c0f7"
+      },
+      {
+        "path": "samples/shaders",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "fdbef0dad2411230500f0dfd06eaec601d572389",
+        "url": "https://api.github.com/repos/erincatto/box3d/git/trees/fdbef0dad2411230500f0dfd06eaec601d572389"
+      },
+      {
+        "path": "samples/shaders/.gitkeep",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "size": 0,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+      },
+      {
+        "path": "samples/shaders/CMakeLists.txt",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ee94b878bc2089ebac6e69707eb7f3a0fd8df531",
+        "size": 6389,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/ee94b878bc2089ebac6e69707eb7f3a0fd8df531"
+      },
+      {
+        "path": "samples/shaders/common",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "eba0922b6055f67d42309858a963ece15c917bc8",
+        "url": "https://api.github.com/repos/erincatto/box3d/git/trees/eba0922b6055f67d42309858a963ece15c917bc8"
+      },
+      {
+        "path": "samples/shaders/common/pbr.glsl",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "14594af3d3096b4952856118ee365c1466c8647e",
+        "size": 10100,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/14594af3d3096b4952856118ee365c1466c8647e"
+      },
+      {
+        "path": "samples/shaders/common/preetham.glsl",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d0e35fdae219e2941d848c7d637f12a6ec984738",
+        "size": 6563,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/d0e35fdae219e2941d848c7d637f12a6ec984738"
+      },
+      {
+        "path": "samples/shaders/common/shadow_cascade.glsl",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6e01a7bd30e544228a50a79758030eb8f9061b23",
+        "size": 1470,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/6e01a7bd30e544228a50a79758030eb8f9061b23"
+      },
+      {
+        "path": "samples/shaders/common/shadow_pcf.glsl",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "fc89f25662cc21e1bf2f9a881bb90e63b9af8e35",
+        "size": 4337,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/fc89f25662cc21e1bf2f9a881bb90e63b9af8e35"
+      },
+      {
+        "path": "samples/shaders/common/xe_gtao_common.glsl",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f724f8fc17e4221dba40ae75a191811ebcfe89d0",
+        "size": 7238,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/f724f8fc17e4221dba40ae75a191811ebcfe89d0"
+      },
+      {
+        "path": "samples/shaders/generated",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "912f4c1e78ba0b6db4d97af7fd3df66c5c1fcc09",
+        "url": "https://api.github.com/repos/erincatto/box3d/git/trees/912f4c1e78ba0b6db4d97af7fd3df66c5c1fcc09"
+      },
+      {
+        "path": "samples/shaders/generated/brdf_lut.glsl.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9999a0d3b9b601c2da1bc8c6f6c39df85fe5a9de",
+        "size": 69545,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/9999a0d3b9b601c2da1bc8c6f6c39df85fe5a9de"
+      },
+      {
+        "path": "samples/shaders/generated/capsule.glsl.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c2da3661973774bac85e7a3a6c95c1aeeae53971",
+        "size": 487676,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/c2da3661973774bac85e7a3a6c95c1aeeae53971"
+      },
+      {
+        "path": "samples/shaders/generated/cube.glsl.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "72714adffeb8becf01b64becc193cde13b8a986a",
+        "size": 392583,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/72714adffeb8becf01b64becc193cde13b8a986a"
+      },
+      {
+        "path": "samples/shaders/generated/depth_only_capsule.glsl.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e12b61b66f8fe1214d22be8d0fac6553946c1c6b",
+        "size": 103912,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/e12b61b66f8fe1214d22be8d0fac6553946c1c6b"
+      },
+      {
+        "path": "samples/shaders/generated/depth_only_cube.glsl.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1b12967664e810dd787416bc57c3624e04b5f87f",
+        "size": 34870,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/1b12967664e810dd787416bc57c3624e04b5f87f"
+      },
+      {
+        "path": "samples/shaders/generated/depth_only_geom.glsl.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "682d35664b6f4155c2989c5796ac2657d63f1a86",
+        "size": 38813,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/682d35664b6f4155c2989c5796ac2657d63f1a86"
+      },
+      {
+        "path": "samples/shaders/generated/depth_only_sphere.glsl.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9388b9e16af2f4d67f75b0a4d578d42f4c0429bc",
+        "size": 55911,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/9388b9e16af2f4d67f75b0a4d578d42f4c0429bc"
+      },
+      {
+        "path": "samples/shaders/generated/edge.glsl.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d7bb3d970ab4286dc25651bdea8d028042a162cc",
+        "size": 85807,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/d7bb3d970ab4286dc25651bdea8d028042a162cc"
+      },
+      {
+        "path": "samples/shaders/generated/geom.glsl.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ca629d9ecb6130010a1f148733b645b8f4872879",
+        "size": 421772,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/ca629d9ecb6130010a1f148733b645b8f4872879"
+      },
+      {
+        "path": "samples/shaders/generated/gtao_denoise.glsl.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6b8946a1e128e935add928d20a4b38d060dfa1df",
+        "size": 127077,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/6b8946a1e128e935add928d20a4b38d060dfa1df"
+      },
+      {
+        "path": "samples/shaders/generated/gtao_main_pass.glsl.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "10ef62b7e6751f07d80c557cd5dc1637f5d1ff1a",
+        "size": 291201,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/10ef62b7e6751f07d80c557cd5dc1637f5d1ff1a"
+      },
+      {
+        "path": "samples/shaders/generated/gtao_prefilter_depth.glsl.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b2bf72a0a04fd506bc78bf67438fa572907c08d4",
+        "size": 126440,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/b2bf72a0a04fd506bc78bf67438fa572907c08d4"
+      },
+      {
+        "path": "samples/shaders/generated/highlight_outline.glsl.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6da1a5a8eece03e896d95e4910ba6d06291286eb",
+        "size": 77324,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/6da1a5a8eece03e896d95e4910ba6d06291286eb"
+      },
+      {
+        "path": "samples/shaders/generated/mask_capsule.glsl.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e53a25303285f144e84231feb1fc35c5a52a9503",
+        "size": 103294,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/e53a25303285f144e84231feb1fc35c5a52a9503"
+      },
+      {
+        "path": "samples/shaders/generated/mask_hull.glsl.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "208e590524127b822236c45e8189b58650be0f86",
+        "size": 34665,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/208e590524127b822236c45e8189b58650be0f86"
+      },
+      {
+        "path": "samples/shaders/generated/mask_sphere.glsl.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1b1f93c96401848a07577f1f3973ef025d0dae5e",
+        "size": 52695,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/1b1f93c96401848a07577f1f3973ef025d0dae5e"
+      },
+      {
+        "path": "samples/shaders/generated/overlay_line.glsl.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a71af3ff7507253e79ab432909203771d2b2bf6b",
+        "size": 108276,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/a71af3ff7507253e79ab432909203771d2b2bf6b"
+      },
+      {
+        "path": "samples/shaders/generated/overlay_point.glsl.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "998af3c6d7635132183d2f3e038dbd0a293de5b6",
+        "size": 75227,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/998af3c6d7635132183d2f3e038dbd0a293de5b6"
+      },
+      {
+        "path": "samples/shaders/generated/prefilter.glsl.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "775de87f6f98b9dd650d35c2629ca63a148281c0",
+        "size": 70012,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/775de87f6f98b9dd650d35c2629ca63a148281c0"
+      },
+      {
+        "path": "samples/shaders/generated/shadow_caster_capsule.glsl.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "088710120b4d65ca5363c57199d053eff7bb466b",
+        "size": 92375,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/088710120b4d65ca5363c57199d053eff7bb466b"
+      },
+      {
+        "path": "samples/shaders/generated/shadow_caster_cube.glsl.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c3abc280478a3ad996ca42e02fc06dee4a551d15",
+        "size": 28789,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/c3abc280478a3ad996ca42e02fc06dee4a551d15"
+      },
+      {
+        "path": "samples/shaders/generated/shadow_caster_geom.glsl.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4bc313ddde9ba0ccfe7ea292ea744e6e8ce315d3",
+        "size": 29605,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/4bc313ddde9ba0ccfe7ea292ea744e6e8ce315d3"
+      },
+      {
+        "path": "samples/shaders/generated/shadow_caster_sphere.glsl.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "183904c363eab28861cb4741a6ff804465114413",
+        "size": 52097,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/183904c363eab28861cb4741a6ff804465114413"
+      },
+      {
+        "path": "samples/shaders/generated/sky.glsl.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3609576f4aab500fca8505bbf0c38cb0799c2bfb",
+        "size": 162850,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/3609576f4aab500fca8505bbf0c38cb0799c2bfb"
+      },
+      {
+        "path": "samples/shaders/generated/sky_to_cube.glsl.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2252fade3aea36a06fd206c75f0852a997697fdb",
+        "size": 160371,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/2252fade3aea36a06fd206c75f0852a997697fdb"
+      },
+      {
+        "path": "samples/shaders/generated/sphere.glsl.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e17df2a84a744d7fe00438f6861a08da8a1a934c",
+        "size": 430155,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/e17df2a84a744d7fe00438f6861a08da8a1a934c"
+      },
+      {
+        "path": "samples/shaders/generated/tonemap.glsl.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7e44ca5a3432572ce9fc19f2b5ac25954498aa4a",
+        "size": 64517,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/7e44ca5a3432572ce9fc19f2b5ac25954498aa4a"
+      },
+      {
+        "path": "samples/shaders/generated/world_text.glsl.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9c2511b368ed3ac271aeb927e7efec60a4d04a68",
+        "size": 56694,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/9c2511b368ed3ac271aeb927e7efec60a4d04a68"
+      },
+      {
+        "path": "samples/shaders/ibl",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "a2b775d5623cf484d3ddf43d2eada6674a2745e2",
+        "url": "https://api.github.com/repos/erincatto/box3d/git/trees/a2b775d5623cf484d3ddf43d2eada6674a2745e2"
+      },
+      {
+        "path": "samples/shaders/ibl/brdf_lut.glsl",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3f2c6e8591d42dea31433d2b2ecc8922d6faf4db",
+        "size": 4797,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/3f2c6e8591d42dea31433d2b2ecc8922d6faf4db"
+      },
+      {
+        "path": "samples/shaders/ibl/prefilter.glsl",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "35c573a139f109ff9564845f06f4141af887adde",
+        "size": 4090,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/35c573a139f109ff9564845f06f4141af887adde"
+      },
+      {
+        "path": "samples/shaders/ibl/sky.glsl",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c2e6719bbb126508a4ab1d77acfbea198c923b49",
+        "size": 4083,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/c2e6719bbb126508a4ab1d77acfbea198c923b49"
+      },
+      {
+        "path": "samples/shaders/ibl/sky_to_cube.glsl",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5d5091b4ac079129a06b39663b246a27087b1c30",
+        "size": 2396,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/5d5091b4ac079129a06b39663b246a27087b1c30"
+      },
+      {
+        "path": "samples/shaders/overlays",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "d9e04acaff0d4edb5ce1681cb80a0337c05744b8",
+        "url": "https://api.github.com/repos/erincatto/box3d/git/trees/d9e04acaff0d4edb5ce1681cb80a0337c05744b8"
+      },
+      {
+        "path": "samples/shaders/overlays/line.glsl",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "29badebee793da506828afae48e2eaaee4104331",
+        "size": 10997,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/29badebee793da506828afae48e2eaaee4104331"
+      },
+      {
+        "path": "samples/shaders/overlays/point.glsl",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "44536d231d8d9368fa58f3326fb0129deb16f79b",
+        "size": 5736,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/44536d231d8d9368fa58f3326fb0129deb16f79b"
+      },
+      {
+        "path": "samples/shaders/overlays/world_text.glsl",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b371f29ce48519f3f681c175f30b2a5583f10f4d",
+        "size": 5516,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/b371f29ce48519f3f681c175f30b2a5583f10f4d"
+      },
+      {
+        "path": "samples/shaders/post",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "305f6899dddbcd9665de269baf7ed26ce8b471ac",
+        "url": "https://api.github.com/repos/erincatto/box3d/git/trees/305f6899dddbcd9665de269baf7ed26ce8b471ac"
+      },
+      {
+        "path": "samples/shaders/post/depth_only_capsule.glsl",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8f7b362c8bb3b03229579c0606be4ae2137c8e54",
+        "size": 3863,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/8f7b362c8bb3b03229579c0606be4ae2137c8e54"
+      },
+      {
+        "path": "samples/shaders/post/depth_only_cube.glsl",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "def36ffb4523e885bf61d89552b8ce8950bad2f2",
+        "size": 1575,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/def36ffb4523e885bf61d89552b8ce8950bad2f2"
+      },
+      {
+        "path": "samples/shaders/post/depth_only_geom.glsl",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a916c3789b8dbf8024c284862d29c47e29a5ff68",
+        "size": 1959,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/a916c3789b8dbf8024c284862d29c47e29a5ff68"
+      },
+      {
+        "path": "samples/shaders/post/depth_only_sphere.glsl",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "290b454b2af2d8b56568c383cc80567d1d67c2ec",
+        "size": 2358,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/290b454b2af2d8b56568c383cc80567d1d67c2ec"
+      },
+      {
+        "path": "samples/shaders/post/gtao_denoise.glsl",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a3c65bfad8eac2c8eedd6c9dfcdb52198a7d1b54",
+        "size": 10712,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/a3c65bfad8eac2c8eedd6c9dfcdb52198a7d1b54"
+      },
+      {
+        "path": "samples/shaders/post/gtao_main_pass.glsl",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5aaae0540cf1099598003168117f8a31ca1c858f",
+        "size": 18680,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/5aaae0540cf1099598003168117f8a31ca1c858f"
+      },
+      {
+        "path": "samples/shaders/post/gtao_prefilter_depth.glsl",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "182555293a5a361ca56c5efbd61e02eba002ce6d",
+        "size": 11597,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/182555293a5a361ca56c5efbd61e02eba002ce6d"
+      },
+      {
+        "path": "samples/shaders/post/highlight_outline.glsl",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d695fb0cb97a6abe6902698f6dd6e2d823f86a1f",
+        "size": 3682,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/d695fb0cb97a6abe6902698f6dd6e2d823f86a1f"
+      },
+      {
+        "path": "samples/shaders/post/mask_capsule.glsl",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "61c6754df5de68b60db87f049491d91a4e06180c",
+        "size": 4044,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/61c6754df5de68b60db87f049491d91a4e06180c"
+      },
+      {
+        "path": "samples/shaders/post/mask_hull.glsl",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "33b9b8d3304956cc5847accc3b3de067ab261056",
+        "size": 1937,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/33b9b8d3304956cc5847accc3b3de067ab261056"
+      },
+      {
+        "path": "samples/shaders/post/mask_sphere.glsl",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4919096e5ace39cebfaee80c7614698deb9284e5",
+        "size": 2601,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/4919096e5ace39cebfaee80c7614698deb9284e5"
+      },
+      {
+        "path": "samples/shaders/post/tonemap.glsl",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "908c1e8edde3e1adda7a01aceba28404ef5f4294",
+        "size": 5459,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/908c1e8edde3e1adda7a01aceba28404ef5f4294"
+      },
+      {
+        "path": "samples/shaders/shapes",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "a133bd2ed477592bf875214e37c8fbc5a2698c4d",
+        "url": "https://api.github.com/repos/erincatto/box3d/git/trees/a133bd2ed477592bf875214e37c8fbc5a2698c4d"
+      },
+      {
+        "path": "samples/shaders/shapes/capsule.glsl",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "fcd148e3abc1515c20bf77a7612e0e7a8d42dcdb",
+        "size": 17455,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/fcd148e3abc1515c20bf77a7612e0e7a8d42dcdb"
+      },
+      {
+        "path": "samples/shaders/shapes/cube.glsl",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c88b685d113f05693cc5e600bd3ffac7c10b4786",
+        "size": 15257,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/c88b685d113f05693cc5e600bd3ffac7c10b4786"
+      },
+      {
+        "path": "samples/shaders/shapes/edge.glsl",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "fccc290e5cdb3fa704d64b8da67dc19985cea593",
+        "size": 6920,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/fccc290e5cdb3fa704d64b8da67dc19985cea593"
+      },
+      {
+        "path": "samples/shaders/shapes/geom.glsl",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "fed1141813997f8923c51ee966d539e94088a25d",
+        "size": 12566,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/fed1141813997f8923c51ee966d539e94088a25d"
+      },
+      {
+        "path": "samples/shaders/shapes/shadow_caster_capsule.glsl",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "efd5190bd37a0b3409a4f1da8bbc86000d6d6de1",
+        "size": 5345,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/efd5190bd37a0b3409a4f1da8bbc86000d6d6de1"
+      },
+      {
+        "path": "samples/shaders/shapes/shadow_caster_cube.glsl",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9bf98015c725ef62eb50503b3a9f3683b3ea4a9c",
+        "size": 2352,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/9bf98015c725ef62eb50503b3a9f3683b3ea4a9c"
+      },
+      {
+        "path": "samples/shaders/shapes/shadow_caster_geom.glsl",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "34e6e90422c2ffeccf4dfa610a7ef34fa1988b14",
+        "size": 2374,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/34e6e90422c2ffeccf4dfa610a7ef34fa1988b14"
+      },
+      {
+        "path": "samples/shaders/shapes/shadow_caster_sphere.glsl",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1ff69a489a0f1eb6f7e20a72e51a38eda6f4e99d",
+        "size": 4483,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/1ff69a489a0f1eb6f7e20a72e51a38eda6f4e99d"
+      },
+      {
+        "path": "samples/shaders/shapes/sphere.glsl",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c1f160652e0f094616e2af82a7ea126f6ba590da",
+        "size": 15842,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/c1f160652e0f094616e2af82a7ea126f6ba590da"
+      },
+      {
+        "path": "samples/stb_truetype.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "90a5c2e2b3fe563c98585294ca7a949876aec94c",
+        "size": 199192,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/90a5c2e2b3fe563c98585294ca7a949876aec94c"
+      },
+      {
+        "path": "samples/tiny_obj_loader.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "942b149ce327c55e278da2583fc66a0096024940",
+        "size": 107612,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/942b149ce327c55e278da2583fc66a0096024940"
+      },
+      {
+        "path": "shared",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "fb500f1b6f66c920040521cb358ee5ea5663aab1",
+        "url": "https://api.github.com/repos/erincatto/box3d/git/trees/fb500f1b6f66c920040521cb358ee5ea5663aab1"
+      },
+      {
+        "path": "shared/CMakeLists.txt",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3a663ee122c8c986d2d563d25050810c9308347a",
+        "size": 873,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/3a663ee122c8c986d2d563d25050810c9308347a"
+      },
+      {
+        "path": "shared/benchmarks.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "402b14a2d38c0ad861d7bcaee1552d5b46e87db4",
+        "size": 44185,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/402b14a2d38c0ad861d7bcaee1552d5b46e87db4"
+      },
+      {
+        "path": "shared/benchmarks.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9218aac3d59f432d1ff652ea9717e77e85b918ab",
+        "size": 2540,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/9218aac3d59f432d1ff652ea9717e77e85b918ab"
+      },
+      {
+        "path": "shared/determinism.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e3121bb8897805844987fba8512b02e92b05f186",
+        "size": 11192,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/e3121bb8897805844987fba8512b02e92b05f186"
+      },
+      {
+        "path": "shared/determinism.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "78925a184bf134a9ce61ec5dbb043a102f6dd8d8",
+        "size": 2228,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/78925a184bf134a9ce61ec5dbb043a102f6dd8d8"
+      },
+      {
+        "path": "shared/human.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1e3793157cd4df655cb0ebb9219a9bc55142ca93",
+        "size": 26778,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/1e3793157cd4df655cb0ebb9219a9bc55142ca93"
+      },
+      {
+        "path": "shared/human.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8ca27425e8ff7f1d17dbf7193fb608b7dc5d03a7",
+        "size": 2118,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/8ca27425e8ff7f1d17dbf7193fb608b7dc5d03a7"
+      },
+      {
+        "path": "shared/overflow_color.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "93190406df57f9b5d9f7a35f325cab80515c8e4a",
+        "size": 2626,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/93190406df57f9b5d9f7a35f325cab80515c8e4a"
+      },
+      {
+        "path": "shared/overflow_color.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "05ea4f8dbd6a9344051346ed268a281f84386896",
+        "size": 684,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/05ea4f8dbd6a9344051346ed268a281f84386896"
+      },
+      {
+        "path": "shared/sat_benchmark.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c20943be4e935ae8da2748cbbac615fa99f95b8d",
+        "size": 5368,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/c20943be4e935ae8da2748cbbac615fa99f95b8d"
+      },
+      {
+        "path": "shared/sat_benchmark.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "66b2b2d450476a15e952c072286019f114e96329",
+        "size": 1801,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/66b2b2d450476a15e952c072286019f114e96329"
+      },
+      {
+        "path": "shared/stability.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "404f9114ff5dff18c34b124213ee198ed244b380",
+        "size": 2461,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/404f9114ff5dff18c34b124213ee198ed244b380"
+      },
+      {
+        "path": "shared/stability.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f8e105cdb415e6c4828bc8bbf17ef1d7bd2b274b",
+        "size": 786,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/f8e105cdb415e6c4828bc8bbf17ef1d7bd2b274b"
+      },
+      {
+        "path": "shared/utils.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "bdba72955a0be13d99015b2c5c71fe5a179fa7a4",
+        "size": 788,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/bdba72955a0be13d99015b2c5c71fe5a179fa7a4"
+      },
+      {
+        "path": "shared/utils.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5997cbce337d6e80f48b0e60d650c57b53a264c1",
+        "size": 3167,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/5997cbce337d6e80f48b0e60d650c57b53a264c1"
+      },
+      {
+        "path": "src",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "31d4f1f5b58e9a1dd49727c421aa8cf726aa5bd0",
+        "url": "https://api.github.com/repos/erincatto/box3d/git/trees/31d4f1f5b58e9a1dd49727c421aa8cf726aa5bd0"
+      },
+      {
+        "path": "src/CMakeLists.txt",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f324addf4e64eaa1e6601e485f50d36cc2615ba8",
+        "size": 6640,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/f324addf4e64eaa1e6601e485f50d36cc2615ba8"
+      },
+      {
+        "path": "src/aabb.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6045bd82f7fc5ac65f64a9d9305955a07c123222",
+        "size": 3678,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/6045bd82f7fc5ac65f64a9d9305955a07c123222"
+      },
+      {
+        "path": "src/aabb.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "97a00b18969851647a44b36d71bfc7e72ee7182a",
+        "size": 2012,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/97a00b18969851647a44b36d71bfc7e72ee7182a"
+      },
+      {
+        "path": "src/algorithm.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "155bb310d0f6cc21e68ce87b1ab6cf2b4348c210",
+        "size": 1387,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/155bb310d0f6cc21e68ce87b1ab6cf2b4348c210"
+      },
+      {
+        "path": "src/arena_allocator.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8543e5782659d1211ca521fdeffce58a85158585",
+        "size": 3991,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/8543e5782659d1211ca521fdeffce58a85158585"
+      },
+      {
+        "path": "src/arena_allocator.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "41422b91b33a66adf130c9e54382433853df4a24",
+        "size": 3036,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/41422b91b33a66adf130c9e54382433853df4a24"
+      },
+      {
+        "path": "src/bitset.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "319725bfcd2c7ce49d4fd88c248d59633dcc223a",
+        "size": 2038,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/319725bfcd2c7ce49d4fd88c248d59633dcc223a"
+      },
+      {
+        "path": "src/bitset.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ff771d96771d144f6c396c7c11a3b806ffab03ae",
+        "size": 1723,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/ff771d96771d144f6c396c7c11a3b806ffab03ae"
+      },
+      {
+        "path": "src/block_allocator.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b3eeea8dac8f09b2408943739b00dfe56f2b693c",
+        "size": 2585,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/b3eeea8dac8f09b2408943739b00dfe56f2b693c"
+      },
+      {
+        "path": "src/block_allocator.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d271304be1bf4a22923d85a003c0f698c4c84c14",
+        "size": 937,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/d271304be1bf4a22923d85a003c0f698c4c84c14"
+      },
+      {
+        "path": "src/body.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6d673431b2b58ac63d65afbe94f21083cceb7034",
+        "size": 73901,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/6d673431b2b58ac63d65afbe94f21083cceb7034"
+      },
+      {
+        "path": "src/body.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b03063df38e6c0135015e47827d57436183261f7",
+        "size": 8896,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/b03063df38e6c0135015e47827d57436183261f7"
+      },
+      {
+        "path": "src/box3d.natvis",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "68d36e1c2120b08c499029c568df6b960883a50d",
+        "size": 3872,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/68d36e1c2120b08c499029c568df6b960883a50d"
+      },
+      {
+        "path": "src/broad_phase.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "003c16ac17a1cdc3a1b948a887f1dba42cb33c49",
+        "size": 25083,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/003c16ac17a1cdc3a1b948a887f1dba42cb33c49"
+      },
+      {
+        "path": "src/broad_phase.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4564f9f147d28a5316312c3125aaaeadff735c41",
+        "size": 2408,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/4564f9f147d28a5316312c3125aaaeadff735c41"
+      },
+      {
+        "path": "src/capsule.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2927740814f5e7d333fe975eb94835908e5bdf7f",
+        "size": 11272,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/2927740814f5e7d333fe975eb94835908e5bdf7f"
+      },
+      {
+        "path": "src/compound.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "99a66e20274ae3adaa5bc0108b42ffad641850eb",
+        "size": 36972,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/99a66e20274ae3adaa5bc0108b42ffad641850eb"
+      },
+      {
+        "path": "src/compound.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "68b1cade6bccf113e8855fa609a8e33251db3ae8",
+        "size": 803,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/68b1cade6bccf113e8855fa609a8e33251db3ae8"
+      },
+      {
+        "path": "src/constraint_graph.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c5e3d3e770cdc7f19db2471ba0080fe20f0f61ef",
+        "size": 10567,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/c5e3d3e770cdc7f19db2471ba0080fe20f0f61ef"
+      },
+      {
+        "path": "src/constraint_graph.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "56bfdff816c6264c4333e6720cb3514cff777e55",
+        "size": 3019,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/56bfdff816c6264c4333e6720cb3514cff777e55"
+      },
+      {
+        "path": "src/contact.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d20030131e0006cb6d3bb1c06d802a5b683cac17",
+        "size": 27926,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/d20030131e0006cb6d3bb1c06d802a5b683cac17"
+      },
+      {
+        "path": "src/contact.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c4388b377f7f16ea1139ad3202c45d7259974415",
+        "size": 4689,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/c4388b377f7f16ea1139ad3202c45d7259974415"
+      },
+      {
+        "path": "src/contact_solver.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ad41b41bcab89685c4ce74e5c4e7df0049d95ee4",
+        "size": 37963,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/ad41b41bcab89685c4ce74e5c4e7df0049d95ee4"
+      },
+      {
+        "path": "src/contact_solver.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d7773dbc819f4c9dcd05e71ae0879edd946dfdd0",
+        "size": 5438,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/d7773dbc819f4c9dcd05e71ae0879edd946dfdd0"
+      },
+      {
+        "path": "src/contact_solver_wide.inl",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1f685b377ce13b086dec35a7777e67b534f3594c",
+        "size": 65193,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/1f685b377ce13b086dec35a7777e67b534f3594c"
+      },
+      {
+        "path": "src/container.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "471db1a9074f4dacd15459df7646b6ae447d6da3",
+        "size": 14469,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/471db1a9074f4dacd15459df7646b6ae447d6da3"
+      },
+      {
+        "path": "src/convex_manifold.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6f84f44b0bc879f8b4ba169bf3c47dbe305dfe55",
+        "size": 50167,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/6f84f44b0bc879f8b4ba169bf3c47dbe305dfe55"
+      },
+      {
+        "path": "src/convex_manifold_wide.inl",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "cbb293b131543b9ab7576e8b490cb61c5fa53645",
+        "size": 27660,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/cbb293b131543b9ab7576e8b490cb61c5fa53645"
+      },
+      {
+        "path": "src/core.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2165eff218eedc57ceebe3fc0ddbf087fc25bacd",
+        "size": 5257,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/2165eff218eedc57ceebe3fc0ddbf087fc25bacd"
+      },
+      {
+        "path": "src/core.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "94de040ad98da0ec774b718464e7923a5f5116d2",
+        "size": 5400,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/94de040ad98da0ec774b718464e7923a5f5116d2"
+      },
+      {
+        "path": "src/ctz.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "483ce4bec164401736de017a87c939b6876024b8",
+        "size": 2324,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/483ce4bec164401736de017a87c939b6876024b8"
+      },
+      {
+        "path": "src/distance.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "57f0814235b3a7543dfde6a498cb17f44145af95",
+        "size": 49535,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/57f0814235b3a7543dfde6a498cb17f44145af95"
+      },
+      {
+        "path": "src/distance_joint.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9185010aeb0e19d1464ea93a5069d7702346b2fb",
+        "size": 19548,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/9185010aeb0e19d1464ea93a5069d7702346b2fb"
+      },
+      {
+        "path": "src/dynamic_tree.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "520663732f28959cbb5b4bdc525d0db826eb60c6",
+        "size": 65580,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/520663732f28959cbb5b4bdc525d0db826eb60c6"
+      },
+      {
+        "path": "src/dynamic_tree.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "cee702e089a2bbeec0dae62f3fa4ca02ca292b64",
+        "size": 3746,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/cee702e089a2bbeec0dae62f3fa4ca02ca292b64"
+      },
+      {
+        "path": "src/height_field.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "37ff65f6d6f402aabe27cf5223711017b2f241d1",
+        "size": 46120,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/37ff65f6d6f402aabe27cf5223711017b2f241d1"
+      },
+      {
+        "path": "src/hull.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b0392d89dcaf320e42ef4b9a84421ccadd0e3cfd",
+        "size": 83539,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/b0392d89dcaf320e42ef4b9a84421ccadd0e3cfd"
+      },
+      {
+        "path": "src/hull.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "23ebbe488046bdb75c5c7c9afaa1320d50998b56",
+        "size": 871,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/23ebbe488046bdb75c5c7c9afaa1320d50998b56"
+      },
+      {
+        "path": "src/id_pool.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "185b6eebc750b8441c38f2df5b95a650d5a12688",
+        "size": 1225,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/185b6eebc750b8441c38f2df5b95a650d5a12688"
+      },
+      {
+        "path": "src/id_pool.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "06106de20dc935f3d070156a93f7808cf25ce5be",
+        "size": 702,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/06106de20dc935f3d070156a93f7808cf25ce5be"
+      },
+      {
+        "path": "src/island.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6a17909231867d3dc59132ca1615c061713caa7c",
+        "size": 23721,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/6a17909231867d3dc59132ca1615c061713caa7c"
+      },
+      {
+        "path": "src/island.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "297c198dd240bfacf40d97d50c18f0d42cbe7e19",
+        "size": 3123,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/297c198dd240bfacf40d97d50c18f0d42cbe7e19"
+      },
+      {
+        "path": "src/joint.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "068a29daf287cb7776070df6a44c6917df53f499",
+        "size": 50427,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/068a29daf287cb7776070df6a44c6917df53f499"
+      },
+      {
+        "path": "src/joint.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9a8c34770ffab5f1a12aa2982eefbd4c967c4e55",
+        "size": 13152,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/9a8c34770ffab5f1a12aa2982eefbd4c967c4e55"
+      },
+      {
+        "path": "src/manifold.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f15db6c03e8e64e1045dc5dfede81f0ddeed0da3",
+        "size": 6088,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/f15db6c03e8e64e1045dc5dfede81f0ddeed0da3"
+      },
+      {
+        "path": "src/manifold.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "577c5d023cdde6b0724f6578be791cd862e7a43d",
+        "size": 2728,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/577c5d023cdde6b0724f6578be791cd862e7a43d"
+      },
+      {
+        "path": "src/math_functions.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a339d95ff929fb7e8b1a2d67ed1af4dc806928a3",
+        "size": 12799,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/a339d95ff929fb7e8b1a2d67ed1af4dc806928a3"
+      },
+      {
+        "path": "src/math_internal.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b272bdc0d9b09eb1efdbab8213113fe49009d813",
+        "size": 12062,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/b272bdc0d9b09eb1efdbab8213113fe49009d813"
+      },
+      {
+        "path": "src/mesh.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7b8d617083b838f37b7e81e3d57e38107716dd1b",
+        "size": 66970,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/7b8d617083b838f37b7e81e3d57e38107716dd1b"
+      },
+      {
+        "path": "src/mesh_contact.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "86f7ed041c3cb3bbef92854a3ed4990564b53c54",
+        "size": 39851,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/86f7ed041c3cb3bbef92854a3ed4990564b53c54"
+      },
+      {
+        "path": "src/motor_joint.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9487d0c2faa8bd47d2cc0b61f2ad4ac5633fae95",
+        "size": 15227,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/9487d0c2faa8bd47d2cc0b61f2ad4ac5633fae95"
+      },
+      {
+        "path": "src/mover.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "209426e97afd0ef48a0f5ad02741ecaf203ece94",
+        "size": 1635,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/209426e97afd0ef48a0f5ad02741ecaf203ece94"
+      },
+      {
+        "path": "src/name_cache.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a7833df5a8464c47c61773e1b7d95cc395955da9",
+        "size": 3214,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/a7833df5a8464c47c61773e1b7d95cc395955da9"
+      },
+      {
+        "path": "src/name_cache.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d1535b37a31646a9c1025005678ba20e58792b77",
+        "size": 1060,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/d1535b37a31646a9c1025005678ba20e58792b77"
+      },
+      {
+        "path": "src/parallel_for.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5a497a420e1b2ff5b363079a31a65c019c9f8ec5",
+        "size": 3463,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/5a497a420e1b2ff5b363079a31a65c019c9f8ec5"
+      },
+      {
+        "path": "src/parallel_for.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4a6d2851c9595058a695505fc4083eb24f55ac69",
+        "size": 1244,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/4a6d2851c9595058a695505fc4083eb24f55ac69"
+      },
+      {
+        "path": "src/parallel_joint.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7390a2131b7a938a51eb3d2a5fec696a61ce3f40",
+        "size": 9329,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/7390a2131b7a938a51eb3d2a5fec696a61ce3f40"
+      },
+      {
+        "path": "src/physics_world.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "192cfdbb151a4c435700aa9e5fe0f0eea51156e2",
+        "size": 128853,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/192cfdbb151a4c435700aa9e5fe0f0eea51156e2"
+      },
+      {
+        "path": "src/physics_world.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1436ee47224be43b340b8cf2592f859f2bb521f0",
+        "size": 10744,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/1436ee47224be43b340b8cf2592f859f2bb521f0"
+      },
+      {
+        "path": "src/platform.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "856b19bf819e0f01a055ff46fb3098f824c9ef21",
+        "size": 5048,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/856b19bf819e0f01a055ff46fb3098f824c9ef21"
+      },
+      {
+        "path": "src/prismatic_joint.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b380d372dfd8cab706b37a71937830d54a44ea1a",
+        "size": 26490,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/b380d372dfd8cab706b37a71937830d54a44ea1a"
+      },
+      {
+        "path": "src/qsort.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9ab426bace341a934db267e9df8019f324d15eae",
+        "size": 7397,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/9ab426bace341a934db267e9df8019f324d15eae"
+      },
+      {
+        "path": "src/rapidhash.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "88de4bc431d1b78e6eb29db78553274bfe98c01d",
+        "size": 20693,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/88de4bc431d1b78e6eb29db78553274bfe98c01d"
+      },
+      {
+        "path": "src/recording.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7e9bc034add1c02ac40af5772aadb6c7389b0528",
+        "size": 38898,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/7e9bc034add1c02ac40af5772aadb6c7389b0528"
+      },
+      {
+        "path": "src/recording.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6f9df4d5aaac72f579bbe08f720a6fdf66db41e5",
+        "size": 17932,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/6f9df4d5aaac72f579bbe08f720a6fdf66db41e5"
+      },
+      {
+        "path": "src/recording_ops.inl",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ed4b7d65aefd0c8b78c6f20d7195b4fc69971eac",
+        "size": 19003,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/ed4b7d65aefd0c8b78c6f20d7195b4fc69971eac"
+      },
+      {
+        "path": "src/replay.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7a46d7391e485b39258ca6dbd2ca307291f23e2b",
+        "size": 119556,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/7a46d7391e485b39258ca6dbd2ca307291f23e2b"
+      },
+      {
+        "path": "src/replay.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ea2bae883dd636e7d7fb5a9782356724f0e11be7",
+        "size": 9809,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/ea2bae883dd636e7d7fb5a9782356724f0e11be7"
+      },
+      {
+        "path": "src/revolute_joint.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5f8b6da035072b6b35045fb40f92571368123c5e",
+        "size": 23518,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/5f8b6da035072b6b35045fb40f92571368123c5e"
+      },
+      {
+        "path": "src/scheduler.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ed942f2813bda415d6d2a716cf2f9bd6cbf43877",
+        "size": 4888,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/ed942f2813bda415d6d2a716cf2f9bd6cbf43877"
+      },
+      {
+        "path": "src/scheduler.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f9aeff7b2dd50e51174972f1e37f57c3d0c24bef",
+        "size": 562,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/f9aeff7b2dd50e51174972f1e37f57c3d0c24bef"
+      },
+      {
+        "path": "src/sensor.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "056708a3bee8ba13fbaa583f1e51e5c5a81c73af",
+        "size": 13026,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/056708a3bee8ba13fbaa583f1e51e5c5a81c73af"
+      },
+      {
+        "path": "src/sensor.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1a17366b785a4aaaacbd80164abdfdb3b0c0f468",
+        "size": 776,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/1a17366b785a4aaaacbd80164abdfdb3b0c0f468"
+      },
+      {
+        "path": "src/shape.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7b21700ccabece5ffb425e45e80f3dcb8b682021",
+        "size": 71413,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/7b21700ccabece5ffb425e45e80f3dcb8b682021"
+      },
+      {
+        "path": "src/shape.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a9164d4fd81047dee6181d65c8adf54b77876acc",
+        "size": 7577,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/a9164d4fd81047dee6181d65c8adf54b77876acc"
+      },
+      {
+        "path": "src/simd.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "30ad2e66ebe3e04bb345237ebf4d95d61c4b09da",
+        "size": 9930,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/30ad2e66ebe3e04bb345237ebf4d95d61c4b09da"
+      },
+      {
+        "path": "src/simd.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b4da76a16ce97fd05cd8073ccd7a5d0a88cbb82f",
+        "size": 8582,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/b4da76a16ce97fd05cd8073ccd7a5d0a88cbb82f"
+      },
+      {
+        "path": "src/simd_avx2.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a751249f1cfea09d1700e3707cac69f84039732c",
+        "size": 6497,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/a751249f1cfea09d1700e3707cac69f84039732c"
+      },
+      {
+        "path": "src/simd_neon.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c35f39ba5fd41493d64a219d6059c08e80159277",
+        "size": 7583,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/c35f39ba5fd41493d64a219d6059c08e80159277"
+      },
+      {
+        "path": "src/simd_scalar.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "56cb0455988fc33e4ed3cc1204436ce2f55a876e",
+        "size": 7639,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/56cb0455988fc33e4ed3cc1204436ce2f55a876e"
+      },
+      {
+        "path": "src/simd_sse2.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b09a17c5c25da602a0507de9fb687b9337edaafa",
+        "size": 10930,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/b09a17c5c25da602a0507de9fb687b9337edaafa"
+      },
+      {
+        "path": "src/simd_wide.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "fe0bb9cd51b41aef36a1891a0399519e32f7877a",
+        "size": 2145,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/fe0bb9cd51b41aef36a1891a0399519e32f7877a"
+      },
+      {
+        "path": "src/solver.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f1697bda6d2400a0da560d03604a27e6cce51733",
+        "size": 80188,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/f1697bda6d2400a0da560d03604a27e6cce51733"
+      },
+      {
+        "path": "src/solver.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "297213d7bd90c23aee0692be6f75200212691d09",
+        "size": 9342,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/297213d7bd90c23aee0692be6f75200212691d09"
+      },
+      {
+        "path": "src/solver_set.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "53b75ddde5faa07179ced318bc3c442b21651486",
+        "size": 21740,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/53b75ddde5faa07179ced318bc3c442b21651486"
+      },
+      {
+        "path": "src/solver_set.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "bf78ab04cc3d990fae4413997b64f1d25d455ef4",
+        "size": 2604,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/bf78ab04cc3d990fae4413997b64f1d25d455ef4"
+      },
+      {
+        "path": "src/sphere.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7b2e6cd3d9f75b3ff322fb9109128e61b784b4fa",
+        "size": 6341,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/7b2e6cd3d9f75b3ff322fb9109128e61b784b4fa"
+      },
+      {
+        "path": "src/spherical_joint.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "cc9692c33684433c8e9676e3fc3c4fb9979c4853",
+        "size": 26637,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/cc9692c33684433c8e9676e3fc3c4fb9979c4853"
+      },
+      {
+        "path": "src/table.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "dc13c33043384d9a1e44121f4a9a587f054a4ad8",
+        "size": 4986,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/dc13c33043384d9a1e44121f4a9a587f054a4ad8"
+      },
+      {
+        "path": "src/table.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9e12b99775326702c3ea45684cf2c726b53baa83",
+        "size": 2139,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/9e12b99775326702c3ea45684cf2c726b53baa83"
+      },
+      {
+        "path": "src/timer.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f779e3bbbdb2ddc1eeb649987fe29264cca51658",
+        "size": 13867,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/f779e3bbbdb2ddc1eeb649987fe29264cca51658"
+      },
+      {
+        "path": "src/triangle_manifold.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "eb3a25ef0127eeee70a3689d0bf5447928353f56",
+        "size": 41107,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/eb3a25ef0127eeee70a3689d0bf5447928353f56"
+      },
+      {
+        "path": "src/types.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9caab0ae8ba2e7c64ab7b196c0fd6eea1f8faf37",
+        "size": 4180,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/9caab0ae8ba2e7c64ab7b196c0fd6eea1f8faf37"
+      },
+      {
+        "path": "src/verstable.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c8601e6d42155230e34a0263b1b44efa4527f0e1",
+        "size": 84569,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/c8601e6d42155230e34a0263b1b44efa4527f0e1"
+      },
+      {
+        "path": "src/weld_joint.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5a379a7666263106881cdbac80258aefd53ed9d8",
+        "size": 10266,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/5a379a7666263106881cdbac80258aefd53ed9d8"
+      },
+      {
+        "path": "src/wheel_joint.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "05665e9f09565f3f059253781c5f70390b4320f7",
+        "size": 39580,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/05665e9f09565f3f059253781c5f70390b4320f7"
+      },
+      {
+        "path": "src/wide4.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e2132ec4e2fd141ca832bad90239c574fbf10189",
+        "size": 171,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/e2132ec4e2fd141ca832bad90239c574fbf10189"
+      },
+      {
+        "path": "src/wide8.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "cb89f92ed8254e0617434cb665920c06f79828aa",
+        "size": 444,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/cb89f92ed8254e0617434cb665920c06f79828aa"
+      },
+      {
+        "path": "src/world_snapshot.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e763fdebbea0d3e5079ffe006c8fe280a116200a",
+        "size": 41955,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/e763fdebbea0d3e5079ffe006c8fe280a116200a"
+      },
+      {
+        "path": "src/world_snapshot.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f58aa0665d251168297534f84706712b058b490b",
+        "size": 785,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/f58aa0665d251168297534f84706712b058b490b"
+      },
+      {
+        "path": "test",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "aa938aef59f5ef8b0f2591c7882b4b6afd008de7",
+        "url": "https://api.github.com/repos/erincatto/box3d/git/trees/aa938aef59f5ef8b0f2591c7882b4b6afd008de7"
+      },
+      {
+        "path": "test/CMakeLists.txt",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8b3e192a073fa655765b9ad46b19bfd096f299b6",
+        "size": 1257,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/8b3e192a073fa655765b9ad46b19bfd096f299b6"
+      },
+      {
+        "path": "test/main.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "df993cfdb0d7d55bb24a71e465903067add1a4aa",
+        "size": 5107,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/df993cfdb0d7d55bb24a71e465903067add1a4aa"
+      },
+      {
+        "path": "test/test_allocator.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b8bd2bd7f61a90bc51397d32a7c9a8ffd4db6b01",
+        "size": 2410,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/b8bd2bd7f61a90bc51397d32a7c9a8ffd4db6b01"
+      },
+      {
+        "path": "test/test_bitset.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "893cdf821372a297b6c9b52b54c4b69ba0033415",
+        "size": 1022,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/893cdf821372a297b6c9b52b54c4b69ba0033415"
+      },
+      {
+        "path": "test/test_body.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "22337c7ea1a6de7f58d7bb1be0ab8115ab0309df",
+        "size": 24683,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/22337c7ea1a6de7f58d7bb1be0ab8115ab0309df"
+      },
+      {
+        "path": "test/test_body_query.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "586a21b5dc3a69fad18051c82bf4f701f8c8b470",
+        "size": 38379,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/586a21b5dc3a69fad18051c82bf4f701f8c8b470"
+      },
+      {
+        "path": "test/test_broad_phase.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "85adbf6367dbbc1f7aab75d00251f127a6340d94",
+        "size": 13910,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/85adbf6367dbbc1f7aab75d00251f127a6340d94"
+      },
+      {
+        "path": "test/test_collision.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d32db1881054d5c68f9969a178cb1b64a59c2273",
+        "size": 10295,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/d32db1881054d5c68f9969a178cb1b64a59c2273"
+      },
+      {
+        "path": "test/test_compound.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0a2ef9e064a7cfce0d1c1c341f942cd72f5081d8",
+        "size": 44806,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/0a2ef9e064a7cfce0d1c1c341f942cd72f5081d8"
+      },
+      {
+        "path": "test/test_container.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0f93e7e06a5221b422ad84b0b1e4539631698ffe",
+        "size": 3161,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/0f93e7e06a5221b422ad84b0b1e4539631698ffe"
+      },
+      {
+        "path": "test/test_determinism.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f2bd7e668be4f46ab5730e4d10600f30e95a8b42",
+        "size": 18005,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/f2bd7e668be4f46ab5730e4d10600f30e95a8b42"
+      },
+      {
+        "path": "test/test_distance.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "59254f53c01e1a0cd276af09afa9675cab9a6cbf",
+        "size": 7143,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/59254f53c01e1a0cd276af09afa9675cab9a6cbf"
+      },
+      {
+        "path": "test/test_dynamic_tree.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0561d2ef9beea51335b201abfe026bf300438ad5",
+        "size": 19458,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/0561d2ef9beea51335b201abfe026bf300438ad5"
+      },
+      {
+        "path": "test/test_hash.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f6271b977311444edfdb6dd46dbae63bd90ebb67",
+        "size": 16574,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/f6271b977311444edfdb6dd46dbae63bd90ebb67"
+      },
+      {
+        "path": "test/test_height_field.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "78ed368a32ff73917c8a24d957b65193a508fc18",
+        "size": 22276,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/78ed368a32ff73917c8a24d957b65193a508fc18"
+      },
+      {
+        "path": "test/test_hull.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d2a27be323b4ab80bf21d0c9ae3fa23efcf05787",
+        "size": 23295,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/d2a27be323b4ab80bf21d0c9ae3fa23efcf05787"
+      },
+      {
+        "path": "test/test_id.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4736ca5bd600631480bd5c1ac28643d9c35d6a5b",
+        "size": 500,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/4736ca5bd600631480bd5c1ac28643d9c35d6a5b"
+      },
+      {
+        "path": "test/test_joint.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4e38d75a692fc7637aaf655df06460985871bc7f",
+        "size": 23509,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/4e38d75a692fc7637aaf655df06460985871bc7f"
+      },
+      {
+        "path": "test/test_large_world.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "402720e352fbb960bf85ecf473cf7efe374cfc6c",
+        "size": 10187,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/402720e352fbb960bf85ecf473cf7efe374cfc6c"
+      },
+      {
+        "path": "test/test_macros.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "95b4412cde0fa66f24d3c11cd48273c0dbbff0ac",
+        "size": 6158,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/95b4412cde0fa66f24d3c11cd48273c0dbbff0ac"
+      },
+      {
+        "path": "test/test_manifold.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a304ef1671d2b103fcb55964008e1df00aa38d87",
+        "size": 50144,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/a304ef1671d2b103fcb55964008e1df00aa38d87"
+      },
+      {
+        "path": "test/test_math.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c79a273e9b6514edd57ecebefeca5f13ad2b5846",
+        "size": 10652,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/c79a273e9b6514edd57ecebefeca5f13ad2b5846"
+      },
+      {
+        "path": "test/test_mesh.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "69330ed144434389a4339463930dca37bff58342",
+        "size": 9728,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/69330ed144434389a4339463930dca37bff58342"
+      },
+      {
+        "path": "test/test_mover.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b82ab4ea44136374702129cfc7fe9bcd24a52f51",
+        "size": 24408,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/b82ab4ea44136374702129cfc7fe9bcd24a52f51"
+      },
+      {
+        "path": "test/test_name_cache.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "406601707429f9dce0f721fe2ada271f4b9ae993",
+        "size": 7254,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/406601707429f9dce0f721fe2ada271f4b9ae993"
+      },
+      {
+        "path": "test/test_recording.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "12f7316155c59b6cbc923c062ea3eaabe6b0be3b",
+        "size": 87762,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/12f7316155c59b6cbc923c062ea3eaabe6b0be3b"
+      },
+      {
+        "path": "test/test_restitution.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3c1b6b2ac2c2024872434155bceef61c7ce01c9a",
+        "size": 43538,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/3c1b6b2ac2c2024872434155bceef61c7ce01c9a"
+      },
+      {
+        "path": "test/test_sat.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ac633db741eac04bb9dbf225788e0970840aa7ec",
+        "size": 18420,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/ac633db741eac04bb9dbf225788e0970840aa7ec"
+      },
+      {
+        "path": "test/test_shape.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b5b73691989463539c65c3f30ef373532ec947a5",
+        "size": 35073,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/b5b73691989463539c65c3f30ef373532ec947a5"
+      },
+      {
+        "path": "test/test_table.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a6ad825ec849bcb41c022a13883426a674586463",
+        "size": 2403,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/a6ad825ec849bcb41c022a13883426a674586463"
+      },
+      {
+        "path": "test/test_world.c",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c9022ef710deb7d9e074e43384cedc6642156358",
+        "size": 57678,
+        "url": "https://api.github.com/repos/erincatto/box3d/git/blobs/c9022ef710deb7d9e074e43384cedc6642156358"
+      }
+    ],
+    "truncated": false
+  },
+  "binding": {
+    "sha": "5d5a3af049cccd9948b2b55bac4342414af0ef64",
+    "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/trees/5d5a3af049cccd9948b2b55bac4342414af0ef64",
+    "tree": [
+      {
+        "path": ".github",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "9e28dcdc1160e641fab1b1ab0f3fe85c63282b7b",
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/trees/9e28dcdc1160e641fab1b1ab0f3fe85c63282b7b"
+      },
+      {
+        "path": ".github/workflows",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "2672035ebb7124149e8a233235ca8d7bef6b5de8",
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/trees/2672035ebb7124149e8a233235ca8d7bef6b5de8"
+      },
+      {
+        "path": ".github/workflows/deploy-pages.yml",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6950fb373d87b98836b5dfb16aa2c89859a977b5",
+        "size": 1130,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/6950fb373d87b98836b5dfb16aa2c89859a977b5"
+      },
+      {
+        "path": ".gitignore",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b079b7f7ecea4c37a0af6e637a09ee01e8363c96",
+        "size": 98,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/b079b7f7ecea4c37a0af6e637a09ee01e8363c96"
+      },
+      {
+        "path": ".gitmodules",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0e874494da2feb4321149dc5a4fdb6d9c4b6c629",
+        "size": 94,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/0e874494da2feb4321149dc5a4fdb6d9c4b6c629"
+      },
+      {
+        "path": "CHANGELOG.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "278d38cbd8d2e882543e809235860f0d58b15ce6",
+        "size": 1523,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/278d38cbd8d2e882543e809235860f0d58b15ce6"
+      },
+      {
+        "path": "LICENSE",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "52427ec590538e5bc9c2299fd761adf1cbe52014",
+        "size": 1068,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/52427ec590538e5bc9c2299fd761adf1cbe52014"
+      },
+      {
+        "path": "LICENSE-box3d",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8cb3586def0b30a9750772fc7fe6df5edfb4e977",
+        "size": 1320,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/8cb3586def0b30a9750772fc7fe6df5edfb4e977"
+      },
+      {
+        "path": "README.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4084d4c97aa9f8f3b5b44f4a2c7dae2466ed7c8c",
+        "size": 53782,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/4084d4c97aa9f8f3b5b44f4a2c7dae2466ed7c8c"
+      },
+      {
+        "path": "biome.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5370b1ba897f284b59855668eef031dca16cf499",
+        "size": 434,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/5370b1ba897f284b59855668eef031dca16cf499"
+      },
+      {
+        "path": "dist",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "f6fc0add7bb50a75b79063afa35f93b24f82bf5d",
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/trees/f6fc0add7bb50a75b79063afa35f93b24f82bf5d"
+      },
+      {
+        "path": "dist/box3d.d.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b3807d81134bc3adddac2e72807769b1c3d1139f",
+        "size": 50263,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/b3807d81134bc3adddac2e72807769b1c3d1139f"
+      },
+      {
+        "path": "dist/box3d.inline.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "133515b5b1c6f076db3102692583dfecfc39d914",
+        "size": 1011665,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/133515b5b1c6f076db3102692583dfecfc39d914"
+      },
+      {
+        "path": "dist/box3d.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a5f1d74d7fcf393ebbcf75b9d194851cb94c9c11",
+        "size": 68196,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/a5f1d74d7fcf393ebbcf75b9d194851cb94c9c11"
+      },
+      {
+        "path": "dist/box3d.mt.inline.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "99e8f6576c698d3f0fe325d2e3c70ef7f0488b95",
+        "size": 1043215,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/99e8f6576c698d3f0fe325d2e3c70ef7f0488b95"
+      },
+      {
+        "path": "dist/box3d.mt.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5609408dbe8b44acb19640e5f9bec2694b76a110",
+        "size": 83991,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/5609408dbe8b44acb19640e5f9bec2694b76a110"
+      },
+      {
+        "path": "dist/box3d.mt.wasm",
+        "mode": "100755",
+        "type": "blob",
+        "sha": "1fafa2f906af0fb3e2199206148586b3d6e52574",
+        "size": 852442,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/1fafa2f906af0fb3e2199206148586b3d6e52574"
+      },
+      {
+        "path": "dist/box3d.wasm",
+        "mode": "100755",
+        "type": "blob",
+        "sha": "50221040acabebd7e88a2624a0e7ba9c65b76908",
+        "size": 837687,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/50221040acabebd7e88a2624a0e7ba9c65b76908"
+      },
+      {
+        "path": "docs",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "7b531c7548fdb62262c61cc7ff97d4eba11c7df4",
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/trees/7b531c7548fdb62262c61cc7ff97d4eba11c7df4"
+      },
+      {
+        "path": "docs/README.template.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6202ef1d9bbcf74319c90cbb1a70628c82a3c8b3",
+        "size": 12896,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/6202ef1d9bbcf74319c90cbb1a70628c82a3c8b3"
+      },
+      {
+        "path": "docs/bodies.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0623af7b10fafb3b0ce535cb5a0d56cdd043986a",
+        "size": 7921,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/0623af7b10fafb3b0ce535cb5a0d56cdd043986a"
+      },
+      {
+        "path": "docs/build.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6765d49b86c12fb6973429666f484170a941239a",
+        "size": 5715,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/6765d49b86c12fb6973429666f484170a941239a"
+      },
+      {
+        "path": "docs/events.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "86af920e7bb25402c8ae405d0f30d4194b32a06d",
+        "size": 5911,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/86af920e7bb25402c8ae405d0f30d4194b32a06d"
+      },
+      {
+        "path": "docs/joints.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "35b7c99de9fe560a3ef781052374666456ead7a5",
+        "size": 4899,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/35b7c99de9fe560a3ef781052374666456ead7a5"
+      },
+      {
+        "path": "docs/memory.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ff96d23a16a2623826c7644cc0eb9c4d19b04e23",
+        "size": 3224,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/ff96d23a16a2623826c7644cc0eb9c4d19b04e23"
+      },
+      {
+        "path": "docs/multithreading.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "77bce35eb1daf6f0a6493521941760c93e9a9175",
+        "size": 1301,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/77bce35eb1daf6f0a6493521941760c93e9a9175"
+      },
+      {
+        "path": "docs/package.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "42a1ea61baec6018e159d8af8742ec043c1d3bb5",
+        "size": 136,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/42a1ea61baec6018e159d8af8742ec043c1d3bb5"
+      },
+      {
+        "path": "docs/queries.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a4b16eb365a5d5e92ac60291a69b5f978a862e89",
+        "size": 4185,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/a4b16eb365a5d5e92ac60291a69b5f978a862e89"
+      },
+      {
+        "path": "docs/quick-start.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "482e7dc61db5eb49c5920829003ca9c311c47e93",
+        "size": 1303,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/482e7dc61db5eb49c5920829003ca9c311c47e93"
+      },
+      {
+        "path": "docs/shapes.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a6b1686667d6c2e31d3c1470db621ab61de4943e",
+        "size": 4155,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/a6b1686667d6c2e31d3c1470db621ab61de4943e"
+      },
+      {
+        "path": "docs/tsconfig.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b675114aa4fa56abceda627b9e3a1a3dd97ddda0",
+        "size": 338,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/b675114aa4fa56abceda627b9e3a1a3dd97ddda0"
+      },
+      {
+        "path": "docs/world.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "bc7cc559df210f6471e6a51d644df178071779e6",
+        "size": 935,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/bc7cc559df210f6471e6a51d644df178071779e6"
+      },
+      {
+        "path": "examples",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "06aaf11075e1fcdeb7b00a99f5d879c53a8397b8",
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/trees/06aaf11075e1fcdeb7b00a99f5d879c53a8397b8"
+      },
+      {
+        "path": "examples/example-add-impulse-at-position.html",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a3f723f312d08555bcec03d7f49d62e9ff2ad41c",
+        "size": 365,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/a3f723f312d08555bcec03d7f49d62e9ff2ad41c"
+      },
+      {
+        "path": "examples/example-angular-damping.html",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3f63227f8f282d36e4602b8c1bbcca89965de120",
+        "size": 349,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/3f63227f8f282d36e4602b8c1bbcca89965de120"
+      },
+      {
+        "path": "examples/example-cast-ray.html",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f8005a1a8273af022854e319e30e52611dbc2fda",
+        "size": 335,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/f8005a1a8273af022854e319e30e52611dbc2fda"
+      },
+      {
+        "path": "examples/example-cast-shape.html",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "27fb3ccd6b28784779b7bfba1715f82894bf96dc",
+        "size": 339,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/27fb3ccd6b28784779b7bfba1715f82894bf96dc"
+      },
+      {
+        "path": "examples/example-ccd.html",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5fdda14b9cbbcde748c4c3d86aedcb6d8ed14265",
+        "size": 352,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/5fdda14b9cbbcde748c4c3d86aedcb6d8ed14265"
+      },
+      {
+        "path": "examples/example-character.html",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "23dc03ad3cad7fedd171d293015fdbd9116e755c",
+        "size": 337,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/23dc03ad3cad7fedd171d293015fdbd9116e755c"
+      },
+      {
+        "path": "examples/example-collision-filtering.html",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8c411d63c57fd3d1842f739d726d0414d93d0f50",
+        "size": 357,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/8c411d63c57fd3d1842f739d726d0414d93d0f50"
+      },
+      {
+        "path": "examples/example-contacts.html",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c51f5f8cc6510c97ca28b7e628676d99aabd8d2d",
+        "size": 335,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/c51f5f8cc6510c97ca28b7e628676d99aabd8d2d"
+      },
+      {
+        "path": "examples/example-conveyor-belt.html",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "26ed21966170ba13a11acb9d89314cb0c19e8be6",
+        "size": 345,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/26ed21966170ba13a11acb9d89314cb0c19e8be6"
+      },
+      {
+        "path": "examples/example-cube-heap.html",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6fd80c1419ad674fac1e1c26d2f93676b387a4ca",
+        "size": 337,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/6fd80c1419ad674fac1e1c26d2f93676b387a4ca"
+      },
+      {
+        "path": "examples/example-events.html",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2973d69d229cba2070d271f1c7df385c9f3ca7b3",
+        "size": 331,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/2973d69d229cba2070d271f1c7df385c9f3ca7b3"
+      },
+      {
+        "path": "examples/example-explosion.html",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "52e8ffab96a8c7c6e3de64554d3c47204bd97853",
+        "size": 337,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/52e8ffab96a8c7c6e3de64554d3c47204bd97853"
+      },
+      {
+        "path": "examples/example-friction.html",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6403b4aad29726e81d437cc052564f8e07dd708e",
+        "size": 335,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/6403b4aad29726e81d437cc052564f8e07dd708e"
+      },
+      {
+        "path": "examples/example-geometry.html",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e3280154cf18e3d26ce45a280cdd0ea7d979778f",
+        "size": 312,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/e3280154cf18e3d26ce45a280cdd0ea7d979778f"
+      },
+      {
+        "path": "examples/example-gjk.html",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6e3c2b17fa97af97b909bbdc95158862e5c2c96d",
+        "size": 334,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/6e3c2b17fa97af97b909bbdc95158862e5c2c96d"
+      },
+      {
+        "path": "examples/example-gravity-factor.html",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d2608c54a69bcb115a79cf56da37f3085dd1e397",
+        "size": 347,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/d2608c54a69bcb115a79cf56da37f3085dd1e397"
+      },
+      {
+        "path": "examples/example-hinge-motor.html",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "009a54737b116a917c619ab55180ec7c7b24c7a2",
+        "size": 341,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/009a54737b116a917c619ab55180ec7c7b24c7a2"
+      },
+      {
+        "path": "examples/example-joints.html",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "cd8fb0778170736e8513c210c86f0c7fda1b057c",
+        "size": 331,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/cd8fb0778170736e8513c210c86f0c7fda1b057c"
+      },
+      {
+        "path": "examples/example-linear-damping.html",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6e026bbcce245d085dc062b1acba8c99504303b8",
+        "size": 347,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/6e026bbcce245d085dc062b1acba8c99504303b8"
+      },
+      {
+        "path": "examples/example-manifold.html",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "65f14b435df70d25b715911c91e42c3cac692323",
+        "size": 335,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/65f14b435df70d25b715911c91e42c3cac692323"
+      },
+      {
+        "path": "examples/example-mesh.html",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "18b91a3f1b88f9c1efb892541ad4bd6de6106fc7",
+        "size": 327,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/18b91a3f1b88f9c1efb892541ad4bd6de6106fc7"
+      },
+      {
+        "path": "examples/example-multithreading.html",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3d26fc01ff624c393f13a79e323ac55d41bad74b",
+        "size": 619,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/3d26fc01ff624c393f13a79e323ac55d41bad74b"
+      },
+      {
+        "path": "examples/example-ragdoll.html",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a2b711787d53b537c47e540658517fb52b2f686a",
+        "size": 333,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/a2b711787d53b537c47e540658517fb52b2f686a"
+      },
+      {
+        "path": "examples/example-replay.html",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "73d1b2b33c22f1f8b9e08d3071dc2ba4e9c8a5fd",
+        "size": 331,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/73d1b2b33c22f1f8b9e08d3071dc2ba4e9c8a5fd"
+      },
+      {
+        "path": "examples/example-restitution.html",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b9be0895a0d5d170ce15fd986c4c465f91d77e90",
+        "size": 341,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/b9be0895a0d5d170ce15fd986c4c465f91d77e90"
+      },
+      {
+        "path": "examples/example-robustness.html",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1c0f93cbb4c8813360bb223cc884b44782c965bd",
+        "size": 339,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/1c0f93cbb4c8813360bb223cc884b44782c965bd"
+      },
+      {
+        "path": "examples/example-sensor.html",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "52603fe897c892afaf81a4ed519438777ae0e8cc",
+        "size": 331,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/52603fe897c892afaf81a4ed519438777ae0e8cc"
+      },
+      {
+        "path": "examples/example-shapes.html",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9897e45c4b2d8d6f93798b81e2bd8180705982f2",
+        "size": 331,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/9897e45c4b2d8d6f93798b81e2bd8180705982f2"
+      },
+      {
+        "path": "examples/example-stacking.html",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ecb12d16e06b79569de76a456cc7e88bc0ff2140",
+        "size": 335,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/ecb12d16e06b79569de76a456cc7e88bc0ff2140"
+      },
+      {
+        "path": "examples/example-static-compound.html",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3dc9cd6ebe29f8df950ed175ab911da75a3e0dba",
+        "size": 349,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/3dc9cd6ebe29f8df950ed175ab911da75a3e0dba"
+      },
+      {
+        "path": "examples/example-tree.html",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "31b441648202bd66071b7da28ee9f431a7433ac0",
+        "size": 335,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/31b441648202bd66071b7da28ee9f431a7433ac0"
+      },
+      {
+        "path": "examples/example-triangle-mesh.html",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2648b7860030419dc60d86b25c5d414f004eaae0",
+        "size": 345,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/2648b7860030419dc60d86b25c5d414f004eaae0"
+      },
+      {
+        "path": "examples/index.html",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5fa7b75219c86f280290cd1ab1517c2f9b501731",
+        "size": 13636,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/5fa7b75219c86f280290cd1ab1517c2f9b501731"
+      },
+      {
+        "path": "examples/package.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f17cc0309c01ead3b6d03d0cf6fbda7f2a153fca",
+        "size": 567,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/f17cc0309c01ead3b6d03d0cf6fbda7f2a153fca"
+      },
+      {
+        "path": "examples/public",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "0de2035f8383a0bdc2d2ec40b4bbdd0232039d8c",
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/trees/0de2035f8383a0bdc2d2ec40b4bbdd0232039d8c"
+      },
+      {
+        "path": "examples/public/coi-serviceworker.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7147e215644581c36beb3686481d2e78fa0f3cf6",
+        "size": 3856,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/7147e215644581c36beb3686481d2e78fa0f3cf6"
+      },
+      {
+        "path": "examples/public/screenshots",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "0895b88fe346338eebf5bd580298d9e1a5a3e6ba",
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/trees/0895b88fe346338eebf5bd580298d9e1a5a3e6ba"
+      },
+      {
+        "path": "examples/public/screenshots/example-add-impulse-at-position.png",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3b1adddbbaf7292923422aee0e7ea3c72d4d1e06",
+        "size": 8918,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/3b1adddbbaf7292923422aee0e7ea3c72d4d1e06"
+      },
+      {
+        "path": "examples/public/screenshots/example-angular-damping.png",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "773322ede0472503d236a1b177ccd44763821d2a",
+        "size": 14448,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/773322ede0472503d236a1b177ccd44763821d2a"
+      },
+      {
+        "path": "examples/public/screenshots/example-cast-ray.png",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d7ce57e231356efd05f7f67ba574e0bdb1a47748",
+        "size": 80725,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/d7ce57e231356efd05f7f67ba574e0bdb1a47748"
+      },
+      {
+        "path": "examples/public/screenshots/example-cast-shape.png",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8862a5892bffebdd8cf9d7f7ea2f65631cc0af03",
+        "size": 63443,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/8862a5892bffebdd8cf9d7f7ea2f65631cc0af03"
+      },
+      {
+        "path": "examples/public/screenshots/example-ccd.png",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7f4a0e6fdb4e96e6d4b13b058544518188bb11fa",
+        "size": 36792,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/7f4a0e6fdb4e96e6d4b13b058544518188bb11fa"
+      },
+      {
+        "path": "examples/public/screenshots/example-character.png",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0799ea8177d9484790d98029a1efc9ea24bd0721",
+        "size": 16818,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/0799ea8177d9484790d98029a1efc9ea24bd0721"
+      },
+      {
+        "path": "examples/public/screenshots/example-collision-filtering.png",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "47564f6810d2c8beaa092f79306d3074b80ee44e",
+        "size": 9359,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/47564f6810d2c8beaa092f79306d3074b80ee44e"
+      },
+      {
+        "path": "examples/public/screenshots/example-contacts.png",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f4b61ec99cfb304c6d5d07ba6f7c3e789c268213",
+        "size": 27740,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/f4b61ec99cfb304c6d5d07ba6f7c3e789c268213"
+      },
+      {
+        "path": "examples/public/screenshots/example-conveyor-belt.png",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d371dbbd6efb39f054b1d6275e6dbfcf5f85590d",
+        "size": 17072,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/d371dbbd6efb39f054b1d6275e6dbfcf5f85590d"
+      },
+      {
+        "path": "examples/public/screenshots/example-cube-heap.png",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1ceb34c51c0a0ef3201382734d4819c676910cad",
+        "size": 45023,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/1ceb34c51c0a0ef3201382734d4819c676910cad"
+      },
+      {
+        "path": "examples/public/screenshots/example-events.png",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1f3be12063b75c94b329ceebfa0d9afe0fecdb11",
+        "size": 21390,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/1f3be12063b75c94b329ceebfa0d9afe0fecdb11"
+      },
+      {
+        "path": "examples/public/screenshots/example-explosion.png",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "aeb6b192722603129ab4186183a4fb176566acdb",
+        "size": 7780,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/aeb6b192722603129ab4186183a4fb176566acdb"
+      },
+      {
+        "path": "examples/public/screenshots/example-friction.png",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9f651b9c6059ab54d6a2556c0db974a8a55cec07",
+        "size": 14664,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/9f651b9c6059ab54d6a2556c0db974a8a55cec07"
+      },
+      {
+        "path": "examples/public/screenshots/example-geometry.png",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c9fc234825ed9a97e8cdf67dda3a94d92394e22c",
+        "size": 17660,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/c9fc234825ed9a97e8cdf67dda3a94d92394e22c"
+      },
+      {
+        "path": "examples/public/screenshots/example-gjk.png",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e03e15d7f31e67b1a04682eaffb3c88dde302248",
+        "size": 6868,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/e03e15d7f31e67b1a04682eaffb3c88dde302248"
+      },
+      {
+        "path": "examples/public/screenshots/example-gravity-factor.png",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "55ae881e4ef7ea6c3ddf6f76fddee2d13c98814b",
+        "size": 19939,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/55ae881e4ef7ea6c3ddf6f76fddee2d13c98814b"
+      },
+      {
+        "path": "examples/public/screenshots/example-hinge-motor.png",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b7f5961f8c35f292e5816b822b1fe0e1bf1265e9",
+        "size": 13419,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/b7f5961f8c35f292e5816b822b1fe0e1bf1265e9"
+      },
+      {
+        "path": "examples/public/screenshots/example-joints.png",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9191279e955f3b899749e6dfc164bf19b90d11a2",
+        "size": 14052,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/9191279e955f3b899749e6dfc164bf19b90d11a2"
+      },
+      {
+        "path": "examples/public/screenshots/example-linear-damping.png",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3df5ddfda92ed234687d08c7e639d3e9748c0040",
+        "size": 9063,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/3df5ddfda92ed234687d08c7e639d3e9748c0040"
+      },
+      {
+        "path": "examples/public/screenshots/example-manifold.png",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4d1298b54cd0a3e693af35ddd2cf9e1cc1d91407",
+        "size": 8813,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/4d1298b54cd0a3e693af35ddd2cf9e1cc1d91407"
+      },
+      {
+        "path": "examples/public/screenshots/example-mesh.png",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e64542e18173a6a829bb4823359b69d252d3ffdf",
+        "size": 36963,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/e64542e18173a6a829bb4823359b69d252d3ffdf"
+      },
+      {
+        "path": "examples/public/screenshots/example-multithreading.png",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1a57be476eeb6e107bf27ea4a94f506f288184d6",
+        "size": 78414,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/1a57be476eeb6e107bf27ea4a94f506f288184d6"
+      },
+      {
+        "path": "examples/public/screenshots/example-ragdoll.png",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b840e492bac4b754a326a6a0482b136b1f7bc6aa",
+        "size": 19738,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/b840e492bac4b754a326a6a0482b136b1f7bc6aa"
+      },
+      {
+        "path": "examples/public/screenshots/example-replay.png",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5da8a61604e819cc77abdfd96f03c81d1887b612",
+        "size": 8706,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/5da8a61604e819cc77abdfd96f03c81d1887b612"
+      },
+      {
+        "path": "examples/public/screenshots/example-restitution.png",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d2ccfc34114567b9b39b81a4dc9ccb54019672df",
+        "size": 15432,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/d2ccfc34114567b9b39b81a4dc9ccb54019672df"
+      },
+      {
+        "path": "examples/public/screenshots/example-robustness.png",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "457c1aa6e81692094a777819660271ba79e6d4eb",
+        "size": 21154,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/457c1aa6e81692094a777819660271ba79e6d4eb"
+      },
+      {
+        "path": "examples/public/screenshots/example-sensor.png",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4cdc0ba30082f49e9dc7afecaff11b00310b312d",
+        "size": 5975,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/4cdc0ba30082f49e9dc7afecaff11b00310b312d"
+      },
+      {
+        "path": "examples/public/screenshots/example-shapes.png",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "90c9bb55e6fb8dd0cec4eb7cc0bb8191a1615c91",
+        "size": 97849,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/90c9bb55e6fb8dd0cec4eb7cc0bb8191a1615c91"
+      },
+      {
+        "path": "examples/public/screenshots/example-stacking.png",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "cc285f94e31da9a6964ed64a828c32bc9159f771",
+        "size": 12732,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/cc285f94e31da9a6964ed64a828c32bc9159f771"
+      },
+      {
+        "path": "examples/public/screenshots/example-static-compound.png",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a50e01421143664c70ded8668d5f59bd566968cb",
+        "size": 24183,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/a50e01421143664c70ded8668d5f59bd566968cb"
+      },
+      {
+        "path": "examples/public/screenshots/example-tree.png",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0e66eee1d05ef43494b1e896aac408661fa7560b",
+        "size": 32158,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/0e66eee1d05ef43494b1e896aac408661fa7560b"
+      },
+      {
+        "path": "examples/public/screenshots/example-triangle-mesh.png",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4ff0eee4dd98d6484b5a4d13225b64fd753fffde",
+        "size": 76535,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/4ff0eee4dd98d6484b5a4d13225b64fd753fffde"
+      },
+      {
+        "path": "examples/scripts",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "fbc40a5af46d2d2a8f45412ce0b6586161f8a6f2",
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/trees/fbc40a5af46d2d2a8f45412ce0b6586161f8a6f2"
+      },
+      {
+        "path": "examples/scripts/screenshot.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6e41ef0bca7cdca2730b12aa448f191f5f97d70b",
+        "size": 4840,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/6e41ef0bca7cdca2730b12aa448f191f5f97d70b"
+      },
+      {
+        "path": "examples/src",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "85402b3de11ca6f108b5a66cd68f8664f141a3b9",
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/trees/85402b3de11ca6f108b5a66cd68f8664f141a3b9"
+      },
+      {
+        "path": "examples/src/box3d-three.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9475751d65c1fa6ec65cb360b952a8086e5de867",
+        "size": 5201,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/9475751d65c1fa6ec65cb360b952a8086e5de867"
+      },
+      {
+        "path": "examples/src/example-add-impulse-at-position.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7a5b3a072254ecaf5800b7ca22fdf2d1366c224f",
+        "size": 2765,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/7a5b3a072254ecaf5800b7ca22fdf2d1366c224f"
+      },
+      {
+        "path": "examples/src/example-angular-damping.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a9423f77a93da2f1d6c2d78262a32e11587c2853",
+        "size": 2364,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/a9423f77a93da2f1d6c2d78262a32e11587c2853"
+      },
+      {
+        "path": "examples/src/example-cast-ray.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d4dd27deae34d686d6c32683cf321c51f8e6c69a",
+        "size": 4721,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/d4dd27deae34d686d6c32683cf321c51f8e6c69a"
+      },
+      {
+        "path": "examples/src/example-cast-shape.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a7957c5a2df48925bc15318adc913bb5e0ebf87a",
+        "size": 4852,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/a7957c5a2df48925bc15318adc913bb5e0ebf87a"
+      },
+      {
+        "path": "examples/src/example-ccd.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "17c102137e11d85ea2a1bbfb0920e6246c25b981",
+        "size": 2467,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/17c102137e11d85ea2a1bbfb0920e6246c25b981"
+      },
+      {
+        "path": "examples/src/example-character.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2a10dfa7a9931b23fb2fa59f3b42c47a8e6e5cf3",
+        "size": 18003,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/2a10dfa7a9931b23fb2fa59f3b42c47a8e6e5cf3"
+      },
+      {
+        "path": "examples/src/example-collision-filtering.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "29587de639602a651deb6335683d3e46c651e321",
+        "size": 2540,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/29587de639602a651deb6335683d3e46c651e321"
+      },
+      {
+        "path": "examples/src/example-contacts.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0636082ae16f3193bb7417d38e301523695289dd",
+        "size": 5665,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/0636082ae16f3193bb7417d38e301523695289dd"
+      },
+      {
+        "path": "examples/src/example-conveyor-belt.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "fb9569ec4d715ce43d35436b2633976221e7e869",
+        "size": 3386,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/fb9569ec4d715ce43d35436b2633976221e7e869"
+      },
+      {
+        "path": "examples/src/example-cube-heap.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "48deb6188b812eb9b7904ebe2d7607405c3b1f4e",
+        "size": 2408,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/48deb6188b812eb9b7904ebe2d7607405c3b1f4e"
+      },
+      {
+        "path": "examples/src/example-events.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3a6e53d755e840a57686e98533a1abca6068584e",
+        "size": 4968,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/3a6e53d755e840a57686e98533a1abca6068584e"
+      },
+      {
+        "path": "examples/src/example-explosion.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "37e52a007eab07e700998c39c9a366f3e4a55468",
+        "size": 2749,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/37e52a007eab07e700998c39c9a366f3e4a55468"
+      },
+      {
+        "path": "examples/src/example-friction.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1600cab6e5a893909671a7955ac4be6e4b58f374",
+        "size": 4152,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/1600cab6e5a893909671a7955ac4be6e4b58f374"
+      },
+      {
+        "path": "examples/src/example-geometry.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a744b169bc9b70e1157a7503207c784e2da3a45f",
+        "size": 3838,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/a744b169bc9b70e1157a7503207c784e2da3a45f"
+      },
+      {
+        "path": "examples/src/example-gjk.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "805d628747139e7d503006a07ce98487ea641e0a",
+        "size": 3015,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/805d628747139e7d503006a07ce98487ea641e0a"
+      },
+      {
+        "path": "examples/src/example-gravity-factor.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a53a77f4eafce2bd13ca3b3b1bfd17d3dc63aa26",
+        "size": 2521,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/a53a77f4eafce2bd13ca3b3b1bfd17d3dc63aa26"
+      },
+      {
+        "path": "examples/src/example-hinge-motor.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d4758820884071d399a5869dcfd55cdd22516c3b",
+        "size": 2776,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/d4758820884071d399a5869dcfd55cdd22516c3b"
+      },
+      {
+        "path": "examples/src/example-joints.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1266883f0932925896908942f54946b9d3929f17",
+        "size": 8659,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/1266883f0932925896908942f54946b9d3929f17"
+      },
+      {
+        "path": "examples/src/example-linear-damping.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "28d08051628689f7cb9d8d7bc91551976f7b54f7",
+        "size": 2768,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/28d08051628689f7cb9d8d7bc91551976f7b54f7"
+      },
+      {
+        "path": "examples/src/example-manifold.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "fd34554344cc5b21a7ec89a43a182f58cf934bde",
+        "size": 5105,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/fd34554344cc5b21a7ec89a43a182f58cf934bde"
+      },
+      {
+        "path": "examples/src/example-mesh.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "50cee79925ffa7dbd7b2dc9eabd4248a150970c0",
+        "size": 3356,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/50cee79925ffa7dbd7b2dc9eabd4248a150970c0"
+      },
+      {
+        "path": "examples/src/example-multithreading.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "be3fec891a486b22e00228db9cbd99f279b4ef7e",
+        "size": 4289,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/be3fec891a486b22e00228db9cbd99f279b4ef7e"
+      },
+      {
+        "path": "examples/src/example-ragdoll.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "dbc937e6f6c94093aa68a175c7be326812c10f8b",
+        "size": 2456,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/dbc937e6f6c94093aa68a175c7be326812c10f8b"
+      },
+      {
+        "path": "examples/src/example-replay.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8ff10ed1a1af8760342bde6153f7015a03e71fb8",
+        "size": 3557,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/8ff10ed1a1af8760342bde6153f7015a03e71fb8"
+      },
+      {
+        "path": "examples/src/example-restitution.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "fd4983c383b5a4da87e1721e973c8b2bd317f184",
+        "size": 2750,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/fd4983c383b5a4da87e1721e973c8b2bd317f184"
+      },
+      {
+        "path": "examples/src/example-robustness.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f32070123795e844208de55f24781fd1129e91e0",
+        "size": 4286,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/f32070123795e844208de55f24781fd1129e91e0"
+      },
+      {
+        "path": "examples/src/example-sensor.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "357c076aa60998fa34cdeec63c77ff5bd1ed3ebf",
+        "size": 3533,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/357c076aa60998fa34cdeec63c77ff5bd1ed3ebf"
+      },
+      {
+        "path": "examples/src/example-shapes.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5304fdffc6c894f5533cea998e9117e635033b63",
+        "size": 4767,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/5304fdffc6c894f5533cea998e9117e635033b63"
+      },
+      {
+        "path": "examples/src/example-stacking.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ee698fb427a51e1f3aee7fd8fcf9ade94ae181ab",
+        "size": 2073,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/ee698fb427a51e1f3aee7fd8fcf9ade94ae181ab"
+      },
+      {
+        "path": "examples/src/example-static-compound.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c639b2570a7afc0ebac3e44ca774f5e57fa5daea",
+        "size": 2955,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/c639b2570a7afc0ebac3e44ca774f5e57fa5daea"
+      },
+      {
+        "path": "examples/src/example-tree.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f766023426b536aa2de1b9a0daebe4fbec3b0b14",
+        "size": 6101,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/f766023426b536aa2de1b9a0daebe4fbec3b0b14"
+      },
+      {
+        "path": "examples/src/example-triangle-mesh.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4be5857e3dd3a3c2788c48ac92674181a463eece",
+        "size": 3025,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/4be5857e3dd3a3c2788c48ac92674181a463eece"
+      },
+      {
+        "path": "examples/src/example.css",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "39b6a382cac28fb6bec78d6912776635c92f1b4c",
+        "size": 423,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/39b6a382cac28fb6bec78d6912776635c92f1b4c"
+      },
+      {
+        "path": "examples/src/examples.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b86b1fb47f8baa00437435c11156e9cae59b3752",
+        "size": 8544,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/b86b1fb47f8baa00437435c11156e9cae59b3752"
+      },
+      {
+        "path": "examples/src/harness.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a61ec6238820ad40f8bbe1cd3c6e9f9940f4cc6d",
+        "size": 3083,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/a61ec6238820ad40f8bbe1cd3c6e9f9940f4cc6d"
+      },
+      {
+        "path": "examples/src/math.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "bf152f6ca447d9eea000b6a09cefd4ecd3b3de9c",
+        "size": 611,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/bf152f6ca447d9eea000b6a09cefd4ecd3b3de9c"
+      },
+      {
+        "path": "examples/src/ragdoll-human.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e60d0c3bb7fa86b617b763565110e63b3d502f4f",
+        "size": 11966,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/e60d0c3bb7fa86b617b763565110e63b3d502f4f"
+      },
+      {
+        "path": "examples/src/stats.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "28d2365603fbdf37a80acd5b66023587a1923af3",
+        "size": 5869,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/28d2365603fbdf37a80acd5b66023587a1923af3"
+      },
+      {
+        "path": "examples/tsconfig.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "602a89abf9d2ddfbc68a7cd9f87a338287bfe5b2",
+        "size": 454,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/602a89abf9d2ddfbc68a7cd9f87a338287bfe5b2"
+      },
+      {
+        "path": "examples/vite-env.d.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "11f02fe2a0061d6e6e1f271b21da95423b448b32",
+        "size": 38,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/11f02fe2a0061d6e6e1f271b21da95423b448b32"
+      },
+      {
+        "path": "examples/vite.config.ts",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "047bad70fdd33091a1be6dc5cba7d98b5bc9c382",
+        "size": 1318,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/047bad70fdd33091a1be6dc5cba7d98b5bc9c382"
+      },
+      {
+        "path": "package.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "37b2bd53efe62e9056b63020ba52bfa7065d4280",
+        "size": 1421,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/37b2bd53efe62e9056b63020ba52bfa7065d4280"
+      },
+      {
+        "path": "pnpm-lock.yaml",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "746914b2ac5d8638b35db8e93be5c4d80d1501ae",
+        "size": 27647,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/746914b2ac5d8638b35db8e93be5c4d80d1501ae"
+      },
+      {
+        "path": "pnpm-workspace.yaml",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ff26c175135a4f14c79f3a37b7603b6132d9d484",
+        "size": 36,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/ff26c175135a4f14c79f3a37b7603b6132d9d484"
+      },
+      {
+        "path": "scripts",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "3478046d2a60a11ca8ed0740596221b6d452e759",
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/trees/3478046d2a60a11ca8ed0740596221b6d452e759"
+      },
+      {
+        "path": "scripts/build.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a8dbdf147a9371ab72ddaafabcfc42cbf6cc0ec3",
+        "size": 20013,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/a8dbdf147a9371ab72ddaafabcfc42cbf6cc0ec3"
+      },
+      {
+        "path": "src",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "c09a020ac88b2ba2926ea808bfc360a0174c013e",
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/trees/c09a020ac88b2ba2926ea808bfc360a0174c013e"
+      },
+      {
+        "path": "src/bindings.cpp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1f639ab798ff0e35e043b6fa8f00d435df84ff29",
+        "size": 120899,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/1f639ab798ff0e35e043b6fa8f00d435df84ff29"
+      },
+      {
+        "path": "src/facade.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "869940906c04aecacd29cad4a949351de312757d",
+        "size": 22024,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/869940906c04aecacd29cad4a949351de312757d"
+      },
+      {
+        "path": "test",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "cb9074e4c6241e962377ec618b2a0dc6d26abde3",
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/trees/cb9074e4c6241e962377ec618b2a0dc6d26abde3"
+      },
+      {
+        "path": "test/smoke.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3f0f54f4991829bd2640862dfd1ba34fca6d3045",
+        "size": 9452,
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/blobs/3f0f54f4991829bd2640862dfd1ba34fca6d3045"
+      },
+      {
+        "path": "vendor",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "334806e9aaf96bd1d6360f238b967528b93afb1f",
+        "url": "https://api.github.com/repos/isaac-mason/box3d.js/git/trees/334806e9aaf96bd1d6360f238b967528b93afb1f"
+      },
+      {
+        "path": "vendor/box3d",
+        "mode": "160000",
+        "type": "commit",
+        "sha": "8441b4a06d6d09dcfb0b0f704df4d847d1437b92"
+      }
+    ],
+    "truncated": false
+  }
+}

@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>AIR 礼物工坊 · EX09 开发纵切</title>
+        <link rel="stylesheet" href="./style.css" />
+        <script type="importmap">
+            { "imports": { "cocosair": "/runtime/cocosair.module.js" } }
+        </script>
+    </head>
+    <body>
+        <header>
+            <div class="brand">AIR<span>礼物工坊</span></div>
+            <span class="badge">EX09 · 开发中 / 非完整游戏</span>
+        </header>
+        <main>
+            <section id="scene-host" class="stage" aria-label="真实 CocosAirJS 工坊场景">
+                <canvas id="GameCanvas"></canvas>
+                <div class="stage-label">
+                    <span class="eyebrow">WORKSHOP / PHYSICS PREVIEW</span
+                    ><strong id="profile-name">加载真实 Box3D 场景…</strong><span id="alignment" aria-live="off"></span>
+                </div>
+                <div class="legend"><span>① 备货区</span><span>② 称重台</span><span>③ 装箱与出货槽</span></div>
+            </section>
+            <aside>
+                <p class="eyebrow">3 分钟 · 3 份礼盒 · 原计划目标</p>
+                <h1>把心意，<br />稳稳装好。</h1>
+                <p id="status" role="status">正在加载匹配的引擎与 WASM。不会使用替代物理或动画结果。</p>
+                <section class="card">
+                    <div class="row">
+                        <span id="order-label">第一份 · 入门礼盒</span><span class="tag" id="order-state">未开放</span>
+                    </div>
+                    <h2 id="order-items">星盒 ＋ 愿望瓶</h2>
+                    <p id="order-mass">目标 0.60 kg · 必须逐件称重后真实出货</p>
+                    <div class="row metrics">
+                        <span>订单 <b id="orders-done">0 / 3</b></span
+                        ><span>得分 <b id="score">0</b></span
+                        ><span>正式计时 <b id="round-time">未开始</b></span>
+                    </div>
+                </section>
+                <section class="card scale">
+                    <div class="row"><span>称重台 / 实例核验</span><span>⚖</span></div>
+                    <div id="scale-value">— kg</div>
+                    <p id="scale-status">称重等待 Box / Capsule 公开接触能力</p>
+                    <small id="scale-history">尚无历史称重凭证</small>
+                </section>
+                <div class="row">
+                    <span id="stock">— 件</span><span>固定步 <b id="tick">0</b></span>
+                </div>
+                <div class="actions">
+                    <button id="pause">暂停模拟</button><button id="view">俯视</button
+                    ><button id="reset">重置当前场景</button><button id="export">导出诊断 JSON</button
+                    ><button id="export-gzip" disabled>无损压缩完整 JSON.gz</button>
+                    <button id="export-committed-motion" disabled>导出当前已提交状态</button>
+                </div>
+                <small id="export-status" role="status"></small>
+                <small id="committed-motion-export-status" role="status"
+                    >请先手动暂停；只读快照不证明 SDK 无待写入。</small
+                >
+                <div class="actions unavailable">
+                    <button id="start-round" disabled>开始正式一局</button
+                    ><button id="attach" disabled>吸附 / 释放</button><button id="submit-order" disabled>发货</button
+                    ><button id="door-control" hidden>门验证：开启</button
+                    ><button id="recover" disabled>掉落回收</button
+                    ><button id="repack" hidden disabled>重新装箱（扣5秒，重新称重）</button>
+                </div>
+                <details id="agent-replay" hidden>
+                    <summary>AGENT · 可见固定步动作回放</summary>
+                    <p>
+                        先开始一局。at 为本段起点后的真实 active tick
+                        偏移；仅方向、吸附释放、发货、回收。暂停/手动输入取消旧回放，拒绝明确停止。结果只由真实物理订单决定。
+                    </p>
+                    <textarea id="replay-script" rows="8" style="width: 100%" spellcheck="false">
+[{"at":0,"command":"set-axes","payload":{"x":0.25,"y":0,"z":0}},{"at":12,"command":"set-axes","payload":{"x":0,"y":0,"z":0}},{"at":24,"command":"set-axes","payload":{"x":0,"y":0,"z":0}}]</textarea>
+                    <div class="actions">
+                        <button id="replay-run">运行 AGENT 回放</button><button id="replay-cancel">取消并暂停</button>
+                    </div>
+                    <p id="replay-state">未启动。JSON 随原始诊断导出。</p>
+                </details>
+                <details id="fine-controls" hidden>
+                    <summary>精细移动 · 原最大速度的 1/4</summary>
+                    <p>按住移动，松开减速。与键盘共用真实查询、加速度和安全停止；不会自动对齐。</p>
+                    <div class="actions">
+                        <button id="fine-left">← 左</button><button id="fine-right">右 →</button>
+                        <button id="fine-back">↑ 后</button><button id="fine-front">前 ↓</button>
+                        <button id="fine-down">降低 Q</button><button id="fine-up">升高 E</button>
+                    </div>
+                </details>
+                <p class="dependency" id="dependency">
+                    正在核对本页真实物理能力。正式三单、提交计分与整体验收尚未完成。
+                </p>
+                <details open>
+                    <summary>独立称重诊断 / 重新载入</summary>
+                    <p id="contact-note">
+                        独立测试商品仅在建场景时放置。实际接触能力以本页运行状态为准，不进入正式订单账本。
+                    </p>
+                    <nav>
+                        <a href="?profile=scale-A">星盒 0.35 kg</a><a href="?profile=scale-B">愿望瓶 0.25 kg</a
+                        ><a href="?profile=scale-C">机器人 0.60 kg</a><a href="?profile=scale-two">双件拒绝</a
+                        ><a href="?profile=scale-edge">越界拒绝</a><a href="?profile=inventory">12 件正常库存</a>
+                    </nav>
+                </details>
+                <details>
+                    <summary>完整 EX09 尚未完成的验收</summary>
+                    <ul>
+                        <li>BIZ01：五布局三单真实履约、正常余量20秒</li>
+                        <li>BIZ02：公开 target / Fixed / sweep 搬运、暂停清输入</li>
+                        <li>BIZ03：单件支承称重、悬吊/双件/垫高/越界负例</li>
+                        <li>BIZ04：全形状装箱、45 tick稳定、错单修正</li>
+                        <li>BIZ05：Hinge门、完整越面、双件原子出货、卡货重试</li>
+                        <li>BIZ06：固定时钟、截止先核验、恢复惩罚与结算</li>
+                        <li>BIZ07：桌面/Android/iOS真机与3位首次体验者</li>
+                        <li>BIZ08：5正常+15异常完整生命周期及资源回收</li>
+                        <li>完整录像、性能预算、第二主题改版与可复用Runner</li>
+                    </ul>
+                    <p>全部正式 BIZ 保留 NOT_RUN / 外部资源阻塞。这里的CPU检查和诊断不能替代。</p>
+                </details>
+                <details>
+                    <summary>实时诊断（默认收起）</summary>
+                    <pre id="debug"></pre>
+                    <button id="close">关闭场景</button>
+                </details>
+                <footer id="build">CocosAirJS · Box3D Single Thread</footer>
+            </aside>
+        </main>
+        <script type="module" src="./src/main.ts"></script>
+    </body>
+</html>

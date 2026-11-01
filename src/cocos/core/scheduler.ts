@@ -24,10 +24,17 @@
 */
 
 import { IDGenerator } from './utils/id-generator';
+import { installComponentActivityTimerSource } from '../scene-graph/component-activity-control';
 import { createMap } from './utils/js';
 import { System, SystemPriority } from './system';
 import { legacyCC } from './global-exports';
 import { errorID, warnID, logID, assertID } from './platform/debug';
+
+const activityTimerSchedulerInstances = new WeakSet<object>();
+/** Read-only original-constructor brand; arbitrary source objects cannot self-authorize. */
+export function isOriginalComponentActivityTimerScheduler (value: object): boolean {
+    return activityTimerSchedulerInstances.has(value);
+}
 
 const MAX_POOL_SIZE = 20;
 
@@ -400,6 +407,40 @@ export class Scheduler extends System {
 
         this._arrayForTimers = [];  // Speed up indexing
         // this._arrayForUpdates = [];   // Speed up indexing
+        const identities = new WeakMap<object, object>();
+        const identity = (entry: object): object => {
+            let value = identities.get(entry);
+            if (!value) { value = Object.freeze({}); identities.set(entry, value); }
+            return value;
+        };
+        activityTimerSchedulerInstances.add(this);
+        try {
+            installComponentActivityTimerSource(this, (target) => {
+                // Match actual target identity, not replaceable target.uuid/id getters.
+                const timers = Object.values(this._hashForTimers).filter((entry) => entry.target === target);
+                const updates = Object.values(this._hashForUpdates).filter((entry) => entry.target === target);
+                const timerList = this._arrayForTimers.filter((entry) => entry.target === target);
+                const updateList = [...this._updatesNegList, ...this._updates0List, ...this._updatesPosList]
+                    .filter((entry) => entry.target === target);
+                if (timers.length > 1 || updates.length > 1 || timerList.length !== timers.length ||
+                    updateList.length !== updates.length || timerList[0] !== timers[0] ||
+                    updateList[0] !== updates[0]?.entry || (updates[0] && updates[0].entry?.target !== target))
+                    throw new Error('Observed Scheduler target membership is inconsistent.');
+                const timer = timers[0], update = updates[0];
+                return Object.freeze({
+                    containerIdentities: Object.freeze([this._hashForTimers, this._arrayForTimers, this._hashForUpdates,
+                        this._updatesNegList, this._updates0List, this._updatesPosList].map(identity)),
+                    timerIdentity: timer ? identity(timer) : null,
+                    timerPaused: timer ? timer.paused : null,
+                    updateIdentity: update ? identity(update) : null,
+                    updateEntryIdentity: update?.entry ? identity(update.entry) : null,
+                    updatePaused: update?.entry ? update.entry.paused : null,
+                });
+        });
+        } catch (error) {
+            activityTimerSchedulerInstances.delete(this);
+            throw error;
+        }
     }
 
     // -----------------------public method-------------------------

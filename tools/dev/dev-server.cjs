@@ -25,8 +25,11 @@ const { spawn } = require('child_process');
 const esbuild = require('esbuild');
 
 const ROOT = path.resolve(__dirname, '..', '..');
+// EX02 must use an explicitly selected, identity-bound ST runtime, never /build fallback.
+const { createGalleryRuntimeRoute } = require('../../examples/box3d-compound-bowling/runtime-route.cjs');
+const ex02RuntimeRoute = createGalleryRuntimeRoute({ runtime: process.env.BOX3D_RUNTIME });
 const args = process.argv.slice(2);
-function argOf (name, def) {
+function argOf(name, def) {
     const i = args.indexOf(name);
     return i >= 0 ? args[i + 1] : def;
 }
@@ -38,14 +41,19 @@ const MANUAL_DIR = path.join(ROOT, 'docs', 'manual');
 const MANIFEST_PATH = path.join(EXAMPLES_DIR, 'files.json');
 var examples = [];
 if (fs.existsSync(MANIFEST_PATH)) {
-  try {
-    var manifestData = JSON.parse(fs.readFileSync(MANIFEST_PATH, 'utf8'));
-    examples = manifestData.examples.map(function(e) { return e.dir; });
-  } catch(e) { /* fallback below */ }
+    try {
+        var manifestData = JSON.parse(fs.readFileSync(MANIFEST_PATH, 'utf8'));
+        examples = manifestData.examples.map(function (e) {
+            return e.dir;
+        });
+    } catch (e) {
+        /* fallback below */
+    }
 }
 if (!examples.length) {
-  examples = fs.readdirSync(EXAMPLES_DIR)
-    .filter(function(d) { return fs.existsSync(path.join(EXAMPLES_DIR, d, 'index.html')); });
+    examples = fs.readdirSync(EXAMPLES_DIR).filter(function (d) {
+        return fs.existsSync(path.join(EXAMPLES_DIR, d, 'index.html'));
+    });
 }
 const example = argOf('--example', 'starter');
 const port = Number(argOf('--port', '7454'));
@@ -59,7 +67,7 @@ let reloadToken = Date.now();
 let building = false;
 let pendingChannel = null;
 let rebuildTimer;
-function scheduleRebuild (channel, reason) {
+function scheduleRebuild(channel, reason) {
     clearTimeout(rebuildTimer);
     rebuildTimer = setTimeout(() => rebuild(channel, reason), 200);
 }
@@ -69,14 +77,14 @@ const devStats = {
     startedAt: new Date().toISOString(),
     coldBuildMs: null, // dev server 启动后的第一次 engine/air rebuild 记为冷/温基准之外首次
     engineRebuilds: [], // [{ms, at}]
-    airRebuilds: [],    // [{ms, at}]
+    airRebuilds: [], // [{ms, at}]
     exampleReloads: 0,
 };
 
 // ---- Task 13：构建状态（错误可见性） ----
 let lastBuild = { channel: null, ok: null, ms: 0, error: '', at: '' };
 
-function classify (relFile) {
+function classify(relFile) {
     let f = relFile.replace(/\\/g, '/');
     // fs.watch 的 file 相对于被监听目录（src/ 或 examples/），归一化为仓库相对路径
     if (!f.startsWith('src/') && !f.startsWith('examples/')) f = 'src/' + f;
@@ -87,8 +95,11 @@ function classify (relFile) {
     return null;
 }
 
-function rebuild (channel, reason) {
-    if (building) { pendingChannel = channel; return; }
+function rebuild(channel, reason) {
+    if (building) {
+        pendingChannel = channel;
+        return;
+    }
     building = true;
     const started = Date.now();
     console.log(`[dev] ${channel} rebuild (${reason}) ...`);
@@ -109,10 +120,20 @@ function rebuild (channel, reason) {
             console.log(`[dev] ${channel} rebuild ok in ${(ms / 1000).toFixed(1)}s (reload browser)`);
         } else {
             // Task 13：构建失败不清 reloadToken（浏览器保留上一个可用 bundle），状态经 /__build_status 暴露
-            lastBuild = { channel, ok: false, ms, error: `build.cjs exited with code ${code} (see terminal)`, at: new Date().toISOString() };
+            lastBuild = {
+                channel,
+                ok: false,
+                ms,
+                error: `build.cjs exited with code ${code} (see terminal)`,
+                at: new Date().toISOString(),
+            };
             console.error(`[dev] ${channel} rebuild FAILED in ${(ms / 1000).toFixed(1)}s, waiting for next change`);
         }
-        if (pendingChannel) { const c = pendingChannel; pendingChannel = null; rebuild(c, 'pending change'); }
+        if (pendingChannel) {
+            const c = pendingChannel;
+            pendingChannel = null;
+            rebuild(c, 'pending change');
+        }
     });
 }
 
@@ -170,7 +191,7 @@ const MIME = {
 };
 
 const fileCache = new Map();
-function serveFile (res, file) {
+function serveFile(res, file) {
     const ext = path.extname(file).toLowerCase();
     res.writeHead(200, { 'Cache-Control': 'no-store', 'Content-Type': MIME[ext] || 'application/octet-stream' });
     try {
@@ -190,7 +211,7 @@ function serveFile (res, file) {
 
 // ---- V0.5.1 T3/T4：tools/debug 入口按需 bundle（mtime 缓存，dev-only） ----
 const debugBundleCache = new Map();
-function serveDebugBundle (res, file) {
+function serveDebugBundle(res, file) {
     try {
         const st = fs.statSync(file);
         let entry = debugBundleCache.get(file);
@@ -210,7 +231,9 @@ function serveDebugBundle (res, file) {
             });
             entry = { mtime: st.mtimeMs, data: Buffer.from(result.outputFiles[0].contents) };
             debugBundleCache.set(file, entry);
-            console.log(`[dev] debug bundle: ${path.relative(ROOT, file)} (${(entry.data.length / 1024).toFixed(0)}KB)`);
+            console.log(
+                `[dev] debug bundle: ${path.relative(ROOT, file)} (${(entry.data.length / 1024).toFixed(0)}KB)`,
+            );
         }
         res.writeHead(200, { 'Cache-Control': 'no-store', 'Content-Type': MIME['.js'] });
         res.end(entry.data);
@@ -222,7 +245,8 @@ function serveDebugBundle (res, file) {
 }
 
 // ---- example .ts 即时编译（esbuild transform + mtime 缓存） ----
-const tsCache = new Map();function serveExampleTs (res, file) {
+const tsCache = new Map();
+function serveExampleTs(res, file) {
     try {
         const source = fs.readFileSync(file, 'utf8');
         let entry = tsCache.get(file);
@@ -238,8 +262,10 @@ const tsCache = new Map();function serveExampleTs (res, file) {
             tsCache.set(file, entry);
         }
         if (entry.warnings && entry.warnings.length) {
-            console.warn(`[dev] esbuild warnings in ${path.relative(ROOT, file)}:`,
-                entry.warnings.map((w) => w.text).join('; '));
+            console.warn(
+                `[dev] esbuild warnings in ${path.relative(ROOT, file)}:`,
+                entry.warnings.map((w) => w.text).join('; '),
+            );
         }
         res.writeHead(200, { 'Cache-Control': 'no-store', 'Content-Type': MIME['.js'] });
         res.end(entry.data);
@@ -259,8 +285,13 @@ const server = http.createServer((req, res) => {
     // 防御 '//'（协议相对形态会让 new URL 抛 Invalid URL 并打死 server）
     const url = new URL(String(req.url || '/').replace(/^\/{2,}/, '/'), `http://127.0.0.1:${port}`);
     const p = decodeURIComponent(url.pathname);
+    if (ex02RuntimeRoute(p, res)) return;
 
-    if (p === '/favicon.ico') { res.writeHead(204); res.end(); return; }
+    if (p === '/favicon.ico') {
+        res.writeHead(204);
+        res.end();
+        return;
+    }
     if (p === '/__runtime-assets.js') {
         return serveFile(res, path.join(ROOT, 'tools', 'verify', 'runtime-assets.js'));
     }
@@ -306,7 +337,9 @@ setTimeout(poll,1000);})();`);
     if (p === '/__air-test.html') {
         // 诊断页：仅 import 引擎 bundle（不初始化设备），结果写入 title
         res.writeHead(200, { 'Cache-Control': 'no-store', 'Content-Type': 'text/html; charset=utf-8' });
-        res.end('<!DOCTYPE html><html><head><title>air-test-start</title></head><body><script>window.__errs=[];window.onerror=function(){window.__errs.push([].slice.call(arguments).map(String).join(" | ").slice(0,400));};window.addEventListener("unhandledrejection",function(e){window.__errs.push("REJ: "+String(e.reason&&(e.reason.stack||e.reason)||e.reason).slice(0,600));});</script><script type="module">import * as m from "/build/cocosair.module.js";document.title="air-test-ok:"+Object.keys(m).length+":"+typeof m.createAirApp;window.onerror=function(e){document.title="air-test-err:"+e;};</script></body></html>');
+        res.end(
+            '<!DOCTYPE html><html><head><title>air-test-start</title></head><body><script>window.__errs=[];window.onerror=function(){window.__errs.push([].slice.call(arguments).map(String).join(" | ").slice(0,400));};window.addEventListener("unhandledrejection",function(e){window.__errs.push("REJ: "+String(e.reason&&(e.reason.stack||e.reason)||e.reason).slice(0,600));});</script><script type="module">import * as m from "/build/cocosair.module.js";document.title="air-test-ok:"+Object.keys(m).length+":"+typeof m.createAirApp;window.onerror=function(e){document.title="air-test-err:"+e;};</script></body></html>',
+        );
         return;
     }
     if (p === '/__air-prelude.js') {
@@ -339,23 +372,35 @@ b.onclick=function(){
         // 按需 esbuild bundle（mtime 缓存）——这些文件不在默认 runtime bundle 内，
         // 仅 dev 页面显式 import('/__debug/...') 时加载。
         const rel = p.slice('/__debug/'.length).replace(/\\/g, '/');
-        if (!/^[\w.-]+(\.ts|\.js)$/.test(rel)) { res.writeHead(404); res.end('not found (debug?)'); return; }
+        if (!/^[\w.-]+(\.ts|\.js)$/.test(rel)) {
+            res.writeHead(404);
+            res.end('not found (debug?)');
+            return;
+        }
         const file = path.join(ROOT, 'tools', 'debug', rel.replace(/\.js$/, '.ts'));
-        if (!fs.existsSync(file)) { res.writeHead(404); res.end('not found (debug entry?)'); return; }
+        if (!fs.existsSync(file)) {
+            res.writeHead(404);
+            res.end('not found (debug entry?)');
+            return;
+        }
         return serveDebugBundle(res, file);
     }
     if (p.startsWith('/source/') && p.endsWith('.ts')) {
-      var rawFile = path.join(ROOT, p.replace('/source/', 'examples/'));
-      if (fs.existsSync(rawFile)) {
-        res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-store' });
-        res.end(fs.readFileSync(rawFile));
-      } else { res.writeHead(404); res.end('not found'); }
-      return;
+        var rawFile = path.join(ROOT, p.replace('/source/', 'examples/'));
+        if (fs.existsSync(rawFile)) {
+            res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-store' });
+            res.end(fs.readFileSync(rawFile));
+        } else {
+            res.writeHead(404);
+            res.end('not found');
+        }
+        return;
     }
     if (p.startsWith('/src/')) {
         const bytes = require('./source-map-source.cjs').readSourceMapSource(ROOT, p);
         res.writeHead(bytes === null ? 404 : 200, {
-            'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-store',
+            'Content-Type': 'text/plain; charset=utf-8',
+            'Cache-Control': 'no-store',
         });
         res.end(bytes === null ? 'not found (source map source)' : bytes);
         return;
@@ -363,13 +408,15 @@ b.onclick=function(){
     if (p.startsWith('/build/')) {
         const file = path.join(ROOT, p);
         if (fs.existsSync(file)) return serveFile(res, file);
-        res.writeHead(404); res.end('not found (build?)');
+        res.writeHead(404);
+        res.end('not found (build?)');
         return;
     }
     if (p.startsWith('/builtin-assets/')) {
         const file = path.join(ROOT, p);
         if (fs.existsSync(file)) return serveFile(res, file);
-        res.writeHead(404); res.end('not found (builtin-assets?)');
+        res.writeHead(404);
+        res.end('not found (builtin-assets?)');
         return;
     }
 
@@ -384,20 +431,28 @@ b.onclick=function(){
         const manualResolved = path.resolve(path.join(MANUAL_DIR, manualRel));
         // 目录穿越守卫：只允许落在 docs/manual/ 前缀内
         if (manualResolved !== MANUAL_DIR && !manualResolved.startsWith(MANUAL_DIR + path.sep)) {
-            res.writeHead(403); res.end('forbidden (manual?)');
+            res.writeHead(403);
+            res.end('forbidden (manual?)');
             return;
         }
         const manualIsDir = fs.existsSync(manualResolved) && fs.statSync(manualResolved).isDirectory();
-        const manualFile = require('./resolve-script.cjs').resolveScript(manualIsDir ? path.join(manualResolved, 'index.html') : manualResolved);
+        const manualFile = require('./resolve-script.cjs').resolveScript(
+            manualIsDir ? path.join(manualResolved, 'index.html') : manualResolved,
+        );
         if (fs.existsSync(manualFile) && fs.statSync(manualFile).isFile()) {
             if (manualFile.endsWith('.html')) {
                 const html = fs.readFileSync(manualFile, 'utf8');
                 res.writeHead(200, { 'Cache-Control': 'no-store', 'Content-Type': 'text/html; charset=utf-8' });
                 // 手册示例自带 importmap；缺失时补注入，再挂 prelude/reload/debug 按钮（与 examples 一致）
                 const importMap = /<script\b[^>]*type=["']importmap["']/i.test(html)
-                    ? '' : `<script type="importmap">${IMPORT_MAP}</script>`;
-                res.end(html.replace('</head>',
-                    `${importMap}<script src="/__air-prelude.js"></script><script src="/__reload.js"></script><script src="/__debug-button.js"></script></head>`));
+                    ? ''
+                    : `<script type="importmap">${IMPORT_MAP}</script>`;
+                res.end(
+                    html.replace(
+                        '</head>',
+                        `${importMap}<script src="/__air-prelude.js"></script><script src="/__reload.js"></script><script src="/__debug-button.js"></script></head>`,
+                    ),
+                );
                 return;
             }
             if (manualFile.endsWith('.md')) {
@@ -408,7 +463,8 @@ b.onclick=function(){
             if (manualFile.endsWith('.ts')) return serveExampleTs(res, manualFile);
             return serveFile(res, manualFile);
         }
-        res.writeHead(404); res.end('not found (manual?)');
+        res.writeHead(404);
+        res.end('not found (manual?)');
         return;
     }
 
@@ -419,32 +475,40 @@ b.onclick=function(){
         return;
     }
     const rel = p.replace(/^\/+/, '');
-    const candidate = rel === ''
-        ? path.join(EXAMPLES_DIR, example, 'index.html')
-        : path.join(EXAMPLES_DIR, rel);
+    const candidate = rel === '' ? path.join(EXAMPLES_DIR, example, 'index.html') : path.join(EXAMPLES_DIR, rel);
     const resolved = path.resolve(candidate);
     const resolvedIsDir = fs.existsSync(resolved) && fs.statSync(resolved).isDirectory();
-    const finalFile = require('./resolve-script.cjs').resolveScript(resolvedIsDir ? path.join(resolved, 'index.html') : resolved);
+    const finalFile = require('./resolve-script.cjs').resolveScript(
+        resolvedIsDir ? path.join(resolved, 'index.html') : resolved,
+    );
     if (finalFile.startsWith(EXAMPLES_DIR) && fs.existsSync(finalFile) && fs.statSync(finalFile).isFile()) {
         if (finalFile.endsWith('index.html')) {
             const html = fs.readFileSync(finalFile, 'utf8');
             res.writeHead(200, { 'Cache-Control': 'no-store', 'Content-Type': 'text/html; charset=utf-8' });
             // importmap 必须先于任何 module script；再注入 prelude（诊断）、reload 轮询与 debug 入口按钮
             const importMap = /<script\b[^>]*type=["']importmap["']/i.test(html)
-                ? '' : `<script type="importmap">${IMPORT_MAP}</script>`;
-            res.end(html.replace('</head>',
-                `${importMap}<script src="/__air-prelude.js"></script><script src="/__reload.js"></script><script src="/__debug-button.js"></script></head>`));
+                ? ''
+                : `<script type="importmap">${IMPORT_MAP}</script>`;
+            res.end(
+                html.replace(
+                    '</head>',
+                    `${importMap}<script src="/__air-prelude.js"></script><script src="/__reload.js"></script><script src="/__debug-button.js"></script></head>`,
+                ),
+            );
             return;
         }
         if (/\.m?ts$/.test(finalFile)) return serveExampleTs(res, finalFile);
         return serveFile(res, finalFile);
     }
 
-    res.writeHead(404); res.end('not found');
+    res.writeHead(404);
+    res.end('not found');
 });
 
 server.listen(port, '127.0.0.1', () => {
     console.log(`[dev] Cocos AIR dev server: http://127.0.0.1:${port}/  (example: ${example})`);
     console.log(`[dev] examples: ${examples.join(', ')}`);
-    console.log('[dev] channels: engine(src/cocos|pal|exports) air(src/air) example(examples) — example changes never trigger engine build');
+    console.log(
+        '[dev] channels: engine(src/cocos|pal|exports) air(src/air) example(examples) — example changes never trigger engine build',
+    );
 });

@@ -18,6 +18,7 @@ const { withIncrementalCache, acquireBuildLock } = require('./incremental.cjs');
 const { withESMHelpers } = require('./esm-helpers.cjs');
 const { lineEndingsPlugin } = require('./line-endings.cjs');
 const { externalizeSources } = require('./source-map-publication.cjs');
+const { stageBox3DAssets, box3DAssetsPlugin } = require('./box3d-assets.cjs');
 const { resolveBuildDate, readBuildNumber, commitBuildNumber, buildMetadataPlugin } = require('./build-metadata.cjs');
 
 const ROOT = join(__dirname, '..', '..');
@@ -80,6 +81,11 @@ const moduleFormat = formatIdx >= 0 ? args[formatIdx + 1] : 'esm';
         require('./builtin-assets.cjs').verify();
         require('./webgpu-assets.cjs').copy(ROOT, OUT);
         require('./box2d3.cjs').copy(OUT);
+        const box3dAssets = await stageBox3DAssets({
+            features: EFFECTIVE,
+            outputDirectory: OUT,
+            buildDirectory: process.env.AIR_BOX3D_ST_BUILD_DIR,
+        });
         const started = Date.now();
         const build = () =>
             withESMHelpers(
@@ -108,6 +114,7 @@ const moduleFormat = formatIdx >= 0 ? args[formatIdx + 1] : 'esm';
                     lineEndingsPlugin(),
                     require('./webgpu-assets.cjs').webgpuAssetsPlugin(ROOT),
                     require('./box2d3.cjs').box2dAssetsPlugin(),
+                    ...(box3dAssets ? [box3DAssetsPlugin(box3dAssets)] : []),
                     buildMetadataPlugin(ROOT, buildDate, buildNumber),
                 ],
             );

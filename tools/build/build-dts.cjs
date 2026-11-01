@@ -26,6 +26,11 @@ const {
     runDeclarationBuild,
 } = require('./upstream-dts-surface.cjs');
 
+const { withDeclarationInputs } = require('./dts-inputs.cjs');
+const { stageExternalDeclarationTypes } = require('./dts-external-types.cjs');
+const { stagePalInputDeclarations } = require('./dts-pal-input.cjs');
+const { withSymbolDeclarations, stageSymbolDeclarations } = require('./dts-symbols.cjs');
+
 const ROOT = join(__dirname, '..', '..');
 const ENGINE = join(ROOT, 'src');
 
@@ -74,7 +79,23 @@ function copyOutput(outDir, receipt) {
     let buildOk = false;
     const receipt = { schema: 'air-main-dts-contract/1' };
     const buildResult = await runDeclarationBuild(
-        () => withMainDeclarations(ROOT, () => dtsBundler.build({ engine: ENGINE, outDir }), receipt),
+        () =>
+            withMainDeclarations(
+                ROOT,
+                () =>
+                    withSymbolDeclarations(ENGINE, (virtual) =>
+                        withDeclarationInputs(
+                            ENGINE,
+                            () => dtsBundler.build({ engine: ENGINE, outDir }),
+                            (options) =>
+                                stagePalInputDeclarations(
+                                    stageExternalDeclarationTypes(stageSymbolDeclarations(options, ENGINE, virtual), ROOT),
+                                    ROOT,
+                                ),
+                        ),
+                    ),
+                receipt,
+            ),
         { receipt, outDir, temporaryDir: join(ENGINE, '__dts_before_bundle') },
     );
     buildOk = !buildResult.recoveredCleanup;

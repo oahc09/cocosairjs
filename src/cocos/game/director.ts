@@ -41,6 +41,7 @@ import { assetManager } from '../asset/asset-manager';
 import { deviceManager } from '../gfx';
 import { releaseManager } from '../asset/asset-manager/release-manager';
 import type { Game } from './game';
+import { enterGameClockFrame } from './game-clock-control';
 
 // ----------------------------------------------------------------------------------------------------------------------
 
@@ -785,46 +786,59 @@ export class Director extends EventTarget {
      * @param dt Delta time in seconds
      */
     public tick (dt: number): void {
-        if (!this._invalid) {
-            this.emit(DirectorEvent.BEGIN_FRAME);
-            if (!EDITOR_NOT_IN_PREVIEW) {
-                input._frameDispatchEvents();
-            }
-
-            // Update
-            if (!this._paused) {
-                this.emit(DirectorEvent.BEFORE_UPDATE);
-                // Call start for new added components
-                this._compScheduler.startPhase();
-                // Update for components
-                this._compScheduler.updatePhase(dt);
-                // Update systems
-                for (let i = 0; i < this._systems.length; ++i) {
-                    this._systems[i].update(dt);
+        const leaveClockFrame = enterGameClockFrame(cclegacy.game, this);
+        let frameFailed = false;
+        try {
+            if (!this._invalid) {
+                this.emit(DirectorEvent.BEGIN_FRAME);
+                if (!EDITOR_NOT_IN_PREVIEW) {
+                    input._frameDispatchEvents();
                 }
-                // Late update for components
-                this._compScheduler.lateUpdatePhase(dt);
-                // User can use this event to do things after update
-                this.emit(DirectorEvent.AFTER_UPDATE);
-                // Destroy entities that have been removed recently
-                CCObject._deferredDestroy();
 
-                // Post update systems
-                for (let i = 0; i < this._systems.length; ++i) {
-                    this._systems[i].postUpdate(dt);
+                // Update
+                if (!this._paused) {
+                    this.emit(DirectorEvent.BEFORE_UPDATE);
+                    // Call start for new added components
+                    this._compScheduler.startPhase();
+                    // Update for components
+                    this._compScheduler.updatePhase(dt);
+                    // Update systems
+                    for (let i = 0; i < this._systems.length; ++i) {
+                        this._systems[i].update(dt);
+                    }
+                    // Late update for components
+                    this._compScheduler.lateUpdatePhase(dt);
+                    // User can use this event to do things after update
+                    this.emit(DirectorEvent.AFTER_UPDATE);
+                    // Destroy entities that have been removed recently
+                    CCObject._deferredDestroy();
+
+                    // Post update systems
+                    for (let i = 0; i < this._systems.length; ++i) {
+                        this._systems[i].postUpdate(dt);
+                    }
                 }
+
+                this.emit(DirectorEvent.BEFORE_DRAW);
+                uiRendererManager.updateAllDirtyRenderers();
+                this._root!.frameMove(dt);
+                this.emit(DirectorEvent.AFTER_DRAW);
+
+                Node.resetHasChangedFlags();
+                Node.clearNodeArray();
+                scalableContainerManager.update(dt);
+                this.emit(DirectorEvent.END_FRAME);
+                this._totalFrames++;
             }
-
-            this.emit(DirectorEvent.BEFORE_DRAW);
-            uiRendererManager.updateAllDirtyRenderers();
-            this._root!.frameMove(dt);
-            this.emit(DirectorEvent.AFTER_DRAW);
-
-            Node.resetHasChangedFlags();
-            Node.clearNodeArray();
-            scalableContainerManager.update(dt);
-            this.emit(DirectorEvent.END_FRAME);
-            this._totalFrames++;
+        } catch (error) {
+            frameFailed = true;
+            throw error;
+        } finally {
+            try {
+                leaveClockFrame?.();
+            } catch (error) {
+                if (!frameFailed) { throw error; }
+            }
         }
     }
 

@@ -36,10 +36,10 @@ declare namespace spine {
 
     class SPVectorFloat {
         size(): number;
-        resize(newSize: number, defaultValue: number);
-        set(index: number, value: number);
+        resize(newSize: number, defaultValue: number): void;
+        set(index: number, value: number): void;
         get(index: number): number;
-        delete();
+        delete(): void;
     }
 
     /**
@@ -48,7 +48,7 @@ declare namespace spine {
     class SPVectorPhysicsConstraintPtr {
         size(): number;
         get(index: number): PhysicsConstraint;
-        delete();
+        delete(): void;
     }
 
     /**
@@ -57,7 +57,7 @@ declare namespace spine {
     class SPVectorPhysicsConstraintDataPtr {
         size(): number;
         get(index: number): PhysicsConstraintData;
-        delete();
+        delete(): void;
     }
 
     class Animation {
@@ -1434,8 +1434,8 @@ declare namespace spine {
         centerY: number;
         radius: number;
         angle: number;
-        worldX;
-        worldY;
+        worldX: number;
+        worldY: number;
         constructor(radius: number, interpolation?: Interpolation);
         begin(skeleton: Skeleton): void;
         transform(x: number, y: number): void;
@@ -1449,31 +1449,54 @@ declare namespace spine {
         public static getCount(): number;
     }
 
+    /** Borrowed WASM vector view; not a JavaScript array. */
+    interface VectorView<T> {
+        size(): number;
+        get(index: number): T;
+    }
+
+    interface SpineModel {
+        vCount: number;
+        iCount: number;
+        vPtr: number;
+        iPtr: number;
+        getData(): VectorView<number>;
+        getTextures(): VectorView<string>;
+    }
+
+    interface SpineDebugShape {
+        type: number;
+        vOffset: number;
+        vCount: number;
+        iOffset: number;
+        iCount: number;
+    }
+
     class SkeletonInstance {
         dtRate: number;
         isCache: boolean;
         isDelete: boolean;
         enable: boolean;
         setTrackEntryListener: any;
-        destroy();
-        initSkeleton(data: SkeletonData);
-        getAnimationState();
+        destroy(): void;
+        initSkeleton(data: SkeletonData): Skeleton;
+        getAnimationState(): AnimationState | null;
         setAnimation(trackIndex: number, name: string, loop: boolean): spine.TrackEntry | null;
-        setSkin(name: string);
-        setPremultipliedAlpha(usePremultipliedAlpha: boolean);
-        setColor(r: number, g: number, b: number, a: number);
-        setMix(fromName: string, toName: string, duration: number);
-        updateAnimation(dt: number);
-        setUseTint(useTint: boolean);
-        clearEffect();
-        setJitterEffect(jitter: spine.VertexEffect);
-        setSwirlEffect(swirl: spine.VertexEffect);
-        updateRenderData();
-        setListener(id: number);
-        setDebugMode(debug: boolean);
-        getDebugShapes();
-        resizeSlotRegion(slotName: string, width: number, height: number, createNew: boolean);
-        setSlotTexture(slotName: string, uuid: string);
+        setSkin(name: string): void;
+        setPremultipliedAlpha(usePremultipliedAlpha: boolean): void;
+        setColor(r: number, g: number, b: number, a: number): void;
+        setMix(fromName: string, toName: string, duration: number): void;
+        updateAnimation(dt: number): void;
+        setUseTint(useTint: boolean): void;
+        clearEffect(): void;
+        setJitterEffect(jitter: spine.VertexEffect): void;
+        setSwirlEffect(swirl: spine.VertexEffect): void;
+        updateRenderData(): SpineModel;
+        setListener(id: number): void;
+        setDebugMode(debug: boolean): void;
+        getDebugShapes(): VectorView<SpineDebugShape>;
+        resizeSlotRegion(slotName: string, width: number, height: number, createNew: boolean): void;
+        setSlotTexture(slotName: string, uuid: string): void;
     }
 
     class wasmUtil {
@@ -1484,8 +1507,8 @@ declare namespace spine {
         static querySpineSkeletonDataByUUID(uuid: string): SkeletonData;
         static createSpineSkeletonDataWithJson(jsonStr: string, atlasText: string, textureNames: string[], textureUUIDs: string[]): SkeletonData;
         static createSpineSkeletonDataWithBinary(byteSize: number, atlasText: string, textureNames: string[], textureUUIDs: string[]): SkeletonData;
-        static registerSpineSkeletonDataWithUUID(data: SkeletonData, uuid: string);
-        static destroySpineSkeletonDataWithUUID(uuid: string);
+        static registerSpineSkeletonDataWithUUID(data: SkeletonData, uuid: string): void;
+        static destroySpineSkeletonDataWithUUID(uuid: string): void;
         static destroySpineSkeleton(skeleton: Skeleton): void;
         static getCurrentListenerID(): number;
         static getCurrentEventType(): EventType;
