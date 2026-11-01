@@ -686,14 +686,13 @@ export class PhysicsSystem extends System implements IWorldInitData {
         let distance = 0;
         const worldRay = new geometry.Ray();
         for (let i = 1; i < samplePointsWorldSpace.length; ++i) {
-            if (distance > maxDistance) break;
+            if (distance >= maxDistance) break;
 
             const fromPoint = samplePointsWorldSpace[i - 1];
             const toPoint = samplePointsWorldSpace[i];
             const direction = new Vec3();
             Vec3.subtract(direction, toPoint, fromPoint);
             const stepLength = Vec3.len(direction);
-            distance += stepLength;
             const EPSILON = 1e-6;
             // The stepLength may be 0, making the subsequent calculations meaningless, so return here.
             if (Math.abs(stepLength) < EPSILON) {
@@ -702,7 +701,9 @@ export class PhysicsSystem extends System implements IWorldInitData {
             Vec3.multiplyScalar(direction, direction, 1.0 / stepLength);
             worldRay.d = direction;
             worldRay.o = fromPoint;
-            const hit = this.raycast(worldRay, mask, stepLength, queryTrigger);
+            const castLength = Math.min(stepLength, maxDistance - distance);
+            distance += castLength;
+            const hit = this.raycast(worldRay, mask, castLength, queryTrigger);
             if (hit) {
                 for (let re = 0; re < this.raycastResults.length; re++) {
                     const result = this.raycastResults[re];
@@ -737,18 +738,20 @@ export class PhysicsSystem extends System implements IWorldInitData {
         const worldRay = new geometry.Ray();
         let hit = false;
         for (let i = 1; i < samplePointsWorldSpace.length; ++i) {
-            if (distance > maxDistance) break;
+            if (distance >= maxDistance) break;
 
             const fromPoint = samplePointsWorldSpace[i - 1];
             const toPoint = samplePointsWorldSpace[i];
             const direction = new Vec3();
             Vec3.subtract(direction, toPoint, fromPoint);
             const stepLength = Vec3.len(direction);
-            distance += stepLength;
+            if (stepLength < 1e-6) continue;
             Vec3.multiplyScalar(direction, direction, 1.0 / stepLength);
             worldRay.d = direction;
             worldRay.o = fromPoint;
-            hit = this.raycastClosest(worldRay, mask, stepLength, queryTrigger);
+            const castLength = Math.min(stepLength, maxDistance - distance);
+            distance += castLength;
+            hit = this.raycastClosest(worldRay, mask, castLength, queryTrigger);
             if (hit) {
                 const result = this.raycastClosestResult;
                 const copiedResult = new PhysicsLineStripCastResult();
