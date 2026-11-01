@@ -1,8 +1,8 @@
 {
   "schema": "air-bundle-source-binding-v1",
   "origin": "compiler-map",
-  "bundleSha256": "853d4aa19d68624a9b8a57e84e2ad0cb12b6caedbea6e2684f067d3ccfd9142c",
-  "mapSha256": "1733130ba29f64f766fd2237ffaf8e99e10c03378d9c0afbce44f0fc86d14044",
+  "bundleSha256": "dec7d3c73ff0eb57e4462f1941168261fda9cc713f46401dc9a02753a833fba3",
+  "mapSha256": "261efffc334e8c4f12916f5befd10ef06687b8753140977f2f6a1f19c56b4c08",
   "sources": [
     {
       "path": "src/cocos/core/global-exports.ts",
@@ -2590,7 +2590,7 @@
     },
     {
       "path": "src/cocos/physics/framework/physics-system.ts",
-      "sha256": "a738669fea9b122ae53549f448a73478639c7f1292607d791d63931edd4c31da"
+      "sha256": "c28ad802166847cfeb3ebd65c35d5d72de367ec1641a9481b5abfc48fd40d21f"
     },
     {
       "path": "src/cocos/physics/framework/physics-command-submission.ts",
@@ -3094,7 +3094,7 @@
     },
     {
       "path": "src/air/session-scope.ts",
-      "sha256": "28fdf0d1f7a75f06d80e74dde72a9209b6c40a216cccfca9f0101983097d1ea8"
+      "sha256": "ab03496f81a369dbfcb6a7a9e2b8b0567fe3a90819bfd8850375002361c497a1"
     },
     {
       "path": "src/air/app.ts",
