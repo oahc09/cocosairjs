@@ -15,7 +15,7 @@ const prefix = {
 };
 test('module-release exact inventories retain every prior ordered source/unit/evidence entry', () => {
     for (const [key, n, total] of [
-        ['inputs', 120, 136],
+        ['inputs', 120, 138],
         ['compileUnits', 85, 87],
         ['evidence', 60, 63],
     ]) {

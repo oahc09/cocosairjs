@@ -15,14 +15,14 @@
 
 ## Read-only serving (only when browser/physics execution is authorized)
 
-Run from the repository root with an **existing explicitly qualified** runtime (SDK223 original baseline; SDK235 CPU declarations checked, browser acceptance still NOT_RUN) and installed project dependencies; do not build or install:
+Run from the repository root with an **existing explicitly selected and independently qualified** runtime and installed project dependencies; the serving command does not build or install. SDK223/SDK235 references below describe historical evidence only; they do not qualify a newer build:
 
 ```sh
-BOX3D_RUNTIME=/absolute/path/to/qualified-sdk223 PORT=7472 \
+BOX3D_RUNTIME=/absolute/path/to/selected-qualified-runtime PORT=7472 \
   node examples/box3d-compound-bowling/serve.cjs
 ```
 
-If dependencies are outside the checkout, set `NODE_PATH=/absolute/path/to/existing/node_modules`; use the existing authorized Node binary. The server binds 127.0.0.1, transforms example TS in memory, and serves runtime read-only. It does not copy/modify the runtime, build engines, or install dependencies. `/identity.json` hashes runtime JS, ST manifest/module/WASM/facade/distribution receipt and example source. Retain it with the exported JSON and screenshots. Runtime source changes/new Terrain ABI are **not** part of SDK223. The shared route now additionally checks the selected ST manifest/receipt identity and asset hashes; this is integrity checking, not browser qualification. The server captures runtime bytes once so later file changes cannot silently mix responses with the recorded identity; restart the server to select new bytes.
+If dependencies are outside the checkout, set `NODE_PATH=/absolute/path/to/existing/node_modules`; use the existing authorized Node binary. The server binds 127.0.0.1, transforms example TS in memory, and serves runtime read-only. It does not copy/modify the runtime, build engines, or install dependencies. `/identity.json` hashes runtime JS, ST manifest/module/WASM/facade/distribution receipt and example source. Retain it with the exported JSON and screenshots. The historical SDK223 baseline does **not** include newer runtime source changes/new Terrain ABI; never transfer its qualification to another build. The shared route now additionally checks the selected ST manifest/receipt identity and asset hashes; this is integrity checking, not browser qualification. The server captures runtime bytes once so later file changes cannot silently mix responses with the recorded identity; restart the server to select new bytes.
 
 ## CPU / strict declarations (no runtime import)
 
@@ -30,14 +30,14 @@ If dependencies are outside the checkout, set `NODE_PATH=/absolute/path/to/exist
 node --test examples/box3d-compound-bowling/tests/*.test.mjs \
   tools/verify/box3d/compound-bowling/check-types.test.cjs
 node tools/verify/box3d/compound-bowling/check-types.cjs \
-  --dts /absolute/path/to/qualified-sdk223/cocosair.module.d.ts
+  --dts /absolute/path/to/selected-qualified-runtime/cocosair.module.d.ts
 ```
 
 The checker requires explicit existing `--dts`, uses `strict:true`, `noEmit:true`, and checks example TS against that exact SDK (`skipLibCheck` skips SDK internals only). Pure policy tests cover native float32 clock rejection, score boundary/invalid orientations, bounded mass, layout/target functions, stale/retired guards, queued failures, multi-click admission, retryable pre-close preparation versus terminal SDK-close failure, and two-phase owned-asset cleanup sequencing. Static source guardrails are **not** engine lifecycle tests. No browser, native build or physics simulation is executed by these commands.
 
 ## Deferred runtime acceptance procedure
 
-1. Record code SHA, qualified SDK223 producer SHA `b089d223aad1bb4be4a81f187eceb341510d766a`, runtime/artifact identity, console errors, viewport/DPR and screenshots. Confirm real Box3D ST (one worker) initialization, all ten compound pins, ball, platform and COM markers. Do not silently fall back.
+1. Record the current code SHA, exact selected runtime producer SHA/build, runtime/artifact identity, console errors, viewport/DPR and screenshots. Confirm real Box3D ST (one worker) initialization, all ten compound pins, ball, platform and COM markers. Do not silently fall back.
 2. Start; inspect actual clocks (float32 1/60, solver 4) and contiguous hook/observation ticks. Review disabled/massPending flags, per-body renderer/native pose error, and `origin + rotate(native localCenter)` against native `worldCOM`. Consistency alone does not prove independent native mass correctness; review known compound mass/inertia expectations in the matrix.
 3. Apply `.5`, `1`, `2` kg in a run. Match each idle request to later native mass frames and the next native geometry snapshot. All ten public dimensions/centers must be unchanged; compare native child dimensions and **body-relative** child geometry (world origins/rotations naturally change during simulation). Missing snapshots, wrong mass, stale readback or nonfinite values fail; do not infer success from the request. Geometry proxies are queried using a tiny positive sweep; its hits are discarded and are not collision evidence.
 4. Separate fresh center and offset runs; export before request and next actual angular/linear frames. Ground friction/contact and moving-platform impacts also rotate bodies, so bowling observations do **not** replace isolated center/off-center impulse matrix tests. Record actual offset rotation rather than assuming it from the button click.
@@ -92,3 +92,15 @@ CPU-only collector policy checks:
 ```sh
 node --test tools/verify/box3d/compound-bowling/lifecycle-evidence.test.cjs
 ```
+
+### Current-runtime collection boundary
+
+The collector records exact runtime, ST assets and source hashes for each fresh attempt.
+Its WebKit/Chromium selection does not transfer a previous browser result. Start must
+call the public app run path before acquiring the manual clock; Stop's semantic pause
+must reject attempted frames without advancing the clock. After terminal Close, clock
+operations must reject `AIR_E_APP_CLOSED`, not restart the engine. Twenty actual reset
+pairs and same-module terminal evidence remain required. A limited lifecycle result
+is not a per-cycle native/GPU leak census or complete physics qualification. Historical
+NOT_RUN statements above remain descriptions of their original cohort; consult the
+new attempt's identity-bound report rather than re-labeling old evidence.

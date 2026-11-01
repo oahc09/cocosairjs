@@ -44,8 +44,8 @@ assert.ok(build.includes("'tools/physics/box3d/native/motion_bridge.c'"));
 assert.ok(build.includes(`'${decision.path}'`));
 const inputBlock = build.match(/const inputs = \[([\s\S]*?)\];/)[1];
 const inputs = [...inputBlock.matchAll(/'([^']+)'/g)].map((match) => match[1]);
-assert.equal(inputs.length, 136);
-assert.equal(new Set(inputs).size, 136);
+assert.equal(inputs.length, 138);
+assert.equal(new Set(inputs).size, 138);
 for (const path of [
     'tools/physics/box3d/native/mesh_bridge.c',
     'tools/physics/box3d/native/mesh_bridge.h',
@@ -92,7 +92,7 @@ assert.match(source, /substeps!=1&&substeps!=2&&substeps!=4&&substeps!=8/);
 assert.match(source, /if\(v.x==0 && v.y==0 && v.z==0\)return AIR_B3_OK/);
 assert.match(read('tools/physics/box3d/native/motion_contract.c'), /b3Body_AllowFastRotation\(kinematic,true\)/);
 const sources = verifySources();
-assert.equal(sources.patchChainSha256, 'fce7869b3888ff9bfd417095e70ce72591893b2c3add1802e1a5bc32ca918bfe');
+assert.equal(sources.patchChainSha256, '14b3b0e85702c42f436fa1b5e570c78ed8d46f30476a3bedc11ded38a2328303');
 console.log(
     JSON.stringify(
         {

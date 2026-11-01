@@ -1,7 +1,0 @@
-{
-  "patchChainSha256": "fce7869b3888ff9bfd417095e70ce72591893b2c3add1802e1a5bc32ca918bfe",
-  "patchLockSha256": "b6f3851d969a66441a49c95250316619c810fbe5db5b7d7e5fdc2a7d59402d13",
-  "verifiedFiles": 130,
-  "fixedCoreFiles": 111,
-  "schemaSha256": "8af84ffb85ce311e9693d378c70ca3c788896b8aeee228700bbddd61c0ca8a04"
-}

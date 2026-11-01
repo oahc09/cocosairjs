@@ -1,8 +1,0 @@
-PASS tools/verify/box3d/owner-material-collider-close-real-wasm.test.ts (20.806 s)
-  ✓ actual material cache identity and truthful post-effect failure (248 ms)
-
-Test Suites: 1 passed, 1 total
-Tests:       1 passed, 1 total
-Snapshots:   0 total
-Time:        21.417 s
-Ran all test suites.

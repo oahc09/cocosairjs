@@ -5,13 +5,13 @@ export function selectTransportCandidate(query) {
         return Object.freeze({ candidateId: 'legacy-sdk220', lockFile: 'transport-candidate-lock.json' });
     if (
         values.length !== 1 ||
-        values[0] !== 'sdk223' ||
+        !['sdk223', 'integration-20261031'].includes(values[0]) ||
         query.getAll('transport').length !== 1 ||
         query.get('transport') !== 'committed-candidate' ||
         query.has('contacts')
     )
         throw new Error('Unknown, duplicate or incompatible explicit transport candidate');
-    return Object.freeze({ candidateId: 'sdk223', lockFile: 'transport-candidate-sdk223-lock.json' });
+    return Object.freeze({ candidateId: values[0], lockFile: `transport-candidate-${values[0]}-lock.json` });
 }
 
 export function validateTransportCandidate(selection, lock, build, identity) {
@@ -32,6 +32,19 @@ export function validateTransportCandidate(selection, lock, build, identity) {
             )
         )
             throw new Error('SDK223 candidate lacks explicit limited qualification');
+    } else if (selection.candidateId === 'integration-20261031') {
+        if (
+            lock.candidateId !== 'integration-20261031' ||
+            !Number.isSafeInteger(build) ||
+            !/^[a-f0-9]{64}$/.test(lock.runtimeSha256) ||
+            !/^[a-f0-9]{64}$/.test(lock.manifestSha256) ||
+            lock.businessStatus !== 'NOT_RUN' ||
+            !/^[a-f0-9]{64}$/.test(lock.qualificationEvidence?.mapSha256 ?? '') ||
+            !['committedQueries', 'committedRay', 'kinematicTarget', 'fixedAtIdle', 'boxSupportDeparture'].every(
+                (key) => lock.qualification?.[key] === true,
+            )
+        )
+            throw new Error('Integration candidate lacks explicit limited qualification');
     } else if (selection.candidateId !== 'legacy-sdk220') {
         throw new Error('Unknown transport candidate selection');
     }

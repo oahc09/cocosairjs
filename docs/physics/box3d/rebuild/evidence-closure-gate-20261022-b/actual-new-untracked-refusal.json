@@ -1,6 +1,0 @@
-{
-  "status": "EXPECTED_SCOPE_REFUSAL_BEFORE_BUNDLE",
-  "observedError": "Untracked required evidence: tools/verify/box3d/material-identity-b1-integration-20261022-a/before/src/air/physics/box3d/box-sphere-shape.ts",
-  "outcome": "No final delivery manifest or source bundle was produced. The seven immutable before-input files are explicitly retained next, without claiming integration qualification.",
-  "sourceCommitAtRefusal": "a2c685c5a27476cb4db825cbb75c5f91dfb6e6de"
-}

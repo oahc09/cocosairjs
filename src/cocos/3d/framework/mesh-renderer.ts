@@ -27,7 +27,7 @@ import { displayOrder, group, range } from 'cc.decorator';
 import { Texture2D, TextureCube } from '../../asset/assets';
 import { Material } from '../../asset/assets/material';
 import { Mesh } from '../assets/mesh';
-import { Vec4, Enum, cclegacy, CCBoolean, CCFloat, assertIsTrue, _decorator, CCInteger, EventTarget, warnID } from '../../core';
+import { Vec4, Enum, cclegacy, CCBoolean, CCFloat, assertIsTrue, _decorator, CCInteger, EventTarget, warnID, isValid } from '../../core';
 import { scene } from '../../render-scene';
 import { MorphModel } from '../models/morph-model';
 import { Root } from '../../root';
@@ -334,6 +334,7 @@ export class MeshRenderer extends ModelRenderer {
 
     @serializable
     protected _mesh: Mesh | null = null;
+    private _geometryEventMesh: Mesh | null = null;
 
     @serializable
     protected _shadowCastingMode = ModelShadowCastingMode.OFF;
@@ -488,6 +489,7 @@ export class MeshRenderer extends ModelRenderer {
         const old = this._mesh;
         const mesh = this._mesh = val;
         mesh?.initialize();
+        this._watchGeometryInMesh();
         this._initSubMeshShapesWeights();
         this._watchMorphInMesh();
         this._onMeshChanged(old);
@@ -576,6 +578,7 @@ export class MeshRenderer extends ModelRenderer {
 
     public onLoad (): void {
         if (this._mesh) { this._mesh.initialize(); }
+        this._watchGeometryInMesh();
         if (!this._validateShapeWeights()) {
             this._initSubMeshShapesWeights();
         }
@@ -594,6 +597,7 @@ export class MeshRenderer extends ModelRenderer {
 
     // Redo, Undo, Prefab restore, etc.
     public onRestore (): void {
+        this._watchGeometryInMesh();
         this._updateModels();
         if (this.enabledInHierarchy) {
             this._attachToScene();
@@ -611,6 +615,7 @@ export class MeshRenderer extends ModelRenderer {
 
     public onEnable (): void {
         super.onEnable();
+        this._watchGeometryInMesh();
         this.node.on(NodeEventType.MOBILITY_CHANGED, this.onMobilityChanged, this);
         this.node.on(NodeEventType.LIGHT_PROBE_BAKING_CHANGED, this.onLightProbeBakingChanged, this);
         this.bakeSettings.on(ModelBakeSettingsEvent.USE_LIGHT_PROBE_CHANGED, this.onUseLightProbeChanged, this);
@@ -647,6 +652,15 @@ export class MeshRenderer extends ModelRenderer {
         this.bakeSettings.off(ModelBakeSettingsEvent.BAKE_TO_REFLECTION_PROBE_CHANGED, this.onBakeToReflectionProbeChanged, this);
     }
 
+    public _onPreDestroy (): void {
+        // Component.onDestroy is skipped for components which were never loaded.
+        this._geometryEventMesh?.off(Mesh.EVENT_GEOMETRY_CHANGED, this._onMeshGeometryChanged, this);
+        this._geometryEventMesh = null;
+        super._onPreDestroy();
+        // Never-loaded components skip onDestroy; owned variants still require release.
+        this._destroyOwnedMaterialInstances();
+    }
+
     public onDestroy (): void {
         if (this._model) {
             (cclegacy.director.root as Root).destroyModel(this._model);
@@ -655,6 +669,27 @@ export class MeshRenderer extends ModelRenderer {
         }
         if (this._morphInstance) {
             this._morphInstance.destroy();
+        }
+        this._destroyOwnedMaterialInstances();
+    }
+
+    private _destroyOwnedMaterialInstances (): void {
+        // Renderer-created variants own passes/buffers; shared assets and borrowed instances do not.
+        for (const instance of this._materialInstances) {
+            if (instance?.owner === this) { instance.destroy(); }
+        }
+        this._materialInstances.length = 0;
+    }
+
+    private _watchGeometryInMesh (): void {
+        this._geometryEventMesh?.off(Mesh.EVENT_GEOMETRY_CHANGED, this._onMeshGeometryChanged, this);
+        this._geometryEventMesh = this._mesh;
+        this._geometryEventMesh?.on(Mesh.EVENT_GEOMETRY_CHANGED, this._onMeshGeometryChanged, this);
+    }
+
+    private _onMeshGeometryChanged (mesh: Mesh): void {
+        if (mesh === this._mesh && isValid(this, true) && isValid(this.node, true)) {
+            this.onGeometryChanged();
         }
     }
 

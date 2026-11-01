@@ -1,4 +1,0 @@
-src/cocos/physics/framework/physics-material-transaction.ts(304,22): error TS7006: Parameter 'errors' implicitly has an 'any' type.
-src/cocos/physics/framework/physics-material-transaction.ts(324,45): error TS2339: Property 'stage' does not exist on type 'object'.
-src/cocos/physics/framework/physics-material-transaction.ts(325,43): error TS2339: Property 'error' does not exist on type 'object'.
-

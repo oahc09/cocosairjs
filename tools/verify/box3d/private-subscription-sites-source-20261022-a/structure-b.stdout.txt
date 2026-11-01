@@ -1,1 +1,0 @@
-PASS: legacy capability=false reduces both complete Collider and System ASTs to the originals.

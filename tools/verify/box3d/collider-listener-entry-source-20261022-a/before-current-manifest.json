@@ -1,7 +1,0 @@
-{
-  "capturedAt": "2026-10-22T18:06:59.580237+00:00",
-  "reason": "Parent-authorized latest owner after B2 repair; retained separately from original before snapshots",
-  "sha256": {
-    "src/air/physics/box3d/world-command-owner.ts": "2f313aae10b900e417ebea9b2b8254994fee4f7fe4e26181516c5fca74fb091f"
-  }
-}

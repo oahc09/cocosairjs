@@ -1,5 +1,0 @@
-PASS repair: owner commit falsy primary survives recovery read, reporter and independent cleanup failures
-PASS repair: no-change completed owner commits followed by caught cleanup reentry remain effectful and faulted
-PASS repair: first commit normal return after caught foreign roster reentry is returned, later commit is unentered
-PASS repair: successful no-change actual commits are returned and retain execution for a subsequent change
-PASS repair: pre-commit no-change actual mismatch is not falsely relabeled owner effect

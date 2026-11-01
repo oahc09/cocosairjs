@@ -53,6 +53,11 @@ try {
     for (const file of ['build/npm/cocosair.math.js', 'build/cocosair.math.d.ts', 'build/cocosair.math.legacy.d.ts'])
         assert.ok(report.tarball.files.includes(file), file);
     assert.ok(!report.tarball.files.some((file) => /math.*\.map$/.test(file)));
+    assert.ok(report.tarball.files.includes('build/README.md'), 'SDK file-selection guide must ship with the package');
+    assert.ok(
+        !report.tarball.files.some((file) => file.startsWith('build/metadata/')),
+        'build receipts are not runtime package resources',
+    );
     fs.writeFileSync(
         path.join(temp, 'package.json'),
         '{"name":"math-consumer","version":"0.0.0","private":true,"type":"module"}',
@@ -98,7 +103,7 @@ try {
             ],
             temp,
         );
-    const receipt = JSON.parse(fs.readFileSync(path.join(root, 'build/math-build.json'), 'utf8'));
+    const receipt = JSON.parse(fs.readFileSync(path.join(root, 'build/metadata/math-build.json'), 'utf8'));
     const map = JSON.parse(fs.readFileSync(path.join(root, 'build/cocosair.module.js.map'), 'utf8'));
     const mapped = new Map(map.sources.map((name, i) => [path.resolve(root, 'build', name), map.sourcesContent[i]]));
     const common = [];

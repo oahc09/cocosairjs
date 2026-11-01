@@ -1,0 +1,163 @@
+{
+  "schema": "upstream-three-declarations/1",
+  "compilerContract": "upstream-sdk-types/3",
+  "engineVersion": "0.186.1",
+  "declarationPackage": "@types/three",
+  "declarationVersion": "0.186.0",
+  "minimumTypeScriptVersion": "5.6",
+  "selectionEvidence": [
+    "https://registry.npmjs.org/@types%2Fthree/0.186.0",
+    "https://github.com/DefinitelyTyped/DefinitelyTyped#how-do-definitely-typed-package-versions-relate-to-versions-of-the-corresponding-library"
+  ],
+  "selectionReason": "DefinitelyTyped aligns major/minor, not patch. The original plan requires TS4.9 for Cocos, not for Three. Use the unchanged modern TS5.9.3 pair for both engines; preserve Cocos legacy coverage separately.",
+  "consumerRelativePath": "consumer",
+  "lock": {
+    "repositoryPath": "tools/benchmark/upstream/three-declarations-package-lock.json",
+    "inputRelativePath": "consumer/package-lock.json",
+    "sha256": "9806b5f268df07a6eb171d13204e9e96419d3016f48202a574c3e5b08715f8b0"
+  },
+  "packages": [
+    {
+      "name": "@dimforge/rapier3d-compat",
+      "version": "0.12.0",
+      "archiveURL": "https://registry.npmjs.org/@dimforge/rapier3d-compat/-/rapier3d-compat-0.12.0.tgz",
+      "archiveBytes": 2348060,
+      "sha256": "8559163a335c12388b02e61a25d588ff5b98da45f9336c59664dc919af086b26",
+      "integrity": "sha512-uekIGetywIgopfD97oDL5PfeezkFpNhwlzlaEYNOA0N6ghdsOvh/HYjSMek5Q2O1PYvRSDFcqFVJl4r4ZBwOow==",
+      "archivePrefix": "package/",
+      "installedTreeSha256": "61e50505f1975ebb14ab67a41d7dac24280585ee887604b7722be3f0a203e57c",
+      "metadataURL": "https://registry.npmjs.org/@dimforge%2Frapier3d-compat/0.12.0",
+      "metadataSha256": "ec8e6b3e79dbc5b825edbea16f590a4ef718cfa6d129f46f71cea29119dcfbea",
+      "dependencies": {},
+      "relativePaths": {
+        "archive": "archives/dimforge__rapier3d-compat-0.12.0.tgz",
+        "metadata": "metadata/dimforge__rapier3d-compat-0.12.0.registry.json",
+        "installed": "consumer/node_modules/@dimforge/rapier3d-compat",
+        "treeEntries": "evidence/dimforge__rapier3d-compat-0.12.0.tree-entries.json"
+      }
+    },
+    {
+      "name": "@tweenjs/tween.js",
+      "version": "23.1.3",
+      "archiveURL": "https://registry.npmjs.org/@tweenjs/tween.js/-/tween.js-23.1.3.tgz",
+      "archiveBytes": 29052,
+      "sha256": "e92ea848c92bd29239efd2689a018c0ef531391ce0041a1787a964314fd4eb8a",
+      "integrity": "sha512-vJmvvwFxYuGnF2axRtPYocag6Clbb5YS7kLL+SO/TeVFzHqDIWrNKYtcsPMibjDx9O+bu+psAy9NKfWklassUA==",
+      "archivePrefix": "package/",
+      "installedTreeSha256": "b64d934877962e19d281464fd195fe7245c684a30831992eb0fc16467bc091b5",
+      "metadataURL": "https://registry.npmjs.org/@tweenjs%2Ftween.js/23.1.3",
+      "metadataSha256": "33254825bd06f518997bccf62607a6296bbdc5781a76c141a90a458fd971fff3",
+      "dependencies": {},
+      "relativePaths": {
+        "archive": "archives/tweenjs__tween.js-23.1.3.tgz",
+        "metadata": "metadata/tweenjs__tween.js-23.1.3.registry.json",
+        "installed": "consumer/node_modules/@tweenjs/tween.js",
+        "treeEntries": "evidence/tweenjs__tween.js-23.1.3.tree-entries.json"
+      }
+    },
+    {
+      "name": "@types/stats.js",
+      "version": "0.17.4",
+      "archiveURL": "https://registry.npmjs.org/@types/stats.js/-/stats.js-0.17.4.tgz",
+      "archiveBytes": 1913,
+      "sha256": "34719404e92bb0efd1f021ab175feaca2bba41ba5b3d4eefca7fa76351f46ec8",
+      "integrity": "sha512-jIBvWWShCvlBqBNIZt0KAshWpvSjhkwkEu4ZUcASoAvhmrgAUI2t1dXrjSL4xXVLB4FznPrIsX3nKXFl/Dt4vA==",
+      "archivePrefix": "stats.js/",
+      "installedTreeSha256": "c8a0cdeaa3eae779440e1839d82b2dceb69b4bb6a78c2033e869eb37c31fcb57",
+      "metadataURL": "https://registry.npmjs.org/@types%2Fstats.js/0.17.4",
+      "metadataSha256": "a96ac9ebfdfdd9400d8befc4562758c539e2d30a4753342c44f12b1ecb72b155",
+      "dependencies": {},
+      "relativePaths": {
+        "archive": "archives/types__stats.js-0.17.4.tgz",
+        "metadata": "metadata/types__stats.js-0.17.4.registry.json",
+        "installed": "consumer/node_modules/@types/stats.js",
+        "treeEntries": "evidence/types__stats.js-0.17.4.tree-entries.json"
+      }
+    },
+    {
+      "name": "@types/three",
+      "version": "0.186.0",
+      "archiveURL": "https://registry.npmjs.org/@types/three/-/three-0.186.0.tgz",
+      "archiveBytes": 371133,
+      "sha256": "903987fb2451466a2c40134626690cb921a8a2552ee95803969d1aa64d9033fe",
+      "integrity": "sha512-mxYSBpDC+D0pLfSP6sW4WZTcT+nrtmZcimMqnVmy36Hte3XpeYSrvgg4TRdaM1GemGog1AWzI5qL2VoIfMXbJQ==",
+      "archivePrefix": "three/",
+      "installedTreeSha256": "d0c8cb8d4db2b49724f7899b132d797fa5830a3d6655cc7f9d7bd2705a63e487",
+      "metadataURL": "https://registry.npmjs.org/@types%2Fthree/0.186.0",
+      "metadataSha256": "c3c0d3fa4863e62f3d2f5769f9d3c4a0412da0a15e801099233caffda48d7a40",
+      "dependencies": {
+        "fflate": "~0.8.3",
+        "@types/webxr": ">=0.5.17",
+        "meshoptimizer": "~1.1.1",
+        "@types/stats.js": "*",
+        "@tweenjs/tween.js": "~23.1.3",
+        "@dimforge/rapier3d-compat": "~0.12.0"
+      },
+      "relativePaths": {
+        "archive": "archives/types__three-0.186.0.tgz",
+        "metadata": "metadata/types__three-0.186.0.registry.json",
+        "installed": "consumer/node_modules/@types/three",
+        "treeEntries": "evidence/types__three-0.186.0.tree-entries.json"
+      }
+    },
+    {
+      "name": "@types/webxr",
+      "version": "0.5.24",
+      "archiveURL": "https://registry.npmjs.org/@types/webxr/-/webxr-0.5.24.tgz",
+      "archiveBytes": 11239,
+      "sha256": "3c846cf2797369ab971b6c89c9eb3089efb967261536c0f9bf31d6c250c9487a",
+      "integrity": "sha512-h8fgEd/DpoS9CBrjEQXR+dIDraopAEfu4wYVNY2tEPwk60stPWhvZMf4Foo5FakuQ7HFZoa8WceaWFervK2Ovg==",
+      "archivePrefix": "webxr/",
+      "installedTreeSha256": "db88c349cd5364cf116f4f4cc4b21653d536f88d9664e98ebbb217a9d830c596",
+      "metadataURL": "https://registry.npmjs.org/@types%2Fwebxr/0.5.24",
+      "metadataSha256": "6ac6de3f776e988e6a4fdd21f43f91db42f952ae88d5ee11001c68a32287600c",
+      "dependencies": {},
+      "relativePaths": {
+        "archive": "archives/types__webxr-0.5.24.tgz",
+        "metadata": "metadata/types__webxr-0.5.24.registry.json",
+        "installed": "consumer/node_modules/@types/webxr",
+        "treeEntries": "evidence/types__webxr-0.5.24.tree-entries.json"
+      }
+    },
+    {
+      "name": "fflate",
+      "version": "0.8.3",
+      "archiveURL": "https://registry.npmjs.org/fflate/-/fflate-0.8.3.tgz",
+      "archiveBytes": 173034,
+      "sha256": "38c2cd824402407b43153c782274aec2ea83ea688e4aa0b743c5f2c305857d92",
+      "integrity": "sha512-tbZNuJrLwGUp3zshBtdy4W+ORxZuIh8a5ilyIEQDC5rY1f3U20JMry0Ll3WBzU58EZKsEuJFXhb5gwv8CsPvgA==",
+      "archivePrefix": "package/",
+      "installedTreeSha256": "a70d921041f812c2b48901cdda83f3cc102ecb43dd7896096457365b60e58f7e",
+      "metadataURL": "https://registry.npmjs.org/fflate/0.8.3",
+      "metadataSha256": "e6f33a19077e6426379512f109594c92acafbcb4888d8633c2a59df73ef7f022",
+      "dependencies": {},
+      "relativePaths": {
+        "archive": "archives/fflate-0.8.3.tgz",
+        "metadata": "metadata/fflate-0.8.3.registry.json",
+        "installed": "consumer/node_modules/fflate",
+        "treeEntries": "evidence/fflate-0.8.3.tree-entries.json"
+      }
+    },
+    {
+      "name": "meshoptimizer",
+      "version": "1.1.1",
+      "archiveURL": "https://registry.npmjs.org/meshoptimizer/-/meshoptimizer-1.1.1.tgz",
+      "archiveBytes": 72797,
+      "sha256": "c23bef9ef57613c8a4e85d446c738154e52cac38e1a017dfb6ed33cfffa43593",
+      "integrity": "sha512-oRFNWJRDA/WTrVj7NWvqa5HqE1t9MYDj2VaWirQCzCCrAd2GHrqR/sQezCxiWATPNlKTcRaPRHPJwIRoPBAp5g==",
+      "archivePrefix": "package/",
+      "installedTreeSha256": "0d1a2eec9d3d7807b10424f08c16d70bb0844e5ea20703dd87e5cb8fa42566c6",
+      "metadataURL": "https://registry.npmjs.org/meshoptimizer/1.1.1",
+      "metadataSha256": "950c6a41ffcff0251e5340fd2439f939e9ce3578f58e13aea55c25751583c8ad",
+      "dependencies": {},
+      "relativePaths": {
+        "archive": "archives/meshoptimizer-1.1.1.tgz",
+        "metadata": "metadata/meshoptimizer-1.1.1.registry.json",
+        "installed": "consumer/node_modules/meshoptimizer",
+        "treeEntries": "evidence/meshoptimizer-1.1.1.tree-entries.json"
+      }
+    }
+  ],
+  "browserExecution": "NOT_RUN",
+  "generatedRuns": 0
+}

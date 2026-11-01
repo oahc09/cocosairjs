@@ -1,0 +1,144 @@
+[
+  {
+    "id": "default-options",
+    "acceptance": ["T01", "T06"],
+    "checks": ["native-shared-identity", "native-cache-hit", "default-fetch-options", "resources-valid"]
+  },
+  {
+    "id": "policy-inheritance",
+    "acceptance": ["T02", "T03"],
+    "checks": ["inherited-policy", "headers-snapshotted", "configured-cache-isolation", "resources-valid"]
+  },
+  {
+    "id": "policy-override",
+    "acceptance": ["T02", "T03"],
+    "checks": ["explicit-defaults-win", "headers-replaced", "resources-valid"]
+  },
+  {
+    "id": "cross-origin-headers",
+    "acceptance": ["T02"],
+    "checks": ["main-origin-header", "cross-origin-header-stripped", "resources-valid"]
+  },
+  {
+    "id": "redirect-headers",
+    "acceptance": ["T02"],
+    "checks": ["redirect-rejected", "redirect-error-option", "no-mounted-result"]
+  },
+  {
+    "id": "http-cache",
+    "acceptance": ["T02", "T06"],
+    "checks": ["separate-assets-http-cache", "all-cache-modes-forwarded", "resources-valid"]
+  },
+  {
+    "id": "pre-abort",
+    "acceptance": ["T04"],
+    "checks": ["abort-error", "no-fetch", "no-progress", "no-mounted-result"]
+  },
+  {
+    "id": "abort-main",
+    "acceptance": ["T04"],
+    "checks": ["abort-error", "server-saw-abort", "no-progress-after-abort", "no-mounted-result", "retry-success"]
+  },
+  {
+    "id": "abort-buffer",
+    "acceptance": ["T05"],
+    "checks": [
+      "abort-error",
+      "server-saw-abort",
+      "no-progress-after-abort",
+      "no-mounted-result",
+      "retry-success",
+      "temporary-resources-released"
+    ]
+  },
+  {
+    "id": "abort-image",
+    "acceptance": ["T05"],
+    "checks": [
+      "abort-error",
+      "server-saw-abort",
+      "no-progress-after-abort",
+      "no-mounted-result",
+      "retry-success",
+      "temporary-resources-released"
+    ]
+  },
+  {
+    "id": "abort-decode-meshopt",
+    "acceptance": ["T03", "T05"],
+    "checks": [
+      "abort-error",
+      "late-output-isolated",
+      "borrowed-provider-unchanged",
+      "provider-policy-retained",
+      "no-mounted-result",
+      "retry-success",
+      "temporary-resources-released"
+    ]
+  },
+  {
+    "id": "abort-decode-draco",
+    "acceptance": ["T03", "T05"],
+    "checks": [
+      "abort-error",
+      "late-output-isolated",
+      "borrowed-provider-unchanged",
+      "provider-policy-retained",
+      "no-mounted-result",
+      "retry-success",
+      "temporary-resources-released"
+    ]
+  },
+  {
+    "id": "abort-decode-ktx2",
+    "acceptance": ["T03", "T05"],
+    "checks": [
+      "abort-error",
+      "late-output-isolated",
+      "borrowed-provider-unchanged",
+      "provider-policy-retained",
+      "no-mounted-result",
+      "retry-success",
+      "temporary-resources-released"
+    ]
+  },
+  {
+    "id": "abort-handoff",
+    "acceptance": ["T05"],
+    "checks": ["abort-error", "created-resources-destroyed", "blob-urls-revoked", "no-mounted-result", "retry-success"]
+  },
+  {
+    "id": "multi-consumer",
+    "acceptance": ["T06"],
+    "checks": [
+      "abort-error",
+      "survivor-success",
+      "consumer-policy-independent",
+      "native-cache-isolation",
+      "retry-success",
+      "policy-response-identity"
+    ]
+  },
+  {
+    "id": "multi-consumer-same-policy",
+    "acceptance": ["T06"],
+    "checks": [
+      "abort-error",
+      "survivor-success",
+      "consumer-policy-independent",
+      "native-cache-isolation",
+      "retry-success",
+      "policy-response-identity"
+    ]
+  },
+  {
+    "id": "retry-network",
+    "acceptance": ["T05"],
+    "checks": ["first-load-rejected", "retry-success", "configured-cache-isolation"]
+  },
+  {
+    "id": "retry-parse",
+    "acceptance": ["T05"],
+    "checks": ["first-load-rejected", "retry-success", "configured-cache-isolation"]
+  }
+]

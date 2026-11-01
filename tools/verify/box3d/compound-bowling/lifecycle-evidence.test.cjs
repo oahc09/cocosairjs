@@ -1,7 +1,7 @@
 /** CPU rejection tests only. Fixtures are fabricated policy inputs, never browser/native evidence. */
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { options } = require('./browser-lifecycle.cjs');
+const { options, terminalClockRejected } = require('./browser-lifecycle.cjs');
 const policy = require('./lifecycle-evidence.cjs');
 const clone = (value) => JSON.parse(JSON.stringify(value));
 const receipt = () => ({
@@ -63,6 +63,11 @@ test('collector rejects missing identity, nonloopback URL and duplicate argument
         '--expect-build=236',
     ];
     assert.equal(options(good).build, 236);
+    assert.equal(options(good).browser, 'chromium');
+    assert.equal(options([...good, '--browser=chromium']).browser, 'chromium');
+    assert.equal(options([...good, '--browser=webkit']).browser, 'webkit');
+    assert.throws(() => options([...good, '--browser=firefox']), /Unsupported browser/);
+    assert.throws(() => options([...good, '--browser=webkit', '--browser=chromium']));
     assert.throws(() => options(good.slice(0, -1)));
     assert.throws(() => options([...good, '--expect-build=237']));
     assert.throws(() => options(good.map((arg) => arg.replace('127.0.0.1', 'example.com'))));
@@ -244,4 +249,18 @@ test('twenty resets require 21 distinct observed generations; click counts canno
     const fake = [...series];
     fake[10] = clone(fake[9]);
     assert.throws(() => policy.reset20(fake));
+});
+
+test('terminal clock requires AIR_E_APP_CLOSED, not success or another failure', () => {
+    assert.equal(terminalClockRejected('Error: [cocosair] AIR_E_APP_CLOSED: the Game clock is terminal.'), true);
+    for (const invalid of [
+        null,
+        undefined,
+        '',
+        'Error: Observed Game is semantically paused.',
+        'Error: native failure',
+        'Error: NOT_AIR_E_APP_CLOSED: invalid',
+        { code: 'AIR_E_APP_CLOSED' },
+    ])
+        assert.equal(terminalClockRejected(invalid), false);
 });

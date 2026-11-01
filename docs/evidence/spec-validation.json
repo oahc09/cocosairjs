@@ -1,10 +1,15 @@
 {
-  "measuredAt": "2026-10-16T15:38:44.209Z",
-  "total": 188,
+  "measuredAt": "2026-10-25T13:59:43.287Z",
+  "total": 193,
   "frozen": 188,
-  "draft": 0,
+  "draft": 5,
   "blocked": 0,
   "examples": [
+    {
+      "id": "afterlight",
+      "specStatus": "draft",
+      "issues": []
+    },
     {
       "id": "anim-position",
       "specStatus": "frozen",
@@ -228,6 +233,11 @@
     {
       "id": "input-queries",
       "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "instance-batch",
+      "specStatus": "draft",
       "issues": []
     },
     {
@@ -586,6 +596,16 @@
       "issues": []
     },
     {
+      "id": "morph-field",
+      "specStatus": "draft",
+      "issues": []
+    },
+    {
+      "id": "neon-city",
+      "specStatus": "draft",
+      "issues": []
+    },
+    {
       "id": "neon-night-city",
       "specStatus": "frozen",
       "issues": []
@@ -638,6 +658,11 @@
     {
       "id": "particle-2d-basic",
       "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "particles-3d",
+      "specStatus": "draft",
       "issues": []
     },
     {

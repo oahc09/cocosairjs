@@ -6,6 +6,8 @@
 
 `node tools/verify/box2d3.cjs --engine=chromium --scope=all` 在真实浏览器运行全部 147 个官方注册案例及 AIR 组件集成断言，分别检查模拟结果、截图、原生资源释放和浏览器物理退出。支持 `firefox`、`webkit`；要求匹配的 Playwright 依赖与二进制，只写新的 `output/box2d/acceptance/` 目录，不更新 canonical example evidence。`--limit=N` 是不能通过完整验收的诊断子集。部署和兼容约定见 [Box2D 指南](../docs/guides/box2d3.md)。
 
+`node --test tools/verify/box2d3-adapter.test.cjs` 使用实际冻结 WASM 与内存转译的 AIR 适配器，检查零缩放恢复和 END 回调重建时的形状释放；只替代 Cocos 组件环境，不模拟物理。不写证据或运行时产物，不替代真实浏览器集成验收。
+
 `node tools/verify/box2d3-archive.cjs --index=<artifacts.json> --out=<new-directory>` 核验索引中的全部原件，
 使用系统 `tar` 写入新的分卷归档目录及 `archive.json`，不覆盖已有目录。每卷原始数据最多 40 MiB。
 `--check=<archive-directory>` 在临时目录中解包，逐项核验路径、大小和 SHA-256 后删除临时目录，不改仓库。
@@ -80,6 +82,8 @@ PAL 的运行时来源固定在 `vendor/pal-source/` 的公开 MIT 快照；
 | 蒙皮首帧与变换          | `node tools/verify/air-skinning-browser.cjs --out=output/playwright/<new-report>.json`                                                    | 三浏览器实时/烘焙模式、暂停dt=0首帧、非对称网格SMR/root/ancestor缩放和bounds/像素。需当前bundle、可解析Playwright及匹配浏览器。写新报告/截图，完整范围及未测项由报告列明。                       |
 
 ## 程序化场景与独立验收工具
+
+Effect 注册、真实 shader 驱动错误和动态网格通知的局部回归：`node tools/verify/effect-runtime-contracts.cjs --bundle=build/cocosair.module.js --out=output/effect-contracts/new-attempt`。需要可解析的 Playwright 和 Chromium（可用 `AIR_EVIDENCE_BROWSER_EXECUTABLE` 指定已安装浏览器）。只读候选 JS，写新的报告/截图目录；保留失败，不重建、不修改 manifest 或正典验收证据。动态网格控制检查初次绑定、移出视锥、无需手动通知自动恢复，以及索引计数 6→3→0→6 的画面和 IA 状态；不能据此归因缺失的 E02/E04 原始源码。
 
 音频加载与所有权局部回归：`node tools/verify/audio-ownership-browser.cjs --bundle=build/cocosair.module.js --browser=chromium --out=output/audio-ownership/new-run`。需要可解析 Playwright 与匹配浏览器；只读 bundle，写新的报告/截图目录，保留失败，不更新正典证据。独立诊断模块 `tools/debug/resource-ownership.ts` 区分清理回调、排队销毁、对象有效性、GFX 与共享缓存状态；不在默认 runtime 内。
 
@@ -313,6 +317,8 @@ The six tools under `tools/skills/` share the Markdown/YAML parser in `lib/md-pa
 - `node tools/skills/measure-tokens.cjs --loads <actual-events.jsonl> --snapshot <candidate> --source-snapshot <original> --scenarios tools/skills/fixtures/load-scenarios.json --diff ai/plans/skills-token-evidence/recovery/original-B1.json --baseline-loads ai/plans/skills-token-evidence/recovery/reading-original-B1/events-audited.jsonl`: reaggregate genuine same-protocol B1 records and compare against re-read original logs. This command does not perform or invent a reading trial.
 - `node tools/skills/check-p1.cjs --source <immutable-original-checkout> --out <new-temp-directory>`: deterministic CI orchestration; writes only the new directory below the OS temporary root (or RUNNER_TEMP). It reconstructs and checks original/prerequisite/candidate manifests, retains the original path FAIL, runs final gates and checks a complete isolated skills copy. It never executes snapshot code or synthesizes real reading events.
 
+`check-p1.cjs` additionally accepts `--candidate-loads ai/plans/skills-token-evidence/<new-reading>/events.jsonl` to select a fresh real B1 record explicitly. The default still reads the historical recovery record. The selected JSONL must stay inside the repository's skills evidence tree; all snapshot, protocol, receipt, answer and cost checks still apply. CI now selects the [Code First guides sealed B1 trial](../ai/plans/skills-token-evidence/reading-vibe-guides-refined-B1-20261025/review.md). Its [execution archive](../ai/plans/skills-token-evidence/vibe-guides-p1-20261025/index.json) records the passing P1 checker, the retained [first B1 failure](../ai/plans/skills-token-evidence/reading-vibe-guides-B1-20261025/review.md), event-schema correction, unchanged Windows symlink tool-test blockage and unchanged manual-consistency failures. The [earlier current trial](../ai/plans/skills-token-evidence/reading-current-B1-1792852467721/review.md) and [its archive](../ai/plans/skills-token-evidence/current-p1-1792852467721/index.json), plus the [HDR trial](../ai/plans/skills-token-evidence/reading-hdr-refined-B1-20261024T130646090/review.md) and [HDR archive](../ai/plans/skills-token-evidence/hdr-p1-20261024/index.json), remain historical evidence for their own snapshots. Earlier preparation-only manifests/L0 are not completed trials. This measures document input, not billing tokens or runtime acceptance.
+
 The original immutable source is commit `66d11fd0c3c189b7dfa6d20645222e237352f9f3`. The focused Skills P1 workflow checks it out separately and verifies all source bytes against the retained manifest. Existing Code quality and browser-smoke gates remain unchanged. Phase two is not part of these tools' acceptance claim.
 
 ### Lossless routing-report archive transport
@@ -327,3 +333,31 @@ node tools/skills/restore-route-reports.cjs --out /tmp/cocosair-route-reports
 ```
 
 The output directory must not exist. The tool checks all four archives before writing and rejects missing, corrupt, altered, oversized or unsafe inputs. The 5,553,733 original bytes occupy 437,707 gzip bytes; independent decoding must reproduce every historical byte and hash. The historical publication inventory describes the uncompressed tree `6a60ee41d9c7d480ffef54f69908da0e596a4fdc`; adding archive transport creates a different final Git tree. Skill contents and their candidate snapshot hash `7f246c153901eae7a31d0bd849904412b575e2cbd5d3cfc507eab502ff0ada41` remain unchanged.
+
+### HDR post-processing pixel regression
+
+`node tools/verify/hdr-post-process.cjs --out=output/hdr-attempt` runs bounded real Chromium calibration and the neon-city controls. Optional `--bundle=<candidate.js>` selects a candidate runtime. Requires Playwright/browser, pngjs and esbuild. Writes a new attempt directory with raw screenshots, source/runtime fingerprints and report; refuses an existing directory and never publishes canonical example evidence. Validates float HDR capture, tone curves, exposure, Bloom spread, resize and release/recreation. Browser close acknowledgement is separate from compositor presentation and OS shutdown evidence.
+
+### Native 3D particles
+
+`node tools/verify/particles.cjs --bundle=<candidate.js> --out=output/playwright/new-particles-attempt` verifies Code First CPU/GPU particle initialization, actual colored pixels and trail geometry, size curves, local/world spaces, pause/resume/drain/replay, invalid GPU module rejection, native GPU resource deletion and reentry. Requires Playwright/browser, pngjs and esbuild. Writes a new local attempt and retains failures; it does not publish canonical evidence or claim compositor timing/OS process custody.
+
+### GPU point/voxel morph fields
+
+`node tools/verify/morph-field.cjs --bundle=<candidate.js> --out=output/playwright/new-morph-attempt` validates GPU position/color interpolation through real pixels, actual indexed instance counts, zero shape/instance transfers during progress changes, atlas row boundaries, font sampling, parent transforms and native GPU deletion. It also checks the FORM / MATTER controls and portrait output. Requires Playwright/browser, pngjs and esbuild. Retains a new local report and screenshots; no canonical promotion, GPU throughput or OS process-custody claim.
+
+### AFTERLIGHT visual study
+
+`node tools/verify/afterlight-example.cjs --out=output/new-afterlight-attempt` verifies the procedural light-sculpture example with real Chromium screenshots, actual HDR reflection, tone/exposure/Bloom controls, pause/resume, orbit, portrait projection and texture release. `--url=http://127.0.0.1:7454/afterlight/` verifies an already-running real dev server and checks its served bundle hash. `--bundle=<candidate.js>` selects a runtime; Playwright/browser, esbuild and pngjs are required. It writes a new isolated local attempt, retains failures and never publishes canonical Gallery evidence.
+
+## WebGPU runtime interop probes
+
+The opt-in [`runtime-interop`](../docs/reference/runtime-interop.md) collector runs shared browser/native behavior probes and AIR scene checks. [`Android interop`](../docs/reference/android-runtime-interop.md) has separate staging, device, lifecycle, memory and offline audit entry points. These tools do not change the default runtime or ordinary CI scope.
+
+Run focused CPU regressions with:
+
+```sh
+node --test tools/build/source-binding.test.cjs tools/verify/runtime-interop*.test.cjs
+```
+
+Runtime builds also write `<bundle>.sources.json`: exact bundle/map/source hash bindings for source-content-free maps. Missing or mismatched bindings fail closed. These receipts are consistency checks, not signed build attestations; see the guide for their trust boundary and retained-map migration provenance.

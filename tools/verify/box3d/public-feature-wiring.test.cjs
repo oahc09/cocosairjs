@@ -43,8 +43,10 @@ function evaluate(relative, dependencies = {}) {
     );
     return module.exports;
 }
-function fixture() {
-    const preparation = evaluate('src/air/physics/preparation.ts').createAirPhysicsPreparation();
+function fixture({ missingReceipt = false, disposeFailure = false, nonterminalReceipt = false } = {}) {
+    const preparation = evaluate('src/air/physics/preparation.ts', {
+        '../safe-error': evaluate('src/air/safe-error.ts'),
+    }).createAirPhysicsPreparation();
     const api = evaluate('src/air/physics/box3d/prepare.ts');
     const calls = [];
     const selector = Object.freeze({ identity: 'canonical-selector-probe' });
@@ -57,9 +59,25 @@ function fixture() {
         },
     };
     let captured;
+    let released = false;
+    const moduleRelease = Object.freeze({
+        status: nonterminalReceipt ? 'BASELINE_CAPTURED' : disposeFailure ? 'FAILED' : 'VERIFIED',
+        verified: !disposeFailure && !nonterminalReceipt,
+        baseline: null,
+        terminal: null,
+        errors: Object.freeze(
+            disposeFailure ? [{ phase: 'release-module', code: null, message: 'probe release failure' }] : [],
+        ),
+    });
     const lease = Object.freeze({
         dispose() {
             calls.push('module-dispose');
+            released = true;
+            if (disposeFailure) throw new Error('probe release failure');
+        },
+        diagnostics() {
+            assert.equal(released, true, 'Receipt must be read after disposal, never before');
+            return { moduleRelease: missingReceipt ? undefined : moduleRelease };
         },
     });
     const loader = Object.freeze({
@@ -178,7 +196,27 @@ async function test(name, action) {
         assert.equal(receipt.status, 'closed');
         assert.equal(receipt.acquired[0].cleanup, 'released');
         assert.equal(f.calls.at(-1), 'module-dispose');
+        assert.equal(receipt.moduleRelease.status, 'VERIFIED');
+        assert(Object.isFrozen(receipt.moduleRelease));
     });
+    for (const options of [{ missingReceipt: true }, { nonterminalReceipt: true }, { disposeFailure: true }]) {
+        await test(`release cannot report closed with ${JSON.stringify(options)}`, async () => {
+            const f = fixture(options);
+            f.load();
+            await f.api.prepareBox3D(
+                { assetBaseUrl: undefined, threading: 'single', workerCount: 1, solverSubSteps: 4 },
+                f.preparation,
+            );
+            const receipt = await f.preparation.dispose();
+            assert.equal(receipt.status, 'cleanup-failed');
+            assert.equal(receipt.acquired[0].cleanup, 'failed');
+            assert(receipt.cleanupErrors.length > 0);
+            if (options.disposeFailure) assert.equal(receipt.moduleRelease.status, 'FAILED');
+            else assert.equal(receipt.moduleRelease, undefined);
+            await f.preparation.dispose();
+            assert.equal(f.calls.filter((item) => item === 'module-dispose').length, 1);
+        });
+    }
     console.log(
         JSON.stringify(
             {

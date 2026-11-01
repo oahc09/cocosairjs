@@ -1,0 +1,35 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "lib": ["es2022", "dom"],
+    "types": [
+      "jest",
+      "../../node_modules/@cocos/cannon/CANNON",
+      "../../src/@types/globals",
+      "../../src/@types/consts",
+      "../../src/@types/jsb",
+      "../../src/@types/editor-extends",
+      "../../src/@types/webGL.extras",
+      "../../src/@types/webGL2.extras",
+      "../../src/@types/webGPU",
+      "../../src/@types/pal/system-info",
+      "../../src/@types/pal/screen-adapter",
+      "../../src/@types/pal/minigame",
+      "../../src/@types/pal/audio",
+      "../../src/@types/pal/input",
+      "../../src/@types/pal/env",
+      "../../src/@types/pal/pacer",
+      "../../src/@types/pal/wasm"
+    ],
+    "module": "esnext",
+    "target": "es2017",
+    "moduleResolution": "node"
+  },
+  "include": [
+    "../../src/**/*.ts",
+    "../../src/**/*.d.ts",
+    "../../examples/material-inspection-showroom/src/**/*.ts",
+    "../debug/readiness-observer.ts",
+    "../../test/fixtures/upstream-skinning/**/*.ts"
+  ]
+}

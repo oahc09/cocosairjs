@@ -1,8 +1,0 @@
-PASS tools/verify/box3d/owner-system-pause-real-wasm.test.ts (29.746 s)
-  ✓ actual AIR/System pause preserves scheduling truth on current real WASM (336 ms)
-
-Test Suites: 1 passed, 1 total
-Tests:       1 passed, 1 total
-Snapshots:   0 total
-Time:        30.744 s
-Ran all test suites.

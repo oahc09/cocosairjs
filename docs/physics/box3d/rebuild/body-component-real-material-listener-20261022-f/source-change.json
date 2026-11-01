@@ -1,8 +1,0 @@
-{
-  "createdAt": "2026-10-22T10:19:11.917995+00:00",
-  "file": "src/cocos/physics/framework/components/colliders/collider.ts",
-  "beforeSha256": "7822cefedbf6c8fbf0861fb05949589b2f4a81462c01d0e23d3ba556fec3b2be",
-  "afterSha256": "a47a19aabb317971c4e8d8947fa8e85730d895f1ed88a34bc17aa8a891802c8a",
-  "priorNaturalRed": "../body-component-real-wasm-l2-20261022-material-listener-a/receipt.json",
-  "scope": "Box3D-only initial material update listener. Existing onDestroy detaches listener; other backends unchanged. Ordinary EventTarget.on assumed nonthrowing; live shared asset updates are not an atomic rollback."
-}

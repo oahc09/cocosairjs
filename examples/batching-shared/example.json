@@ -24,13 +24,13 @@
         "api": "Material.initialize",
         "source": "shared/batching-routes.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L104"
+        "sourceLocation": "L105"
       },
       {
         "api": "utils.createMesh",
         "source": "shared/batching-routes.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L107"
+        "sourceLocation": "L108"
       }
     ]
   },

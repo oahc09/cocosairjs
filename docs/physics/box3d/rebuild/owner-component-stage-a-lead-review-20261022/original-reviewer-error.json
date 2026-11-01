@@ -1,7 +1,0 @@
-{
-  "status": "REVIEWER_ERROR_NOT_PRODUCT_FAILURE",
-  "exitCode": 1,
-  "error": "KeyError: 'pass' while reading actual component check schema, which uses passed",
-  "reviewerSha256": "68b65a8c5bf9bb6cc6d5ce1b4d15b4c58449a173ea80dd661ab84db2ee90861c",
-  "scope": "First four real-run hash/cleanup reviews completed in memory, but no receipt was emitted. Raw physics/test records unchanged."
-}

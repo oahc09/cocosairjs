@@ -270,6 +270,98 @@ try {
         assert.equal(report.acceptancePassed, false);
         assert.equal(report.factoryCalls, 1);
     });
+    // Same-world live disable regression: retain original trim's zero/live guard.
+    for (const type of [1, 2]) {
+        check(`sleepDisableEnableDestroyType${type}ThreeCycles`, () => {
+            for (let cycle = 0; cycle < 3; ++cycle) {
+                const body = api.createBody(world, { type, enableSleep: true, position: [0, 0, 0] });
+                api.createSphere(body, 0.25);
+                api.setBodyAwake(world, body, false);
+                const sleeping = api.memoryDiagnostics(world);
+                const step = sleeping.identity.nativeStepIndex;
+                assert.equal(api.bodyState(world, body).awake, false);
+                api.setBodyEnabled(world, body, false);
+                const disabled = api.memoryDiagnostics(world);
+                assert.equal(disabled.liveCounts.bodies, 1);
+                assert.equal(row(disabled, 'idFreeList.solverSet').count, 1n);
+                assert.equal(api.trimEmptyWorld(world, true), false);
+                api.setBodyEnabled(world, body, true);
+                assert.equal(api.bodyState(world, body).enabled, true);
+                api.setBodyAwake(world, body, false);
+                api.setBodyEnabled(world, body, false);
+                api.destroyBody(body);
+                assert.equal(api.trimEmptyWorld(world, true), true);
+                const trimmed = api.memoryDiagnostics(world);
+                exactLedger(trimmed);
+                assert.equal(trimmed.identity.worldId, initial.identity.worldId);
+                assert.equal(trimmed.identity.nativeStepIndex, step);
+                assert.deepEqual(bytes(trimmed), bytes(initial));
+            }
+        });
+    }
+    for (const kind of ['fixed', 'hinge', 'point-to-point']) {
+        check(`sleepSharedSetDisablePreserves${kind}`, () => {
+            const a = api.createBody(world, { type: 2, enableSleep: true, position: [0, 0, 0] });
+            const b = api.createBody(world, { type: 2, enableSleep: true, position: [2, 0, 0] });
+            api.createSphere(a, 0.25);
+            api.createSphere(b, 0.25);
+            const geometry = { pivotA: [0, 0, 0], pivotB: [0, 0, 0], autoPivotB: true };
+            const joint =
+                kind === 'fixed'
+                    ? api.createFixedJoint(world, a, b, { collideConnected: false, breakForce: 1e8, breakTorque: 1e8 })
+                    : kind === 'hinge'
+                      ? api.createHingeJoint(
+                            world,
+                            a,
+                            b,
+                            { ...geometry, axisA: [0, 1, 0] },
+                            {
+                                collideConnected: false,
+                                limitEnabled: false,
+                                lowerAngleRadians: 0,
+                                upperAngleRadians: 0,
+                                motorEnabled: false,
+                                motorSpeedRadians: 0,
+                                maxMotorTorque: 0,
+                            },
+                        )
+                      : api.createPointToPointJoint(world, a, b, geometry, { collideConnected: false });
+            const state = () =>
+                kind === 'fixed'
+                    ? api.fixedJointState(world, joint)
+                    : kind === 'hinge'
+                      ? api.hingeJointState(world, joint)
+                      : api.pointToPointJointState(world, joint);
+            api.step(world, 1 / 60, 1);
+            api.setBodyAwake(world, a, false);
+            assert.equal(api.bodyState(world, a).awake, false);
+            assert.equal(api.bodyState(world, b).awake, false);
+            const step = api.memoryDiagnostics(world).identity.nativeStepIndex;
+            api.setBodyEnabled(world, a, false);
+            assert.equal(api.bodyState(world, b).enabled, true);
+            assert.equal(state().kind, kind);
+            assert.equal(api.memoryDiagnostics(world).liveCounts.joints, 1);
+            assert.equal(row(api.memoryDiagnostics(world), 'idFreeList.solverSet').count, 0n);
+            assert.equal(api.trimEmptyWorld(world, true), false);
+            api.setBodyEnabled(world, a, true);
+            assert.equal(state().kind, kind);
+            api.setBodyAwake(world, a, false);
+            api.setBodyEnabled(world, a, false);
+            api.setBodyEnabled(world, b, false);
+            assert.equal(row(api.memoryDiagnostics(world), 'idFreeList.solverSet').count, 1n);
+            assert.equal(state().kind, kind);
+            api.destroyJoint(world, joint);
+            api.destroyBody(a);
+            api.destroyBody(b);
+            assert.equal(api.trimEmptyWorld(world, true), true);
+            const trimmed = api.memoryDiagnostics(world);
+            exactLedger(trimmed);
+            assert.deepEqual(bytes(trimmed), bytes(initial));
+            assert.equal(trimmed.identity.worldId, initial.identity.worldId);
+            assert.equal(trimmed.identity.nativeStepIndex, step);
+            assert.deepEqual(isolated(api.memoryDiagnostics(other)), otherInitial);
+        });
+    }
     report.status = 'PASS';
 } catch (error) {
     report.status = 'FAIL';

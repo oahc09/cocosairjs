@@ -36,6 +36,7 @@ import { cclegacy, warnID } from '../../core';
 import { ProgramLibrary } from '../../rendering/custom/private';
 import { addEffectDefaultProperties, getCombinationDefines } from '../../render-scene/core/program-utils';
 import { TextureBase } from './texture-base';
+import { normalizeEffectShaders } from '../../../air/rendering/effect-json-contract';
 
 export declare namespace EffectAsset {
     export interface IPropertyInfo {
@@ -225,6 +226,7 @@ export class EffectAsset extends Asset {
      * @param asset @en The effect asset to be registered. @zh 待注册的 effect asset。
      */
     public static register (asset: EffectAsset): void {
+        asset.shaders = normalizeEffectShaders(asset.shaders, asset.name);
         EffectAsset._effects[asset.name] = asset;
         EffectAsset._layoutValid = false;
     }
@@ -337,6 +339,7 @@ export class EffectAsset extends Asset {
      * @zh 通过 [[AssetManager]] 加载完成时的回调，将自动注册 effect 资源。
      */
     public onLoaded (): void {
+        const previous = EffectAsset._effects[this.name];
         EffectAsset.register(this);
         // Full Web bundles can expose the effect-import module before game.init
         // chooses the actual pipeline. Its init() needs a device, and game.init
@@ -348,7 +351,13 @@ export class EffectAsset extends Asset {
             cclegacy.game.once(cclegacy.Game.EVENT_RENDERER_INITED, this._onRendererReady, this);
             return;
         }
-        this._registerPrograms();
+        try {
+            this._registerPrograms();
+        } catch (error) {
+            EffectAsset.remove(this);
+            if (previous) { EffectAsset._effects[this.name] = previous; }
+            throw error;
+        }
         if (!EDITOR_NOT_IN_PREVIEW) { cclegacy.game.once(cclegacy.Game.EVENT_RENDERER_INITED, this._precompile, this); }
     }
 

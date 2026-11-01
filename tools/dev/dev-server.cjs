@@ -396,6 +396,15 @@ b.onclick=function(){
         }
         return;
     }
+    if (p.startsWith('/src/')) {
+        const bytes = require('./source-map-source.cjs').readSourceMapSource(ROOT, p);
+        res.writeHead(bytes === null ? 404 : 200, {
+            'Content-Type': 'text/plain; charset=utf-8',
+            'Cache-Control': 'no-store',
+        });
+        res.end(bytes === null ? 'not found (source map source)' : bytes);
+        return;
+    }
     if (p.startsWith('/build/')) {
         const file = path.join(ROOT, p);
         if (fs.existsSync(file)) return serveFile(res, file);

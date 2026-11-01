@@ -1,9 +1,0 @@
-{
-  "status": "PASS_PURE_OBSERVER_CONTROL_ONLY",
-  "counts": {
-    "cases": 76,
-    "passed": 76
-  },
-  "stable": true,
-  "failures": []
-}

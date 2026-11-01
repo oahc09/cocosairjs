@@ -1,48 +1,38 @@
 # Post Processing（后处理）
 
-> 自建后处理管线：用 render target + 自定义着色器拼 Bloom/灰度等效果。
-> 状态：**N/A** —— AIR 没有用户可装配的后处理管线入口，本篇给实测证据与边界，不配示例。
-> 内建后处理槽位（`camera.usePostProcess` / 色调映射单项）已在专篇讨论：见
-> [how-to-use-post-processing](how-to-use-post-processing.md)（PARTIAL）。
+默认 Code First WebGL2 路径现在提供 `createAirPostProcess(camera, options)`，包含线性 HDR 捕获、多级 Bloom、ACES/Reinhard、曝光及统一输出编码。完整参数、资源所有权、限制及运行方法见 [HDR 后处理指南](../guides/hdr-post-processing.md)。
 
-## 1. 实测结论：装配入口缺失
+```ts
+const post = createAirPostProcess(camera, {
+    levels: 5,
+    toneMapping: 'aces',
+    exposure: 1,
+    bloom: { intensity: 0.6, threshold: 1 },
+});
+post.setOptions({ bloom: { enabled: false } });
+// 离开场景时释放；销毁相机节点也会自动释放。
+post.dispose();
+```
 
-- **Stage 类导出了，但没有装配面**。`PostProcessStage / BloomStage / ShadowStage / RenderStage / RenderFlow`
-  等管线类都在顶层导出表里（module.js export 实测），但 d.ts 中 `PostProcessStage`（34907 起）只有
-  `initialize(IRenderStageInfo) / activate / render` 生命周期方法——`IRenderStageInfo` 是名字/输入布局类元数据，
-  **没有任何"塞自定义效果"的参数**。
-- **源码侧装配是硬编码**。全量 grep `new PostProcessStage(`：唯一构造点在
-  `src/cocos/rendering/deferred/main-flow.ts:69`（延迟管线内部流程）；用户没有注册 stage/flow 的入口
-  （grep `registerStage|addStage` 零命中）。
-- **~~`PostProcess` 本体未导出~~（V1.2 已过期）**：`postProcess` 命名空间（`PostProcess` 组件 +
-  `BlitScreen/Bloom/ColorGrading/FSR/TAA` 设置类）V1.2 起在默认聚合导出内；G4 探针（2026-09-25）
-  装配 `addSetting` + 挂 `camera.postProcess` 零报错。**但效果应用的像素级 A/B 不可归因**
-  （开/关对照无差异、两次开态非确定差异），状态保持"可装配、效果未证实"——
-  见 [How to use Post Processing](how-to-use-post-processing.md) §2/§3。
-- **自定义Effect与后处理装配分开验收**：原生EffectAsset的GLSL阶段、显式资源binding与Material接线已由PG-23真实验证，见[自定义着色器](custom-shaders.md)。render target手工合成（[render-targets](rendertargets.md)）仍须验证目标纹理与实际像素；这一路通过也不能替代原生postProcess设置的效果验收。此前“没有用户面GLSL入口”的结论已过期。
+主引擎入口直接导出该接口。先调用 `createAirApp`，再装配后处理；可在 `app.run(scene)` 前创建。示例：[霓虹夜城](../../examples/neon-city/index.html)，提供实际 Bloom 开关、色调映射和曝光控件。
 
-## 2. 与 how-to-use 篇的分工
+## 输出与限制
 
-后处理在本手册分两篇讲：_How to use Post Processing_（用现成内建槽位）与 _Post Processing_
-（本篇，自己搭管线）。前者见 [how-to-use-post-processing](how-to-use-post-processing.md)
-（内建槽位 PARTIAL：色调映射单项可用、composer 类效果缺）；本篇自建管线，**N/A**（上节四条证据）。
+- 自定义 shader 输出线性场景亮度，发光值可大于 1；不要提前进行 tone mapping 或 sRGB 编码。
+- 原生 standard/unlit 的输出转换按相机切换，不修改其他相机的材质行为。
+- 捕获及 Bloom 中间目标为 RGBA16F；不支持 HDR 时明确失败，不静默转为 8 位。
+- 当前支持默认 WebGL2 ForwardPipeline；不承诺 WebGPU、延迟或第三方自定义管线。
+- 输出颜色，不复制深度。resize 自动重建并重新绑定；启用期间不要外部覆盖相机目标。
+- 旧 `attachAirBloom` 是 LDR 近似，保持兼容；不要同时把两条链叠到同一相机。
 
-## 3. 应用层近似（不伪装）
+## 与原生 postProcess 设置的区别
 
-能做的只有"无着色器的合成"：多相机 + 多 render target（`camera.targetTexture`，d.ts 21370–21371）把场景渲到
-几张 RT，再各自作为纹理贴到 unlit quad 上按透明度叠加——做出"两层画面混合"这类效果，但**逐像素运算**
-（阈值提取、卷积、色差）做不了，因为没有自定义 fragment 着色器的入口。性能与正确性均未在本仓库取证，
-只述路线不承诺。
+原生 `camera.postProcess`、`camera.usePostProcess` 和 `postSettings.toneMappingType` 的历史调查见 [How to use Post Processing](how-to-use-post-processing.md)。该调查不代表新的 AIR 链没有效果；两个入口不应混为同一次验收。
 
-## 4. 升级条件（何时能把本篇改 PARTIAL/FULL）
+历史文档中“没有用户 fragment shader 入口”“只能无着色器合成”“本篇 N/A”的结论已过期。AIR 新接口使用现有 GFX、RenderTexture 和 ForwardPipeline 命令链，不新增平行播放器或其他引擎依赖。
 
-1. `PostProcess`/`PPRenderStage` 类效果装配面对用户开放（或出现 `addPostProcessStage` 类入口）；
-2. 或用户 GLSL 通道打开（EffectAsset 运行时注册可编译自写 effect——见 [shadertoy](shadertoy.md) 的同一升级条件），
-   配合 render target 即可自建；
-3. 有示例通过本仓库验证器（效果前后像素对比 + 无运行时错误）。
+## 定向验证
 
-三条任一满足前，本篇保持 N/A。
+CPU 数值及宏作用域回归：`test/smoke/hdr-post-process.test.ts`。真实 Chromium 像素、MSAA、viewport、资源释放与霓虹控件回归：`tools/verify/hdr-post-process.cjs`，写入新的本地尝试目录。它不更新规范示例证据，也不等于全浏览器发布验收。
 
----
-
-上一篇：[鼠标拾取（Picking Objects with the Mouse）](picking.md) ｜ 下一篇：[使用 Shadertoy 着色器（Using Shadertoy Shaders）](shadertoy.md)
+上一篇：[鼠标拾取](picking.md) ｜ 下一篇：[Shadertoy](shadertoy.md)

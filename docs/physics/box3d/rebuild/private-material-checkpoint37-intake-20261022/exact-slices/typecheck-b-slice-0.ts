@@ -1,1 +1,0 @@
-const observedMaterialAssets = new WeakMap<Collider, Set<PhysicsMaterial>>();

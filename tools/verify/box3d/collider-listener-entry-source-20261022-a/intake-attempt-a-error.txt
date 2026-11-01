@@ -1,1 +1,0 @@
-Fixture intake schema error before verification: TypeError: string indices must be integers, not 'str'. Manifest maps paths directly to SHA strings, not byte/sha objects. No product execution or source change. Corrected intake below verifies every data member hash.

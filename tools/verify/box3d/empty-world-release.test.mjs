@@ -34,7 +34,12 @@ const bindingSource = load('src/air/physics/box3d/world-binding.ts', [
     'copyVector',
     'finiteFloat32',
 ]);
-const { createAirPhysicsPreparation } = load('src/air/physics/preparation.ts', ['createAirPhysicsPreparation']);
+const safeErrors = load('src/air/safe-error.ts', ['safeErrorString', 'safeErrorField']);
+const { createAirPhysicsPreparation } = load(
+    'src/air/physics/preparation.ts',
+    ['createAirPhysicsPreparation'],
+    safeErrors,
+);
 const error = (code) => Object.assign(new Error(code), { code });
 function preparation() {
     const p = createAirPhysicsPreparation();
@@ -542,6 +547,7 @@ function appHarness(options = {}) {
         },
     };
     const { AirAppImpl } = load('src/air/app.ts', ['AirAppImpl'], {
+        ...safeErrors,
         Scene,
         createSessionScope,
         game,

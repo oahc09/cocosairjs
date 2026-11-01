@@ -249,7 +249,11 @@ function actualTS(relative, names) {
     const code = stripTypeScriptTypes(source, { mode: 'transform' })
         .replace(/^import[\s\S]*?;\s*$/gm, '')
         .replace(/^export /gm, '');
-    return vm.runInNewContext(code + '\n;({' + names.join(',') + '})');
+    const dependencies =
+        relative === 'src/air/physics/preparation.ts'
+            ? actualTS('src/air/safe-error.ts', ['safeErrorString', 'safeErrorField'])
+            : {};
+    return vm.runInNewContext(code + '\n;({' + names.join(',') + '})', dependencies);
 }
 for (const disposeFails of [false, true])
     test('actual preparation copies this lease terminal in failure-safe disposal; throws=' + disposeFails, async () => {

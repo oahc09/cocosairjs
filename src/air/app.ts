@@ -19,6 +19,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
 */
+import { safeErrorString } from './safe-error';
 /**
  * Cocos AIR — Agent-first Interactive Runtime.
  *
@@ -229,7 +230,7 @@ export class AirAppImpl implements AirApp {
                 try {
                     retained = director._releaseSceneImmediate();
                 } catch (error) {
-                    destructionFailure = String(error);
+                    destructionFailure = safeErrorString(error);
                 }
                 const result = await cleanup;
                 const pending = [...result.pending],
@@ -238,7 +239,7 @@ export class AirAppImpl implements AirApp {
                     releaseManager._flushAirReleaseQueue();
                     CCObject._deferredDestroy();
                 } catch (error) {
-                    failures.push({ label: 'native-asset-destruction', message: String(error) });
+                    failures.push({ label: 'native-asset-destruction', message: safeErrorString(error) });
                 }
                 if (destructionFailure)
                     failures.push({ label: 'native-scene-destruction', message: destructionFailure });
@@ -250,7 +251,7 @@ export class AirAppImpl implements AirApp {
                     try {
                         physicsSceneRelease = this.physicsPreparation?.releaseScene();
                     } catch (error) {
-                        failures.push({ label: 'box3d-empty-world-reclamation', message: String(error) });
+                        failures.push({ label: 'box3d-empty-world-reclamation', message: safeErrorString(error) });
                     }
                 }
                 const status = pending.length || failures.length ? ('failed' as const) : ('released' as const);
@@ -302,7 +303,7 @@ export class AirAppImpl implements AirApp {
             try {
                 action();
             } catch (error) {
-                failures.push({ label, message: String(error) });
+                failures.push({ label, message: safeErrorString(error) });
             }
         };
         // Install the shared promise before any teardown callback can reenter close.
@@ -317,7 +318,7 @@ export class AirAppImpl implements AirApp {
                     completed: Object.freeze([]),
                     pending: Object.freeze(['scene-release']),
                     retained: Object.freeze(['runtime', 'scene']),
-                    failures: Object.freeze([{ label: 'scene-release', message: String(error) }]),
+                    failures: Object.freeze([{ label: 'scene-release', message: safeErrorString(error) }]),
                     measurements: Object.freeze({ gpuMemory: 'unavailable', reason: 'Scene release failed.' }),
                 });
             }

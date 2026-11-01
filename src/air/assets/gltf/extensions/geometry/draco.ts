@@ -51,8 +51,9 @@ async function decodePrimitive (context: GLTFParserContext, meshIndex: number, p
         throw new GLTFError('GLTF_EXTENSION_INVALID', `${EXTENSION}: POSITION attribute is required`, EXTENSION);
     }
     const bytes = context.bufferView(definition.bufferView);
-    const result = await decoder.decodePrimitive(bytes.slice().buffer, attributes, context.json)
+    const result = await context.wait(() => decoder.decodePrimitive(bytes.slice().buffer, attributes, context.json))
         .catch((error: unknown) => {
+            context.throwIfAborted();
             if (error instanceof GLTFError) { throw error; }
             throw new GLTFError('GLTF_DECODE_FAILED', `${KHR_DRACO_MESH_COMPRESSION} on mesh ${meshIndex}: ${(error as Error).message}`,
                 KHR_DRACO_MESH_COMPRESSION);

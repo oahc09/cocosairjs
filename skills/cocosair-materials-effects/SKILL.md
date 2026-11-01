@@ -1,6 +1,6 @@
 ---
 name: cocosair-materials-effects
-description: "Configure materials, effects, uniforms, defines and GLSL. Use for setProperty, missing textures, AIR_E_MATERIAL_NOT_READY, AIR_E_MATERIAL_TYPE or uniform buffer too small."
+description: "Configure materials, effects, uniforms, defines and GLSL. Diagnose black/invisible effects, missing textures, setProperty, AIR_E_MATERIAL_NOT_READY or AIR_E_MATERIAL_TYPE."
 license: MIT
 compatibility: "Cocos AIR source checkout or installed cocosair.js package. Browser rendering requires WebGL 2; source tooling requires Node.js >=18. Use the host-provided tools and user-authorized workspace."
 allowed-tools: Read Edit Write Bash
@@ -67,7 +67,11 @@ Read relevant [wrong/right examples](references/common-mistakes.md) before imple
 
 ## Reference map
 
+- [AirMorphField polish controls?](../cocosair-performance/references/gpu-morph-fields.md#rendering-and-polish) - Field-owned surface
+
 - [Which material recipe?](references/builtin-effects.md) - Registration and instances
 - [Property rejected?](references/property-types.md) - Types, aliases and color
 - [Write custom GLSL?](references/custom-glsl.md) - Variants and binding layouts
 - [Texture or macro inert?](references/defines.md) - Map gates and diagnostics
+- [Black additive effect or empty UBO?](references/custom-glsl.md#runtime-state-and-empty-block-traps) - Numeric states and block omission
+- [Copy a complete effect?](references/custom-glsl.md#complete-minimal-effect-template) - JSON, registration and version traps

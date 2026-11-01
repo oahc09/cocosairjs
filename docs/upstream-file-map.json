@@ -2,7 +2,7 @@
   "meta": {
     "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
     "note": "Air Path 与 Upstream Path 一致(前缀 src/)；modified 文件另行标注 reason；upstreamPath=null 表示该行为 Air 原创文件或上游产物（仓库内无对应源文件），必须 modified:true 并在 reason 说明出处",
-    "modifiedCount": 285,
+    "modifiedCount": 278,
     "pal": {
       "revision": "9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "license": "MIT",
@@ -15,7 +15,7 @@
       "upstreamPath": null,
       "baseline": "AIR original",
       "modified": true,
-      "reason": "AIR optional Box2D 3.2.0 WebAssembly backend behind original Cocos 2D component interfaces; pinned source, native compatibility bridge and separate assets. Existing extracted physics backends unchanged. Box3D coexistence preparation 2026-10-22: per-app module/world acquisition leases, shared in-flight load and persistent pins for existing direct consumers; a lease cannot release another consumer world."
+      "reason": "AIR optional Box2D 3.2.0 WebAssembly backend behind original Cocos 2D component interfaces; pinned source, native compatibility bridge and separate assets. Existing extracted physics backends unchanged."
     },
     {
       "airPath": "src/air/dom-overlay.ts",
@@ -71,14 +71,14 @@
       "upstreamPath": null,
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "AIR 原创（上游 cocos4 无 air/app.ts）。原登记 reason=\"extraction copy\" 系 V0.x tools/analyze/dep-graph.cjs 批量生成时按「去掉 src/ 前缀」臆造 upstreamPath 所致，r26 起由 tools/verify/verify-file-map.cjs 门禁检出并更正。 2026-10-06：新增 AIR_BUILD_DATE（北京时间 yyyyMMddHHmm）与 AIR_BUILD_NUMBER（每次成功运行时编译递增，从1开始）；tools/build/build-metadata.cjs 注入，tools/build/build-number.json 持久化序号，源码默认 unbuilt/1；SOURCE_DATE_EPOCH 仅固定时间，不修改版本号。 Box3D rebuild 2026-10-22: admitted-app close independently attempts scene, owned native physics and non-physics cleanup, preserving original/cleanup diagnostics and an idempotent close promise."
+      "reason": "AIR 原创（上游 cocos4 无 air/app.ts）。原登记 reason=\"extraction copy\" 系 V0.x tools/analyze/dep-graph.cjs 批量生成时按「去掉 src/ 前缀」臆造 upstreamPath 所致，r26 起由 tools/verify/verify-file-map.cjs 门禁检出并更正。 2026-10-06：新增 AIR_BUILD_DATE（北京时间 yyyyMMddHHmm）与 AIR_BUILD_NUMBER（每次成功运行时编译递增，从1开始）；tools/build/build-metadata.cjs 注入，tools/build/build-number.json 持久化序号，源码默认 unbuilt/1；SOURCE_DATE_EPOCH 仅固定时间，不修改版本号。"
     },
     {
       "airPath": "src/air/bootstrap.ts",
       "upstreamPath": null,
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "AIR 原创（上游 cocos4 无 air/bootstrap.ts）。原登记 reason=\"extraction copy\" 系 V0.x tools/analyze/dep-graph.cjs 批量生成时按「去掉 src/ 前缀」臆造 upstreamPath 所致，r26 起由 tools/verify/verify-file-map.cjs 门禁检出并更正。 Box3D rebuild 2026-10-22: begin owned-resource transaction before selected 2D/3D prepare, keep PRE selection synchronous, roll back obtained resources without masking initialization errors."
+      "reason": "AIR 原创（上游 cocos4 无 air/bootstrap.ts）。原登记 reason=\"extraction copy\" 系 V0.x tools/analyze/dep-graph.cjs 批量生成时按「去掉 src/ 前缀」臆造 upstreamPath 所致，r26 起由 tools/verify/verify-file-map.cjs 门禁检出并更正。"
     },
     {
       "airPath": "src/air/builtin/builtin-effects.ts",
@@ -113,7 +113,7 @@
       "upstreamPath": null,
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "AIR 原创（上游 cocos4 无 air/index.ts）。原登记 reason=\"extraction copy\" 系 V0.x tools/analyze/dep-graph.cjs 批量生成时按「去掉 src/ 前缀」臆造 upstreamPath 所致，r26 起由 tools/verify/verify-file-map.cjs 门禁检出并更正。 Box3D SDK222 backend source checkpoint 2026-10-25; exact source preserved, branch-wide build and full acceptance are not established by this checkpoint."
+      "reason": "AIR 原创（上游 cocos4 无 air/index.ts）。原登记 reason=\"extraction copy\" 系 V0.x tools/analyze/dep-graph.cjs 批量生成时按「去掉 src/ 前缀」臆造 upstreamPath 所致，r26 起由 tools/verify/verify-file-map.cjs 门禁检出并更正。"
     },
     {
       "airPath": "src/air/utils/index.ts",
@@ -743,7 +743,7 @@
       "upstreamPath": "cocos/3d/assets/mesh.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "PG-18/21: bone-space bounds use weak skeleton identity plus full bindpose data instead of trusting cached skeleton.hash; reset, dynamic data updates and destroy invalidate the cache. Weighted joint indices, attribute layout, weights, positions and bindposes reject invalid input with actionable AIR_E_SKINNING_* diagnostics. Unweighted/unused joints remain legal null bounds; only complete calculations enter the cache. Native mesh/model abstractions and upstream baseline are preserved.; ENG-01..04: native dynamic preflight, semantic partial streams, retained index validation, bounds refresh, retryable buffer allocation and cleanup. Invalid inputs commit no CPU/GPU update."
+      "reason": "PG-18/21: bone-space bounds use weak skeleton identity plus full bindpose data instead of trusting cached skeleton.hash; reset, dynamic data updates and destroy invalidate the cache. Weighted joint indices, attribute layout, weights, positions and bindposes reject invalid input with actionable AIR_E_SKINNING_* diagnostics. Unweighted/unused joints remain legal null bounds; only complete calculations enter the cache. Native mesh/model abstractions and upstream baseline are preserved.; ENG-01..04: native dynamic preflight, semantic partial streams, retained index validation, bounds refresh, retryable buffer allocation and cleanup. Invalid inputs commit no CPU/GPU update.  2026-10-24 A4: emit a geometry-commit event only after successful dynamic buffer/count/bounds updates. ; U05: optional instance morph weights are applied to POSITION displacements before bone-space bounds; base shared-mesh cache remains separate, with finite/layout guards."
     },
     {
       "airPath": "src/cocos/3d/assets/morph-rendering.ts",
@@ -791,8 +791,8 @@
       "airPath": "src/cocos/3d/framework/mesh-renderer.ts",
       "upstreamPath": "cocos/3d/framework/mesh-renderer.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "extraction copy AIR A4: subscribe to bound mesh geometry commits and reuse native onGeometryChanged to refresh transformed bounds and draw info for all sharing renderers. Rebind/restore/enable are deduplicated; pre-destroy unsubscribes even never-loaded components; pending destruction ignores updates. U05: renderer teardown destroys only renderer-owned native MaterialInstance passes/buffers; shared templates and borrowed instances remain caller-owned. 2026-10-29 integration: share idempotent owner-only material cleanup between onDestroy and the unconditional _onPreDestroy path so never-loaded detached/inactive renderers release their passes without disposing borrowed instances."
     },
     {
       "airPath": "src/cocos/3d/index.ts",
@@ -953,7 +953,7 @@
       "upstreamPath": "cocos/3d/models/skinning-model.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "PG-18/19: reject invalid weighted joint paths and realtime palette capacity overflow before releasing the previous binding; keep large skeletons with legal local palettes"
+      "reason": "PG-18/19: reject invalid weighted joint paths and realtime palette capacity overflow before releasing the previous binding; keep large skeletons with legal local palettes; U05: per-model latest morph-weight bounds are refreshed before world bounds, conservatively unioned with base positions; negative weights and nonuniform/negative scaling stay supported without disabling culling."
     },
     {
       "airPath": "src/cocos/3d/reflection-probe/index.ts",
@@ -2409,7 +2409,7 @@
       "upstreamPath": "cocos/asset/assets/effect-asset.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "CB-07 preserve immediate effect metadata registration, defer device-dependent program registration before renderer init, select the actual legacy/custom library after game.init, and remove pending listeners on destroy."
+      "reason": "CB-07 preserve immediate effect metadata registration, defer device-dependent program registration before renderer init, select the actual legacy/custom library after game.init, and remove pending listeners on destroy. 2026-10-24: normalize optional shader arrays and generate missing content hashes before publishing effect metadata."
     },
     {
       "airPath": "src/cocos/asset/assets/image-asset.ts",
@@ -3053,7 +3053,7 @@
       "upstreamPath": "cocos/core/index.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "extraction copy Checkpoint42 candidate: preserve the existing public Scheduler and type ISchedulable set with explicit re-exports, preventing the new internal constructor-brand predicate from escaping through the previous scheduler export-star."
+      "reason": "extraction copy | Box3D integration 2026-10-31: Exports the backend-neutral mutation guard seam used by opt-in physics ownership."
     },
     {
       "airPath": "src/cocos/core/internal-index.ts",
@@ -3277,7 +3277,7 @@
       "upstreamPath": "cocos/core/scheduler.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "extraction copy Checkpoint42 candidate: original constructor captures exact-target copied timer/update inventory reader with opaque container/entry identities. No writable entries/functions escape; no public uuid/id getters are ownership authority. Original CRLF and extracted header preserved. Original-constructor private brand gates source installation; failed construction removes the brand. The read-only predicate is not re-exported by core/index."
+      "reason": "extraction copy | Box3D integration 2026-10-31: Registers actual timer scheduling state for component-activity observation without replacing scheduler execution."
     },
     {
       "airPath": "src/cocos/core/settings.ts",
@@ -3529,14 +3529,14 @@
       "upstreamPath": "cocos/game/director.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "PG-30: internal scene-only immediate detach/drain retaining runtime, shared caches and persistent nodes, usable while paused or context lost; internal Game clock candidate 2026-10-23: exact observed frame entry before BEGIN_FRAME/input, independent synchronous scope disposal after END_FRAME; no new loop or accumulator."
+      "reason": "PG-30: internal scene-only immediate detach/drain retaining runtime, shared caches and persistent nodes, usable while paused or context lost | Box3D integration 2026-10-31: Enters/leaves the registered game-clock frame boundary while retaining main scene-only detach/drain and existing frame dispatch."
     },
     {
       "airPath": "src/cocos/game/game.ts",
       "upstreamPath": "cocos/game/game.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "Internal Game clock candidate 2026-10-23: original-constructor captured reason/effect source; opt-in application/background prepared admission before early returns and public notifications; exact manual Game.step entry before dt. Unobserved original cache/pacer/event bodies retained. Closed-game visibility fix candidate 2026-10-24: exact per-Game systemInfo show/hide/close listener detachment and terminal guards for queued callbacks and late event initialization; never-observed listeners remain unchanged. Declaration closure repair 2026-10-25: private _disposeEvents remove parameter is limited to its existing show/hide/close calls, matching restored PalSystemEvent; pure type change with identical full-file TypeScript JS transpilation, no listener/runtime changes."
+      "reason": "extraction copy | Box3D integration 2026-10-31: Registers game-clock source and routes pause/resume/step through reason and terminal-state admission; legacy engine pause reasons remain distinct."
     },
     {
       "airPath": "src/cocos/game/index.ts",
@@ -3998,7 +3998,7 @@
       "upstreamPath": "cocos/gfx/webgl2/webgl2-commands.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "AIR: integer external formats/clear/attributes, sampler destruction, depth bias enable/order, selected layer attachments and validated native-layout readback with GL state/resource recovery (WGL-02/04/05/06/07/08/09). Audit 2026-10-19: recover program independently of PSO identity; restore partial stencil masks; validate vertex streams/locations; reset scratch blit attachments and buffer selection."
+      "reason": "AIR: integer external formats/clear/attributes, sampler destruction, depth bias enable/order, selected layer attachments and validated native-layout readback with GL state/resource recovery (WGL-02/04/05/06/07/08/09). Audit 2026-10-19: recover program independently of PSO identity; restore partial stencil masks; validate vertex streams/locations; reset scratch blit attachments and buffer selection. 2026-10-24: structured compile/link errors with exact submitted sources and driver logs; release all shader stages on compile failure and failed programs on link failure."
     },
     {
       "airPath": "src/cocos/gfx/webgl2/webgl2-define.ts",
@@ -4529,8 +4529,8 @@
       "airPath": "src/cocos/particle/animator/texture-animation.ts",
       "upstreamPath": "cocos/particle/animator/texture-animation.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR F02 Code First: numTilesX/Y retain their values before a renderer target is bound and defer material updates to native initialization; use optional target access instead of dereferencing null. Baseline and copyright unchanged."
     },
     {
       "airPath": "src/cocos/particle/animator/velocity-overtime.ts",
@@ -4627,8 +4627,8 @@
       "airPath": "src/cocos/particle/particle-system.ts",
       "upstreamPath": "cocos/particle/particle-system.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR F02 late trail enable: move the existing lazy CPU trail initialization before simulation, so updateParticles cannot access an unbound trail owner/pool. Preserve native simulation, culling, material and buffer lifecycle; baseline and copyright unchanged."
     },
     {
       "airPath": "src/cocos/particle/particle-utils.ts",
@@ -4662,8 +4662,8 @@
       "airPath": "src/cocos/particle/renderer/particle-system-renderer-data.ts",
       "upstreamPath": "cocos/particle/renderer/particle-system-renderer-data.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR F02 Code First: alignment setter retains configuration before ParticleSystem/processor binding; onInit applies the stored alignment as before. Baseline and copyright unchanged."
     },
     {
       "airPath": "src/cocos/particle/renderer/particle-system-renderer-gpu.ts",
@@ -4676,8 +4676,8 @@
       "airPath": "src/cocos/particle/renderer/trail.ts",
       "upstreamPath": "cocos/particle/renderer/trail.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR F02 Code First: TrailModule.enable stores the requested state before ParticleSystem.onLoad/onInit, avoiding a null particle-system dereference. Native onInit synchronizes the renderer trail material after binding, including initially disabled trails enabled at runtime, then resolves it before rebuilding so the model transform/submodel is initialized. Native simulation and buffer allocation remain; upstream baseline and copyright unchanged."
     },
     {
       "airPath": "src/cocos/physics-2d/builtin/builtin-contact.ts",
@@ -4929,7 +4929,7 @@
       "upstreamPath": "cocos/physics/framework/assets/physics-material.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "extraction copy 2026-10-22 unified-command preparation: Opt-in identity-keyed mutation fences reject four coefficient setters, setValues and destroy before coercion, fields, events, registry removal or deferred destruction. Finite real-source lease controls only; actual World lease activation and new WASM integration remain unqualified. 2026-10-22 private material integration: owned coefficient mutations and destroy use private owner/actual-binding coverage rather than public listener membership, preserving original unobserved coefficient paths. New neutral wiring is not covered by historical source PASS.; AIR: constructor registers a fixed private coefficient reader without reading values or changing foreign setter behavior"
+      "reason": "extraction copy | Box3D integration 2026-10-31: Constructor-private coefficient source plus candidate-first material value transactions and mutation admission; nonparticipating material ownership remains unknown."
     },
     {
       "airPath": "src/cocos/physics/framework/collision-matrix.ts",
@@ -4964,42 +4964,42 @@
       "upstreamPath": "cocos/physics/framework/components/colliders/box-collider.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "2026-10-22 Box3D-only initialized collider setter transaction: adapter validates the candidate before cache/listener replacement. Box/Sphere receive normalized candidate dimensions without changing common shape interfaces; other backend cache-first paths and upstream headers remain unchanged. Actual-source mock controls only; native shape and complete shared-material rollback remain unqualified. Stage A opt-in identity-lease assertions now precede supported property/filter/sleep/velocity mutations and mutable bounds reads before caller evaluation or cache/native work; unchanged no-lease algorithms and nine command wrappers remain delegable. Finite explicit-lease source controls and separate real Release lifecycle/alias-fault evidence do not activate unified transactions or qualify listener editing."
+      "reason": "extraction copy | Box3D integration 2026-10-31: Mutation admission before collider configuration; Box3D candidate validation precedes public cache commits while legacy backend paths remain available."
     },
     {
       "airPath": "src/cocos/physics/framework/components/colliders/capsule-collider.ts",
       "upstreamPath": "cocos/physics/framework/components/colliders/capsule-collider.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "2026-10-23 Box3D-only CapsuleCollider mutation guard and candidate-before-public-field setter transaction. Existing Cocos radius/height normalization and direction normalization, and every other backend path, remain unchanged. Source candidate requires fresh native/public validation."
+      "reason": "extraction copy | Box3D integration 2026-10-31: Mutation admission before collider configuration; Box3D candidate validation precedes public cache commits while legacy backend paths remain available."
     },
     {
       "airPath": "src/cocos/physics/framework/components/colliders/collider.ts",
       "upstreamPath": "cocos/physics/framework/components/colliders/collider.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "2026-10-22 Box3D-only initialized collider setter transaction: adapter validates the candidate before cache/listener replacement. Box/Sphere receive normalized candidate dimensions without changing common shape interfaces; other backend cache-first paths and upstream headers remain unchanged. Actual-source mock controls only; native shape and complete shared-material rollback remain unqualified. Initial Box3D onLoad attaches the existing shared-material update listener only after successful native shape initialization; two actual colliders, listener replacement and destruction were checked against l2 WASM. Asset mutation before EVENT_UPDATE callback and unexpected subscription failure are not transactional rollback guarantees. 2026-10-22 unified-command preparation: Opt-in mutation fences reject material assignment and the side-effecting shared-material clone getter before listeners, delegates or caches change. Finite real-source lease controls only; actual World lease activation and new WASM integration remain unqualified. Stage A opt-in identity-lease assertions now precede supported property/filter/sleep/velocity mutations and mutable bounds reads before caller evaluation or cache/native work; unchanged no-lease algorithms and nine command wrappers remain delegable. Finite explicit-lease source controls and separate real Release lifecycle/alias-fault evidence do not activate unified transactions or qualify listener editing. 2026-10-22 private material integration and neutral candidate: actual source registration precedes initialize; identity/clone transitions preserve original callback/native/cache order with exact old/candidate hazards; public notifications are not physics ownership, and teardown needs independent native release proof. This candidate remains separately qualified, not a full Gate. 2026-10-26 Box3D registration admission precedes callback-table and demand-flag mutation in on, including the existing Eventify.once delegation. Terrain, hull/mesh and round-hull reject unsupported candidate event demand before insertion; supported primitives retain read-only phase admission. Existing duplicate handlers are never removed as rollback. off/removeAll/targetOff and demand refresh remain unchanged, preserving pre-mount listener removal behavior without claiming removal atomicity. Other backends retain original order; no collision geometry or snapshot-epoch qualification is broadened."
+      "reason": "extraction copy | Box3D integration 2026-10-31: Mutation admission and candidate-first Box3D shape configuration; Collider additionally tracks actual material-source lifecycle and assignment transactions. Legacy backend delegates remain available."
     },
     {
       "airPath": "src/cocos/physics/framework/components/colliders/cone-collider.ts",
       "upstreamPath": "cocos/physics/framework/components/colliders/cone-collider.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy Box3D SDK222 backend source checkpoint 2026-10-25; exact source preserved, branch-wide build and full acceptance are not established by this checkpoint."
+      "modified": true,
+      "reason": "extraction copy | Box3D integration 2026-10-31: Mutation admission before collider configuration; Box3D candidate validation precedes public cache commits while legacy backend paths remain available."
     },
     {
       "airPath": "src/cocos/physics/framework/components/colliders/cylinder-collider.ts",
       "upstreamPath": "cocos/physics/framework/components/colliders/cylinder-collider.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy Box3D SDK222 backend source checkpoint 2026-10-25; exact source preserved, branch-wide build and full acceptance are not established by this checkpoint."
+      "modified": true,
+      "reason": "extraction copy | Box3D integration 2026-10-31: Mutation admission before collider configuration; Box3D candidate validation precedes public cache commits while legacy backend paths remain available."
     },
     {
       "airPath": "src/cocos/physics/framework/components/colliders/mesh-collider.ts",
       "upstreamPath": "cocos/physics/framework/components/colliders/mesh-collider.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "2026-10-23 Box3D-only MeshCollider mutation guards and candidate-before-field mesh/convex transactions. Legacy backends retain their original callback and cache order. Hull-only integration keeps null pending and rejects nonconvex geometry without fallback; fresh native/public validation required."
+      "reason": "extraction copy | Box3D integration 2026-10-31: Mutation admission before collider configuration; Box3D candidate validation precedes public cache commits while legacy backend paths remain available."
     },
     {
       "airPath": "src/cocos/physics/framework/components/colliders/plane-collider.ts",
@@ -5020,14 +5020,14 @@
       "upstreamPath": "cocos/physics/framework/components/colliders/sphere-collider.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "2026-10-22 Box3D-only initialized collider setter transaction: adapter validates the candidate before cache/listener replacement. Box/Sphere receive normalized candidate dimensions without changing common shape interfaces; other backend cache-first paths and upstream headers remain unchanged. Actual-source mock controls only; native shape and complete shared-material rollback remain unqualified. Stage A opt-in identity-lease assertions now precede supported property/filter/sleep/velocity mutations and mutable bounds reads before caller evaluation or cache/native work; unchanged no-lease algorithms and nine command wrappers remain delegable. Finite explicit-lease source controls and separate real Release lifecycle/alias-fault evidence do not activate unified transactions or qualify listener editing."
+      "reason": "extraction copy | Box3D integration 2026-10-31: Mutation admission before collider configuration; Box3D candidate validation precedes public cache commits while legacy backend paths remain available."
     },
     {
       "airPath": "src/cocos/physics/framework/components/colliders/terrain-collider.ts",
       "upstreamPath": "cocos/physics/framework/components/colliders/terrain-collider.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "2026-10-25 Box3D-only TerrainCollider.terrain mutation admission and candidate-before-component-cache setter, including same-object resnapshot. Other backend cache-first behavior and upstream header preserved. Explicit mesh-cooked Terrain adapter is a source candidate; real C17/C19/WASM qualification is pending."
+      "reason": "extraction copy | Box3D integration 2026-10-31: Mutation admission before collider configuration; Box3D candidate validation precedes public cache commits while legacy backend paths remain available."
     },
     {
       "airPath": "src/cocos/physics/framework/components/constant-force.ts",
@@ -5047,36 +5047,36 @@
       "airPath": "src/cocos/physics/framework/components/constraints/constraint.ts",
       "upstreamPath": "cocos/physics/framework/components/constraints/constraint.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy Box3D Fixed opt-in setter cache transaction and destruction admission; no owner preserves original backend behavior. Box3D SDK222 backend source checkpoint 2026-10-25; exact source preserved, branch-wide build and full acceptance are not established by this checkpoint."
+      "modified": true,
+      "reason": "extraction copy | Box3D integration 2026-10-31: Opt-in constraint owner admission for configuration/lifecycle and copied committed state; preserves unregistered legacy constraint behavior."
     },
     {
       "airPath": "src/cocos/physics/framework/components/constraints/fixed-constraint.ts",
       "upstreamPath": "cocos/physics/framework/components/constraints/fixed-constraint.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy Box3D Fixed opt-in break-threshold validation before original public cache write. Box3D SDK222 backend source checkpoint 2026-10-25; exact source preserved, branch-wide build and full acceptance are not established by this checkpoint."
+      "modified": true,
+      "reason": "extraction copy | Box3D integration 2026-10-31: Opt-in constraint owner admission for configuration/lifecycle and copied committed state; preserves unregistered legacy constraint behavior."
     },
     {
       "airPath": "src/cocos/physics/framework/components/constraints/hinge-constraint.ts",
       "upstreamPath": "cocos/physics/framework/components/constraints/hinge-constraint.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy Box3D Hinge 2026-10-24: optional backend-owned admission before nine public setter cache writes; copied vector candidate publication, no-owner legacy path unchanged. Box3D SDK222 backend source checkpoint 2026-10-25; exact source preserved, branch-wide build and full acceptance are not established by this checkpoint."
+      "modified": true,
+      "reason": "extraction copy | Box3D integration 2026-10-31: Opt-in constraint owner admission for configuration/lifecycle and copied committed state; preserves unregistered legacy constraint behavior."
     },
     {
       "airPath": "src/cocos/physics/framework/components/constraints/point-to-point-constraint.ts",
       "upstreamPath": "cocos/physics/framework/components/constraints/point-to-point-constraint.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy Box3D SDK222 backend source checkpoint 2026-10-25; exact source preserved, branch-wide build and full acceptance are not established by this checkpoint."
+      "modified": true,
+      "reason": "extraction copy | Box3D integration 2026-10-31: Opt-in constraint owner admission for configuration/lifecycle and copied committed state; preserves unregistered legacy constraint behavior."
     },
     {
       "airPath": "src/cocos/physics/framework/components/rigid-body.ts",
       "upstreamPath": "cocos/physics/framework/components/rigid-body.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "Box3D rebuild 2026-10-22: nine initialized component setters commit cached values only after the Box3D adapter accepts; retain existing mass normalization and unchanged cache-first paths for all other backends. This does not repair direct mutable-vector alias edits or establish full native component acceptance. Stage A opt-in identity-lease assertions now precede supported property/filter/sleep/velocity mutations and mutable bounds reads before caller evaluation or cache/native work; unchanged no-lease algorithms and nine command wrappers remain delegable. Finite explicit-lease source controls and separate real Release lifecycle/alias-fault evidence do not activate unified transactions or qualify listener editing. Internal dynamic-owner candidate: nine command wrappers now offer a lazy neutral owner route before initialized-body checks; both velocity setters consult the owner configuration gate before instance state. No registered owner leaves legacy evaluation order unchanged. Registration is explicit-only and not exported as unified package activation. Internal persistent-target candidate: velocity admission now receives the exact source before reading vectors and rejects active/protected target ownership; unowned ready-phase behavior remains unchanged."
+      "reason": "extraction copy | Box3D integration 2026-10-31: Mutation admission, candidate-first Box3D configuration, and owner-routed copied force/impulse/clear commands; no command owner preserves legacy dispatch without inspecting inputs."
     },
     {
       "airPath": "src/cocos/physics/framework/deprecated.ts",
@@ -5125,14 +5125,14 @@
       "upstreamPath": "cocos/physics/framework/physics-selector.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "extraction copy 2026-10-22 Box3D neutral material candidate: records actual constructed world/shape identities and distinguishes shared nonphysical fallback objects; failed acquisition remains opaque, never inferred released."
+      "reason": "extraction copy | Box3D integration 2026-10-31: Records actual constructed world/shape identity and acquisition failures for material provenance; preserves selected backend creation and fallback stubs."
     },
     {
       "airPath": "src/cocos/physics/framework/physics-system.ts",
       "upstreamPath": "cocos/physics/framework/physics-system.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "2026-10-22 Box3D-only native-first allowSleep/gravity/default material assignment: commit public cached values after native acceptance, and transfer the default-material listener only after success. All other backend branches retain original cache-first order. Mutable gravity aliases, existing material EVENT_UPDATE and resetConfiguration remain explicitly outside this narrow transaction. 2026-10-22 unified-command preparation: Opt-in mutation fences reject configuration setters, material replacement and resets before fields, input reads or delegation; outside a lease original behavior is retained. Finite real-source lease controls only; actual World lease activation and new WASM integration remain unqualified. 2026-10-22 earliest System entry fence: 14 opt-in assertions precede postUpdate, explicit step/sync/events and all ray/line/sweep query cache entry work, including World lookup and caller coercion. No-lease paths retain original algorithms. Actual-source 81-case/321-check RED/GREEN and lead rerun use counted mock World delegates, not native physics. 2026-10-22 private material integration and neutral candidate: actual default source is bound to a fixed world generation; each original default assignment branch preserves its cache/native order. An old non-null cache does not prove acceptance by a newly constructed world; unknown generations are retained."
+      "reason": "extraction copy | Box3D integration 2026-10-31: Opt-in enable/autoSimulation/material transactions and manual-step admission; Box3D gravity/allowSleep native validation precedes public cache writes; legacy backend ordering retained."
     },
     {
       "airPath": "src/cocos/physics/spec/i-character-controller.ts",
@@ -5174,7 +5174,7 @@
       "upstreamPath": "cocos/physics/spec/i-physics-shape.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "2026-10-23 Optional ITrimeshShape.setConvex candidate setter for the Box3D-only transactional branch. Other backend interfaces and dispatch remain compatible. 2026-10-26 Optional read-only validateEventListener(collision, trigger) phase/candidate admission before Box3D callback registration. Existing backends need not implement it."
+      "reason": "extraction copy | Box3D integration 2026-10-31: Adds optional candidate-first mesh convex configuration; legacy backends retain setMesh fallback."
     },
     {
       "airPath": "src/cocos/physics/spec/i-physics-world.ts",
@@ -5264,8 +5264,8 @@
       "airPath": "src/cocos/primitive/quad.ts",
       "upstreamPath": "cocos/primitive/quad.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR optional quad width/height with matching positions and bounds; unit defaults retained"
     },
     {
       "airPath": "src/cocos/primitive/sphere.ts",
@@ -5370,14 +5370,14 @@
       "upstreamPath": "cocos/render-scene/core/pass.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "CB-02 validate direct uniform and uniform-array writes before staging GPU state."
+      "reason": "CB-02 validate direct uniform and uniform-array writes before staging GPU state. HDR post-process transient shader patches restore original macro values, including failures."
     },
     {
       "airPath": "src/cocos/render-scene/core/program-lib.ts",
       "upstreamPath": "cocos/render-scene/core/program-lib.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "AIR: choose WebGPU binding preparation from actual device rather than a build-wide constant"
+      "reason": "AIR: choose WebGPU binding preparation from actual device rather than a build-wide constant 2026-10-24: validate/clone compiled shader JSON at direct and batch boundaries, derive missing hashes from source/layout, reject hash/content conflicts and delay template insertion until preparation succeeds."
     },
     {
       "airPath": "src/cocos/render-scene/core/program-utils.ts",
@@ -5551,8 +5551,8 @@
       "airPath": "src/cocos/render-scene/scene/submodel.ts",
       "upstreamPath": "cocos/render-scene/scene/submodel.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "Cache opt-in camera-scoped linear HDR shader variants without mutating ordinary-camera materials."
     },
     {
       "airPath": "src/cocos/render-scene/utils.ts",
@@ -5965,7 +5965,7 @@
       "upstreamPath": "cocos/rendering/render-pipeline.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "AIR rendering contracts: create camera render passes with actual framebuffer samples, support absent depth, and preserve sampled depth/stencil attachments for later resolve/reconstruction; ordinary unsampled depth keeps discard."
+      "reason": "AIR rendering contracts: create camera render passes with actual framebuffer samples, support absent depth, and preserve sampled depth/stencil attachments for later resolve/reconstruction; ordinary unsampled depth keeps discard. Scope linear HDR output around the selected camera and restore context in finally."
     },
     {
       "airPath": "src/cocos/rendering/render-queue.ts",
@@ -6070,14 +6070,14 @@
       "upstreamPath": "cocos/scene-graph/component-scheduler.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "extraction copy Checkpoint42 candidate: original constructor captures opt-in actual callback/completion and invoker readers; exact source-bound invocation verifies timer/container/entry/invoker facts. Existing Web/EDITOR/NODEJS legacy enableComp/disableComp bodies unchanged; only observed callbacks bypass exception-swallowing functors. Constructor-local branding is removed on installation failure. Direct utils/js import avoids the new core-barrel cycle. Actual callback schedule/unschedule changes use a private post-callback completion baseline; initialized pre-onEnable cache-only transitions remain no-op scheduler calls. The observer registration anchors the exact component/timer scheduler pair; later genuine replacements reject before publication without claiming ownership migration."
+      "reason": "extraction copy | Box3D integration 2026-10-31: Registers actual component scheduling/activity state and timer participation for opt-in observation."
     },
     {
       "airPath": "src/cocos/scene-graph/component.ts",
       "upstreamPath": "cocos/scene-graph/component.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "extraction copy 2026-10-22 unified-command preparation: Opt-in identity-keyed mutation fences reject enabled/destroy before cached fields, scheduler callbacks or deferred-destroy flags change. Finite real-source lease controls only; actual World lease activation and new WASM integration remain unqualified. Checkpoint42 candidate: observed enabled changes run original mutation guard before owner fences, then constructor-captured cache/scheduler publication only after all owners prepare/apply; no-observer legacy setter body unchanged. Runtime-visible fields are not represented as tamper-proof. Box3D SDK222 backend source checkpoint 2026-10-25; exact source preserved, branch-wide build and full acceptance are not established by this checkpoint."
+      "reason": "extraction copy | Box3D integration 2026-10-31: Identity-scoped mutation and activity admission around component enabled/lifecycle changes; registers actual component activity source."
     },
     {
       "airPath": "src/cocos/scene-graph/deprecated-3.7.0.ts",
@@ -6161,7 +6161,7 @@
       "upstreamPath": "cocos/scene-graph/node.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "ENG-08: local/world TRS and setRTS reject nonfinite/non-float32/invalid numeric overload values before mutation; valid transforms and Euler degrees unchanged. Box3D reconstruction: opt-in backend-neutral pre-mutation ownership checks for protected TRS/relative/hierarchy writes; exact single-use world-pose permits are consumed before events; unregistered Node paths retain original behavior. 2026-10-22 unified-command preparation: Opt-in mutation fences reject active/destroy/destroyAllChildren before lifecycle writes; addComponent uses the frozen realm-wide Node.prototype category lease before class resolution, dependency reads or construction, including orphan/UI/2D/custom components. Finite real-source lease controls only; actual World lease activation and new WASM integration remain unqualified. Checkpoint42 candidate: original constructor installs only a captured _activeInHierarchy reader for the opt-in Component.enabled source; no hierarchy/scene lifecycle changes. Box3D SDK222 backend source checkpoint 2026-10-25; exact source preserved, branch-wide build and full acceptance are not established by this checkpoint."
+      "reason": "ENG-08: local/world TRS and setRTS reject nonfinite/non-float32/invalid numeric overload values before mutation; valid transforms and Euler degrees unchanged. | Box3D integration 2026-10-31: Mutation guards around transform/hierarchy/destruction writes and opt-in deferred-destruction/activity seams; preserves existing main node validation."
     },
     {
       "airPath": "src/cocos/scene-graph/prefab/index.ts",
@@ -6371,7 +6371,7 @@
       "upstreamPath": "cocos/spine/lib/spine-core.d.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
       "modified": true,
-      "reason": "V1.2 批次 c1-spine 回归抽取，官方原文; 2026-10-25 declaration-only repair: explicit Spine WASM return/coordinate types from frozen cocos4 native bindings; structural borrowed vector/model/debug views, with nullable pre-init animation state. No JS/WASM changes."
+      "reason": "V1.2 批次 c1-spine 回归抽取，官方原文 | Box3D integration 2026-10-31: Declaration-only accuracy: explicit void/numeric returns, borrowed VectorView rather than JS arrays, typed SpineModel/debug shapes and nullable AnimationState; no Spine runtime replacement."
     },
     {
       "airPath": "src/cocos/spine/lib/spine-core.js",
@@ -6476,7 +6476,7 @@
       "upstreamPath": "cocos/spine/skeleton.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
       "modified": true,
-      "reason": "V1.2 批次 c1-spine 回归抽取，官方原文; 2026-10-25 declaration contract: assert initialized AnimationState only immediately after successful initSkeleton; public getAnimationState remains nullable before initialization. Type-only assertion, not a runtime change."
+      "reason": "V1.2 批次 c1-spine 回归抽取，官方原文 | Box3D integration 2026-10-31: Non-null assertion after initSkeleton for the now accurately nullable getAnimationState declaration; emitted runtime behavior unchanged."
     },
     {
       "airPath": "src/cocos/spine/track-entry-listeners.ts",
@@ -7365,7 +7365,7 @@
       "upstreamPath": "public-pal/pal/input/web/mouse-input.ts",
       "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "modified": true,
-      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs; AIR host canvas binding / DPR adaptation; AIR explicit startup canvas binding (generated by startup-binding-patch.cjs), no import-time DOM wrapping/listeners"
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs; AIR host canvas binding / DPR adaptation; AIR explicit startup canvas binding (generated by startup-binding-patch.cjs), no import-time DOM wrapping/listeners; AIR preserves mouse/wheel DOM propagation, dispatches mouseup only through window, and cancels only cancelable canvas defaults (pal-source.cjs)"
     },
     {
       "airPath": "src/pal/input/web/touch-input.js",
@@ -7743,7 +7743,7 @@
       "upstreamPath": "cocos/physics/cannon/cannon-world.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
       "modified": true,
-      "reason": "V1.2 批次 physics-cannon 回归抽取，官方原文 2026-10-22 Box3D neutral candidate: actual raw default-material effects record an asset-scoped opaque hazard before reads/writes; ordinary foreign destroy is not release authority."
+      "reason": "V1.2 批次 physics-cannon 回归抽取，官方原文 | Box3D integration 2026-10-31: Records raw foreign-backend material acquisitions as unknown; does not claim release/participation proof or change the backend material delegate."
     },
     {
       "airPath": "src/cocos/physics/cannon/constraints/cannon-constraint.ts",
@@ -7820,7 +7820,7 @@
       "upstreamPath": "cocos/physics/cannon/shapes/cannon-shape.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
       "modified": true,
-      "reason": "V1.2 批次 physics-cannon 回归抽取，官方原文 2026-10-22 Box3D neutral candidate: record resolved asset as opaque raw-use hazard before coefficient/global material cache/native writes, so a later shared Box3D value transaction refuses incomplete participation. No foreign coefficient validator, propagation implementation, or release inference added."
+      "reason": "V1.2 批次 physics-cannon 回归抽取，官方原文 | Box3D integration 2026-10-31: Records raw foreign-backend material acquisitions as unknown; does not claim release/participation proof or change the backend material delegate."
     },
     {
       "airPath": "src/cocos/physics/cannon/shapes/cannon-simplex-shape.ts",
@@ -8345,7 +8345,7 @@
       "upstreamPath": "cc.config.json",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
       "modified": true,
-      "reason": "V1.2（Air 修改，上游原文为基础）四处增量：① features.air = {modules:[\"air\"]}（Air 聚合出口 unit，产物 d.ts 面由此驱动）；② moduleOverrides += {test:\"true\", spine-instantiate.ts -> air-spine-instantiate-js.ts}（计划书 D2/P2：external:emscripten/spine 资产不随快照分发）；③ includes 去掉 ./editor/exports/**（Air 无编辑器闭包）；④ r43 features += marionette / procedural-animation（按上游 cc.config.json:236-247 原文逐字段登记，两者 modules:[] 只带 intrinsicFlags MARIONETTE / PROCEDURAL_ANIMATION；默认 AIR_FEATURES 不含 ⇒ 发布产物逐字节不变，变体代价实测见 docs/notes/pose-graph-notes.md §4）。其余 30 个 feature 与 16 条 moduleOverrides 与上游逐字段一致（node 深比较 0 差异）；上游另有 25 个 feature unit 未登记 = native/minigame/编辑器向排除集（计划书 §1.3、护栏 5）；V1.2 批次 E 实测 gfx-webgpu 也留在未登记之列——登记它会把未接线的 emscripten-only 后端并入发布 d.ts（类型/产物不一致），见 UPSTREAM.md Deviation-04。 2026-10-06：treeShake.noSideEffectFiles 移除四个未抽取的 pal/input/minigame/*-input.js 声明；保留九条实际存在的文件声明及全部 moduleOverrides，不引入 MiniGame 闭包。 2026-10-22 Box3D rebuild: add the explicit optional physics-box3d feature declaration; default AIR_FEATURES and existing backend declarations are unchanged. Experimental ST preparation only; no full adapter/browser acceptance claim."
+      "reason": "V1.2（Air 修改，上游原文为基础）四处增量：① features.air = {modules:[\"air\"]}（Air 聚合出口 unit，产物 d.ts 面由此驱动）；② moduleOverrides += {test:\"true\", spine-instantiate.ts -> air-spine-instantiate-js.ts}（计划书 D2/P2：external:emscripten/spine 资产不随快照分发）；③ includes 去掉 ./editor/exports/**（Air 无编辑器闭包）；④ r43 features += marionette / procedural-animation（按上游 cc.config.json:236-247 原文逐字段登记，两者 modules:[] 只带 intrinsicFlags MARIONETTE / PROCEDURAL_ANIMATION；默认 AIR_FEATURES 不含 ⇒ 发布产物逐字节不变，变体代价实测见 docs/notes/pose-graph-notes.md §4）。其余 30 个 feature 与 16 条 moduleOverrides 与上游逐字段一致（node 深比较 0 差异）；上游另有 25 个 feature unit 未登记 = native/minigame/编辑器向排除集（计划书 §1.3、护栏 5）；V1.2 批次 E 实测 gfx-webgpu 也留在未登记之列——登记它会把未接线的 emscripten-only 后端并入发布 d.ts（类型/产物不一致），见 UPSTREAM.md Deviation-04。 2026-10-06：treeShake.noSideEffectFiles 移除四个未抽取的 pal/input/minigame/*-input.js 声明；保留九条实际存在的文件声明及全部 moduleOverrides，不引入 MiniGame 闭包。"
     },
     {
       "airPath": "src/tsconfig.json",
@@ -8877,7 +8877,7 @@
       "upstreamPath": "cocos/physics/bullet/shapes/bullet-shape.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
       "modified": true,
-      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文 2026-10-22 Box3D neutral candidate: resolved material raw-use hazard is captured before potential native writes; foreign-only value semantics retained. This conservative marker does not claim mixed-backend propagation or native release."
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文 | Box3D integration 2026-10-31: Records raw foreign-backend material acquisitions as unknown; does not claim release/participation proof or change the backend material delegate."
     },
     {
       "airPath": "src/cocos/physics/bullet/shapes/bullet-simplex-shape.ts",
@@ -9066,7 +9066,7 @@
       "upstreamPath": "cocos/physics/physx/shapes/physx-shape.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
       "modified": true,
-      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文 2026-10-22 Box3D neutral candidate: shared-material helper records resolved asset opaque use before native/global cache effects, covering existing terrain/trimesh delegates through this helper. No mixed-backend propagation or release proof claimed."
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文 | Box3D integration 2026-10-31: Records raw foreign-backend material acquisitions as unknown; does not claim release/participation proof or change the backend material delegate."
     },
     {
       "airPath": "src/cocos/physics/physx/shapes/physx-sphere-shape.ts",
@@ -9276,7 +9276,7 @@
       "upstreamPath": null,
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
       "modified": true,
-      "reason": "AIR 新增（r46，owner 批复 #8(a)/D12）：交付期 3D 物理后端选择 selectPhysicsBackend——官方两个 instantiate 在 Game.EVENT_PRE_SUBSYSTEM_INIT 监听器内 register（builtin 先、cannon 后），本文件在 createAirApp 内向同一事件注册第三个监听器使用户后端确定性最后胜出（默认 builtin）；并预置 default-physics-material（无 Creator 资产包时 initDefaultMaterial 的 errorID 9642 对 cannon 是致命面，材质缺失会令 cannon-shape.setMaterial 崩溃），零引擎改动。世界创建后选择显式报错（官方 switchTo 仅编辑器面放行）。 Box3D rebuild 2026-10-22: explicit registered box3d selection only; absent backend never silently falls back."
+      "reason": "AIR 新增（r46，owner 批复 #8(a)/D12）：交付期 3D 物理后端选择 selectPhysicsBackend——官方两个 instantiate 在 Game.EVENT_PRE_SUBSYSTEM_INIT 监听器内 register（builtin 先、cannon 后），本文件在 createAirApp 内向同一事件注册第三个监听器使用户后端确定性最后胜出（默认 builtin）；并预置 default-physics-material（无 Creator 资产包时 initDefaultMaterial 的 errorID 9642 对 cannon 是致命面，材质缺失会令 cannon-shape.setMaterial 崩溃），零引擎改动。世界创建后选择显式报错（官方 switchTo 仅编辑器面放行）。"
     },
     {
       "airPath": "src/pal/integrity-check.js",
@@ -9332,7 +9332,7 @@
       "upstreamPath": null,
       "baseline": "AIR engine contracts 2026-10-06",
       "modified": true,
-      "reason": "AIR-owned finite TRS guard used by native Node setters. Private opt-in identity-keyed ownership registry with copied exact one-use world-pose permissions, ancestor/multi-owner admission, and reentrant revocation checks; no concrete physics runtime import. Pure write-capacity checks and irreversible disjoint grant reservations preserve exact one-use operations and reject same-owner expected-value-copy reentry."
+      "reason": "AIR-owned finite TRS guard used by native Node setters. | Box3D integration 2026-10-31: Extends existing transform validation with identity-scoped mutation admission before transform writes."
     },
     {
       "airPath": "src/node_modules/@cocos/box2d/types/index.d.ts",
@@ -9839,403 +9839,109 @@
       "reason": "AIR: 可选 feature unit `spark` 的 bundle 入口（ccbuild 声明见 src/cc.config.json），聚合集成层与生成物 `src/air/spark/generated/spark-runtime.js`；不并入 `air` 聚合、不进默认 bundle（SPK-12）"
     },
     {
-      "airPath": "src/exports/physics-box3d.ts",
-      "upstreamPath": null,
-      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
-      "modified": true,
-      "reason": "AIR-owned optional Box3D feature export. Registers lazy preparation only; never imported by the default air barrel."
-    },
-    {
-      "airPath": "src/air/physics/box3d/feature.ts",
-      "upstreamPath": null,
-      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
-      "modified": true,
-      "reason": "AIR-owned lazy ST loader registration with build-injected trusted manifest/facade/native identity and runtime-relative assets. Does not create a fake world adapter."
-    },
-    {
-      "airPath": "src/air/app-config.ts",
-      "upstreamPath": null,
-      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
-      "modified": true,
-      "reason": "AIR-owned existing application admission/configuration module, restored from main b573be. Box3D rebuild adds copied/frozen optional native physics options and normalized equality; preserves builtin/Cannon defaults."
-    },
-    {
-      "airPath": "src/air/physics/preparation.ts",
-      "upstreamPath": null,
-      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
-      "modified": true,
-      "reason": "AIR-owned admitted-application native physics resource ownership ledger. Independent cleanup, dependency retention on failed releases and immutable diagnostics; not a general async cancellation controller."
-    },
-    {
-      "airPath": "src/air/physics/box3d/config.ts",
-      "upstreamPath": null,
-      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
-      "modified": true,
-      "reason": "AIR-owned strict optional Box3D application option normalization. ST default, explicit unavailable MT/auto until their implementation; no native side effects."
-    },
-    {
-      "airPath": "src/air/physics/box3d/prepare.ts",
-      "upstreamPath": null,
-      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
-      "modified": true,
-      "reason": "AIR-owned lazy feature/real world-adapter preparation registry. Rejects absent real adapter before asset requests; no fallback or no-op physics world."
-    },
-    {
-      "airPath": "src/air/physics/box3d/loader/st-loader.mjs",
-      "upstreamPath": null,
-      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
-      "modified": true,
-      "reason": "AIR-owned internal optional ST manifest/hash/native-identity loader with generation-owned leases and injectable transport. Browser dynamic import is not SRI-certified."
-    },
-    {
-      "airPath": "src/air/physics/box3d/loader/st-loader.d.mts",
-      "upstreamPath": null,
-      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
-      "modified": true,
-      "reason": "AIR-owned declarations for the internal optional ST loader; strict browser-ambient consumer validated independently of runtime declarations."
-    },
-    {
-      "airPath": "src/air/physics/box3d/world.ts",
-      "upstreamPath": null,
-      "baseline": "AIR original",
-      "modified": true,
-      "reason": "2026-10-22 Box3D rebuild: Internal unregistered IPhysicsWorld control adapter with native ownership, one-step diagnostics, copied debug primitives, material rollback and explicit unsupported operations; not yet a real qualified engine/WASM integration. Checkpoint42 candidate: exact private Component.enabled activity owner wiring; queue-backed no-sequence admission, retained control/target guards through original callback and actual scheduler/native readback, no replay after committed or unknown failure. Box3D SDK222 backend source checkpoint 2026-10-25; exact source preserved, branch-wide build and full acceptance are not established by this checkpoint."
-    },
-    {
-      "airPath": "src/air/physics/box3d/world-binding.ts",
-      "upstreamPath": null,
-      "baseline": "AIR original",
-      "modified": true,
-      "reason": "2026-10-22 Box3D rebuild: Fail-closed runtime admission contract for required live native world controls; g/i8 foundation alone is insufficient. 2026-10-23 additive true native Capsule source candidate, three-axis geometry and reviewed no-write/preflight versus committed failure phases; existing Box/Sphere boundaries preserved. Fresh Capsule validation pending."
-    },
-    {
-      "airPath": "src/air/physics/box3d/registration.ts",
-      "upstreamPath": null,
-      "baseline": "AIR original",
-      "modified": true,
-      "reason": "2026-10-22 Box3D rebuild: Explicit factory/selector registration helper, not yet activated from public feature. 2026-10-23 additive true native Capsule source candidate, three-axis geometry and reviewed no-write/preflight versus committed failure phases; existing Box/Sphere boundaries preserved. Fresh Capsule validation pending. Box3D SDK222 backend source checkpoint 2026-10-25; exact source preserved, branch-wide build and full acceptance are not established by this checkpoint."
-    },
-    {
-      "airPath": "src/air/physics/box3d/debug.ts",
-      "upstreamPath": null,
-      "baseline": "AIR original",
-      "modified": true,
-      "reason": "2026-10-22 Box3D rebuild: Copied and validated native debug primitives; no fake renderer or presentation success."
-    },
-    {
-      "airPath": "src/air/physics/box3d/unsupported.ts",
-      "upstreamPath": null,
-      "baseline": "AIR original",
-      "modified": true,
-      "reason": "2026-10-22 Box3D rebuild: Explicit error constructors for unsupported component/query paths rather than selector no-op fallbacks."
-    },
-    {
-      "airPath": "src/air/physics/box3d/binding/facade.mjs",
-      "upstreamPath": null,
-      "baseline": "AIR original",
-      "modified": true,
-      "reason": "2026-10-22 Box3D rebuild: AIR original scalar WASM facade with ownership tokens and copied native snapshots; reviewed staged generation-basis geometry is exposed separately from unresolved old anchor fields. 2026-10-23 additive true native Capsule source candidate, three-axis geometry and reviewed no-write/preflight versus committed failure phases; existing Box/Sphere boundaries preserved. Fresh Capsule validation pending. Box3D SDK222 backend source checkpoint 2026-10-25; exact source preserved, branch-wide build and full acceptance are not established by this checkpoint."
-    },
-    {
-      "airPath": "src/air/physics/box3d/binding/facade.d.mts",
-      "upstreamPath": null,
-      "baseline": "AIR original",
-      "modified": true,
-      "reason": "2026-10-22 Box3D rebuild: Typed AIR original scalar WASM facade and immutable contact geometry generation-basis contract. 2026-10-23 additive true native Capsule source candidate, three-axis geometry and reviewed no-write/preflight versus committed failure phases; existing Box/Sphere boundaries preserved. Fresh Capsule validation pending. Box3D SDK222 backend source checkpoint 2026-10-25; exact source preserved, branch-wide build and full acceptance are not established by this checkpoint."
-    },
-    {
-      "airPath": "src/air/physics/box3d/shared-body.ts",
-      "upstreamPath": null,
-      "baseline": "AIR original",
-      "modified": true,
-      "reason": "2026-10-22 Box3D rebuild: Private world-scoped Node/shared-body and primitive-shape ownership. Only immutable explicit not-mutated errors preserve observations; committed or unknown native outcomes fault. Qualified l2 batch filters are used without fake per-shape atomicity; public activation and T11 pose/scale remain incomplete. Checkpoint42 candidate: exact private Component.enabled activity owner wiring; queue-backed no-sequence admission, retained control/target guards through original callback and actual scheduler/native readback, no replay after committed or unknown failure. 2026-10-23 additive true native Capsule source candidate, three-axis geometry and reviewed no-write/preflight versus committed failure phases; existing Box/Sphere boundaries preserved. Fresh Capsule validation pending. Box3D SDK222 backend source checkpoint 2026-10-25; exact source preserved, branch-wide build and full acceptance are not established by this checkpoint."
-    },
-    {
-      "airPath": "src/air/physics/box3d/rigid-body.ts",
-      "upstreamPath": null,
-      "baseline": "AIR original",
-      "modified": true,
-      "reason": "2026-10-22 Box3D rebuild: AIR-owned IRigidBody forwarding with whole initial-candidate preflight, private shared ownership, copied real native readback and 32-bit filters. Source controls are limited; current actual component qualification is separate, public activation and T11 pose/scale remain incomplete. Persistent-target candidate makes the internal shared-body accessor ECMAScript-private, closing the TypeScript-private runtime escape to raw SharedBody.control without changing public adapter interfaces. Checkpoint42 candidate: exact private Component.enabled activity owner wiring; queue-backed no-sequence admission, retained control/target guards through original callback and actual scheduler/native readback, no replay after committed or unknown failure. Box3D SDK222 backend source checkpoint 2026-10-25; exact source preserved, branch-wide build and full acceptance are not established by this checkpoint."
-    },
-    {
-      "airPath": "src/air/physics/box3d/box-sphere-geometry.ts",
-      "upstreamPath": null,
-      "baseline": "AIR original",
-      "modified": true,
-      "reason": "2026-10-22 Box3D rebuild: AIR-owned strict initial primitive geometry/material admission and analytic bounds from copied native origin/rotation. Positive initial scale only; external parent/pose/scale and event integration remain unsupported pending later contracts. 2026-10-23 additive true native Capsule source candidate, three-axis geometry and reviewed no-write/preflight versus committed failure phases; existing Box/Sphere boundaries preserved. Fresh Capsule validation pending."
-    },
-    {
-      "airPath": "src/air/physics/box3d/box-sphere-shape.ts",
-      "upstreamPath": null,
-      "baseline": "AIR original",
-      "modified": true,
-      "reason": "2026-10-22 Box3D rebuild: AIR-owned IBoxShape/ISphereShape candidate with real native ownership, guarded replacement, material/filter delegation and copied bounds. Unknown allocation/configuration failures fault instead of claiming rollback; public component activation and full qualification remain incomplete. Persistent-target candidate makes the internal shared-body accessor ECMAScript-private, closing the TypeScript-private runtime escape to raw SharedBody.control without changing public adapter interfaces. 2026-10-23 additive true native Capsule source candidate, three-axis geometry and reviewed no-write/preflight versus committed failure phases; existing Box/Sphere boundaries preserved. Fresh Capsule validation pending. Box3D SDK222 backend source checkpoint 2026-10-25; exact source preserved, branch-wide build and full acceptance are not established by this checkpoint."
-    },
-    {
       "airPath": "src/cocos/core/data/mutation-guard.ts",
       "upstreamPath": null,
       "baseline": "AIR original",
       "modified": true,
-      "reason": "2026-10-22 Box3D rebuild: Backend-neutral opt-in identity/category mutation-lease registry with independent owners, copied inputs and reentrant admission rejection; no concrete physics import or global bypass."
-    },
-    {
-      "airPath": "src/air/physics/box3d/command-queue.ts",
-      "upstreamPath": null,
-      "baseline": "AIR original",
-      "modified": true,
-      "reason": "2026-10-22 Box3D rebuild: Internal copied unified-command queue, generation/counter identity, nondestructive reduction and explicit commit/step phases; logical controls do not establish native lifetime or World integration. Checkpoint42 candidate: exact private Component.enabled activity owner wiring; queue-backed no-sequence admission, retained control/target guards through original callback and actual scheduler/native readback, no replay after committed or unknown failure."
-    },
-    {
-      "airPath": "src/air/physics/box3d/command-producers.ts",
-      "upstreamPath": null,
-      "baseline": "AIR original",
-      "modified": true,
-      "reason": "2026-10-22 Box3D rebuild: Internal combined-order before-step/continuous-force producer configuration and one-shot snapshot leases; explicit owner-admission reentry guard. Not exported or wired to actual World yet."
-    },
-    {
-      "airPath": "src/air/physics/box3d/command-wire.ts",
-      "upstreamPath": null,
-      "baseline": "AIR original",
-      "modified": true,
-      "reason": "2026-10-22 Box3D rebuild: Internal immutable value mapping from queue-owned operations to the unified facade command shape. Preserves private opaque capability identity and exact numbers; no native calls, scene sync, reduction or ownership authentication. Finite source controls only, not World activation."
-    },
-    {
-      "airPath": "src/cocos/physics/framework/physics-state-observer.ts",
-      "upstreamPath": null,
-      "baseline": "AIR original",
-      "modified": true,
-      "reason": "2026-10-22 Box3D rebuild: private opt-in multi-owner JS state observer with created tickets, barriers before snapshot reads, actual-cache commit, exact first errors and independently retained cleanup outcomes. Not wired to existing engine/World/material entries or public exports; 76 finite pure controls do not establish native material correctness."
-    },
-    {
-      "airPath": "src/cocos/physics/framework/physics-material-transaction.ts",
-      "upstreamPath": null,
-      "baseline": "AIR original",
-      "modified": true,
-      "reason": "2026-10-22 Box3D rebuild: private typed copied-material delegate adapter over the B0 observer. Exact one-use delegate and clone handling only; not wired to World/Collider/System entries yet. Pure controls are not native material qualification. 2026-10-22 checkpoint37 actual Box3D identity/value ownership is wired through Collider/System/World. Earlier unwired description is historical; privateSubscriptions capability separates public notifications from private physical propagation. Mixed neutral coverage is a subsequent candidate.; AIR: explicit copied candidate-value reader capability selected by Box3D, with no missing-authentication fallback to public accessors"
-    },
-    {
-      "airPath": "src/cocos/physics/framework/physics-material-values-transaction.ts",
-      "upstreamPath": null,
-      "baseline": "AIR Box3D integration",
-      "modified": true,
-      "reason": "2026-10-22 Box3D rebuild: Private copied-coefficient value transaction registry, owner membership and truthful entered/returned/readback/cache phases; no rollback or replay. Neutral coverage checks actual binding roster before callbacks and through transaction boundaries."
-    },
-    {
-      "airPath": "src/cocos/physics/framework/physics-material-values.ts",
-      "upstreamPath": null,
-      "baseline": "AIR Box3D integration",
-      "modified": true,
-      "reason": "2026-10-22 Box3D rebuild: Private shared production value registry and actual-binding coverage admission. Not a public barrel API."
-    },
-    {
-      "airPath": "src/cocos/physics/framework/physics-material-bindings.ts",
-      "upstreamPath": null,
-      "baseline": "AIR Box3D integration",
-      "modified": true,
-      "reason": "2026-10-22 Box3D rebuild: Private backend-neutral actual source/world-generation ledger, exact owner claims and one-use independent cleanup proofs. Unknown/unclaimed bindings reject covered Box3D value mutations; no foreign propagation implementation."
-    },
-    {
-      "airPath": "src/cocos/physics/framework/physics-material-binding-source.ts",
-      "upstreamPath": null,
-      "baseline": "AIR Box3D integration",
-      "modified": true,
-      "reason": "2026-10-22 Box3D rebuild: Private real factory/source glue binds Collider/System fixed cache readers to original constructed adapter/world identities; no later selector inference or listener-based ownership."
-    },
-    {
-      "airPath": "src/cocos/physics/framework/physics-material-cache.ts",
-      "upstreamPath": null,
-      "baseline": "AIR original",
-      "modified": true,
-      "reason": "AIR: private constructor-installed PhysicsMaterial coefficient reader; authentic fixed cache identity for Box3D initialization, identity transactions and raw refresh, never public accessor inference"
-    },
-    {
-      "airPath": "src/cocos/physics/framework/physics-command-submission.ts",
-      "upstreamPath": null,
-      "baseline": "AIR original",
-      "modified": true,
-      "reason": "AIR-owned internal backend-neutral single-owner command routing. Captures trusted handlers under registration reentry latch; original command input is read only inside the actual owner submission admission. No owner preserves legacy paths, no native capability is published. Internal candidate, not general multi-backend or unified release qualification. Internal persistent-target candidate: velocity admission now receives the exact source before reading vectors and rejects active/protected target ownership; unowned ready-phase behavior remains unchanged."
-    },
-    {
-      "airPath": "src/air/physics/box3d/current-motion-route.ts",
-      "upstreamPath": null,
-      "baseline": "AIR Box3D integration",
-      "modified": true,
-      "reason": "AIR-owned private realm-current target route captures handlers under a registration reentry latch and forbids route changes during admitted calls. Retained stale handles reach the current collecting queue before owner/generation checks; no package export or native capability."
-    },
-    {
-      "airPath": "src/cocos/scene-graph/component-activity-control.ts",
-      "upstreamPath": null,
-      "baseline": "AIR original",
-      "modified": true,
-      "reason": "AIR original private backend-neutral Component.enabled seam. Constructor-captured cache/source/scheduler controls, exact observer generations and private adapter-secret delegation; actual timer/invoker verification and latched first-error cleanup. Only original-source brand predicates are imported; deliberate initialization cycles are unexecuted. No public barrel export or test blessing hook. The observer registration anchors the exact component/timer scheduler pair; later genuine replacements reject before publication without claiming ownership migration."
-    },
-    {
-      "airPath": "src/air/physics/box3d/world-command-owner.ts",
-      "upstreamPath": null,
-      "baseline": "AIR original",
-      "modified": true,
-      "reason": "Checkpoint42 candidate: exact private Component.enabled activity owner wiring; queue-backed no-sequence admission, retained control/target guards through original callback and actual scheduler/native readback, no replay after committed or unknown failure. Box3D SDK222 backend source checkpoint 2026-10-25; exact source preserved, branch-wide build and full acceptance are not established by this checkpoint."
+      "reason": "Box3D integration 2026-10-31: AIR original internal identity-scoped mutation leases; copy admission is reentry-latched, release is owner-only and idempotent; unregistered targets retain the fast path."
     },
     {
       "airPath": "src/cocos/game/game-clock-control.ts",
       "upstreamPath": null,
       "baseline": "AIR original",
       "modified": true,
-      "reason": "Internal neutral original-Game reason source, prepared owner observation and exact owned synchronous Director frame leases. No AIR/physics import, public barrel export or native authority. Terminal state survives owner disposal; legacy active adoption fails closed. Captured optional event disposal runs exactly once for observed termination despite owner failure; pacer stop remains independently attempted and detach errors fail close. Candidate source/CPU controls are separate from browser NOT_RUN."
-    },
-    {
-      "airPath": "src/air/box3d-controls.ts",
-      "upstreamPath": null,
-      "baseline": "AIR original",
-      "modified": true,
-      "reason": "Box3D backend internal implementation: box3d-controls. Restored SDK222 source checkpoint 2026-10-25; not a new full acceptance claim."
-    },
-    {
-      "airPath": "src/air/box3d-queries.ts",
-      "upstreamPath": null,
-      "baseline": "AIR original",
-      "modified": true,
-      "reason": "Box3D backend internal implementation: box3d-queries. Restored SDK222 source checkpoint 2026-10-25; not a new full acceptance claim."
-    },
-    {
-      "airPath": "src/air/physics/box3d/collision-events.ts",
-      "upstreamPath": null,
-      "baseline": "AIR original",
-      "modified": true,
-      "reason": "Box3D backend internal implementation: collision-events. Restored SDK222 source checkpoint 2026-10-25; not a new full acceptance claim."
-    },
-    {
-      "airPath": "src/air/physics/box3d/committed-query-source.ts",
-      "upstreamPath": null,
-      "baseline": "AIR original",
-      "modified": true,
-      "reason": "Box3D backend internal implementation: committed-query-source. Restored SDK222 source checkpoint 2026-10-25; not a new full acceptance claim."
-    },
-    {
-      "airPath": "src/air/physics/box3d/contact-equation.ts",
-      "upstreamPath": null,
-      "baseline": "AIR original",
-      "modified": true,
-      "reason": "Box3D backend internal implementation: contact-equation. Restored SDK222 source checkpoint 2026-10-25; not a new full acceptance claim."
-    },
-    {
-      "airPath": "src/air/physics/box3d/convex-query.ts",
-      "upstreamPath": null,
-      "baseline": "AIR original",
-      "modified": true,
-      "reason": "Box3D backend internal implementation: convex-query. Restored SDK222 source checkpoint 2026-10-25; not a new full acceptance claim."
-    },
-    {
-      "airPath": "src/air/physics/box3d/fixed-constraint.ts",
-      "upstreamPath": null,
-      "baseline": "AIR original",
-      "modified": true,
-      "reason": "Box3D backend internal implementation: fixed-constraint. Restored SDK222 source checkpoint 2026-10-25; not a new full acceptance claim."
-    },
-    {
-      "airPath": "src/air/physics/box3d/hinge-constraint.ts",
-      "upstreamPath": null,
-      "baseline": "AIR original",
-      "modified": true,
-      "reason": "Box3D backend internal implementation: hinge-constraint. Restored SDK222 source checkpoint 2026-10-25; not a new full acceptance claim."
-    },
-    {
-      "airPath": "src/air/physics/box3d/hull-geometry.ts",
-      "upstreamPath": null,
-      "baseline": "AIR original",
-      "modified": true,
-      "reason": "Box3D backend internal implementation: hull-geometry. Restored SDK222 source checkpoint 2026-10-25; not a new full acceptance claim."
-    },
-    {
-      "airPath": "src/air/physics/box3d/hull-shape.ts",
-      "upstreamPath": null,
-      "baseline": "AIR original",
-      "modified": true,
-      "reason": "Box3D backend internal implementation: hull-shape. Restored SDK222 source checkpoint 2026-10-25; not a new full acceptance claim."
-    },
-    {
-      "airPath": "src/air/physics/box3d/point-to-point-constraint.ts",
-      "upstreamPath": null,
-      "baseline": "AIR original",
-      "modified": true,
-      "reason": "Box3D backend internal implementation: point-to-point-constraint. Restored SDK222 source checkpoint 2026-10-25; not a new full acceptance claim."
-    },
-    {
-      "airPath": "src/air/physics/box3d/query.ts",
-      "upstreamPath": null,
-      "baseline": "AIR original",
-      "modified": true,
-      "reason": "Box3D backend internal implementation: query. Restored SDK222 source checkpoint 2026-10-25; not a new full acceptance claim."
-    },
-    {
-      "airPath": "src/air/physics/box3d/round-hull-geometry.ts",
-      "upstreamPath": null,
-      "baseline": "AIR original",
-      "modified": true,
-      "reason": "Box3D backend internal implementation: round-hull-geometry. Restored SDK222 source checkpoint 2026-10-25; not a new full acceptance claim."
-    },
-    {
-      "airPath": "src/air/physics/box3d/round-hull-shape.ts",
-      "upstreamPath": null,
-      "baseline": "AIR original",
-      "modified": true,
-      "reason": "Box3D backend internal implementation: round-hull-shape. Restored SDK222 source checkpoint 2026-10-25; not a new full acceptance claim."
-    },
-    {
-      "airPath": "src/air/physics/box3d/static-mesh-intake.ts",
-      "upstreamPath": null,
-      "baseline": "AIR original",
-      "modified": true,
-      "reason": "Box3D backend internal implementation: static-mesh-intake. Restored SDK222 source checkpoint 2026-10-25; not a new full acceptance claim."
-    },
-    {
-      "airPath": "src/air/physics/box3d/static-mesh-resource.ts",
-      "upstreamPath": null,
-      "baseline": "AIR original",
-      "modified": true,
-      "reason": "Box3D backend internal implementation: static-mesh-resource. Restored SDK222 source checkpoint 2026-10-25; not a new full acceptance claim."
-    },
-    {
-      "airPath": "src/air/physics/box3d/trigger-events.ts",
-      "upstreamPath": null,
-      "baseline": "AIR original",
-      "modified": true,
-      "reason": "Box3D backend internal implementation: trigger-events. Restored SDK222 source checkpoint 2026-10-25; not a new full acceptance claim."
-    },
-    {
-      "airPath": "src/air/physics/box3d/world-writeback.ts",
-      "upstreamPath": null,
-      "baseline": "AIR original",
-      "modified": true,
-      "reason": "Box3D backend internal implementation: world-writeback. Restored SDK222 source checkpoint 2026-10-25; not a new full acceptance claim."
+      "reason": "Box3D integration 2026-10-31: AIR original opt-in game clock ownership, pause-reason accounting, terminal/step admission and frame leases."
     },
     {
       "airPath": "src/cocos/physics/framework/constraint-state-control.ts",
       "upstreamPath": null,
       "baseline": "AIR original",
       "modified": true,
-      "reason": "Box3D backend internal implementation: constraint-state-control. Restored SDK222 source checkpoint 2026-10-25; not a new full acceptance claim."
+      "reason": "Box3D integration 2026-10-31: AIR original weak-key opt-in constraint owner for candidate field changes, destruction admission and copied state observations."
+    },
+    {
+      "airPath": "src/cocos/physics/framework/physics-material-binding-source.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "Box3D integration 2026-10-31: AIR original private factory/source identity glue for actual adapters and worlds, including explicit unknown lifecycle outcomes."
+    },
+    {
+      "airPath": "src/cocos/physics/framework/physics-command-submission.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "Box3D integration 2026-10-31: AIR original single-owner backend-neutral command admission; copied handlers and latched reentry guard; no owner leaves legacy command path untouched."
+    },
+    {
+      "airPath": "src/cocos/physics/framework/physics-material-cache.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "Box3D integration 2026-10-31: AIR original constructor-installed private coefficient reader; public getters and backend labels do not grant cache authority."
+    },
+    {
+      "airPath": "src/cocos/physics/framework/physics-material-transaction.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "Box3D integration 2026-10-31: AIR original typed material assignment transaction over registered state observers and actual source identity."
+    },
+    {
+      "airPath": "src/cocos/physics/framework/physics-material-bindings.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "Box3D integration 2026-10-31: AIR original material identity/participation ledger; only reviewed owner cleanup receipts establish release, foreign cleanup remains unknown."
+    },
+    {
+      "airPath": "src/cocos/physics/framework/physics-material-values-transaction.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "Box3D integration 2026-10-31: AIR original coefficient-value transaction with exact participant coverage and private cache snapshots."
+    },
+    {
+      "airPath": "src/cocos/physics/framework/physics-state-observer.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "Box3D integration 2026-10-31: AIR original typed preflight/effect/commit/failure observation with disposable barriers; state observation is not proof of native effects."
+    },
+    {
+      "airPath": "src/cocos/physics/framework/physics-system-control.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "Box3D integration 2026-10-31: AIR original opt-in system enable/auto-simulation state observation and manual-step disposition admission."
+    },
+    {
+      "airPath": "src/cocos/scene-graph/component-activity-control.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "Box3D integration 2026-10-31: AIR original opt-in activity observation over actual node/component/scheduler/timer sources, not inferred native success."
+    },
+    {
+      "airPath": "src/cocos/physics/framework/physics-material-values.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "Box3D integration 2026-10-31: AIR original copied material coefficient value contracts and validation."
     },
     {
       "airPath": "src/cocos/scene-graph/deferred-destroy-control.ts",
       "upstreamPath": null,
       "baseline": "AIR original",
       "modified": true,
-      "reason": "Box3D backend internal implementation: deferred-destroy-control. Restored SDK222 source checkpoint 2026-10-25; not a new full acceptance claim."
+      "reason": "Box3D integration 2026-10-31: AIR original owner-controlled deferred-destruction admission and lifecycle seam."
     },
     {
-      "airPath": "src/air/physics/box3d/terrain-intake.ts",
+      "airPath": "src/exports/physics-box3d.ts",
       "upstreamPath": null,
       "baseline": "AIR original",
       "modified": true,
-      "reason": "Explicit heightfield-cooked-static-triangle-mesh TerrainCollider terrain-intake source candidate; native kind remains mesh and real C17/C19/WASM qualification is pending."
-    },
-    {
-      "airPath": "src/air/physics/box3d/terrain-shape.ts",
-      "upstreamPath": null,
-      "baseline": "AIR original",
-      "modified": true,
-      "reason": "Explicit heightfield-cooked-static-triangle-mesh TerrainCollider terrain-shape source candidate; native kind remains mesh and real C17/C19/WASM qualification is pending."
+      "reason": "Box3D integration 2026-10-31: AIR original explicit optional Box3D feature registration entry; no replacement of the default physics backend."
     }
   ]
 }

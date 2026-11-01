@@ -1,0 +1,26 @@
+{
+  "license": "MIT",
+  "externalRequests": false,
+  "assets": [
+    {
+      "path": "LICENSE.txt",
+      "sha256": "bff48c22cb9fddbb32de5253523f75f0b921dead1b43f444ff51e21640fc7a4e",
+      "bytes": 392
+    },
+    {
+      "path": "checker.png",
+      "sha256": "34dc4853f731464c784dac0a8dc6d511f2d773e12696c3f7cf6c48fac56af3e8",
+      "bytes": 97
+    },
+    {
+      "path": "crystal.gltf",
+      "sha256": "af4f7a96b66e65699dbd8a7ea3e512a55be5aa35796716053387312017deb950",
+      "bytes": 11295
+    },
+    {
+      "path": "inspection-rig.gltf",
+      "sha256": "7019f2000970043194e94c22d1fd71879a4440bf921ab5ccf5ff0513870a7bae",
+      "bytes": 13664
+    }
+  ]
+}

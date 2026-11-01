@@ -21,6 +21,8 @@ const {
 } = require('./example-evidence-supervisor.cjs');
 const { planTargetDiagnostic, readTargetDiagnostic } = require('./run-example-shutdown-target.cjs');
 
+const { validatePreClosePolicy } = require('./example-evidence-shutdown-policy.cjs');
+
 const REPO = path.resolve(__dirname, '../..');
 const SCHEMA = 'example-evidence-shutdown-diagnostic/1';
 const SYSCALLS = Object.freeze(['kill', 'tkill', 'tgkill', 'pidfd_send_signal', 'wait4', 'waitid']);
@@ -1240,7 +1242,13 @@ const SECONDARY_FAILURES = new Set([
 // original browser/server row, runtime launch and exact worker namespace.
 function browserNonzeroEventOwnership(receipt) {
     const raw = receipt.custody?.observation;
-    if (!raw || receipt.runtimes.length !== 1 || receipt.browsers.length !== 1 || receipt.servers.length !== 1)
+    if (
+        !raw ||
+        receipt.runtimes.length !== 1 ||
+        receipt.browsers.length !== 1 ||
+        receipt.servers.length !== 1 ||
+        !diagnosticPreCloseValid(receipt, raw)
+    )
         return false;
     const runtime = receipt.runtimes[0],
         browser = receipt.browsers[0],
@@ -1287,9 +1295,42 @@ function browserNonzeroEventOwnership(receipt) {
 
 // The browser-nonzero fixture can close its worker before the already-issued stop ACK
 // reaches the inner supervisor. This permits only that retained negative-control failure.
+// The diagnostic exception lacks stopComplete, not the start/closing request witnesses.
+// Their cross-process clock tolerance is the same as normal custody validation.
+function diagnosticPreCloseValid(receipt, raw) {
+    if (validatePreClosePolicy(receipt, raw).length) return false;
+    const runtime = receipt.runtimes[0];
+    const acks = receipt.events.filter(
+        (row) => row.type === 'custody-barrier-ack' && ['start', 'closing'].includes(row.phase),
+    );
+    if (acks.length !== 2) return false;
+    return acks.every((ack, index) => {
+        const proof = raw.barriers.find((row) => row.eventId === ack.custodyEventId);
+        return (
+            ack.phase === ['start', 'closing'][index] &&
+            ack.runtimeId === runtime.runtimeId &&
+            proof.requestId === index + 1 &&
+            Number.isFinite(proof.elapsedMs) &&
+            Number.isFinite(ack.supervisorElapsedMs) &&
+            proof.elapsedMs <= ack.supervisorElapsedMs + 50 &&
+            (index === 0
+                ? ack.supervisorElapsedMs <= runtime.start?.supervisorElapsedMs
+                : runtime.stopBegin.supervisorElapsedMs <= ack.supervisorElapsedMs &&
+                  ack.supervisorElapsedMs <= runtime.closeAuthorized.supervisorElapsedMs)
+        );
+    });
+}
+
 function browserNonzeroPendingDrain(receipt) {
     const raw = receipt.custody?.observation;
-    if (!raw || receipt.runtimes.length !== 1 || receipt.browsers.length !== 1 || receipt.servers.length !== 1)
+    if (
+        !raw ||
+        receipt.runtimes.length !== 1 ||
+        receipt.browsers.length !== 1 ||
+        receipt.servers.length !== 1 ||
+        raw.barriers.length !== 3 ||
+        !diagnosticPreCloseValid(receipt, raw)
+    )
         return false;
     const runtime = receipt.runtimes[0],
         browser = receipt.browsers[0],
@@ -1307,6 +1348,7 @@ function browserNonzeroPendingDrain(receipt) {
     const proof = proofs[0],
         settled = responses[0];
     const start = raw.barriers.filter((row) => row.phase === 'start');
+    const closing = raw.barriers.find((row) => row.phase === 'closing');
     const localBefore = (a, b) =>
         exact(a, receipt.events) &&
         exact(b, receipt.events) &&
@@ -1320,7 +1362,9 @@ function browserNonzeroPendingDrain(receipt) {
     return (
         start.length === 1 &&
         start[0].requestId === 1 &&
-        proof.requestId === 2 &&
+        proof.requestId === 3 &&
+        closing.eventId < proof.eventId &&
+        closing.elapsedMs <= proof.elapsedMs &&
         settled.requestId === proof.requestId &&
         proof.runtimeId === runtime.runtimeId &&
         proof.workerPID === worker.pid &&
@@ -1390,7 +1434,8 @@ function browserNonzeroRejectedDrain(receipt, bytes) {
     if (
         !raw ||
         !originalCustodyBytesValid(receipt, bytes) ||
-        raw.barriers.length !== 1 ||
+        raw.barriers.length !== 2 ||
+        !diagnosticPreCloseValid(receipt, raw) ||
         JSON.stringify(raw.errors) !== JSON.stringify([CURRENT_WORKER_FAILURE]) ||
         raw.adopted.length ||
         raw.events.some((row) => row.type.startsWith('cpu-')) ||
@@ -1411,6 +1456,7 @@ function browserNonzeroRejectedDrain(receipt, bytes) {
         browser = receipt.browsers[0],
         server = receipt.servers[0];
     const start = raw.barriers[0],
+        closing = raw.barriers.find((row) => row.phase === 'closing'),
         inner = raw.innerSupervisor;
     const proofs = raw.events.filter((row) => row.type === 'runtime-custody-rejection');
     const failures = raw.events.filter((row) => row.type === 'custody-error');
@@ -1474,12 +1520,14 @@ function browserNonzeroRejectedDrain(receipt, bytes) {
         start.transport === 'inherited-anonymous-pipes/v1' &&
         JSON.stringify(start.directChildren) === JSON.stringify([inner.pid]) &&
         proof.startEventId === start.eventId &&
-        proof.requestId === 2 &&
+        proof.requestId === 3 &&
         proof.phase === 'stop' &&
         proof.ok === false &&
         sameRequest(proof) &&
         proof.nodeSupervisorPID === inner.pid &&
         proof.transport === 'inherited-anonymous-pipes/v1' &&
+        closing.eventId < failure.eventId &&
+        closing.elapsedMs <= failure.elapsedMs &&
         start.eventId < failure.eventId &&
         failure.eventId < proof.eventId &&
         start.elapsedMs < failure.elapsedMs &&
@@ -1675,6 +1723,10 @@ function expectedOutcome(receipt, options) {
         if (rejectedStop) {
             if (!browserNonzeroRejectedDrain(receipt, options.artifactBytes)) return false;
             for (const value of LATE_STOP_FAILURES) allowed.add(value);
+            // Only the independently verified CPU rejection may lack the final stop boundary.
+            // The shared pre-close validator has already checked both retained barriers/ACKs.
+            allowed.add('Custody barrier request/ACK correlation invalid');
+            allowed.add('Shutdown policy: stop closure differs from original process events');
         } else if (raw.errors.length) return false;
         if ([...receipt.errors, ...receipt.lifecycleErrors].includes(ABORT_EPIPE_FAILURE)) {
             if (!rejectedStop || !browserNonzeroAbortEpipe(receipt, options.artifactBytes)) return false;

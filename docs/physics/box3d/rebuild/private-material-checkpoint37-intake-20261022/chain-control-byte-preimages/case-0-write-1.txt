@@ -1,5 +1,0 @@
-# v2 git bundle
--45b526f248575a0542af8eed591c0cf8c8a1ba8d fixture prerequisite
-7777777777777777777777777777777777777777 refs/heads/feat/box3d-rebuild-20261022
-
-NOT_A_PACK_UNIT_CONTROL_ONLY

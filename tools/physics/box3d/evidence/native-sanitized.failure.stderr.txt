@@ -1,4 +1,0 @@
-/usr/lib/gcc/x86_64-linux-gnu/14/include/emmintrin.h:148:10: runtime error: load of misaligned address 0x7ff57b1951ac for type 'const double', which requires 8 byte alignment
-0x7ff57b1951ac: note: pointer points here
-  85 eb 11 bf c0 f5 c8 3f  67 c9 78 41 85 eb 11 3f  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
-              ^ 

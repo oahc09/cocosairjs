@@ -1,2 +1,0 @@
-tools/verify/box3d/writeback-epoch-control.test.ts(71,56): error TS2540: Cannot assign to 'x' because it is a read-only property.
-tools/verify/box3d/writeback-epoch-control.test.ts(93,23): error TS2540: Cannot assign to 'x' because it is a read-only property.

@@ -1,1 +1,0 @@
-tools/verify/box3d/coexist-real-wasm.test.ts(7,20): error TS2306: File '/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/@cocos/cannon/CANNON.d.ts' is not a module.

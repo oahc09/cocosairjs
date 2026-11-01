@@ -132,8 +132,3 @@ build/examples/
 !/docs/evidence/webkit-video-loop/sdk-min/execution.log
 !/docs/evidence/webkit-video-loop/sequencing-tests.log
 !/docs/evidence/webkit-video-loop/targeted-tests.log
-
-# Box3D completed verification stdout/stderr is source evidence, not disposable logs.
-!/docs/physics/box3d/rebuild/**/*.log
-!/tools/verify/box3d/**/*.log
-!/tools/physics/box3d/evidence/**/*.log

@@ -3,6 +3,8 @@
  * labeled; they are not production observations or C20 application acceptance. */
 #include "world_bridge.c"
 #include "physics_world.h"
+#include "body.h"
+#include "solver_set.h"
 #include <stdio.h>
 #include <string.h>
 #define T(x) do { ++checks; if (!(x)) { fprintf(stderr,"world storage contract line %d: %s\n",__LINE__,#x); return 1; } } while(0)
@@ -71,12 +73,68 @@ int main(void) {
     T(air_b3_world_destroy(w)==AIR_B3_OK && air_b3_world_destroy(other)==AIR_B3_OK);
     T(b3GetByteCount()==globalBaseline);
     T(air_b3_bridge_memory(0,bridge)==AIR_B3_OK && value64(bridge)==0 && bridge[2]==0);
+    /* The original 51 assertions above remain an ordered prefix. */
+    w=air_b3_world_create(0,0,0); core=b3GetWorldFromId(b3LoadWorldId(w));
+    T(w && air_b3_world_counts(w,initial)==AIR_B3_OK);
+    /* Production regression: sleep -> disable must retire only an empty source
+     * solver set. No wake workaround, clock step or relaxed trim precondition. */
+    for (int type=1;type<=2;++type) for (int cycle=0;cycle<3;++cycle) {
+        b3BodyDef def=b3DefaultBodyDef(); def.type=(b3BodyType)type;
+        b3BodyId body=b3CreateBody(b3LoadWorldId(w),&def);
+        b3ShapeDef shapeDef=b3DefaultShapeDef(); b3Sphere sphere={.center={0,0,0},.radius=0.5f};
+        b3ShapeId shape=b3CreateSphereShape(body,&shapeDef,&sphere);
+        T(b3Body_IsValid(body) && b3Shape_IsValid(shape));
+        uint64_t fixedStep=core->stepIndex;
+        b3Body_SetAwake(body,false);
+        int source=b3GetBodyFullId(core,body)->setIndex;
+        T(source>=b3_firstSleepingSet);
+        b3Body_Disable(body);
+        T(core->solverSets.data[source].setIndex==B3_NULL_INDEX);
+        T(b3GetIdCount(&core->solverSetIdPool)==b3_firstSleepingSet);
+        for(int base=0;base<b3_firstSleepingSet;++base) T(core->solverSets.data[base].setIndex==base);
+        b3Body_Enable(body); T(b3Body_IsEnabled(body));
+        b3Body_SetAwake(body,false); b3Body_Disable(body); b3DestroyBody(body);
+        T(air_b3_world_trim_empty(w,1)==AIR_B3_OK && core->stepIndex==fixedStep);
+        T(b3GetWorldFromId(b3LoadWorldId(w))==core && !b3Body_IsValid(body) && !b3Shape_IsValid(shape));
+        T(air_b3_world_counts(w,after)==AIR_B3_OK && !memcmp(initial,after,sizeof(initial)));
+    }
+    /* Fixed, Hinge and PointToPoint: preserve the other sleeping body and the
+     * live joint when disabling one endpoint, then retire on last removal. */
+    for(int kind=0;kind<3;++kind) {
+        b3BodyDef def=b3DefaultBodyDef(); def.type=b3_dynamicBody;
+        b3BodyId a=b3CreateBody(b3LoadWorldId(w),&def); def.position.x=2;
+        b3BodyId b=b3CreateBody(b3LoadWorldId(w),&def);
+        b3ShapeDef sd=b3DefaultShapeDef(); b3Sphere sp={.center={0,0,0},.radius=0.25f};
+        b3CreateSphereShape(a,&sd,&sp); b3CreateSphereShape(b,&sd,&sp);
+        b3JointId joint;
+        if(kind==0) { b3WeldJointDef d=b3DefaultWeldJointDef(); d.base.bodyIdA=a; d.base.bodyIdB=b; joint=b3CreateWeldJoint(b3LoadWorldId(w),&d); }
+        else if(kind==1) { b3RevoluteJointDef d=b3DefaultRevoluteJointDef(); d.base.bodyIdA=a; d.base.bodyIdB=b; joint=b3CreateRevoluteJoint(b3LoadWorldId(w),&d); }
+        else { b3SphericalJointDef d=b3DefaultSphericalJointDef(); d.base.bodyIdA=a; d.base.bodyIdB=b; joint=b3CreateSphericalJoint(b3LoadWorldId(w),&d); }
+        T(b3Joint_IsValid(joint));
+        T(air_b3_world_step(w,1.0f/60.0f,1)==AIR_B3_OK);
+        b3Body_SetAwake(a,false);
+        int shared=b3GetBodyFullId(core,a)->setIndex;
+        T(shared>=b3_firstSleepingSet && b3GetBodyFullId(core,b)->setIndex==shared);
+        uint64_t fixedStep=core->stepIndex;
+        b3Body_Disable(a);
+        T(core->solverSets.data[shared].setIndex==shared && core->solverSets.data[shared].bodySims.count==1);
+        T(b3Joint_IsValid(joint) && b3Body_IsValid(b));
+        T(air_b3_world_trim_empty(w,1)==AIR_B3_WORLD_NONEMPTY);
+        b3Body_Enable(a); T(b3Joint_IsValid(joint));
+        b3Body_SetAwake(a,false); b3Body_Disable(a); b3Body_Disable(b);
+        T(b3GetIdCount(&core->solverSetIdPool)==b3_firstSleepingSet);
+        T(b3Joint_IsValid(joint)); b3DestroyJoint(joint,true); b3DestroyBody(a); b3DestroyBody(b);
+        T(air_b3_world_trim_empty(w,1)==AIR_B3_OK && core->stepIndex==fixedStep);
+        T(air_b3_world_counts(w,after)==AIR_B3_OK && !memcmp(initial,after,sizeof(initial)));
+    }
+    T(air_b3_world_destroy(w)==AIR_B3_OK && b3GetByteCount()==globalBaseline);
+    T(air_b3_bridge_memory(0,bridge)==AIR_B3_OK && value64(bridge)==0 && bridge[2]==0);
     printf("{\"schema\":\"air-box3d-storage-native-contract-v1\",\"status\":\"PASS\",\"pointerBytes\":%zu,"
         "\"coreSha\":\"%s\",\"schemaSha256\":\"%s\",\"patchChainSha256\":\"%s\",\"checks\":%d,"
         "\"initialLedgerBytes\":%llu,\"identityMetadataBytes\":36,\"creationCapacityBytes\":20,"
         "\"metadataRows\":true,\"nonemptyNoMutation\":true,\"ownershipRefusal\":true,\"sameWorldStepPreserved\":true,"
         "\"realStepReleaseBaseline\":true,\"secondCycleBaseline\":true,\"staleIdsRejected\":true,\"twoWorldIsolation\":true,"
         "\"controlledFaultClose\":true,\"controlledFixture\":true,\"injectionsAreProductionObservations\":false,"
-        "\"finalCoreDelta\":0,\"finalBridgeBytes\":0}\n",sizeof(void*),air_b3_core_sha(),air_b3_schema_sha(),air_b3_patch_chain_sha(),checks,(unsigned long long)value64(initial+4));
+        "\"sleepDisableCycles\":true,\"sharedSleepingConstraintSets\":true,\"reEnablePreservesJoints\":true,\"baseSetsPreserved\":true,\"finalCoreDelta\":0,\"finalBridgeBytes\":0}\n",sizeof(void*),air_b3_core_sha(),air_b3_schema_sha(),air_b3_patch_chain_sha(),checks,(unsigned long long)value64(initial+4));
     return 0;
 }

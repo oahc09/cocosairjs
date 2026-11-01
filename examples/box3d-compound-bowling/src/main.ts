@@ -1,4 +1,4 @@
-/** EX02 candidate: public SDK223 only; CPU checks are not physics acceptance. */
+/** EX02 candidate: public API, bound to the exact selected runtime identity; CPU checks are not physics acceptance. */
 import {
     createAirApp,
     AIR_BUILD_NUMBER,
@@ -602,7 +602,7 @@ function close() {
             await release(true);
             director.off(Director.EVENT_AFTER_PHYSICS, afterPhysics);
             if (!app?.close) throw Error('Public close unavailable');
-            lifecycle.startSdkClose(); // SDK223 permanently caches this Promise, even on failure.
+            lifecycle.startSdkClose(); // The selected runtime must permanently cache this Promise, even on failure.
             const receipt = await app.close();
             log.push({ kind: 'close', generation, receipt });
             if (receipt.status !== 'released') throw Error('Terminal SDK Close failed');

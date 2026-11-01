@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "snapshot": "output/skills-hdr-b1-refined-20261024T130646090",
+  "trial": "ai/plans/skills-token-evidence/reading-hdr-refined-B1-20261024T130646090",
+  "snapshot_hash": "0cccd2f1294752e5015b4d1ad548173e4ce24e8e17a0de664f292b26427929a0",
+  "prior_candidate_snapshot": "14243e1628a737a34aa81def1dbead6c7db128de83f91d68b24181ea8fab0aac",
+  "helper": "ai/plans/skills-token-evidence/recovery/read-trial.cjs",
+  "helper_hash": "9e4e87dae555da98099f4f9d81740b2e91c44325fe3141569e22b3776a4d0c67",
+  "status": "AWAITING_INDEPENDENT_READER_AFTER_SOURCE_REFINEMENT",
+  "source_identity": "Frozen byte manifest of working candidate; base commit alone does not claim these modifications were already committed.",
+  "protocol": "unchanged tools/skills/fixtures/load-scenarios.json B1",
+  "model_override": null,
+  "exact_model_deployment": "not exposed by runtime",
+  "source_refinement": "A general diagnostic citation/evidence-scoping contract added after two retained failed answers.",
+  "prior_trials": [
+    "ai/plans/skills-token-evidence/reading-hdr-candidate-B1-20261024T125742383",
+    "ai/plans/skills-token-evidence/reading-hdr-candidate-B1-20261024T125742383-retry1"
+  ]
+}

@@ -60,6 +60,7 @@ http.createServer(async (req, res) => {
                         'contact-candidate-lock.json',
                         'transport-candidate-lock.json',
                         'transport-candidate-sdk223-lock.json',
+                        'transport-candidate-integration-20261031-lock.json',
                     ].map((f) => [f, hash(path.join(__dirname, f))]),
                 ),
             };

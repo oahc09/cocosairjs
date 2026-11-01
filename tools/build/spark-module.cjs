@@ -28,7 +28,9 @@ async function buildSparkModule(outDir = path.join(root, 'build')) {
     if (forbidden.length) throw new Error('Spark must not bundle Cocos: ' + forbidden.join(', '));
     fs.mkdirSync(outDir, { recursive: true });
     for (const file of result.outputFiles) fs.writeFileSync(file.path, file.contents);
-    fs.writeFileSync(path.join(outDir, 'spark.module.meta.json'), JSON.stringify(result.metafile, null, 2) + '\n');
+    fs.mkdirSync(path.join(outDir, 'metadata'), { recursive: true });
+    fs.writeFileSync(path.join(outDir, 'metadata', 'spark.module.meta.json'), JSON.stringify(result.metafile, null, 2) + '\n');
+    fs.rmSync(path.join(outDir, 'spark.module.meta.json'), { force: true });
     buildSparkTypes(outDir);
     // Retire only the former all-in-one Spark bundle, never the main engine.
     for (const file of ['cocosair.module.spark.js', 'cocosair.module.spark.js.map']) {

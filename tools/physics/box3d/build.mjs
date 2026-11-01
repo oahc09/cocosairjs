@@ -671,6 +671,8 @@ try {
         'tools/physics/box3d/module-release/public-contract.mjs',
         'tools/verify/box3d/loader-lifecycle.test.mjs',
         'src/air/physics/box3d/prepare.ts',
+        'src/air/safe-error.ts',
+        'tools/physics/box3d/patches/sleeping-set-disable-cleanup-v1.patch',
     ];
     result.inputHashes = inputs.map((path) => ({ path, sha256: sha256(readFileSync(resolve(root, path))) }));
     receipt();

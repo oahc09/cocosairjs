@@ -19,6 +19,9 @@ async function fixture(callback) {
     try {
         return await callback({ root, temp, repo, source, out: path.join(temp, 'new-result') });
     } finally {
+        const resolved = fs.realpathSync(root);
+        assert.equal(path.dirname(resolved), fs.realpathSync(process.env.RUNNER_TEMP || os.tmpdir()));
+        assert(path.basename(resolved).startsWith('skills-p1-orchestration-test-'));
         fs.rmSync(root, { recursive: true, force: true });
     }
 }
@@ -31,6 +34,26 @@ function write(filename, content) {
 function event(overrides = {}) {
     return { scenario_id: 'B1', complete: true, outcome: 'success', ...overrides };
 }
+
+test('fresh candidate reading evidence is explicitly selected without rebinding historical records', () => {
+    const root = path.resolve(os.tmpdir(), 'skills-evidence-repo');
+    const historical = 'ai/plans/skills-token-evidence/recovery/reading-candidate-B1/events.jsonl';
+    const fresh = 'ai/plans/skills-token-evidence/reading-candidate-B1-20261024/events.jsonl';
+    assert.equal(gate.candidateLoadPath(root), path.join(root, historical));
+    assert.equal(gate.candidateLoadPath(root, fresh), path.join(root, fresh));
+    const parsed = gate.parseArgs(['--source', '/source', '--out', '/tmp/out', '--candidate-loads', fresh]);
+    assert.equal(parsed['candidate-loads'], fresh);
+    for (const invalid of [
+        '',
+        null,
+        '../../outside.jsonl',
+        '/outside.jsonl',
+        'ai/plans/skills-token-evidence/../outside.jsonl',
+        fresh.replace('.jsonl', '.txt'),
+    ]) {
+        assert.throws(() => gate.candidateLoadPath(root, invalid));
+    }
+});
 
 test('CLI requires explicit source and output, and rejects unknown, duplicate or valueless flags', () => {
     assert.deepEqual(gate.parseArgs(['--source', '/source', '--out', '/tmp/out']), {
@@ -77,7 +100,7 @@ test('output parent must already exist', () =>
 
 test('output rejects both an existing symlink and a symlink ancestor', () =>
     fixture(({ temp, repo, source, out }) => {
-        fs.symlinkSync(source, out, 'dir');
+        fs.symlinkSync(source, out, process.platform === 'win32' ? 'junction' : 'dir');
         assert.throws(() => gate.validateOutput(out, temp, [repo]), /Symlink/);
         assert.throws(() => gate.validateOutput(path.join(out, 'new'), temp, [repo]), /Symlink/);
     }));
@@ -88,8 +111,13 @@ test('read-only inputs reject symlinks, directories and absent files', () =>
         write(input, 'original');
         assert.equal(gate.readFile(input).toString(), 'original');
         const link = path.join(root, 'input-link');
-        fs.symlinkSync(input, link);
-        assert.throws(() => gate.readFile(link), /Symlink/);
+        // A real directory reparse point works without elevated Windows symlink privileges.
+        fs.symlinkSync(
+            process.platform === 'win32' ? source : input,
+            link,
+            process.platform === 'win32' ? 'junction' : 'file',
+        );
+        assert.throws(() => gate.readFile(process.platform === 'win32' ? path.join(link, 'input') : link), /Symlink/);
         assert.throws(() => gate.readFile(source), /regular file/);
         assert.throws(() => gate.readFile(path.join(root, 'missing')), /ENOENT/);
     }));
@@ -114,7 +142,7 @@ test('writeNew refuses traversal, absolute paths, backslashes, NULs and overwrit
 
 test('writeNew refuses a symlinked parent without touching the target', () =>
     fixture(({ temp, source }) => {
-        fs.symlinkSync(source, path.join(temp, 'link'), 'dir');
+        fs.symlinkSync(source, path.join(temp, 'link'), process.platform === 'win32' ? 'junction' : 'dir');
         assert.throws(() => gate.writeNew(temp, 'link/new.txt', 'bad'), /Symlink/);
         assert.deepEqual(fs.readdirSync(source), []);
     }));

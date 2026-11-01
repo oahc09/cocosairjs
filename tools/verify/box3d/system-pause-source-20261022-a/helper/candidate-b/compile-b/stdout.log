@@ -1,2 +1,0 @@
-candidate-b/physics-system-control.ts(123,43): error TS2552: Cannot find name 'PhysicsStateChangeContext'. Did you mean 'PhysicsStateChangeTicket'?
-candidate-b/physics-system-control.ts(168,26): error TS2304: Cannot find name 'PhysicsStateEffect'.

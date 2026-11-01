@@ -1,8 +1,0 @@
-{
-  "status": "PASS_SCOPED_UNBOUND_PREFLIGHT",
-  "exitCode": 0,
-  "passedTests": 56,
-  "failedTests": 0,
-  "rawSHA256": "e2d72a34a89f21f2c1a0c4b2e0b81fcbac0ec420ccc86f5b3c384da0c40bc340",
-  "limitation": "No pre-run input manifest was recorded for this first expanded matrix invocation; use the independent -b invocation for the pre/post source-bound result."
-}

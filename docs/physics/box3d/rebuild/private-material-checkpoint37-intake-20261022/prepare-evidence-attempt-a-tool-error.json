@@ -1,7 +1,0 @@
-{
-  "exitCode": 1,
-  "action": "local explicit git add with path arguments",
-  "error": "OSError: [Errno 7] Argument list too long: git",
-  "state": "Git child not spawned; evidence config files produced; no commit or external write",
-  "fix": "Same explicit paths via git --pathspec-from-file=- --pathspec-file-nul stdin; no scope expansion"
-}

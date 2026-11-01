@@ -141,6 +141,18 @@
           "afterSha256": "0c4c818233e930d9cde545bb42f2e9f2fb86bcc14e9c9b4c736b50b7abffd53b"
         }
       ]
+    },
+    {
+      "id": "sleeping-set-disable-cleanup-v1",
+      "path": "tools/physics/box3d/patches/sleeping-set-disable-cleanup-v1.patch",
+      "sha256": "b3d26a71b3d52da023b4f021d6f788eb24a1915309496002520edb3990c2c2b7",
+      "files": [
+        {
+          "path": "src/body.c",
+          "beforeSha256": "915596df4eaac49042b3a3007863b47c5874592a0889c3ed0563890fbf4cef34",
+          "afterSha256": "ec838370f0554fd4240e164c176708058660e7120916b7cfdae3153e779c63f0"
+        }
+      ]
     }
   ]
 }

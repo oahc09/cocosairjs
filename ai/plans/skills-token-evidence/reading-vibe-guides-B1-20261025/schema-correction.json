@@ -1,0 +1,14 @@
+{
+  "scope": "schema aliases only; not a new reading, answer or successful retry",
+  "original": "events-reader-original.jsonl",
+  "original_sha256": "0c3cb71b5ac48be00546ca44162a1314df24c6db73b6c0ca3b82ecb867d04c0b",
+  "normalized": "events.jsonl",
+  "normalized_sha256": "27ea5ed82e32c2199b87159b86fdd9a0bc92d7d96eedcd79a0caf900dec14eef",
+  "unchanged_answer_sha256": "81ec19c5747359ecc7f8261ed25ef27d1f50b398a9527bac551caa6c661918bf",
+  "added_fields": [
+    "complete",
+    "outcome",
+    "answer_checks"
+  ],
+  "outcome": "failure"
+}

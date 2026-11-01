@@ -165,7 +165,7 @@ const MEMORY_DIAGNOSTIC_ROWS = [
 const MEMORY_DIAGNOSTIC_WORDS = 756;
 const commandIsArray = Array.isArray;
 const commandKeys = Object.keys;
-const PATCH_CHAIN_SHA256 = 'fce7869b3888ff9bfd417095e70ce72591893b2c3add1802e1a5bc32ca918bfe';
+const PATCH_CHAIN_SHA256 = '14b3b0e85702c42f436fa1b5e570c78ed8d46f30476a3bedc11ded38a2328303';
 
 function failure(code, message) {
     return Object.assign(new Error(message), { code });
@@ -176,7 +176,7 @@ function nativeStatus(status) {
         throw failure('AIR_E_BOX3D_IDENTITY_EXHAUSTED', 'Same-world native identity exhausted or faulted');
     if (status === 16)
         throw failure('AIR_E_BOX3D_TRIM_UNSAFE', 'Empty-world storage release preconditions are not satisfied');
-    if (status === 13) throw failure('AIR_E_BOX3D_ABI', 'Native memory diagnostic accounting is inconsistent');
+    if (status === 13) throw failure('AIR_E_BOX3D_ABI', 'Native memory accounting or empty-world storage invariants are inconsistent');
     if (status === 11) throw failure('AIR_E_BOX3D_CONFIG', 'Motion conflicts with a locked world velocity component');
     if (status === 12) throw failure('AIR_E_BOX3D_CONFIG', 'Motion exceeds the safe native speed cap');
     if (status === 9) throw failure('AIR_E_BOX3D_LOCKED', 'World is locked');

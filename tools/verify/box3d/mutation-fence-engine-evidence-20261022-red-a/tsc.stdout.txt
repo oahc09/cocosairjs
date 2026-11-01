@@ -1,6 +1,0 @@
-tools/verify/box3d/mutation-fence-engine-control.test.ts(5,45): error TS2307: Cannot find module 'node:fs' or its corresponding type declarations.
-tools/verify/box3d/mutation-fence-engine-control.test.ts(6,28): error TS2307: Cannot find module 'node:crypto' or its corresponding type declarations.
-tools/verify/box3d/mutation-fence-engine-control.test.ts(7,26): error TS2307: Cannot find module 'node:path' or its corresponding type declarations.
-tools/verify/box3d/mutation-fence-engine-control.test.ts(98,20): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
-tools/verify/box3d/mutation-fence-engine-control.test.ts(106,54): error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
-tools/verify/box3d/mutation-fence-engine-control.test.ts(107,68): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.

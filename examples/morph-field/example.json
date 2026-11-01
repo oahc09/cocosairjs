@@ -1,0 +1,123 @@
+{
+  "id": "morph-field",
+  "version": "1.0.0",
+  "status": "draft",
+  "specStatus": "draft",
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "title": "FORM / MATTER — GPU Morph Fields",
+  "category": "rendering",
+  "apiClaims": [
+    "createAirMorphField",
+    "sampleAirTextShape",
+    "sampleAirImageShape",
+    "sampleAirTriangleShape",
+    "Camera",
+    "Node",
+    "Scene"
+  ],
+  "capabilities": ["rendering"],
+  "learning": {
+    "goal": "用原生索引实例化与 GPU 形态纹理连续变形文字、网格和图像",
+    "points": [
+      "固定样本索引和线性 RGB",
+      "进度 uniform 与静态形态纹理",
+      "全形态 envelope bounds",
+      "点/体素与资源所有权",
+      "形态法线与程序化摄影棚反射"
+    ]
+  },
+  "effect": {
+    "functional": "形态选择、进度、点/体素、自动往返、暂停及拖动旋转；竖屏重新适配。",
+    "visual": "16,384 个样本形成文字、球体、斜置圆环和原创图像；抛光表面具有视角反射、清漆亮带和可调粗糙度，经 HDR 输出。"
+  },
+  "api": {
+    "primary": ["createAirMorphField"],
+    "supporting": ["sampleAirTextShape", "sampleAirImageShape", "sampleAirTriangleShape", "Camera", "Node", "Scene"],
+    "claims": [
+      "createAirMorphField",
+      "sampleAirTextShape",
+      "sampleAirImageShape",
+      "sampleAirTriangleShape",
+      "Camera",
+      "Node",
+      "Scene"
+    ],
+    "forbiddenShortcut": [
+      "不得用逐样本 Node 或每帧 CPU 矩阵插值冒充 GPU 形变。",
+      "不得用 HUD 像素替代实际几何画面验证。"
+    ],
+    "evidence": [
+      {
+        "api": "createAirMorphField",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L110"
+      },
+      {
+        "api": "sampleAirTextShape",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L37"
+      },
+      {
+        "api": "sampleAirImageShape",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L76"
+      },
+      {
+        "api": "sampleAirTriangleShape",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L45"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L27"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L24"
+      },
+      {
+        "api": "Scene",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L23"
+      }
+    ]
+  },
+  "validation": {
+    "functional": ["scene-ready", "node-exists", "no-runtime-error"],
+    "visual": ["visible-frame"],
+    "interaction": [],
+    "lifecycle": [],
+    "capability": []
+  },
+  "ready": {
+    "validators": ["scene-ready"]
+  },
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": ["Main Camera", "Morph field"]
+    }
+  },
+  "interaction": {
+    "steps": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "原创图像与程序化几何；系统字体由浏览器提供；仓库 MIT 许可；无在线资产。"
+  }
+}

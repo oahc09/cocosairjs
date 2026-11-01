@@ -1,8 +1,0 @@
-src/cocos/physics/framework/physics-state-observer.ts(264,21): error TS7006: Parameter 'reader' implicitly has an 'any' type.
-src/cocos/physics/framework/physics-state-observer.ts(271,54): error TS2339: Property 'before' does not exist on type 'object'.
-src/cocos/physics/framework/physics-state-observer.ts(273,57): error TS2339: Property 'candidate' does not exist on type 'object'.
-src/cocos/physics/framework/physics-state-observer.ts(283,20): error TS7006: Parameter 'fact' implicitly has an 'any' type.
-src/cocos/physics/framework/physics-state-observer.ts(291,20): error TS7006: Parameter 'actualReader' implicitly has an 'any' type.
-src/cocos/physics/framework/physics-state-observer.ts(306,18): error TS7006: Parameter 'error' implicitly has an 'any' type.
-src/cocos/physics/framework/physics-state-observer.ts(306,25): error TS7006: Parameter 'actualReader' implicitly has an 'any' type.
-

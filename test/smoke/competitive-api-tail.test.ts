@@ -10,6 +10,18 @@ describe('competitive API tail contracts', () => {
         const plane = primitives.plane({ width: 2, length: 4, widthSegments: 1, lengthSegments: 1 });
         expect(plane.positions.filter((_, i) => i % 3 === 1).every((y) => y === 0)).toBe(true);
     });
+    test('quad dimensions scale positions and bounds while retaining geometry options', () => {
+        const large = primitives.quad({ width: 2.2, height: 3, includeNormal: false, includeUV: false });
+        const small = primitives.quad({ width: 0.5 });
+        expect(large.maxPos!.x / small.maxPos!.x).toBeCloseTo(4.4);
+        expect(large.positions).toEqual([-1.1, -1.5, 0, -1.1, 1.5, 0, 1.1, 1.5, 0, 1.1, -1.5, 0]);
+        expect(large.minPos).toEqual({ x: -1.1, y: -1.5, z: 0 });
+        expect(large.maxPos).toEqual({ x: 1.1, y: 1.5, z: 0 });
+        expect(large.boundingRadius).toBeCloseTo(Math.hypot(1.1, 1.5));
+        expect(large.normals).toBeUndefined();
+        expect(large.uvs).toBeUndefined();
+        expect(primitives.quad({ width: 0, height: 0 }).boundingRadius).toBe(0);
+    });
     test('Quat has its native instance operations and static normalization', () => {
         const q = new Quat(0, 0, 0, 2);
         expect(q.clone().strictEquals(q)).toBe(true);

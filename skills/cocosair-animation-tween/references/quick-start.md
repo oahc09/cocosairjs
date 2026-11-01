@@ -53,3 +53,23 @@ for (let i = 0; i < 90; i++) { await clock.step(1 / 60); }   // throws if the re
 clock.end();                                         // game.resume()
 </script>
 ```
+
+## Per-frame geometry updates
+
+Use this section for continuous mesh deformation in an existing app and scene. `Component.update(dt)` receives seconds from the native pacer. The example assumes an attached `motionNode` and an initialized dynamic `mesh` with matching typed-array `geometry`; its deformation changes one vertex while retaining the existing layout:
+
+```js
+// Component is imported from the same AIR main entry as the rest of the app.
+let elapsed = 0;
+const restY = geometry.positions[1];
+class MeshMotion extends Component {
+    update(dt) {
+        elapsed += dt;
+        geometry.positions[1] = restY + Math.sin(elapsed) * 0.25;
+        mesh.updateSubMesh(0, geometry);
+    }
+}
+motionNode.addComponent(MeshMotion);
+```
+
+Keep the existing app/scene/camera and native loop. Read the tween or clip recipes when the task actually uses those APIs. For mesh setup, capacities and renderer synchronization use the [dynamic-mesh checklist](../../cocosair-primitives-mesh/references/common-mistakes.md#dynamic-mesh-creation-and-update-checklist). During controlled browser checks use the [step-clock contract](step-clock.md); restore native pacing with `end()` afterward. Disabling or destroying the motion component stops its updates; mesh/material ownership remains with their creator.

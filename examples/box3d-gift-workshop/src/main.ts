@@ -1035,7 +1035,7 @@ function observe(nativeTick: number) {
     say(
         'dependency',
         doorCandidate
-            ? `真实 Hinge 门 · 当前角度 ${door?.lastObservation?.angleDegrees?.toFixed(2) ?? '等待读回'}°。已选定机械方案：后下沿轴 y1.46，前门缝2mm，另有亚微米装配余量待本版实测；保留原设计差异记录。${flow ? '真实称重→提交→触发越面→双件事务已接入；三单 g 已完成，恢复/移动端等整体验收仍待完成。' : '本页仅门机构诊断；三单结果来自独立 g 原流，不能替代本页测试。'}`
+            ? `真实 Hinge 门 · 当前角度 ${door?.lastObservation?.angleDegrees?.toFixed(2) ?? '等待读回'}°。已选定机械方案：后下沿轴 y1.46，前门缝2mm，另有亚微米装配余量待本版实测；保留原设计差异记录。${flow ? '真实称重→提交→触发越面→双件事务已接入；当前候选的三单与恢复/移动端验收见本轮报告。' : '本页仅门机构诊断；三单结果来自独立 g 原流，不能替代本页测试。'}`
             : transportCandidate
               ? '真实逐子形状 sweep / overlap、吊点可见性、Fixed 与 target 已接入本页。拒绝不安全移动，不自动装箱。当前底门仍静态占位，正式订单未开放。'
               : '当前为库存/称重诊断，正式搬运、Hinge 出货与三单计分未开放。',

@@ -1,6 +1,0 @@
-{
-  "path": "tools/verify/box3d/runtime-feature-import.test.cjs",
-  "bytes": 9805,
-  "sha256": "f4fb927dd7d054a5a18025949cd8803a829797dd88e7854b5e8ce52b7fcc30b4",
-  "capture": "After initial selected-only run, before any tool edits; existing raw records unchanged."
-}

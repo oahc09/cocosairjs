@@ -1,0 +1,179 @@
+{
+  "status": "PASS",
+  "cases": 43,
+  "diskWrites": false,
+  "results": [
+    {
+      "name": "local and cross-skill",
+      "status": "PASS"
+    },
+    {
+      "name": "double title",
+      "status": "PASS"
+    },
+    {
+      "name": "single title missing",
+      "status": "PASS"
+    },
+    {
+      "name": "parenthesized title missing",
+      "status": "PASS"
+    },
+    {
+      "name": "single title valid",
+      "status": "PASS"
+    },
+    {
+      "name": "parenthesized title valid",
+      "status": "PASS"
+    },
+    {
+      "name": "multiline title",
+      "status": "PASS"
+    },
+    {
+      "name": "angle target valid",
+      "status": "PASS"
+    },
+    {
+      "name": "angle target missing",
+      "status": "PASS"
+    },
+    {
+      "name": "angle target spaces",
+      "status": "PASS"
+    },
+    {
+      "name": "encoded spaces",
+      "status": "PASS"
+    },
+    {
+      "name": "nested destination parentheses",
+      "status": "PASS"
+    },
+    {
+      "name": "escaped destination parentheses",
+      "status": "PASS"
+    },
+    {
+      "name": "reference definition",
+      "status": "PASS"
+    },
+    {
+      "name": "missing reference definition target",
+      "status": "PASS"
+    },
+    {
+      "name": "plain missing",
+      "status": "PASS"
+    },
+    {
+      "name": "dot navigation",
+      "status": "PASS"
+    },
+    {
+      "name": "parent navigation",
+      "status": "PASS"
+    },
+    {
+      "name": "bare navigation",
+      "status": "PASS"
+    },
+    {
+      "name": "double-backtick navigation",
+      "status": "PASS"
+    },
+    {
+      "name": "triple fence",
+      "status": "PASS"
+    },
+    {
+      "name": "tilde fence",
+      "status": "PASS"
+    },
+    {
+      "name": "four fence with inner three",
+      "status": "PASS"
+    },
+    {
+      "name": "longer closing fence",
+      "status": "PASS"
+    },
+    {
+      "name": "after fence still checked",
+      "status": "PASS"
+    },
+    {
+      "name": "mismatched marker stays code",
+      "status": "PASS"
+    },
+    {
+      "name": "inline code link example",
+      "status": "PASS"
+    },
+    {
+      "name": "code-formatted link label",
+      "status": "PASS"
+    },
+    {
+      "name": "code-formatted reference label",
+      "status": "PASS"
+    },
+    {
+      "name": "nested link label",
+      "status": "PASS"
+    },
+    {
+      "name": "escaped backtick leaves link active",
+      "status": "PASS"
+    },
+    {
+      "name": "indented fence",
+      "status": "PASS"
+    },
+    {
+      "name": "comment link example",
+      "status": "PASS"
+    },
+    {
+      "name": "provenance and placeholder",
+      "status": "PASS"
+    },
+    {
+      "name": "external and anchor",
+      "status": "PASS"
+    },
+    {
+      "name": "malformed encoding",
+      "status": "PASS"
+    },
+    {
+      "name": "absolute path",
+      "status": "PASS"
+    },
+    {
+      "name": "Windows absolute path",
+      "status": "PASS"
+    },
+    {
+      "name": "empty scope",
+      "status": "PASS"
+    },
+    {
+      "name": "Markdown without skills",
+      "status": "PASS"
+    },
+    {
+      "name": "nonexistent scope",
+      "status": "PASS"
+    },
+    {
+      "name": "unreadable scope",
+      "status": "PASS"
+    },
+    {
+      "name": "non-directory scope",
+      "status": "PASS"
+    }
+  ]
+}

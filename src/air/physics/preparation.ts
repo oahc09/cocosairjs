@@ -19,6 +19,8 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
 */
+import { safeErrorString, safeErrorField } from '../safe-error';
+
 /** Detached module evidence. Canonical public types live in emitted TS, not a private .d.mts closure. */
 export interface Box3DModuleReleaseSnapshot {
     readonly schema: 'air-box3d-module-release-snapshot-v1';
@@ -154,7 +156,7 @@ export function createAirPhysicsPreparation(): AirPhysicsPreparation {
             } catch (error) {
                 entry.cleanup = 'failed';
                 entry.retained = [entry.resource];
-                cleanupErrors.push({ label: `${entry.backend}:${entry.resource}`, message: String(error) });
+                cleanupErrors.push({ label: `${entry.backend}:${entry.resource}`, message: safeErrorString(error) });
             }
         });
         return entry.releasePromise;
@@ -277,16 +279,15 @@ export function createAirPhysicsPreparation(): AirPhysicsPreparation {
         },
         failed(error) {
             if (originalError === null) {
-                const value = error as { code?: unknown; message?: unknown } | null;
                 originalError = Object.freeze({
-                    code: typeof value?.code === 'string' ? value.code : null,
-                    message: typeof value?.message === 'string' ? value.message : String(error),
+                    code: safeErrorField(error, 'code'),
+                    message: safeErrorField(error, 'message') ?? safeErrorString(error),
                 });
             }
             status = cleanupErrors.length ? 'cleanup-failed' : 'failed';
         },
         recordCleanupError(label, error) {
-            cleanupErrors.push({ label, message: String(error) });
+            cleanupErrors.push({ label, message: safeErrorString(error) });
             if (closing) status = 'cleanup-failed';
         },
         dispose() {

@@ -1,7 +1,0 @@
-{
-  "path": "tools/physics/box3d/output/geometry-validation-20261022-i.tar.gz",
-  "bytes": 42971237,
-  "sha256": "3f1a2746619cfb8ba549edf52c8b777d7d25fb253a4d0f417ccf62e1578b2191",
-  "fileCount": 2969,
-  "excluded": "Only .o/.a and rebuildable CMake intermediates; all command logs, actual product/qualification binaries, raw failure records, staged core copies, JSONL and source variants retained."
-}

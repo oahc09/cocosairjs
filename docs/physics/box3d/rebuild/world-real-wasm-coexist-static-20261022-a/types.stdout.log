@@ -1,4 +1,0 @@
-src/cocos/physics-2d/box2d/platform/physics-ray-cast-callback.ts(48,48): error TS2833: Cannot find namespace 'B2'. Did you mean 'b2'?
-src/cocos/physics-2d/box2d/platform/physics-ray-cast-callback.ts(48,65): error TS2833: Cannot find namespace 'B2'. Did you mean 'b2'?
-tools/verify/box3d/coexist-real-wasm.test.ts(287,25): error TS2339: Property 'removeBody' does not exist on type 'World'.
-tools/verify/box3d/coexist-real-wasm.test.ts(324,52): error TS2339: Property 'removeBody' does not exist on type 'World'.

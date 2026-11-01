@@ -869,3 +869,77 @@ test('distinct late acquisition is self-released once and cannot be re-owned und
     assert.deepEqual(h.calls, ['first.release', 'late.release']);
     assert.equal(preparation.diagnostics().acquired.length, 2);
 });
+
+test('hostile thrown values cannot interrupt independent resource cleanup or erase failure status', async () => {
+    const revoked = Proxy.revocable({}, {});
+    revoked.revoke();
+    for (const failure of [
+        {
+            toString() {
+                throw new Error('coercion failed');
+            },
+        },
+        new Proxy(
+            {},
+            {
+                get() {
+                    throw new Error('getter failed');
+                },
+            },
+        ),
+        revoked.proxy,
+    ]) {
+        const h = harness();
+        const preparation = h.load('src/air/physics/preparation.ts').createAirPhysicsPreparation();
+        preparation.own('box3d', 'module', () => h.calls.push('module'));
+        preparation.own('box3d', 'independent', () => h.calls.push('independent'));
+        preparation.own(
+            'box3d',
+            'world',
+            () => {
+                throw failure;
+            },
+            { dependsOn: ['module'] },
+        );
+        preparation.failed(failure);
+        preparation.recordCleanupError('earlier-error', failure);
+        const close = preparation.dispose();
+        assert.equal(preparation.dispose(), close);
+        const receipt = await close;
+        assert.deepEqual(h.calls, ['independent']);
+        assert.equal(receipt.status, 'cleanup-failed');
+        assert.equal(receipt.originalError.message, '[unprintable error]');
+        assert.equal(receipt.cleanupErrors.length, 2);
+        assert.equal(receipt.cleanupErrors[1].message, '[unprintable error]');
+        assert.deepEqual(
+            plain(receipt.acquired).map((entry) => entry.cleanup),
+            ['not-attempted', 'released', 'failed'],
+        );
+        assert.deepEqual(plain(receipt.acquired[0].retained), ['module']);
+    }
+});
+
+test('app.close continues 2D and host cleanup after an unprintable world destruction failure', async () => {
+    const h = harness();
+    installFeature(h, {
+        failWorld: new Proxy(
+            {},
+            {
+                get() {
+                    throw new Error('hostile error');
+                },
+            },
+        ),
+    });
+    const app = await h
+        .load('src/air/bootstrap.ts')
+        .createAirApp({ canvas: h.canvas, physics: 'box3d', physics2D: 'box2d-v3-wasm' });
+    const receipt = await app.close();
+    assert.equal(receipt.status, 'failed');
+    for (const name of ['2d.dispose', 'layout.destroy', 'context.destroy', 'diagnostics.destroy']) {
+        assert.ok(h.calls.includes(name), `missing independent cleanup: ${name}`);
+    }
+    assert.ok(!h.calls.includes('3d.module.dispose'));
+    assert.ok(receipt.retained.includes('module') && receipt.retained.includes('world'));
+    assert.ok(receipt.failures.some((item) => item.message === '[unprintable error]'));
+});

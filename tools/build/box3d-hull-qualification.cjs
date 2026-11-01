@@ -11,7 +11,7 @@ const sorted = (values) => [...values].sort();
 // The legacy oracle remains the original TWO-patch pre-Hull core, even after
 // identity/storage patches are appended. Never infer that prefix from the tail.
 function preHullPrefix(plan) {
-    assert.equal(plan.patchChainSha256, 'fce7869b3888ff9bfd417095e70ce72591893b2c3add1802e1a5bc32ca918bfe');
+    assert.equal(plan.patchChainSha256, '14b3b0e85702c42f436fa1b5e570c78ed8d46f30476a3bedc11ded38a2328303');
     assert.deepEqual(
         plan.lock.patches.map((patch) => patch.id),
         [
@@ -20,8 +20,9 @@ function preHullPrefix(plan) {
             'checked-hull-cooking-v1',
             'same-world-identity-v1-candidate',
             'same-world-empty-storage-v1',
+            'sleeping-set-disable-cleanup-v1',
         ],
-        'Exact reviewed five-patch order',
+        'Exact reviewed six-patch order',
     );
     return { ...plan.lock, patches: plan.lock.patches.slice(0, 2) };
 }

@@ -1,9 +1,0 @@
-{
-  "src/cocos/physics/framework/components/rigid-body.ts": "d452cafb18d8be4ebf89c4c89aa0342f121cccacbb6b2a096c76cce783b35bbf",
-  "src/cocos/physics/framework/physics-selector.ts": "121956af3ad15be76e7b75ac879adaff666f67e8a3d10327b3302b9fe4efc50c",
-  "tools/verify/box3d/body-component-transaction.test.ts": "04e316ddc12ef625eff4db7b0a04306b94324525716543e3feb3b15082a1c247",
-  "tools/verify/box3d/body-component-transaction.jest.cjs": "12263b456942033706660743abe0a73f3309123b8aae53a5a394cf2b1466a701",
-  "jest.config.js": "fd5a10574248f364fd15779d6ffe38068f588f1a49508cc511cdc370aac1cceb",
-  "test/setup-dom.js": "6a2f11fb94ebcad2ce48c4b53a6044bfaa682fdd9f232345cc6d25b7b0f5fcd5",
-  "test/setup-engine.js": "1c9bbf584722c35f63df80c0be298e05a03361d3e8c639eab0fb6591b88091bf"
-}

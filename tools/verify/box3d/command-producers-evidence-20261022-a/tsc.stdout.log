@@ -1,5 +1,0 @@
-src/air/physics/box3d/command-producers.ts(120,35): error TS7006: Parameter 'op' implicitly has an 'any' type.
-src/air/physics/box3d/command-producers.ts(120,39): error TS7006: Parameter 'allowPaused' implicitly has an 'any' type.
-src/air/physics/box3d/command-producers.ts(121,38): error TS7006: Parameter 'body' implicitly has an 'any' type.
-src/air/physics/box3d/command-producers.ts(122,22): error TS7006: Parameter 'body' implicitly has an 'any' type.
-src/air/physics/box3d/command-producers.ts(122,28): error TS7006: Parameter 'command' implicitly has an 'any' type.

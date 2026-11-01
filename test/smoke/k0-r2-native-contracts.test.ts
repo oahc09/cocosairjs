@@ -16,7 +16,7 @@ describe('K0 R2 native mesh contracts: large capacity, repeated partial updates,
         await app.close();
     });
 
-    test('N3 mesh writes require notification to synchronize an existing renderer draw count', async () => {
+    test('N3 mesh writes automatically synchronize an existing renderer draw count', async () => {
         const mesh = MeshUtils.createDynamicMesh(
             0,
             {
@@ -36,9 +36,12 @@ describe('K0 R2 native mesh contracts: large capacity, repeated partial updates,
         expect(assembler.drawInfo.indexCount).toBe(6);
         mesh.updateSubMesh(0, { indices16: new Uint16Array(0) });
         expect(mesh.renderingSubMeshes[0].drawInfo!.indexCount).toBe(0);
-        expect(assembler.drawInfo.indexCount).toBe(6);
+        expect(assembler.drawInfo.indexCount).toBe(0);
+        // Explicit notification is still idempotent for existing callers.
         renderer.onGeometryChanged();
         expect(assembler.drawInfo.indexCount).toBe(0);
+        mesh.updateSubMesh(0, { indices16: new Uint16Array([0, 1, 2, 1, 3, 2]) });
+        expect(assembler.drawInfo.indexCount).toBe(6);
         renderer.mesh = null;
         await app.releaseScene();
         mesh.destroy();

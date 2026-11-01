@@ -1,0 +1,74 @@
+{
+  "task_id": "reading-vibe-guides-refined-B1-20261025",
+  "scenario_id": "B1",
+  "metric_version": "air-document-input-1",
+  "started_at": "2026-10-25T14:39:29.772Z",
+  "snapshot_hash": "e99d41033b9e2a8dcee26a8bb8d04e6708f338603514be4b905f86a2363a7fad",
+  "source_snapshot_hash": "1e9c6637a512b819e822d8d06ea64d444c1e5640f35c48134f70fe80a5363e19",
+  "scenario_fixture_hash": "37604a27b0a77e634dbfac285bdbaa8c84a10c2c84229b9fd7fe1e23a76c3a85",
+  "question_hash": "56e885d6561733e853ec6a075cfb7824c3fe15a55f4745b1a354ce37d0f26796",
+  "read_protocol_hash": "15cb41ae79f3c5e9ac24b3812f0f89713e282803479c9f1e4f1f7f74fb6edb0b",
+  "notes": [
+    "Recovery run. Original path failures remain historical facts; no external documents are supplied to the frozen snapshot."
+  ],
+  "reads": [
+    {
+      "path": "skills/cocosair/SKILL.md",
+      "content_hash": "c8fe00387e77e1da67891d4cb46ac5a7958fb5a739c437bf9661489d44d45f65",
+      "read_chars": 4087,
+      "read_bytes": 4189,
+      "whole_file": true,
+      "fragments": [],
+      "payload": "payloads/01.txt",
+      "observed_at": "2026-10-25T14:39:37.483Z",
+      "received_complete": true,
+      "received_untruncated": true,
+      "tool_chunk_id": "adf0f0"
+    },
+    {
+      "path": "skills/cocosair-rendering/SKILL.md",
+      "content_hash": "54141645de2a54ca8029a4522c7275d656c3b52edebd5a1d0a2a277dde5aaab6",
+      "read_chars": 3852,
+      "read_bytes": 3946,
+      "whole_file": true,
+      "fragments": [],
+      "payload": "payloads/02.txt",
+      "observed_at": "2026-10-25T14:40:05.558Z",
+      "received_complete": true,
+      "received_untruncated": true,
+      "tool_chunk_id": "8be687"
+    },
+    {
+      "path": "skills/cocosair-rendering/references/lighting-units.md",
+      "content_hash": "4008359e0472e965874a8a164b5d0bc4709c1bca24d08f6b68ae92ecd20132c1",
+      "read_chars": 14228,
+      "read_bytes": 14228,
+      "whole_file": true,
+      "fragments": [],
+      "payload": "payloads/03.txt",
+      "observed_at": "2026-10-25T14:40:09.699Z",
+      "received_complete": true,
+      "received_untruncated": true,
+      "tool_chunk_id": "cee8be"
+    },
+    {
+      "path": "skills/cocosair-rendering/references/shadow-matrix.md",
+      "content_hash": "9257147cb7f00db9d946ec38b58742f545eb3f414f12789469f4709e40f71d7c",
+      "read_chars": 14073,
+      "read_bytes": 14073,
+      "whole_file": true,
+      "fragments": [],
+      "payload": "payloads/04.txt",
+      "observed_at": "2026-10-25T14:40:14.339Z",
+      "received_complete": true,
+      "received_untruncated": true,
+      "tool_chunk_id": "9cb4e1"
+    }
+  ],
+  "l0_hash": "a5a9dd411b2e6d9562664e12def2089a8b8df038f9c07ae62742d002ceb90660",
+  "l0_received_untruncated": true,
+  "l0_tool_chunk_id": "e2d6ab",
+  "answer_artifact": "answer.md",
+  "answer_hash": "cd151208e0848979f61758c52e382e708a26be02499371e8e70458f2b61950ba",
+  "answer_sealed_at": "2026-10-25T14:41:01.486Z"
+}

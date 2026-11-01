@@ -7,9 +7,9 @@
  *                   闭环、§19-§23 Gallery 与 Manifest 一致性），回答"规范是否真的被执行"。
  * 只报告、不改写：每条 finding 带规则号（含 § 条款）与示例 id，可定位复核。
  *
- * 执行：node tools/examples/spec-compliance-audit.cjs [--warn-ok]
+ * 执行：node tools/examples/spec-compliance-audit.cjs [--warn-ok] [--out=<report.json>]
  *   默认任何 severity=fail 使退出码为 1；--warn-ok 仅报告不失败。
- * 产出：docs/evidence/spec-compliance.json
+ * 产出：默认 docs/evidence/spec-compliance.json；--out 显式指定独立报告，便于隔离测试和失败记录。
  */
 const fs = require('fs');
 const path = require('path');
@@ -17,7 +17,10 @@ const crypto = require('crypto');
 
 const REPO = path.resolve(__dirname, '..', '..');
 const EXAMPLES_DIR = path.join(REPO, 'examples');
-const OUT_PATH = path.join(REPO, 'docs', 'evidence', 'spec-compliance.json');
+const outArg = process.argv.find((arg) => arg.startsWith('--out='));
+const OUT_PATH = outArg
+    ? path.resolve(outArg.slice('--out='.length))
+    : path.join(REPO, 'docs', 'evidence', 'spec-compliance.json');
 const { specFingerprintOf, listAssetTree, readEvidence } = require(
     path.join(REPO, 'tools', 'verify', 'example-spec-common.cjs'),
 );

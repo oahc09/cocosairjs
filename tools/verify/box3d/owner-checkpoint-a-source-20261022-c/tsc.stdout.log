@@ -1,4 +1,0 @@
-tools/verify/box3d/owner-checkpoint-a-control.test.ts(144,34): error TS2583: Cannot find name 'BigInt'. Do you need to change your target library? Try changing the 'lib' compiler option to 'es2020' or later.
-tools/verify/box3d/owner-checkpoint-a-control.test.ts(144,47): error TS2583: Cannot find name 'BigInt'. Do you need to change your target library? Try changing the 'lib' compiler option to 'es2020' or later.
-tools/verify/box3d/owner-checkpoint-a-control.test.ts(147,31): error TS2583: Cannot find name 'BigInt'. Do you need to change your target library? Try changing the 'lib' compiler option to 'es2020' or later.
-tools/verify/box3d/owner-checkpoint-a-control.test.ts(147,44): error TS2583: Cannot find name 'BigInt'. Do you need to change your target library? Try changing the 'lib' compiler option to 'es2020' or later.

@@ -9,11 +9,15 @@ const hash = (bytes) => crypto.createHash('sha256').update(bytes).digest('hex');
 function options(argv) {
     const args = {};
     for (const item of argv) {
-        const match = /^--(url|out|expect-runtime-sha256|expect-build|executable)=(.+)$/.exec(item);
+        const match = /^--(url|out|expect-runtime-sha256|expect-build|executable|browser)=(.+)$/.exec(item);
         if (!match || args[match[1]])
-            throw Error('Use unique --url= --out= --expect-runtime-sha256= --expect-build= [--executable=]');
+            throw Error(
+                'Use unique --url= --out= --expect-runtime-sha256= --expect-build= [--executable=] [--browser=chromium|webkit]',
+            );
         args[match[1]] = match[2];
     }
+    args.browser ??= 'chromium';
+    assert.ok(['chromium', 'webkit'].includes(args.browser), 'Unsupported browser: use chromium or webkit');
     const url = new URL(args.url);
     assert.ok(
         url.protocol === 'http:' && ['localhost', '127.0.0.1', '[::1]'].includes(url.hostname),
@@ -26,6 +30,9 @@ function options(argv) {
     assert.ok(args.out, 'new output directory required');
     if (args.executable) assert.ok(path.isAbsolute(args.executable) && fs.statSync(args.executable).isFile());
     return { ...args, url: url.href, build: Number(args['expect-build']), out: path.resolve(args.out) };
+}
+function terminalClockRejected(message) {
+    return typeof message === 'string' && /\bAIR_E_APP_CLOSED:/.test(message);
 }
 async function collect(args) {
     fs.mkdirSync(args.out); // Reject existing attempts, including partial failures.
@@ -102,8 +109,9 @@ async function collect(args) {
         await step(6);
     };
     try {
-        const { chromium } = require('playwright');
-        browser = await chromium.launch({
+        const browserType = require('playwright')[args.browser];
+        report.browserName = args.browser;
+        browser = await browserType.launch({
             headless: true,
             ...(args.executable ? { executablePath: args.executable } : {}),
         });
@@ -149,8 +157,9 @@ async function collect(args) {
         await frame.waitForFunction(() => !document.querySelector('#start').disabled, null, { timeout: 15000 });
         await frame.evaluate(async () => {
             const sdk = await import(new URL('./runtime/cocosair.module.js', location.href).href);
+            // Boot is semantically paused until the public Start button calls app.run().
+            // Acquire the exclusive clock in start()/step(), never bypass that pause.
             globalThis.__ex02LifecycleClock = sdk.createStepClock();
-            globalThis.__ex02LifecycleClock.begin();
         });
         const initial = await snapshot('ready');
         check('initial generation empty', initial.runs.length === 0);
@@ -179,10 +188,29 @@ async function collect(args) {
         const stopped = await snapshot('stopped');
         policy.unchanged(moving, stopped);
         policy.releasePair(moving, stopped, run.generation);
-        await step(3);
-        const quiet = await snapshot('stopped-after-steps');
+        report.pausedStepProbe = await frame.evaluate(async () => {
+            const clock = globalThis.__ex02LifecycleClock;
+            const before = clock.stepped;
+            const rejections = [];
+            for (let i = 0; i < 3; i++) {
+                try {
+                    await clock.step(1 / 60);
+                    rejections.push(null);
+                } catch (error) {
+                    rejections.push(String(error));
+                }
+            }
+            return { before, after: clock.stepped, rejections };
+        });
+        check(
+            'semantic pause rejects all three attempted frames without advancing clock',
+            report.pausedStepProbe.before === report.pausedStepProbe.after &&
+                report.pausedStepProbe.rejections.every((message) => /semantically paused/.test(message || '')),
+        );
+        await page.waitForTimeout(100);
+        const quiet = await snapshot('stopped-after-rejected-steps');
         policy.unchanged(stopped, quiet);
-        check('stopped generation history frozen through later engine frames');
+        check('stopped generation history frozen through rejected paused steps and wall-time wait');
         await screenshot('03-stopped');
         await start();
         let previous = await snapshot('restarted');
@@ -221,11 +249,23 @@ async function collect(args) {
         report.closeReceipt = policy.terminal(previous, closed, report.race);
         check('queued reset prevented remount; terminal same-module baseline verified');
         await screenshot('04-closed');
-        // Restore native pacing via the same public clock client; terminal SDK Close must remain sticky.
-        await frame.evaluate(() => globalThis.__ex02LifecycleClock.end());
+        // Terminal Close rejects clock operations; it must never resume native pacing.
+        report.terminalClockEnd = await frame.evaluate(() => {
+            try {
+                globalThis.__ex02LifecycleClock.end();
+                return null;
+            } catch (error) {
+                return String(error);
+            }
+        });
         check(
-            'terminal history stable after clock release',
-            policy.stable((await snapshot('closed-after-clock-end')).runs.at(-1)) === policy.stable(closed.runs.at(-1)),
+            'terminal clock end rejects without restarting the engine',
+            terminalClockRejected(report.terminalClockEnd),
+        );
+        check(
+            'terminal history stable after rejected clock end',
+            policy.stable((await snapshot('closed-after-rejected-clock-end')).runs.at(-1)) ===
+                policy.stable(closed.runs.at(-1)),
         );
         await page.goto(new URL('/gallery.html', args.url).href);
         check('returned to Gallery', await page.locator('#search').isVisible());
@@ -315,4 +355,4 @@ if (require.main === module) {
                 process.exitCode = 1;
             });
 }
-module.exports = { options, collect };
+module.exports = { options, collect, terminalClockRejected };

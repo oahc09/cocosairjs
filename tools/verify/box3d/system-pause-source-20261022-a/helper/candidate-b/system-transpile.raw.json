@@ -1,4 +1,0 @@
-{
-  "scope": "Syntax transpile only, not whole-product typecheck or execution",
-  "errors": []
-}

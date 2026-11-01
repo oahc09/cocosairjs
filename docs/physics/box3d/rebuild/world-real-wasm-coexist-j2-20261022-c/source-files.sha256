@@ -1,8 +1,0 @@
-5fa5be2d4a9c8504e1d88a5b0b33ea98080fd08725e6b2850fd6a10a3e6a660e  tools/verify/box3d/coexist-real-wasm-environment.cjs
-e047992bd135e177072df592171ceb045755d58af4be66fd9b02f37c4c95135a  tools/verify/box3d/coexist-real-wasm-factory.cjs
-bb5fd65439fdf7131d9665c1f80e3380fff77fd1157fda3bc0bceeea7c706953  tools/verify/box3d/coexist-real-wasm-inputs.cjs
-36d3014361c188d4bd877bd56386d0c61c9020839bb51f1f5115c3fc085edd0d  tools/verify/box3d/coexist-real-wasm-preload.mjs
-c7e79d6fe6e3ac9110a3df61de214cefe3c480844bf0d5b6df1f15801ae8a0a8  tools/verify/box3d/coexist-real-wasm.jest.cjs
-04760ec8e4566b03f138a1da4ac39c5dc3ba284b6aeee85a327c0ffb3444f74f  tools/verify/box3d/coexist-real-wasm.mjs
-fd5cae91493cd8096e998b1dea136a0bbff8bc77343b739721f5400ae0b9a0de  tools/verify/box3d/coexist-real-wasm.test.ts
-92db4aacd94e202f2d871a823bf1baaa648935fffd3044da2992af07b9eb5e7d  tools/verify/box3d/coexist-real-wasm.tsconfig.json

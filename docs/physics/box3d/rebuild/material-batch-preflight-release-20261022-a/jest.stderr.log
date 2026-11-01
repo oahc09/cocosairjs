@@ -1,8 +1,0 @@
-PASS tools/verify/box3d/owner-material-batch-preflight-real-wasm.test.ts (20.234 s)
-  ✓ all real native material preflight reads precede any setter (298 ms)
-
-Test Suites: 1 passed, 1 total
-Tests:       1 passed, 1 total
-Snapshots:   0 total
-Time:        20.702 s
-Ran all test suites.

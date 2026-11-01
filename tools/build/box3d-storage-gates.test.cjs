@@ -131,15 +131,15 @@ test('all current build/audit/asset consumers require production storage and v2 
     assert(cmake.includes('target_link_libraries(air_box3d_world_storage_contract PRIVATE air_box3d_abi)'));
     for (const name of ['motion-source-controls.mjs', 'command-source-controls.mjs']) {
         const source = read('tools/physics/box3d/' + name);
-        assert(source.includes('assert.equal(inputs.length, 136)'));
-        assert(source.includes('assert.equal(new Set(inputs).size, 136)'));
+        assert(source.includes('assert.equal(inputs.length, 138)'));
+        assert(source.includes('assert.equal(new Set(inputs).size, 138)'));
     }
 });
 
-test('synthetic five-patch plans retain only the exact original two-patch Hull baseline', () => {
+test('synthetic six-patch plans retain only the exact original two-patch Hull baseline', () => {
     const { preHullPrefix } = require('./box3d-hull-qualification.cjs');
     const plan = {
-        patchChainSha256: 'fce7869b3888ff9bfd417095e70ce72591893b2c3add1802e1a5bc32ca918bfe',
+        patchChainSha256: '14b3b0e85702c42f436fa1b5e570c78ed8d46f30476a3bedc11ded38a2328303',
         lock: {
             patches: [
                 'sse2-loadv-float-alignment-v1',
@@ -147,6 +147,7 @@ test('synthetic five-patch plans retain only the exact original two-patch Hull b
                 'checked-hull-cooking-v1',
                 'same-world-identity-v1-candidate',
                 'same-world-empty-storage-v1',
+            'sleeping-set-disable-cleanup-v1',
             ].map((id) => ({ id })),
         },
     };

@@ -1,8 +1,0 @@
-PASS tools/verify/box3d/owner-material-real-wasm.test.ts (17.31 s)
-  ✓ actual material cache identity and truthful post-effect failure (217 ms)
-
-Test Suites: 1 passed, 1 total
-Tests:       1 passed, 1 total
-Snapshots:   0 total
-Time:        17.811 s
-Ran all test suites.

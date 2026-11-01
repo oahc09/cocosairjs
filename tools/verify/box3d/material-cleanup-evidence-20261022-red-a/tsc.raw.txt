@@ -1,3 +1,0 @@
-tools/verify/box3d/material-cleanup-control-red.test.ts(473,44): error TS2339: Property 'assertWriteCapacity' does not exist on type 'NodeTransformGuardLease'.
-tools/verify/box3d/material-cleanup-control-red.test.ts(528,22): error TS2683: 'this' implicitly has type 'any' because it does not have a type annotation.
-tools/verify/box3d/material-cleanup-control-red.test.ts(533,22): error TS2683: 'this' implicitly has type 'any' because it does not have a type annotation.

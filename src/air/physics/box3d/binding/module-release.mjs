@@ -23,7 +23,7 @@ THE SOFTWARE.
 // Stateless copied observer. The WeakSet is only a reentrancy guard, never ownership.
 const CORE_SHA = 'efca0c184d40fd6a82016983f1601c4d23965867';
 const SCHEMA_SHA256 = '8af84ffb85ce311e9693d378c70ca3c788896b8aeee228700bbddd61c0ca8a04';
-const PATCH_CHAIN_SHA256 = 'fce7869b3888ff9bfd417095e70ce72591893b2c3add1802e1a5bc32ca918bfe';
+const PATCH_CHAIN_SHA256 = '14b3b0e85702c42f436fa1b5e570c78ed8d46f30476a3bedc11ded38a2328303';
 export const MODULE_RELEASE_WORDS = 38;
 export const MODULE_RELEASE_SCHEMA = 'air-box3d-module-release-snapshot-v1';
 const groups = Object.freeze({

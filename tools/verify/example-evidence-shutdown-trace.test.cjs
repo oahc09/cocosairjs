@@ -3153,14 +3153,26 @@ function rejectedStopSchemaFixture() {
         if (row.source === 'observer') row.sequence = ++sequence;
     });
     const last = receipt.events.at(-1).supervisorElapsedMs;
-    raw.events = raw.events.filter((row) => row.eventId <= 5);
-    raw.barriers = [raw.events[4]];
+    const closing = raw.barriers.find((row) => row.phase === 'closing');
+    raw.events = raw.events.filter((row) => row.eventId <= closing.eventId);
+    raw.barriers = raw.events.filter((row) => row.type === 'runtime-custody-barrier');
     const start = raw.barriers[0],
         ack = receipt.events.find((row) => row.type === 'custody-barrier-ack');
     start.namespace = receipt.worker.namespace;
     start.nodeSupervisorPID = inner.pid;
     start.elapsedMs = ack.supervisorElapsedMs - 1;
     start.utc = new Date(Date.parse(startedAt) + start.elapsedMs).toISOString();
+    const closingAck = receipt.events.find((row) => row.type === 'custody-barrier-ack' && row.phase === 'closing');
+    closing.namespace = receipt.worker.namespace;
+    closing.nodeSupervisorPID = inner.pid;
+    closing.elapsedMs = closingAck.supervisorElapsedMs - 1;
+    closing.utc = new Date(Date.parse(startedAt) + closing.elapsedMs).toISOString();
+    closing.closeBudget = {
+        originEventId: runtime.stopBegin.eventId,
+        originElapsedMs: runtime.stopBegin.supervisorElapsedMs,
+        deadlineMs: runtime.stopBegin.supervisorElapsedMs + receipt.limits.closeMs,
+    };
+    closing.deadlineMs = closing.closeBudget.deadlineMs;
     const rawEvent = (type, elapsedMs, values = {}) => {
         const row = {
             type,
@@ -3176,7 +3188,7 @@ function rejectedStopSchemaFixture() {
     raw.errors = [failure];
     rawEvent('custody-error', last + 1, { message: failure });
     const proof = rawEvent('runtime-custody-rejection', last + 2, {
-        requestId: 2,
+        requestId: 3,
         workerPID: receipt.worker.pid,
         workerStartTicks: receipt.worker.startTicks,
         namespace: receipt.worker.namespace,
@@ -3203,7 +3215,7 @@ function rejectedStopSchemaFixture() {
         return row;
     };
     nodeEvent('custody-barrier-rejected', last + 3, {
-        requestId: 2,
+        requestId: 3,
         runtimeId: runtime.runtimeId,
         phase: 'stop',
         custodianPID: wrapper.pid,
@@ -3216,7 +3228,7 @@ function rejectedStopSchemaFixture() {
         ok: false,
     });
     nodeEvent('custody-request-settled', last + 4, {
-        requestId: 2,
+        requestId: 3,
         runtimeId: runtime.runtimeId,
         phase: 'stop',
         outcome: 'rejected-response',
@@ -3402,7 +3414,46 @@ test('late-stop browser-7 diagnostic accepts only a complete rejected failure ch
             `${reason}: only the fixed identity observation fields are accepted`,
         );
     }
+    const closing = (r) => r.custody.observation.barriers.find((row) => row.phase === 'closing');
     const mutations = [
+        (r) => {
+            const row = closing(r);
+            r.custody.observation.barriers = r.custody.observation.barriers.filter((event) => event !== row);
+            r.custody.observation.events = r.custody.observation.events.filter((event) => event !== row);
+        },
+        (r) => {
+            r.custody.observation.barriers.push(closing(r));
+        },
+        (r) => {
+            closing(r).requestId = 3;
+        },
+        (r) => {
+            closing(r).policy = 'browser-shutdown/1';
+        },
+        (r) => {
+            closing(r).snapshot.browser.startTicks = '99999';
+        },
+        (r) => {
+            closing(r).snapshot.browser.state = 'Z';
+        },
+        (r) => {
+            closing(r).snapshot.image = { ...closing(r).snapshot.image, sha256: '0'.repeat(64) };
+        },
+        (r) => {
+            closing(r).snapshot.functionalResult = { ...closing(r).snapshot.functionalResult, sha256: '0'.repeat(64) };
+        },
+        (r) => {
+            closing(r).closeBudget.deadlineMs++;
+        },
+        (r) => {
+            closing(r).deadlineMs = closing(r).elapsedMs;
+        },
+        (r) => {
+            r.events.find((row) => row.type === 'custody-barrier-ack' && row.phase === 'closing').custodyEventId++;
+        },
+        (r) => {
+            r.runtimes[0].closeAuthorized.healthy = false;
+        },
         (r) => {
             proof(r).ok = true;
         },
@@ -3419,7 +3470,7 @@ test('late-stop browser-7 diagnostic accepts only a complete rejected failure ch
             proof(r).startEventId = 4;
         },
         (r) => {
-            proof(r).requestId = 3;
+            proof(r).requestId = 2;
         },
         (r) => {
             proof(r).workerPID++;

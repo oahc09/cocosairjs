@@ -1,8 +1,0 @@
-box3d-private-material-roster-candidate-20261022/src/physics-material-values-transaction.ts(340,31): error TS7006: Parameter 'input' implicitly has an 'any' type.
-box3d-private-material-roster-candidate-20261022/src/physics-material-values-transaction.ts(344,19): error TS7006: Parameter 'outcome' implicitly has an 'any' type.
-box3d-private-material-roster-candidate-20261022/src/physics-material-values-transaction.ts(424,21): error TS7006: Parameter 'actualAsset' implicitly has an 'any' type.
-box3d-private-material-roster-candidate-20261022/src/physics-material-values-transaction.ts(568,21): error TS7006: Parameter 'source' implicitly has an 'any' type.
-box3d-private-material-roster-candidate-20261022/src/physics-material-values-transaction.ts(670,46): error TS2339: Property 'target' does not exist on type 'object'.
-box3d-private-material-roster-candidate-20261022/src/physics-material-values-transaction.ts(671,44): error TS2339: Property 'invoke' does not exist on type 'object'.
-box3d-private-material-roster-candidate-20261022/src/physics-material-values-transaction.ts(672,44): error TS2339: Property 'verify' does not exist on type 'object'.
-box3d-private-material-roster-candidate-20261022/src/physics-material-values-transaction.ts(682,25): error TS2739: Type '{}' is missing the following properties from type 'PreparedNativeMaterialOperation': target, invoke, verify

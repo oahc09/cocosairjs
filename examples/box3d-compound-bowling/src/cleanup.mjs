@@ -1,4 +1,4 @@
-/** Public orchestration only. SDK223 releaseScene re-enters its final deferred flush on every completed call.
+/** Public orchestration only. Requires the selected runtime to flush on every completed releaseScene call.
  * No mocks in production: the live example passes its real app, Scene and owned Asset objects. */
 export async function releaseOwned({ app, scene, assets, record }) {
   if (!app.releaseScene) throw Error("Public releaseScene unavailable");

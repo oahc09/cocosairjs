@@ -1,2 +1,0 @@
-/usr/bin/ld: cannot open output file tools/physics/box3d/output/sse2-alignment-20261022/candidate: Is a directory
-collect2: error: ld returned 1 exit status

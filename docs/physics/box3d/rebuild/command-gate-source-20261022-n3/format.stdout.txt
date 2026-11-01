@@ -1,4 +1,0 @@
-tools/build/box3d-assets.cjs 222ms (unchanged)
-tools/build/box3d-command-qualification.cjs 110ms
-tools/build/box3d-command-expectations.json 13ms (unchanged)
-tools/build/box3d-command-qualification.test.cjs 59ms

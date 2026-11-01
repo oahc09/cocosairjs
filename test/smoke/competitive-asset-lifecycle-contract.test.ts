@@ -1,21 +1,37 @@
 import { installAssetLifecycle } from '../../examples/shared/asset-lifecycle';
 import { CCObject } from '../../src/cocos/core/data/object';
+import { director, Director } from '../../src/cocos/game/director';
 
 describe('native asset lifecycle release predicates', () => {
+    let frame: number;
     beforeEach(() => {
         jest.useFakeTimers();
+        frame = 0;
+        jest.spyOn(director, 'getTotalFrames').mockImplementation(() => frame);
     });
     afterEach(() => {
+        jest.restoreAllMocks();
         jest.useRealTimers();
     });
     async function settle(run: Promise<any>): Promise<any> {
-        // The pinned Jest exposes synchronous timer controls; alternate native Promise jobs and RAF/timers.
+        // Supply complete update/draw cycles and drain their microtasks, not all pending timers.
+        // This unit fixture simulates director events; integration tests exercise the real director.
         for (let i = 0; i < 20; i++) {
             await Promise.resolve();
-            jest.runOnlyPendingTimers();
+            director.emit(Director.EVENT_AFTER_UPDATE);
+            director.emit(Director.EVENT_AFTER_DRAW);
+            frame++;
+            jest.runAllTicks();
             await Promise.resolve();
         }
-        return run;
+        const result = await run;
+        expect(result.settlement.release.completed).toBe(true);
+        expect(result.settlement.reacquire.completed).toBe(true);
+        for (const phase of ['release', 'reacquire']) {
+            expect(result.settlement[phase].cycles).toBe(2);
+            expect(result.settlement[phase].frames[1]).toBeGreaterThan(result.settlement[phase].frames[0]);
+        }
+        return result;
     }
     test('default CCObject validity still detects release and fresh reacquisition', async () => {
         const old = new CCObject();

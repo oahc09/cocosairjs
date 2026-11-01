@@ -1,8 +1,0 @@
-{
-  "src/air/physics/box3d/world.ts": "c31689427cbecb89dddb6effeb3ffd2ee9a36a5719e7141df08199e1d42e5ff0",
-  "src/air/physics/box3d/world-command-owner.ts": "485a76c9b47d6b13c11240f870cd2cc9ca71ba16f143bc767cc8c4cf49ee1cbb",
-  "src/cocos/physics/framework/components/colliders/collider.ts": "2e93ecae851d1a943c00d1a5a01a3d887153dce0d9693f541b4f6be73b2a7ac9",
-  "src/cocos/physics/framework/physics-material-transaction.ts": "949426ebc03754639cf7ff2e3ce9bbb80e6c9a43e7c4a5ec671739c55cdda083",
-  "src/cocos/physics/framework/physics-system.ts": "92153ad5783bf4a27271daf31075704c6ea4fc4dbac323af9e05bffc5caee988",
-  "src/cocos/physics/framework/physics-state-observer.ts": "4cf40c4f1be0d407a402e95dcdb7a898b1942cb175f869f6367a41b18c2d1d2b"
-}

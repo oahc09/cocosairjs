@@ -1,4 +1,4 @@
-/** Admission only, not an engine cleanup implementation. SDK223 caches close() permanently. */
+/** Admission only, not engine cleanup. Requires the exact selected runtime to cache close() permanently. */
 export class Lifecycle {
   faulted = false;
   closed = false;

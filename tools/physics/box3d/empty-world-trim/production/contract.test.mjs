@@ -80,9 +80,9 @@ function fixture() {
         },
     };
 }
-test('new production ABI pins five patches and complete embedded metadata ledger', () => {
-    assert.equal(lock.corePatches.length, 5);
-    assert.equal(lock.patchLock.patchChainSha256, 'fce7869b3888ff9bfd417095e70ce72591893b2c3add1802e1a5bc32ca918bfe');
+test('new production ABI pins six patches and complete embedded metadata ledger', () => {
+    assert.equal(lock.corePatches.length, 6);
+    assert.equal(lock.patchLock.patchChainSha256, '14b3b0e85702c42f436fa1b5e570c78ed8d46f30476a3bedc11ded38a2328303');
     assert.equal(
         createHash('sha256').update(read('tools/physics/box3d/abi-schema.json')).digest('hex'),
         identity.schemaSha256,
@@ -225,7 +225,7 @@ function syntheticReports() {
         schema: 'air-box3d-storage-native-contract-v1',
         status: 'PASS',
         pointerBytes: 4,
-        checks: 51,
+        checks: 153,
         coreSha: identity.coreSha,
         schemaSha256: identity.schemaSha256,
         patchChainSha256: identity.patchChainSha256,
@@ -271,7 +271,7 @@ for (const [name, alter] of Object.entries({
         r.native.pointerBytes = 8;
     },
     oldNativeChecks: (r) => {
-        r.native.checks = 170;
+        r.native.checks = 51;
     },
     unknownWasmCheck: (r) => {
         r.wasm.checks.extra = true;
@@ -330,3 +330,23 @@ for (const [name, alter] of Object.entries({
         alter(reports);
         assert.throws(() => verifyStorageQualification(reports));
     });
+
+for (const key of [
+    'sleepDisableCycles',
+    'sharedSleepingConstraintSets',
+    'reEnablePreservesJoints',
+    'baseSetsPreserved',
+]) {
+    test(`consumer rejects missing new sleeping-set native check ${key}`, () => {
+        const reports = syntheticReports();
+        delete reports.native[key];
+        assert.throws(() => verifyStorageQualification(reports));
+    });
+}
+for (const key of STORAGE_WASM_CHECKS.slice(12)) {
+    test(`consumer rejects false new sleeping-set WASM check ${key}`, () => {
+        const reports = syntheticReports();
+        reports.wasm.checks[key] = false;
+        assert.throws(() => verifyStorageQualification(reports));
+    });
+}

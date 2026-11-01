@@ -14,12 +14,22 @@ const identity = (row, namespace) =>
     /^\d+$/.test(row.startTicks || '') &&
     row.namespace === namespace;
 const live = (row) => row && ['R', 'S', 'D', 'T', 't', 'K', 'W', 'P', 'I'].includes(row.state);
+// Lossless uint64 wire representation. Legacy safe numeric receipts remain valid verbatim;
+// unsafe legacy numbers are ambiguous and must never be normalized into accepted identities.
+const exactUnsigned = (value, positive = false) => {
+    if (typeof value === 'number')
+        return Number.isSafeInteger(value) && !Object.is(value, -0) && value >= (positive ? 1 : 0);
+    return (
+        typeof value === 'string' &&
+        /^(0|[1-9][0-9]{0,19})$/.test(value) &&
+        (!positive || value !== '0') &&
+        BigInt(value) <= 18446744073709551615n
+    );
+};
 const validImage = (value) =>
     value &&
-    Number.isSafeInteger(value.device) &&
-    value.device >= 0 &&
-    Number.isSafeInteger(value.inode) &&
-    value.inode > 0 &&
+    exactUnsigned(value.device) &&
+    exactUnsigned(value.inode, true) &&
     Number.isSafeInteger(value.bytes) &&
     value.bytes > 0 &&
     /^\d+$/.test(value.mtimeNs || '') &&
@@ -35,11 +45,24 @@ const roles = new Set([
     'ppapi',
     'ppapi-broker',
 ]);
-function validateShutdownPolicy(receipt, raw) {
+// Shared pre-close proof only. A valid result never substitutes for stop/reap closure.
+function validatePreClosePolicy(receipt, raw) {
     const errors = [];
     const fail = (reason) => errors.push(`Shutdown policy: ${reason}`);
     const eventIs = (row, type) =>
         row?.type === type && raw.events.some((event) => event.eventId === row.eventId && same(event, row));
+    if (
+        !receipt ||
+        !raw ||
+        !Array.isArray(raw.events) ||
+        !Array.isArray(raw.barriers) ||
+        !Array.isArray(receipt.events) ||
+        !Array.isArray(receipt.runtimes) ||
+        !Array.isArray(receipt.browsers)
+    ) {
+        fail('pre-close evidence missing');
+        return errors;
+    }
     const image = raw.browserImage;
     if (
         !eventIs(image, 'frozen-browser-image') ||
@@ -57,7 +80,6 @@ function validateShutdownPolicy(receipt, raw) {
         }
         const closing = found[0],
             snapshot = closing.snapshot;
-        const stop = raw.barriers.find((proof) => proof.phase === 'stop' && proof.runtimeId === runtime.runtimeId);
         const ack = receipt.events.find(
             (event) =>
                 event.type === 'custody-barrier-ack' &&
@@ -65,6 +87,76 @@ function validateShutdownPolicy(receipt, raw) {
                 event.runtimeId === runtime.runtimeId,
         );
         const browser = receipt.browsers.find((row) => row.runtimeId === runtime.runtimeId);
+        const starts = raw.barriers.filter((proof) => proof.phase === 'start' && proof.runtimeId === runtime.runtimeId);
+        const acks = receipt.events.filter(
+            (event) =>
+                event.type === 'custody-barrier-ack' &&
+                event.phase === 'closing' &&
+                event.runtimeId === runtime.runtimeId,
+        );
+        const exact = (row, events) =>
+            row &&
+            events.filter((event) => event.eventId === row.eventId).length === 1 &&
+            events.some((event) => same(event, row));
+        const start = starts[0];
+        const startAcks = receipt.events.filter(
+            (event) =>
+                event.type === 'custody-barrier-ack' &&
+                event.phase === 'start' &&
+                event.runtimeId === runtime.runtimeId,
+        );
+        const startAck = startAcks[0];
+        const nodePID = raw.innerSupervisor?.pid;
+        const childrenValid =
+            Array.isArray(closing.directChildren) &&
+            closing.directChildren.includes(nodePID) &&
+            new Set(closing.directChildren).size === closing.directChildren.length &&
+            closing.directChildren.every(
+                (pid) =>
+                    pid === nodePID ||
+                    raw.adopted?.some(
+                        (row) =>
+                            row.pid === pid &&
+                            row.observed.eventId < closing.eventId &&
+                            row.reap.eventId > closing.eventId,
+                    ),
+            );
+
+        if (
+            startAcks.length !== 1 ||
+            !exact(startAck, receipt.events) ||
+            startAck.custodyEventId !== start?.eventId ||
+            startAck.requestId !== start?.requestId ||
+            startAck.custodianPID !== receipt.custody?.wrapper?.pid ||
+            !childrenValid ||
+            !same(start?.directChildren, [nodePID]) ||
+            start?.observedSubreaper !== 1 ||
+            start?.transport !== 'inherited-anonymous-pipes/v1' ||
+            start?.workerPID !== receipt.worker?.pid ||
+            start?.workerStartTicks !== receipt.worker?.startTicks ||
+            starts.length !== 1 ||
+            acks.length !== 1 ||
+            !exact(closing, raw.events) ||
+            closing.type !== 'runtime-custody-barrier' ||
+            !exact(start, raw.events) ||
+            start.type !== 'runtime-custody-barrier' ||
+            start.ok !== true ||
+            !Number.isSafeInteger(start.requestId) ||
+            start.requestId < 1 ||
+            closing.requestId !== start.requestId + 1 ||
+            !(start.eventId < closing.eventId) ||
+            closing.observedSubreaper !== 1 ||
+            closing.transport !== 'inherited-anonymous-pipes/v1' ||
+            closing.workerPID !== receipt.worker?.pid ||
+            closing.workerStartTicks !== receipt.worker?.startTicks ||
+            !exact(ack, receipt.events) ||
+            ack.custodyEventId !== closing.eventId ||
+            ack.requestId !== closing.requestId ||
+            ack.custodianPID !== receipt.custody?.wrapper?.pid ||
+            !exact(runtime.stopBegin, receipt.events) ||
+            !(runtime.stopBegin.eventId < ack?.eventId)
+        )
+            fail('pre-close request/ACK correlation invalid');
         const authorized = runtime.closeAuthorized;
         const functional = snapshot?.functionalResult;
         if (
@@ -102,7 +194,8 @@ function validateShutdownPolicy(receipt, raw) {
         if (
             !ack ||
             !authorized ||
-            !receipt.events.some((event) => same(event, authorized) && event.type === 'close-authorized') ||
+            !exact(authorized, receipt.events) ||
+            authorized.type !== 'close-authorized' ||
             !(ack.eventId < authorized.eventId && authorized.eventId < browser?.exit?.eventId) ||
             authorized.runtimeId !== runtime.runtimeId ||
             authorized.launchId !== browser?.launchId ||
@@ -111,6 +204,22 @@ function validateShutdownPolicy(receipt, raw) {
             !same(authorized.functionalResult, functional)
         )
             fail('close call lacks acknowledged healthy boundary');
+    }
+    return errors;
+}
+
+function validateShutdownPolicy(receipt, raw) {
+    const errors = validatePreClosePolicy(receipt, raw);
+    const fail = (reason) => errors.push(`Shutdown policy: ${reason}`);
+    const eventIs = (row, type) =>
+        row?.type === type && raw.events.some((event) => event.eventId === row.eventId && same(event, row));
+    const image = raw.browserImage;
+    const closings = raw.barriers.filter((proof) => proof.phase === 'closing');
+    for (const runtime of receipt.runtimes) {
+        const closing = closings.find((proof) => proof.runtimeId === runtime.runtimeId);
+        if (!closing) continue;
+        const browser = receipt.browsers.find((row) => row.runtimeId === runtime.runtimeId);
+        const stop = raw.barriers.find((proof) => proof.phase === 'stop' && proof.runtimeId === runtime.runtimeId);
         if (
             !stop ||
             stop.policy !== POLICY ||
@@ -203,4 +312,4 @@ function validateShutdownPolicy(receipt, raw) {
     }
     return errors;
 }
-module.exports = { POLICY, validateShutdownPolicy };
+module.exports = { POLICY, validatePreClosePolicy, validateShutdownPolicy };

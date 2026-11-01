@@ -1,9 +1,0 @@
-{
-  "status": "PASS_PURE_CLEANUP_REPORTER_ONLY",
-  "counts": {
-    "cases": 39,
-    "passed": 39
-  },
-  "stable": true,
-  "failures": []
-}

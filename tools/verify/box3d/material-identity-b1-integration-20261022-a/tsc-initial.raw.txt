@@ -1,3 +1,0 @@
-src/air/physics/box3d/world-command-owner.ts(240,49): error TS2345: Argument of type 'RigidBody | Collider' is not assignable to parameter of type 'Collider | PhysicsSystem'.
-  Type 'RigidBody' is not assignable to type 'Collider | PhysicsSystem'.
-    Type 'RigidBody' is missing the following properties from type 'Collider': attachedRigidBody, sharedMaterial, material, isTrigger, and 25 more.

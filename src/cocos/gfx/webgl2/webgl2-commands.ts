@@ -23,6 +23,7 @@
 */
 
 import { systemInfo } from 'pal/system-info';
+import { shaderDiagnostic } from '../../../air/rendering/shader-diagnostics';
 import {
     BufferUsageBit, ColorMask, CullMode, DynamicStateFlagBit, Filter, Format, TextureType, Type, FormatInfo,
     FormatInfos, FormatType, FormatSize, LoadOp, MemoryUsageBit, SampleCount, ShaderStageFlagBit, TextureFlagBit,
@@ -1504,18 +1505,21 @@ export function WebGL2CmdFuncCreateShader (device: WebGL2Device, gpuShader: IWeb
             gl.compileShader(gpuStage.glShader);
 
             if (!gl.getShaderParameter(gpuStage.glShader, WebGLConstants.COMPILE_STATUS)) {
+                const diagnostic = shaderDiagnostic('AIR_E_SHADER_COMPILE', gpuShader.name,
+                    gpuStage.type === ShaderStageFlagBit.FRAGMENT ? 'fragment' : 'vertex',
+                    `#version 300 es\n${gpuStage.source}`, gl.getShaderInfoLog(gpuStage.glShader));
                 errorID(16323, shaderTypeStr, gpuShader.name);
                 errorID(16324, gpuStage.source.replace(/^|\n/g, (): string => `\n${lineNumber++} `));
                 error(gl.getShaderInfoLog(gpuStage.glShader));
 
                 for (let l = 0; l < gpuShader.gpuStages.length; l++) {
-                    const stage = gpuShader.gpuStages[k];
+                    const stage = gpuShader.gpuStages[l];
                     if (stage.glShader) {
                         gl.deleteShader(stage.glShader);
                         stage.glShader = null;
                     }
                 }
-                return;
+                throw diagnostic;
             }
         }
     }
@@ -1551,8 +1555,12 @@ export function WebGL2CmdFuncCreateShader (device: WebGL2Device, gpuShader: IWeb
         debugID(16325, gpuShader.name);
     } else {
         errorID(16326, gpuShader.name);
-        error(gl.getProgramInfoLog(gpuShader.glProgram));
-        return;
+        const log = gl.getProgramInfoLog(gpuShader.glProgram);
+        error(log);
+        gl.deleteProgram(gpuShader.glProgram);
+        gpuShader.glProgram = null;
+        throw shaderDiagnostic('AIR_E_SHADER_LINK', gpuShader.name, 'link',
+            gpuShader.gpuStages.map((stage) => `// stage ${stage.type}\n#version 300 es\n${stage.source}`).join('\n'), log);
     }
 
     // parse inputs

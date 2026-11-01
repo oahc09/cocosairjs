@@ -1,0 +1,54 @@
+{
+  "checkedAt": "2026-10-24T14:42:18.189Z",
+  "scope": "Read-only check of existing WSL; no installation or host configuration changes",
+  "checks": [
+    {
+      "command": [
+        "wsl.exe",
+        "--version"
+      ],
+      "exit_code": 0,
+      "stdout": "WSL 版本: 3.0.3.0\r\n内核版本: 6.18.54.1-1\r\nWSLg 版本: 1.0.79\r\nMSRDC 版本: 1.2.7391\r\nDirect3D 版本: 1.611.1-81528511\r\nDXCore 版本: 10.0.26100.1-240331-1435.ge-release\r\nWindows 版本: 10.0.26300.9711\r\n",
+      "stderr": "",
+      "stdout_base64": "VwBTAEwAIABIcixnOgAgADMALgAwAC4AMwAuADAADQAKAIVROGhIcixnOgAgADYALgAxADgALgA1ADQALgAxAC0AMQANAAoAVwBTAEwAZwAgAEhyLGc6ACAAMQAuADAALgA3ADkADQAKAE0AUwBSAEQAQwAgAEhyLGc6ACAAMQAuADIALgA3ADMAOQAxAA0ACgBEAGkAcgBlAGMAdAAzAEQAIABIcixnOgAgADEALgA2ADEAMQAuADEALQA4ADEANQAyADgANQAxADEADQAKAEQAWABDAG8AcgBlACAASHIsZzoAIAAxADAALgAwAC4AMgA2ADEAMAAwAC4AMQAtADIANAAwADMAMwAxAC0AMQA0ADMANQAuAGcAZQAtAHIAZQBsAGUAYQBzAGUADQAKAFcAaQBuAGQAbwB3AHMAIABIcixnOgAgADEAMAAuADAALgAyADYAMwAwADAALgA5ADcAMQAxAA0ACgA=",
+      "stderr_base64": ""
+    },
+    {
+      "command": [
+        "wsl.exe",
+        "--list",
+        "--verbose"
+      ],
+      "exit_code": 4294967295,
+      "stdout": "适用于 Linux 的 Windows 子系统没有已安装的分发。\r\n可按照以下说明安装分发来解决此问题:\r\n\r\n使用 'wsl.exe --list --online' 列出可用的分发\r\n和 'wsl.exe --install <Distro>' 进行安装。\r\n",
+      "stderr": "",
+      "stdout_base64": "ApAodY5OIABMAGkAbgB1AHgAIACEdiAAVwBpAG4AZABvAHcAcwAgAFBb+3zffqFsCWfyXYlbxYiEdgZS0VMCMA0ACgDvUwljZ3HlTgtO9IsOZolbxYgGUtFTZWfjibNRZGvulZiYOgANAAoADQAKAH9PKHUgACcAdwBzAGwALgBlAHgAZQAgAC0ALQBsAGkAcwB0ACAALQAtAG8AbgBsAGkAbgBlACcAIAAXUvpR71ModYR2BlLRUw0ACgCMVCAAJwB3AHMAbAAuAGUAeABlACAALQAtAGkAbgBzAHQAYQBsAGwAIAA8AEQAaQBzAHQAcgBvAD4AJwAgANuPTIiJW8WIAjANAAoA",
+      "stderr_base64": ""
+    },
+    {
+      "command": [
+        "wsl.exe",
+        "--status"
+      ],
+      "exit_code": 0,
+      "stdout": "默认版本: 2\r\n当前计算机配置不支持 WSL1。\r\n若要使用 WSL1，请启用“Windows Subsystem for Linux”可选组件。\r\nWSL2 无法启动，因为此计算机上未启用虚拟化。\r\n请确保计算机固件设置中“虚拟机平台”可选组件已启用，且虚拟化已开启。\r\n\r\n通过运行以下命令启用“虚拟机平台”: wsl.exe --install --no-distribution\r\n\r\n有关信息，请访问 https://aka.ms/enablevirtualization\r\n",
+      "stderr": "",
+      "stdout_base64": "2J6ki0hyLGc6ACAAMgANAAoAU19NUqGLl3s6Z02Rbn8NTi9lAWMgAFcAUwBMADEAAjANAAoA5YKBiX9PKHUgAFcAUwBMADEADP/3iy9UKHUcIFcAaQBuAGQAbwB3AHMAIABTAHUAYgBzAHkAcwB0AGUAbQAgAGYAbwByACAATABpAG4AdQB4AB0g71MJkMR+9k4CMA0ACgBXAFMATAAyACAA4GXVbC9UqFIM/+BWOk5ka6GLl3s6ZwpOKmcvVCh1WobfYhZTAjANAAoA94tueN1PoYuXezpn+lb2Tr6Lbn8tThwgWobfYjpnc17wUx0g71MJkMR+9k7yXS9UKHUM/xROWobfYhZT8l0AXy9UAjANAAoADQAKABqQx4/Qj0yI5U4LTn1U5E4vVCh1HCBaht9iOmdzXvBTHSA6ACAAdwBzAGwALgBlAHgAZQAgAC0ALQBpAG4AcwB0AGEAbABsACAALQAtAG4AbwAtAGQAaQBzAHQAcgBpAGIAdQB0AGkAbwBuAA0ACgANAAoACWdzUeFPb2AM//eLv4vulSAAaAB0AHQAcABzADoALwAvAGEAawBhAC4AbQBzAC8AZQBuAGEAYgBsAGUAdgBpAHIAdAB1AGEAbABpAHoAYQB0AGkAbwBuAA0ACgA=",
+      "stderr_base64": ""
+    },
+    {
+      "command": [
+        "wsl.exe",
+        "--exec",
+        "sh",
+        "-lc",
+        "uname -a; command -v node; command -v npm"
+      ],
+      "exit_code": 4294967295,
+      "stdout": "适用于 Linux 的 Windows 子系统没有已安装的分发。\r\n可按照以下说明安装分发来解决此问题:\r\n\r\n使用 'wsl.exe --list --online' 列出可用的分发\r\n和 'wsl.exe --install <Distro>' 进行安装。\r\n",
+      "stderr": "",
+      "stdout_base64": "ApAodY5OIABMAGkAbgB1AHgAIACEdiAAVwBpAG4AZABvAHcAcwAgAFBb+3zffqFsCWfyXYlbxYiEdgZS0VMCMA0ACgDvUwljZ3HlTgtO9IsOZolbxYgGUtFTZWfjibNRZGvulZiYOgANAAoADQAKAH9PKHUgACcAdwBzAGwALgBlAHgAZQAgAC0ALQBsAGkAcwB0ACAALQAtAG8AbgBsAGkAbgBlACcAIAAXUvpR71ModYR2BlLRUw0ACgCMVCAAJwB3AHMAbAAuAGUAeABlACAALQAtAGkAbgBzAHQAYQBsAGwAIAA8AEQAaQBzAHQAcgBvAD4AJwAgANuPTIiJW8WIAjANAAoA",
+      "stderr_base64": ""
+    }
+  ]
+}

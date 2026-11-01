@@ -20,6 +20,7 @@ async function withIncrementalCache(root, build) {
         'src/cc.config.json',
         'src/package.json',
         'tools/build/build.cjs',
+        'tools/build/default-features.cjs',
         'tools/build/incremental.cjs',
         'tools/build/esm-helpers.cjs',
         'tools/build/build-metadata.cjs',

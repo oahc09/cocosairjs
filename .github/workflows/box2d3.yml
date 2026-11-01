@@ -69,6 +69,7 @@ jobs:
           mkdir -p output/box2d/ci/package
           node tools/build/box2d3.cjs --check 2>&1 | tee output/box2d/ci/source-check.log
           node tools/verify/box2d3-native.mjs 2>&1 | tee output/box2d/ci/native-regressions.log
+          node --test tools/verify/box2d3-adapter.test.cjs 2>&1 | tee output/box2d/ci/adapter-regressions.log
           npm run build:all 2>&1 | tee output/box2d/ci/build.log
           cp build/cocosair.module.js output/box2d/ci/cocosair.module.js
           npm pack --json --pack-destination output/box2d/ci/package > output/box2d/ci/package/pack.json

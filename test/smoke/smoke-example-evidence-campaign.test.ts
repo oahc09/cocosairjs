@@ -36,10 +36,31 @@ describe('fixed-snapshot segmented example evidence', () => {
         for (const file of state.segmentFiles) expect(read(file)).toMatchObject({ partial: true, completed: false });
         expect(read(path.join(state.repo, 'examples/alpha/example.json')).status).toBe('stable');
     });
-    test('current real manifest includes all 183 examples and 184 ordered modes including Spark and WebGPU', () => {
+    test('current real manifest includes every ordinary example and ordered mode, including new drafts', () => {
         const scope = campaign.collectScope(path.resolve(__dirname, '../..'));
-        expect(scope).toHaveLength(183);
-        expect(scope.reduce((n, e) => n + e.modes.length, 0)).toBe(184);
+        const root = path.resolve(__dirname, '../..');
+        const manifest = read(path.join(root, 'examples/files.json'));
+        const ordinary = manifest.examples.filter((entry: any) => !entry.requiresDevTools);
+        expect(scope.map((entry: any) => entry.id).sort()).toEqual(ordinary.map((entry: any) => entry.id).sort());
+        const expectedModes = ordinary.reduce((sum: number, entry: any) => {
+            const spec = read(path.join(root, 'examples', entry.dir, 'example.json'));
+            return sum + 1 + (spec.bench?.apiVariants?.length || 0);
+        }, 0);
+        expect(scope.reduce((n, e) => n + e.modes.length, 0)).toBe(expectedModes);
+        for (const id of [
+            'material-inspection-showroom',
+            'asset-request-policy',
+            'first-frame-readiness',
+            'material-contract-lab',
+            'render-state-isolation',
+            'skinned-instance-lifecycle',
+            'depth-precision-lab',
+            'probe-sh-lab',
+        ]) {
+            expect(scope.find((entry: any) => entry.id === id)?.statusAdmission.gallery).toBe('draft');
+        }
+        for (const id of ['afterlight', 'neon-city', 'instance-batch', 'particles-3d', 'morph-field'])
+            expect(scope.some((entry: any) => entry.id === id)).toBe(true);
         expect(scope.some((e) => e.id === 'spark-splats')).toBe(true);
         expect(scope.find((e) => e.id === 'webgpu-basic').modes).toEqual([
             expect.objectContaining({ id: 'primary', query: 'renderer=webgl2' }),
@@ -192,8 +213,21 @@ describe('fixed-snapshot segmented example evidence', () => {
         write(path.join(state.repo, 'examples/alpha/assets/new.bin'), 'new');
         expect(check(state, data).ok).toBe(false);
     });
-    test('symlink inputs and artifact symlinks fail closed', () => {
-        fs.symlinkSync(path.join(state.repo, 'package-lock.json'), path.join(state.repo, 'examples/linked.json'));
+    test('new metadata/Spark graph is captured and invalidates an older frozen inventory', () => {
+        const data = complete(state);
+        write(path.join(state.repo, 'build/metadata/spark.module.meta.json'), '{"inputs":{}}');
+        expect(check(state, data).ok).toBe(false);
+    });
+    test('symbolic-link inputs fail closed, including unprivileged Windows junctions', () => {
+        const link = path.join(state.repo, 'examples/linked-input');
+        // Windows file symlinks require extra privileges; a real directory junction exercises the same rejection.
+        const windows = process.platform === 'win32';
+        fs.symlinkSync(
+            path.join(state.repo, windows ? 'tools' : 'package-lock.json'),
+            link,
+            windows ? 'junction' : 'file',
+        );
+        expect(fs.lstatSync(link).isSymbolicLink()).toBe(true);
         expect(() => campaign.collectInputs(state.repo)).toThrow(/symbolic/);
     });
     test.each(['status', 'stableReview'])('publication normalization never excludes %s', (key) => {

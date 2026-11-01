@@ -1,7 +1,0 @@
-{
-  "path": "tools/physics/box3d/output/filter-validation-20261022-l.tar.gz",
-  "bytes": 59885029,
-  "sha256": "d87140b862d640147f206a403ca7a3661b1a2ca3975be0396babebb5d363bd29",
-  "fileCount": 2496,
-  "excluded": "Only .o/.a and rebuildable CMake intermediates. All failures, commands, source variants, actual product/qualification binaries, staged cores and full617 JSONL retained."
-}

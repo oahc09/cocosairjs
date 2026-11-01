@@ -72,6 +72,22 @@ MATERIAL=1（用户 Constants 块 binding 0 起，采样器顺延）；LOCAL=2�
 
 ## 2. GLSL 变体与当前支持范围
 
+运行时注册会将省略的 `samplerTextures/samplers/textures/buffers/images/subpassInputs`
+以及 `defines/attributes/blocks/descriptors` 补为 `[]`；显式传入 `null` 或错误类型会抛出
+`AIR_E_EFFECT_JSON_TYPE`，包含 effect、shader 与字段路径。省略 `hash` 时按源码变体、宏及
+属性/资源布局生成稳定内容 hash；显式 hash 与已有缓存内容冲突时抛 `AIR_E_EFFECT_HASH_COLLISION`。
+这不是 GLSL 编译器，也不会自动补齐实际需要的顶点属性、UBO 或生成 `glsl3`。
+
+WebGL2 驱动编译失败会抛 `AIR_E_SHADER_COMPILE`，包含 `shader/stage/driverLog/source/numberedSource/hint`；
+`source` 包含后端添加的 `#version 300 es`，行号按实际提交文本计算。手写 ESSL 300 片元不要使用
+`gl_FragColor`，应声明并写入 `out vec4 fragColor`。不以“缺少颜色输出”单独判错，以保留合法的深度专用 shader。
+链接失败使用 `AIR_E_SHADER_LINK`。修正源码后再重试；失败时已创建的阶段和失败 program 会清理。
+
+`AIR_E_SHADER_COMPILE`、`AIR_E_SHADER_LINK` 和显式 effect 预检的 `AIR_E_EFFECT_LAYOUT`
+都会在错误文本末尾附上 `see skills/cocosair-materials-effects/references/custom-glsl.md`，
+并提供同值的结构化 `skillDoc` 字段，便于 Agent 直接读取对应技能。路径相对仓库或安装后的
+`cocosair.js` 包根目录；技能文件随 npm 包提供。该提示不自动读取文档，也不代表已定位根因。
+
 运行期 `program-lib` 按设备选源码（`getDeviceShaderVersion`）：**WebGL2 → glsl3**。
 无 chunk include——每个变体必须自包含。浏览器必须成功初始化 WebGL2Device，
 否则启动失败；不会调用 `getContext('webgl')` 降级。下表的 `glsl1` 是保留的上游

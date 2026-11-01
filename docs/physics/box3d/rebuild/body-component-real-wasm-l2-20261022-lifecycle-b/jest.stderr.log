@@ -1,8 +1,0 @@
-PASS tools/verify/box3d/body-component-real-wasm.test.ts (14.439 s)
-  ✓ actual Cocos body/primitive components on current native WASM; independently scoped case (536 ms)
-
-Test Suites: 1 passed, 1 total
-Tests:       1 passed, 1 total
-Snapshots:   0 total
-Time:        14.92 s
-Ran all test suites.

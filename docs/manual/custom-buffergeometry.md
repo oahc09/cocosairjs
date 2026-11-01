@@ -308,4 +308,22 @@ console.log('[manual/custom-geometry] running on cocosair');
 
 ---
 
+### 动态网格更新自动同步模型
+
+`createDynamicMesh()` 在绑定 renderer 之前完成初始数据上传；首次绑定无需额外通知。
+后续 `mesh.updateSubMesh()` 在缓冲、draw info 和 bounds 更新完成后，同步通知所有绑定的 renderer：
+
+```ts
+mesh.updateSubMesh(0, geometry); // 动态索引使用 indices16 / indices32
+```
+
+共享网格的模型 bounds 和输入装配器计数会一起更新；renderer 换绑或销毁会解除旧订阅。
+不需要逐个调用 `renderer.onGeometryChanged()`；原方法保留，旧调用仍兼容。
+该自动路径仅针对 `updateSubMesh()`，直接改写 `mesh.struct` 或底层缓冲不属于自动更新合同。
+
+修复前的引擎内对照确认：模型先移出视锥，再将顶点和显式 mesh bounds 更新回中心而不通知，
+模型 bounds 会留在旧位置而被错误剔除。这不证明历史 E02/E04 使用了相同触发条件。
+`tools/verify/effect-runtime-contracts.cjs` 检查新版无需手动通知即可恢复画面，以及索引数 6→3→0→6
+的实际画面与输入装配器计数；结果属于局部回归，不是完整浏览器验收。
+
 上一篇：[渲染目标（Render Targets）](rendertargets.md) ｜ 下一篇：[物理（Physics）](physics.md)

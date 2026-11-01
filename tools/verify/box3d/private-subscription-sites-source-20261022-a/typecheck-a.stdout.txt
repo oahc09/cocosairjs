@@ -1,1 +1,0 @@
-Strict affected-source typecheck PASS (9 exact slices; 62 compiler inputs).

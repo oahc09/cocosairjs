@@ -1,6 +1,0 @@
-src/air/physics/box3d/registration.ts(58,43): error TS2345: Argument of type 'Box3DComponentConfiguration | undefined' is not assignable to parameter of type 'Box3DComponentConfiguration'.
-  Type 'undefined' is not assignable to type 'Box3DComponentConfiguration'.
-src/air/physics/box3d/registration.ts(63,43): error TS2345: Argument of type 'Box3DComponentConfiguration | undefined' is not assignable to parameter of type 'Box3DComponentConfiguration'.
-  Type 'undefined' is not assignable to type 'Box3DComponentConfiguration'.
-src/air/physics/box3d/registration.ts(68,43): error TS2345: Argument of type 'Box3DComponentConfiguration | undefined' is not assignable to parameter of type 'Box3DComponentConfiguration'.
-  Type 'undefined' is not assignable to type 'Box3DComponentConfiguration'.

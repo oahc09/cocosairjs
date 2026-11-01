@@ -1,9 +1,0 @@
-full reverified restored-local box3d-checkpoint-preparation-20261022
-full reverified restored-local box3d-checkpoint-verified-20261022
-full reverified restored-local box3d-foundation-checkpoint-20261022
-full reverified restored-local box3d-node-wasm-checkpoint-20261022
-full reverified restored-local box3d-validated-wasm-checkpoint-20261022
-full reverified restored-from-library box3d-checkpoint-library-roundtrip-20261022
-full reverified restored-from-library box3d-foundation-library-roundtrip-20261022
-full reverified restored-from-library box3d-node-wasm-library-roundtrip-20261022
-{"status": "REMOVED_EXACT_EIGHT_VERIFIED_REGENERABLE_COPIES", "timeUTC": "2026-10-22T12:33:11.346995+00:00", "removedPaths": ["/workspace/scratch/62d43a81bbde/box3d-checkpoint-preparation-20261022/restored-local", "/workspace/scratch/62d43a81bbde/box3d-checkpoint-verified-20261022/restored-local", "/workspace/scratch/62d43a81bbde/box3d-foundation-checkpoint-20261022/restored-local", "/workspace/scratch/62d43a81bbde/box3d-node-wasm-checkpoint-20261022/restored-local", "/workspace/scratch/62d43a81bbde/box3d-validated-wasm-checkpoint-20261022/restored-local", "/workspace/scratch/62d43a81bbde/box3d-checkpoint-library-roundtrip-20261022/restored-from-library", "/workspace/scratch/62d43a81bbde/box3d-foundation-library-roundtrip-20261022/restored-from-library", "/workspace/scratch/62d43a81bbde/box3d-node-wasm-library-roundtrip-20261022/restored-from-library"], "allocatedBytesRemoved": 730357760, "freeBytesBefore": 2978299904, "freeBytesAfter": 3708637184, "observedNetFreeBytesChange": 730337280, "concurrentSharedFilesystemCaveat": true, "outerArchivesUnchanged": true, "preDeleteVerification": "pre-delete-verification.json", "preservedOuterFiles": 81, "retained": "All outer packages/receipts/raw, current Git and independent incremental restore; no object/archive removal outside eight clones"}

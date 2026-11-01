@@ -1,0 +1,80 @@
+{
+  "schema": "air-gradient-focused-build-validation/1",
+  "time": "2026-10-30T23:14:57.370445+00:00",
+  "baseCommit": "ed10a370d3929db292a5b93328d8a02e7bf2ffb3",
+  "sourceOnlyPR": true,
+  "generatedSDKCommitted": false,
+  "checks": [
+    {
+      "command": "npm ci --ignore-scripts",
+      "result": "pass",
+      "packages": 848
+    },
+    {
+      "command": "npm run typecheck",
+      "result": "pass",
+      "exitCode": 0
+    },
+    {
+      "command": "npm test -- --runInBand test/smoke/gradient-effect.test.ts",
+      "result": "pass",
+      "suites": 1,
+      "tests": 6,
+      "exitCode": 0
+    },
+    {
+      "command": "focused prettier --check (7 source/doc/example files and 3 browser collector/fixture files)",
+      "result": "pass"
+    },
+    {
+      "command": "npm run build:dts",
+      "result": "pass",
+      "exitCode": 0,
+      "notes": "Upstream declaration-bundler warnings were emitted; the build contract succeeded."
+    },
+    {
+      "command": "independent strict TypeScript 4.9.5 consumer of generated declarations",
+      "result": "pass",
+      "diagnostics": 0
+    },
+    {
+      "command": "NODE_OPTIONS=--max-old-space-size=6144 npm run build",
+      "result": "pass",
+      "exitCode": 0,
+      "buildNumber": 245
+    },
+    {
+      "command": "NODE_OPTIONS=--max-old-space-size=6144 npm run build:min",
+      "result": "pass",
+      "exitCode": 0,
+      "buildNumber": 246
+    },
+    {
+      "command": "npm run prepack && node tools/verify/published-artifacts.cjs",
+      "result": "pass",
+      "exitCode": 0,
+      "builtinMarkers": 4,
+      "runtimeBundles": 2
+    }
+  ],
+  "recoveredFailures": [
+    "First build attempts before baseline restoration completed reported missing vendor files; all required vendor inventories were subsequently restored with target Git blob SHA verification.",
+    "Default Node heap (~2 GiB) exhausted during first complete development build; rerun with 6 GiB heap succeeded. Its confirmed-dead stale build lock was archived; no build scripts or security settings were altered.",
+    "First new invalid-color test constructed Vec4(NaN), whose constructor normalizes NaN to zero. Corrected the test to assign invalid x after construction; all native rejection and unchanged-uniform assertions pass."
+  ],
+  "limits": [
+    "Focused tests, not full Jest discovery or whole Gallery certification.",
+    "A source-only Draft PR, not a release. Existing committed build/ files remain old; fresh builds are required.",
+    "Local checkout restored the complete engine/build dependency subset; no claim of complete package documentation/Skills or optional decoder-distribution acceptance."
+  ],
+  "sha256": {
+    "src/air/effects/gradient.ts": "2129ec570b17e3b9f572dd5fd4f07885d0118ddf5eccd56646f7777413810433",
+    "src/air/index.ts": "bc39d8e7d28caced9fd4a746753e347d631a0e997058f9b09e42cdc630134884",
+    "test/smoke/gradient-effect.test.ts": "eddffe0eee9474054bde5c91697dec905777849cbd5873cb33ddd220ed6dffbd",
+    "build/cocosair.module.js": "284c7458c36e33f295c8761374aea0ad233af095bc6853a225b6c83b7e31beb1",
+    "build/cocosair.module.min.js": "224495d4532843574eff06d1d05efb819d399701be026e501f42dcfa5d234d71",
+    "build/cocosair.module.d.ts": "0b72515c6e4a8634653e606ea3fb4aae454ceeebd8493e5b0ab3915893a74d94",
+    "build/npm/cocosair.module.js": "96b7eb1c92a9260a9027670c03eb036ce7cf0276b5250d310060091bd5b64f41",
+    "build/npm/cocosair.module.min.js": "23128e898e71671395d8eacad4e22c85460af445e1da628db0f3662fae3e32a2"
+  }
+}

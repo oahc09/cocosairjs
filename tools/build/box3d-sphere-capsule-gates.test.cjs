@@ -164,7 +164,7 @@ for (const kind of ['normal', 'point', 'pose', 'identity', 'duplicate', 'order',
     });
 test('exact additive gate locks preserve prior111/85/58 prefix and current47 command count', () => {
     assert.equal(expected.gate.commands, 47);
-    assert.equal(expected.gate.inputs.length, 136);
+    assert.equal(expected.gate.inputs.length, 138);
     assert.equal(expected.gate.compileUnits.length, 87);
     assert.equal(expected.gate.evidence.length, 63);
     for (const [k, n] of [

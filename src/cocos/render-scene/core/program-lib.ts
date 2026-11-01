@@ -23,6 +23,7 @@
 */
 
 import * as env from 'internal:constants';
+import { normalizeEffectShader, normalizeEffectShaders, effectShaderSignature } from '../../../air/rendering/effect-json-contract';
 import { EffectAsset } from '../../asset/assets/effect-asset';
 import { SetIndex, IDescriptorSetLayoutInfo, globalDescriptorSetLayout, localDescriptorSetLayout } from '../../rendering/define';
 import { PipelineRuntime } from '../../rendering/custom/pipeline';
@@ -322,8 +323,16 @@ export class ProgramLib {
     protected _templates: Record<string, IProgramInfo> = {}; // per shader
     protected _cache: Record<string, Shader> = {};
     protected _templateInfos: Record<number, ITemplateInfo> = {};
+    private _templateSignatures = new Map<number, string>();
 
     public register (effect: EffectAsset): void {
+        const shaders = normalizeEffectShaders(effect.shaders, effect.name);
+        const signatures = new Map(this._templateSignatures);
+        for (const shader of shaders) {
+            this._checkShaderIdentity(shader, signatures);
+            signatures.set(shader.hash, effectShaderSignature(shader));
+        }
+        effect.shaders = shaders;
         for (let i = 0; i < effect.shaders.length; i++) {
             const tmpl = this.define(effect.shaders[i]);
             tmpl.effectName = effect.name;
@@ -345,6 +354,9 @@ export class ProgramLib {
      * @zh 注册 shader 模板。
      */
     public define (shader: EffectAsset.IShaderInfo): IProgramInfo {
+        shader = normalizeEffectShader(shader);
+        this._checkShaderIdentity(shader, this._templateSignatures);
+        const sourceSignature = effectShaderSignature(shader);
         const curTmpl = this._templates[shader.name];
         if (curTmpl && curTmpl.hash === shader.hash) { return curTmpl; }
         const tmpl = ({ ...shader }) as IProgramInfo;
@@ -353,7 +365,6 @@ export class ProgramLib {
         populateMacros(tmpl);
 
         // store it
-        this._templates[shader.name] = tmpl;
         if (!this._templateInfos[tmpl.hash]) {
             const tmplInfo = {} as ITemplateInfo;
             // cache material-specific descriptor set layout
@@ -452,7 +463,17 @@ export class ProgramLib {
             this._templateInfos[tmpl.hash] = tmplInfo;
         }
 
+        this._templates[shader.name] = tmpl;
+        this._templateSignatures.set(tmpl.hash, sourceSignature);
         return tmpl;
+    }
+
+    private _checkShaderIdentity (shader: EffectAsset.IShaderInfo, signatures: Map<number, string>): void {
+        const signature = signatures.get(shader.hash);
+        if (signature !== undefined && signature !== effectShaderSignature(shader)) {
+            throw Object.assign(new Error(`[AIR_E_EFFECT_HASH_COLLISION] shader '${shader.name}': hash ${shader.hash} already identifies different source or resource layout; omit hash to derive it from content`),
+                { code: 'AIR_E_EFFECT_HASH_COLLISION', shader: shader.name, hash: shader.hash });
+        }
     }
 
     /**

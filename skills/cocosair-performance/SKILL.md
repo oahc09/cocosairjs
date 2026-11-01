@@ -1,12 +1,12 @@
 ---
 name: cocosair-performance
-description: "Optimize draw calls with static merge, instancing and dynamic atlases. Use for frame budgets, on-demand rendering, AIR_E_MESH_CAPACITY or AIR_E_PIXEL_RATIO_IMPORT_ORDER."
+description: "Optimize draw calls: static merge, instancing, dynamic atlases and GPU morph fields. Frame budgets, on-demand rendering, AIR_E_MESH_CAPACITY, AIR_E_PIXEL_RATIO_IMPORT_ORDER."
 license: MIT
 compatibility: "Cocos AIR source checkout or installed cocosair.js package. Browser rendering requires WebGL 2; source tooling requires Node.js >=18. Use the host-provided tools and user-authorized workspace."
 allowed-tools: Read Edit Write Bash
 when_to_use:
   - draw calls equal the object count
-  - batch many static meshes or UI sprites
+  - batch many static meshes or UI sprites; createAirInstanceBatch/createAirMorphField point/voxel
   - measure actual draw counts and frame budget
   - stop rendering until the next requested frame
   - high pixel density makes the device too slow
@@ -70,4 +70,6 @@ Read relevant [wrong/right examples](references/common-mistakes.md) before imple
 - [Which batching route?](references/batching-routes.md) - Routes and counts
 - [Can sprites pack?](references/dynamic-atlas.md) - Acceptance and leases
 - [Will instancing help?](references/instancing.md) - Macro and grouping
+- [Instances without per-object Nodes?](references/instance-batches.md) - Explicit buffers and ownership
+- [GPU points, voxels or polished shapes?](references/gpu-morph-fields.md) - Sampling, transitions and surface controls
 - [What does profiling prove?](references/profiles.md) - Counters and step clock

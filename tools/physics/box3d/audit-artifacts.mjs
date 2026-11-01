@@ -26,8 +26,8 @@ assert.equal(receipt.status, 'PASS');
 assert.equal(receipt.kind, 'st-simd-wasm');
 commandQualification.verifyCommandSchedule(receipt);
 assert.ok(receipt.commands.every((c) => c.exitCode === 0 && !c.error));
-assert.equal(receipt.inputHashes.length, 136);
-assert.equal(new Set(receipt.inputHashes.map((input) => input.path)).size, 136);
+assert.equal(receipt.inputHashes.length, 138);
+assert.equal(new Set(receipt.inputHashes.map((input) => input.path)).size, 138);
 const expectedGate = JSON.parse(
     readFileSync(resolve(root, 'tools/build/box3d-command-expectations.json'), 'utf8'),
 ).gate;

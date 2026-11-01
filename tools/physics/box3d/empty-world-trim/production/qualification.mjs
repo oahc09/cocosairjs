@@ -11,6 +11,10 @@ export const STORAGE_NATIVE_CHECKS = Object.freeze([
     'staleIdsRejected',
     'twoWorldIsolation',
     'controlledFaultClose',
+    'sleepDisableCycles',
+    'sharedSleepingConstraintSets',
+    'reEnablePreservesJoints',
+    'baseSetsPreserved',
 ]);
 export const STORAGE_WASM_CHECKS = Object.freeze([
     'fresh89RowBaselineAndFixedMetadata',
@@ -25,6 +29,11 @@ export const STORAGE_WASM_CHECKS = Object.freeze([
     'regrownLowAndHighSlotsKeepAllOldRawIdsStale',
     'secondRealEpochRestoresSameOriginalLedger',
     'afterCloseAndFullC20NotClaimed',
+    'sleepDisableEnableDestroyType1ThreeCycles',
+    'sleepDisableEnableDestroyType2ThreeCycles',
+    'sleepSharedSetDisablePreservesfixed',
+    'sleepSharedSetDisablePreserveshinge',
+    'sleepSharedSetDisablePreservespoint-to-point',
 ]);
 const unsigned = (value) => {
     assert.equal(typeof value, 'string');
@@ -60,7 +69,7 @@ export function verifyStorageQualification({ native, wasm, identity, fixtureSha2
     assert.equal(native.schema, 'air-box3d-storage-native-contract-v1');
     assert.equal(native.status, 'PASS');
     assert.equal(native.pointerBytes, 4);
-    assert.equal(native.checks, 51);
+    assert.equal(native.checks, 153);
     for (const key of STORAGE_NATIVE_CHECKS) assert.equal(native[key], true, key);
     assert.equal(native.controlledFixture, true);
     assert.equal(native.injectionsAreProductionObservations, false);

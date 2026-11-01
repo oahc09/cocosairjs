@@ -26,6 +26,7 @@ import { ccclass, displayOrder, serializable, type } from 'cc.decorator';
 import { systemInfo } from 'pal/system-info';
 import { sceneCulling, validPunctualLightsCulling } from './scene-culling';
 import { Asset } from '../asset/assets/asset';
+import { beginAirCameraOutput, restoreAirCameraOutput } from '../../air/rendering/hdr-context';
 import { AccessFlagBit, Attribute, Buffer, BufferInfo, BufferUsageBit, ClearFlagBit, ClearFlags, ColorAttachment, CommandBuffer,
     DepthStencilAttachment, DescriptorSet, Device, Feature, Format, FormatFeatureBit, Framebuffer, FramebufferInfo, InputAssembler,
     InputAssemblerInfo, LoadOp, MemoryUsageBit, Rect, RenderPass, RenderPassInfo, Sampler, StoreOp, SurfaceTransform, Swapchain,
@@ -495,14 +496,19 @@ export abstract class RenderPipeline extends Asset implements IPipelineEvent, Pi
             const camera = cameras[i];
             if (camera.scene) {
                 this.emit(PipelineEventType.RENDER_CAMERA_BEGIN, camera);
-                validPunctualLightsCulling(this.pipelineSceneData, camera);
-                sceneCulling(this.pipelineSceneData, this.pipelineUBO, camera);
-                this._pipelineUBO.updateGlobalUBO(camera.window);
-                this._pipelineUBO.updateCameraUBO(camera);
-                for (let j = 0; j < this._flows.length; j++) {
-                    this._flows[j].render(camera);
+                const previousOutput = beginAirCameraOutput(camera);
+                try {
+                    validPunctualLightsCulling(this.pipelineSceneData, camera);
+                    sceneCulling(this.pipelineSceneData, this.pipelineUBO, camera);
+                    this._pipelineUBO.updateGlobalUBO(camera.window);
+                    this._pipelineUBO.updateCameraUBO(camera);
+                    for (let j = 0; j < this._flows.length; j++) {
+                        this._flows[j].render(camera);
+                    }
+                    this.emit(PipelineEventType.RENDER_CAMERA_END, camera);
+                } finally {
+                    restoreAirCameraOutput(previousOutput);
                 }
-                this.emit(PipelineEventType.RENDER_CAMERA_END, camera);
             }
         }
         this.emit(PipelineEventType.RENDER_FRAME_END, cameras);

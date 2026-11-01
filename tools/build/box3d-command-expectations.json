@@ -257,7 +257,9 @@
       "tools/physics/box3d/module-release/loader-contract.test.mjs",
       "tools/physics/box3d/module-release/public-contract.mjs",
       "tools/verify/box3d/loader-lifecycle.test.mjs",
-      "src/air/physics/box3d/prepare.ts"
+      "src/air/physics/box3d/prepare.ts",
+      "src/air/safe-error.ts",
+      "tools/physics/box3d/patches/sleeping-set-disable-cleanup-v1.patch"
     ],
     "compileUnits": [
       "staged-core/src/aabb.c",
@@ -424,8 +426,15 @@
       "tools/physics/box3d/wasm-query-contract.mjs",
       "tools/physics/box3d/query-admission-contract.mjs"
     ],
-    "compileUnits": ["tools/physics/box3d/native/query_bridge.c", "tools/physics/box3d/native/query_contract.c"],
-    "evidence": ["native-query-contract.raw.json", "wasm-query-contract.raw.json", "air_box3d_query_contract.cjs"]
+    "compileUnits": [
+      "tools/physics/box3d/native/query_bridge.c",
+      "tools/physics/box3d/native/query_contract.c"
+    ],
+    "evidence": [
+      "native-query-contract.raw.json",
+      "wasm-query-contract.raw.json",
+      "air_box3d_query_contract.cjs"
+    ]
   },
   "hullExtension": {
     "status": "ADDITIVE_SOURCE_GENERATION_NOT_FORMAL_ACCEPTANCE",
@@ -456,7 +465,11 @@
       "hull-legacy-baseline/baseline.raw.txt",
       "hull-legacy-baseline/patched.raw.txt"
     ],
-    "commands": ["air_box3d_hull_contract.cjs", "air_box3d_hull_core_contract.cjs", "hull-legacy-contract.mjs"],
+    "commands": [
+      "air_box3d_hull_contract.cjs",
+      "air_box3d_hull_core_contract.cjs",
+      "hull-legacy-contract.mjs"
+    ],
     "qualificationSource": "tools/build/box3d-hull-qualification.cjs",
     "provenance": {
       "inputs": "tools/physics/box3d/build.mjs",
@@ -477,9 +490,17 @@
       "tools/physics/box3d/native/joint_bridge.h",
       "tools/physics/box3d/native/joint_contract.c"
     ],
-    "compileUnits": ["tools/physics/box3d/native/joint_bridge.c", "tools/physics/box3d/native/joint_contract.c"],
-    "evidence": ["native-joint-contract.raw.json", "air_box3d_joint_contract.cjs"],
-    "commands": ["air_box3d_joint_contract.cjs"],
+    "compileUnits": [
+      "tools/physics/box3d/native/joint_bridge.c",
+      "tools/physics/box3d/native/joint_contract.c"
+    ],
+    "evidence": [
+      "native-joint-contract.raw.json",
+      "air_box3d_joint_contract.cjs"
+    ],
+    "commands": [
+      "air_box3d_joint_contract.cjs"
+    ],
     "formalT17": "NOT_RUN",
     "formal2128": "NOT_RUN",
     "nineGates": "NOT_RUN"
@@ -491,9 +512,17 @@
       "tools/physics/box3d/native/hinge_bridge.h",
       "tools/physics/box3d/native/hinge_contract.c"
     ],
-    "compileUnits": ["tools/physics/box3d/native/hinge_bridge.c", "tools/physics/box3d/native/hinge_contract.c"],
-    "evidence": ["native-hinge-contract.raw.json", "air_box3d_hinge_contract.cjs"],
-    "commands": ["air_box3d_hinge_contract.cjs"],
+    "compileUnits": [
+      "tools/physics/box3d/native/hinge_bridge.c",
+      "tools/physics/box3d/native/hinge_contract.c"
+    ],
+    "evidence": [
+      "native-hinge-contract.raw.json",
+      "air_box3d_hinge_contract.cjs"
+    ],
+    "commands": [
+      "air_box3d_hinge_contract.cjs"
+    ],
     "formalT17": "NOT_RUN",
     "formal2128": "NOT_RUN",
     "nineGates": "NOT_RUN"
@@ -524,7 +553,11 @@
     "nativeQualification": "REQUIRED_BY_SOURCE_NOT_RUN",
     "formalC20": "ORIGINAL_FAIL_UNCHANGED",
     "afterClose": "UNAVAILABLE",
-    "evidence": ["native-memory-contract.raw.json", "air_box3d_memory_contract.cjs", "wasm-memory-contract.raw.json"]
+    "evidence": [
+      "native-memory-contract.raw.json",
+      "air_box3d_memory_contract.cjs",
+      "wasm-memory-contract.raw.json"
+    ]
   },
   "storageExtension": {
     "status": "ADDITIVE_PRODUCTION_SOURCE_NOT_RUNTIME_QUALIFIED",
@@ -549,7 +582,9 @@
       "tools/verify/box3d/empty-world-release.test.mjs",
       "tools/build/box3d-hull-qualification.cjs"
     ],
-    "compileUnits": ["tools/physics/box3d/native/world_storage_contract.c"],
+    "compileUnits": [
+      "tools/physics/box3d/native/world_storage_contract.c"
+    ],
     "evidence": [
       "native-world-storage-contract.raw.json",
       "air_box3d_world_storage_contract.cjs",
@@ -584,7 +619,10 @@
       "tools/physics/box3d/sphere-capsule/public-contract.test.mjs",
       "src/air/physics/box3d/contact-equation.ts"
     ],
-    "evidence": ["sphere-capsule-samples.raw.jsonl", "wasm-sphere-capsule-contract.raw.json"],
+    "evidence": [
+      "sphere-capsule-samples.raw.jsonl",
+      "wasm-sphere-capsule-contract.raw.json"
+    ],
     "commands": 2,
     "fullT15": "NOT_QUALIFIED"
   },
@@ -605,7 +643,9 @@
       "tools/physics/box3d/module-release/loader-contract.test.mjs",
       "tools/physics/box3d/module-release/public-contract.mjs",
       "tools/verify/box3d/loader-lifecycle.test.mjs",
-      "src/air/physics/box3d/prepare.ts"
+      "src/air/physics/box3d/prepare.ts",
+      "src/air/safe-error.ts",
+      "tools/physics/box3d/patches/sleeping-set-disable-cleanup-v1.patch"
     ],
     "compileUnits": [
       "tools/physics/box3d/native/module_release.c",

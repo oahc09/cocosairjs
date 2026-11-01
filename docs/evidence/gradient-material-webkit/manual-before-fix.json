@@ -1,0 +1,65 @@
+{
+  "checks": [
+    {
+      "name": "reference-mid-blue",
+      "ok": false,
+      "pixel": [
+        0,
+        0,
+        17,
+        255
+      ]
+    },
+    {
+      "name": "mode-select-changes-real-render",
+      "ok": true,
+      "before": [
+        0,
+        0,
+        17,
+        255
+      ],
+      "after": [
+        0,
+        0,
+        128,
+        255
+      ]
+    },
+    {
+      "name": "alpha-keyboard-zero-clears-to-background",
+      "ok": true,
+      "pixel": [
+        32,
+        32,
+        32,
+        255
+      ],
+      "label": "0"
+    },
+    {
+      "name": "offset-keyboard-negative",
+      "ok": true,
+      "pixel": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "label": "-1"
+    },
+    {
+      "name": "offset-keyboard-positive",
+      "ok": true,
+      "pixel": [
+        0,
+        0,
+        255,
+        255
+      ]
+    }
+  ],
+  "errors": [],
+  "ok": false,
+  "scope": "Unmodified HTML; TS type erasure + public imports adapted to pinned main runtime and new helper; actual select and native keyboard range interactions."
+}

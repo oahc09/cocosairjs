@@ -1,1 +1,0 @@
-src/air/physics/box3d/world-command-owner.ts(516,21): error TS2367: This comparison appears to be unintentional because the types '"material" | "preflight" | "dispatch"' and '"faulted"' have no overlap.

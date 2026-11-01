@@ -499,11 +499,11 @@ test('exact 47-command gate preserves historical 33 and diagnostic 37-command se
         assert.throws(() => verifyCommandSchedule(r));
     }
 });
-test('exact 136-input, 87-compile-unit and 63-evidence inventories retain original 79 and diagnostic 92 input sets', () => {
+test('exact 138-input, 87-compile-unit and 63-evidence inventories retain original 79 and diagnostic 92 input sets', () => {
     const additions = expected.memoryDiagnosticExtension.inputs;
     assert.equal(additions.length, 13);
     assert.equal(new Set(additions).size, 13);
-    assert.equal(expected.gate.inputs.length, 136);
+    assert.equal(expected.gate.inputs.length, 138);
     assert.equal(expected.storageExtension.inputs.length, 19);
     const diagnosticInputs = expected.gate.inputs.filter(
         (path) =>
@@ -591,8 +591,8 @@ test('current source controls execute and exact input/compile guards reject stal
             [...expected.gate.inputs.slice(0, -1), expected.gate.inputs[0]],
         ])
             assert.throws(() => checkInputs(assert, invalid));
-        const stale = new Function('assert', 'inputs', guards.join('\n').replaceAll(', 136);', ', 79);'));
-        assert.throws(() => stale(assert, expected.gate.inputs), 'Old 79-input guard must reject the real 136 set');
+        const stale = new Function('assert', 'inputs', guards.join('\n').replaceAll(', 138);', ', 79);'));
+        assert.throws(() => stale(assert, expected.gate.inputs), 'Old 79-input guard must reject the real 138 set');
         const result = spawnSync(process.execPath, [path], { cwd: root, encoding: 'utf8', timeout: 30000 });
         assert.ifError(result.error);
         assert.equal(result.signal, null);

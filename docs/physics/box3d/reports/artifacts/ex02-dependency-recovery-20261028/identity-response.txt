@@ -1,1 +1,0 @@
-EX02 runtime unavailable: Set BOX3D_RUNTIME to the existing qualified runtime directory.

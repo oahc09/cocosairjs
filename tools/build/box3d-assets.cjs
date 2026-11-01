@@ -158,6 +158,8 @@ const INPUTS = [
     'tools/physics/box3d/module-release/public-contract.mjs',
     'tools/verify/box3d/loader-lifecycle.test.mjs',
     'src/air/physics/box3d/prepare.ts',
+    'src/air/safe-error.ts',
+    'tools/physics/box3d/patches/sleeping-set-disable-cleanup-v1.patch',
 ];
 const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const read = (file) => fs.readFileSync(file);
@@ -230,7 +232,7 @@ async function verifySTBuild(buildDirectory, { provenanceRoot = ROOT } = {}) {
         receipt.memorySourceControls,
         verifyMemoryDiagnosticSources(ROOT, path.join(directory, 'staged-core')),
     );
-    assert.equal(INPUTS.length, 136);
+    assert.equal(INPUTS.length, 138);
     assert.deepEqual(sorted(INPUTS), sorted(COMMAND_EXPECTATIONS.gate.inputs));
     assert.deepEqual(sorted(receipt.inputHashes.map((row) => row.path)), sorted(INPUTS), 'Build input inventory drift');
     for (const input of receipt.inputHashes) {

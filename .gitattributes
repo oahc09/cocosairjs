@@ -4,3 +4,6 @@ vendor/box2d/** -text
 tools/build/box2d/** -text
 build/box2d3/** -text
 build/box2d3-samples/** -text
+
+# Reading-trial answers and receipts are sealed by byte hash, not prose formatting.
+ai/plans/skills-token-evidence/reading-*/** -text

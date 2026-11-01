@@ -1,8 +1,0 @@
-{
-  "src/cocos/physics/framework/components/colliders/collider.ts": "7822cefedbf6c8fbf0861fb05949589b2f4a81462c01d0e23d3ba556fec3b2be",
-  "src/cocos/physics/framework/components/colliders/box-collider.ts": "9957d3a6b789798560ed32913d22efff16e42bcc4d4592414a3082e572e6da13",
-  "src/cocos/physics/framework/components/colliders/sphere-collider.ts": "a54b0edc6af5ed9b9a81be221ae38b94ba400ae0b9ad2ee17253a290c9107a3e",
-  "tools/verify/box3d/body-component-real-collider-control.test.ts": "8a00bfd6964862eedeb6ecadb7f22848e8fd6530e9e08ab00a73d83b6fef36b0",
-  "tools/verify/box3d/body-component-real-collider-control.jest.cjs": "d3c55a125ddfa958c3ab2289993f0e630c59d7bb3a1e5173b3ea533d8d15ce80",
-  "tools/verify/box3d/body-component-real-collider-control.tsconfig.json": "11c1cd8185797c42e060aa7290c33be0315204a015664f8c00c11228db6638f5"
-}

@@ -25,6 +25,8 @@ test('direct and transitive build/package/browser inputs select full acceptance'
         'tools/verify/published-artifacts.cjs',
         'tools/dev/resolve-script.cjs',
         'examples/box2d3-lab/index.html',
+        'examples/starter/index.html',
+        'examples/starter/src/main.ts',
         'build/box2d3-samples/air-box2d-samples.wasm',
         'package-lock.json',
         'package.json',

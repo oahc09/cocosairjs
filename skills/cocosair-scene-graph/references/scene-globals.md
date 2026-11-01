@@ -55,3 +55,9 @@ Fog ordering contract (api-behavior-contracts.md item 8, fog.ts): `FogType` is `
 - `oldScene.autoReleaseAssets === true`: on switch away the engine auto-releases the old scene's dependencies (used by `examples/scene-switch-reentry/src/main.ts:179` where `SceneB.autoReleaseAssets = true`).
 
 Set it on the `Scene` before running it; it is read at switch time, not at load.
+
+## Updating globals without confusing object identity and property setters
+
+Clarification for the writable-object wording above, checked against the current checkout on 2026-10-24: `Scene.globals` is a getter returning the existing object; `SceneGlobals.ambient` and `fog` are public fields initialized to `AmbientInfo` and `FogInfo`, while `skybox` has a getter and setter. Do not generalize a getter-only error from a different SDK to this source version.
+
+For ordinary configuration, keep the existing typed objects and use their property setters, for example `scene.globals.ambient.skyIllum = value` or `scene.globals.fog.fogDensity = value`. Do not replace an Info instance with a plain object: the instance carries activation behavior and the bound render resource. Mutating a nested color's channels in place can also bypass the owning property's setter; assign through that setter when a write-through is needed. If execution reports a getter-only assignment, identify the exact property in the stack and compare the loaded SDK/build with its matching declarations before choosing a fix. The source field being writable does not establish that an unrelated deployed bundle has the same contract.

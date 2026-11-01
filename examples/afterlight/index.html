@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>AFTERLIGHT — Cocos AIR</title>
+        <style>
+            :root {
+                color-scheme: dark;
+                --ink: #dcece8;
+                --muted: #78938e;
+                --acid: #c8f594;
+                --line: #ffffff22;
+            }
+            * {
+                box-sizing: border-box;
+            }
+            html,
+            body {
+                margin: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                background: #010609;
+                color: var(--ink);
+            }
+            body {
+                font-family: 'Segoe UI', sans-serif;
+            }
+            #GameDiv,
+            #Cocos3dGameContainer,
+            canvas {
+                width: 100%;
+                height: 100%;
+                display: block;
+            }
+            canvas {
+                touch-action: none;
+            }
+            .chrome {
+                position: fixed;
+                z-index: 10;
+                isolation: isolate;
+                transform: translateZ(0);
+                inset: 0;
+                pointer-events: none;
+                padding: 32px 42px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+            header {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                border-top: 1px solid var(--line);
+                padding-top: 16px;
+            }
+            .brand {
+                font:
+                    600 11px/1.7 Consolas,
+                    monospace;
+                letter-spacing: 3px;
+            }
+            .brand em {
+                font-style: normal;
+                color: var(--acid);
+            }
+            .edition {
+                text-align: right;
+                font:
+                    10px/1.8 Consolas,
+                    monospace;
+                letter-spacing: 1px;
+                color: var(--muted);
+            }
+            .title {
+                position: absolute;
+                top: 18%;
+                left: 42px;
+                max-width: 280px;
+            }
+            .eyebrow {
+                color: var(--acid);
+                font:
+                    11px Consolas,
+                    monospace;
+                letter-spacing: 3px;
+            }
+            h1 {
+                font:
+                    400 clamp(42px, 5.5vw, 80px)/0.94 Georgia,
+                    'Times New Roman',
+                    serif;
+                letter-spacing: -4px;
+                margin: 20px 0;
+            }
+            h1 i {
+                color: #9abbb5;
+                font-weight: 400;
+            }
+            .description {
+                font-size: 12px;
+                line-height: 1.9;
+                max-width: 205px;
+                color: var(--muted);
+            }
+            .bottom {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-end;
+                gap: 24px;
+            }
+            .caption {
+                font:
+                    10px/1.9 Consolas,
+                    monospace;
+                letter-spacing: 1px;
+                color: var(--muted);
+            }
+            .caption b {
+                display: block;
+                font-weight: 400;
+                letter-spacing: 3px;
+                color: var(--ink);
+                margin-bottom: 8px;
+            }
+            .controls {
+                pointer-events: auto;
+                width: 254px;
+                background: #061016db;
+                border: 1px solid var(--line);
+                padding: 18px 20px;
+                backdrop-filter: blur(16px);
+            }
+            .control-title {
+                display: flex;
+                justify-content: space-between;
+                font:
+                    10px Consolas,
+                    monospace;
+                letter-spacing: 2px;
+                color: var(--muted);
+                padding-bottom: 12px;
+                border-bottom: 1px solid var(--line);
+            }
+            .row {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 10px;
+                font-size: 11px;
+                padding: 12px 0;
+                border-bottom: 1px solid var(--line);
+            }
+            select,
+            button {
+                font:
+                    11px Consolas,
+                    monospace;
+                color: var(--ink);
+                background: transparent;
+                border: 1px solid var(--line);
+                padding: 6px 8px;
+            }
+            button {
+                cursor: pointer;
+            }
+            button:hover {
+                border-color: var(--acid);
+                color: var(--acid);
+            }
+            select {
+                max-width: 110px;
+            }
+            option {
+                background: #061016;
+            }
+            input[type='range'] {
+                width: 108px;
+                accent-color: var(--acid);
+            }
+            input[type='checkbox'] {
+                accent-color: var(--acid);
+            }
+            output {
+                font:
+                    11px Consolas,
+                    monospace;
+                color: var(--acid);
+            }
+            .actions {
+                display: flex;
+                gap: 8px;
+                padding-top: 14px;
+            }
+            .actions button {
+                flex: 1;
+            }
+            .hint {
+                position: absolute;
+                bottom: 34px;
+                left: 50%;
+                transform: translateX(-50%);
+                font:
+                    9px Consolas,
+                    monospace;
+                letter-spacing: 2px;
+                color: #78938e;
+            }
+            :focus-visible {
+                outline: 2px solid var(--acid);
+                outline-offset: 4px;
+            }
+            @media (max-width: 700px) {
+                .chrome {
+                    padding: 20px;
+                }
+                .title {
+                    left: 20px;
+                    top: 15%;
+                    max-width: 170px;
+                }
+                h1 {
+                    font-size: 44px;
+                    letter-spacing: -2px;
+                }
+                .description {
+                    display: none;
+                }
+                .controls {
+                    width: 218px;
+                    padding: 12px;
+                }
+                .caption {
+                    max-width: 95px;
+                    font-size: 8px;
+                }
+                .hint {
+                    display: none;
+                }
+                .edition {
+                    font-size: 8px;
+                }
+                .bottom {
+                    gap: 12px;
+                }
+                .row {
+                    padding: 7px 0;
+                }
+                .control-title {
+                    padding-bottom: 8px;
+                }
+                .actions {
+                    padding-top: 10px;
+                }
+                input[type='range'] {
+                    width: 82px;
+                }
+            }
+            @media (max-height: 560px) {
+                .description,
+                .caption,
+                .hint {
+                    display: none;
+                }
+                .title {
+                    top: 22%;
+                }
+                .controls {
+                    padding: 10px 16px;
+                }
+                .row {
+                    padding: 7px 0;
+                }
+            }
+            @media (prefers-reduced-motion: reduce) {
+                * {
+                    scroll-behavior: auto;
+                }
+            }
+        </style>
+        <script type="importmap">
+            { "imports": { "cocosair": "/build/cocosair.module.js" } }
+        </script>
+    </head>
+    <body>
+        <div id="GameDiv">
+            <div id="Cocos3dGameContainer">
+                <canvas id="GameCanvas" aria-label="Interactive light sculpture"></canvas>
+            </div>
+        </div>
+        <main class="chrome">
+            <header>
+                <div class="brand"><em>◉</em> COCOS AIR<br />LIGHT STUDIES / 001</div>
+                <div class="edition">
+                    REAL-TIME / CODE FIRST<br /><span id="status" role="status">INITIALIZING</span>
+                </div>
+            </header>
+            <section class="title">
+                <span class="eyebrow">AN EXPERIMENT IN RADIANCE</span>
+                <h1>After<br /><i>light.</i></h1>
+                <p class="description">
+                    Suspended in darkness.<br />Light leaves a trace.<br />A kinetic study of energy,<br />surface and
+                    atmosphere.
+                </p>
+            </section>
+            <footer class="bottom">
+                <div class="caption">
+                    <b>THE ION CHAMBER</b>01 / TITANIUM · BASALT · LIGHT<br />PROCEDURAL GEOMETRY<br />MIRRORED CAMERA /
+                    HDR CAPTURE
+                </div>
+                <section class="controls" aria-label="Light controls">
+                    <div class="control-title"><span>OUTPUT STAGE</span><span>LIVE</span></div>
+                    <label class="row" for="surface"
+                        ><span>Core surface</span
+                        ><select id="surface">
+                            <option value="glass">Liquid glass</option>
+                            <option value="obsidian">Obsidian</option>
+                        </select></label
+                    >
+                    <label class="row" for="bloom"
+                        ><span>Optical bloom</span
+                        ><span
+                            ><output id="bloom-state">ON</output>
+                            <input type="checkbox" id="bloom" checked /></span></label
+                    ><label class="row" for="tone"
+                        ><span>Tone curve</span
+                        ><select id="tone">
+                            <option value="aces">ACES fitted</option>
+                            <option value="reinhard">Reinhard</option>
+                        </select></label
+                    ><label class="row" for="exposure"
+                        ><span>Exposure</span
+                        ><input type="range" id="exposure" min="0.2" max="2" step="0.05" value="0.85" /><output
+                            id="exposure-value"
+                            >0.85</output
+                        ></label
+                    >
+                    <div class="actions">
+                        <button id="pause" aria-pressed="false">Pause motion</button
+                        ><button id="reset">Reset view</button>
+                    </div>
+                </section>
+            </footer>
+            <div class="hint">DRAG TO ORBIT · SCROLL TO EXPLORE</div>
+        </main>
+        <script type="module" src="./src/main.ts"></script>
+    </body>
+</html>

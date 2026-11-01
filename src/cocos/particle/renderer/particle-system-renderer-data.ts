@@ -272,7 +272,7 @@ export default class ParticleSystemRenderer {
 
     public set alignSpace (val: number) {
         this._alignSpace = val;
-        this._particleSystem.processor.updateAlignSpace(this._alignSpace);
+        this._particleSystem?.processor?.updateAlignSpace(this._alignSpace);
     }
 
     @serializable

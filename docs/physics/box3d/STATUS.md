@@ -1,5 +1,7 @@
 # Box3D closure status
 
+> **2026-10-31 integration in progress:** see [the current integration ledger](integration-20261031.md). The following 2026-10-28 body is a retained historical checkpoint, not the current environment or current build status. The official toolchain and fresh native ST build now work; full original acceptance is still open.
+
 Updated: 2026-10-28 14:57 UTC. Branch: `feat/box3d-rebuild-20261022`.
 
 ## Current EX02 checkpoint and environment verification

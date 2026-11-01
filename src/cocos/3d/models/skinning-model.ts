@@ -40,6 +40,7 @@ import { TextureFilter, PixelFormat, WrapMode } from '../../asset/assets/asset-e
 import { Texture2D, ImageAsset } from '../../asset/assets';
 import { SubModel } from '../../render-scene/scene';
 import { validateSkinningBinding, validateSkinningCapacity } from './skinning-validation';
+import type { SkinnedMeshRenderer } from '../skinned-mesh-renderer/skinned-mesh-renderer';
 
 const uniformPatches: IMacroPatch[] = [
     { name: 'CC_USE_SKINNING', value: true },
@@ -65,6 +66,7 @@ function getRelevantBuffers (outIndices: number[], outBuffers: number[], jointMa
 }
 
 interface IJointInfo {
+    skeletonIndex: number;
     bound: geometry.AABB;
     target: Node;
     bindpose: Mat4;
@@ -95,6 +97,11 @@ class RealTimeJointTexture {
  * 实时计算动画的蒙皮模型。
  */
 export class SkinningModel extends MorphModel {
+    private _boundsMesh: Mesh | null = null;
+    private _boundsSkeleton: Skeleton | null = null;
+    private _baseBounds: (geometry.AABB | null)[] | null = null;
+    private _morphBounds: (geometry.AABB | null)[] | null = null;
+    private _morphBoundsKey = '';
     private _buffers: Buffer[] = [];
     private _dataArray: Float32Array[] = [];
     private _joints: IJointInfo[] = [];
@@ -148,6 +155,11 @@ export class SkinningModel extends MorphModel {
             deleteTransform(this._joints[i].target);
         }
         this._bufferIndices = null; this._joints.length = 0;
+        this._boundsMesh = mesh;
+        this._boundsSkeleton = skeleton;
+        this._baseBounds = null;
+        this._morphBounds = null;
+        this._morphBoundsKey = '';
         if (!skeleton || !skinningRoot || !mesh) { return; }
         this._realTimeTextureMode = false;
         if (UBOSkinning.JOINT_UNIFORM_CAPACITY < skeleton.joints.length) { this._realTimeTextureMode = true; }
@@ -165,7 +177,7 @@ export class SkinningModel extends MorphModel {
             const indices: number[] = [];
             const buffers: number[] = [];
             if (!jointMaps) { indices.push(index); buffers.push(0); } else { getRelevantBuffers(indices, buffers, jointMaps, index); }
-            this._joints.push({ indices, buffers, bound, target, bindpose, transform });
+            this._joints.push({ skeletonIndex: index, indices, buffers, bound, target, bindpose, transform });
         }
     }
 
@@ -179,6 +191,29 @@ export class SkinningModel extends MorphModel {
         if (root.hasChangedFlags || root.isTransformDirty()) {
             root.updateWorldTransform();
             this._localDataUpdated = true;
+        }
+        // One latest bounds entry per model, not a shared mesh cache entry per animation sample.
+        const mesh = this._boundsMesh;
+        const skeleton = this._boundsSkeleton;
+        if (mesh?.struct.morph && skeleton) {
+            const morph = mesh.struct.morph;
+            const renderer = this.node?.getComponent('cc.SkinnedMeshRenderer') as SkinnedMeshRenderer | null;
+            const weights = morph.subMeshMorphs.map((sub, subMesh) => sub?.targets.map((_, target) =>
+                renderer ? renderer.getWeight(subMesh, target) : sub.weights?.[target] ?? morph.weights?.[target] ?? 0) ?? []);
+            const key = weights.map((sub) => sub.join(',')).join(';');
+            const base = mesh.getBoneSpaceBounds(skeleton);
+            if (base !== this._baseBounds || key !== this._morphBoundsKey) {
+                const bounds = mesh.getBoneSpaceBounds(skeleton, weights);
+                // Keep the undeformed shape as well: disabling morph must remain conservative without
+                // depending on the renderer's private morph-resource activation timing.
+                for (let joint = 0; joint < bounds.length; joint++) {
+                    if (bounds[joint] && base[joint]) { geometry.AABB.merge(bounds[joint]!, bounds[joint]!, base[joint]!); }
+                }
+                this._baseBounds = base;
+                this._morphBoundsKey = key;
+                this._morphBounds = bounds;
+            }
+            for (const joint of this._joints) { joint.bound = this._morphBounds![joint.skeletonIndex]!; }
         }
         // update bounds
         Vec3.set(v3_min,  Infinity,  Infinity,  Infinity);

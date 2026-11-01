@@ -1,8 +1,0 @@
-PASS tools/verify/box3d/world-real-wasm.test.ts (15.801 s)
-  ✓ real WASM world through actual AIR startup and PhysicsSystem; scope reported independently (297 ms)
-
-Test Suites: 1 passed, 1 total
-Tests:       1 passed, 1 total
-Snapshots:   0 total
-Time:        16.304 s
-Ran all test suites.

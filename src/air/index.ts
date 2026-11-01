@@ -53,6 +53,7 @@ export * from './scene-stack';
 export * from './audio-service';
 export * from './utils';
 export * from './primitive-geometry';
+export * from './particles';
 export { Billboard } from '../cocos/particle/billboard';
 export * from './assets/gltf';
 export * from './assets/bmfont';
@@ -64,6 +65,12 @@ export { createAirUnlitFogEffect } from './effects/unlit-fog';
 export * from './rendering/render-target';
 export * from './rendering/screen-effect';
 export * from './rendering/screen-pass';
+export * from './rendering/post-process';
+export * from './rendering/instance-batch';
+export { createAirInstanceMaterial, AIR_INSTANCE_ATTRIBUTES } from './rendering/instance-material';
+export * from './rendering/morph-field';
+export * from './rendering/point-shapes';
+export * from './rendering/point-text';
 export * from './effects/vignette';
 export * from './effects/bloom';
 export * from './rendering/color-contract';
@@ -73,6 +80,8 @@ export * from './ui-glyph-tags';
 export * from './ui-glyph-text';
 export * from './ui-glyph-icons';
 export * from './ui-typewriter';
+
+export { createAirGradientEffect } from './effects/gradient';
 
 export { registerBox3DBeforeStep, readBox3DBodyMotion, readBox3DConstraintState } from './box3d-controls';
 export type {

@@ -1,6 +1,0 @@
-PASS phase: owner prepare returned then native-plan getter throws is pre-effect with independently cleaned scopes
-PASS phase: owner prepare return after caught reentry is refused before material effects
-PASS phase: dispose throws after actual release is conservatively unresolved, never retried, all owners fault
-PASS phase: cleanup normal return after caught reentry retains completed cleanup but faults changed transaction
-PASS phase: commitCaches normal return after caught reentry retains returned fact and stops later owner
-PASS phase: commitCaches partial write then throw stays entered-unknown and stops later owner

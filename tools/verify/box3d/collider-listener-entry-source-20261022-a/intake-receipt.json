@@ -1,7 +1,0 @@
-{
-  "status": "PASS_81_EXACT_ARCHIVE_DATA_MEMBERS",
-  "checked": 81,
-  "manifestSha256": "f0cb29f94fbc175888c154f29b8090a49a8b446d2e5cc56462f5ec31e47f5f81",
-  "mainColliderUnchangedSha256": "2e93ecae851d1a943c00d1a5a01a3d887153dce0d9693f541b4f6be73b2a7ac9",
-  "productIntegration": "NOT_INTEGRATED"
-}
