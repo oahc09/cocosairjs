@@ -1,5 +1,7 @@
 # Cocos AIR 工具
 
+Android 宿主后台退出的定向入口为 `node tools/verify/runtime-interop-android-background-exit.cjs --serial=<device> --apk=<candidate.apk> --host-source=<matching-checkout> --case=foreground|home|settings --expected-page-size=4096|16384 --out=<new-directory>`。仅显式 `--install` 安装专用 debug 包；原10秒内要求真实 native/SDL 析构后才清理进程，保存失败尝试，不以强停或回前台补通过。写入和固定SDK夹具边界见 [Android 互操作说明](../docs/reference/android-runtime-interop.md)。宿主构建支持 `-RuntimeBase` 指向已有隔离目录，不需要搬动依赖或修改历史记录。
+
 ## Box2D 3.2 可选后端
 
 `node tools/build/box2d3.cjs --check` 只读检查冻结源码；`--build` 使用固定的 Emscripten 4.0.21 编译，写入 vendor 运行时与 receipt、`build/box2d3/` 和开发专用的 `build/box2d3-samples/`。它不会安装系统工具链；本地路径可通过 `BOX2D_EMSDK`、`NINJA`、`BOX2D_BUILD_DIR` 指定。

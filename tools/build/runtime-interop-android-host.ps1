@@ -1,19 +1,24 @@
 param(
     [ValidateSet('x86_64', 'arm64-v8a')][string]$Abi = 'x86_64',
-    [Parameter(Mandatory = $true)][string]$Out
+    [Parameter(Mandatory = $true)][string]$Out,
+    [string]$RuntimeBase
 )
 
 # Build the isolated Mystral host with the existing, fixed SDL/static dependencies.
 # Writes the named new output directory and the host's ordinary Gradle build directories.
 $ErrorActionPreference = 'Stop'
 $taskRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../..'))
-$taskBase = [IO.Path]::GetFullPath((Join-Path $taskRoot 'output/runtime-interop'))
+$taskBase = if ($RuntimeBase) { [IO.Path]::GetFullPath($RuntimeBase) } else {
+    [IO.Path]::GetFullPath((Join-Path $taskRoot 'output/runtime-interop'))
+}
 $taskSource = Join-Path $taskBase 'mystral-source'
 $taskAndroid = Join-Path $taskSource 'android'
 $taskDeps = Join-Path $taskBase 'deps-16k-attempt-1'
 $taskOld = Join-Path $taskBase 'android-build-deps-attempt-1'
 $taskAssets = Join-Path $taskBase 'android-assets-attempt-4'
-$taskOps = [IO.Path]::GetFullPath((Join-Path $taskRoot $Out))
+$taskOps = if ([IO.Path]::IsPathRooted($Out)) { [IO.Path]::GetFullPath($Out) } else {
+    [IO.Path]::GetFullPath((Join-Path $taskRoot $Out))
+}
 if (-not $taskOps.StartsWith($taskBase + [IO.Path]::DirectorySeparatorChar, [StringComparison]::OrdinalIgnoreCase)) {
     throw 'Output must be a new directory inside output/runtime-interop/'
 }
