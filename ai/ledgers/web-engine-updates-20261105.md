@@ -12,6 +12,7 @@ Baseline: `main@e640be140fad8763e18865877acd896b60e9f44a`. This is an implementa
 - WebGL timer evidence: bind query samples to submission phase/frame and discard pending queries on disjoint; unavailable or unresolved results remain unavailable.
 - Benchmark preparation: require the actual installed Three.js baseline version and bind each arm to a verified copy of the same local package tree. This does not authenticate the registry archive or alter historical Goldens.
 - Interactive baseline evidence: verify external source-map binding receipts instead of assuming embedded `sourcesContent`; retain legacy embedded-map support and fail closed on missing or stale evidence.
+- Example evidence preflight: verify external dev/min source-binding receipts, include their presence and hashes in the frozen campaign input, and retain Spark's original embedded virtual-worker checks. This does not publish or promote a campaign.
 
 ## Verification boundaries
 

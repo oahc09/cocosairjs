@@ -53,7 +53,15 @@ const INPUT_TREES = [
     'tools/build',
 ];
 const OPTIONAL_TREES = ['build/gltf-decoders', 'build/spark-types', 'build/fflate', 'build/devtools'];
-const OPTIONAL_FILES = ['build/package.json', 'build/cocosair.legacy.d.ts', 'build/metadata/spark.module.meta.json'];
+const OPTIONAL_FILES = [
+    'build/package.json',
+    'build/cocosair.legacy.d.ts',
+    'build/metadata/spark.module.meta.json',
+    // Embedded legacy maps need no receipt; external-map preflight requires these.
+    // Once present, their bytes and presence are immutable for the entire campaign.
+    'build/cocosair.module.js.sources.json',
+    'build/cocosair.module.min.js.sources.json',
+];
 const DEFAULT_LIMITS = Object.freeze(require('./example-evidence-limits.json'));
 
 function stable(value) {
