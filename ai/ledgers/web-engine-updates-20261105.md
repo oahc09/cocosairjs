@@ -13,7 +13,7 @@ Baseline: `main@e640be140fad8763e18865877acd896b60e9f44a`. This is an implementa
 
 ## Verification boundaries
 
-Focused tests use synthetic inputs or mocked GL against actual source; they are not real-GPU evidence. Run the newly registered CPU tests through the normal CI when its dependencies are available. The local dependency installation did not complete; full Jest, runtime build, full TypeScript checking, and current-source browser/GPU acceptance were not established. Browser attempts failed before creation of a WebGL context. Do not reuse old output as proof for this revision.
+Focused CPU tests use synthetic inputs or mocked GL against actual source. A separate WebKit 26.5 WebGL2 check executed AST-selected current buffer functions with native GL calls: four candidate cases passed, while all four failed on the unmodified baseline. It covered typed-array upload/readback, UBO ranges and a draw/readPixels check; it is not a full-engine build, physical-hardware claim or cross-browser certification. A separate Chromium attempt failed before creating a WebGL context. Run the newly registered CPU tests through normal CI when dependencies are available. The local dependency installation did not complete; full Jest, runtime build and full TypeScript checking were not established. Do not reuse old output as proof for this revision.
 
 ## Still open
 
