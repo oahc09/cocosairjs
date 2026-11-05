@@ -37,6 +37,7 @@ export class WebGL2StateCache {
     public glUniformBuffer: WebGLBuffer | null = null;
     public glBindUBOs: (WebGLBuffer | null)[] = [];
     public glBindUBOOffsets: number[] = [];
+    public glBindUBOSizes: number[] = [];
     public glVAO: WebGLVertexArrayObject | null = null;
     public texUnit = 0;
     public glTexUnits: IWebGL2TexUnit[] = [];
@@ -71,6 +72,9 @@ export class WebGL2StateCache {
 
         this.glBindUBOOffsets.length = bufferBindings;
         this.glBindUBOOffsets.fill(0);
+
+        this.glBindUBOSizes.length = bufferBindings;
+        this.glBindUBOSizes.fill(0);
 
         this.glEnabledAttribLocs.length = vertexAttributes;
         this.glEnabledAttribLocs.fill(false);

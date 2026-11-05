@@ -43,8 +43,8 @@ interface KTX2ImageLike { uri?: string; bufferView?: number; mimeType?: string; 
 /** KTX2 file identifier: 0xAB 'KTX 20' 0xBB 0x0D 0x0A 0x1A 0x0A. */
 export function isKTX2 (bytes: Uint8Array): boolean {
     return bytes.length >= 12 && bytes[0] === 0xAB && bytes[1] === 0x4B && bytes[2] === 0x54 && bytes[3] === 0x58
-        && bytes[4] === 0x20 && bytes[5] === 0x32 && bytes[6] === 0x30 && bytes[7] === 0x42 && bytes[8] === 0x42
-        && bytes[9] === 0xBB && bytes[10] === 0x0D && bytes[11] === 0x0A;
+        && bytes[4] === 0x20 && bytes[5] === 0x32 && bytes[6] === 0x30 && bytes[7] === 0xBB && bytes[8] === 0x0D
+        && bytes[9] === 0x0A && bytes[10] === 0x1A && bytes[11] === 0x0A;
 }
 
 export function basisuFactory (context: GLTFParserContext): GLTFExtensionHandler {

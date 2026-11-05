@@ -72,9 +72,6 @@ export function createAirHTMLSource(options: AirHTMLSourceOptions): {
     if (element.parentNode !== canvas || elementLeases.has(element) || !Number.isFinite(resolution) || resolution <= 0) throw new Error('AIR_E_HTML_SOURCE_OPTIONS: unique direct canvas child and positive resolution required');
     const surface = canvas as ExperimentalCanvas, gl = canvas.getContext('webgl2') as ExperimentalGL;
     const lease = canvasLeases.get(canvas) ?? { count: 0, original: canvas.getAttribute('content'), layout: canvas.getAttribute('layoutsubtree') }, oldDrawable = element.getAttribute('drawable');
-    lease.count++; canvasLeases.set(canvas, lease); elementLeases.add(element);
-    // Experimental Chrome builds may still use the earlier layoutsubtree spelling.
-    canvas.setAttribute('content', 'drawable'); canvas.setAttribute('layoutsubtree', ''); element.setAttribute('drawable', '');
     let disposed = false, pending = true, snapshot: ElementImageHandle | null = null, failed = false;
     let status: 'waiting' | 'ready' | 'failed' | 'disposed' = 'waiting', lastError: unknown = null, snapshotSize: readonly [number, number] | null = null;
     const alive = (): void => { if (disposed) throw new Error('AIR_E_HTML_SOURCE_DISPOSED'); };
@@ -100,25 +97,36 @@ export function createAirHTMLSource(options: AirHTMLSourceOptions): {
             status = 'ready'; lastError = null; options.onUpdate?.();
         } catch (error) { failed = true; status = 'failed'; lastError = error; options.onError?.(error); }
     };
-    canvas.addEventListener('paint', paint);
-    surface.requestPaint();
+    const dispose = (): void => {
+        if (disposed) return; disposed = true; status = 'disposed'; canvas.removeEventListener('paint', paint);
+        let cleanupError: unknown = null;
+        try { surface.clearElementGeometry(snapshot ?? element); } catch (error) { cleanupError = error; }
+        try { snapshot?.close(); } catch (error) { cleanupError = cleanupError ?? error; } snapshot = null;
+        elementLeases.delete(element); lease.count--;
+        if (element.getAttribute('drawable') === '') { if (oldDrawable === null) element.removeAttribute('drawable'); else element.setAttribute('drawable', oldDrawable); }
+        // Restore content only after the last drawable child is gone.
+        if (lease.count === 0) {
+            canvasLeases.delete(canvas);
+            if (canvas.getAttribute('content') === 'drawable') { if (lease.original === null) canvas.removeAttribute('content'); else canvas.setAttribute('content', lease.original); }
+            if (canvas.getAttribute('layoutsubtree') === '') { if (lease.layout === null) canvas.removeAttribute('layoutsubtree'); else canvas.setAttribute('layoutsubtree', lease.layout); }
+        }
+        if (cleanupError) throw cleanupError;
+    };
+    lease.count++; canvasLeases.set(canvas, lease); elementLeases.add(element);
+    try {
+        // Experimental Chrome builds may still use the earlier layoutsubtree spelling.
+        canvas.setAttribute('content', 'drawable'); canvas.setAttribute('layoutsubtree', ''); element.setAttribute('drawable', '');
+        canvas.addEventListener('paint', paint);
+        surface.requestPaint();
+    } catch (error) {
+        // No handle is returned on failure, so release every resource acquired above.
+        // Preserve the initialization error even if a browser cleanup API also fails.
+        try { dispose(); } catch { /* The initialization error remains the cause. */ }
+        throw error;
+    }
     return { texture, get status() { return status; }, get error() { return lastError; },
         update() { alive(); failed = false; pending = true; status = 'waiting'; surface.requestPaint(); },
         updateGeometry(geometry) { alive(); surface.updateElementGeometry(snapshot ?? element, geometry); },
-        dispose() {
-            if (disposed) return; disposed = true; status = 'disposed'; canvas.removeEventListener('paint', paint);
-            let cleanupError: unknown = null;
-            try { surface.clearElementGeometry(snapshot ?? element); } catch (error) { cleanupError = error; }
-            try { snapshot?.close(); } catch (error) { cleanupError = cleanupError ?? error; } snapshot = null;
-            elementLeases.delete(element); lease.count--;
-            if (element.getAttribute('drawable') === '') { if (oldDrawable === null) element.removeAttribute('drawable'); else element.setAttribute('drawable', oldDrawable); }
-            // Restore content only after the last drawable child is gone.
-            if (lease.count === 0) {
-                canvasLeases.delete(canvas);
-                if (canvas.getAttribute('content') === 'drawable') { if (lease.original === null) canvas.removeAttribute('content'); else canvas.setAttribute('content', lease.original); }
-                if (canvas.getAttribute('layoutsubtree') === '') { if (lease.layout === null) canvas.removeAttribute('layoutsubtree'); else canvas.setAttribute('layoutsubtree', lease.layout); }
-            }
-            if (cleanupError) throw cleanupError;
-        },
+        dispose,
     };
 }

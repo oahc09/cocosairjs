@@ -814,6 +814,15 @@ export function WebGL2CmdFuncDestroyBuffer (device: WebGL2Device, gpuBuffer: IWe
         default:
         }
 
+        // Deleting a buffer clears native indexed bindings as well. Do not
+        // retain a deleted handle or its range in the descriptor cache.
+        for (let i = 0; i < cache.glBindUBOs.length; ++i) {
+            if (cache.glBindUBOs[i] === gpuBuffer.glBuffer) {
+                cache.glBindUBOs[i] = null;
+                cache.glBindUBOOffsets[i] = 0;
+                cache.glBindUBOSizes[i] = 0;
+            }
+        }
         gl.deleteBuffer(gpuBuffer.glBuffer);
         gpuBuffer.glBuffer = null;
     }
@@ -896,7 +905,17 @@ export function WebGL2CmdFuncUpdateBuffer (
             gpuBuffer.indirects.setDrawInfo(offset + i, drawInfos[i]);
         }
     } else {
-        const buff = buffer as ArrayBuffer;
+        // BufferSource callers also pass typed-array/DataView subviews. Size and
+        // destination offset are bytes, never typed-array element counts.
+        const bytes = ArrayBuffer.isView(buffer)
+            ? new Uint8Array(buffer.buffer, buffer.byteOffset, buffer.byteLength)
+            : new Uint8Array(buffer as ArrayBuffer);
+        if (!Number.isSafeInteger(offset) || offset < 0 || !Number.isSafeInteger(size) || size < 0
+            || size > bytes.byteLength || offset + size > gpuBuffer.size) {
+            throw new RangeError('WEBGL2_BUFFER_UPDATE_RANGE');
+        }
+        if (size === 0) return;
+        const buff = bytes.subarray(0, size);
         const { gl } = device;
         const cache = device.getStateCache();
 
@@ -915,16 +934,14 @@ export function WebGL2CmdFuncUpdateBuffer (
                 cache.glArrayBuffer = gpuBuffer.glBuffer;
             }
 
-            if (systemInfo.os === OS.IOS && (gpuBuffer.memUsage & MemoryUsageBit.HOST) && offset === 0 && size === buff.byteLength) {
+            if (systemInfo.os === OS.IOS && (gpuBuffer.memUsage & MemoryUsageBit.HOST) && offset === 0 && size === gpuBuffer.size) {
                 // Fix performance issue on iOS.
                 // TODO(zhouzhenglong): glBufferSubData is faster than glBufferData in most cases.
                 // We should use multiple buffers to avoid stall (cpu write conflicts with gpu read).
                 // Before that, we will use glBufferData instead of glBufferSubData.
                 gl.bufferData(gpuBuffer.glTarget, buff, gl.DYNAMIC_DRAW);
-            } else if (size === buff.byteLength) {
-                gl.bufferSubData(gpuBuffer.glTarget, offset, buff);
             } else {
-                gl.bufferSubData(gpuBuffer.glTarget, offset, buff.slice(0, size));
+                gl.bufferSubData(gpuBuffer.glTarget, offset, buff);
             }
             break;
         }
@@ -942,16 +959,14 @@ export function WebGL2CmdFuncUpdateBuffer (
                 cache.glElementArrayBuffer = gpuBuffer.glBuffer;
             }
 
-            if (systemInfo.os === OS.IOS && (gpuBuffer.memUsage & MemoryUsageBit.HOST) && offset === 0 && size === buff.byteLength) {
+            if (systemInfo.os === OS.IOS && (gpuBuffer.memUsage & MemoryUsageBit.HOST) && offset === 0 && size === gpuBuffer.size) {
                 // Fix performance issue on iOS.
                 // TODO(zhouzhenglong): glBufferSubData is faster than glBufferData in most cases.
                 // We should use multiple buffers to avoid stall (cpu write conflicts with gpu read).
                 // Before that, we will use glBufferData instead of glBufferSubData.
                 gl.bufferData(gpuBuffer.glTarget, buff, gl.DYNAMIC_DRAW);
-            } else if (size === buff.byteLength) {
-                gl.bufferSubData(gpuBuffer.glTarget, offset, buff);
             } else {
-                gl.bufferSubData(gpuBuffer.glTarget, offset, buff.slice(0, size));
+                gl.bufferSubData(gpuBuffer.glTarget, offset, buff);
             }
             break;
         }
@@ -961,16 +976,14 @@ export function WebGL2CmdFuncUpdateBuffer (
                 cache.glUniformBuffer = gpuBuffer.glBuffer;
             }
 
-            if (systemInfo.os === OS.IOS && (gpuBuffer.memUsage & MemoryUsageBit.HOST) && offset === 0 && size === buff.byteLength) {
+            if (systemInfo.os === OS.IOS && (gpuBuffer.memUsage & MemoryUsageBit.HOST) && offset === 0 && size === gpuBuffer.size) {
                 // Fix performance issue on iOS.
                 // TODO(zhouzhenglong): glBufferSubData is faster than glBufferData in most cases.
                 // We should use multiple buffers to avoid stall (cpu write conflicts with gpu read).
                 // Before that, we will use glBufferData instead of glBufferSubData.
                 gl.bufferData(gpuBuffer.glTarget, buff, gl.DYNAMIC_DRAW);
-            } else if (size === buff.byteLength) {
-                gl.bufferSubData(gpuBuffer.glTarget, offset, buff);
             } else {
-                gl.bufferSubData(gpuBuffer.glTarget, offset, new Float32Array(buff, 0, size / 4));
+                gl.bufferSubData(gpuBuffer.glTarget, offset, buff);
             }
             break;
         }
@@ -2357,20 +2370,20 @@ export function WebGL2CmdFuncBindStates (
             if (dynamicOffsetIndex >= 0) { offset += dynamicOffsets[dynamicOffsetIndex]; }
 
             if (cache.glBindUBOs[glBlock.glBinding] !== gpuDescriptor.gpuBuffer.glBuffer
-                || cache.glBindUBOOffsets[glBlock.glBinding] !== offset) {
-                if (offset) {
-                    gl.bindBufferRange(
-                        WebGLConstants.UNIFORM_BUFFER,
-                        glBlock.glBinding,
-                        gpuDescriptor.gpuBuffer.glBuffer,
-                        offset,
-                        gpuDescriptor.gpuBuffer.size,
-                    );
-                } else {
-                    gl.bindBufferBase(WebGLConstants.UNIFORM_BUFFER, glBlock.glBinding, gpuDescriptor.gpuBuffer.glBuffer);
-                }
+                || cache.glBindUBOOffsets[glBlock.glBinding] !== offset
+                || cache.glBindUBOSizes[glBlock.glBinding] !== gpuDescriptor.gpuBuffer.size) {
+                // A zero-offset view still has a bounded range. Binding the
+                // entire backing buffer would discard that view contract.
+                gl.bindBufferRange(
+                    WebGLConstants.UNIFORM_BUFFER,
+                    glBlock.glBinding,
+                    gpuDescriptor.gpuBuffer.glBuffer,
+                    offset,
+                    gpuDescriptor.gpuBuffer.size,
+                );
                 cache.glUniformBuffer = cache.glBindUBOs[glBlock.glBinding] = gpuDescriptor.gpuBuffer.glBuffer;
                 cache.glBindUBOOffsets[glBlock.glBinding] = offset;
+                cache.glBindUBOSizes[glBlock.glBinding] = gpuDescriptor.gpuBuffer.size;
             }
         }
 
