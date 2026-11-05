@@ -1,7 +1,7 @@
 {
   "source": "build/cocosair.module.d.ts",
-  "sourceFingerprint": "96c15e0e17102b84",
-  "apiInventoryRevision": "487b5105378fe9dd",
+  "sourceFingerprint": "186759946f56dd77",
+  "apiInventoryRevision": "66f5b8bc8d26a68e",
   "units": {
     "MeshBuffer": {
       "kind": "class",
@@ -19409,6 +19409,138 @@
       "coverageRequired": false,
       "parent": null
     },
+    "Scheduler": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "Scheduler.ID": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "Scheduler"
+    },
+    "Scheduler.enableForTarget": {
+      "kind": "static",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "Scheduler"
+    },
+    "Scheduler.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "Scheduler"
+    },
+    "Scheduler.setTimeScale": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "Scheduler"
+    },
+    "Scheduler.getTimeScale": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "Scheduler"
+    },
+    "Scheduler.update": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "Scheduler"
+    },
+    "Scheduler.schedule": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "Scheduler"
+    },
+    "Scheduler.scheduleUpdate": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "Scheduler"
+    },
+    "Scheduler.unschedule": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "Scheduler"
+    },
+    "Scheduler.unscheduleForTimer": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "Scheduler"
+    },
+    "Scheduler.unscheduleUpdate": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "Scheduler"
+    },
+    "Scheduler.unscheduleAllForTarget": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "Scheduler"
+    },
+    "Scheduler.unscheduleAll": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "Scheduler"
+    },
+    "Scheduler.unscheduleAllWithMinPriority": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "Scheduler"
+    },
+    "Scheduler.isScheduled": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "Scheduler"
+    },
+    "Scheduler.pauseAllTargets": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "Scheduler"
+    },
+    "Scheduler.pauseAllTargetsWithMinPriority": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "Scheduler"
+    },
+    "Scheduler.resumeTargets": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "Scheduler"
+    },
+    "Scheduler.pauseTarget": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "Scheduler"
+    },
+    "Scheduler.resumeTarget": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "Scheduler"
+    },
+    "Scheduler.isTargetPaused": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "Scheduler"
+    },
     "cclegacy": {
       "kind": "constant",
       "tier": "supporting",
@@ -20766,138 +20898,6 @@
       "tier": "supporting",
       "coverageRequired": false,
       "parent": null
-    },
-    "Scheduler": {
-      "kind": "class",
-      "tier": "supporting",
-      "coverageRequired": false,
-      "parent": null
-    },
-    "Scheduler.ID": {
-      "kind": "property",
-      "tier": "supporting",
-      "coverageRequired": false,
-      "parent": "Scheduler"
-    },
-    "Scheduler.enableForTarget": {
-      "kind": "static",
-      "tier": "supporting",
-      "coverageRequired": false,
-      "parent": "Scheduler"
-    },
-    "Scheduler.constructor": {
-      "kind": "constructor",
-      "tier": "supporting",
-      "coverageRequired": false,
-      "parent": "Scheduler"
-    },
-    "Scheduler.setTimeScale": {
-      "kind": "method",
-      "tier": "supporting",
-      "coverageRequired": false,
-      "parent": "Scheduler"
-    },
-    "Scheduler.getTimeScale": {
-      "kind": "method",
-      "tier": "supporting",
-      "coverageRequired": false,
-      "parent": "Scheduler"
-    },
-    "Scheduler.update": {
-      "kind": "method",
-      "tier": "supporting",
-      "coverageRequired": false,
-      "parent": "Scheduler"
-    },
-    "Scheduler.schedule": {
-      "kind": "method",
-      "tier": "supporting",
-      "coverageRequired": false,
-      "parent": "Scheduler"
-    },
-    "Scheduler.scheduleUpdate": {
-      "kind": "method",
-      "tier": "supporting",
-      "coverageRequired": false,
-      "parent": "Scheduler"
-    },
-    "Scheduler.unschedule": {
-      "kind": "method",
-      "tier": "supporting",
-      "coverageRequired": false,
-      "parent": "Scheduler"
-    },
-    "Scheduler.unscheduleForTimer": {
-      "kind": "method",
-      "tier": "supporting",
-      "coverageRequired": false,
-      "parent": "Scheduler"
-    },
-    "Scheduler.unscheduleUpdate": {
-      "kind": "method",
-      "tier": "supporting",
-      "coverageRequired": false,
-      "parent": "Scheduler"
-    },
-    "Scheduler.unscheduleAllForTarget": {
-      "kind": "method",
-      "tier": "supporting",
-      "coverageRequired": false,
-      "parent": "Scheduler"
-    },
-    "Scheduler.unscheduleAll": {
-      "kind": "method",
-      "tier": "supporting",
-      "coverageRequired": false,
-      "parent": "Scheduler"
-    },
-    "Scheduler.unscheduleAllWithMinPriority": {
-      "kind": "method",
-      "tier": "supporting",
-      "coverageRequired": false,
-      "parent": "Scheduler"
-    },
-    "Scheduler.isScheduled": {
-      "kind": "method",
-      "tier": "supporting",
-      "coverageRequired": false,
-      "parent": "Scheduler"
-    },
-    "Scheduler.pauseAllTargets": {
-      "kind": "method",
-      "tier": "supporting",
-      "coverageRequired": false,
-      "parent": "Scheduler"
-    },
-    "Scheduler.pauseAllTargetsWithMinPriority": {
-      "kind": "method",
-      "tier": "supporting",
-      "coverageRequired": false,
-      "parent": "Scheduler"
-    },
-    "Scheduler.resumeTargets": {
-      "kind": "method",
-      "tier": "supporting",
-      "coverageRequired": false,
-      "parent": "Scheduler"
-    },
-    "Scheduler.pauseTarget": {
-      "kind": "method",
-      "tier": "supporting",
-      "coverageRequired": false,
-      "parent": "Scheduler"
-    },
-    "Scheduler.resumeTarget": {
-      "kind": "method",
-      "tier": "supporting",
-      "coverageRequired": false,
-      "parent": "Scheduler"
-    },
-    "Scheduler.isTargetPaused": {
-      "kind": "method",
-      "tier": "supporting",
-      "coverageRequired": false,
-      "parent": "Scheduler"
     },
     "RealCurve": {
       "kind": "class",
@@ -52573,6 +52573,12 @@
       "coverageRequired": false,
       "parent": "physics.Constraint"
     },
+    "physics.Constraint.destroy": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "physics.Constraint"
+    },
     "physics.HingeConstraint": {
       "kind": "class",
       "tier": "supporting",
@@ -55243,6 +55249,30 @@
     },
     "AIR_INSTANCE_ATTRIBUTES": {
       "kind": "constant",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "createAirGradientEffect": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "registerBox3DBeforeStep": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "readBox3DBodyMotion": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "readBox3DConstraintState": {
+      "kind": "function",
       "tier": "supporting",
       "coverageRequired": false,
       "parent": null
@@ -58922,6 +58952,24 @@
       "tier": "supporting",
       "coverageRequired": false,
       "parent": "AirTypewriter"
+    },
+    "queryBox3DCommittedColliders": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "queryBox3DCommittedRay": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "createBox3DKinematicTarget": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
     },
     "rendering.createCustomPipeline": {
       "kind": "function",
@@ -67625,6 +67673,13 @@
       "parent": "Constraint",
       "aliasOf": "physics.Constraint.constructor"
     },
+    "Constraint.destroy": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "Constraint",
+      "aliasOf": "physics.Constraint.destroy"
+    },
     "HingeConstraint": {
       "kind": "class",
       "tier": "supporting",
@@ -69013,9 +69068,9 @@
     "core": 974,
     "important": 293,
     "advanced": 200,
-    "supporting": 8904,
+    "supporting": 8913,
     "internal": 966
   },
-  "totalUnits": 11337,
+  "totalUnits": 11346,
   "coverageRequiredUnits": 1467
 }

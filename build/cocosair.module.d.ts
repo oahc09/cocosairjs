@@ -22873,11 +22873,11 @@ export class PipelineStateManager {
     /**
      * @en Get or create a compute pipeline state.
      * A compute pipeline only depends on the shader variant and the pipeline layout,
-     * both carried by the pass, so the cache key is `pass.hash ^ shader.typedID`,
-     * mirroring the graphics-side hash mechanism without renderPass/inputState factors.
+     * both carried by the pass. Keep pass.hash and shader.typedID as independent
+     * keys, without the graphics-side renderPass/inputState factors.
      * @zh 获取或创建计算管线状态。
      * 计算管线仅依赖于着色器变体与管线布局（均由 pass 携带），
-     * 因此缓存键为 `pass.hash ^ shader.typedID`，与图形侧哈希机制一致但不包含 renderPass/顶点布局因子。
+     * 因此分别按 pass.hash 和 shader.typedID 缓存，不包含 renderPass/顶点布局因子。
      */
     static getOrCreateComputePipelineState(device: gfx.Device, pass: renderer.Pass, shader: gfx.Shader): gfx.PipelineState;
 }
@@ -77598,7 +77598,8 @@ declare namespace __private {
         getLevels(): number;
         getFaces(): number;
         getHasAlpha(): boolean;
-        getDFDFlags(): number;
+        /** Absent in older bindings; the adapter then reads the KTX2 descriptor directly. */
+        getDFDTransferFunc?(): number;
         startTranscoding(): boolean;
         getImageLevelInfo(mip: number, layer: number, face: number): _air_assets_gltf_decoder_ktx2__BasisLevelInfo;
         getImageTranscodedSizeInBytes(mip: number, layer: number, face: number, format: number): number;
@@ -77797,6 +77798,7 @@ declare namespace __private {
         glUniformBuffer: WebGLBuffer | null;
         glBindUBOs: (WebGLBuffer | null)[];
         glBindUBOOffsets: number[];
+        glBindUBOSizes: number[];
         glVAO: WebGLVertexArrayObject | null;
         texUnit: number;
         glTexUnits: _cocos_gfx_webgl2_webgl2_state_cache__IWebGL2TexUnit[];
@@ -78257,6 +78259,8 @@ declare namespace __private {
         fs: string;
     }
     export interface _air_spark_cocos_renderer__GeometryEntry {
+        program: WebGLProgram;
+        cache: globalThis.Map<WebGLProgram, _air_spark_cocos_renderer__GeometryEntry>;
         signature: string;
         attrs: gfx.Attribute[];
         buffers: gfx.Buffer[];

@@ -3,11 +3,16 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
+const crypto = require('node:crypto');
+const vm = require('node:vm');
+const { createRequire } = require('node:module');
 const ts = require('typescript');
 const gift = require('@cocos/tfig');
 const { DEFAULT_FEATURES } = require('./default-features.cjs');
 const {
     prepareGiftOptions,
+    normalizeCompatibleEntry,
+    excludedFeatureInputs,
     prepareCompatibleGiftOptions,
     collectEntrySurface,
     reconcileExports,
@@ -158,6 +163,288 @@ test('declaration normalization is byte-identical in separate clean directories'
         first.close();
         second.close();
     }
+});
+
+function compatibleEntryFixture(t) {
+    const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'air-dts-portable-entry-'));
+    t.after(() => fs.rmSync(directory, { recursive: true, force: true }));
+    const entry = path.join(directory, 'virtual-cc.d.ts');
+    const main = path.join(directory, 'main.d.ts');
+    const optional = path.join(directory, 'optional.d.ts');
+    fs.writeFileSync(main, 'export declare class Main { value: number; }');
+    fs.writeFileSync(optional, 'export declare class Optional { value: string; }');
+    fs.writeFileSync(
+        entry,
+        `// Auto-generated\nexport * from ${JSON.stringify(main.slice(0, -5))};\nimport * as optional from ${JSON.stringify(optional.slice(0, -5))};\nexport { optional };\n`,
+    );
+    const options = {
+        rootDir: directory,
+        input: [main, optional, entry],
+        entries: { cc: entry },
+        name: 'cc',
+        rootModule: 'index',
+        privateJsDocTag: 'engineInternal',
+        priority: [entry],
+        groups: [{ test: /^cc$/, path: path.join(directory, 'cc.d.ts') }],
+        nonExportedSymbolDistribution: [{ sourceModule: /.*/, targetModule: 'cc' }],
+    };
+    return { directory, entry, main, optional, options };
+}
+
+test('all-feature entry, actual bundles and receipt are byte-identical across input roots', (t) => {
+    const results = [compatibleEntryFixture(t), compatibleEntryFixture(t)].map((fixture) => {
+        const { configured, surface, originalEntrySha256 } = prepareCompatibleGiftOptions(fixture.options, [fixture.main]);
+        const entry = fs.readFileSync(fixture.entry, 'utf8');
+        assert(!entry.includes(fixture.directory));
+        assert.match(entry, /export \* from "\.\/main"/);
+        assert.match(entry, /import \* as optional from "\.\/optional"/);
+        assert.equal(normalizeCompatibleEntry(fixture.options, entry), entry, 'normalization is idempotent');
+        assert.equal(originalEntrySha256, crypto.createHash('sha256').update(entry).digest('hex'));
+        const legacy = gift.bundle(fixture.options).groups[0].code;
+        const current = gift.bundle(configured).groups[0].code;
+        assert.match(legacy, /class Optional/);
+        assert.match(current, /class Optional/);
+        assert.deepEqual(surface.values, ['Main']);
+        return { entry, legacy, current, receipt: { surface, originalEntrySha256 } };
+    });
+    assert.deepEqual(results[0], results[1]);
+});
+
+function loadCommonJsWithOverrides(file, overrides) {
+    const module = { exports: {} };
+    const actualRequire = createRequire(file);
+    vm.runInNewContext(fs.readFileSync(file, 'utf8'), {
+        module,
+        exports: module.exports,
+        require: (name) => overrides[name] || actualRequire(name),
+        __dirname: path.dirname(file),
+        __filename: file,
+    }, { filename: file });
+    return module.exports;
+}
+
+// Execute the installed generator's actual path utilities and virtual-entry
+// expressions under path.win32. This is a path/filesystem simulation, not a
+// native Windows declaration build or a Windows filesystem acceptance result.
+function windowsEntryFixture(root) {
+    const packageRoot = path.resolve(path.dirname(require.resolve('@cocos/ccbuild')), '../..');
+    const metadata = JSON.parse(fs.readFileSync(path.join(packageRoot, 'package.json'), 'utf8'));
+    const lock = JSON.parse(fs.readFileSync(path.join(__dirname, '../../package-lock.json'), 'utf8'));
+    assert.equal(metadata.version, lock.packages['node_modules/@cocos/ccbuild'].version);
+    const windowsPath = loadCommonJsWithOverrides(path.join(packageRoot, 'modules/utils/lib/path.js'), { path: path.win32 });
+    const generatorPath = path.join(packageRoot, 'modules/dts-bundler/lib/index.js');
+    const generator = ts.createSourceFile(generatorPath, fs.readFileSync(generatorPath, 'utf8'), ts.ScriptTarget.Latest, true);
+    const modulePath = [];
+    const virtualEntry = [];
+    function find(node) {
+        if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer) {
+            if (node.name.text === 'getModuleNameInTsOutFile') modulePath.push(node.initializer.getText(generator));
+            if (node.name.text === 'code' && node.initializer.getText(generator).includes('evaluateIndexModuleSource'))
+                virtualEntry.push(node.initializer.getText(generator));
+        }
+        ts.forEachChild(node, find);
+    }
+    find(generator);
+    assert.equal(modulePath.length, 1, 'expected one installed declaration module-path generator');
+    assert.equal(virtualEntry.length, 1, 'expected one installed virtual-entry generator');
+    const sourceRoot = path.win32.dirname(root);
+    const statsQuery = {
+        path: sourceRoot,
+        _index: { modules: {} },
+        getFeatureUnitFile: (unit) => path.win32.join(sourceRoot, 'exports', unit + '.ts'),
+        evaluateIndexModuleSource: require('@cocos/ccbuild').StatsQuery.prototype.evaluateIndexModuleSource,
+    };
+    const source = vm.runInNewContext(`const getModuleNameInTsOutFile = ${modulePath[0]};\n${virtualEntry[0]}`, {
+        utils_1: { ps: windowsPath },
+        statsQuery,
+        featureUnits: ['main'],
+        unbundledOutDirNormalized: windowsPath.resolve(root),
+    });
+    assert(!source.includes('\\'), 'installed ccbuild must publish forward-slash Windows module paths');
+    const entry = path.win32.join(root, 'virtual-cc.d.ts');
+    const main = path.win32.join(root, 'exports/main.d.ts');
+    const files = new Map();
+    const key = (file) => path.win32.resolve(file).toLowerCase();
+    const add = (file, directory = false, real = file) => files.set(key(file), { directory, real });
+    add(root, true);
+    add(path.win32.join(root, 'exports'), true);
+    add(entry);
+    add(main);
+    const get = (file) => {
+        const result = files.get(key(file));
+        if (!result) throw Object.assign(new Error('Missing Windows fixture path: ' + file), { code: 'ENOENT' });
+        return result;
+    };
+    const filesystem = {
+        realpathSync: (file) => get(file).real,
+        existsSync: (file) => files.has(key(file)),
+        statSync: (file) => ({ isFile: () => !get(file).directory }),
+    };
+    const normalizer = loadCommonJsWithOverrides(path.join(__dirname, 'upstream-dts-surface.cjs'), {
+        'node:path': path.win32,
+        'node:fs': filesystem,
+    }).normalizeCompatibleEntry;
+    const options = { rootDir: root, entries: { cc: entry }, input: [entry, main] };
+    return { source, options, normalize: (text = source) => normalizer(options, text), add };
+}
+
+test('installed ccbuild Windows paths with drive letters and spaces normalize identically (win32 simulation)', () => {
+    const roots = [
+        'C:\\Work Spaces\\Cocos AIR\\src\\__dts_before_bundle',
+        'D:\\Other Work Spaces\\Cocos AIR\\src\\__dts_before_bundle',
+    ];
+    const fixtures = roots.map(windowsEntryFixture);
+    for (const [index, fixture] of fixtures.entries()) {
+        assert(fixture.source.includes(roots[index].replace(/\\/g, '/')));
+        assert.equal(fixture.normalize(), '// Auto-generated\nexport * from "./exports/main";\n');
+    }
+    assert.equal(fixtures[0].normalize(), fixtures[1].normalize());
+    assert.equal(
+        crypto.createHash('sha256').update(fixtures[0].normalize()).digest('hex'),
+        crypto.createHash('sha256').update(fixtures[1].normalize()).digest('hex'),
+    );
+});
+
+test('Windows declaration paths reject cross-drive, parent, prefix and realpath escapes (win32 simulation)', () => {
+    const root = 'C:\\Work Spaces\\Cocos AIR\\src\\__dts_before_bundle';
+    const fixture = windowsEntryFixture(root);
+    const portable = root.replace(/\\/g, '/');
+    const requests = [
+        ['D:/Other/exports/main', /outside input root/],
+        [portable + '-outside/exports/main', /outside input root/],
+        ['../outside', /outside input root/],
+        ['./exports/../../outside', /outside input root/],
+        ['/rooted-without-drive/main', /outside input root/],
+        ['//other-server/share/main', /outside input root/],
+        ['C:exports/main', /unsupported declaration module path/],
+        [root + '\\exports\\main', /unsupported declaration module path/],
+        [portable + '/exports/missing', /unknown declaration module input/],
+    ];
+    for (const [request, error] of requests)
+        assert.throws(() => fixture.normalize(`export * from ${JSON.stringify(request)};`), error, request);
+    const alias = path.win32.join(root, 'exports/alias.d.ts');
+    fixture.add(alias, false, 'D:\\Outside\\alias.d.ts');
+    fixture.options.input.push(alias);
+    assert.throws(() => fixture.normalize('export * from "./exports/alias";'), /outside real input root/);
+});
+
+test('all-feature graph changes alter the bound entry and actual bundle, not the default runtime surface', (t) => {
+    const fixture = compatibleEntryFixture(t);
+    const before = prepareCompatibleGiftOptions(fixture.options, [fixture.main]);
+    const originalEntry = fs.readFileSync(fixture.entry, 'utf8');
+    const originalBundle = gift.bundle(before.configured).groups[0].code;
+    const additional = path.join(fixture.directory, 'additional.d.ts');
+    fs.writeFileSync(additional, 'export declare class AdditionalFeature { changed: true; }');
+    fixture.options.input.push(additional);
+    fs.appendFileSync(fixture.entry, `export * from ${JSON.stringify(additional.slice(0, -5))};\n`);
+    const after = prepareCompatibleGiftOptions(fixture.options, [fixture.main]);
+    const changedEntry = fs.readFileSync(fixture.entry, 'utf8');
+    const changedBundle = gift.bundle(after.configured).groups[0].code;
+    assert.notEqual(originalEntry, changedEntry);
+    assert.notEqual(before.originalEntrySha256, after.originalEntrySha256);
+    assert.notEqual(originalBundle, changedBundle);
+    assert.match(changedBundle, /class AdditionalFeature/);
+    assert.deepEqual(before.surface, after.surface);
+    assert.equal(after.originalEntrySha256, crypto.createHash('sha256').update(changedEntry).digest('hex'));
+});
+
+test('entry normalization rejects unknown, malformed and out-of-scope module paths without rewriting input', (t) => {
+    const fixture = compatibleEntryFixture(t);
+    const unlisted = path.join(fixture.directory, 'unlisted.d.ts');
+    fs.writeFileSync(unlisted, 'export declare class Unlisted {}');
+    const outside = fs.mkdtempSync(fixture.directory + '-outside-');
+    t.after(() => fs.rmSync(outside, { recursive: true, force: true }));
+    const escaped = path.join(outside, 'escaped.d.ts');
+    fs.writeFileSync(escaped, 'export declare class Escaped {}');
+    fixture.options.input.push(escaped);
+    const original = fs.readFileSync(fixture.entry, 'utf8');
+    const cases = [
+        ['missing', './missing', /unknown declaration module/],
+        ['unlisted existing file', './unlisted', /unknown declaration module/],
+        ['absolute sibling prefix', escaped, /outside input root/],
+        ['relative escape', path.relative(fixture.directory, escaped).split(path.sep).join('/'), /outside input root/],
+        ['bare dependency', 'typescript', /unsupported declaration module path/],
+        ['URL', 'file:///untrusted.d.ts', /unsupported declaration module path/],
+        ['backslash', '.\\main', /unsupported declaration module path/],
+        ['control character', './main\u0000', /unsupported declaration module path/],
+    ];
+    for (const [label, request, error] of cases) {
+        assert.throws(
+            () => normalizeCompatibleEntry(fixture.options, `export * from ${JSON.stringify(request)};`),
+            error,
+            label,
+        );
+        assert.equal(fs.readFileSync(fixture.entry, 'utf8'), original);
+    }
+    assert.throws(() => normalizeCompatibleEntry(fixture.options, 'export * from ;'), /must parse/);
+    assert.throws(() => normalizeCompatibleEntry(fixture.options, 'export {};'), /no module inputs/);
+    assert.throws(
+        () => normalizeCompatibleEntry(fixture.options, 'import dependency = require("./main");'),
+        /unsupported original declaration entry statement/,
+    );
+    const missingKnown = path.join(fixture.directory, 'known-but-missing.d.ts');
+    fixture.options.input.push(missingKnown);
+    assert.throws(
+        () => normalizeCompatibleEntry(fixture.options, 'export * from "./known-but-missing";'),
+        /unknown declaration module input/,
+    );
+    const linkedDirectory = path.join(fixture.directory, 'linked');
+    fs.symlinkSync(outside, linkedDirectory, process.platform === 'win32' ? 'junction' : 'dir');
+    const linked = path.join(linkedDirectory, 'escaped.d.ts');
+    fixture.options.input.push(linked);
+    assert.throws(
+        () => normalizeCompatibleEntry(fixture.options, 'export * from "./linked/escaped";'),
+        /outside real input root/,
+    );
+    const externalEntry = { ...fixture.options, entries: { cc: escaped } };
+    assert.throws(() => normalizeCompatibleEntry(externalEntry, original), /entry outside input root/);
+    const rejected = 'export * from "./known-but-missing";\n';
+    fs.writeFileSync(fixture.entry, rejected);
+    assert.throws(() => prepareCompatibleGiftOptions(fixture.options, [fixture.main]), /unknown declaration module input/);
+    assert.equal(fs.readFileSync(fixture.entry, 'utf8'), rejected, 'failed validation must not replace the input');
+});
+
+test('only current-config excluded feature roots may retain unresolved imports', (t) => {
+    const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'air-dts-excluded-feature-'));
+    t.after(() => fs.rmSync(directory, { recursive: true, force: true }));
+    const source = path.join(directory, 'source');
+    const emitted = path.join(directory, 'emitted');
+    fs.mkdirSync(source);
+    fs.mkdirSync(emitted);
+    for (const name of ['main', 'optional'])
+        fs.writeFileSync(path.join(source, name + '.ts'), `export class ${name} {}`);
+    fs.writeFileSync(path.join(emitted, 'main.d.ts'), 'export declare class Main {}');
+    const configFile = path.join(source, 'tsconfig.json');
+    const config = { include: ['*.ts'], exclude: ['optional.ts'] };
+    const writeConfig = () => fs.writeFileSync(configFile, JSON.stringify(config));
+    writeConfig();
+    const stats = {
+        path: source,
+        tsConfigPath: configFile,
+        getFeatureUnits: () => ['main', 'optional'],
+        getFeatureUnitFile: (unit) => path.join(source, unit + '.ts'),
+    };
+    const exclusions = excludedFeatureInputs(stats, emitted);
+    assert.deepEqual([...exclusions], [path.join(emitted, 'optional.d.ts')]);
+    const entry = path.join(emitted, 'virtual-cc.d.ts');
+    const original = ['main', 'optional'].map((name) => `export * from ${JSON.stringify(path.join(emitted, name))};`).join('\n');
+    fs.writeFileSync(entry, original);
+    const options = { rootDir: emitted, entries: { cc: entry }, input: [entry, path.join(emitted, 'main.d.ts')] };
+    assert.throws(() => normalizeCompatibleEntry(options, original), /unknown declaration module input/);
+    assert.equal(
+        normalizeCompatibleEntry(options, original, exclusions),
+        'export * from "./main";\nexport * from "./optional";',
+    );
+    config.exclude = [];
+    writeConfig();
+    assert.equal(excludedFeatureInputs(stats, emitted).size, 0, 'enabling the feature removes the absence exemption');
+    assert.throws(
+        () => normalizeCompatibleEntry(options, original, excludedFeatureInputs(stats, emitted)),
+        /unknown declaration module input/,
+    );
+    config.include = ['main.ts'];
+    writeConfig();
+    assert.throws(() => excludedFeatureInputs(stats, emitted), /must be explicitly excluded/);
 });
 
 test('unexpected emitter shape and missing selected entry fail closed', () => {

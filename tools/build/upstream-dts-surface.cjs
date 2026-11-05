@@ -43,14 +43,108 @@ function prepareGiftOptions(options, entryFiles) {
     };
 }
 
+// ccbuild writes absolute imports into its generated all-feature entry. Normalize
+// the actual temporary input, not just its receipt: both bundler passes must see
+// the same portable source that originalEntrySha256 identifies.
+function normalizeCompatibleEntry(options, source, excludedInputs = new Set()) {
+    assert(options.rootDir && options.entries?.cc && Array.isArray(options.input), 'missing declaration input scope');
+    const root = path.resolve(options.rootDir);
+    const realRoot = fs.realpathSync(root);
+    const entry = path.resolve(options.entries.cc);
+    const within = (base, file) => {
+        const relative = path.relative(base, file);
+        return relative !== '' && relative !== '..' && !relative.startsWith('..' + path.sep) && !path.isAbsolute(relative);
+    };
+    assert(within(root, entry) && within(realRoot, fs.realpathSync(entry)), 'declaration entry outside input root');
+    const known = new Set(options.input.map((file) => path.resolve(file)));
+    assert(known.has(entry), 'unknown declaration entry');
+    const ast = ts.createSourceFile(entry, source, ts.ScriptTarget.Latest, true);
+    assert.equal(ast.parseDiagnostics.length, 0, 'original declaration entry must parse');
+    const replacements = [];
+    for (const statement of ast.statements) {
+        assert(
+            ts.isImportDeclaration(statement) || ts.isExportDeclaration(statement),
+            'unsupported original declaration entry statement',
+        );
+        const specifier = statement.moduleSpecifier;
+        if (!specifier) continue;
+        assert(ts.isStringLiteral(specifier), 'unsupported declaration module specifier');
+        const request = specifier.text;
+        assert(
+            !/[\\\x00-\x1f]/.test(request) &&
+                (path.isAbsolute(request) || request.startsWith('./') || request.startsWith('../')),
+            'unsupported declaration module path',
+        );
+        const resolved = path.resolve(path.dirname(entry), request);
+        const target = resolved.endsWith('.d.ts') ? resolved : resolved + '.d.ts';
+        assert(within(root, target), 'declaration module outside input root');
+        if (excludedInputs.has(target) && !known.has(target) && !fs.existsSync(target)) {
+            // ccbuild's original entry includes even the feature roots explicitly
+            // excluded by tsconfig. Keep those unresolved imports, but only when
+            // their absence is independently derived from the current source config.
+            const parent = fs.realpathSync(path.dirname(target));
+            assert(parent === realRoot || within(realRoot, parent), 'excluded module outside real input root');
+        } else {
+            assert(
+                known.has(target) && fs.existsSync(target),
+                'unknown declaration module input: ' + path.relative(root, target).split(path.sep).join('/'),
+            );
+            assert(
+                fs.statSync(target).isFile() && within(realRoot, fs.realpathSync(target)),
+                'declaration module outside real input root',
+            );
+        }
+        let relative = path.relative(path.dirname(entry), target).split(path.sep).join('/').replace(/\.d\.ts$/, '');
+        if (!relative.startsWith('.')) relative = './' + relative;
+        replacements.push({ start: specifier.getStart(ast), end: specifier.end, text: JSON.stringify(relative) });
+    }
+    assert(replacements.length, 'original declaration entry has no module inputs');
+    let normalized = source;
+    for (const replacement of replacements.reverse())
+        normalized = normalized.slice(0, replacement.start) + replacement.text + normalized.slice(replacement.end);
+    return normalized;
+}
+
+function excludedFeatureInputs(stats, declarationRoot) {
+    const config = ts.getParsedCommandLineOfConfigFile(stats.tsConfigPath, {}, {
+        ...ts.sys,
+        onUnRecoverableConfigFileDiagnostic(diagnostic) {
+            throw new Error(ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n'));
+        },
+    });
+    assert(config && !config.errors.length, 'invalid declaration source config');
+    const included = new Set(config.fileNames.map((file) => path.resolve(file)));
+    const root = path.resolve(stats.path);
+    const realRoot = fs.realpathSync(root) + path.sep;
+    const excluded = new Set();
+    for (const unit of stats.getFeatureUnits()) {
+        const source = path.resolve(stats.getFeatureUnitFile(unit));
+        if (included.has(source)) continue;
+        const relative = path.relative(root, source);
+        assert(
+            relative !== '..' && !relative.startsWith('..' + path.sep) && !path.isAbsolute(relative) &&
+                source.endsWith('.ts') && fs.statSync(source).isFile() && fs.realpathSync(source).startsWith(realRoot),
+            'excluded feature source outside source root',
+        );
+        const matching = (excludes) => ts.sys.readDirectory(root, ['.ts'], excludes, [relative])
+            .some((file) => path.resolve(file) === source);
+        assert(
+            matching([]) && !matching(config.raw.exclude || []),
+            'unemitted feature must be explicitly excluded by source config',
+        );
+        excluded.add(path.join(declarationRoot, relative.replace(/\.ts$/, '.d.ts')));
+    }
+    return excluded;
+}
+
 /** The original ccbuild entry defines legacy type reachability, not default JS values.
  * Inspect the narrow runtime entry, then restore the original emitted type graph
  * before bundling. Both sources come from the current source tree and installed
  * generator, never a copied historical SDK or hand-maintained Spark whitelist.
  */
-function prepareCompatibleGiftOptions(options, entryFiles) {
+function prepareCompatibleGiftOptions(options, entryFiles, excludedInputs = new Set()) {
     assert(options.entries?.cc, 'missing original declaration entry');
-    const originalEntry = fs.readFileSync(options.entries.cc, 'utf8');
+    const originalEntry = normalizeCompatibleEntry(options, fs.readFileSync(options.entries.cc, 'utf8'), excludedInputs);
     let configured, surface;
     try {
         configured = prepareGiftOptions(options, entryFiles);
@@ -368,7 +462,8 @@ async function withMainDeclarations(root, build, receipt) {
                 path.relative(path.join(root, 'src'), stats.getFeatureUnitFile(unit)).replace(/\.ts$/, '.d.ts'),
             ),
         );
-        const { configured, surface, originalEntrySha256 } = prepareCompatibleGiftOptions(options, entryFiles);
+        const excludedInputs = excludedFeatureInputs(stats, options.rootDir);
+        const { configured, surface, originalEntrySha256 } = prepareCompatibleGiftOptions(options, entryFiles, excludedInputs);
         Object.assign(receipt, {
             features: DEFAULT_FEATURES.slice(),
             units,
@@ -376,6 +471,7 @@ async function withMainDeclarations(root, build, receipt) {
             compatibilityTypeGraph: {
                 source: 'original-current-ccbuild-all-feature-entry',
                 originalEntrySha256,
+                excludedFeatureEntries: [...excludedInputs].map((file) => path.relative(options.rootDir, file).split(path.sep).join('/')).sort(),
                 optionalRuntimeValues: false,
                 historicalArtifactCopied: false,
             },
@@ -434,6 +530,8 @@ async function runDeclarationBuild(build, context) {
 module.exports = {
     isTypeOnlyAlias,
     prepareGiftOptions,
+    normalizeCompatibleEntry,
+    excludedFeatureInputs,
     prepareCompatibleGiftOptions,
     collectEntrySurface,
     reconcileExports,

@@ -1,8 +1,8 @@
 {
   "schema": "air-bundle-source-binding-v1",
   "origin": "compiler-map",
-  "bundleSha256": "dec7d3c73ff0eb57e4462f1941168261fda9cc713f46401dc9a02753a833fba3",
-  "mapSha256": "261efffc334e8c4f12916f5befd10ef06687b8753140977f2f6a1f19c56b4c08",
+  "bundleSha256": "10f9b9c19dd2afbbc862cf080c77c461e7cb5255b9cb1bc4979877792691e551",
+  "mapSha256": "afe86f38026a65a4bee8be24e02a1bdf91e7ea5724132b3aae5d76387403e71a",
   "sources": [
     {
       "path": "src/cocos/core/global-exports.ts",
@@ -842,7 +842,7 @@
     },
     {
       "path": "src/cocos/rendering/pipeline-state-manager.ts",
-      "sha256": "53dbb3578621847144dc532baaffaf2fae2b73ca13fb274815ef7956fd54fb35"
+      "sha256": "0749e1372c04fc19a554b6e3c6879044de0f76e43f528d31e995b7da84c28569"
     },
     {
       "path": "src/cocos/rendering/pipeline-funcs.ts",
@@ -3234,7 +3234,7 @@
     },
     {
       "path": "src/air/html-source.ts",
-      "sha256": "807fac7e746f9105a3cc35e2c2bd1c3340391789790fb058bc258e8f2ae82634"
+      "sha256": "377653a5077f1546731af6799f504e36dcf11ea742ae717e859e28e84c59741e"
     },
     {
       "path": "src/air/step-clock.ts",
@@ -3442,7 +3442,7 @@
     },
     {
       "path": "src/air/assets/gltf/extensions/texture/basisu.ts",
-      "sha256": "42e989f09fb0792341046c63895cfbbbf0b9cc92979bda711946c54e17cf347c"
+      "sha256": "4f618646243f3e0c11bc065f71172be35d8fae7e0ad5e3b96167c46aeab62b8b"
     },
     {
       "path": "src/air/assets/gltf/extensions/scene/lights.ts",
@@ -3610,7 +3610,7 @@
     },
     {
       "path": "src/air/assets/gltf/decoder/ktx2.ts",
-      "sha256": "de298c031d41a622dc7f58ff36b9fb6d507aeb897166a0e7523f21c52862b26f"
+      "sha256": "2b79f7bf00a7d9a9ec4ce44dae7bfdf698f9a8f5f30a2156ef16b0832a3711a2"
     },
     {
       "path": "src/air/assets/gltf/index.ts",
@@ -3654,7 +3654,7 @@
     },
     {
       "path": "src/cocos/gfx/webgl2/webgl2-commands.ts",
-      "sha256": "892b3523fd4648a5bbfb2477e0d5d5ae3714d086fdb2b7241c6750f25503f003"
+      "sha256": "9309e9b052b45fc36b5cb3b52b75ce420e65a58a913713fcecf876179b0a1e23"
     },
     {
       "path": "src/air/rendering/render-target.ts",
@@ -3922,7 +3922,7 @@
     },
     {
       "path": "src/cocos/gfx/webgl2/webgl2-state-cache.ts",
-      "sha256": "afa25786b21f7780f67f10c72a34d9beb8a1a5d85313e81d1d5e16c11dbc75e3"
+      "sha256": "e5e3e54a7cfc20babad60f22ad724f6e4b0c527b11a2ea9f89ff9c85672c080a"
     },
     {
       "path": "src/cocos/gfx/webgl2/webgl2-texture.ts",

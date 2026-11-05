@@ -13,6 +13,7 @@ Baseline: `main@e640be140fad8763e18865877acd896b60e9f44a`. This is an implementa
 - Benchmark preparation: require the actual installed Three.js baseline version and bind each arm to a verified copy of the same local package tree. This does not authenticate the registry archive or alter historical Goldens.
 - Interactive baseline evidence: verify external source-map binding receipts instead of assuming embedded `sourcesContent`; retain legacy embedded-map support and fail closed on missing or stale evidence.
 - Example evidence preflight: verify external dev/min source-binding receipts, include their presence and hashes in the frozen campaign input, and retain Spark's original embedded virtual-worker checks. This does not publish or promote a campaign.
+- Declaration generation: normalize the actual all-feature entry to checked relative paths before both bundler passes, and record any feature entries excluded by the current TypeScript configuration. This removes checkout-path dependence without hand-editing output or receipt hashes. Windows path handling is simulated; native Windows generation remains unverified.
 
 ## Verification boundaries
 
@@ -25,6 +26,8 @@ A separate worktree at the same source snapshot completed `npm run build:all`, i
 On source tree `935c451eae85b8218fa80b0358648f2f911f134b` (remote commit `13832cdc8568ba38d59ea9719938fd4a0d27df5a`), the 230-suite shard excluding two long-running full-report suites ended with 206 suites passing and 24 failing (3393 tests passed, 416 failed). Most failures used absent pinned external shader reference inputs; the old Spark map correctly failed source freshness. The WebGL2 UBO and pinned CI-action assertions were repaired and independently rerun: four targeted suites passed 109 tests. These follow-up results do not rewrite the original shard outcome or qualify the two excluded suites. Additional failures and the missing Spark authorization remain open.
 
 The pinned Shader Effects and MaterialX source inputs were subsequently restored in a separate validation worktree and verified against their recorded commits, hashes and license files. All 17 previously reference-blocked shader suites passed on retest. The two initially excluded full-report suites also passed separately (51 and 110 tests). Four other historical specs/evidence suites remain failing or blocked and are not promoted. Historical Windows-style matrix screenshot paths are now normalized with repository containment and symlink-escape checks; 19 focused path tests and the original 78 screenshot hash/size checks pass, without changing old receipts.
+
+The checked-in development bundle (build 256, SHA-256 `10f9b9c19dd2afbbc862cf080c77c461e7cb5255b9cb1bc4979877792691e551`) and minified bundle (build 257, SHA-256 `68a123d7a4b16273a9db7a1636db5915f2757f7760eede5b5bbc655d17da2b8a`) each passed 139 directed WebKit WebGL2 checks with zero page errors. Their source bindings matched 1009 and 1007 inputs respectively. Declaration output and its full contract matched byte-for-byte across two independently installed directories; the generated API inventory was refreshed against the final declaration and its focused Jest suite passed 31 tests. These checks do not resolve the remaining Spark license gate, frozen example specifications or other browsers.
 
 ## Still open
 
