@@ -11,7 +11,7 @@
  *   releaseScene、createSessionScope（sessionScope）；修正 createSessionGate 的测试映射。
  * - 身份复用 tools/verify/port-gap-candidate-snapshot.cjs 的 collectSnapshot（branch/HEAD/完整 dirty/
  *   AIR/source/config/runner/contracts/artifacts），并补充 min/map/npm 产物身份。
- * - 源码与 bundle 对应：对 dev/min 两个 source map 做抽样 sourcesContent 比对；无法证明的记 UNKNOWN，
+ * - 源码与 bundle 对应：核对外置 source map 的字节绑定收据，兼容旧 sourcesContent 抽样；无法证明的记 UNKNOWN，
  *   不再用 HEAD 臒测 builtFrom。
  * - 历史任务书 SHA 修正为精确 64 位值。
  * - 去重表逐项给出 IER-00..11 → 原 10 建议 → 现有复用物 → 动作，不再是一句话。
@@ -21,6 +21,7 @@ const path = require('node:path');
 const crypto = require('node:crypto');
 const { isDeepStrictEqual } = require('node:util');
 const snapshotTool = require('./port-gap-candidate-snapshot.cjs');
+const { verifySourceBinding } = require('../build/source-binding.cjs');
 
 const REPO = path.resolve(__dirname, '../..');
 
@@ -327,19 +328,23 @@ function detectCapability(api, exportNames, exportMatched, dts, bundlePath) {
     return { status, detection: { kind: api.kind, inTopLevelExports: inExports, inDts, bundleImpl: implPresent } };
 }
 
-/** source map 抽样核对：map.sources 定位 + sourcesContent 与盘面（CRLF 归一）逐字节比较。 */
-function checkBuiltFromSampling() {
+/** External maps require a byte-bound receipt; legacy embedded maps retain sampled comparisons. */
+function checkBuiltFromSampling(repo = REPO) {
     const results = [];
     for (const bundleRel of ['build/cocosair.module.js', 'build/cocosair.module.min.js']) {
         const mapRel = bundleRel + '.map';
-        const mapAbs = path.join(REPO, mapRel);
-        if (!fs.existsSync(mapAbs)) {
-            results.push({ bundle: bundleRel, status: 'UNKNOWN', reason: `map missing: ${mapRel}` });
+        const bundleAbs = path.join(repo, bundleRel);
+        const mapAbs = path.join(repo, mapRel);
+        if (!fs.existsSync(bundleAbs) || !fs.existsSync(mapAbs)) {
+            results.push({ bundle: bundleRel, status: 'UNKNOWN', reason: `bundle or map missing: ${bundleRel}` });
             continue;
         }
         let map;
         try {
             map = JSON.parse(fs.readFileSync(mapAbs, 'utf8'));
+            if (!Array.isArray(map?.sources) || !map.sources.every((source) => typeof source === 'string')) {
+                throw new Error('source map sources must be an array of paths');
+            }
         } catch (e) {
             results.push({
                 bundle: bundleRel,
@@ -348,27 +353,63 @@ function checkBuiltFromSampling() {
             });
             continue;
         }
+        const missing = BUILT_FROM_SAMPLE_SOURCES.filter(
+            (file) =>
+                !map.sources.some((source) => path.resolve(path.dirname(bundleAbs), source) === path.join(repo, file)),
+        );
+        if (map.sourcesContent === undefined) {
+            const binding = verifySourceBinding(repo, bundleAbs);
+            results.push({
+                bundle: bundleRel,
+                status:
+                    binding.compared === 0
+                        ? 'UNKNOWN'
+                        : binding.matches && missing.length === 0
+                          ? 'verified-source-binding'
+                          : 'stale',
+                sourceBinding: binding,
+                stale: binding.compared > 0 ? binding.mismatches : [],
+                missingFromMap: missing,
+                ...(binding.reason ? { reason: binding.reason } : {}),
+            });
+            continue;
+        }
+        if (!Array.isArray(map.sourcesContent) || map.sourcesContent.length !== map.sources.length) {
+            results.push({ bundle: bundleRel, status: 'UNKNOWN', reason: `source content incomplete: ${mapRel}` });
+            continue;
+        }
         const stale = [];
-        const missing = [];
+        const unreadable = [];
         for (const file of BUILT_FROM_SAMPLE_SOURCES) {
             const idx = map.sources.findIndex(
-                (s) => path.resolve(path.dirname(path.join(REPO, bundleRel)), s) === path.join(REPO, file),
+                (s) => path.resolve(path.dirname(bundleAbs), s) === path.join(repo, file),
             );
-            if (idx < 0) {
-                missing.push(file);
+            if (idx < 0) continue;
+            if (typeof map.sourcesContent[idx] !== 'string') {
+                unreadable.push(file);
                 continue;
             }
-            const disk = fs.readFileSync(path.join(REPO, file), 'utf8').replace(/\r\n/g, '\n');
-            const inMap = String(map.sourcesContent[idx]).replace(/\r\n/g, '\n');
-            if (disk !== inMap) stale.push(file);
+            try {
+                const disk = fs.readFileSync(path.join(repo, file), 'utf8').replace(/\r\n/g, '\n');
+                const inMap = map.sourcesContent[idx].replace(/\r\n/g, '\n');
+                if (disk !== inMap) stale.push(file);
+            } catch {
+                unreadable.push(file);
+            }
         }
-        const status = stale.length === 0 && missing.length === 0 ? 'verified-sampled' : 'stale';
+        const status =
+            unreadable.length > 0
+                ? 'UNKNOWN'
+                : stale.length === 0 && missing.length === 0
+                  ? 'verified-sampled'
+                  : 'stale';
         results.push({
             bundle: bundleRel,
             status,
             sampled: BUILT_FROM_SAMPLE_SOURCES.length,
             stale,
             missingFromMap: missing,
+            ...(unreadable.length ? { reason: 'sample source content unavailable', unreadable } : {}),
         });
     }
     return results;
@@ -692,6 +733,8 @@ function verifyBaseline(report, options = {}) {
 }
 
 module.exports = {
+    checkBuiltFromSampling,
+    BUILT_FROM_SAMPLE_SOURCES,
     buildBaseline,
     verifyBaseline,
     applyExecutionReport,
