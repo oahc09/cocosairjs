@@ -21,6 +21,7 @@ const http = require('http');
 const crypto = require('crypto');
 const esbuild = require('esbuild');
 const { resolveScript } = require('../dev/resolve-script.cjs');
+const { screenshotPath } = require('./browser-matrix-paths.cjs');
 
 const REPO = path.resolve(__dirname, '..', '..');
 const TRACE_MEDIA = process.argv.includes('--trace-media');
@@ -256,11 +257,11 @@ async function runOne(pw, id, contract, port, engines) {
             }
             const dir = path.join(OUT_DIR, id);
             fs.mkdirSync(dir, { recursive: true });
-            const pngRel = path.join('docs', 'evidence', 'browser-matrix', id, `matrix-${engine}.png`);
+            const pngRel = screenshotPath(id, engine);
             fs.writeFileSync(path.join(REPO, pngRel), shotB);
             let pngBeforeRel = null;
             if (shotBefore) {
-                pngBeforeRel = path.join('docs', 'evidence', 'browser-matrix', id, `matrix-${engine}-before.png`);
+                pngBeforeRel = screenshotPath(id, engine, true);
                 fs.writeFileSync(path.join(REPO, pngBeforeRel), shotBefore);
             }
             const benign = consoleErrors.filter((t) => BENIGN_CONSOLE.some((b) => t.includes(b)));
@@ -346,6 +347,7 @@ async function runOne(pw, id, contract, port, engines) {
         __filename,
         path.join(__dirname, 'browser-engines.cjs'),
         path.join(__dirname, 'browser-probe.cjs'),
+        path.join(__dirname, 'browser-matrix-paths.cjs'),
     ];
     const sha256 = (file) => crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
     const fingerprints = Object.fromEntries(

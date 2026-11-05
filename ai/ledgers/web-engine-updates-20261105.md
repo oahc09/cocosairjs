@@ -24,6 +24,8 @@ A separate worktree at the same source snapshot completed `npm run build:all`, i
 
 On source tree `935c451eae85b8218fa80b0358648f2f911f134b` (remote commit `13832cdc8568ba38d59ea9719938fd4a0d27df5a`), the 230-suite shard excluding two long-running full-report suites ended with 206 suites passing and 24 failing (3393 tests passed, 416 failed). Most failures used absent pinned external shader reference inputs; the old Spark map correctly failed source freshness. The WebGL2 UBO and pinned CI-action assertions were repaired and independently rerun: four targeted suites passed 109 tests. These follow-up results do not rewrite the original shard outcome or qualify the two excluded suites. Additional failures and the missing Spark authorization remain open.
 
+The pinned Shader Effects and MaterialX source inputs were subsequently restored in a separate validation worktree and verified against their recorded commits, hashes and license files. All 17 previously reference-blocked shader suites passed on retest. The two initially excluded full-report suites also passed separately (51 and 110 tests). Four other historical specs/evidence suites remain failing or blocked and are not promoted. Historical Windows-style matrix screenshot paths are now normalized with repository containment and symlink-escape checks; 19 focused path tests and the original 78 screenshot hash/size checks pass, without changing old receipts.
+
 ## Still open
 
 - Real WebGL2/WebGPU cross-backend Buffer/UBO/VAO rendering; Chrome 156/157 HTML-in-Canvas compatibility, input, DPR and disposal.
