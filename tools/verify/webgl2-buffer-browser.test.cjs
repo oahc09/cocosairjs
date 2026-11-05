@@ -9,6 +9,7 @@ const collector = path.join(__dirname, 'webgl2-buffer-browser.cjs');
 function invoke(args, extraEnv = {}) {
     const env = { ...process.env, ...extraEnv };
     delete env.AIR_WEBKIT_EXECUTABLE;
+    delete env.AIR_FIREFOX_EXECUTABLE;
     Object.assign(env, extraEnv);
     return spawnSync(process.execPath, [collector, ...args], { env, encoding: 'utf8', timeout: 15000 });
 }
@@ -60,5 +61,41 @@ test('an existing attempt is not overwritten', () => {
         assert.equal(result.status, 1);
         assert.match(result.stderr, /EEXIST/);
         assert.equal(fs.readFileSync(out, 'utf8'), original);
+    });
+});
+
+test('Firefox selection requires its own executable without falling back to configured WebKit', () => {
+    temporary((out) => {
+        const result = invoke([`--out=${out}`, '--browser=firefox'], { AIR_WEBKIT_EXECUTABLE: process.execPath });
+        assert.equal(result.status, 1);
+        const report = JSON.parse(fs.readFileSync(out, 'utf8'));
+        assert.equal(report.status, 'BLOCKED');
+        assert.equal(report.browserName, 'firefox');
+        assert.match(report.error, /Set AIR_FIREFOX_EXECUTABLE/);
+        assert.equal(report.results, undefined);
+    });
+});
+
+test('missing configured Firefox is BLOCKED without invoking WebKit', () => {
+    temporary((out) => {
+        const result = invoke([`--out=${out}`, '--browser=firefox'], {
+            AIR_FIREFOX_EXECUTABLE: path.join(path.dirname(out), 'absent-firefox'),
+            AIR_WEBKIT_EXECUTABLE: process.execPath,
+        });
+        assert.equal(result.status, 1);
+        const report = JSON.parse(fs.readFileSync(out, 'utf8'));
+        assert.equal(report.status, 'BLOCKED');
+        assert.equal(report.browserName, 'firefox');
+        assert.match(report.error, /AIR_FIREFOX_EXECUTABLE does not exist/);
+    });
+});
+
+test('unsupported browser names are rejected rather than selecting another engine', () => {
+    temporary((out) => {
+        const result = invoke([`--out=${out}`, '--browser=unknown']);
+        assert.equal(result.status, 1);
+        const report = JSON.parse(fs.readFileSync(out, 'utf8'));
+        assert.equal(report.status, 'BLOCKED');
+        assert.match(report.error, /Supported --browser values are webkit and firefox/);
     });
 });

@@ -1,8 +1,8 @@
 # Cocos AIR 工具
 
-## Buffer / UBO 定向 WebKit 验证
+## Buffer / UBO 定向 WebKit / Firefox 验证
 
-`tools/verify/webgl2-buffer-browser.cjs` 从选定源码抽取真实 GFX 函数并用 TypeScript 编译，在 WebKit 的原生 WebGL2 中验证 TypedArray 字节子视图连续上传/读回、UBO 独立范围、dynamic offset、范围变化、绘制像素和删除绑定。它不读取历史 `build/`，不构建完整引擎，不证明其他浏览器、硬件性能或 compositor present。
+`tools/verify/webgl2-buffer-browser.cjs` 从选定源码抽取真实 GFX 函数并用 TypeScript 编译，在显式选择的 WebKit 或 Firefox 原生 WebGL2 中验证 TypedArray 字节子视图连续上传/读回、UBO 独立范围、dynamic offset、范围变化、绘制像素和删除绑定。它不读取历史 `build/`，不构建完整引擎，不将单浏览器结果当作其他浏览器、硬件性能或 compositor present 的证明。
 
 先在当前环境中准备兼容的 Playwright、TypeScript、WebKit 二进制及其共享库，再显式配置运行：
 
@@ -10,6 +10,15 @@
 AIR_WEBKIT_EXECUTABLE=<已配置依赖的WebKit启动器> NODE_PATH=<工具node_modules目录> \
   node tools/verify/webgl2-buffer-browser.cjs --out=output/buffer-candidate.json
 ```
+
+默认 `--browser=webkit` 保留原调用方式。Firefox 必须单独选定引擎与可执行文件，并写入另一份新报告：
+
+```bash
+AIR_FIREFOX_EXECUTABLE=<已安装的Firefox可执行文件> NODE_PATH=<工具node_modules目录> \
+  node tools/verify/webgl2-buffer-browser.cjs --browser=firefox --out=output/buffer-firefox.json
+```
+
+两个浏览器分别使用自己的 `AIR_<ENGINE>_EXECUTABLE`，不互相回退。安装成功不等于浏览器能启动或 WebGL2 可用；启动、字体缓存、图形初始化或安全限制导致的失败应保留为独立 `BLOCKED` 报告，不能借用另一个浏览器的 PASS。工具不添加禁用沙箱或图形安全限制的启动参数。
 
 这是配置模板，不是可直接复制的安装命令。部分官方 MiniBrowser 包装器会覆盖 `LD_LIBRARY_PATH`，因此仅在包装器外追加共享库路径可能无效。对于已经安装的 Linux WPE bundle 和额外共享库，可直接使用完整环境：
 

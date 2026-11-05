@@ -1,11 +1,16 @@
 /*
- * Native WebKit WebGL2 checks for Buffer byte ranges and UBO bindings.
+ * Native WebKit/Firefox WebGL2 checks for Buffer byte ranges and UBO bindings.
  * Explicit setup only; never installs browsers, modifies runtime builds, or uses
  * build/ bundles. Missing dependencies, browser, or WebGL2 are BLOCKED (exit 1).
  * Writes only a new --out report, preserving all earlier attempts.
  *
  * AIR_WEBKIT_EXECUTABLE=<installed-webkit-launcher> NODE_PATH=<tooling-node_modules> \
  *   node tools/verify/webgl2-buffer-browser.cjs --out=output/buffer-candidate.json
+ * For Firefox, explicitly select the engine and its installed executable:
+ * AIR_FIREFOX_EXECUTABLE=<installed-firefox> NODE_PATH=<tooling-node_modules> \
+ *   node tools/verify/webgl2-buffer-browser.cjs --browser=firefox --out=output/buffer-firefox.json
+ * --browser=webkit is the default for compatibility. Engines never fall back to
+ * each other; each run requires its matching AIR_<ENGINE>_EXECUTABLE setting.
  * The selected launcher must configure all browser runtime dependencies. The
  * command above is a configuration template, not a portable installation recipe.
  * In particular, some official MiniBrowser wrappers replace LD_LIBRARY_PATH;
@@ -37,7 +42,7 @@ const hash = (value) => crypto.createHash('sha256').update(value).digest('hex');
 
 async function main() {
     const { values } = parseArgs({
-        options: { out: { type: 'string' }, 'source-ref': { type: 'string' } },
+        options: { out: { type: 'string' }, 'source-ref': { type: 'string' }, browser: { type: 'string' } },
         strict: true,
         allowPositionals: false,
     });
@@ -51,6 +56,7 @@ async function main() {
         status: 'BLOCKED',
         scope: 'AST-selected exact source functions with native WebGL2; not full engine build or hardware-performance acceptance',
         sourceKind: values['source-ref'] ? 'git-ref' : 'working-tree',
+        browserName: values.browser ?? 'webkit',
         browserClosed: false,
         browserCloseEvidence: 'Playwright browser.close() promise only; physical waitpid/ECHILD is not collected',
         pageErrors: [],
@@ -59,12 +65,18 @@ async function main() {
     let sourceSnapshot;
     let read;
     try {
-        const executable = process.env.AIR_WEBKIT_EXECUTABLE;
+        if (!['webkit', 'firefox'].includes(report.browserName)) {
+            throw new Error('Supported --browser values are webkit and firefox.');
+        }
+        const executableVariable = `AIR_${report.browserName.toUpperCase()}_EXECUTABLE`;
+        const executable = process.env[executableVariable];
         if (!executable)
-            throw new Error('Set AIR_WEBKIT_EXECUTABLE to an explicitly selected installed WebKit launcher.');
-        if (!fs.existsSync(executable)) throw new Error('AIR_WEBKIT_EXECUTABLE does not exist.');
+            throw new Error(
+                `Set ${executableVariable} to an explicitly selected installed ${report.browserName} launcher.`,
+            );
+        if (!fs.existsSync(executable)) throw new Error(`${executableVariable} does not exist.`);
         const ts = require('typescript');
-        const { webkit } = require('playwright');
+        const browserType = require('playwright')[report.browserName];
         report.compiler = ts.version;
         report.playwright = require('playwright/package.json').version;
         report.browserExecutable = path.basename(executable);
@@ -135,7 +147,7 @@ window.__probeSource={WebGL2CmdFuncUpdateBuffer,WebGL2CmdFuncBindStates,WebGL2Cm
         report.sourceFiles = [...sourceSnapshot].map(([file, source]) => ({ file, sha256: hash(source) }));
         report.scriptSha256 = hash(bundle);
         report.collectorSha256 = hash(fs.readFileSync(__filename));
-        browser = await webkit.launch({ executablePath: executable, headless: true, timeout: 30000 });
+        browser = await browserType.launch({ executablePath: executable, headless: true, timeout: 30000 });
         report.browser = await browser.version();
         const page = await browser.newPage();
         page.on('pageerror', (error) => report.pageErrors.push(error.message));
