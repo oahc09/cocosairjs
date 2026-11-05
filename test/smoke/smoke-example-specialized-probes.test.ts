@@ -2,6 +2,7 @@
 import { nodeRequire } from '../shims';
 const fs = nodeRequire('fs');
 const path = nodeRequire('path');
+const yaml = nodeRequire('js-yaml');
 const B = nodeRequire(path.resolve('tools/verify/shaders-driver-pilot-browser.cjs'));
 const O = nodeRequire(path.resolve('tools/verify/shaders-driver-pilot-oracle.cjs'));
 const P = nodeRequire(path.resolve('tools/verify/example-specialized-probes.cjs'));
@@ -9,6 +10,16 @@ const C = nodeRequire(path.resolve('tools/verify/example-evidence-campaign.cjs')
 const F = nodeRequire(path.resolve('tools/verify/example-evidence-campaign.cpu-fixture.cjs'));
 const clone = (x: any) => JSON.parse(JSON.stringify(x));
 const scope = { id: P.ID, mode: 'primary', query: '', viewport: { width: 480, height: 360 } };
+const UPLOAD_ARTIFACT = 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02';
+const RETENTION_STEP = 'Retain exact-head originals, failures and timings';
+function assertArtifactRetention(text: string) {
+    const workflow = yaml.load(text, { schema: yaml.JSON_SCHEMA });
+    const steps = workflow.jobs.quality.steps.filter((step: any) => step.name === RETENTION_STEP);
+    expect(steps).toHaveLength(1);
+    expect(steps[0].if).toBe('always()');
+    expect(steps[0].uses).toBe(UPLOAD_ARTIFACT);
+    expect(steps[0].with.path.trim().split(/\r?\n/)).toContain('${{ runner.temp }}/core-example-smoke/');
+}
 function state(steps: number[], frame: number) {
     const bindings = B.bindingsFor('holographic', 'time');
     const pointer = { x: 0.5, y: 0.5 };
@@ -141,13 +152,26 @@ describe('ordinary Driver Pilot specialized proof contract (synthetic CPU only)'
                 expect(text).toContain('example-evidence-status.test.cjs');
                 expect(command).toContain('$RUNNER_TEMP/core-cpu/unit-tests.log');
                 expect(text).toContain('${{ runner.temp }}/core-cpu/');
-                expect(text).toMatch(
-                    /name: Retain exact-head originals, failures and timings\s+if: always\(\)\s+uses: actions\/upload-artifact@v4/,
-                );
-                expect(text).toMatch(/if: always\(\)[\s\S]*?actions\/upload-artifact@v4[\s\S]*?core-example-smoke\//);
+                assertArtifactRetention(text);
             }
         }
     });
+    test.each(['mutable tag', 'wrong commit', 'success only', 'missing condition', 'missing originals'])(
+        'retention contract rejects %s instead of relaxing the pinned action',
+        (mutation) => {
+            const workflow = yaml.load(fs.readFileSync(path.resolve('.github/workflows/format.yml'), 'utf8'), {
+                schema: yaml.JSON_SCHEMA,
+            });
+            const step = workflow.jobs.quality.steps.find((item: any) => item.name === RETENTION_STEP);
+            if (mutation === 'mutable tag') step.uses = 'actions/upload-artifact@v4';
+            if (mutation === 'wrong commit') step.uses = 'actions/upload-artifact@' + '0'.repeat(40);
+            if (mutation === 'success only') step.if = 'success()';
+            if (mutation === 'missing condition') delete step.if;
+            if (mutation === 'missing originals')
+                step.with.path = step.with.path.replace('${{ runner.temp }}/core-example-smoke/', '');
+            expect(() => assertArtifactRetention(yaml.dump(workflow))).toThrow();
+        },
+    );
     test('recomputes a complete primary proof and accepts real assets with empty UUIDs', () => {
         expect(P.validateProbe(synthetic(), scope)).toEqual({ ok: true, errors: [] });
     });
