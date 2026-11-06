@@ -1,0 +1,203 @@
+{
+  "schema": "air-hdr-skybox-focused-verification-v1",
+  "generatedAt": "2026-11-06T17:03:13.190Z",
+  "scope": "Asset-free focused HDR skybox browser regression only. Not full browser matrix, example campaign, or release acceptance.",
+  "fixture": {
+    "linearRadiance": [4, 2, 1],
+    "encodedCocosRGBE": [244, 122, 61, 143],
+    "decodedRGB": [3.997053150342824, 1.998526575171412, 0.999263287585706],
+    "effectiveSky": 1,
+    "sourceRGBAbsoluteTolerance": 0.006,
+    "ordinaryRGBAbsoluteTolerance": 0.004
+  },
+  "fingerprints": {
+    "tools/verify/hdr-skybox.cjs": "ff1e47dac528da9bae17e3316201e628bcfd17dfacde90701b084a681ca90e69",
+    "test/fixtures/hdr-skybox/main.js": "83302ef463d493c8a075fd63b85739c62e4bbbaebc75f290889972ba013391c7",
+    "test/fixtures/hdr-skybox/index.html": "6a4e17b3b1ca78d75bec504b32b46c3998eef42d0514a94864866b504c9a9809",
+    "test/fixtures/hdr-skybox/README.md": "4076d8a2d5bb122b44966265a2dd3be371b0c0f5e3167f707e57d6f101724a39"
+  },
+  "helperFingerprints": {
+    "observation": "Read at summary time; original raw attempts did not independently fingerprint these helper files. Raw evidence was not altered.",
+    "files": {
+      "tools/verify/browser-engines.cjs": "556a3fd699c4906a869fdd893f396bbde62cf0011a222555fafeacc272fb1752",
+      "tools/verify/loopback-browser-env.cjs": "eb57e562c46813cc153c94e16ae6889dd132ab552befd57fd75512caa6403929",
+      "tools/verify/static-file-response.cjs": "23101765da4ecb8693245cf357f3b9fd8637806ec8c9a1bd7b55536c353e2667"
+    }
+  },
+  "checksSummary": {
+    "ordinaryCameraACESAndGamma": 8,
+    "linearHDRSource": 5,
+    "sourceAlpha": 5,
+    "restoredMainTarget": 2,
+    "disposedHandle": 1,
+    "webglNoError": 1,
+    "total": 22
+  },
+  "attempts": {
+    "oldChromium": {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "sdkSHA256": "7dbca75c807a3ddd6b941dd3712ec0c53391902201614e51ad8d27a41d76fbad",
+      "completed": true,
+      "passed": false,
+      "checks": 22,
+      "passedChecks": 18,
+      "failedChecks": [
+        "post-active: post source preserves linear HDR",
+        "ordinary-after-post: post source preserves linear HDR",
+        "post-reenabled: post source preserves linear HDR",
+        "stock-sky-restored: post source preserves linear HDR"
+      ],
+      "postSource": [0.98681640625, 0.95654296875, 0.896484375, 1],
+      "meshControl": [4, 2, 1, 1],
+      "ordinaryBaseline": [0.986596941947937, 0.956436038017273, 0.8964604735374451, 1],
+      "glError": 0,
+      "pageOrConsoleErrors": [],
+      "httpFailures": [],
+      "inputsUnchanged": true,
+      "sourceBinding": {
+        "file": "src/air/rendering/effect-json-contract.ts",
+        "matchesCurrentSource": false,
+        "sourceSHA256": "b7dc719894f7e180718e16a44a374b9af3886fd9566600168819889b73dcf27f",
+        "manifestBundleMatches": true,
+        "manifestMapMatches": true,
+        "sourceMapSHA256": "afe86f38026a65a4bee8be24e02a1bdf91e7ea5724132b3aae5d76387403e71a"
+      }
+    },
+    "intermediateChromium": {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "sdkSHA256": "dedadf88b888e9f78f490d9b0b33735a3d55d219e17ae6786e1b434c7631c991",
+      "completed": true,
+      "passed": true,
+      "checks": 22,
+      "passedChecks": 22,
+      "failedChecks": [],
+      "postSource": [3.99609375, 1.998046875, 0.9990234375, 1],
+      "meshControl": [4, 2, 1, 1],
+      "ordinaryBaseline": [0.986596941947937, 0.956436038017273, 0.8964604735374451, 1],
+      "glError": 0,
+      "pageOrConsoleErrors": [],
+      "httpFailures": [],
+      "inputsUnchanged": true,
+      "sourceBinding": {
+        "file": "src/air/rendering/effect-json-contract.ts",
+        "matchesCurrentSource": true,
+        "sourceSHA256": "b88d5a42025fad08c99e850bf0289d67d3e7c13e906a4e7467aff5024219c0d2",
+        "manifestBundleMatches": true,
+        "manifestMapMatches": true,
+        "sourceMapSHA256": "4a85c0f2b48a239b93e689ffe3cfd507dc1967285737367df14cd093a81c3cea"
+      }
+    },
+    "intermediateWebKit": {
+      "browser": "webkit",
+      "version": "26.5",
+      "sdkSHA256": "dedadf88b888e9f78f490d9b0b33735a3d55d219e17ae6786e1b434c7631c991",
+      "completed": true,
+      "passed": false,
+      "checks": 22,
+      "passedChecks": 18,
+      "failedChecks": [
+        "post-active: post source preserves linear HDR",
+        "ordinary-after-post: post source preserves linear HDR",
+        "post-reenabled: post source preserves linear HDR",
+        "stock-sky-restored: post source preserves linear HDR"
+      ],
+      "postSource": [3.9765625, 1.98828125, 0.994140625, 1],
+      "meshControl": [4, 2, 1, 1],
+      "ordinaryBaseline": [0.986328125, 0.9560546875, 0.89501953125, 1],
+      "glError": 0,
+      "pageOrConsoleErrors": [],
+      "httpFailures": [],
+      "inputsUnchanged": true,
+      "sourceBinding": {
+        "file": "src/air/rendering/effect-json-contract.ts",
+        "matchesCurrentSource": true,
+        "sourceSHA256": "b88d5a42025fad08c99e850bf0289d67d3e7c13e906a4e7467aff5024219c0d2",
+        "manifestBundleMatches": true,
+        "manifestMapMatches": true,
+        "sourceMapSHA256": "4a85c0f2b48a239b93e689ffe3cfd507dc1967285737367df14cd093a81c3cea"
+      }
+    },
+    "finalChromium": {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "sdkSHA256": "1aa82350919d17a2dbe21b1e6ac3f4ecfa50b3672c4e658840583f128b672244",
+      "completed": true,
+      "passed": true,
+      "checks": 22,
+      "passedChecks": 22,
+      "failedChecks": [],
+      "postSource": [3.99609375, 1.998046875, 0.9990234375, 1],
+      "meshControl": [4, 2, 1, 1],
+      "ordinaryBaseline": [0.986596941947937, 0.956436038017273, 0.8964604735374451, 1],
+      "glError": 0,
+      "pageOrConsoleErrors": [],
+      "httpFailures": [],
+      "inputsUnchanged": true,
+      "sourceBinding": {
+        "file": "src/air/rendering/effect-json-contract.ts",
+        "matchesCurrentSource": true,
+        "sourceSHA256": "328639f66afffe423f53f9eab9c51115113db62b92ce2921b83ff52f5e7c67c1",
+        "manifestBundleMatches": true,
+        "manifestMapMatches": true,
+        "sourceMapSHA256": "bd344d104696b5ebb6ac7b4ba31e000bcd79b42dbd3c385d00b37beb4999d0b7"
+      }
+    },
+    "finalWebKit": {
+      "browser": "webkit",
+      "version": "26.5",
+      "sdkSHA256": "1aa82350919d17a2dbe21b1e6ac3f4ecfa50b3672c4e658840583f128b672244",
+      "completed": true,
+      "passed": true,
+      "checks": 22,
+      "passedChecks": 22,
+      "failedChecks": [],
+      "postSource": [3.99609375, 1.998046875, 0.9990234375, 1],
+      "meshControl": [4, 2, 1, 1],
+      "ordinaryBaseline": [0.986328125, 0.9560546875, 0.89501953125, 1],
+      "glError": 0,
+      "pageOrConsoleErrors": [],
+      "httpFailures": [],
+      "inputsUnchanged": true,
+      "sourceBinding": {
+        "file": "src/air/rendering/effect-json-contract.ts",
+        "matchesCurrentSource": true,
+        "sourceSHA256": "328639f66afffe423f53f9eab9c51115113db62b92ce2921b83ff52f5e7c67c1",
+        "manifestBundleMatches": true,
+        "manifestMapMatches": true,
+        "sourceMapSHA256": "bd344d104696b5ebb6ac7b4ba31e000bcd79b42dbd3c385d00b37beb4999d0b7"
+      }
+    }
+  },
+  "isolation": {
+    "fixtureAndRunnerIdenticalAcrossAllFiveRuns": true,
+    "finalOrdinaryPixelsExactlyEqualToIntermediateInAllEightPhasesPerBrowser": true,
+    "ordinaryCameraTestedBeforeAndAfterHDRCamera": true,
+    "postDisabledReenabledAndDisposed": true
+  },
+  "precisionDiagnostics": {
+    "oldSDK": "7dbca75c807a3ddd6b941dd3712ec0c53391902201614e51ad8d27a41d76fbad",
+    "oldStock": [0.986328125, 0.9560546875, 0.89501953125, 1],
+    "oldDisplayBypassOriginalPrecision": [3.9765625, 1.98828125, 0.994140625, 1],
+    "oldDisplayBypassHighpFloatOnly": [3.97265625, 1.986328125, 0.9931640625, 1],
+    "oldDisplayBypassHighpFloatAndSamplers": [3.99609375, 1.998046875, 0.9990234375, 1],
+    "diagnosticMaterialsWereApplicationOwned": true,
+    "rawRegressionThresholdsUnchanged": true
+  },
+  "shutdown": {
+    "browserCloseAcknowledged": true,
+    "osECHILDMeasured": false,
+    "canonicalPhysicalShutdownProtocol": false,
+    "applicationResultsSeparateFromShutdown": true
+  },
+  "rawReports": [
+    "output/hdr-skybox/old-sdk-chromium-final2/report.json",
+    "output/hdr-skybox/patched-sdk-chromium-final/report.json",
+    "output/hdr-skybox/patched-sdk-webkit-final/report.json",
+    "output/hdr-skybox/precision-patched-chromium-final/report.json",
+    "output/hdr-skybox/precision-patched-webkit-final/report.json",
+    "output/hdr-skybox/old-webkit-precision-diagnostic/report.json",
+    "output/hdr-skybox/old-webkit-sampler-precision-diagnostic/report.json"
+  ]
+}

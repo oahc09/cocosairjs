@@ -6,7 +6,7 @@ import {
     registerAirHDRCamera,
 } from '../../src/air/rendering/hdr-context';
 import { SubModel } from '../../src/cocos/render-scene/scene/submodel';
-import { Material, createAirApp } from '../../src';
+import { Material, EffectAsset, createAirApp } from '../../src';
 import { programLib } from '../../src/cocos/render-scene/core/program-lib';
 
 describe('HDR post-process contracts', () => {
@@ -59,6 +59,67 @@ describe('HDR post-process contracts', () => {
         expect(b.glsl3.frag).toContain('#if CC_USE_FOG != 4 && (!CC_USE_FLOAT_OUTPUT || CC_IS_TRANSPARENCY_PASS)');
     });
 
+    test('stock skybox direct output preserves linear HDR in both shader dialects only when opted in', () => {
+        const frag = [
+            'precision mediump float;',
+            'vec4 frag() {',
+            'vec4 color = vec4(c * cc_ambientSky.w, 1.0);',
+            '#if CC_USE_RGBE_OUTPUT',
+            'color = packRGBE(color.rgb);',
+            '#else',
+            'color.rgb = HDRToLDR(color.rgb);',
+            'color.rgb = LinearToSRGB(color.rgb);',
+            '#endif',
+            'return color;',
+            '}',
+        ].join('\n');
+        const source = { name: 'hdr-skybox', glsl3: { vert: '', frag }, glsl4: { vert: '', frag } };
+        const result = normalizeEffectShader(source) as any;
+        for (const dialect of ['glsl3', 'glsl4']) {
+            expect(result[dialect].frag).toContain(
+                'vec4 color = vec4(c * cc_ambientSky.w, 1.0);\n#if CC_AIR_LINEAR_HDR\nreturn color;\n#endif\n#if CC_USE_RGBE_OUTPUT',
+            );
+            expect(result[dialect].frag).toContain(
+                'precision mediump float;\n#if CC_AIR_LINEAR_HDR\nprecision highp float;\nprecision highp sampler2D;\nprecision highp samplerCube;\n#endif',
+            );
+            expect(result[dialect].frag).toContain('color.rgb = HDRToLDR(color.rgb);');
+            expect(result[dialect].frag).toContain('color.rgb = LinearToSRGB(color.rgb);');
+            expect(source[dialect as 'glsl3'].frag).toBe(frag);
+        }
+        expect(result.defines).toEqual([{ name: 'CC_AIR_LINEAR_HDR', type: 'boolean' }]);
+        const repeated = normalizeEffectShader(result) as any;
+        expect(repeated.hash).toBe(result.hash);
+        expect(repeated.glsl3.frag).toBe(result.glsl3.frag);
+        expect(repeated.glsl4.frag).toBe(result.glsl4.frag);
+        // An effect pre-normalized by an older SDK may already contain a bridge in
+        // its unused CCFragOutput helper, but still lack the direct skybox bridge.
+        const older = '#if CC_AIR_LINEAR_HDR\n// pre-existing helper bridge\n#endif\n' + frag;
+        const upgraded = normalizeEffectShader({
+            name: 'older-skybox',
+            hash: 137,
+            defines: [{ name: 'CC_AIR_LINEAR_HDR', type: 'boolean' }],
+            glsl3: { vert: '', frag: older },
+        }) as any;
+        expect(upgraded.hash).toBe(137); // Explicit caller hashes retain their existing contract.
+        expect(upgraded.glsl3.frag).toContain(result.glsl3.frag);
+        expect(upgraded.defines).toEqual([{ name: 'CC_AIR_LINEAR_HDR', type: 'boolean' }]);
+        const precisionBlock =
+            '#if CC_AIR_LINEAR_HDR\nprecision highp float;\nprecision highp sampler2D;\nprecision highp samplerCube;\n#endif';
+        const directOnly = {
+            ...result,
+            glsl3: { ...result.glsl3, frag: result.glsl3.frag.replace(precisionBlock, '') },
+        };
+        expect((normalizeEffectShader(directOnly) as any).glsl3.frag).toContain(precisionBlock);
+        const differentOutput = frag.replace('CC_USE_RGBE_OUTPUT', 'CUSTOM_OUTPUT');
+        expect(
+            (normalizeEffectShader({ name: 'other-output', glsl3: { vert: '', frag: differentOutput } }) as any).glsl3
+                .frag,
+        ).toBe(differentOutput);
+        const unrelated = frag.replace('c * cc_ambientSky.w', 'c * customExposure');
+        const untouched = normalizeEffectShader({ name: 'other-rgbe', glsl3: { vert: '', frag: unrelated } }) as any;
+        expect(untouched.glsl3.frag).toBe(unrelated);
+    });
+
     test('camera output scope isolates other cameras and caches variants outside the frame hot path', () => {
         const camera = {},
             other = {},
@@ -95,6 +156,17 @@ describe('native macro patch restoration', () => {
     beforeAll(async () => {
         document.body.innerHTML = '<canvas id="GameCanvas"></canvas>';
         await createAirApp({ canvas: '#GameCanvas', renderMode: 3 });
+    });
+    test('the registered shipped skybox contains the direct HDR output bridge in both dialects', () => {
+        const skybox = EffectAsset.get('pipeline/skybox');
+        expect(skybox).toBeTruthy();
+        const shader = skybox!.shaders[0];
+        for (const dialect of ['glsl3', 'glsl4'] as const) {
+            expect(shader[dialect].frag).toContain('precision highp samplerCube;');
+            expect(shader[dialect].frag).toMatch(
+                /vec4\s+color\s*=\s*vec4\(c\s*\*\s*cc_ambientSky\.w,\s*1\.0\);\s*#if CC_AIR_LINEAR_HDR\nreturn color;\n#endif\n#if CC_USE_RGBE_OUTPUT/,
+            );
+        }
     });
     test('temporary HDR patches restore pre-existing values even on shader failure', () => {
         const material = new Material();
