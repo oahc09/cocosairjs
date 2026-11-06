@@ -24,7 +24,7 @@
  *
  * 引擎快照的运行期按 gfxAPI 选源码变体（`src/cocos/render-scene/core/program-lib.ts:592-600`，
  * WebGL2 → `glsl3`），并且没有 chunk include 系统，所以自定义 effect 必须自带完整源码。
- * 这里把这套样板（CCCamera/CCLocal 声明、set/binding 约定、`Constants` 块 + 采样器布局）
+ * 这里把这套样板（set/binding 约定、`Constants` 块 + 采样器布局）
  * 收在一处，调用方只写片元主体。布局与 `examples/shader-emboss` 里已在浏览器验证过的
  * 版本一致：MATERIAL set=1，`Constants` 块 binding 0，采样器从 binding 1 顺延。
  *
@@ -36,37 +36,9 @@ import { EffectAsset } from '../../cocos/asset/assets/effect-asset';
 import { cclegacy } from '../../cocos/core/global-exports';
 import { ShaderStageFlagBit, Type } from '../../cocos/gfx';
 
-const CCCAMERA = `layout(set = 0, binding = 1) uniform CCCamera {
-  highp mat4 cc_matView;
-  highp mat4 cc_matViewInv;
-  highp mat4 cc_matProj;
-  highp mat4 cc_matProjInv;
-  highp mat4 cc_matViewProj;
-  highp mat4 cc_matViewProjInv;
-  highp vec4 cc_cameraPos;
-  mediump vec4 cc_surfaceTransform;
-  mediump vec4 cc_screenScale;
-  mediump vec4 cc_exposure;
-  mediump vec4 cc_mainLitDir;
-  mediump vec4 cc_mainLitColor;
-  mediump vec4 cc_ambientSky;
-  mediump vec4 cc_ambientGround;
-  mediump vec4 cc_fogColor;
-  mediump vec4 cc_fogBase;
-  mediump vec4 cc_fogAdd;
-  mediump vec4 cc_nearFar;
-  mediump vec4 cc_viewPort;
-};`;
-
-const CCLOCAL = `layout(set = 2, binding = 0) uniform CCLocal {
-  highp mat4 cc_matWorld;
-  highp mat4 cc_matWorldIT;
-  highp vec4 cc_lightingMapUVParam;
-  highp vec4 cc_localShadowBias;
-};`;
-
-// The quad is emitted in clip space directly, so the MVP blocks stay unused; declaring them
-// keeps the descriptor layout identical to every other user effect in this snapshot.
+// The quad uses clip-space coordinates and has no camera or model UBOs. Declaring
+// unused blocks is unsafe: drivers may retain them as active, and a first-frame
+// full-screen pass has no model-local descriptor to bind.
 const VERT_BODY = `in vec3 a_position;
 in vec2 a_texCoord;
 out highp vec2 v_uv;
@@ -76,11 +48,11 @@ void main () {
 }`;
 
 /** @en Body that strips `layout(...)` qualifiers to turn a GLSL 4 source into the GLSL 3 one. */
-function toGlsl3 (source: string): string {
+function toGlsl3(source: string): string {
     return source.replace(/layout\s*\([^)]*\)\s*/g, '');
 }
 
-function hashSource (text: string): number {
+function hashSource(text: string): number {
     let hash = 2166136261;
     for (let i = 0; i < text.length; ++i) hash = Math.imul(hash ^ text.charCodeAt(i), 16777619);
     return hash >>> 0;
@@ -107,7 +79,7 @@ export interface AirScreenEffectOptions {
     defaults?: Readonly<Record<string, readonly number[]>>;
 }
 
-function fail (code: string, message: string): never {
+function fail(code: string, message: string): never {
     const error = new Error(`[${code}] ${message}`);
     Object.assign(error, { code });
     throw error;
@@ -119,18 +91,29 @@ function fail (code: string, message: string): never {
  * @zh 运行期装配并注册一个全屏 effect 资产。返回的资产由调用方持有（材质使用期间 addRef，用完
  *  destroy）；调用时机与 `createAirRenderTarget` 一样必须在 `createAirApp()` 之后。
  */
-export function createAirScreenEffect (options: AirScreenEffectOptions): EffectAsset {
+export function createAirScreenEffect(options: AirScreenEffectOptions): EffectAsset {
     if (!options || typeof options !== 'object') fail('AIR_E_SCREEN_EFFECT_OPTIONS', 'provide effect options');
     const { name, body, constants } = options;
     if (typeof name !== 'string' || !name) fail('AIR_E_SCREEN_EFFECT_NAME', 'name must be a non-empty string');
-    if (EffectAsset.get(name)) fail('AIR_E_SCREEN_EFFECT_NAME', `${name} is already registered; destroy the previous effect or pass a unique name`);
-    if (typeof body !== 'string' || !body.includes('void main')) fail('AIR_E_SCREEN_EFFECT_BODY', 'body must be GLSL containing void main');
-    if (!Array.isArray(constants) || constants.length === 0) fail('AIR_E_SCREEN_EFFECT_CONSTANTS', 'declare at least one vec4 constant');
+    if (EffectAsset.get(name))
+        fail(
+            'AIR_E_SCREEN_EFFECT_NAME',
+            `${name} is already registered; destroy the previous effect or pass a unique name`,
+        );
+    if (typeof body !== 'string' || !body.includes('void main'))
+        fail('AIR_E_SCREEN_EFFECT_BODY', 'body must be GLSL containing void main');
+    if (!Array.isArray(constants) || constants.length === 0)
+        fail('AIR_E_SCREEN_EFFECT_CONSTANTS', 'declare at least one vec4 constant');
     const samplers = options.samplers ?? [];
     const identifiers = [...constants, ...samplers];
-    for (const id of identifiers) if (!/^[A-Za-z_][A-Za-z0-9_]*$/.test(id)) fail('AIR_E_SCREEN_EFFECT_MEMBER', `${String(id)} must be a GLSL identifier`);
-    if (new Set(identifiers).size !== identifiers.length) fail('AIR_E_SCREEN_EFFECT_MEMBER', 'constant and sampler names must be unique');
-    for (const define of options.defines ?? []) if (!/^[A-Z][A-Z0-9_]*$/.test(define)) fail('AIR_E_SCREEN_EFFECT_DEFINE', `${String(define)} must be an upper-case macro name`);
+    for (const id of identifiers)
+        if (!/^[A-Za-z_][A-Za-z0-9_]*$/.test(id))
+            fail('AIR_E_SCREEN_EFFECT_MEMBER', `${String(id)} must be a GLSL identifier`);
+    if (new Set(identifiers).size !== identifiers.length)
+        fail('AIR_E_SCREEN_EFFECT_MEMBER', 'constant and sampler names must be unique');
+    for (const define of options.defines ?? [])
+        if (!/^[A-Z][A-Z0-9_]*$/.test(define))
+            fail('AIR_E_SCREEN_EFFECT_DEFINE', `${String(define)} must be an upper-case macro name`);
     const defaults = options.defaults ?? {};
     for (const [key, value] of Object.entries(defaults)) {
         if (!constants.includes(key)) fail('AIR_E_SCREEN_EFFECT_DEFAULT', `${key} is not a declared constant`);
@@ -147,7 +130,7 @@ ${samplers.map((sampler, index) => `layout(set = 1, binding = ${index + 1}) unif
 out vec4 cc_FragColor;
 ${body}
 `;
-    const vert4 = `precision highp float;\n${CCCAMERA}\n${CCLOCAL}\n${VERT_BODY}`;
+    const vert4 = `precision highp float;\n${VERT_BODY}`;
     const sources = { glsl3: { vert: toGlsl3(vert4), frag: toGlsl3(frag4) }, glsl4: { vert: vert4, frag: frag4 } };
     const program = `${name}-program`;
     const hash = hashSource(JSON.stringify(sources));
@@ -156,56 +139,66 @@ ${body}
 
     const effect = Object.assign(new EffectAsset(), {
         name,
-        techniques: [{
-            passes: [{
-                program,
-                rasterizerState: { cullMode: 0 },
-                depthStencilState: { depthTest: false, depthWrite: false },
-                blendState: { targets: [{ blend: false }] },
-                properties,
-            }],
-        }],
-        shaders: [{
-            name: program,
-            hash,
-            builtins: {
-                statistics: {
-                    CC_EFFECT_USED_VERTEX_UNIFORM_VECTORS: 47,
-                    CC_EFFECT_USED_FRAGMENT_UNIFORM_VECTORS: constants.length + samplers.length * 4,
-                },
-                globals: {
-                    blocks: [
-                        { name: 'CCGlobal', defines: [], set: 0, binding: 0 },
-                        { name: 'CCCamera', defines: [], set: 0, binding: 1 },
-                    ],
-                    samplerTextures: [],
-                    buffers: [],
-                    images: [],
-                },
-                locals: { blocks: [{ name: 'CCLocal', defines: [], set: 2, binding: 0 }], samplerTextures: [], buffers: [], images: [] },
+        techniques: [
+            {
+                passes: [
+                    {
+                        program,
+                        rasterizerState: { cullMode: 0 },
+                        depthStencilState: { depthTest: false, depthWrite: false },
+                        blendState: { targets: [{ blend: false }] },
+                        properties,
+                    },
+                ],
             },
-            defines: (options.defines ?? []).map((define) => ({ name: define, type: 'boolean' })),
-            attributes: [
-                { name: 'a_position', defines: [], format: 32, location: 0 },
-                { name: 'a_texCoord', defines: [], format: 21, location: 2 },
-            ],
-            blocks: [{
-                name: 'Constants',
-                defines: [],
-                binding: 0,
-                stageFlags: ShaderStageFlagBit.FRAGMENT,
-                members: constants.map((member) => ({ name: member, type: Type.FLOAT4, count: 1 })),
-            }],
-            samplerTextures: samplers.map((sampler, index) => ({
-                name: sampler, type: Type.SAMPLER2D, count: 1, defines: [],
-                stageFlags: ShaderStageFlagBit.FRAGMENT, set: 1, binding: index + 1,
-            })),
-            buffers: [],
-            images: [],
-            textures: [],
-            samplers: [],
-            subpassInputs: [],
-        }],
+        ],
+        shaders: [
+            {
+                name: program,
+                hash,
+                builtins: {
+                    statistics: {
+                        CC_EFFECT_USED_VERTEX_UNIFORM_VECTORS: 0,
+                        CC_EFFECT_USED_FRAGMENT_UNIFORM_VECTORS: constants.length + samplers.length * 4,
+                    },
+                    globals: {
+                        blocks: [],
+                        samplerTextures: [],
+                        buffers: [],
+                        images: [],
+                    },
+                    locals: { blocks: [], samplerTextures: [], buffers: [], images: [] },
+                },
+                defines: (options.defines ?? []).map((define) => ({ name: define, type: 'boolean' })),
+                attributes: [
+                    { name: 'a_position', defines: [], format: 32, location: 0 },
+                    { name: 'a_texCoord', defines: [], format: 21, location: 2 },
+                ],
+                blocks: [
+                    {
+                        name: 'Constants',
+                        defines: [],
+                        binding: 0,
+                        stageFlags: ShaderStageFlagBit.FRAGMENT,
+                        members: constants.map((member) => ({ name: member, type: Type.FLOAT4, count: 1 })),
+                    },
+                ],
+                samplerTextures: samplers.map((sampler, index) => ({
+                    name: sampler,
+                    type: Type.SAMPLER2D,
+                    count: 1,
+                    defines: [],
+                    stageFlags: ShaderStageFlagBit.FRAGMENT,
+                    set: 1,
+                    binding: index + 1,
+                })),
+                buffers: [],
+                images: [],
+                textures: [],
+                samplers: [],
+                subpassInputs: [],
+            },
+        ],
         combinations: [],
         hideInEditor: false,
     } as unknown as Partial<EffectAsset>);

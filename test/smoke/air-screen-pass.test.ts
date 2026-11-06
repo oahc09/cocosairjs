@@ -76,8 +76,16 @@ describe('AIR full-screen effect stack', () => {
         expect(EffectAsset.get(effect.name)).toBe(effect);
         const shader = effect.shaders[0];
         expect(shader.name).toBe(`${effect.name}-program`);
-        expect(shader.glsl4.vert).toContain('layout(set = 0, binding = 1) uniform CCCamera');
-        expect(shader.glsl4.vert).toContain('layout(set = 2, binding = 0) uniform CCLocal');
+        // Empty-scene fullscreen passes have no local descriptor. Unused builtin
+        // blocks can remain active on drivers and must not require a model draw.
+        for (const dialect of ['glsl3', 'glsl4'] as const) {
+            expect(shader[dialect].vert).not.toContain('uniform CCCamera');
+            expect(shader[dialect].vert).not.toContain('uniform CCLocal');
+            expect(shader[dialect].vert).not.toContain('uniform CCGlobal');
+        }
+        expect(shader.builtins.globals.blocks).toEqual([]);
+        expect(shader.builtins.locals.blocks).toEqual([]);
+        expect(shader.builtins.statistics.CC_EFFECT_USED_VERTEX_UNIFORM_VECTORS).toBe(0);
         // Clip-space quad: no MVP is applied to the position.
         expect(shader.glsl4.vert).toContain('gl_Position = vec4(a_position.xy, 0.0, 1.0)');
         expect(shader.glsl4.frag).toContain('layout(set = 1, binding = 0) uniform Constants');
@@ -86,7 +94,6 @@ describe('AIR full-screen effect stack', () => {
         // The variant WebGL2 selects (`program-lib.ts:592-600`) is the same source minus layout.
         expect(shader.glsl3.frag).not.toContain('layout(');
         expect(shader.glsl3.frag).toContain('uniform Constants');
-        expect(shader.glsl3.vert).toContain('uniform CCCamera');
         expect(shader.glsl1).toBeUndefined();
 
         expect(shader.blocks[0].members.map((member: { name: string }) => member.name)).toEqual(['probe0', 'probe1']);

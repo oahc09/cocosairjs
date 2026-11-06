@@ -1,0 +1,2204 @@
+{
+  "schema": "air-hdr-empty-post-focused-verification-v1",
+  "generatedAt": "2026-11-06T17:33:10.098847+00:00",
+  "scope": "Focused empty-scene first-three post frames and unchanged native skybox regression. Not full browser matrix, release acceptance or canonical campaign evidence.",
+  "fingerprints": {
+    "tools/verify/hdr-empty-post.cjs": "ff8682144e36b41bfb2b856fa8b93f8db3405161cfa4dffd213f6c53f501815c",
+    "test/fixtures/hdr-empty-post/main.js": "0c1c6802fef4b07e517b59743a1c411daa9f377dacf958a6cbf30af30bf0c1e4",
+    "test/fixtures/hdr-empty-post/index.html": "c64d670899feb8ba14fcaea7825743193b16715b18ae29191d73cd040f6b39d7",
+    "test/fixtures/hdr-empty-post/README.md": "2b1394216555c7245ab32d9497c92b9749058cf28fa23f9cdcca4418c2a12166",
+    "tools/verify/hdr-skybox.cjs": "ff1e47dac528da9bae17e3316201e628bcfd17dfacde90701b084a681ca90e69",
+    "test/fixtures/hdr-skybox/main.js": "83302ef463d493c8a075fd63b85739c62e4bbbaebc75f290889972ba013391c7",
+    "test/fixtures/hdr-skybox/index.html": "6a4e17b3b1ca78d75bec504b32b46c3998eef42d0514a94864866b504c9a9809",
+    "test/fixtures/hdr-empty-post/collector-check.cjs": "2674e8762f46a6ed192936506f24dd0b54364a797b5c6e7e5f6bb5525bc50a41"
+  },
+  "helperFingerprints": {
+    "observation": "Read at summary time. Original raw collectors did not independently fingerprint these helper files. Raw reports unchanged.",
+    "files": {
+      "tools/verify/browser-engines.cjs": "556a3fd699c4906a869fdd893f396bbde62cf0011a222555fafeacc272fb1752",
+      "tools/verify/loopback-browser-env.cjs": "eb57e562c46813cc153c94e16ae6889dd132ab552befd57fd75512caa6403929",
+      "tools/verify/static-file-response.cjs": "23101765da4ecb8693245cf357f3b9fd8637806ec8c9a1bd7b55536c353e2667"
+    }
+  },
+  "fixture": {
+    "sourceRGBA": [0.5019607843137255, 0.25098039215686274, 0.12549019607843137, 1],
+    "sourceAbsoluteTolerance": 0.001,
+    "outputRGBA": [206, 165, 115, 255],
+    "outputByteTolerance": 2,
+    "steppedFrames": 3,
+    "modelDrawsBeforePost": 0,
+    "runtimeShaderStripping": false
+  },
+  "attempts": {
+    "old-chromium-attempt1": {
+      "rawReport": "output/hdr-empty-post/old-chromium-attempt1/report.json",
+      "rawReportSHA256": "4063df3ec1215f37b0b3bddcdaaa54b3a0cf9da121835b2b082e146c0ad3c19d",
+      "timestamp": "2026-11-06T17:25:43.892Z",
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "sdkSHA256": "1aa82350919d17a2dbe21b1e6ac3f4ecfa50b3672c4e658840583f128b672244",
+      "completed": true,
+      "passed": false,
+      "checks": 18,
+      "passedChecks": 9,
+      "failedChecks": [
+        {
+          "name": "Frame 1: draw GL error",
+          "pass": false,
+          "actual": 1282
+        },
+        {
+          "name": "Frame 1: all active blocks bound",
+          "pass": false,
+          "actual": [
+            {
+              "name": "CCCamera",
+              "binding": 1,
+              "bound": true,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "CCLocal",
+              "binding": 4,
+              "bound": false,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "Constants",
+              "binding": 11,
+              "bound": true,
+              "vertex": false,
+              "fragment": true
+            }
+          ]
+        },
+        {
+          "name": "Frame 2: draw GL error",
+          "pass": false,
+          "actual": 1282
+        },
+        {
+          "name": "Frame 2: all active blocks bound",
+          "pass": false,
+          "actual": [
+            {
+              "name": "CCCamera",
+              "binding": 1,
+              "bound": true,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "CCLocal",
+              "binding": 4,
+              "bound": false,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "Constants",
+              "binding": 11,
+              "bound": true,
+              "vertex": false,
+              "fragment": true
+            }
+          ]
+        },
+        {
+          "name": "Frame 3: draw GL error",
+          "pass": false,
+          "actual": 1282
+        },
+        {
+          "name": "Frame 3: all active blocks bound",
+          "pass": false,
+          "actual": [
+            {
+              "name": "CCCamera",
+              "binding": 1,
+              "bound": true,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "CCLocal",
+              "binding": 4,
+              "bound": false,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "Constants",
+              "binding": 11,
+              "bound": true,
+              "vertex": false,
+              "fragment": true
+            }
+          ]
+        },
+        {
+          "name": "Frame 1: ACES sRGB output",
+          "pass": false,
+          "actual": [0, 0, 0, 255]
+        },
+        {
+          "name": "Frame 2: ACES sRGB output",
+          "pass": false,
+          "actual": [0, 0, 0, 255]
+        },
+        {
+          "name": "Frame 3: ACES sRGB output",
+          "pass": false,
+          "actual": [0, 0, 0, 255]
+        }
+      ],
+      "inputsUnchanged": true,
+      "sourceBinding": {
+        "file": "src/air/rendering/screen-effect.ts",
+        "matchesCurrentSource": false,
+        "sourceSHA256": "14dcd68a54f39b1f37518a1b71a85a4ba490912b044efdadfd32a45ca50478bf",
+        "manifestBundleMatches": true,
+        "manifestMapMatches": true,
+        "sourceMapSHA256": "bd344d104696b5ebb6ac7b4ba31e000bcd79b42dbd3c385d00b37beb4999d0b7"
+      },
+      "pageOrConsoleErrors": [],
+      "httpFailures": [],
+      "screenshots": [
+        {
+          "path": "output/hdr-empty-post/old-chromium-attempt1/first-three-frames.png",
+          "sha256": "d4c867c3d949c28b65107e10dd2450d49879d4a7317bb85a6cf12412b7ded0d6"
+        }
+      ],
+      "shutdown": "browser.close acknowledged; OS ECHILD not measured; focused non-canonical run",
+      "drawsBeforePost": 0,
+      "draws": [
+        {
+          "frame": 1,
+          "name": "drawElements",
+          "args": [4, 6, 5123, 0],
+          "blocks": [
+            {
+              "name": "CCCamera",
+              "binding": 1,
+              "bound": true,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "CCLocal",
+              "binding": 4,
+              "bound": false,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "Constants",
+              "binding": 11,
+              "bound": true,
+              "vertex": false,
+              "fragment": true
+            }
+          ],
+          "error": 1282
+        },
+        {
+          "frame": 2,
+          "name": "drawElements",
+          "args": [4, 6, 5123, 0],
+          "blocks": [
+            {
+              "name": "CCCamera",
+              "binding": 1,
+              "bound": true,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "CCLocal",
+              "binding": 4,
+              "bound": false,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "Constants",
+              "binding": 11,
+              "bound": true,
+              "vertex": false,
+              "fragment": true
+            }
+          ],
+          "error": 1282
+        },
+        {
+          "frame": 3,
+          "name": "drawElements",
+          "args": [4, 6, 5123, 0],
+          "blocks": [
+            {
+              "name": "CCCamera",
+              "binding": 1,
+              "bound": true,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "CCLocal",
+              "binding": 4,
+              "bound": false,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "Constants",
+              "binding": 11,
+              "bound": true,
+              "vertex": false,
+              "fragment": true
+            }
+          ],
+          "error": 1282
+        }
+      ],
+      "samples": [
+        {
+          "frame": 1,
+          "source": [0.501953125, 0.2509765625, 0.12548828125, 1],
+          "output": [0, 0, 0, 255],
+          "error": 0
+        },
+        {
+          "frame": 2,
+          "source": [0.501953125, 0.2509765625, 0.12548828125, 1],
+          "output": [0, 0, 0, 255],
+          "error": 0
+        },
+        {
+          "frame": 3,
+          "source": [0.501953125, 0.2509765625, 0.12548828125, 1],
+          "output": [0, 0, 0, 255],
+          "error": 0
+        }
+      ],
+      "finalError": 0,
+      "collectorSHA256": "58284174282160225e240d092cd5f559b34ba1c8b23dfcfc6419924c18505388",
+      "evidenceStatus": "superseded-collector-version-retained"
+    },
+    "old-webkit-attempt1": {
+      "rawReport": "output/hdr-empty-post/old-webkit-attempt1/report.json",
+      "rawReportSHA256": "23f9338e40f7e855968f9232809a3013a620444cdd74d98e05fa385eb39959a4",
+      "timestamp": "2026-11-06T17:25:46.056Z",
+      "browser": "webkit",
+      "version": "26.0",
+      "sdkSHA256": "1aa82350919d17a2dbe21b1e6ac3f4ecfa50b3672c4e658840583f128b672244",
+      "completed": true,
+      "passed": false,
+      "checks": 18,
+      "passedChecks": 9,
+      "failedChecks": [
+        {
+          "name": "Frame 1: draw GL error",
+          "pass": false,
+          "actual": 1282
+        },
+        {
+          "name": "Frame 1: all active blocks bound",
+          "pass": false,
+          "actual": [
+            {
+              "name": "CCCamera",
+              "binding": 1,
+              "bound": true,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "CCLocal",
+              "binding": 4,
+              "bound": false,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "Constants",
+              "binding": 11,
+              "bound": true,
+              "vertex": false,
+              "fragment": true
+            }
+          ]
+        },
+        {
+          "name": "Frame 2: draw GL error",
+          "pass": false,
+          "actual": 1282
+        },
+        {
+          "name": "Frame 2: all active blocks bound",
+          "pass": false,
+          "actual": [
+            {
+              "name": "CCCamera",
+              "binding": 1,
+              "bound": true,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "CCLocal",
+              "binding": 4,
+              "bound": false,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "Constants",
+              "binding": 11,
+              "bound": true,
+              "vertex": false,
+              "fragment": true
+            }
+          ]
+        },
+        {
+          "name": "Frame 3: draw GL error",
+          "pass": false,
+          "actual": 1282
+        },
+        {
+          "name": "Frame 3: all active blocks bound",
+          "pass": false,
+          "actual": [
+            {
+              "name": "CCCamera",
+              "binding": 1,
+              "bound": true,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "CCLocal",
+              "binding": 4,
+              "bound": false,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "Constants",
+              "binding": 11,
+              "bound": true,
+              "vertex": false,
+              "fragment": true
+            }
+          ]
+        },
+        {
+          "name": "Frame 1: ACES sRGB output",
+          "pass": false,
+          "actual": [0, 0, 0, 255]
+        },
+        {
+          "name": "Frame 2: ACES sRGB output",
+          "pass": false,
+          "actual": [0, 0, 0, 255]
+        },
+        {
+          "name": "Frame 3: ACES sRGB output",
+          "pass": false,
+          "actual": [0, 0, 0, 255]
+        }
+      ],
+      "inputsUnchanged": true,
+      "sourceBinding": {
+        "file": "src/air/rendering/screen-effect.ts",
+        "matchesCurrentSource": false,
+        "sourceSHA256": "14dcd68a54f39b1f37518a1b71a85a4ba490912b044efdadfd32a45ca50478bf",
+        "manifestBundleMatches": true,
+        "manifestMapMatches": true,
+        "sourceMapSHA256": "bd344d104696b5ebb6ac7b4ba31e000bcd79b42dbd3c385d00b37beb4999d0b7"
+      },
+      "pageOrConsoleErrors": [
+        "WebGL: INVALID_OPERATION: glDrawElements: It is undefined behaviour to have a used but unbound uniform buffer.",
+        "WebGL: INVALID_OPERATION: glDrawElements: It is undefined behaviour to have a used but unbound uniform buffer.",
+        "WebGL: INVALID_OPERATION: glDrawElements: It is undefined behaviour to have a used but unbound uniform buffer."
+      ],
+      "httpFailures": [],
+      "screenshots": [
+        {
+          "path": "output/hdr-empty-post/old-webkit-attempt1/first-three-frames.png",
+          "sha256": "ca0711051dee0eba29cafea161bebdddb8a14559234285b71ad2f3a336672d3c"
+        }
+      ],
+      "shutdown": "browser.close acknowledged; OS ECHILD not measured; focused non-canonical run",
+      "drawsBeforePost": 0,
+      "draws": [
+        {
+          "frame": 1,
+          "name": "drawElements",
+          "args": [4, 6, 5123, 0],
+          "blocks": [
+            {
+              "name": "CCCamera",
+              "binding": 1,
+              "bound": true,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "CCLocal",
+              "binding": 4,
+              "bound": false,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "Constants",
+              "binding": 11,
+              "bound": true,
+              "vertex": false,
+              "fragment": true
+            }
+          ],
+          "error": 1282
+        },
+        {
+          "frame": 2,
+          "name": "drawElements",
+          "args": [4, 6, 5123, 0],
+          "blocks": [
+            {
+              "name": "CCCamera",
+              "binding": 1,
+              "bound": true,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "CCLocal",
+              "binding": 4,
+              "bound": false,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "Constants",
+              "binding": 11,
+              "bound": true,
+              "vertex": false,
+              "fragment": true
+            }
+          ],
+          "error": 1282
+        },
+        {
+          "frame": 3,
+          "name": "drawElements",
+          "args": [4, 6, 5123, 0],
+          "blocks": [
+            {
+              "name": "CCCamera",
+              "binding": 1,
+              "bound": true,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "CCLocal",
+              "binding": 4,
+              "bound": false,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "Constants",
+              "binding": 11,
+              "bound": true,
+              "vertex": false,
+              "fragment": true
+            }
+          ],
+          "error": 1282
+        }
+      ],
+      "samples": [
+        {
+          "frame": 1,
+          "source": [0.501953125, 0.2509765625, 0.12548828125, 1],
+          "output": [0, 0, 0, 255],
+          "error": 0
+        },
+        {
+          "frame": 2,
+          "source": [0.501953125, 0.2509765625, 0.12548828125, 1],
+          "output": [0, 0, 0, 255],
+          "error": 0
+        },
+        {
+          "frame": 3,
+          "source": [0.501953125, 0.2509765625, 0.12548828125, 1],
+          "output": [0, 0, 0, 255],
+          "error": 0
+        }
+      ],
+      "finalError": 0,
+      "collectorSHA256": "58284174282160225e240d092cd5f559b34ba1c8b23dfcfc6419924c18505388",
+      "evidenceStatus": "superseded-collector-version-retained"
+    },
+    "new-chromium-attempt1": {
+      "rawReport": "output/hdr-empty-post/new-chromium-attempt1/report.json",
+      "rawReportSHA256": "a0cbf70eaacc28ff830e71687ffb083627917c84dc3789738de84fbf116b0cc9",
+      "timestamp": "2026-11-06T17:26:40.682Z",
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "sdkSHA256": "bae6449d30642cdc7d5d2bdeb8c7ecb54e1e0783ecb82b8f6b8cd8f319738b41",
+      "completed": true,
+      "passed": true,
+      "checks": 18,
+      "passedChecks": 18,
+      "failedChecks": [],
+      "inputsUnchanged": true,
+      "sourceBinding": {
+        "file": "src/air/rendering/screen-effect.ts",
+        "matchesCurrentSource": true,
+        "sourceSHA256": "a8debfa1296164f70f1f6063d1d96513bc3bd0bad9ebb4b3bfd9b781c8c54681",
+        "manifestBundleMatches": true,
+        "manifestMapMatches": true,
+        "sourceMapSHA256": "a396aa63c4655ac363de1dc0003378df9fdc572ed4232e93d725f0b256153d0f"
+      },
+      "pageOrConsoleErrors": [],
+      "httpFailures": [],
+      "screenshots": [
+        {
+          "path": "output/hdr-empty-post/new-chromium-attempt1/first-three-frames.png",
+          "sha256": "8722999596367d9f9d11b73d00c77274d94581a76905ba8d83e2b2e9e24e9362"
+        }
+      ],
+      "shutdown": "browser.close acknowledged; OS ECHILD not measured; focused non-canonical run",
+      "drawsBeforePost": 0,
+      "draws": [
+        {
+          "frame": 1,
+          "name": "drawElements",
+          "args": [4, 6, 5123, 0],
+          "blocks": [
+            {
+              "name": "Constants",
+              "binding": 11,
+              "bound": true,
+              "vertex": false,
+              "fragment": true
+            }
+          ],
+          "error": 0
+        },
+        {
+          "frame": 2,
+          "name": "drawElements",
+          "args": [4, 6, 5123, 0],
+          "blocks": [
+            {
+              "name": "Constants",
+              "binding": 11,
+              "bound": true,
+              "vertex": false,
+              "fragment": true
+            }
+          ],
+          "error": 0
+        },
+        {
+          "frame": 3,
+          "name": "drawElements",
+          "args": [4, 6, 5123, 0],
+          "blocks": [
+            {
+              "name": "Constants",
+              "binding": 11,
+              "bound": true,
+              "vertex": false,
+              "fragment": true
+            }
+          ],
+          "error": 0
+        }
+      ],
+      "samples": [
+        {
+          "frame": 1,
+          "source": [0.501953125, 0.2509765625, 0.12548828125, 1],
+          "output": [206, 165, 115, 255],
+          "error": 0
+        },
+        {
+          "frame": 2,
+          "source": [0.501953125, 0.2509765625, 0.12548828125, 1],
+          "output": [206, 165, 115, 255],
+          "error": 0
+        },
+        {
+          "frame": 3,
+          "source": [0.501953125, 0.2509765625, 0.12548828125, 1],
+          "output": [206, 165, 115, 255],
+          "error": 0
+        }
+      ],
+      "finalError": 0,
+      "collectorSHA256": "58284174282160225e240d092cd5f559b34ba1c8b23dfcfc6419924c18505388",
+      "evidenceStatus": "superseded-collector-version-retained"
+    },
+    "new-webkit-attempt1": {
+      "rawReport": "output/hdr-empty-post/new-webkit-attempt1/report.json",
+      "rawReportSHA256": "e18dac026a5f5539cebd5292e7ba9248f947e2383674b8b96030b432a81bd3b2",
+      "timestamp": "2026-11-06T17:26:42.665Z",
+      "browser": "webkit",
+      "version": "26.0",
+      "sdkSHA256": "bae6449d30642cdc7d5d2bdeb8c7ecb54e1e0783ecb82b8f6b8cd8f319738b41",
+      "completed": true,
+      "passed": true,
+      "checks": 18,
+      "passedChecks": 18,
+      "failedChecks": [],
+      "inputsUnchanged": true,
+      "sourceBinding": {
+        "file": "src/air/rendering/screen-effect.ts",
+        "matchesCurrentSource": true,
+        "sourceSHA256": "a8debfa1296164f70f1f6063d1d96513bc3bd0bad9ebb4b3bfd9b781c8c54681",
+        "manifestBundleMatches": true,
+        "manifestMapMatches": true,
+        "sourceMapSHA256": "a396aa63c4655ac363de1dc0003378df9fdc572ed4232e93d725f0b256153d0f"
+      },
+      "pageOrConsoleErrors": [],
+      "httpFailures": [],
+      "screenshots": [
+        {
+          "path": "output/hdr-empty-post/new-webkit-attempt1/first-three-frames.png",
+          "sha256": "3bdd5fc22ff13758f502125d6f80eb5be4acc4fefc39fff02ecefa7a1f576272"
+        }
+      ],
+      "shutdown": "browser.close acknowledged; OS ECHILD not measured; focused non-canonical run",
+      "drawsBeforePost": 0,
+      "draws": [
+        {
+          "frame": 1,
+          "name": "drawElements",
+          "args": [4, 6, 5123, 0],
+          "blocks": [
+            {
+              "name": "Constants",
+              "binding": 11,
+              "bound": true,
+              "vertex": false,
+              "fragment": true
+            }
+          ],
+          "error": 0
+        },
+        {
+          "frame": 2,
+          "name": "drawElements",
+          "args": [4, 6, 5123, 0],
+          "blocks": [
+            {
+              "name": "Constants",
+              "binding": 11,
+              "bound": true,
+              "vertex": false,
+              "fragment": true
+            }
+          ],
+          "error": 0
+        },
+        {
+          "frame": 3,
+          "name": "drawElements",
+          "args": [4, 6, 5123, 0],
+          "blocks": [
+            {
+              "name": "Constants",
+              "binding": 11,
+              "bound": true,
+              "vertex": false,
+              "fragment": true
+            }
+          ],
+          "error": 0
+        }
+      ],
+      "samples": [
+        {
+          "frame": 1,
+          "source": [0.501953125, 0.2509765625, 0.12548828125, 1],
+          "output": [206, 165, 115, 255],
+          "error": 0
+        },
+        {
+          "frame": 2,
+          "source": [0.501953125, 0.2509765625, 0.12548828125, 1],
+          "output": [206, 165, 115, 255],
+          "error": 0
+        },
+        {
+          "frame": 3,
+          "source": [0.501953125, 0.2509765625, 0.12548828125, 1],
+          "output": [206, 165, 115, 255],
+          "error": 0
+        }
+      ],
+      "finalError": 0,
+      "collectorSHA256": "58284174282160225e240d092cd5f559b34ba1c8b23dfcfc6419924c18505388",
+      "evidenceStatus": "superseded-collector-version-retained"
+    },
+    "skybox-chromium-attempt1": {
+      "rawReport": "output/hdr-empty-post/skybox-chromium-attempt1/report.json",
+      "rawReportSHA256": "7e6aebfc3527791d8ee62aeaa9c4ef4563b4be221abc01fc35d5113f17dd05c2",
+      "timestamp": "2026-11-06T17:26:45.427Z",
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "sdkSHA256": "bae6449d30642cdc7d5d2bdeb8c7ecb54e1e0783ecb82b8f6b8cd8f319738b41",
+      "completed": true,
+      "passed": true,
+      "checks": 22,
+      "passedChecks": 22,
+      "failedChecks": [],
+      "inputsUnchanged": true,
+      "sourceBinding": {
+        "file": "src/air/rendering/effect-json-contract.ts",
+        "matchesCurrentSource": true,
+        "sourceSHA256": "328639f66afffe423f53f9eab9c51115113db62b92ce2921b83ff52f5e7c67c1",
+        "manifestBundleMatches": true,
+        "manifestMapMatches": true,
+        "sourceMapSHA256": "a396aa63c4655ac363de1dc0003378df9fdc572ed4232e93d725f0b256153d0f"
+      },
+      "pageOrConsoleErrors": [],
+      "httpFailures": [],
+      "screenshots": [
+        {
+          "path": "output/hdr-empty-post/skybox-chromium-attempt1/baseline.png",
+          "sha256": "42c81b6d33706bf433df275e5d09450e7e9068f356e06d83150f4fbf9aa46a34"
+        },
+        {
+          "path": "output/hdr-empty-post/skybox-chromium-attempt1/post-active.png",
+          "sha256": "83442ad6a6c081f6c14ad48ab89ded2fad71a2752adb7c926501808bfe57b2f0"
+        },
+        {
+          "path": "output/hdr-empty-post/skybox-chromium-attempt1/ordinary-after-post.png",
+          "sha256": "83442ad6a6c081f6c14ad48ab89ded2fad71a2752adb7c926501808bfe57b2f0"
+        },
+        {
+          "path": "output/hdr-empty-post/skybox-chromium-attempt1/post-disabled.png",
+          "sha256": "42c81b6d33706bf433df275e5d09450e7e9068f356e06d83150f4fbf9aa46a34"
+        },
+        {
+          "path": "output/hdr-empty-post/skybox-chromium-attempt1/post-reenabled.png",
+          "sha256": "83442ad6a6c081f6c14ad48ab89ded2fad71a2752adb7c926501808bfe57b2f0"
+        },
+        {
+          "path": "output/hdr-empty-post/skybox-chromium-attempt1/linear-mesh-control.png",
+          "sha256": "83442ad6a6c081f6c14ad48ab89ded2fad71a2752adb7c926501808bfe57b2f0"
+        },
+        {
+          "path": "output/hdr-empty-post/skybox-chromium-attempt1/stock-sky-restored.png",
+          "sha256": "83442ad6a6c081f6c14ad48ab89ded2fad71a2752adb7c926501808bfe57b2f0"
+        },
+        {
+          "path": "output/hdr-empty-post/skybox-chromium-attempt1/post-disposed.png",
+          "sha256": "42c81b6d33706bf433df275e5d09450e7e9068f356e06d83150f4fbf9aa46a34"
+        }
+      ],
+      "shutdown": "browser.close acknowledged; OS ECHILD not measured; focused non-canonical run",
+      "cases": [
+        {
+          "name": "baseline",
+          "ordinary": [0.986596941947937, 0.956436038017273, 0.8964604735374451, 1],
+          "ordinaryPriority": -10,
+          "exposure": 2.604165625e-5,
+          "ordinaryExposure": 2.604165625e-5,
+          "skyIllum": 38400.015360006146,
+          "effectiveSky": 1,
+          "mainTargetIsNull": true
+        },
+        {
+          "name": "post-active",
+          "ordinary": [0.986596941947937, 0.956436038017273, 0.8964604735374451, 1],
+          "ordinaryPriority": -10,
+          "exposure": 2.604165625e-5,
+          "ordinaryExposure": 2.604165625e-5,
+          "skyIllum": 38400.015360006146,
+          "effectiveSky": 1,
+          "mainTargetIsNull": false,
+          "source": [3.99609375, 1.998046875, 0.9990234375, 1],
+          "sourceInfo": {
+            "requested": {
+              "name": "air-post-1",
+              "width": 320,
+              "height": 240,
+              "scale": 0.25,
+              "colorFormat": "rgba16f",
+              "depthFormat": "depth24-stencil8",
+              "filter": "linear",
+              "samples": 1,
+              "sampleFallback": "lower"
+            },
+            "effective": {
+              "colorFormat": "rgba16f",
+              "depthFormat": "depth24-stencil8",
+              "filter": "linear",
+              "samples": 1,
+              "scale": 0.25
+            },
+            "width": 80,
+            "height": 60,
+            "samples": 1,
+            "generation": 1,
+            "framebufferComplete": true,
+            "resolveRequired": false,
+            "disposed": false,
+            "supportedSamples": [1, 4],
+            "glSamples": 0
+          }
+        },
+        {
+          "name": "ordinary-after-post",
+          "ordinary": [0.986596941947937, 0.956436038017273, 0.8964604735374451, 1],
+          "ordinaryPriority": 10,
+          "exposure": 2.604165625e-5,
+          "ordinaryExposure": 2.604165625e-5,
+          "skyIllum": 38400.015360006146,
+          "effectiveSky": 1,
+          "mainTargetIsNull": false,
+          "source": [3.99609375, 1.998046875, 0.9990234375, 1],
+          "sourceInfo": {
+            "requested": {
+              "name": "air-post-1",
+              "width": 320,
+              "height": 240,
+              "scale": 0.25,
+              "colorFormat": "rgba16f",
+              "depthFormat": "depth24-stencil8",
+              "filter": "linear",
+              "samples": 1,
+              "sampleFallback": "lower"
+            },
+            "effective": {
+              "colorFormat": "rgba16f",
+              "depthFormat": "depth24-stencil8",
+              "filter": "linear",
+              "samples": 1,
+              "scale": 0.25
+            },
+            "width": 80,
+            "height": 60,
+            "samples": 1,
+            "generation": 1,
+            "framebufferComplete": true,
+            "resolveRequired": false,
+            "disposed": false,
+            "supportedSamples": [1, 4],
+            "glSamples": 0
+          }
+        },
+        {
+          "name": "post-disabled",
+          "ordinary": [0.986596941947937, 0.956436038017273, 0.8964604735374451, 1],
+          "ordinaryPriority": 10,
+          "exposure": 2.604165625e-5,
+          "ordinaryExposure": 2.604165625e-5,
+          "skyIllum": 38400.015360006146,
+          "effectiveSky": 1,
+          "mainTargetIsNull": true
+        },
+        {
+          "name": "post-reenabled",
+          "ordinary": [0.986596941947937, 0.956436038017273, 0.8964604735374451, 1],
+          "ordinaryPriority": 10,
+          "exposure": 2.604165625e-5,
+          "ordinaryExposure": 2.604165625e-5,
+          "skyIllum": 38400.015360006146,
+          "effectiveSky": 1,
+          "mainTargetIsNull": false,
+          "source": [3.99609375, 1.998046875, 0.9990234375, 1],
+          "sourceInfo": {
+            "requested": {
+              "name": "air-post-1",
+              "width": 320,
+              "height": 240,
+              "scale": 0.25,
+              "colorFormat": "rgba16f",
+              "depthFormat": "depth24-stencil8",
+              "filter": "linear",
+              "samples": 1,
+              "sampleFallback": "lower"
+            },
+            "effective": {
+              "colorFormat": "rgba16f",
+              "depthFormat": "depth24-stencil8",
+              "filter": "linear",
+              "samples": 1,
+              "scale": 0.25
+            },
+            "width": 80,
+            "height": 60,
+            "samples": 1,
+            "generation": 1,
+            "framebufferComplete": true,
+            "resolveRequired": false,
+            "disposed": false,
+            "supportedSamples": [1, 4],
+            "glSamples": 0
+          }
+        },
+        {
+          "name": "linear-mesh-control",
+          "ordinary": [0.986596941947937, 0.956436038017273, 0.8964604735374451, 1],
+          "ordinaryPriority": 10,
+          "exposure": 2.604165625e-5,
+          "ordinaryExposure": 2.604165625e-5,
+          "skyIllum": 38400.015360006146,
+          "effectiveSky": 1,
+          "mainTargetIsNull": false,
+          "source": [4, 2, 1, 1],
+          "sourceInfo": {
+            "requested": {
+              "name": "air-post-1",
+              "width": 320,
+              "height": 240,
+              "scale": 0.25,
+              "colorFormat": "rgba16f",
+              "depthFormat": "depth24-stencil8",
+              "filter": "linear",
+              "samples": 1,
+              "sampleFallback": "lower"
+            },
+            "effective": {
+              "colorFormat": "rgba16f",
+              "depthFormat": "depth24-stencil8",
+              "filter": "linear",
+              "samples": 1,
+              "scale": 0.25
+            },
+            "width": 80,
+            "height": 60,
+            "samples": 1,
+            "generation": 1,
+            "framebufferComplete": true,
+            "resolveRequired": false,
+            "disposed": false,
+            "supportedSamples": [1, 4],
+            "glSamples": 0
+          }
+        },
+        {
+          "name": "stock-sky-restored",
+          "ordinary": [0.986596941947937, 0.956436038017273, 0.8964604735374451, 1],
+          "ordinaryPriority": 10,
+          "exposure": 2.604165625e-5,
+          "ordinaryExposure": 2.604165625e-5,
+          "skyIllum": 38400.015360006146,
+          "effectiveSky": 1,
+          "mainTargetIsNull": false,
+          "source": [3.99609375, 1.998046875, 0.9990234375, 1],
+          "sourceInfo": {
+            "requested": {
+              "name": "air-post-1",
+              "width": 320,
+              "height": 240,
+              "scale": 0.25,
+              "colorFormat": "rgba16f",
+              "depthFormat": "depth24-stencil8",
+              "filter": "linear",
+              "samples": 1,
+              "sampleFallback": "lower"
+            },
+            "effective": {
+              "colorFormat": "rgba16f",
+              "depthFormat": "depth24-stencil8",
+              "filter": "linear",
+              "samples": 1,
+              "scale": 0.25
+            },
+            "width": 80,
+            "height": 60,
+            "samples": 1,
+            "generation": 1,
+            "framebufferComplete": true,
+            "resolveRequired": false,
+            "disposed": false,
+            "supportedSamples": [1, 4],
+            "glSamples": 0
+          }
+        },
+        {
+          "name": "post-disposed",
+          "ordinary": [0.986596941947937, 0.956436038017273, 0.8964604735374451, 1],
+          "ordinaryPriority": 10,
+          "exposure": 2.604165625e-5,
+          "ordinaryExposure": 2.604165625e-5,
+          "skyIllum": 38400.015360006146,
+          "effectiveSky": 1,
+          "mainTargetIsNull": true
+        }
+      ],
+      "glError": 0,
+      "collectorSHA256": "ff1e47dac528da9bae17e3316201e628bcfd17dfacde90701b084a681ca90e69",
+      "evidenceStatus": "current-focused-proof"
+    },
+    "skybox-webkit-attempt1": {
+      "rawReport": "output/hdr-empty-post/skybox-webkit-attempt1/report.json",
+      "rawReportSHA256": "c3eb58a98dfaa3cc78d2962c15e070aa84cffd38526a65f1140b7838324dfc3f",
+      "timestamp": "2026-11-06T17:26:47.565Z",
+      "browser": "webkit",
+      "version": "26.0",
+      "sdkSHA256": "bae6449d30642cdc7d5d2bdeb8c7ecb54e1e0783ecb82b8f6b8cd8f319738b41",
+      "completed": true,
+      "passed": true,
+      "checks": 22,
+      "passedChecks": 22,
+      "failedChecks": [],
+      "inputsUnchanged": true,
+      "sourceBinding": {
+        "file": "src/air/rendering/effect-json-contract.ts",
+        "matchesCurrentSource": true,
+        "sourceSHA256": "328639f66afffe423f53f9eab9c51115113db62b92ce2921b83ff52f5e7c67c1",
+        "manifestBundleMatches": true,
+        "manifestMapMatches": true,
+        "sourceMapSHA256": "a396aa63c4655ac363de1dc0003378df9fdc572ed4232e93d725f0b256153d0f"
+      },
+      "pageOrConsoleErrors": [],
+      "httpFailures": [],
+      "screenshots": [
+        {
+          "path": "output/hdr-empty-post/skybox-webkit-attempt1/baseline.png",
+          "sha256": "51b6bdc3f1ac1566756b7449d1bd38ce75e0e0771049ee5303fe8d89b7a5842e"
+        },
+        {
+          "path": "output/hdr-empty-post/skybox-webkit-attempt1/post-active.png",
+          "sha256": "95d1b3f6887edaf23377da2c4d9fb046211235c8f08aae46cddbb34f72bd0722"
+        },
+        {
+          "path": "output/hdr-empty-post/skybox-webkit-attempt1/ordinary-after-post.png",
+          "sha256": "95d1b3f6887edaf23377da2c4d9fb046211235c8f08aae46cddbb34f72bd0722"
+        },
+        {
+          "path": "output/hdr-empty-post/skybox-webkit-attempt1/post-disabled.png",
+          "sha256": "51b6bdc3f1ac1566756b7449d1bd38ce75e0e0771049ee5303fe8d89b7a5842e"
+        },
+        {
+          "path": "output/hdr-empty-post/skybox-webkit-attempt1/post-reenabled.png",
+          "sha256": "95d1b3f6887edaf23377da2c4d9fb046211235c8f08aae46cddbb34f72bd0722"
+        },
+        {
+          "path": "output/hdr-empty-post/skybox-webkit-attempt1/linear-mesh-control.png",
+          "sha256": "95d1b3f6887edaf23377da2c4d9fb046211235c8f08aae46cddbb34f72bd0722"
+        },
+        {
+          "path": "output/hdr-empty-post/skybox-webkit-attempt1/stock-sky-restored.png",
+          "sha256": "95d1b3f6887edaf23377da2c4d9fb046211235c8f08aae46cddbb34f72bd0722"
+        },
+        {
+          "path": "output/hdr-empty-post/skybox-webkit-attempt1/post-disposed.png",
+          "sha256": "51b6bdc3f1ac1566756b7449d1bd38ce75e0e0771049ee5303fe8d89b7a5842e"
+        }
+      ],
+      "shutdown": "browser.close acknowledged; OS ECHILD not measured; focused non-canonical run",
+      "cases": [
+        {
+          "name": "baseline",
+          "ordinary": [0.986328125, 0.9560546875, 0.89501953125, 1],
+          "ordinaryPriority": -10,
+          "exposure": 2.604165625e-5,
+          "ordinaryExposure": 2.604165625e-5,
+          "skyIllum": 38400.015360006146,
+          "effectiveSky": 1,
+          "mainTargetIsNull": true
+        },
+        {
+          "name": "post-active",
+          "ordinary": [0.986328125, 0.9560546875, 0.89501953125, 1],
+          "ordinaryPriority": -10,
+          "exposure": 2.604165625e-5,
+          "ordinaryExposure": 2.604165625e-5,
+          "skyIllum": 38400.015360006146,
+          "effectiveSky": 1,
+          "mainTargetIsNull": false,
+          "source": [3.99609375, 1.998046875, 0.9990234375, 1],
+          "sourceInfo": {
+            "requested": {
+              "name": "air-post-1",
+              "width": 320,
+              "height": 240,
+              "scale": 0.25,
+              "colorFormat": "rgba16f",
+              "depthFormat": "depth24-stencil8",
+              "filter": "linear",
+              "samples": 1,
+              "sampleFallback": "lower"
+            },
+            "effective": {
+              "colorFormat": "rgba16f",
+              "depthFormat": "depth24-stencil8",
+              "filter": "linear",
+              "samples": 1,
+              "scale": 0.25
+            },
+            "width": 80,
+            "height": 60,
+            "samples": 1,
+            "generation": 1,
+            "framebufferComplete": true,
+            "resolveRequired": false,
+            "disposed": false,
+            "supportedSamples": [1, 4],
+            "glSamples": 0
+          }
+        },
+        {
+          "name": "ordinary-after-post",
+          "ordinary": [0.986328125, 0.9560546875, 0.89501953125, 1],
+          "ordinaryPriority": 10,
+          "exposure": 2.604165625e-5,
+          "ordinaryExposure": 2.604165625e-5,
+          "skyIllum": 38400.015360006146,
+          "effectiveSky": 1,
+          "mainTargetIsNull": false,
+          "source": [3.99609375, 1.998046875, 0.9990234375, 1],
+          "sourceInfo": {
+            "requested": {
+              "name": "air-post-1",
+              "width": 320,
+              "height": 240,
+              "scale": 0.25,
+              "colorFormat": "rgba16f",
+              "depthFormat": "depth24-stencil8",
+              "filter": "linear",
+              "samples": 1,
+              "sampleFallback": "lower"
+            },
+            "effective": {
+              "colorFormat": "rgba16f",
+              "depthFormat": "depth24-stencil8",
+              "filter": "linear",
+              "samples": 1,
+              "scale": 0.25
+            },
+            "width": 80,
+            "height": 60,
+            "samples": 1,
+            "generation": 1,
+            "framebufferComplete": true,
+            "resolveRequired": false,
+            "disposed": false,
+            "supportedSamples": [1, 4],
+            "glSamples": 0
+          }
+        },
+        {
+          "name": "post-disabled",
+          "ordinary": [0.986328125, 0.9560546875, 0.89501953125, 1],
+          "ordinaryPriority": 10,
+          "exposure": 2.604165625e-5,
+          "ordinaryExposure": 2.604165625e-5,
+          "skyIllum": 38400.015360006146,
+          "effectiveSky": 1,
+          "mainTargetIsNull": true
+        },
+        {
+          "name": "post-reenabled",
+          "ordinary": [0.986328125, 0.9560546875, 0.89501953125, 1],
+          "ordinaryPriority": 10,
+          "exposure": 2.604165625e-5,
+          "ordinaryExposure": 2.604165625e-5,
+          "skyIllum": 38400.015360006146,
+          "effectiveSky": 1,
+          "mainTargetIsNull": false,
+          "source": [3.99609375, 1.998046875, 0.9990234375, 1],
+          "sourceInfo": {
+            "requested": {
+              "name": "air-post-1",
+              "width": 320,
+              "height": 240,
+              "scale": 0.25,
+              "colorFormat": "rgba16f",
+              "depthFormat": "depth24-stencil8",
+              "filter": "linear",
+              "samples": 1,
+              "sampleFallback": "lower"
+            },
+            "effective": {
+              "colorFormat": "rgba16f",
+              "depthFormat": "depth24-stencil8",
+              "filter": "linear",
+              "samples": 1,
+              "scale": 0.25
+            },
+            "width": 80,
+            "height": 60,
+            "samples": 1,
+            "generation": 1,
+            "framebufferComplete": true,
+            "resolveRequired": false,
+            "disposed": false,
+            "supportedSamples": [1, 4],
+            "glSamples": 0
+          }
+        },
+        {
+          "name": "linear-mesh-control",
+          "ordinary": [0.986328125, 0.9560546875, 0.89501953125, 1],
+          "ordinaryPriority": 10,
+          "exposure": 2.604165625e-5,
+          "ordinaryExposure": 2.604165625e-5,
+          "skyIllum": 38400.015360006146,
+          "effectiveSky": 1,
+          "mainTargetIsNull": false,
+          "source": [4, 2, 1, 1],
+          "sourceInfo": {
+            "requested": {
+              "name": "air-post-1",
+              "width": 320,
+              "height": 240,
+              "scale": 0.25,
+              "colorFormat": "rgba16f",
+              "depthFormat": "depth24-stencil8",
+              "filter": "linear",
+              "samples": 1,
+              "sampleFallback": "lower"
+            },
+            "effective": {
+              "colorFormat": "rgba16f",
+              "depthFormat": "depth24-stencil8",
+              "filter": "linear",
+              "samples": 1,
+              "scale": 0.25
+            },
+            "width": 80,
+            "height": 60,
+            "samples": 1,
+            "generation": 1,
+            "framebufferComplete": true,
+            "resolveRequired": false,
+            "disposed": false,
+            "supportedSamples": [1, 4],
+            "glSamples": 0
+          }
+        },
+        {
+          "name": "stock-sky-restored",
+          "ordinary": [0.986328125, 0.9560546875, 0.89501953125, 1],
+          "ordinaryPriority": 10,
+          "exposure": 2.604165625e-5,
+          "ordinaryExposure": 2.604165625e-5,
+          "skyIllum": 38400.015360006146,
+          "effectiveSky": 1,
+          "mainTargetIsNull": false,
+          "source": [3.99609375, 1.998046875, 0.9990234375, 1],
+          "sourceInfo": {
+            "requested": {
+              "name": "air-post-1",
+              "width": 320,
+              "height": 240,
+              "scale": 0.25,
+              "colorFormat": "rgba16f",
+              "depthFormat": "depth24-stencil8",
+              "filter": "linear",
+              "samples": 1,
+              "sampleFallback": "lower"
+            },
+            "effective": {
+              "colorFormat": "rgba16f",
+              "depthFormat": "depth24-stencil8",
+              "filter": "linear",
+              "samples": 1,
+              "scale": 0.25
+            },
+            "width": 80,
+            "height": 60,
+            "samples": 1,
+            "generation": 1,
+            "framebufferComplete": true,
+            "resolveRequired": false,
+            "disposed": false,
+            "supportedSamples": [1, 4],
+            "glSamples": 0
+          }
+        },
+        {
+          "name": "post-disposed",
+          "ordinary": [0.986328125, 0.9560546875, 0.89501953125, 1],
+          "ordinaryPriority": 10,
+          "exposure": 2.604165625e-5,
+          "ordinaryExposure": 2.604165625e-5,
+          "skyIllum": 38400.015360006146,
+          "effectiveSky": 1,
+          "mainTargetIsNull": true
+        }
+      ],
+      "glError": 0,
+      "collectorSHA256": "ff1e47dac528da9bae17e3316201e628bcfd17dfacde90701b084a681ca90e69",
+      "evidenceStatus": "current-focused-proof"
+    },
+    "old-chromium-attempt2": {
+      "rawReport": "output/hdr-empty-post/old-chromium-attempt2/report.json",
+      "rawReportSHA256": "02c8a2ea4356c396525356b33fb3758fbaf79323deeed3964b5647be74ca2e5d",
+      "timestamp": "2026-11-06T17:29:24.944Z",
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "sdkSHA256": "1aa82350919d17a2dbe21b1e6ac3f4ecfa50b3672c4e658840583f128b672244",
+      "completed": true,
+      "passed": false,
+      "checks": 18,
+      "passedChecks": 9,
+      "failedChecks": [
+        {
+          "name": "Frame 1: draw GL error",
+          "pass": false,
+          "actual": 1282
+        },
+        {
+          "name": "Frame 1: all active blocks bound",
+          "pass": false,
+          "actual": [
+            {
+              "name": "CCCamera",
+              "binding": 1,
+              "bound": true,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "CCLocal",
+              "binding": 4,
+              "bound": false,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "Constants",
+              "binding": 11,
+              "bound": true,
+              "vertex": false,
+              "fragment": true
+            }
+          ]
+        },
+        {
+          "name": "Frame 2: draw GL error",
+          "pass": false,
+          "actual": 1282
+        },
+        {
+          "name": "Frame 2: all active blocks bound",
+          "pass": false,
+          "actual": [
+            {
+              "name": "CCCamera",
+              "binding": 1,
+              "bound": true,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "CCLocal",
+              "binding": 4,
+              "bound": false,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "Constants",
+              "binding": 11,
+              "bound": true,
+              "vertex": false,
+              "fragment": true
+            }
+          ]
+        },
+        {
+          "name": "Frame 3: draw GL error",
+          "pass": false,
+          "actual": 1282
+        },
+        {
+          "name": "Frame 3: all active blocks bound",
+          "pass": false,
+          "actual": [
+            {
+              "name": "CCCamera",
+              "binding": 1,
+              "bound": true,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "CCLocal",
+              "binding": 4,
+              "bound": false,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "Constants",
+              "binding": 11,
+              "bound": true,
+              "vertex": false,
+              "fragment": true
+            }
+          ]
+        },
+        {
+          "name": "Frame 1: ACES sRGB output",
+          "pass": false,
+          "actual": [0, 0, 0, 255]
+        },
+        {
+          "name": "Frame 2: ACES sRGB output",
+          "pass": false,
+          "actual": [0, 0, 0, 255]
+        },
+        {
+          "name": "Frame 3: ACES sRGB output",
+          "pass": false,
+          "actual": [0, 0, 0, 255]
+        }
+      ],
+      "inputsUnchanged": true,
+      "sourceBinding": {
+        "file": "src/air/rendering/screen-effect.ts",
+        "matchesCurrentSource": false,
+        "sourceSHA256": "14dcd68a54f39b1f37518a1b71a85a4ba490912b044efdadfd32a45ca50478bf",
+        "manifestBundleMatches": true,
+        "manifestMapMatches": true,
+        "sourceMapSHA256": "bd344d104696b5ebb6ac7b4ba31e000bcd79b42dbd3c385d00b37beb4999d0b7"
+      },
+      "sourceBindingScope": "explicit-archived-bundle",
+      "sourceBindingPassed": true,
+      "pageOrConsoleErrors": [],
+      "httpFailures": [],
+      "screenshots": [
+        {
+          "path": "output/hdr-empty-post/old-chromium-attempt2/first-three-frames.png",
+          "sha256": "d4c867c3d949c28b65107e10dd2450d49879d4a7317bb85a6cf12412b7ded0d6"
+        }
+      ],
+      "shutdown": "browser.close acknowledged; OS ECHILD not measured; focused non-canonical run",
+      "drawsBeforePost": 0,
+      "draws": [
+        {
+          "frame": 1,
+          "name": "drawElements",
+          "args": [4, 6, 5123, 0],
+          "blocks": [
+            {
+              "name": "CCCamera",
+              "binding": 1,
+              "bound": true,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "CCLocal",
+              "binding": 4,
+              "bound": false,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "Constants",
+              "binding": 11,
+              "bound": true,
+              "vertex": false,
+              "fragment": true
+            }
+          ],
+          "error": 1282
+        },
+        {
+          "frame": 2,
+          "name": "drawElements",
+          "args": [4, 6, 5123, 0],
+          "blocks": [
+            {
+              "name": "CCCamera",
+              "binding": 1,
+              "bound": true,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "CCLocal",
+              "binding": 4,
+              "bound": false,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "Constants",
+              "binding": 11,
+              "bound": true,
+              "vertex": false,
+              "fragment": true
+            }
+          ],
+          "error": 1282
+        },
+        {
+          "frame": 3,
+          "name": "drawElements",
+          "args": [4, 6, 5123, 0],
+          "blocks": [
+            {
+              "name": "CCCamera",
+              "binding": 1,
+              "bound": true,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "CCLocal",
+              "binding": 4,
+              "bound": false,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "Constants",
+              "binding": 11,
+              "bound": true,
+              "vertex": false,
+              "fragment": true
+            }
+          ],
+          "error": 1282
+        }
+      ],
+      "samples": [
+        {
+          "frame": 1,
+          "source": [0.501953125, 0.2509765625, 0.12548828125, 1],
+          "output": [0, 0, 0, 255],
+          "error": 0
+        },
+        {
+          "frame": 2,
+          "source": [0.501953125, 0.2509765625, 0.12548828125, 1],
+          "output": [0, 0, 0, 255],
+          "error": 0
+        },
+        {
+          "frame": 3,
+          "source": [0.501953125, 0.2509765625, 0.12548828125, 1],
+          "output": [0, 0, 0, 255],
+          "error": 0
+        }
+      ],
+      "finalError": 0,
+      "collectorSHA256": "ff8682144e36b41bfb2b856fa8b93f8db3405161cfa4dffd213f6c53f501815c",
+      "evidenceStatus": "current-focused-proof"
+    },
+    "old-webkit-attempt2": {
+      "rawReport": "output/hdr-empty-post/old-webkit-attempt2/report.json",
+      "rawReportSHA256": "e6c4fd6e558344435c14f1f888bc80f199c0814b05611d324ff652370d6ab8ad",
+      "timestamp": "2026-11-06T17:29:27.167Z",
+      "browser": "webkit",
+      "version": "26.0",
+      "sdkSHA256": "1aa82350919d17a2dbe21b1e6ac3f4ecfa50b3672c4e658840583f128b672244",
+      "completed": true,
+      "passed": false,
+      "checks": 18,
+      "passedChecks": 9,
+      "failedChecks": [
+        {
+          "name": "Frame 1: draw GL error",
+          "pass": false,
+          "actual": 1282
+        },
+        {
+          "name": "Frame 1: all active blocks bound",
+          "pass": false,
+          "actual": [
+            {
+              "name": "CCCamera",
+              "binding": 1,
+              "bound": true,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "CCLocal",
+              "binding": 4,
+              "bound": false,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "Constants",
+              "binding": 11,
+              "bound": true,
+              "vertex": false,
+              "fragment": true
+            }
+          ]
+        },
+        {
+          "name": "Frame 2: draw GL error",
+          "pass": false,
+          "actual": 1282
+        },
+        {
+          "name": "Frame 2: all active blocks bound",
+          "pass": false,
+          "actual": [
+            {
+              "name": "CCCamera",
+              "binding": 1,
+              "bound": true,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "CCLocal",
+              "binding": 4,
+              "bound": false,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "Constants",
+              "binding": 11,
+              "bound": true,
+              "vertex": false,
+              "fragment": true
+            }
+          ]
+        },
+        {
+          "name": "Frame 3: draw GL error",
+          "pass": false,
+          "actual": 1282
+        },
+        {
+          "name": "Frame 3: all active blocks bound",
+          "pass": false,
+          "actual": [
+            {
+              "name": "CCCamera",
+              "binding": 1,
+              "bound": true,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "CCLocal",
+              "binding": 4,
+              "bound": false,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "Constants",
+              "binding": 11,
+              "bound": true,
+              "vertex": false,
+              "fragment": true
+            }
+          ]
+        },
+        {
+          "name": "Frame 1: ACES sRGB output",
+          "pass": false,
+          "actual": [0, 0, 0, 255]
+        },
+        {
+          "name": "Frame 2: ACES sRGB output",
+          "pass": false,
+          "actual": [0, 0, 0, 255]
+        },
+        {
+          "name": "Frame 3: ACES sRGB output",
+          "pass": false,
+          "actual": [0, 0, 0, 255]
+        }
+      ],
+      "inputsUnchanged": true,
+      "sourceBinding": {
+        "file": "src/air/rendering/screen-effect.ts",
+        "matchesCurrentSource": false,
+        "sourceSHA256": "14dcd68a54f39b1f37518a1b71a85a4ba490912b044efdadfd32a45ca50478bf",
+        "manifestBundleMatches": true,
+        "manifestMapMatches": true,
+        "sourceMapSHA256": "bd344d104696b5ebb6ac7b4ba31e000bcd79b42dbd3c385d00b37beb4999d0b7"
+      },
+      "sourceBindingScope": "explicit-archived-bundle",
+      "sourceBindingPassed": true,
+      "pageOrConsoleErrors": [
+        "WebGL: INVALID_OPERATION: glDrawElements: It is undefined behaviour to have a used but unbound uniform buffer.",
+        "WebGL: INVALID_OPERATION: glDrawElements: It is undefined behaviour to have a used but unbound uniform buffer.",
+        "WebGL: INVALID_OPERATION: glDrawElements: It is undefined behaviour to have a used but unbound uniform buffer."
+      ],
+      "httpFailures": [],
+      "screenshots": [
+        {
+          "path": "output/hdr-empty-post/old-webkit-attempt2/first-three-frames.png",
+          "sha256": "ca0711051dee0eba29cafea161bebdddb8a14559234285b71ad2f3a336672d3c"
+        }
+      ],
+      "shutdown": "browser.close acknowledged; OS ECHILD not measured; focused non-canonical run",
+      "drawsBeforePost": 0,
+      "draws": [
+        {
+          "frame": 1,
+          "name": "drawElements",
+          "args": [4, 6, 5123, 0],
+          "blocks": [
+            {
+              "name": "CCCamera",
+              "binding": 1,
+              "bound": true,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "CCLocal",
+              "binding": 4,
+              "bound": false,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "Constants",
+              "binding": 11,
+              "bound": true,
+              "vertex": false,
+              "fragment": true
+            }
+          ],
+          "error": 1282
+        },
+        {
+          "frame": 2,
+          "name": "drawElements",
+          "args": [4, 6, 5123, 0],
+          "blocks": [
+            {
+              "name": "CCCamera",
+              "binding": 1,
+              "bound": true,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "CCLocal",
+              "binding": 4,
+              "bound": false,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "Constants",
+              "binding": 11,
+              "bound": true,
+              "vertex": false,
+              "fragment": true
+            }
+          ],
+          "error": 1282
+        },
+        {
+          "frame": 3,
+          "name": "drawElements",
+          "args": [4, 6, 5123, 0],
+          "blocks": [
+            {
+              "name": "CCCamera",
+              "binding": 1,
+              "bound": true,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "CCLocal",
+              "binding": 4,
+              "bound": false,
+              "vertex": false,
+              "fragment": false
+            },
+            {
+              "name": "Constants",
+              "binding": 11,
+              "bound": true,
+              "vertex": false,
+              "fragment": true
+            }
+          ],
+          "error": 1282
+        }
+      ],
+      "samples": [
+        {
+          "frame": 1,
+          "source": [0.501953125, 0.2509765625, 0.12548828125, 1],
+          "output": [0, 0, 0, 255],
+          "error": 0
+        },
+        {
+          "frame": 2,
+          "source": [0.501953125, 0.2509765625, 0.12548828125, 1],
+          "output": [0, 0, 0, 255],
+          "error": 0
+        },
+        {
+          "frame": 3,
+          "source": [0.501953125, 0.2509765625, 0.12548828125, 1],
+          "output": [0, 0, 0, 255],
+          "error": 0
+        }
+      ],
+      "finalError": 0,
+      "collectorSHA256": "ff8682144e36b41bfb2b856fa8b93f8db3405161cfa4dffd213f6c53f501815c",
+      "evidenceStatus": "current-focused-proof"
+    },
+    "new-chromium-attempt2": {
+      "rawReport": "output/hdr-empty-post/new-chromium-attempt2/report.json",
+      "rawReportSHA256": "a37d2a40d0d60a868dc70867d3f7eec1665d200a05a736d53ac58a5b0f153e90",
+      "timestamp": "2026-11-06T17:29:29.870Z",
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "sdkSHA256": "bae6449d30642cdc7d5d2bdeb8c7ecb54e1e0783ecb82b8f6b8cd8f319738b41",
+      "completed": true,
+      "passed": true,
+      "checks": 18,
+      "passedChecks": 18,
+      "failedChecks": [],
+      "inputsUnchanged": true,
+      "sourceBinding": {
+        "file": "src/air/rendering/screen-effect.ts",
+        "matchesCurrentSource": true,
+        "sourceSHA256": "a8debfa1296164f70f1f6063d1d96513bc3bd0bad9ebb4b3bfd9b781c8c54681",
+        "manifestBundleMatches": true,
+        "manifestMapMatches": true,
+        "sourceMapSHA256": "a396aa63c4655ac363de1dc0003378df9fdc572ed4232e93d725f0b256153d0f"
+      },
+      "sourceBindingScope": "current-source-required",
+      "sourceBindingPassed": true,
+      "pageOrConsoleErrors": [],
+      "httpFailures": [],
+      "screenshots": [
+        {
+          "path": "output/hdr-empty-post/new-chromium-attempt2/first-three-frames.png",
+          "sha256": "8722999596367d9f9d11b73d00c77274d94581a76905ba8d83e2b2e9e24e9362"
+        }
+      ],
+      "shutdown": "browser.close acknowledged; OS ECHILD not measured; focused non-canonical run",
+      "drawsBeforePost": 0,
+      "draws": [
+        {
+          "frame": 1,
+          "name": "drawElements",
+          "args": [4, 6, 5123, 0],
+          "blocks": [
+            {
+              "name": "Constants",
+              "binding": 11,
+              "bound": true,
+              "vertex": false,
+              "fragment": true
+            }
+          ],
+          "error": 0
+        },
+        {
+          "frame": 2,
+          "name": "drawElements",
+          "args": [4, 6, 5123, 0],
+          "blocks": [
+            {
+              "name": "Constants",
+              "binding": 11,
+              "bound": true,
+              "vertex": false,
+              "fragment": true
+            }
+          ],
+          "error": 0
+        },
+        {
+          "frame": 3,
+          "name": "drawElements",
+          "args": [4, 6, 5123, 0],
+          "blocks": [
+            {
+              "name": "Constants",
+              "binding": 11,
+              "bound": true,
+              "vertex": false,
+              "fragment": true
+            }
+          ],
+          "error": 0
+        }
+      ],
+      "samples": [
+        {
+          "frame": 1,
+          "source": [0.501953125, 0.2509765625, 0.12548828125, 1],
+          "output": [206, 165, 115, 255],
+          "error": 0
+        },
+        {
+          "frame": 2,
+          "source": [0.501953125, 0.2509765625, 0.12548828125, 1],
+          "output": [206, 165, 115, 255],
+          "error": 0
+        },
+        {
+          "frame": 3,
+          "source": [0.501953125, 0.2509765625, 0.12548828125, 1],
+          "output": [206, 165, 115, 255],
+          "error": 0
+        }
+      ],
+      "finalError": 0,
+      "collectorSHA256": "ff8682144e36b41bfb2b856fa8b93f8db3405161cfa4dffd213f6c53f501815c",
+      "evidenceStatus": "current-focused-proof"
+    },
+    "new-webkit-attempt2": {
+      "rawReport": "output/hdr-empty-post/new-webkit-attempt2/report.json",
+      "rawReportSHA256": "b8af433d468db898e2aa2ee07fe75bd3dd4892154aa267937c9c21ad0cf7ecfe",
+      "timestamp": "2026-11-06T17:29:31.347Z",
+      "browser": "webkit",
+      "version": "26.0",
+      "sdkSHA256": "bae6449d30642cdc7d5d2bdeb8c7ecb54e1e0783ecb82b8f6b8cd8f319738b41",
+      "completed": true,
+      "passed": true,
+      "checks": 18,
+      "passedChecks": 18,
+      "failedChecks": [],
+      "inputsUnchanged": true,
+      "sourceBinding": {
+        "file": "src/air/rendering/screen-effect.ts",
+        "matchesCurrentSource": true,
+        "sourceSHA256": "a8debfa1296164f70f1f6063d1d96513bc3bd0bad9ebb4b3bfd9b781c8c54681",
+        "manifestBundleMatches": true,
+        "manifestMapMatches": true,
+        "sourceMapSHA256": "a396aa63c4655ac363de1dc0003378df9fdc572ed4232e93d725f0b256153d0f"
+      },
+      "sourceBindingScope": "current-source-required",
+      "sourceBindingPassed": true,
+      "pageOrConsoleErrors": [],
+      "httpFailures": [],
+      "screenshots": [
+        {
+          "path": "output/hdr-empty-post/new-webkit-attempt2/first-three-frames.png",
+          "sha256": "3bdd5fc22ff13758f502125d6f80eb5be4acc4fefc39fff02ecefa7a1f576272"
+        }
+      ],
+      "shutdown": "browser.close acknowledged; OS ECHILD not measured; focused non-canonical run",
+      "drawsBeforePost": 0,
+      "draws": [
+        {
+          "frame": 1,
+          "name": "drawElements",
+          "args": [4, 6, 5123, 0],
+          "blocks": [
+            {
+              "name": "Constants",
+              "binding": 11,
+              "bound": true,
+              "vertex": false,
+              "fragment": true
+            }
+          ],
+          "error": 0
+        },
+        {
+          "frame": 2,
+          "name": "drawElements",
+          "args": [4, 6, 5123, 0],
+          "blocks": [
+            {
+              "name": "Constants",
+              "binding": 11,
+              "bound": true,
+              "vertex": false,
+              "fragment": true
+            }
+          ],
+          "error": 0
+        },
+        {
+          "frame": 3,
+          "name": "drawElements",
+          "args": [4, 6, 5123, 0],
+          "blocks": [
+            {
+              "name": "Constants",
+              "binding": 11,
+              "bound": true,
+              "vertex": false,
+              "fragment": true
+            }
+          ],
+          "error": 0
+        }
+      ],
+      "samples": [
+        {
+          "frame": 1,
+          "source": [0.501953125, 0.2509765625, 0.12548828125, 1],
+          "output": [206, 165, 115, 255],
+          "error": 0
+        },
+        {
+          "frame": 2,
+          "source": [0.501953125, 0.2509765625, 0.12548828125, 1],
+          "output": [206, 165, 115, 255],
+          "error": 0
+        },
+        {
+          "frame": 3,
+          "source": [0.501953125, 0.2509765625, 0.12548828125, 1],
+          "output": [206, 165, 115, 255],
+          "error": 0
+        }
+      ],
+      "finalError": 0,
+      "collectorSHA256": "ff8682144e36b41bfb2b856fa8b93f8db3405161cfa4dffd213f6c53f501815c",
+      "evidenceStatus": "current-focused-proof"
+    }
+  },
+  "shutdownLimit": "All ten real runs acknowledged browser.close. OS ECHILD and the canonical campaign physical-close protocol were not measured.",
+  "collectorFailureTests": {
+    "report": "output/hdr-empty-post/collector-failure-tests.json",
+    "reportSHA256": "32f6a95ac58311e16786d9246d6b333aa2aeedeecd4c7a4e20ead1b5bbb974b2",
+    "testSource": "output/hdr-empty-post/collector-failure-tests.cjs",
+    "testSourceSHA256": "29b42cb791ed79ffb29f4eca1dd24f7b2e987faa8493e1a022603154268dc170",
+    "results": {
+      "runnerSHA256": "ff8682144e36b41bfb2b856fa8b93f8db3405161cfa4dffd213f6c53f501815c",
+      "results": [
+        {
+          "mode": "close-error",
+          "passed": true,
+          "completed": false,
+          "collectorPassed": false,
+          "nonzero": true,
+          "launched": true,
+          "failure": "Error: close diagnostic\n    at Object.close (/workspace/scratch/62d43a81bbde/water-replica-engine/output/hdr-empty-post/collector-failure-tests.cjs:6:116)\n    at evalmachine.<anonymous>:128:31"
+        },
+        {
+          "mode": "close-hang",
+          "passed": true,
+          "completed": false,
+          "collectorPassed": false,
+          "nonzero": true,
+          "launched": true,
+          "failure": "Focused run exceeded original 120-second budget"
+        },
+        {
+          "mode": "server-close-error",
+          "passed": true,
+          "completed": false,
+          "collectorPassed": false,
+          "nonzero": true,
+          "launched": true,
+          "failure": "Error: server close diagnostic\n    at Object.close (/workspace/scratch/62d43a81bbde/water-replica-engine/output/hdr-empty-post/collector-failure-tests.cjs:4:117)\n    at report.passed (evalmachine.<anonymous>:139:24)\n    at new Promise (<anonymous>)\n    at evalmachine.<anonymous>:138:19"
+        },
+        {
+          "mode": "bad-bundle",
+          "passed": true,
+          "completed": false,
+          "collectorPassed": false,
+          "nonzero": true,
+          "launched": false,
+          "failure": "Error: SDK/source binding verification failed\n    at evalmachine.<anonymous>:91:48\n    at evalmachine.<anonymous>:164:3\n    at Script.runInContext (node:vm:149:12)\n    at Script.runInNewContext (node:vm:154:17)\n    at Object.runInNewContext (node:vm:310:38)\n    at test (/workspace/scratch/62d43a81bbde/water-replica-engine/output/hdr-empty-post/collector-failure-tests.cjs:7:4)\n    at /workspace/scratch/62d43a81bbde/water-replica-engine/output/hdr-empty-post/collector-failure-tests.cjs:9:150"
+        },
+        {
+          "mode": "bad-map",
+          "passed": true,
+          "completed": false,
+          "collectorPassed": false,
+          "nonzero": true,
+          "launched": false,
+          "failure": "Error: SDK/source binding verification failed\n    at evalmachine.<anonymous>:91:48\n    at evalmachine.<anonymous>:164:3\n    at Script.runInContext (node:vm:149:12)\n    at Script.runInNewContext (node:vm:154:17)\n    at Object.runInNewContext (node:vm:310:38)\n    at test (/workspace/scratch/62d43a81bbde/water-replica-engine/output/hdr-empty-post/collector-failure-tests.cjs:7:4)\n    at /workspace/scratch/62d43a81bbde/water-replica-engine/output/hdr-empty-post/collector-failure-tests.cjs:9:150"
+        },
+        {
+          "mode": "bad-source",
+          "passed": true,
+          "completed": false,
+          "collectorPassed": false,
+          "nonzero": true,
+          "launched": false,
+          "failure": "Error: SDK/source binding verification failed\n    at evalmachine.<anonymous>:91:48\n    at evalmachine.<anonymous>:164:3\n    at Script.runInContext (node:vm:149:12)\n    at Script.runInNewContext (node:vm:154:17)\n    at Object.runInNewContext (node:vm:310:38)\n    at test (/workspace/scratch/62d43a81bbde/water-replica-engine/output/hdr-empty-post/collector-failure-tests.cjs:7:4)\n    at /workspace/scratch/62d43a81bbde/water-replica-engine/output/hdr-empty-post/collector-failure-tests.cjs:9:150"
+        }
+      ]
+    },
+    "scope": "Mocked collector control-flow checks only, not browser acceptance"
+  },
+  "portableCollectorUnitDiagnostic": {
+    "script": "test/fixtures/hdr-empty-post/collector-check.cjs",
+    "scriptSHA256": "2674e8762f46a6ed192936506f24dd0b54364a797b5c6e7e5f6bb5525bc50a41",
+    "command": "node test/fixtures/hdr-empty-post/collector-check.cjs",
+    "report": "output/hdr-empty-post/collector-check-portable-attempt1.json",
+    "reportSHA256": "e65fafd89707177278d3c5c663da9f0644e7127df38a9a93e3fbefe4d6a8a8fc",
+    "results": {
+      "runnerSHA256": "ff8682144e36b41bfb2b856fa8b93f8db3405161cfa4dffd213f6c53f501815c",
+      "results": [
+        {
+          "mode": "close-error",
+          "passed": true,
+          "completed": false,
+          "collectorPassed": false,
+          "nonzero": true,
+          "launched": true,
+          "failure": "Error: close diagnostic\n    at Object.close (/workspace/scratch/62d43a81bbde/water-replica-engine/test/fixtures/hdr-empty-post/collector-check.cjs:69:47)\n    at evalmachine.<anonymous>:128:31"
+        },
+        {
+          "mode": "close-hang",
+          "passed": true,
+          "completed": false,
+          "collectorPassed": false,
+          "nonzero": true,
+          "launched": true,
+          "failure": "Focused run exceeded original 120-second budget"
+        },
+        {
+          "mode": "server-close-error",
+          "passed": true,
+          "completed": false,
+          "collectorPassed": false,
+          "nonzero": true,
+          "launched": true,
+          "failure": "Error: server close diagnostic\n    at Object.close (/workspace/scratch/62d43a81bbde/water-replica-engine/test/fixtures/hdr-empty-post/collector-check.cjs:48:51)\n    at report.passed (evalmachine.<anonymous>:139:24)\n    at new Promise (<anonymous>)\n    at evalmachine.<anonymous>:138:19"
+        },
+        {
+          "mode": "bad-bundle",
+          "passed": true,
+          "completed": false,
+          "collectorPassed": false,
+          "nonzero": true,
+          "launched": false,
+          "failure": "Error: SDK/source binding verification failed\n    at evalmachine.<anonymous>:91:48\n    at evalmachine.<anonymous>:164:3\n    at Script.runInContext (node:vm:149:12)\n    at Script.runInNewContext (node:vm:154:17)\n    at Object.runInNewContext (node:vm:310:38)\n    at test (/workspace/scratch/62d43a81bbde/water-replica-engine/test/fixtures/hdr-empty-post/collector-check.cjs:76:8)\n    at /workspace/scratch/62d43a81bbde/water-replica-engine/test/fixtures/hdr-empty-post/collector-check.cjs:138:28"
+        },
+        {
+          "mode": "bad-map",
+          "passed": true,
+          "completed": false,
+          "collectorPassed": false,
+          "nonzero": true,
+          "launched": false,
+          "failure": "Error: SDK/source binding verification failed\n    at evalmachine.<anonymous>:91:48\n    at evalmachine.<anonymous>:164:3\n    at Script.runInContext (node:vm:149:12)\n    at Script.runInNewContext (node:vm:154:17)\n    at Object.runInNewContext (node:vm:310:38)\n    at test (/workspace/scratch/62d43a81bbde/water-replica-engine/test/fixtures/hdr-empty-post/collector-check.cjs:76:8)\n    at /workspace/scratch/62d43a81bbde/water-replica-engine/test/fixtures/hdr-empty-post/collector-check.cjs:138:28"
+        },
+        {
+          "mode": "bad-source",
+          "passed": true,
+          "completed": false,
+          "collectorPassed": false,
+          "nonzero": true,
+          "launched": false,
+          "failure": "Error: SDK/source binding verification failed\n    at evalmachine.<anonymous>:91:48\n    at evalmachine.<anonymous>:164:3\n    at Script.runInContext (node:vm:149:12)\n    at Script.runInNewContext (node:vm:154:17)\n    at Object.runInNewContext (node:vm:310:38)\n    at test (/workspace/scratch/62d43a81bbde/water-replica-engine/test/fixtures/hdr-empty-post/collector-check.cjs:76:8)\n    at /workspace/scratch/62d43a81bbde/water-replica-engine/test/fixtures/hdr-empty-post/collector-check.cjs:138:28"
+        }
+      ]
+    },
+    "scope": "Independent mocked control-flow diagnostics; does not replace real-browser evidence."
+  }
+}

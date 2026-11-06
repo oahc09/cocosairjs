@@ -18,3 +18,9 @@ node tools/verify/hdr-skybox.cjs --out=output/hdr-skybox-attempt
 The browser runner accepts `--bundle=<candidate.js>` to compare a previously built runtime. Use a new output directory for each attempt. It creates a six-face constant RGBE cube in memory; no reference-site assets or network resources are needed. The source pixel expectation includes RGBE and half-float quantization, not a weakened display-color tolerance. It also checks a separate ordinary camera, post-process enable/disable and disposal, and a direct linear mesh control.
 
 These are focused rendering regressions. They do not certify the complete browser matrix, all examples, performance, or the water reconstruction's visual fidelity. Generated runtime bundles and example campaign evidence are not part of this source patch; build and test the candidate in the selected environment.
+
+## Empty-scene fullscreen startup
+
+The same HDR integration exposed a separate first-frame issue in `createAirScreenEffect`. Its clip-space vertex shader declared unused camera and model-local uniform blocks. Both Chromium and WebKit retained `CCLocal` as active, so a fullscreen post draw before any model draw failed with an unbound local UBO and left the output black. Later model draws could mask the issue.
+
+Fullscreen effects now omit those unused declarations and builtin metadata. Their material Constants and sampler bindings are unchanged. The asset-free `hdr-empty-post` fixture creates no model or skybox, retains every draw's GL error, and validates the first three source/output readbacks. The original SDK fails nine of eighteen checks in each browser; the corrected SDK passes eighteen of eighteen, without shader stripping, dummy draws, error clearing or relaxed tolerances. The skybox fixture also remains twenty-two of twenty-two in both browsers. See its portable verification summary for fingerprints and the acknowledged-close limitation.
