@@ -10,6 +10,8 @@ import * as crypto from 'crypto';
 import { PNG } from 'pngjs';
 
 const {
+    checkBuiltFromSampling,
+    BUILT_FROM_SAMPLE_SOURCES,
     buildBaseline,
     verifyBaseline,
     applyExecutionReport,
@@ -63,6 +65,132 @@ function makeRealPng(dir: string, opts: { w?: number; h?: number; red?: [number,
 }
 
 const isoNow = () => new Date().toISOString();
+
+describe('builtFrom source-map provenance', () => {
+    const { createSourceBinding } = require('../../tools/build/source-binding.cjs');
+    const { externalizeSources } = require('../../tools/build/source-map-publication.cjs');
+    let root: string;
+    const bundles = ['build/cocosair.module.js', 'build/cocosair.module.min.js'];
+    const sources: string[] = [...BUILT_FROM_SAMPLE_SOURCES, 'src/unsampled.ts'];
+    beforeEach(() => {
+        root = makeTmpDir();
+        for (const file of sources) {
+            fs.mkdirSync(path.dirname(path.join(root, file)), { recursive: true });
+            fs.writeFileSync(path.join(root, file), `// ${file}\nexport const value = 1;\n`);
+        }
+        fs.mkdirSync(path.join(root, 'build'));
+    });
+    afterEach(() => fs.rmSync(root, { recursive: true, force: true }));
+
+    function writeMaps(embedded = false, included = sources) {
+        for (const relative of bundles) {
+            const bundle = path.join(root, relative);
+            const map = {
+                version: 3,
+                file: path.basename(bundle),
+                sources: included.map((file) => `../${file}`),
+                sourcesContent: included.map((file) => fs.readFileSync(path.join(root, file), 'utf8')),
+                names: [],
+                mappings: 'AAAA',
+            };
+            fs.writeFileSync(bundle, 'const value = 1;\n');
+            fs.writeFileSync(bundle + '.map', JSON.stringify(embedded ? map : externalizeSources(map)));
+            if (!embedded)
+                fs.writeFileSync(bundle + '.sources.json', JSON.stringify(createSourceBinding(root, bundle, map)));
+        }
+    }
+
+    test('external maps verify exact bundle, map, receipt and all source bytes', () => {
+        writeMaps();
+        for (const result of checkBuiltFromSampling(root)) {
+            expect(result.status).toBe('verified-source-binding');
+            expect(result.sourceBinding).toMatchObject({ matches: true, compared: sources.length });
+            expect(result.sourceBinding.receiptSha256).toMatch(/^[0-9a-f]{64}$/);
+            expect(result.missingFromMap).toEqual([]);
+        }
+    });
+
+    test.each(['sampled', 'unsampled'])('external maps reject changed %s source', (kind) => {
+        writeMaps();
+        const source = kind === 'sampled' ? sources[0] : sources[sources.length - 1];
+        fs.appendFileSync(path.join(root, source), '// changed\n');
+        for (const result of checkBuiltFromSampling(root)) {
+            expect(result.status).toBe('stale');
+            expect(result.stale).toContain(source);
+            expect(result.sourceBinding.matches).toBe(false);
+        }
+    });
+
+    test.each(['bundle', 'map', 'receipt', 'source'])('missing %s cannot verify external provenance', (target) => {
+        writeMaps();
+        for (const bundle of bundles) {
+            const file = target === 'bundle' ? bundle : target === 'map' ? bundle + '.map' : bundle + '.sources.json';
+            if (target !== 'source') fs.unlinkSync(path.join(root, file));
+        }
+        if (target === 'source') fs.unlinkSync(path.join(root, sources[0]));
+        expect(checkBuiltFromSampling(root).map((result: any) => result.status)).toEqual(['UNKNOWN', 'UNKNOWN']);
+    });
+
+    test.each(['bundle', 'map', 'receipt'])('changed %s cannot inherit external provenance', (target) => {
+        writeMaps();
+        for (const bundle of bundles) {
+            const file = path.join(
+                root,
+                target === 'bundle' ? bundle : target === 'map' ? bundle + '.map' : bundle + '.sources.json',
+            );
+            if (target === 'receipt') {
+                const receipt = JSON.parse(fs.readFileSync(file, 'utf8'));
+                receipt.bundleSha256 = '0'.repeat(64);
+                fs.writeFileSync(file, JSON.stringify(receipt));
+            } else fs.appendFileSync(file, ' ');
+        }
+        expect(checkBuiltFromSampling(root).map((result: any) => result.status)).toEqual(['UNKNOWN', 'UNKNOWN']);
+    });
+
+    test('a valid binding must still contain the required sampled sources', () => {
+        writeMaps(false, sources.slice(1));
+        for (const result of checkBuiltFromSampling(root)) {
+            expect(result.status).toBe('stale');
+            expect(result.sourceBinding.matches).toBe(true);
+            expect(result.missingFromMap).toEqual([sources[0]]);
+        }
+    });
+
+    test('legacy embedded maps still compare normalized source text without a receipt', () => {
+        writeMaps(true);
+        fs.writeFileSync(
+            path.join(root, sources[0]),
+            fs.readFileSync(path.join(root, sources[0]), 'utf8').replace(/\n/g, '\r\n'),
+        );
+        expect(checkBuiltFromSampling(root).map((result: any) => result.status)).toEqual([
+            'verified-sampled',
+            'verified-sampled',
+        ]);
+        fs.appendFileSync(path.join(root, sources[0]), '// changed\n');
+        for (const result of checkBuiltFromSampling(root)) {
+            expect(result.status).toBe('stale');
+            expect(result.stale).toEqual([sources[0]]);
+        }
+    });
+
+    test.each(['null entry', 'short content', 'null content', 'invalid sources', 'invalid json', 'missing source'])(
+        'legacy maps fail closed for %s',
+        (kind) => {
+            writeMaps(true);
+            for (const bundle of bundles) {
+                const file = path.join(root, bundle + '.map');
+                const map = JSON.parse(fs.readFileSync(file, 'utf8'));
+                if (kind === 'null entry') map.sourcesContent[0] = null;
+                if (kind === 'short content') map.sourcesContent.pop();
+                if (kind === 'null content') map.sourcesContent = null;
+                if (kind === 'invalid sources') map.sources = null;
+                fs.writeFileSync(file, kind === 'invalid json' ? '{' : JSON.stringify(map));
+            }
+            if (kind === 'missing source') fs.unlinkSync(path.join(root, sources[0]));
+            expect(checkBuiltFromSampling(root).map((result: any) => result.status)).toEqual(['UNKNOWN', 'UNKNOWN']);
+        },
+    );
+});
 
 describe('IER-00 baseline: file presence is not executed evidence', () => {
     test('default buildBaseline never emits tested-passed', () => {
@@ -146,12 +274,16 @@ describe('IER-00 baseline: file presence is not executed evidence', () => {
         }
     });
 
-    test('builtFrom uses source-map sampling, not HEAD speculation', () => {
+    test('builtFrom uses source-map provenance, not HEAD speculation', () => {
         const baseline = buildBaseline();
         expect(baseline.builtFrom).toHaveLength(2); // dev + min
         for (const r of baseline.builtFrom) {
-            expect(['verified-sampled', 'stale', 'UNKNOWN']).toContain(r.status);
+            expect(['verified-sampled', 'verified-source-binding', 'stale', 'UNKNOWN']).toContain(r.status);
             if (r.status === 'verified-sampled') expect(r.sampled).toBeGreaterThan(0);
+            if (r.status === 'verified-source-binding') {
+                expect(r.sourceBinding.matches).toBe(true);
+                expect(r.sourceBinding.compared).toBeGreaterThan(0);
+            }
             if (r.status === 'stale') expect(r.stale.length + r.missingFromMap.length).toBeGreaterThan(0);
         }
     });

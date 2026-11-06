@@ -18,6 +18,7 @@ const scenes = value('scenes', 'E01,E02,E05,E10').split(',');
 const profiles = value('profiles', 'K0,K1').split(',');
 const repeats = Number(value('repeats', '3'));
 const identity = value('identity') ? JSON.parse(fs.readFileSync(path.resolve(value('identity')), 'utf8')) : null;
+const THREE_VERSION = '0.186.1';
 const hash = (buffer) => crypto.createHash('sha256').update(buffer).digest('hex');
 const fileHash = (file) => hash(fs.readFileSync(file));
 const json = (file) => JSON.parse(fs.readFileSync(file, 'utf8'));
@@ -155,6 +156,23 @@ const publicInputs = [
 ];
 for (const file of publicInputs)
     if (!fs.existsSync(path.join(benchRoot, file))) blockers.push(`public input missing: ${file}`);
+let threeBaseline = null;
+try {
+    const directory = path.join(benchRoot, 'node_modules/three');
+    if (!fs.lstatSync(directory).isDirectory()) throw new Error('a regular local package directory is required');
+    const metadata = json(path.join(directory, 'package.json'));
+    if (metadata.name !== 'three' || metadata.version !== THREE_VERSION)
+        throw new Error(`expected three@${THREE_VERSION}, found ${metadata.name}@${metadata.version}`);
+    threeBaseline = {
+        name: metadata.name,
+        version: metadata.version,
+        installedPackageHash: treeHash(directory),
+        artifactSha256: null,
+        provenance: 'Installed package name/version and local tree snapshot only; registry archive not authenticated.',
+    };
+} catch (error) {
+    blockers.push(`three baseline is invalid: ${error.message}`);
+}
 const candidateHash = candidate && fs.existsSync(candidate) ? fileHash(candidate) : null;
 let files = [];
 let candidatePackage = null;
@@ -180,6 +198,7 @@ const manifest = {
     runRoot,
     sourceBenchmarkRoot: benchRoot,
     candidate: { path: candidate, sha256: candidateHash, packageVersion: candidatePackage?.version ?? null },
+    threeBaseline,
     configuredIdentity: identity,
     modelRevision: identity?.modelRevision ?? null,
     modelRevisionUnavailableReason: identity?.modelRevision
@@ -195,7 +214,7 @@ const manifest = {
         knowledge: profiles,
         scenes,
         repeats,
-        pairedEngines: ['three@0.186.1', 'cocosair-current'],
+        pairedEngines: [`three@${THREE_VERSION}`, 'cocosair-current'],
         k0Readme: 'historical frozen K0 README',
         k1: 'same package/README/types plus explicitly curated current generic docs',
     },
@@ -275,6 +294,9 @@ for (const profile of profiles)
                 if (engine === 'cocosair')
                     installCandidate(files, path.join(nm, 'cocosair.js'), frozenReadmes.cocosair);
                 else fs.cpSync(path.join(benchRoot, 'node_modules/three'), path.join(nm, 'three'), { recursive: true });
+                const installedPackageHash = treeHash(path.join(nm, engine === 'three' ? 'three' : 'cocosair.js'));
+                if (engine === 'three' && installedPackageHash !== threeBaseline.installedPackageHash)
+                    throw new Error('three baseline changed after preflight; preserve this incomplete cohort');
                 if (engine === 'cocosair') {
                     const packagePath = path.join(workspace, 'package.json');
                     const packageData = json(packagePath);
@@ -342,6 +364,10 @@ for (const profile of profiles)
                 const record = {
                     armName,
                     engine,
+                    enginePackage: {
+                        name: engine === 'three' ? threeBaseline.name : candidatePackage.name,
+                        version: engine === 'three' ? threeBaseline.version : candidatePackage.version,
+                    },
                     workspace,
                     port: port++,
                     modelId: identity.modelId,
@@ -362,7 +388,7 @@ for (const profile of profiles)
                             .map((name) => [`scripts/${name}`, fileHash(path.join(workspace, 'scripts', name))]),
                     ),
                     knowledgeHash: treeHash(knowledge),
-                    installedPackageHash: treeHash(path.join(nm, engine === 'three' ? 'three' : 'cocosair.js')),
+                    installedPackageHash,
                     metrics: {
                         observedExecutionEvents: null,
                         agentToolCalls: null,

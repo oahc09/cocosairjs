@@ -57,7 +57,8 @@ interface BasisKTX2File {
     getLevels (): number;
     getFaces (): number;
     getHasAlpha (): boolean;
-    getDFDFlags (): number;
+    /** Absent in older bindings; the adapter then reads the KTX2 descriptor directly. */
+    getDFDTransferFunc? (): number;
     startTranscoding (): boolean;
     getImageLevelInfo (mip: number, layer: number, face: number): BasisLevelInfo;
     getImageTranscodedSizeInBytes (mip: number, layer: number, face: number, format: number): number;
@@ -107,6 +108,28 @@ function candidateFor (name: KTX2TargetFormat, hasAlpha: boolean, srgb: boolean)
     return { transcoder: entry.transcoder, format: srgbVariant(hasAlpha ? entry.alpha : entry.opaque, srgb), compressed: true };
 }
 
+function transferFunction (file: BasisKTX2File, data: ArrayBuffer): number {
+    if (typeof file.getDFDTransferFunc === 'function') { return file.getDFDTransferFunc(); }
+    // Older Basis bindings may omit the getter. KTX2's little-endian header points
+    // to the DFD: totalSize precedes the basic descriptor, whose transfer byte is
+    // at offset 14. The adjacent flags byte describes alpha, not color transfer.
+    // https://registry.khronos.org/KTX/specs/2.0/ktxspec.v2.html#_data_format_descriptor
+    const fail = (): never => { throw new GLTFError('GLTF_DECODE_FAILED', 'ktx2: missing or invalid transfer-function descriptor'); };
+    if (data.byteLength < 80) { return fail(); }
+    const view = new DataView(data);
+    const offset = view.getUint32(48, true);
+    const length = view.getUint32(52, true);
+    const indexEnd = 80 + Math.max(1, view.getUint32(40, true)) * 24;
+    if (offset < indexEnd || offset % 4 !== 0 || length < 28 || offset + length > data.byteLength) { return fail(); }
+    const total = view.getUint32(offset, true);
+    const blockSize = view.getUint16(offset + 10, true);
+    // Recognize the standard Khronos basic descriptor, not a vendor-defined block.
+    if (total !== length || view.getUint32(offset + 4, true) !== 0
+        || view.getUint16(offset + 8, true) !== 2
+        || blockSize < 24 || blockSize % 4 !== 0 || blockSize + 4 > total) { return fail(); }
+    return view.getUint8(offset + 14);
+}
+
 /** True when the module exposes the KTX2File surface used by this adapter. */
 export function isKTX2Available (module: BasisTranscoderModule | undefined): boolean {
     return !!module && typeof module.initializeBasis === 'function' && typeof module.KTX2File === 'function';
@@ -115,13 +138,21 @@ export function isKTX2Available (module: BasisTranscoderModule | undefined): boo
 export function createKTX2Transcoder (factory: BasisModuleFactory): GLTFKTX2Transcoder {
     let modulePromise: Promise<BasisTranscoderModule> | null = null;
     const getModule = (): Promise<BasisTranscoderModule> => {
-        modulePromise = modulePromise || Promise.resolve(factory()).then((module) => {
-            if (!isKTX2Available(module)) {
-                throw new GLTFError('GLTF_DECODER_MISSING', 'Basis transcoder module lacks initializeBasis/KTX2File');
-            }
-            module.initializeBasis();
-            return module;
-        });
+        if (!modulePromise) {
+            // Share one initialization attempt, but do not retain a rejected factory or
+            // initialization forever. The caller still owns the module and its workers.
+            const pending = Promise.resolve().then(factory).then((module) => {
+                if (!isKTX2Available(module)) {
+                    throw new GLTFError('GLTF_DECODER_MISSING', 'Basis transcoder module lacks initializeBasis/KTX2File');
+                }
+                module.initializeBasis();
+                return module;
+            }).catch((error) => {
+                if (modulePromise === pending) { modulePromise = null; }
+                throw error;
+            });
+            modulePromise = pending;
+        }
         return modulePromise;
     };
     return {
@@ -141,7 +172,7 @@ export function createKTX2Transcoder (factory: BasisModuleFactory): GLTFKTX2Tran
                     throw new GLTFError('GLTF_DECODE_FAILED', 'ktx2: only single-face non-array images are supported');
                 }
                 const hasAlpha = file.getHasAlpha();
-                const srgb = (file.getDFDFlags() & (module.KTX2_KHR_DF_TRANSFER_SRGB ?? 0x40)) !== 0;
+                const srgb = transferFunction(file, data) === (module.KTX2_KHR_DF_TRANSFER_SRGB ?? 2);
                 // Candidate order: explicit device list, else ranked defaults for the Basis flavor.
                 const names: KTX2TargetFormat[] = supportedFormats && supportedFormats.length
                     ? [...supportedFormats]
@@ -160,8 +191,7 @@ export function createKTX2Transcoder (factory: BasisModuleFactory): GLTFKTX2Tran
                 }
                 throw new GLTFError('GLTF_DECODE_FAILED', `ktx2: all ${candidates.length} transcode targets failed`);
             } finally {
-                file.close();
-                file.delete();
+                try { file.close(); } finally { file.delete(); }
             }
         },
     };

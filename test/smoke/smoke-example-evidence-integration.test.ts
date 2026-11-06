@@ -33,6 +33,26 @@ function put(relative: string, value: string): string {
     fs.writeFileSync(file, value);
     return file;
 }
+function sourceMapFixture() {
+    const { createSourceBinding } = nodeRequire(path.join(root, 'tools/build/source-binding.cjs'));
+    const { externalizeSources } = nodeRequire(path.join(root, 'tools/build/source-map-publication.cjs'));
+    const source = 'current source\n';
+    put('src/main.ts', source);
+    for (const relative of preflight.MAPS) {
+        const spark = relative === 'build/spark.module.js.map';
+        const map = {
+            version: 3,
+            sources: ['../src/main.ts', ...(spark ? ['air-inline-worker:air-spark-inline-worker'] : [])],
+            sourcesContent: [source, ...(spark ? ['class SparkInlineWorker {}\n'] : [])],
+            names: [],
+            mappings: 'AAAA',
+        };
+        const bundle = put(relative.slice(0, -4), 'synthetic CPU fixture runtime\n');
+        put(relative, JSON.stringify(spark ? map : externalizeSources(map)));
+        if (!spark)
+            put(relative.slice(0, -4) + '.sources.json', JSON.stringify(createSourceBinding(temp, bundle, map)));
+    }
+}
 function sparkBootstrapCommands(workflowFile: string) {
     const yaml = nodeRequire('js-yaml');
     const workflow = yaml.load(fs.readFileSync(path.join(root, workflowFile), 'utf8'), { schema: yaml.JSON_SCHEMA });
@@ -257,6 +277,82 @@ describe('Evidence collector integration safeguards', () => {
             put(name, JSON.stringify({ sources: ['unknown:fake'], sourcesContent: ['fake'] }));
         expect(() => preflight.checkSourceMaps(temp)).toThrow();
     });
+    test('external main maps require exact source bindings while Spark retains its embedded worker proof', () => {
+        sourceMapFixture();
+        const maps = preflight.checkSourceMaps(temp);
+        expect(maps).toHaveLength(3);
+        for (const map of maps.slice(0, 2)) {
+            expect(map.verifiedSources).toBe(1);
+            expect(map.sourceBinding).toMatchObject({ matches: true, compared: 1 });
+            expect(map.sourceBinding.receiptSha256).toMatch(/^[0-9a-f]{64}$/);
+            expect(map.virtual).toEqual([]);
+        }
+        expect(maps[2].sourceBinding).toBeUndefined();
+        expect(maps[2].virtual.map((item: any) => item.source)).toEqual(['air-inline-worker:air-spark-inline-worker']);
+    });
+    test.each(['bundle', 'map', 'receipt', 'source'])(
+        'external main maps fail closed for missing %s before collection',
+        (target) => {
+            sourceMapFixture();
+            const file = {
+                bundle: 'build/cocosair.module.js',
+                map: 'build/cocosair.module.js.map',
+                receipt: 'build/cocosair.module.js.sources.json',
+                source: 'src/main.ts',
+            }[target];
+            fs.unlinkSync(path.join(temp, file));
+            expect(() => preflight.checkSourceMaps(temp)).toThrow();
+        },
+    );
+    test.each(['bundle', 'map', 'receipt', 'source'])(
+        'external main maps fail closed for changed %s before collection',
+        (target) => {
+            sourceMapFixture();
+            const file = path.join(
+                temp,
+                {
+                    bundle: 'build/cocosair.module.js',
+                    map: 'build/cocosair.module.js.map',
+                    receipt: 'build/cocosair.module.js.sources.json',
+                    source: 'src/main.ts',
+                }[target],
+            );
+            if (target === 'receipt') {
+                const receipt = JSON.parse(fs.readFileSync(file, 'utf8'));
+                receipt.sources[0].sha256 = '0'.repeat(64);
+                fs.writeFileSync(file, JSON.stringify(receipt));
+            } else fs.appendFileSync(file, ' ');
+            expect(() => preflight.checkSourceMaps(temp)).toThrow('Build/source drift');
+        },
+    );
+    test.each(['bundle', 'receipt', 'source'])(
+        'external map %s symlinks cannot bypass regular in-tree input checks',
+        (target) => {
+            sourceMapFixture();
+            const relative = {
+                bundle: 'build/cocosair.module.js',
+                receipt: 'build/cocosair.module.js.sources.json',
+                source: 'src/main.ts',
+            }[target];
+            const file = path.join(temp, relative);
+            const alias = put(relative + '.actual', fs.readFileSync(file, 'utf8'));
+            fs.unlinkSync(file);
+            fs.symlinkSync(alias, file);
+            expect(() => preflight.checkSourceMaps(temp)).toThrow(/Nonregular|regular repository inputs/);
+        },
+    );
+    test.each(['absent content', 'wrong worker'])(
+        'external main-map support does not relax Spark checks for %s',
+        (kind) => {
+            sourceMapFixture();
+            const file = path.join(temp, 'build/spark.module.js.map');
+            const map = JSON.parse(fs.readFileSync(file, 'utf8'));
+            if (kind === 'absent content') delete map.sourcesContent;
+            else map.sourcesContent[1] = 'unrelated worker';
+            fs.writeFileSync(file, JSON.stringify(map));
+            expect(() => preflight.checkSourceMaps(temp)).toThrow(/Incomplete source map|Unexpected inline worker/);
+        },
+    );
     test('response body store reuses identical bytes and verifies their full hash', () => {
         const dir = path.join(temp, 'responses');
         const bytes = Buffer.from('actual HTTP body');

@@ -218,6 +218,28 @@ describe('fixed-snapshot segmented example evidence', () => {
         write(path.join(state.repo, 'build/metadata/spark.module.meta.json'), '{"inputs":{}}');
         expect(check(state, data).ok).toBe(false);
     });
+    test.each(['build/cocosair.module.js.sources.json', 'build/cocosair.module.min.js.sources.json'])(
+        'source-binding receipt %s is immutable once captured',
+        (relative) => {
+            const file = path.join(state.repo, relative);
+            write(file, { synthetic: 'CPU fixture receipt, not build evidence' });
+            const freeze = campaign.freezeCampaign({ repo: state.repo, runtimeIdentity: state.freeze.runtimeIdentity });
+            const input = freeze.inputs.find((item) => item.path === relative);
+            expect(input).toMatchObject(campaign.fileDigest(file));
+            expect(() => campaign.assertFrozenInputs(freeze, { repo: state.repo })).not.toThrow();
+            const original = fs.readFileSync(file);
+            fs.appendFileSync(file, ' ');
+            expect(() => campaign.assertFrozenInputs(freeze, { repo: state.repo })).toThrow(/frozen inputs changed/);
+            fs.writeFileSync(file, original);
+            expect(() => campaign.assertFrozenInputs(freeze, { repo: state.repo })).not.toThrow();
+            fs.unlinkSync(file);
+            expect(() => campaign.assertFrozenInputs(freeze, { repo: state.repo })).toThrow(/frozen inputs changed/);
+        },
+    );
+    test('adding a source-binding receipt cannot reuse an older frozen inventory', () => {
+        write(path.join(state.repo, 'build/cocosair.module.js.sources.json'), { synthetic: true });
+        expect(() => campaign.assertFrozenInputs(state.freeze, { repo: state.repo })).toThrow(/frozen inputs changed/);
+    });
     test('symbolic-link inputs fail closed, including unprivileged Windows junctions', () => {
         const link = path.join(state.repo, 'examples/linked-input');
         // Windows file symlinks require extra privileges; a real directory junction exercises the same rejection.

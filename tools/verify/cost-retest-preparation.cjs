@@ -33,10 +33,11 @@ function tar(files) {
     parts.push(Buffer.alloc(1024));
     return zlib.gzipSync(Buffer.concat(parts));
 }
-function invoke(bench, candidate, target, extra = []) {
+function invoke(bench, candidate, target, extra = [], nodeArguments = []) {
     return spawnSync(
         process.execPath,
         [
+            ...nodeArguments,
             path.join(repo, 'tools/benchmark/prepare-cost-retest.mjs'),
             `--bench-root=${bench}`,
             `--candidate=${candidate}`,
@@ -89,12 +90,56 @@ try {
     const dry = invoke(bench, candidate, target);
     assert.equal(dry.status, 0, dry.stderr);
     assert.equal(fs.existsSync(target), false, 'dry-run must not write a cohort');
+    const threeMetadata = path.join(bench, 'node_modules/three/package.json');
+    const originalThreeMetadata = fs.readFileSync(threeMetadata);
+    for (const [label, metadata] of [
+        ['r187', { name: 'three', version: '0.187.0' }],
+        ['r186-other-patch', { name: 'three', version: '0.186.0' }],
+        ['wrong-package', { name: 'not-three', version: '0.186.1' }],
+    ]) {
+        write(threeMetadata, JSON.stringify(metadata));
+        const rejectedRoot = path.join(temporary, label);
+        const rejected = invoke(bench, candidate, rejectedRoot, ['--execute']);
+        assert.equal(rejected.status, 2, `${label} must not be labelled three@0.186.1`);
+        assert.match(rejected.stderr, /three baseline/);
+        assert.equal(fs.existsSync(rejectedRoot), false, 'baseline rejection must precede cohort writes');
+    }
+    fs.unlinkSync(threeMetadata);
+    const missingRoot = path.join(temporary, 'missing-three-metadata');
+    assert.equal(invoke(bench, candidate, missingRoot, ['--execute']).status, 2);
+    assert.equal(fs.existsSync(missingRoot), false);
+    fs.writeFileSync(threeMetadata, originalThreeMetadata);
+    const corruptCopy = path.join(temporary, 'corrupt-copy.cjs');
+    write(
+        corruptCopy,
+        `const fs = require('node:fs');
+const path = require('node:path');
+const copy = fs.cpSync;
+fs.cpSync = function (source, destination, options) {
+    copy(source, destination, options);
+    if (source === ${JSON.stringify(path.join(bench, 'node_modules/three'))})
+        fs.writeFileSync(path.join(destination, 'index.js'), '// corrupted synthetic copied package');
+};
+`,
+    );
+    const corruptRoot = path.join(temporary, 'corrupt-copy');
+    const corrupted = invoke(bench, candidate, corruptRoot, ['--execute'], ['--require', corruptCopy]);
+    assert.equal(corrupted.status, 1);
+    assert.match(corrupted.stderr, /three baseline changed after preflight/);
+    assert.equal(fs.existsSync(corruptRoot), true, 'incomplete attempt must remain available for inspection');
+    assert.equal(fs.existsSync(path.join(corruptRoot, 'COHORT.json')), false, 'no completed cohort on copy drift');
+    assert.equal(fs.readFileSync(path.join(bench, 'node_modules/three/index.js'), 'utf8'), '// test fixture\n');
     const oldMeta = fs.readFileSync(path.join(bench, 'knowledge/K0/cocosair/manifest.json'));
     const result = invoke(bench, candidate, target, ['--execute']);
     assert.equal(result.status, 0, result.stderr);
     const cohort = JSON.parse(fs.readFileSync(path.join(target, 'COHORT.json')));
     assert.equal(cohort.pairCount, 4);
     assert.equal(cohort.armCount, 8);
+    assert.equal(cohort.threeBaseline.name, 'three');
+    assert.equal(cohort.threeBaseline.version, '0.186.1');
+    assert.match(cohort.threeBaseline.installedPackageHash, /^[a-f0-9]{64}$/);
+    assert.equal(cohort.threeBaseline.artifactSha256, null, 'local tree hashing cannot authenticate an archive');
+    assert.match(cohort.threeBaseline.provenance, /registry archive not authenticated/);
     const packages = [];
     for (const id of cohort.preparedPairs) {
         const pair = JSON.parse(fs.readFileSync(path.join(target, id, 'pair.json')));
@@ -104,7 +149,12 @@ try {
             assert.equal(record.reasoningEffort, 'high');
             assert.equal(record.metrics.agentToolCalls, null);
             assert.equal(record.metrics.observedExecutionEvents, null);
+            if (record.engine === 'three') {
+                assert.deepEqual(record.enginePackage, { name: 'three', version: '0.186.1' });
+                assert.equal(record.installedPackageHash, cohort.threeBaseline.installedPackageHash);
+            }
             if (record.engine === 'cocosair') {
+                assert.deepEqual(record.enginePackage, { name: 'cocosair.js', version: '1.0.0' });
                 const directory = path.join(target, id, arm, 'workspace/node_modules/cocosair.js');
                 assert.equal(fs.readFileSync(path.join(directory, 'README.md'), 'utf8'), 'frozen-old-cocosair');
                 assert.equal(fs.existsSync(path.join(directory, 'docs/answer.md')), false);
@@ -154,6 +204,7 @@ try {
             dryRunNoWrite: true,
             identicalCodeAcrossKnowledge: true,
             noHistoricalMutation: true,
+            exactThreeVersionAndTreeBound: true,
         }),
     );
 } finally {

@@ -9,7 +9,7 @@ const geometry = Buffer.from(new Float32Array([-0.5, -0.5, 0, 0.5, -0.5, 0, 0, 0
 const pixel = new PNG({ width: 1, height: 1 });
 pixel.data.set([255, 255, 255, 255]);
 const png = PNG.sync.write(pixel);
-const ktx = Buffer.from([0xab, 0x4b, 0x54, 0x58, 0x20, 0x32, 0x30, 0x42, 0x42, 0xbb, 0x0d, 0x0a]);
+const ktx = Buffer.from([0xab, 0x4b, 0x54, 0x58, 0x20, 0x32, 0x30, 0xbb, 0x0d, 0x0a, 0x1a, 0x0a]);
 function model(caseId, crossOrigin) {
     const doc = {
         asset: { version: '2.0', generator: 'local request-policy fixture, not vendor codec conformance' },

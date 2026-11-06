@@ -53,10 +53,16 @@ describe('2026-10-19 WebGL2 audit regressions', () => {
         bind();
         expect(cache.glProgram).toBe(program);
         expect(gl.useProgram).toHaveBeenCalledTimes(2);
-        expect(gl.bindBufferBase).toHaveBeenLastCalledWith(GL.UNIFORM_BUFFER, 0, buffer.glBuffer);
+        expect(gl.bindBufferRange).toHaveBeenLastCalledWith(GL.UNIFORM_BUFFER, 0, buffer.glBuffer, 0, buffer.size);
+        expect(gl.bindBufferRange).toHaveBeenCalledTimes(2);
+        expect(gl.bindBufferBase).not.toHaveBeenCalled();
+        expect(cache.glBindUBOs[0]).toBe(buffer.glBuffer);
+        expect(cache.glBindUBOOffsets[0]).toBe(0);
+        expect(cache.glBindUBOSizes[0]).toBe(buffer.size);
         if (useVAO) expect(cache.glVAO).toBe(vao);
         bind();
         expect(gl.useProgram).toHaveBeenCalledTimes(2);
+        expect(gl.bindBufferRange).toHaveBeenCalledTimes(2);
     });
     test.each([0, 15, 240, 0xffff])('stencil clear restores front and back mask %s', (front) => {
         const { device, gl, cache } = fixture();

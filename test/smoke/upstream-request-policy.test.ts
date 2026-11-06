@@ -474,7 +474,7 @@ describe('upstream U01 request policy and cancellation (T01-T06 CPU contracts)',
     });
 
     test('T05 uncancellable KTX2 output is discarded before ImageAsset or Texture2D allocation', async () => {
-        const ktx = new Uint8Array([0xab, 0x4b, 0x54, 0x58, 0x20, 0x32, 0x30, 0x42, 0x42, 0xbb, 0x0d, 0x0a]);
+        const ktx = new Uint8Array([0xab, 0x4b, 0x54, 0x58, 0x20, 0x32, 0x30, 0xbb, 0x0d, 0x0a, 0x1a, 0x0a]);
         const json = {
             ...empty,
             extensionsUsed: ['KHR_texture_basisu'],

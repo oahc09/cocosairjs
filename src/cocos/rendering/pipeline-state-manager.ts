@@ -25,12 +25,16 @@
 import { Shader, RenderPass, InputAssembler, Device, PipelineState, InputState, PipelineStateInfo, PipelineBindPoint } from '../gfx';
 import { Pass } from '../render-scene/core/pass';
 
+type ShaderPipelines = Map<number, PipelineState>;
+type InputPipelines = Map<number, ShaderPipelines>;
+type RenderPassPipelines = Map<number, InputPipelines>;
+
 export class PipelineStateManager {
     private constructor () {}
 
-    private static _PSOHashMap: Map<number, PipelineState> = new Map<number, PipelineState>();
+    private static _PSOHashMap: Map<number, RenderPassPipelines> = new Map();
 
-    private static _computePSOHashMap: Map<number, PipelineState> = new Map<number, PipelineState>();
+    private static _computePSOHashMap: Map<number, ShaderPipelines> = new Map();
 
     // pass is only needed on TS.
     static getOrCreatePipelineState (device: Device, pass: Pass, shader: Shader, renderPass: RenderPass, ia: InputAssembler): PipelineState {
@@ -39,8 +43,16 @@ export class PipelineStateManager {
         const hash3 = ia.attributesHash;
         const hash4 = shader.typedID;
 
-        const newHash = hash1 ^ hash2 ^ hash3 ^ hash4;
-        let pso = this._PSOHashMap.get(newHash);
+        // Preserve every component and its position: XOR loses both, so different
+        // shader/state tuples can otherwise reuse the first tuple's pipeline.
+        // Nested numeric maps allocate only on misses, never on a warmed draw path.
+        let renderPasses = this._PSOHashMap.get(hash1);
+        if (!renderPasses) { this._PSOHashMap.set(hash1, renderPasses = new Map()); }
+        let inputs = renderPasses.get(hash2);
+        if (!inputs) { renderPasses.set(hash2, inputs = new Map()); }
+        let shaders = inputs.get(hash3);
+        if (!shaders) { inputs.set(hash3, shaders = new Map()); }
+        let pso = shaders.get(hash4);
         if (!pso) {
             const pipelineLayout = pass.pipelineLayout;
             const inputState = new InputState(ia.attributes);
@@ -56,7 +68,7 @@ export class PipelineStateManager {
                 pass.dynamicStates,
             );
             pso = device.createPipelineState(psoInfo);
-            this._PSOHashMap.set(newHash, pso);
+            shaders.set(hash4, pso);
         }
 
         return pso;
@@ -65,18 +77,19 @@ export class PipelineStateManager {
     /**
      * @en Get or create a compute pipeline state.
      * A compute pipeline only depends on the shader variant and the pipeline layout,
-     * both carried by the pass, so the cache key is `pass.hash ^ shader.typedID`,
-     * mirroring the graphics-side hash mechanism without renderPass/inputState factors.
+     * both carried by the pass. Keep pass.hash and shader.typedID as independent
+     * keys, without the graphics-side renderPass/inputState factors.
      * @zh 获取或创建计算管线状态。
      * 计算管线仅依赖于着色器变体与管线布局（均由 pass 携带），
-     * 因此缓存键为 `pass.hash ^ shader.typedID`，与图形侧哈希机制一致但不包含 renderPass/顶点布局因子。
+     * 因此分别按 pass.hash 和 shader.typedID 缓存，不包含 renderPass/顶点布局因子。
      */
     static getOrCreateComputePipelineState (device: Device, pass: Pass, shader: Shader): PipelineState {
         const hash1 = pass.hash;
         const hash2 = shader.typedID;
 
-        const newHash = hash1 ^ hash2;
-        let pso = this._computePSOHashMap.get(newHash);
+        let shaders = this._computePSOHashMap.get(hash1);
+        if (!shaders) { this._computePSOHashMap.set(hash1, shaders = new Map()); }
+        let pso = shaders.get(hash2);
         if (!pso) {
             const pipelineLayout = pass.pipelineLayout;
             const psoInfo = new PipelineStateInfo(
@@ -85,7 +98,7 @@ export class PipelineStateManager {
             );
             psoInfo.bindPoint = PipelineBindPoint.COMPUTE;
             pso = device.createPipelineState(psoInfo);
-            this._computePSOHashMap.set(newHash, pso);
+            shaders.set(hash2, pso);
         }
 
         return pso;

@@ -21,6 +21,7 @@ import { selector as selector3d } from '../../src/cocos/physics/framework/physic
 // 后端注册挂在 game.EVENT_PRE_SUBSYSTEM_INIT 上，必须先于 createAirApp 进入模块图。
 import '../../src/exports/physics-2d-box2d';
 import '../../src/exports/physics-builtin';
+const { resolveScreenshot } = require('../../tools/verify/browser-matrix-paths.cjs');
 
 const ROOT = process.cwd();
 const BUNDLE = join(ROOT, 'build', 'cocosair.module.js');
@@ -531,7 +532,7 @@ describe('smoke 30 — V1.2 回归组产物面与运行时', () => {
         test('每张截图仍在盘且与记录逐字节一致；断言全部为真', () => {
             const json = JSON.parse(readFileSync(EVIDENCE, 'utf8'));
             for (const rec of json.records) {
-                const png = join(ROOT, rec.png);
+                const png = resolveScreenshot(ROOT, rec.png);
                 expect({ engine: rec.engine, example: rec.example, exists: existsSync(png) }).toEqual({
                     engine: rec.engine,
                     example: rec.example,

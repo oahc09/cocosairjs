@@ -6,6 +6,7 @@ const crypto = require('crypto');
 const { execFileSync } = require('child_process');
 const { collectScope } = require('./example-evidence-campaign.cjs');
 const { listWorkspaceInputs, validateReferences } = require('./example-workspace.cjs');
+const { verifySourceBinding } = require('../build/source-binding.cjs');
 const REPO = path.resolve(__dirname, '../..');
 const MAPS = ['build/cocosair.module.js.map', 'build/cocosair.module.min.js.map', 'build/spark.module.js.map'];
 const VIRTUAL = new Set(['air-inline-worker:air-spark-inline-worker']);
@@ -16,8 +17,28 @@ function checkSourceMaps(repo = REPO) {
         if (fs.realpathSync(file) !== file || !fs.lstatSync(file).isFile()) throw Error('Nonregular map: ' + relative);
         const bytes = fs.readFileSync(file);
         const map = JSON.parse(bytes);
-        if (!Array.isArray(map.sources) || !map.sources.length || map.sources.length !== map.sourcesContent?.length)
+        // Only the main runtime publishes external source maps. Spark's inline worker
+        // remains embedded and must pass the original virtual-source contract below.
+        const external = map.sourcesContent === undefined && relative !== 'build/spark.module.js.map';
+        if (
+            !Array.isArray(map.sources) ||
+            !map.sources.length ||
+            (!external && map.sources.length !== map.sourcesContent?.length)
+        )
             throw Error('Incomplete source map: ' + relative);
+        let binding;
+        if (external) {
+            const bundle = file.slice(0, -4);
+            for (const input of [bundle, bundle + '.sources.json']) {
+                if (fs.realpathSync(input) !== input || !fs.lstatSync(input).isFile())
+                    throw Error('Nonregular source binding input: ' + path.relative(repo, input));
+            }
+            binding = verifySourceBinding(repo, bundle);
+            if (!binding.matches)
+                throw Error(
+                    'Build/source drift: ' + relative + ': ' + (binding.reason || binding.mismatches.join(', ')),
+                );
+        }
         const virtual = [];
         let verified = 0;
         map.sources.forEach((source, index) => {
@@ -34,11 +55,18 @@ function checkSourceMaps(repo = REPO) {
                 !fs.lstatSync(absolute).isFile()
             )
                 throw Error('Source map path escapes regular repository inputs: ' + source);
-            if (fs.readFileSync(absolute, 'utf8') !== map.sourcesContent[index])
+            if (!external && fs.readFileSync(absolute, 'utf8') !== map.sourcesContent[index])
                 throw Error('Build/source drift: ' + source);
             verified++;
         });
-        return { path: relative, bytes: bytes.length, sha256: hash(bytes), verifiedSources: verified, virtual };
+        return {
+            path: relative,
+            bytes: bytes.length,
+            sha256: hash(bytes),
+            verifiedSources: verified,
+            virtual,
+            ...(binding ? { sourceBinding: binding } : {}),
+        };
     });
 }
 function preflight(repo = REPO, { generatedChecks = true } = {}) {

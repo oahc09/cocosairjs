@@ -13,53 +13,108 @@ import type { GLTFDocument } from '../../src/air/assets/gltf/schema';
 
 Object.assign(globalThis, { TextDecoder, TextEncoder });
 
-/** A complete KTX2 header (RGBA8 supercompression scheme is irrelevant to the fake transcoder). */
-function ktx2Bytes (width: number, height: number): Uint8Array {
+/** A synthetic KTX2 header prefix for the fake transcoder, not a complete encoded texture. */
+function ktx2Bytes(width: number, height: number): Uint8Array {
     const out = new Uint8Array(64);
-    Object.assign(out, { 0: 0xAB, 1: 0x4B, 2: 0x54, 3: 0x58, 4: 0x20, 5: 0x32, 6: 0x30, 7: 0x42, 8: 0x42, 9: 0xBB, 10: 0x0D, 11: 0x0A });
+    Object.assign(out, {
+        0: 0xab,
+        1: 0x4b,
+        2: 0x54,
+        3: 0x58,
+        4: 0x20,
+        5: 0x32,
+        6: 0x30,
+        7: 0xbb,
+        8: 0x0d,
+        9: 0x0a,
+        10: 0x1a,
+        11: 0x0a,
+    });
     const view = new DataView(out.buffer);
-    view.setUint32(12, 0, true);        // vkFormat (KHR_DF_TRANCODED_COLOR_MODEL=0 opaque)
-    view.setUint32(20, width, true);    // pixelWidth
-    view.setUint32(24, height, true);   // pixelHeight
-    view.setUint32(32, 1, true);        // layerCount
-    view.setUint32(36, 1, true);        // faceCount
-    view.setUint32(40, 1, true);        // levelCount
-    view.setUint32(44, 0, true);        // supercompressionScheme (none)
+    view.setUint32(12, 0, true); // vkFormat (KHR_DF_TRANCODED_COLOR_MODEL=0 opaque)
+    view.setUint32(20, width, true); // pixelWidth
+    view.setUint32(24, height, true); // pixelHeight
+    view.setUint32(32, 1, true); // layerCount
+    view.setUint32(36, 1, true); // faceCount
+    view.setUint32(40, 1, true); // levelCount
+    view.setUint32(44, 0, true); // supercompressionScheme (none)
     return out;
 }
 
 /** A Basis module mock that transcodes any KTX2 to a single-level RGBA8 buffer. */
-function fakeBasisModule (options?: { srgb?: boolean; uastc?: boolean; failFirstFormat?: number; width?: number; height?: number }) {
+function fakeBasisModule(options?: {
+    srgb?: boolean;
+    uastc?: boolean;
+    failFirstFormat?: number;
+    width?: number;
+    height?: number;
+}) {
     const requests: number[] = [];
     const module = {
-        initializeBasis () { /* no-op */ },
-        KTX2_KHR_DF_TRANSFER_SRGB: 0x04,
+        initializeBasis() {
+            /* no-op */
+        },
+        KTX2_KHR_DF_TRANSFER_SRGB: 2,
         KTX2File: class {
             private readonly data: Uint8Array;
-            constructor (data: Uint8Array) { this.data = data; }
-            isValid () { return isKTX2(this.data); }
-            isUASTC () { return !!options?.uastc; }
-            getWidth () { return options?.width ?? 2; }
-            getHeight () { return options?.height ?? 2; }
-            getLayers () { return 1; }
-            getLevels () { return 1; }
-            getFaces () { return 1; }
-            getHasAlpha () { return true; }
-            getDFDFlags () { return options?.srgb ? 0x04 : 0; }
-            startTranscoding () { return true; }
-            getImageLevelInfo () { return { width: 2, height: 2, origWidth: 2, origHeight: 2 }; }
-            getImageTranscodedSizeInBytes (_mip: number, _layer: number, _face: number, format: number) {
+            constructor(data: Uint8Array) {
+                this.data = data;
+            }
+            isValid() {
+                return isKTX2(this.data);
+            }
+            isUASTC() {
+                return !!options?.uastc;
+            }
+            getWidth() {
+                return options?.width ?? 2;
+            }
+            getHeight() {
+                return options?.height ?? 2;
+            }
+            getLayers() {
+                return 1;
+            }
+            getLevels() {
+                return 1;
+            }
+            getFaces() {
+                return 1;
+            }
+            getHasAlpha() {
+                return true;
+            }
+            getDFDTransferFunc() {
+                return options?.srgb ? 2 : 1;
+            }
+            startTranscoding() {
+                return true;
+            }
+            getImageLevelInfo() {
+                return { width: 2, height: 2, origWidth: 2, origHeight: 2 };
+            }
+            getImageTranscodedSizeInBytes(_mip: number, _layer: number, _face: number, format: number) {
                 requests.push(format);
                 return format === 13 || format === 7 ? 16 : 0;
             }
-            transcodeImage (dst: Uint8Array, _mip: number, _layer: number, _face: number, format: number) {
-                if (options?.failFirstFormat === format) { return false; }
-                if (format !== 13 && format !== 7) { return false; }
-                for (let i = 0; i < dst.length; ++i) { dst[i] = 255; }
+            transcodeImage(dst: Uint8Array, _mip: number, _layer: number, _face: number, format: number) {
+                if (options?.failFirstFormat === format) {
+                    return false;
+                }
+                if (format !== 13 && format !== 7) {
+                    return false;
+                }
+                for (let i = 0; i < dst.length; ++i) {
+                    dst[i] = 255;
+                }
                 return true;
             }
-            close () { /* no-op */ }
-            delete () { /* no-op */ }
+            close() {
+                /* no-op */
+            }
+            delete() {
+                /* no-op */
+            }
         },
     };
     return { module, requests };
@@ -70,7 +125,10 @@ describe('KHR_texture_basisu transcoder', () => {
         document.body.innerHTML = '<canvas id="GameCanvas"></canvas>';
         await createAirApp({ canvas: '#GameCanvas', renderMode: 3 });
     });
-    afterEach(() => { setTextureSupportForTesting('image/webp', null); CCObject._deferredDestroy(); });
+    afterEach(() => {
+        setTextureSupportForTesting('image/webp', null);
+        CCObject._deferredDestroy();
+    });
 
     test('isKTX2 detects the container magic', () => {
         expect(isKTX2(ktx2Bytes(4, 4))).toBe(true);
@@ -79,7 +137,14 @@ describe('KHR_texture_basisu transcoder', () => {
 
     test('isKTX2Available validates the module surface', () => {
         expect(isKTX2Available(undefined)).toBe(false);
-        expect(isKTX2Available({ initializeBasis: () => undefined, KTX2File: function () { /* empty */ } } as never)).toBe(true);
+        expect(
+            isKTX2Available({
+                initializeBasis: () => undefined,
+                KTX2File: function () {
+                    /* empty */
+                },
+            } as never),
+        ).toBe(true);
     });
 
     test('device formats returns a supported subset or undefined', () => {
@@ -100,7 +165,7 @@ describe('KHR_texture_basisu transcoder', () => {
         expect(result.data.length).toBe(16);
     });
 
-    test('adapter applies the sRGB variant from the DFD transfer flag', async () => {
+    test('adapter applies the sRGB variant from the DFD transfer function', async () => {
         const { module } = fakeBasisModule({ srgb: true });
         const transcoder = createKTX2Transcoder(() => module as never);
         const result = await transcoder.transcode(ktx2Bytes(2, 2).buffer as ArrayBuffer);
@@ -110,33 +175,50 @@ describe('KHR_texture_basisu transcoder', () => {
     test('adapter throws when a payload is not KTX2', async () => {
         const { module } = fakeBasisModule();
         const transcoder = createKTX2Transcoder(() => module as never);
-        await expect(transcoder.transcode(new Uint8Array(64).buffer)).rejects.toMatchObject({ code: 'GLTF_DECODE_FAILED' });
+        await expect(transcoder.transcode(new Uint8Array(64).buffer)).rejects.toMatchObject({
+            code: 'GLTF_DECODE_FAILED',
+        });
     });
 
     test('absurd dimensions fail the allocation ceiling before any transcode', async () => {
         const { module } = fakeBasisModule({ width: 17000 });
         const transcoder = createKTX2Transcoder(() => module);
-        await expect(transcoder.transcode(ktx2Bytes(2, 2) as unknown as Uint8Array))
-            .rejects.toMatchObject({ code: 'GLTF_DECODE_FAILED' });
+        await expect(transcoder.transcode(ktx2Bytes(2, 2) as unknown as Uint8Array)).rejects.toMatchObject({
+            code: 'GLTF_DECODE_FAILED',
+        });
     });
 
     test('adapter surfaces missing module surface as GLTF_DECODER_MISSING', async () => {
         const transcoder = createKTX2Transcoder(() => ({}) as never);
-        await expect(transcoder.transcode(ktx2Bytes(2, 2).buffer as ArrayBuffer)).rejects.toMatchObject({ code: 'GLTF_DECODER_MISSING' });
+        await expect(transcoder.transcode(ktx2Bytes(2, 2).buffer as ArrayBuffer)).rejects.toMatchObject({
+            code: 'GLTF_DECODER_MISSING',
+        });
     });
 
     test('loader end-to-end uploads a KTX2 texture via an injected provider', async () => {
         const { module } = fakeBasisModule();
         const provider = createKTX2Transcoder(() => module as never);
         // Build a glTF whose single texture is KTX2-only (no core image source) to force the path.
-        const json: GLTFDocument = { asset: { version: '2.0' },
+        const json: GLTFDocument = {
+            asset: { version: '2.0' },
             extensionsUsed: ['KHR_texture_basisu', 'KHR_materials_unlit'],
-            buffers: [{ byteLength: 0 }], bufferViews: [], accessors: [], images: [], textures: [], materials: [], meshes: [], nodes: [], scenes: [{ nodes: [] }] };
+            buffers: [{ byteLength: 0 }],
+            bufferViews: [],
+            accessors: [],
+            images: [],
+            textures: [],
+            materials: [],
+            meshes: [],
+            nodes: [],
+            scenes: [{ nodes: [] }],
+        };
         const ktx = ktx2Bytes(2, 2);
         const positions = new Float32Array([-1, 0, 0, 1, 0, 0, 0, 1, 0]);
         const uvs = new Float32Array([0, 0, 1, 0, 0, 1]);
         const pad = (n: number) => (n + 3) & ~3;
-        const posOff = 0; const uvOff = pad(positions.byteLength); const ktxOff = pad(uvOff + uvs.byteLength);
+        const posOff = 0;
+        const uvOff = pad(positions.byteLength);
+        const ktxOff = pad(uvOff + uvs.byteLength);
         const bin = new Uint8Array(ktxOff + ktx.length);
         bin.set(new Uint8Array(positions.buffer), posOff);
         bin.set(new Uint8Array(uvs.buffer), uvOff);
@@ -146,7 +228,11 @@ describe('KHR_texture_basisu transcoder', () => {
         json.bufferViews!.push({ buffer: 0, byteOffset: ktxOff, byteLength: ktx.length });
         json.images!.push({ bufferView: 2 });
         json.textures!.push({ extensions: { KHR_texture_basisu: { source: 0 } } });
-        json.materials!.push({ name: 'ktx', extensions: { KHR_materials_unlit: {} }, pbrMetallicRoughness: { baseColorTexture: { index: 0 } } });
+        json.materials!.push({
+            name: 'ktx',
+            extensions: { KHR_materials_unlit: {} },
+            pbrMetallicRoughness: { baseColorTexture: { index: 0 } },
+        });
         json.accessors!.push({ bufferView: 0, componentType: 5126, count: 3, type: 'VEC3' });
         json.accessors!.push({ bufferView: 1, componentType: 5126, count: 3, type: 'VEC2' });
         json.buffers![0].byteLength = bin.byteLength;
@@ -162,16 +248,22 @@ describe('KHR_texture_basisu transcoder', () => {
 
     test('optional extension falls back to core with no transcoder configured', async () => {
         // Minimal solid 1x1 PNG as the core source; browser/jsdom decoding is stubbed.
-        const png = new Uint8Array([137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82,
-            0, 0, 0, 1, 0, 0, 0, 1, 8, 6, 0, 0, 0, 0, 0, 0, 0]);
+        const png = new Uint8Array([
+            137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82, 0, 0, 0, 1, 0, 0, 0, 1, 8, 6, 0, 0, 0, 0, 0,
+            0, 0,
+        ]);
         const RealImage = globalThis.Image;
         class StubImage {
             public onload: (() => void) | null = null;
             public onerror: (() => void) | null = null;
             public width = 1;
             public height = 1;
-            set src (_value: string) { setTimeout(() => this.onload?.(), 0); }
-            get src (): string { return ''; }
+            set src(_value: string) {
+                setTimeout(() => this.onload?.(), 0);
+            }
+            get src(): string {
+                return '';
+            }
         }
         const realCreate = URL.createObjectURL;
         const realRevoke = URL.revokeObjectURL;
@@ -179,13 +271,16 @@ describe('KHR_texture_basisu transcoder', () => {
         URL.revokeObjectURL = () => undefined;
         (globalThis as { Image: unknown }).Image = StubImage;
         try {
-            const json = { asset: { version: '2.0' },
+            const json = {
+                asset: { version: '2.0' },
                 extensionsUsed: ['KHR_texture_basisu'],
                 buffers: [{ byteLength: png.length }],
                 bufferViews: [{ buffer: 0, byteOffset: 0, byteLength: png.length }],
-                accessors: [], images: [{ bufferView: 0 }],
+                accessors: [],
+                images: [{ bufferView: 0 }],
                 textures: [{ extensions: { KHR_texture_basisu: { source: 0 } }, source: 0 }],
-                nodes: [], scenes: [{ nodes: [] }],
+                nodes: [],
+                scenes: [{ nodes: [] }],
             } as unknown as GLTFDocument;
             const asset = await new GLTFLoader().parseAsync(toGLB(json, png.buffer));
             expect(asset.warnings.some((w) => /KHR_texture_basisu.*transcoder|fallback/.test(w))).toBe(true);
@@ -219,6 +314,8 @@ describe('KHR_texture_basisu transcoder', () => {
         json.textures.push({ extensions: { KHR_texture_basisu: { source: json.images.length - 1 } } });
         // no texture.source -> required without core must fail
         await expect(new GLTFLoader().parseAsync(toGLB(json, f.bin))).rejects.toBeInstanceOf(GLTFError);
-        await expect(new GLTFLoader().parseAsync(toGLB(json, f.bin))).rejects.toMatchObject({ code: 'GLTF_DECODER_MISSING' });
+        await expect(new GLTFLoader().parseAsync(toGLB(json, f.bin))).rejects.toMatchObject({
+            code: 'GLTF_DECODER_MISSING',
+        });
     });
 });

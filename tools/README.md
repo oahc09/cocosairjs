@@ -1,5 +1,43 @@
 # Cocos AIR 工具
 
+## Buffer / UBO 定向 WebKit / Firefox 验证
+
+`tools/verify/webgl2-buffer-browser.cjs` 从选定源码抽取真实 GFX 函数并用 TypeScript 编译，在显式选择的 WebKit 或 Firefox 原生 WebGL2 中验证 TypedArray 字节子视图连续上传/读回、UBO 独立范围、dynamic offset、范围变化、绘制像素和删除绑定。它不读取历史 `build/`，不构建完整引擎，不将单浏览器结果当作其他浏览器、硬件性能或 compositor present 的证明。
+
+先在当前环境中准备兼容的 Playwright、TypeScript、WebKit 二进制及其共享库，再显式配置运行：
+
+```bash
+AIR_WEBKIT_EXECUTABLE=<已配置依赖的WebKit启动器> NODE_PATH=<工具node_modules目录> \
+  node tools/verify/webgl2-buffer-browser.cjs --out=output/buffer-candidate.json
+```
+
+默认 `--browser=webkit` 保留原调用方式。Firefox 必须单独选定引擎与可执行文件，并写入另一份新报告：
+
+```bash
+AIR_FIREFOX_EXECUTABLE=<已安装的Firefox可执行文件> NODE_PATH=<工具node_modules目录> \
+  node tools/verify/webgl2-buffer-browser.cjs --browser=firefox --out=output/buffer-firefox.json
+```
+
+两个浏览器分别使用自己的 `AIR_<ENGINE>_EXECUTABLE`，不互相回退。安装成功不等于浏览器能启动或 WebGL2 可用；启动、字体缓存、图形初始化或安全限制导致的失败应保留为独立 `BLOCKED` 报告，不能借用另一个浏览器的 PASS。工具不添加禁用沙箱或图形安全限制的启动参数。
+
+这是配置模板，不是可直接复制的安装命令。部分官方 MiniBrowser 包装器会覆盖 `LD_LIBRARY_PATH`，因此仅在包装器外追加共享库路径可能无效。对于已经安装的 Linux WPE bundle 和额外共享库，可直接使用完整环境：
+
+```bash
+WK=<WebKit安装目录>/minibrowser-wpe
+EXTRA_LIBS=<额外共享库目录>
+WEBKIT_EXEC_PATH="$WK/bin" WEBKIT_INJECTED_BUNDLE_PATH="$WK/lib" \
+WEBKIT_INSPECTOR_RESOURCES_PATH="$WK/share" WEBKIT_FORCE_COMPLEX_TEXT=1 \
+LD_LIBRARY_PATH="$EXTRA_LIBS:$WK/lib:$WK/sys/lib" \
+AIR_WEBKIT_EXECUTABLE="$WK/bin/MiniBrowser" NODE_PATH=<工具node_modules目录> \
+  node tools/verify/webgl2-buffer-browser.cjs --out=output/buffer-candidate.json
+```
+
+额外库可能包括来自官方系统包的 `libharfbuzz-icu`、`libhyphen`、`libGLESv2`，以实际平台和 loader 错误为准。工具不安装依赖、不改变系统 loader 或安全设置；缺依赖、缺浏览器、启动失败或没有 WebGL2 均记录 `BLOCKED` 并退出 1，不降级为 PASS。
+
+`--out` 必须指向新文件，已有结果拒绝覆盖。可加 `--source-ref=<commit>` 读取冻结 Git 源码作为负控，失败负控仍退出 1。报告保留源码/采集器/编译脚本哈希、浏览器版本、原生 API 和渲染器字符串、字节/像素结果及源码未变化检查；渲染器字符串不证明物理硬件型号。`browserClosed` 仅表示 Playwright 的关闭 Promise 完成，物理 waitpid/ECHILD 不在本定向工具的证明范围。
+
+配置和拒绝覆盖回归：`node --test tools/verify/webgl2-buffer-browser.test.cjs`。正式多浏览器或完整引擎验收仍使用各自的采集与物理关闭合同。
+
 Android 宿主后台退出的定向入口为 `node tools/verify/runtime-interop-android-background-exit.cjs --serial=<device> --apk=<candidate.apk> --host-source=<matching-checkout> --case=foreground|home|settings --expected-page-size=4096|16384 --out=<new-directory>`。仅显式 `--install` 安装专用 debug 包；原10秒内要求真实 native/SDL 析构后才清理进程，保存失败尝试，不以强停或回前台补通过。写入和固定SDK夹具边界见 [Android 互操作说明](../docs/reference/android-runtime-interop.md)。宿主构建支持 `-RuntimeBase` 指向已有隔离目录，不需要搬动依赖或修改历史记录。
 
 ## Box2D 3.2 可选后端

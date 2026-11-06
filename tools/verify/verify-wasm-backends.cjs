@@ -81,6 +81,7 @@ const EXPECT = {
         'cocos/render-scene/scene/fog.ts',
         'cocos/render-scene/scene/light.ts',
         'cocos/rendering/global-descriptor-set-manager.ts',
+        'cocos/rendering/pipeline-state-manager.ts',
         'cocos/scene-graph/node.ts',
     ],
     emscriptenSpecs: [

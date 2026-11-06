@@ -461,6 +461,8 @@ interface MaterialEntry {
     fs: string;
 }
 interface GeometryEntry {
+    program: WebGLProgram;
+    cache: Map<WebGLProgram, GeometryEntry>;
     signature: string;
     attrs: Attribute[];
     buffers: Buffer[];
@@ -1494,6 +1496,15 @@ export class CocosRenderer {
         if (!p) return;
         this._liveMaterials.delete(p);
         for (const v of p.psos.values()) this._destroy(v);
+        // Vertex allocations are keyed by the native program, not only by geometry.
+        // A replaced shader can never reuse these entries, even if the geometry stays live.
+        for (const e of this._liveGeometries) {
+            if (e.program !== p.program) continue;
+            this._liveGeometries.delete(e);
+            e.cache.delete(p.program);
+            this._destroy(e.ia);
+            for (const buffer of e.buffers) this._destroy(buffer);
+        }
         for (const v of [p.ds, p.pl, p.layout, p.shader]) this._destroy(v);
         this._materials.delete(m);
         this.info.programs = this.info.programs.filter((r) => r.program !== p.program);
@@ -1662,7 +1673,7 @@ export class CocosRenderer {
         }
         const ia = this._own(this.device.createInputAssembler(new g.InputAssemblerInfo(attrs, buffers, index)));
         if (index) buffers.push(index);
-        e = { signature, attrs, buffers, ia };
+        e = { program: p.program, cache: byProgram, signature, attrs, buffers, ia };
         byProgram.set(p.program, e);
         this._liveGeometries.add(e);
         return e;
@@ -2181,54 +2192,53 @@ export class CocosRenderer {
                 ),
             ),
         );
-        const native = (staging as WebGL2Buffer).getGpuBuffer().glBuffer;
-        const oldRead = gl.getParameter(gl.READ_FRAMEBUFFER_BINDING),
-            oldDraw = gl.getParameter(gl.DRAW_FRAMEBUFFER_BINDING),
-            oldPack = gl.getParameter(gl.PIXEL_PACK_BUFFER_BINDING),
-            oldAlign = gl.getParameter(gl.PACK_ALIGNMENT);
         let fence: WebGLSync | null = null;
+        // The allocation is owned from this point, including setup/submit failures before
+        // a fence exists. Renderer disposal may already release it while polling awaits.
         try {
-            gl.bindFramebuffer(gl.FRAMEBUFFER, gpu.glFramebuffer);
-            const framebufferStatus = gl.checkFramebufferStatus(gl.FRAMEBUFFER);
-            if (framebufferStatus !== gl.FRAMEBUFFER_COMPLETE)
-                throw new Error(
-                    'Incomplete native Spark readback framebuffer ' +
-                        JSON.stringify({
-                            status: framebufferStatus,
-                            width: target.width,
-                            height: target.height,
-                            layer,
-                            textureIndex,
-                            colors: gpu.gpuColorViews.map((v) => ({
-                                w: v.gpuTexture.width,
-                                h: v.gpuTexture.height,
-                                format: v.format,
-                                baseLayer: v.baseLayer,
-                            })),
-                            depth: gpu.gpuDepthStencilView?.gpuTexture,
-                        }),
-                );
-            gl.readBuffer(gl.COLOR_ATTACHMENT0 + textureIndex);
-            gl.bindBuffer(gl.PIXEL_PACK_BUFFER, native);
-            gl.pixelStorei(gl.PACK_ALIGNMENT, 1);
-            gl.readPixels(x, y, w, h, tex.gpuTexture.glFormat, tex.gpuTexture.glType, 0);
-            fence = gl.fenceSync(gl.SYNC_GPU_COMMANDS_COMPLETE, 0);
-            gl.flush();
-        } finally {
-            gl.bindBuffer(gl.PIXEL_PACK_BUFFER, oldPack);
-            gl.bindFramebuffer(gl.READ_FRAMEBUFFER, oldRead);
-            gl.bindFramebuffer(gl.DRAW_FRAMEBUFFER, oldDraw);
-            this.device.getStateCache().glReadFramebuffer = oldRead;
-            this.device.getStateCache().glFramebuffer = oldDraw;
-            gl.pixelStorei(gl.PACK_ALIGNMENT, oldAlign);
-        }
-        if (!fence) {
-            this._destroy(staging);
-            throw new Error('Cocos GPU readback fence creation failed');
-        }
-        // Typed-forced local: the fence narrowed above must stay non-null inside the poll closure.
-        const sync = fence;
-        try {
+            const native = (staging as WebGL2Buffer).getGpuBuffer().glBuffer;
+            const oldRead = gl.getParameter(gl.READ_FRAMEBUFFER_BINDING),
+                oldDraw = gl.getParameter(gl.DRAW_FRAMEBUFFER_BINDING),
+                oldPack = gl.getParameter(gl.PIXEL_PACK_BUFFER_BINDING),
+                oldAlign = gl.getParameter(gl.PACK_ALIGNMENT);
+            try {
+                gl.bindFramebuffer(gl.FRAMEBUFFER, gpu.glFramebuffer);
+                const framebufferStatus = gl.checkFramebufferStatus(gl.FRAMEBUFFER);
+                if (framebufferStatus !== gl.FRAMEBUFFER_COMPLETE)
+                    throw new Error(
+                        'Incomplete native Spark readback framebuffer ' +
+                            JSON.stringify({
+                                status: framebufferStatus,
+                                width: target.width,
+                                height: target.height,
+                                layer,
+                                textureIndex,
+                                colors: gpu.gpuColorViews.map((v) => ({
+                                    w: v.gpuTexture.width,
+                                    h: v.gpuTexture.height,
+                                    format: v.format,
+                                    baseLayer: v.baseLayer,
+                                })),
+                                depth: gpu.gpuDepthStencilView?.gpuTexture,
+                            }),
+                    );
+                gl.readBuffer(gl.COLOR_ATTACHMENT0 + textureIndex);
+                gl.bindBuffer(gl.PIXEL_PACK_BUFFER, native);
+                gl.pixelStorei(gl.PACK_ALIGNMENT, 1);
+                gl.readPixels(x, y, w, h, tex.gpuTexture.glFormat, tex.gpuTexture.glType, 0);
+                fence = gl.fenceSync(gl.SYNC_GPU_COMMANDS_COMPLETE, 0);
+                gl.flush();
+            } finally {
+                gl.bindBuffer(gl.PIXEL_PACK_BUFFER, oldPack);
+                gl.bindFramebuffer(gl.READ_FRAMEBUFFER, oldRead);
+                gl.bindFramebuffer(gl.DRAW_FRAMEBUFFER, oldDraw);
+                this.device.getStateCache().glReadFramebuffer = oldRead;
+                this.device.getStateCache().glFramebuffer = oldDraw;
+                gl.pixelStorei(gl.PACK_ALIGNMENT, oldAlign);
+            }
+            if (!fence) throw new Error('Cocos GPU readback fence creation failed');
+            // Typed-forced local: the fence narrowed above must stay non-null inside the poll closure.
+            const sync = fence;
             await new Promise<void>((resolve, reject) => {
                 const poll = () => {
                     if (this._disposed || gl.isContextLost())
@@ -2241,13 +2251,19 @@ export class CocosRenderer {
                 poll();
             });
             const previous = gl.getParameter(gl.PIXEL_PACK_BUFFER_BINDING);
-            gl.bindBuffer(gl.PIXEL_PACK_BUFFER, native);
-            gl.getBufferSubData(gl.PIXEL_PACK_BUFFER, 0, buffer);
-            gl.bindBuffer(gl.PIXEL_PACK_BUFFER, previous);
+            try {
+                gl.bindBuffer(gl.PIXEL_PACK_BUFFER, native);
+                gl.getBufferSubData(gl.PIXEL_PACK_BUFFER, 0, buffer);
+            } finally {
+                gl.bindBuffer(gl.PIXEL_PACK_BUFFER, previous);
+            }
             return buffer;
         } finally {
-            gl.deleteSync(sync);
-            this._destroy(staging);
+            try {
+                if (fence) gl.deleteSync(fence);
+            } finally {
+                if (this._owned.has(staging)) this._destroy(staging);
+            }
         }
     }
     public setAnimationLoop(callback: AnimationLoopCallback | null): void {

@@ -1936,7 +1936,12 @@
   },
   "compatibilityTypeGraph": {
     "source": "original-current-ccbuild-all-feature-entry",
-    "originalEntrySha256": "1fcfd972e0293570429df26005c0a8e7d456bb2baab8bee9a5ab3fa575ecdd33",
+    "originalEntrySha256": "b6592dfe62dc92bcbfe41d681fcba9e040cba2efcad94e9eb80a463c73969940",
+    "excludedFeatureEntries": [
+      "exports/physics-2d-box2d-wasm.d.ts",
+      "exports/physics-ammo.d.ts",
+      "exports/physics-physx.d.ts"
+    ],
     "optionalRuntimeValues": false,
     "historicalArtifactCopied": false,
     "retainedPrivateAliases": [
