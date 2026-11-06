@@ -401,3 +401,7 @@ node --test tools/build/source-binding.test.cjs tools/verify/runtime-interop*.te
 ```
 
 Runtime builds also write `<bundle>.sources.json`: exact bundle/map/source hash bindings for source-content-free maps. Missing or mismatched bindings fail closed. These receipts are consistency checks, not signed build attestations; see the guide for their trust boundary and retained-map migration provenance.
+
+### Explicit texture mip readback
+
+`node tools/verify/texture2d-explicit-mipmaps.cjs --browser=chromium --bundle=build/cocosair.module.js --out=output/new-mipmap-attempt` reads every pixel of a 4×4/2×2/1×1 native Texture2D chain. `--browser=webkit`, `--playwright=<module path>` and `--executable=<browser executable>` are supported. It covers buffer/DOM uploads, a single ImageAsset containing several levels, partial explicit allocation, filter setup order and single-image generation. It requires a matching compiler source-binding receipt before launching and rechecks it afterward. It writes only the required new output directory and refuses to overwrite attempts. The browser root exit is recorded within one four-second closing budget; this is focused non-canonical evidence, not full descendant ECHILD or release acceptance. CPU regression: `npx jest --runInBand --runTestsByPath test/smoke/texture2d-explicit-mipmaps.test.ts`.

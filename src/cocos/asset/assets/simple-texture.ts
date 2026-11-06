@@ -322,7 +322,9 @@ export class SimpleTexture extends TextureBase {
     protected _createTexture (device: Device): void {
         if (this._width === 0 || this._height === 0) { return; }
         let flags = TextureFlagBit.NONE;
-        if (this._mipFilter !== TextureFilter.NONE && canGenerateMipmap(device, this._width, this._height)) {
+        // An explicit multi-level allocation is populated by the caller, not by GPU generation.
+        if (this._mipmapLevel === 1 && this._mipFilter !== TextureFilter.NONE
+            && canGenerateMipmap(device, this._width, this._height)) {
             this._mipmapLevel = getMipLevel(this._width, this._height);
             if (!this.isUsingOfflineMipmaps() && !this.isCompressed) {
                 flags = TextureFlagBit.GEN_MIPMAP;

@@ -1,0 +1,9 @@
+{
+  "scope": "Focused single-branch candidate from checked-in baseline bundle; not a fresh full build or release artifact",
+  "baselineCommit": "652db1557821453c86baf2c9e3a56a01426124a9",
+  "baselineBundleSHA256": "10f9b9c19dd2afbbc862cf080c77c461e7cb5255b9cb1bc4979877792691e551",
+  "candidateSHA256": "95dfe74ce8dc13232d5c4e61810676bbb1e8bc19e296e9f20d1d65d9c795845f",
+  "sourceSHA256": "3f97de81618665a529d7f3b93c3ef688624dfc3fd9a0671ae5b47de20b4d73c0",
+  "needle": "if (this._mipFilter !== TextureFilter.NONE && canGenerateMipmap(device, this._width, this._height)) {",
+  "replacement": "if (this._mipmapLevel === 1 && this._mipFilter !== TextureFilter.NONE && canGenerateMipmap(device, this._width, this._height)) {"
+}
