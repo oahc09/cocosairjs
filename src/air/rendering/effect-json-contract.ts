@@ -108,18 +108,40 @@ export function normalizeEffectShader<T>(input: T, effect = '<direct>', path = '
     for (const variant of ['glsl3', 'glsl4']) {
         const frag = normalized[variant]?.frag;
         if (typeof frag !== 'string') continue;
+        let patched = frag;
         if (frag.includes('CC_AIR_LINEAR_HDR')) {
             hdrOutput = true;
-            continue;
-        }
-        let patched = frag.replace(
-            /(vec4\s+CCFragOutput\s*\(\s*vec4\s+color\s*\)\s*\{)/,
-            '$1\n#if CC_AIR_LINEAR_HDR\nreturn color;\n#endif\n',
-        );
-        if (frag.includes('HDRToLDR') && frag.includes('LinearToSRGB')) {
+        } else {
             patched = patched.replace(
-                /#if\s+(!CC_USE_FLOAT_OUTPUT(?:\s*\|\|\s*CC_IS_TRANSPARENCY_PASS)?)(?=\s*\n)/g,
-                '#if ($1) && !CC_AIR_LINEAR_HDR',
+                /(vec4\s+CCFragOutput\s*\(\s*vec4\s+color\s*\)\s*\{)/,
+                '$1\n#if CC_AIR_LINEAR_HDR\nreturn color;\n#endif\n',
+            );
+            if (frag.includes('HDRToLDR') && frag.includes('LinearToSRGB')) {
+                patched = patched.replace(
+                    /#if\s+(!CC_USE_FLOAT_OUTPUT(?:\s*\|\|\s*CC_IS_TRANSPARENCY_PASS)?)(?=\s*\n)/g,
+                    '#if ($1) && !CC_AIR_LINEAR_HDR',
+                );
+            }
+        }
+        // The stock skybox returns its color directly instead of calling CCFragOutput.
+        // Keep exposure, but defer tone mapping / display encoding to the HDR camera's
+        // output stage. Match the skybox radiance expression, not arbitrary RGBE passes.
+        patched = patched.replace(
+            /(vec4\s+color\s*=\s*vec4\(c\s*\*\s*cc_ambientSky\.w,\s*1\.0\);\s*)(#if\s+CC_USE_RGBE_OUTPUT)/,
+            '$1#if CC_AIR_LINEAR_HDR\nreturn color;\n#endif\n$2',
+        );
+        // HDR readback must retain radiance, not mediump sampler/pow quantization.
+        // Scope the higher default precision to the HDR variant; ordinary cameras
+        // retain the original shader's precision and display output byte-for-byte.
+        if (
+            /vec4\s+color\s*=\s*vec4\(c\s*\*\s*cc_ambientSky\.w,\s*1\.0\);\s*#if CC_AIR_LINEAR_HDR\s+return color;\s*#endif\s*#if CC_USE_RGBE_OUTPUT/.test(
+                patched,
+            ) &&
+            !patched.includes('#if CC_AIR_LINEAR_HDR\nprecision highp float;')
+        ) {
+            patched = patched.replace(
+                /precision\s+(?:lowp|mediump|highp)\s+float\s*;/,
+                '$&\n#if CC_AIR_LINEAR_HDR\nprecision highp float;\nprecision highp sampler2D;\nprecision highp samplerCube;\n#endif',
             );
         }
         if (patched !== frag) {
