@@ -2,6 +2,9 @@
 const DEFAULT_FEATURES = Object.freeze([
     'air', // bundle 入口: src/exports/air.ts（含 base/3d/animation/... 与 createAirApp）
     'base',
+    'worker',
+    'worker-pool',
+    'webassembly',
     'gfx-webgl2',
     'gfx-webgpu',
     'gfx-empty',

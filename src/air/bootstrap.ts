@@ -117,7 +117,15 @@ function ensureCanvasDOM(canvas: HTMLCanvasElement, options: AirNormalizedOption
  * ```
  */
 export function createAirApp(options: AirAppOptions): Promise<AirApp> {
-    return requestAirApp(options, () => initializeAirApp);
+    const maximum = settings.querySettings<number>(SettingsCategory.SCREEN, 'maxDevicePixelRatio');
+    if (maximum != null && (typeof maximum !== 'number' || !Number.isFinite(maximum) || maximum < 1)) {
+        return Promise.reject(new RangeError('screen.maxDevicePixelRatio must be a finite number >= 1.'));
+    }
+    // Explicit AIR caps retain their positive-fraction contract and take precedence.
+    // Resolve the upstream startup setting before admission and first-frame sizing.
+    const resolved = options.pixelRatioCap == null && maximum != null
+        ? { ...options, pixelRatioCap: maximum } : options;
+    return requestAirApp(resolved, () => initializeAirApp);
 }
 
 async function initializeAirApp(options: AirNormalizedOptions): Promise<AirApp> {

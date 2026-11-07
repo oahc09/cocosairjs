@@ -39,7 +39,8 @@
       "./src/@types/pal/input",
       "./src/@types/pal/env",
       "./src/@types/pal/pacer",
-      "./src/@types/pal/wasm"
+      "./src/@types/pal/wasm",
+      "./src/@types/pal/worker"
     ]
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts"],

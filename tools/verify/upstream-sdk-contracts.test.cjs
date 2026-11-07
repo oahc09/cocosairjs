@@ -67,6 +67,16 @@ export declare class Mat4 { private matrixBrand: number; }
 export declare function clamp01(value: number): number;
 export { Material as MaterialAlias };
 export type { TypeOnlyNative } from './type-only.js';
+export interface UIMeshSegment { indexOffset: number; indexCount: number; texture: unknown; material: unknown; }
+export interface UIMeshData { vertexCount: number; vertexStride: number; vertexData: Uint8Array; indexCount: number; indexData: Uint8Array; segments: UIMeshSegment[]; }
+export declare class UIMesh { setMeshData(data: UIMeshData): void; enableBatch: boolean; }
+export interface WorkerPoolOptions { maxWorkers?: number; idleReleaseAfter?: number; timeout?: number; }
+export declare class WorkerPool { constructor(task: (...args: any[]) => any, options?: WorkerPoolOptions); run(args: unknown[]): Promise<unknown>; terminate(): void; }
+export interface IWorker { postMessage(message: unknown): void; terminate(): void; }
+export declare function createWorker(path: string): IWorker;
+export declare enum MaxDPR { Performance = 1, Balanced = 2, Quality = 4 }
+export interface AirAppOptions { canvas: string; pixelRatioCap?: number; }
+export declare const wasm: { fetchUrl(url: string): Promise<string> };
 `;
 const values = [
     'AnimationClip',
@@ -83,6 +93,11 @@ const values = [
     'clamp01',
     'configureGLTFLoaderDefaults',
     'instantiate',
+    'UIMesh',
+    'WorkerPool',
+    'createWorker',
+    'MaxDPR',
+    'wasm',
 ].sort();
 function fixture() {
     const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'upstream-sdk-helper-test-'));
@@ -206,6 +221,9 @@ test('strict fixture accepts the declared contract and rejects widened request/l
         if (process.env.AIR_UPSTREAM_MODERN_TS) assert.equal(result.modern, 'PASS');
         else assert.match(result.modern, /^NOT_RUN/);
         for (const [name, before, after] of [
+            ['mesh bytes', 'vertexData: Uint8Array', 'vertexData: any'],
+            ['worker count', 'maxWorkers?: number', 'maxWorkers?: any'],
+            ['DPR cap', 'pixelRatioCap?: number', 'pixelRatioCap?: any'],
             ['priority', "priority?: 'high' | 'low' | 'auto'", 'priority?: any'],
             ['HTTP cache', 'httpCache?: RequestCache', 'httpCache?: any'],
             ['credentials', 'credentials?: RequestCredentials', 'credentials?: any'],

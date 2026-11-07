@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>AIR Worker and WebAssembly browser regression</title>
+    </head>
+    <body>
+        <pre id="result">Running Worker CPU regressions. No canvas or GPU initialization.</pre>
+        <script type="module">
+            import { WorkerPool, createWorker, getWorkerCapabilities, wasm } from '/build/cocosair.module.js';
+
+            window.workerRegression = (async () => {
+                const results = [];
+                const pools = [];
+                const ownedURLs = [];
+                const handles = [];
+                const NativeWorker = window.Worker;
+                const active = new Set();
+                window.Worker = class extends NativeWorker {
+                    constructor(...args) {
+                        super(...args);
+                        active.add(this);
+                    }
+                    terminate() {
+                        active.delete(this);
+                        super.terminate();
+                    }
+                };
+                function check(condition, label) {
+                    if (!condition) throw new Error(label);
+                    results.push(label);
+                }
+                const pool = (task, options = {}) => {
+                    const instance = new WorkerPool(task, { idleReleaseAfter: 0, timeout: 4000, ...options });
+                    pools.push(instance);
+                    return instance;
+                };
+                const script = (source) => {
+                    const url = URL.createObjectURL(new Blob([source], { type: 'text/javascript' }));
+                    ownedURLs.push(url);
+                    return url;
+                };
+                try {
+                    check(getWorkerCapabilities().available, 'browser Worker available');
+                    const functions = pool(async (bytes) => {
+                        await Promise.resolve();
+                        bytes[0] *= 2;
+                        return { bytes, alias: bytes };
+                    });
+                    const input = new Uint8Array([21]);
+                    const transferred = functions.run([input], [input.buffer]);
+                    check(input.byteLength === 0, 'input ArrayBuffer ownership transferred');
+                    const output = await transferred;
+                    check(
+                        output.bytes[0] === 42 && output.bytes === output.alias,
+                        'async function result and alias preserved',
+                    );
+
+                    const queued = pool(
+                        async (n) => {
+                            await new Promise((resolve) => setTimeout(resolve, 20));
+                            return n * 2;
+                        },
+                        { maxWorkers: 2 },
+                    );
+                    check(
+                        (await Promise.all([1, 2, 3, 4].map((n) => queued.run([n])))).join(',') === '2,4,6,8',
+                        'bounded pool drains excess queue',
+                    );
+
+                    const worker = createWorker(script('self.onmessage = e => self.postMessage(e.data);'));
+                    handles.push(worker);
+                    const rawReply = new Promise((resolve, reject) => {
+                        worker.onMessage(resolve);
+                        worker.onError(reject);
+                    });
+                    worker.postMessage({ custom: 7 });
+                    check((await rawReply).custom === 7, 'raw worker preserves custom message protocol');
+                    worker.terminate();
+
+                    const silent = pool(script('self.onmessage = () => {};'), { timeout: 150, fallback: (n) => n + 1 });
+                    check(
+                        (await silent.run([9])) === 10 && silent.backend === 'sync',
+                        'timeout degrades to safe sync fallback',
+                    );
+
+                    const malformed = pool(script('self.onmessage = () => self.postMessage({ nope: true });'));
+                    let rejected = false;
+                    try {
+                        await malformed.run([]);
+                    } catch {
+                        rejected = true;
+                    }
+                    check(rejected, 'malformed reply rejects instead of hanging');
+
+                    const cancelled = pool(script('self.onmessage = () => {};'));
+                    const pending = cancelled.run([]).then(
+                        () => false,
+                        () => true,
+                    );
+                    cancelled.terminate();
+                    check(await pending, 'termination rejects in-flight task');
+
+                    const url = 'data:application/wasm;base64,AGFzbQEAAAA=';
+                    check((await wasm.fetchUrl(url)) === url, 'wasm absolute URL preserved');
+                    check((await wasm.fetchBuffer(url)).byteLength === 8, 'wasm bytes fetched through Web PAL');
+                    const compiled = await wasm.instantiateWasm(url, {});
+                    check(
+                        compiled.instance instanceof WebAssembly.Instance,
+                        'wasm module instantiated through public namespace',
+                    );
+                    await wasm.ensureWasmModuleReady();
+                    return { ok: true, results };
+                } catch (error) {
+                    return { ok: false, results, error: String((error && error.stack) || error) };
+                } finally {
+                    pools.forEach((item) => item.terminate());
+                    handles.forEach((item) => item.terminate());
+                    ownedURLs.forEach((url) => URL.revokeObjectURL(url));
+                    window.Worker = NativeWorker;
+                    if (active.size) throw new Error('Worker resource leak: ' + active.size);
+                }
+            })();
+            window.workerRegression.then((report) => {
+                document.querySelector('#result').textContent = JSON.stringify(report, null, 2);
+            });
+        </script>
+    </body>
+</html>

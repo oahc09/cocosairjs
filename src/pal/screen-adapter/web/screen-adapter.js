@@ -75,10 +75,12 @@ class ScreenAdapter extends EventTarget {
         }
         return !!document[this._fn.fullscreenElement];
     }
+    get maxDevicePixelRatio() { return this._maxDevicePixelRatio; }
     get devicePixelRatio() {
         // TODO: remove the down sampling operation in DPR after supporting resolutionScale
-        const cap = Number(window.__CCDPR_CAP__);
-        return Math.min(window.devicePixelRatio ?? 1, Number.isFinite(cap) && cap > 0 ? cap : 2);
+        const airCap = Number(window.__CCDPR_CAP__);
+        const cap = Number.isFinite(airCap) && airCap > 0 ? airCap : (this._maxDevicePixelRatio ?? 2);
+        return Math.min(window.devicePixelRatio ?? 1, cap);
     }
     get windowSize() {
         const result = this._windowSizeInCssPixels;
@@ -240,6 +242,7 @@ class ScreenAdapter extends EventTarget {
         super();
         this.isFrameRotated = false;
         this.handleResizeEvent = true;
+        this._maxDevicePixelRatio = null;
         this._isProportionalToFrame = false;
         this._cachedFrameStyle = { width: '0px', height: '0px' };
         this._cachedContainerStyle = { width: '0px', height: '0px' };
@@ -353,6 +356,11 @@ class ScreenAdapter extends EventTarget {
             callback();
     }
     init(options, cbToRebuildFrameBuffer) {
+        const maximum = options.maxDevicePixelRatio;
+        if (maximum != null && (typeof maximum !== 'number' || !Number.isFinite(maximum) || maximum < 1)) {
+            throw new RangeError('screen.maxDevicePixelRatio must be a finite number >= 1.');
+        }
+        this._maxDevicePixelRatio = maximum ?? null;
         this.bindCanvas();
         this._cbToUpdateFrameBuffer = cbToRebuildFrameBuffer;
         this.orientation = orientationMap[options.configOrientation];

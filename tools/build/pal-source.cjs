@@ -51,7 +51,22 @@ function generate() {
             source = require('./screen-layout-patch.cjs').patchScreenLayout(source);
             replace(
                 'return Math.min(window.devicePixelRatio ?? 1, 2);',
-                'const cap = Number((window as any).__CCDPR_CAP__); return Math.min(window.devicePixelRatio ?? 1, Number.isFinite(cap) && cap > 0 ? cap : 2);',
+                'const airCap = Number((window as any).__CCDPR_CAP__); const cap = Number.isFinite(airCap) && airCap > 0 ? airCap : (this._maxDevicePixelRatio ?? 2); return Math.min(window.devicePixelRatio ?? 1, cap);',
+            );
+            replace(
+                '    public get devicePixelRatio',
+                `    private _maxDevicePixelRatio: number | null = null;
+    public get maxDevicePixelRatio (): number | null { return this._maxDevicePixelRatio; }
+    public get devicePixelRatio`,
+            );
+            replace(
+                '    public init (options: IScreenOptions, cbToRebuildFrameBuffer: () => void): void {',
+                `    public init (options: IScreenOptions, cbToRebuildFrameBuffer: () => void): void {
+        const maximum = options.maxDevicePixelRatio;
+        if (maximum != null && (typeof maximum !== 'number' || !Number.isFinite(maximum) || maximum < 1)) {
+            throw new RangeError('screen.maxDevicePixelRatio must be a finite number >= 1.');
+        }
+        this._maxDevicePixelRatio = maximum ?? null;`,
             );
             replace('result.width *= dpr;', 'result.width = Math.round(result.width * dpr);');
             replace('result.height *= dpr;', 'result.height = Math.round(result.height * dpr);');

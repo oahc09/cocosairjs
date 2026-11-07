@@ -40,3 +40,7 @@ export * from './custom-pipeline-post-process';
 export * from './audio';
 
 export * from '../air';
+
+export * from './worker';
+export * from './worker-pool';
+export * from './webassembly';
