@@ -54,6 +54,8 @@
     "docs/reference/",
     "docs/manual/",
     "docs/notes/",
+    "docs/worker/",
+    "docs/physics/box3d/integration-20261031.md",
     "README.md",
     "README.en.md",
     "LICENSE",

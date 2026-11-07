@@ -2,7 +2,7 @@
   "meta": {
     "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
     "note": "Air Path 与 Upstream Path 一致(前缀 src/)；modified 文件另行标注 reason；upstreamPath=null 表示该行为 Air 原创文件或上游产物（仓库内无对应源文件），必须 modified:true 并在 reason 说明出处",
-    "modifiedCount": 281,
+    "modifiedCount": 316,
     "pal": {
       "revision": "9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "license": "MIT",
@@ -154,8 +154,8 @@
       "airPath": "src/cocos/2d/assembler/graphics/webgl/graphics-assembler.ts",
       "upstreamPath": "cocos/2d/assembler/graphics/webgl/graphics-assembler.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "extraction copy; Cocos4 TS integration fffd9a514a..a56706c: Font family/CHAR scale, Graphics grow-only buffers, UIMesh data submission/ownership, MeshRenderData cleanup, and Button event API as applicable. UIMesh validates integer counts; CHAR bold and placeholder font-family retained."
     },
     {
       "airPath": "src/cocos/2d/assembler/graphics/webgl/impl.ts",
@@ -196,8 +196,8 @@
       "airPath": "src/cocos/2d/assembler/label/font-utils.ts",
       "upstreamPath": "cocos/2d/assembler/label/font-utils.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "extraction copy; Cocos4 TS integration fffd9a514a..a56706c: Font family/CHAR scale, Graphics grow-only buffers, UIMesh data submission/ownership, MeshRenderData cleanup, and Button event API as applicable. UIMesh validates integer counts; CHAR bold and placeholder font-family retained."
     },
     {
       "airPath": "src/cocos/2d/assembler/label/index.ts",
@@ -210,8 +210,8 @@
       "airPath": "src/cocos/2d/assembler/label/letter-font.ts",
       "upstreamPath": "cocos/2d/assembler/label/letter-font.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "extraction copy; Cocos4 TS integration fffd9a514a..a56706c: Font family/CHAR scale, Graphics grow-only buffers, UIMesh data submission/ownership, MeshRenderData cleanup, and Button event API as applicable. UIMesh validates integer counts; CHAR bold and placeholder font-family retained."
     },
     {
       "airPath": "src/cocos/2d/assembler/label/letter.ts",
@@ -239,14 +239,14 @@
       "upstreamPath": "cocos/2d/assembler/label/text-processing.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "AIR E-RICHTEXT-SHADOW-KERNEL-001: TTF shadow uses separate visual overflow; preserve logical Label/RichText dimensions and glyph origin at all font scales, including anchor-only vertex updates. PG-02: retain the final character's incoming BMFont kerning pair instead of forcing it to zero; native layout already consumes the next character's incoming value."
+      "reason": "AIR E-RICHTEXT-SHADOW-KERNEL-001: TTF shadow uses separate visual overflow; preserve logical Label/RichText dimensions and glyph origin at all font scales, including anchor-only vertex updates. PG-02: retain the final character's incoming BMFont kerning pair instead of forcing it to zero; native layout already consumes the next character's incoming value.; Cocos4 TS integration fffd9a514a..a56706c: Font family/CHAR scale, Graphics grow-only buffers, UIMesh data submission/ownership, MeshRenderData cleanup, and Button event API as applicable. UIMesh validates integer counts; CHAR bold and placeholder font-family retained."
     },
     {
       "airPath": "src/cocos/2d/assembler/label/text-style.ts",
       "upstreamPath": "cocos/2d/assembler/label/text-style.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "extraction copy; Cocos4 TS integration fffd9a514a..a56706c: Font family/CHAR scale, Graphics grow-only buffers, UIMesh data submission/ownership, MeshRenderData cleanup, and Button event API as applicable. UIMesh validates integer counts; CHAR bold and placeholder font-family retained."
     },
     {
       "airPath": "src/cocos/2d/assembler/label/ttf.ts",
@@ -260,7 +260,7 @@
       "upstreamPath": "cocos/2d/assembler/label/ttfUtils.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "AIR E-RICHTEXT-SHADOW-KERNEL-001: TTF shadow uses separate visual overflow; preserve logical Label/RichText dimensions and glyph origin at all font scales, including anchor-only vertex updates."
+      "reason": "AIR E-RICHTEXT-SHADOW-KERNEL-001: TTF shadow uses separate visual overflow; preserve logical Label/RichText dimensions and glyph origin at all font scales, including anchor-only vertex updates.; Cocos4 TS integration fffd9a514a..a56706c: Font family/CHAR scale, Graphics grow-only buffers, UIMesh data submission/ownership, MeshRenderData cleanup, and Button event API as applicable. UIMesh validates integer counts; CHAR bold and placeholder font-family retained."
     },
     {
       "airPath": "src/cocos/2d/assembler/sprite/bar-filled.ts",
@@ -378,15 +378,15 @@
       "airPath": "src/cocos/2d/components/graphics.ts",
       "upstreamPath": "cocos/2d/components/graphics.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "extraction copy; Cocos4 TS integration fffd9a514a..a56706c: Font family/CHAR scale, Graphics grow-only buffers, UIMesh data submission/ownership, MeshRenderData cleanup, and Button event API as applicable. UIMesh validates integer counts; CHAR bold and placeholder font-family retained."
     },
     {
       "airPath": "src/cocos/2d/components/index.ts",
       "upstreamPath": "cocos/2d/components/index.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "extraction copy; Cocos4 TS integration fffd9a514a..a56706c: Font family/CHAR scale, Graphics grow-only buffers, UIMesh data submission/ownership, MeshRenderData cleanup, and Button event API as applicable. UIMesh validates integer counts; CHAR bold and placeholder font-family retained."
     },
     {
       "airPath": "src/cocos/2d/components/label-outline.ts",
@@ -623,8 +623,8 @@
       "airPath": "src/cocos/2d/renderer/mesh-buffer.ts",
       "upstreamPath": "cocos/2d/renderer/mesh-buffer.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "extraction copy; Cocos4 TS integration fffd9a514a..a56706c: Font family/CHAR scale, Graphics grow-only buffers, UIMesh data submission/ownership, MeshRenderData cleanup, and Button event API as applicable. UIMesh validates integer counts; CHAR bold and placeholder font-family retained."
     },
     {
       "airPath": "src/cocos/2d/renderer/native-2d-empty.ts",
@@ -644,8 +644,8 @@
       "airPath": "src/cocos/2d/renderer/render-data.ts",
       "upstreamPath": "cocos/2d/renderer/render-data.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "extraction copy; Cocos4 TS integration fffd9a514a..a56706c: Font family/CHAR scale, Graphics grow-only buffers, UIMesh data submission/ownership, MeshRenderData cleanup, and Button event API as applicable. UIMesh validates integer counts; CHAR bold and placeholder font-family retained."
     },
     {
       "airPath": "src/cocos/2d/renderer/render-draw-info.ts",
@@ -665,8 +665,8 @@
       "airPath": "src/cocos/2d/renderer/static-vb-accessor.ts",
       "upstreamPath": "cocos/2d/renderer/static-vb-accessor.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "extraction copy; Cocos4 TS integration fffd9a514a..a56706c: Font family/CHAR scale, Graphics grow-only buffers, UIMesh data submission/ownership, MeshRenderData cleanup, and Button event API as applicable. UIMesh validates integer counts; CHAR bold and placeholder font-family retained."
     },
     {
       "airPath": "src/cocos/2d/renderer/stencil-manager.ts",
@@ -700,8 +700,8 @@
       "airPath": "src/cocos/2d/utils/font-loader.ts",
       "upstreamPath": "cocos/2d/utils/font-loader.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "extraction copy; Cocos4 TS integration fffd9a514a..a56706c: Font family/CHAR scale, Graphics grow-only buffers, UIMesh data submission/ownership, MeshRenderData cleanup, and Button event API as applicable. UIMesh validates integer counts; CHAR bold and placeholder font-family retained."
     },
     {
       "airPath": "src/cocos/2d/utils/html-text-parser.ts",
@@ -939,7 +939,7 @@
       "upstreamPath": "cocos/3d/models/baked-skinning-model.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "PG-18: validate weighted joint paths and mesh data before replacing a baked skinning binding"
+      "reason": "PG-18: validate weighted joint paths and mesh data before replacing a baked skinning binding; Cocos4 TS integration fffd9a514a..a56706c: Batch accessor recursion and recreated skinning resource rebinding; preserve AIR validation/morph bounds and user instanced values."
     },
     {
       "airPath": "src/cocos/3d/models/morph-model.ts",
@@ -953,7 +953,7 @@
       "upstreamPath": "cocos/3d/models/skinning-model.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "PG-18/19: reject invalid weighted joint paths and realtime palette capacity overflow before releasing the previous binding; keep large skeletons with legal local palettes; U05: per-model latest morph-weight bounds are refreshed before world bounds, conservatively unioned with base positions; negative weights and nonuniform/negative scaling stay supported without disabling culling."
+      "reason": "PG-18/19: reject invalid weighted joint paths and realtime palette capacity overflow before releasing the previous binding; keep large skeletons with legal local palettes; U05: per-model latest morph-weight bounds are refreshed before world bounds, conservatively unioned with base positions; negative weights and nonuniform/negative scaling stay supported without disabling culling.; Cocos4 TS integration fffd9a514a..a56706c: Batch accessor recursion and recreated skinning resource rebinding; preserve AIR validation/morph bounds and user instanced values."
     },
     {
       "airPath": "src/cocos/3d/reflection-probe/index.ts",
@@ -1064,8 +1064,8 @@
       "airPath": "src/cocos/3d/skinned-mesh-renderer/skinned-mesh-batch-renderer.ts",
       "upstreamPath": "cocos/3d/skinned-mesh-renderer/skinned-mesh-batch-renderer.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "extraction copy; Cocos4 TS integration fffd9a514a..a56706c: Batch accessor recursion and recreated skinning resource rebinding; preserve AIR validation/morph bounds and user instanced values."
     },
     {
       "airPath": "src/cocos/3d/skinned-mesh-renderer/skinned-mesh-renderer.ts",
@@ -2444,7 +2444,7 @@
       "upstreamPath": "cocos/asset/assets/render-texture.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "AIR rendering contracts: preserve explicitly supplied attachment formats (default follows swapchain); expose actual created color format."
+      "reason": "AIR rendering contracts: preserve explicitly supplied attachment formats (default follows swapchain); expose actual created color format.; Cocos4 TS integration fffd9a514a..a56706c: Use actual GPU texture limit with legacy unknown-capability fallback."
     },
     {
       "airPath": "src/cocos/asset/assets/rendering-sub-mesh.ts",
@@ -3241,8 +3241,8 @@
       "airPath": "src/cocos/core/platform/index.ts",
       "upstreamPath": "cocos/core/platform/index.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "extraction copy; Cocos4 TS integration fffd9a514a..a56706c: Public feature/export/type/error wiring for this integration."
     },
     {
       "airPath": "src/cocos/core/platform/macro.ts",
@@ -3255,8 +3255,8 @@
       "airPath": "src/cocos/core/platform/screen.ts",
       "upstreamPath": "cocos/core/platform/screen.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "extraction copy; Cocos4 TS integration fffd9a514a..a56706c: Upstream startup maxDevicePixelRatio/MaxDPR; frozen PAL transform keeps explicit AIR positive caps and first-frame sizing."
     },
     {
       "airPath": "src/cocos/core/platform/sys.ts",
@@ -3717,8 +3717,8 @@
       "airPath": "src/cocos/gfx/empty/empty-buffer.ts",
       "upstreamPath": "cocos/gfx/empty/empty-buffer.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "extraction copy; Cocos4 TS integration fffd9a514a..a56706c: Report actual GL buffer allocation on resize and bound batch growth; zero-size allocations update GL; preserve AIR byte-range/subview/UBO contracts."
     },
     {
       "airPath": "src/cocos/gfx/empty/empty-command-buffer.ts",
@@ -3843,8 +3843,8 @@
       "airPath": "src/cocos/gfx/webgl/webgl-buffer.ts",
       "upstreamPath": "cocos/gfx/webgl/webgl-buffer.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "extraction copy; Cocos4 TS integration fffd9a514a..a56706c: Report actual GL buffer allocation on resize and bound batch growth; zero-size allocations update GL; preserve AIR byte-range/subview/UBO contracts."
     },
     {
       "airPath": "src/cocos/gfx/webgl/webgl-command-buffer.ts",
@@ -3857,8 +3857,8 @@
       "airPath": "src/cocos/gfx/webgl/webgl-commands.ts",
       "upstreamPath": "cocos/gfx/webgl/webgl-commands.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "extraction copy; Cocos4 TS integration fffd9a514a..a56706c: Report actual GL buffer allocation on resize and bound batch growth; zero-size allocations update GL; preserve AIR byte-range/subview/UBO contracts."
     },
     {
       "airPath": "src/cocos/gfx/webgl/webgl-define.ts",
@@ -3983,8 +3983,8 @@
       "airPath": "src/cocos/gfx/webgl2/webgl2-buffer.ts",
       "upstreamPath": "cocos/gfx/webgl2/webgl2-buffer.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "extraction copy; Cocos4 TS integration fffd9a514a..a56706c: Report actual GL buffer allocation on resize and bound batch growth; zero-size allocations update GL; preserve AIR byte-range/subview/UBO contracts."
     },
     {
       "airPath": "src/cocos/gfx/webgl2/webgl2-command-buffer.ts",
@@ -3998,7 +3998,7 @@
       "upstreamPath": "cocos/gfx/webgl2/webgl2-commands.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "AIR: integer external formats/clear/attributes, sampler destruction, depth bias enable/order, selected layer attachments and validated native-layout readback with GL state/resource recovery (WGL-02/04/05/06/07/08/09). Audit 2026-10-19: recover program independently of PSO identity; restore partial stencil masks; validate vertex streams/locations; reset scratch blit attachments and buffer selection. 2026-10-24: structured compile/link errors with exact submitted sources and driver logs; release all shader stages on compile failure and failed programs on link failure. 2026-11-05: preserve byte ranges and typed-array subviews during buffer updates, and include UBO binding range in the indexed binding cache and deletion cleanup."
+      "reason": "AIR: integer external formats/clear/attributes, sampler destruction, depth bias enable/order, selected layer attachments and validated native-layout readback with GL state/resource recovery (WGL-02/04/05/06/07/08/09). Audit 2026-10-19: recover program independently of PSO identity; restore partial stencil masks; validate vertex streams/locations; reset scratch blit attachments and buffer selection. 2026-10-24: structured compile/link errors with exact submitted sources and driver logs; release all shader stages on compile failure and failed programs on link failure. 2026-11-05: preserve byte ranges and typed-array subviews during buffer updates, and include UBO binding range in the indexed binding cache and deletion cleanup.; Cocos4 TS integration fffd9a514a..a56706c: Report actual GL buffer allocation on resize and bound batch growth; zero-size allocations update GL; preserve AIR byte-range/subview/UBO contracts."
     },
     {
       "airPath": "src/cocos/gfx/webgl2/webgl2-define.ts",
@@ -4194,7 +4194,7 @@
       "upstreamPath": "cocos/input/input.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "CB-03 isolate input listeners with structured diagnostics and preserve queued input after dispatcher errors. PG-28 includes existing mouse-enter/mouse-leave dispatch in InputEventMap so native ownership cleanup has a typed subscription."
+      "reason": "CB-03 isolate input listeners with structured diagnostics and preserve queued input after dispatcher errors. PG-28 includes existing mouse-enter/mouse-leave dispatch in InputEventMap so native ownership cleanup has a typed subscription.; Cocos4 TS integration fffd9a514a..a56706c: Upstream platform-touch duplicate guard with HTML5 preservation of hybrid mouse-to-touch synthesis."
     },
     {
       "airPath": "src/cocos/input/system-event.ts",
@@ -4564,8 +4564,8 @@
       "airPath": "src/cocos/particle/emitter/shape-module.ts",
       "upstreamPath": "cocos/particle/emitter/shape-module.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "extraction copy; Cocos4 TS integration fffd9a514a..a56706c: Random emission factors and direction-aligned local/world mesh particles, preserving AIR initialization/trail fixes."
     },
     {
       "airPath": "src/cocos/particle/enum.ts",
@@ -4628,7 +4628,7 @@
       "upstreamPath": "cocos/particle/particle-system.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "AIR F02 late trail enable: move the existing lazy CPU trail initialization before simulation, so updateParticles cannot access an unbound trail owner/pool. Preserve native simulation, culling, material and buffer lifecycle; baseline and copyright unchanged."
+      "reason": "AIR F02 late trail enable: move the existing lazy CPU trail initialization before simulation, so updateParticles cannot access an unbound trail owner/pool. Preserve native simulation, culling, material and buffer lifecycle; baseline and copyright unchanged.; Cocos4 TS integration fffd9a514a..a56706c: Random emission factors and direction-aligned local/world mesh particles, preserving AIR initialization/trail fixes."
     },
     {
       "airPath": "src/cocos/particle/particle-utils.ts",
@@ -4655,8 +4655,8 @@
       "airPath": "src/cocos/particle/renderer/particle-system-renderer-cpu.ts",
       "upstreamPath": "cocos/particle/renderer/particle-system-renderer-cpu.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "extraction copy; Cocos4 TS integration fffd9a514a..a56706c: Random emission factors and direction-aligned local/world mesh particles, preserving AIR initialization/trail fixes."
     },
     {
       "airPath": "src/cocos/particle/renderer/particle-system-renderer-data.ts",
@@ -4669,8 +4669,8 @@
       "airPath": "src/cocos/particle/renderer/particle-system-renderer-gpu.ts",
       "upstreamPath": "cocos/particle/renderer/particle-system-renderer-gpu.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "extraction copy; Cocos4 TS integration fffd9a514a..a56706c: Random emission factors and direction-aligned local/world mesh particles, preserving AIR initialization/trail fixes."
     },
     {
       "airPath": "src/cocos/particle/renderer/trail.ts",
@@ -5838,8 +5838,8 @@
       "airPath": "src/cocos/rendering/instanced-buffer.ts",
       "upstreamPath": "cocos/rendering/instanced-buffer.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "extraction copy; Cocos4 TS integration fffd9a514a..a56706c: Report actual GL buffer allocation on resize and bound batch growth; zero-size allocations update GL; preserve AIR byte-range/subview/UBO contracts."
     },
     {
       "airPath": "src/cocos/rendering/legacy/index.ts",
@@ -6678,8 +6678,8 @@
       "airPath": "src/cocos/ui/button.ts",
       "upstreamPath": "cocos/ui/button.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 b4-ui 回归抽取，官方原文"
+      "modified": true,
+      "reason": "V1.2 批次 b4-ui 回归抽取，官方原文; Cocos4 TS integration fffd9a514a..a56706c: Font family/CHAR scale, Graphics grow-only buffers, UIMesh data submission/ownership, MeshRenderData cleanup, and Button event API as applicable. UIMesh validates integer counts; CHAR bold and placeholder font-family retained."
     },
     {
       "airPath": "src/cocos/ui/category.json",
@@ -6713,8 +6713,8 @@
       "airPath": "src/cocos/ui/editbox/edit-box-impl.ts",
       "upstreamPath": "cocos/ui/editbox/edit-box-impl.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 b4-ui 回归抽取，官方原文"
+      "modified": true,
+      "reason": "V1.2 批次 b4-ui 回归抽取，官方原文; Cocos4 TS integration fffd9a514a..a56706c: Font family/CHAR scale, Graphics grow-only buffers, UIMesh data submission/ownership, MeshRenderData cleanup, and Button event API as applicable. UIMesh validates integer counts; CHAR bold and placeholder font-family retained."
     },
     {
       "airPath": "src/cocos/ui/editbox/edit-box.ts",
@@ -7008,7 +7008,7 @@
       "upstreamPath": null,
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "AIR 原创聚合出口（上游 cocos4 无 exports/air.ts）：Air 面向 Code First 的单入口 re-export 面。V1.2 各回归批次在此追加 `export * from './<unit>'` 行（profiler/video/webview/2d/particle-2d/tiled-map/ui/spine/dragon-bones/physics-2d-box2d/physics-framework/physics-builtin/custom-pipeline-post-process/audio），并 export * from '../air' 引入 Air 层。原登记 reason=\"extraction copy\" 系 V0.x 工具误标，r26 更正。"
+      "reason": "AIR 原创聚合出口（上游 cocos4 无 exports/air.ts）：Air 面向 Code First 的单入口 re-export 面。V1.2 各回归批次在此追加 `export * from './<unit>'` 行（profiler/video/webview/2d/particle-2d/tiled-map/ui/spine/dragon-bones/physics-2d-box2d/physics-framework/physics-builtin/custom-pipeline-post-process/audio），并 export * from '../air' 引入 Air 层。原登记 reason=\"extraction copy\" 系 V0.x 工具误标，r26 更正。; Cocos4 TS integration fffd9a514a..a56706c: Public feature/export/type/error wiring for this integration."
     },
     {
       "airPath": "src/exports/animation.ts",
@@ -7407,7 +7407,7 @@
       "upstreamPath": "public-pal/pal/screen-adapter/web/screen-adapter.ts",
       "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "modified": true,
-      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs; AIR host canvas binding / DPR adaptation; AIR explicit startup canvas binding (generated by startup-binding-patch.cjs), no import-time DOM wrapping/listeners"
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs; AIR host canvas binding / DPR adaptation; AIR explicit startup canvas binding (generated by startup-binding-patch.cjs), no import-time DOM wrapping/listeners; Cocos4 TS integration fffd9a514a..a56706c: Upstream startup maxDevicePixelRatio/MaxDPR; frozen PAL transform keeps explicit AIR positive caps and first-frame sizing."
     },
     {
       "airPath": "src/pal/system-info/enum-type/browser-type.js",
@@ -8331,7 +8331,7 @@
       "upstreamPath": null,
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "AIR 原创（上游无同名文件）：npm 包 `cocosair` 的源码消费入口（three.js 风格 named export 面）。注意：发布 d.ts 面由 ccbuild 从 src/cc.config.json 的 feature units 生成 virtual-cc.d.ts，不经本文件；本文件只约束 `import ... from 'cocosair/src'` 与 jest 侧源码可见符号。"
+      "reason": "AIR 原创（上游无同名文件）：npm 包 `cocosair` 的源码消费入口（three.js 风格 named export 面）。注意：发布 d.ts 面由 ccbuild 从 src/cc.config.json 的 feature units 生成 virtual-cc.d.ts，不经本文件；本文件只约束 `import ... from 'cocosair/src'` 与 jest 侧源码可见符号。; Cocos4 TS integration fffd9a514a..a56706c: Public feature/export/type/error wiring for this integration."
     },
     {
       "airPath": "src/package.json",
@@ -8345,21 +8345,21 @@
       "upstreamPath": "cc.config.json",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
       "modified": true,
-      "reason": "V1.2（Air 修改，上游原文为基础）四处增量：① features.air = {modules:[\"air\"]}（Air 聚合出口 unit，产物 d.ts 面由此驱动）；② moduleOverrides += {test:\"true\", spine-instantiate.ts -> air-spine-instantiate-js.ts}（计划书 D2/P2：external:emscripten/spine 资产不随快照分发）；③ includes 去掉 ./editor/exports/**（Air 无编辑器闭包）；④ r43 features += marionette / procedural-animation（按上游 cc.config.json:236-247 原文逐字段登记，两者 modules:[] 只带 intrinsicFlags MARIONETTE / PROCEDURAL_ANIMATION；默认 AIR_FEATURES 不含 ⇒ 发布产物逐字节不变，变体代价实测见 docs/notes/pose-graph-notes.md §4）。其余 30 个 feature 与 16 条 moduleOverrides 与上游逐字段一致（node 深比较 0 差异）；上游另有 25 个 feature unit 未登记 = native/minigame/编辑器向排除集（计划书 §1.3、护栏 5）；V1.2 批次 E 实测 gfx-webgpu 也留在未登记之列——登记它会把未接线的 emscripten-only 后端并入发布 d.ts（类型/产物不一致），见 UPSTREAM.md Deviation-04。 2026-10-06：treeShake.noSideEffectFiles 移除四个未抽取的 pal/input/minigame/*-input.js 声明；保留九条实际存在的文件声明及全部 moduleOverrides，不引入 MiniGame 闭包。"
+      "reason": "V1.2（Air 修改，上游原文为基础）四处增量：① features.air = {modules:[\"air\"]}（Air 聚合出口 unit，产物 d.ts 面由此驱动）；② moduleOverrides += {test:\"true\", spine-instantiate.ts -> air-spine-instantiate-js.ts}（计划书 D2/P2：external:emscripten/spine 资产不随快照分发）；③ includes 去掉 ./editor/exports/**（Air 无编辑器闭包）；④ r43 features += marionette / procedural-animation（按上游 cc.config.json:236-247 原文逐字段登记，两者 modules:[] 只带 intrinsicFlags MARIONETTE / PROCEDURAL_ANIMATION；默认 AIR_FEATURES 不含 ⇒ 发布产物逐字节不变，变体代价实测见 docs/notes/pose-graph-notes.md §4）。其余 30 个 feature 与 16 条 moduleOverrides 与上游逐字段一致（node 深比较 0 差异）；上游另有 25 个 feature unit 未登记 = native/minigame/编辑器向排除集（计划书 §1.3、护栏 5）；V1.2 批次 E 实测 gfx-webgpu 也留在未登记之列——登记它会把未接线的 emscripten-only 后端并入发布 d.ts（类型/产物不一致），见 UPSTREAM.md Deviation-04。 2026-10-06：treeShake.noSideEffectFiles 移除四个未抽取的 pal/input/minigame/*-input.js 声明；保留九条实际存在的文件声明及全部 moduleOverrides，不引入 MiniGame 闭包。; Cocos4 TS integration fffd9a514a..a56706c: Public feature/export/type/error wiring for this integration."
     },
     {
       "airPath": "src/tsconfig.json",
       "upstreamPath": "tsconfig.json",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
       "modified": true,
-      "reason": "V1.2 P1（Air 修改）：显式钉住 \"rootDir\": \"./\"。ccbuild 的 dtsBundler 不带 rootDir 调 tsc，中间产物目录按「全部输入文件的最长公共根」布局；V1.2 把 @cocos/box2d 等运行库 vendored 到 src/node_modules/ 后，其 types 回指仓库根 node_modules（box2d 类型闭包约 92 MB，不入仓库），公共根上移到仓库根，emit 落到 __dts_before_bundle/src/**，而 ccbuild 生成的 virtual-cc.d.ts 仍按 __dts_before_bundle/exports/** 引用 → 解析全空，发布 d.ts 退化为 `declare module \"cc\" { export {}; }`。钉住后声明布局恒以引擎根为准（build/cocosair.module.d.ts 恢复 3.08 MB 完整面）。另：Air 版裁掉上游的 outDir/editor typedoc include 项，files 收敛为 predefine/cocos/external；@types 引用去掉 native/jest/box2d-jsb 项。V1.2 批次 E 把 ./@types/webGPU 按上游同名项回接（gfx-webgpu 后端需要 GPU* 全局类型）。批次 E / D10 另在 exclude 追加 cocos/gfx/webgpu/**、cocos/webgpu/**、exports/gfx-webgpu.ts：dtsBundler 用本配置把 exports/** 全量收进声明图，未接线的 gfx-webgpu 会被并入发布面（cc.d.ts 多出 `export class WebGPUDevice` 而默认 bundle 导出表无此符号，实测 +60,649 B 类型/产物不一致），且该 emscripten-only 子图在本快照内无法核对，故整图移出声明与核对闭包（详见 UPSTREAM.md Deviation-04）。 2026-10-06：显式 moduleResolution=node 与 Rollup bundler/root typecheck 对齐，避免 ccbuild NodeNext 回落误判 DragonBones ESM/CJS；types 接入既有 box2d、emscripten-assets 与 external-modules 声明；同步根配置对官方全注释 cannon-distance-constraint.ts 的空脚本豁免。"
+      "reason": "V1.2 P1（Air 修改）：显式钉住 \"rootDir\": \"./\"。ccbuild 的 dtsBundler 不带 rootDir 调 tsc，中间产物目录按「全部输入文件的最长公共根」布局；V1.2 把 @cocos/box2d 等运行库 vendored 到 src/node_modules/ 后，其 types 回指仓库根 node_modules（box2d 类型闭包约 92 MB，不入仓库），公共根上移到仓库根，emit 落到 __dts_before_bundle/src/**，而 ccbuild 生成的 virtual-cc.d.ts 仍按 __dts_before_bundle/exports/** 引用 → 解析全空，发布 d.ts 退化为 `declare module \"cc\" { export {}; }`。钉住后声明布局恒以引擎根为准（build/cocosair.module.d.ts 恢复 3.08 MB 完整面）。另：Air 版裁掉上游的 outDir/editor typedoc include 项，files 收敛为 predefine/cocos/external；@types 引用去掉 native/jest/box2d-jsb 项。V1.2 批次 E 把 ./@types/webGPU 按上游同名项回接（gfx-webgpu 后端需要 GPU* 全局类型）。批次 E / D10 另在 exclude 追加 cocos/gfx/webgpu/**、cocos/webgpu/**、exports/gfx-webgpu.ts：dtsBundler 用本配置把 exports/** 全量收进声明图，未接线的 gfx-webgpu 会被并入发布面（cc.d.ts 多出 `export class WebGPUDevice` 而默认 bundle 导出表无此符号，实测 +60,649 B 类型/产物不一致），且该 emscripten-only 子图在本快照内无法核对，故整图移出声明与核对闭包（详见 UPSTREAM.md Deviation-04）。 2026-10-06：显式 moduleResolution=node 与 Rollup bundler/root typecheck 对齐，避免 ccbuild NodeNext 回落误判 DragonBones ESM/CJS；types 接入既有 box2d、emscripten-assets 与 external-modules 声明；同步根配置对官方全注释 cannon-distance-constraint.ts 的空脚本豁免。; Cocos4 TS integration fffd9a514a..a56706c: Public feature/export/type/error wiring for this integration."
     },
     {
       "airPath": "src/EngineErrorMap.md",
       "upstreamPath": "EngineErrorMap.md",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
-      "modified": false,
-      "reason": "extraction copy（上游原文，字节一致；本行 r26 补登）"
+      "modified": true,
+      "reason": "extraction copy（上游原文，字节一致；本行 r26 补登）; Cocos4 TS integration fffd9a514a..a56706c: Public feature/export/type/error wiring for this integration."
     },
     {
       "airPath": "src/DebugInfos.d.ts",
@@ -8373,7 +8373,7 @@
       "upstreamPath": null,
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
       "modified": true,
-      "reason": "上游产物，非上游仓库文件：由官方 scripts/build-debug-infos.js 从 EngineErrorMap.md 生成，cocos4 侧 .gitignore 不入库。Air 提交生成结果以保证 src/ 自包含（源码消费面需要 DebugInfos.json）。重新生成：在 cocos4 根跑 `node scripts/build-debug-infos.js` 后复制。"
+      "reason": "上游产物，非上游仓库文件：由官方 scripts/build-debug-infos.js 从 EngineErrorMap.md 生成，cocos4 侧 .gitignore 不入库。Air 提交生成结果以保证 src/ 自包含（源码消费面需要 DebugInfos.json）。重新生成：在 cocos4 根跑 `node scripts/build-debug-infos.js` 后复制。; Cocos4 TS integration fffd9a514a..a56706c: Public feature/export/type/error wiring for this integration."
     },
     {
       "airPath": "src/@types/consts.d.ts",
@@ -8484,8 +8484,8 @@
       "airPath": "src/@types/pal/screen-adapter.d.ts",
       "upstreamPath": "@types/pal/screen-adapter.d.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
-      "modified": false,
-      "reason": "extraction copy（pal 类型声明上游原文字节一致；本行 r26 补登）"
+      "modified": true,
+      "reason": "extraction copy（pal 类型声明上游原文字节一致；本行 r26 补登）; Cocos4 TS integration fffd9a514a..a56706c: Upstream startup maxDevicePixelRatio/MaxDPR; frozen PAL transform keeps explicit AIR positive caps and first-frame sizing."
     },
     {
       "airPath": "src/@types/pal/system-info.d.ts",
@@ -9942,6 +9942,121 @@
       "baseline": "AIR original",
       "modified": true,
       "reason": "Box3D integration 2026-10-31: AIR original explicit optional Box3D feature registration entry; no replacement of the default physics backend."
+    },
+    {
+      "airPath": "src/@types/pal/worker.d.ts",
+      "upstreamPath": null,
+      "baseline": "Post-baseline import at a56706c",
+      "modified": true,
+      "reason": "Cocos4 TS integration fffd9a514a..a56706c: Web Worker/WorkerPool public API and lifecycle; browser-only AIR PAL implementation, no retired engine-pal dependency. New file absent from the frozen baseline; sourceOrigin records its upstream provenance.",
+      "sourceOrigin": {
+        "repository": "cocos/cocos4",
+        "revision": "a56706c9adb6200cfa066a4648e4915288b2684b",
+        "path": "@types/pal/worker.d.ts"
+      }
+    },
+    {
+      "airPath": "src/air/platform/worker-web.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "Cocos4 TS integration fffd9a514a..a56706c: Web Worker/WorkerPool public API and lifecycle; browser-only AIR PAL implementation, no retired engine-pal dependency."
+    },
+    {
+      "airPath": "src/cocos/2d/assembler/graphics/constants.ts",
+      "upstreamPath": null,
+      "baseline": "Post-baseline import at a56706c",
+      "modified": true,
+      "reason": "Cocos4 TS integration fffd9a514a..a56706c: Font family/CHAR scale, Graphics grow-only buffers, UIMesh data submission/ownership, MeshRenderData cleanup, and Button event API as applicable. UIMesh validates integer counts; CHAR bold and placeholder font-family retained. New file absent from the frozen baseline; sourceOrigin records its upstream provenance.",
+      "sourceOrigin": {
+        "repository": "cocos/cocos4",
+        "revision": "a56706c9adb6200cfa066a4648e4915288b2684b",
+        "path": "cocos/2d/assembler/graphics/constants.ts"
+      }
+    },
+    {
+      "airPath": "src/cocos/2d/components/ui-mesh.ts",
+      "upstreamPath": null,
+      "baseline": "Post-baseline import at a56706c",
+      "modified": true,
+      "reason": "Cocos4 TS integration fffd9a514a..a56706c: Font family/CHAR scale, Graphics grow-only buffers, UIMesh data submission/ownership, MeshRenderData cleanup, and Button event API as applicable. UIMesh validates integer counts; CHAR bold and placeholder font-family retained. New file absent from the frozen baseline; sourceOrigin records its upstream provenance.",
+      "sourceOrigin": {
+        "repository": "cocos/cocos4",
+        "revision": "a56706c9adb6200cfa066a4648e4915288b2684b",
+        "path": "cocos/2d/components/ui-mesh.ts"
+      }
+    },
+    {
+      "airPath": "src/cocos/2d/utils/font-family.ts",
+      "upstreamPath": null,
+      "baseline": "Post-baseline import at a56706c",
+      "modified": true,
+      "reason": "Cocos4 TS integration fffd9a514a..a56706c: Font family/CHAR scale, Graphics grow-only buffers, UIMesh data submission/ownership, MeshRenderData cleanup, and Button event API as applicable. UIMesh validates integer counts; CHAR bold and placeholder font-family retained. New file absent from the frozen baseline; sourceOrigin records its upstream provenance.",
+      "sourceOrigin": {
+        "repository": "cocos/cocos4",
+        "revision": "a56706c9adb6200cfa066a4648e4915288b2684b",
+        "path": "cocos/2d/utils/font-family.ts"
+      }
+    },
+    {
+      "airPath": "src/cocos/misc/worker-pool.ts",
+      "upstreamPath": null,
+      "baseline": "Post-baseline import at a56706c",
+      "modified": true,
+      "reason": "Cocos4 TS integration fffd9a514a..a56706c: Web Worker/WorkerPool public API and lifecycle; browser-only AIR PAL implementation, no retired engine-pal dependency. New file absent from the frozen baseline; sourceOrigin records its upstream provenance.",
+      "sourceOrigin": {
+        "repository": "cocos/cocos4",
+        "revision": "a56706c9adb6200cfa066a4648e4915288b2684b",
+        "path": "cocos/misc/worker-pool.ts"
+      }
+    },
+    {
+      "airPath": "src/cocos/misc/worker.ts",
+      "upstreamPath": null,
+      "baseline": "Post-baseline import at a56706c",
+      "modified": true,
+      "reason": "Cocos4 TS integration fffd9a514a..a56706c: Web Worker/WorkerPool public API and lifecycle; browser-only AIR PAL implementation, no retired engine-pal dependency. New file absent from the frozen baseline; sourceOrigin records its upstream provenance.",
+      "sourceOrigin": {
+        "repository": "cocos/cocos4",
+        "revision": "a56706c9adb6200cfa066a4648e4915288b2684b",
+        "path": "cocos/misc/worker.ts"
+      }
+    },
+    {
+      "airPath": "src/exports/webassembly.ts",
+      "upstreamPath": null,
+      "baseline": "Post-baseline import at a56706c",
+      "modified": true,
+      "reason": "Cocos4 TS integration fffd9a514a..a56706c: Expose existing Web PAL wasm helpers with Web-only deployment documentation. New file absent from the frozen baseline; sourceOrigin records its upstream provenance.",
+      "sourceOrigin": {
+        "repository": "cocos/cocos4",
+        "revision": "a56706c9adb6200cfa066a4648e4915288b2684b",
+        "path": "exports/webassembly.ts"
+      }
+    },
+    {
+      "airPath": "src/exports/worker-pool.ts",
+      "upstreamPath": null,
+      "baseline": "Post-baseline import at a56706c",
+      "modified": true,
+      "reason": "Cocos4 TS integration fffd9a514a..a56706c: Web Worker/WorkerPool public API and lifecycle; browser-only AIR PAL implementation, no retired engine-pal dependency. New file absent from the frozen baseline; sourceOrigin records its upstream provenance.",
+      "sourceOrigin": {
+        "repository": "cocos/cocos4",
+        "revision": "a56706c9adb6200cfa066a4648e4915288b2684b",
+        "path": "exports/worker-pool.ts"
+      }
+    },
+    {
+      "airPath": "src/exports/worker.ts",
+      "upstreamPath": null,
+      "baseline": "Post-baseline import at a56706c",
+      "modified": true,
+      "reason": "Cocos4 TS integration fffd9a514a..a56706c: Web Worker/WorkerPool public API and lifecycle; browser-only AIR PAL implementation, no retired engine-pal dependency. New file absent from the frozen baseline; sourceOrigin records its upstream provenance.",
+      "sourceOrigin": {
+        "repository": "cocos/cocos4",
+        "revision": "a56706c9adb6200cfa066a4648e4915288b2684b",
+        "path": "exports/worker.ts"
+      }
     }
   ]
 }

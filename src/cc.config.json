@@ -293,6 +293,25 @@
             "modules": [
                 "physics-box3d"
             ]
+        },
+        "worker": {
+            "modules": [
+                "worker"
+            ]
+        },
+        "worker-pool": {
+            "modules": [
+                "worker",
+                "worker-pool"
+            ],
+            "dependentModules": [
+                "worker"
+            ]
+        },
+        "webassembly": {
+            "modules": [
+                "webassembly"
+            ]
         }
     },
     "moduleOverrides": [
@@ -383,7 +402,8 @@
                 "pal/input": "pal/input/web/index.js",
                 "pal/env": "pal/env/web/env.js",
                 "pal/pacer": "pal/pacer/pacer-web.js",
-                "pal/wasm": "pal/wasm/wasm-web.js"
+                "pal/wasm": "pal/wasm/wasm-web.js",
+                "pal/worker": "air/platform/worker-web.ts"
             }
         },
         {

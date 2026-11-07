@@ -161,6 +161,7 @@ export class SkinningModel extends MorphModel {
         this._morphBounds = null;
         this._morphBoundsKey = '';
         if (!skeleton || !skinningRoot || !mesh) { return; }
+        const prevRealTimeTextureMode = this._realTimeTextureMode;
         this._realTimeTextureMode = false;
         if (UBOSkinning.JOINT_UNIFORM_CAPACITY < skeleton.joints.length) { this._realTimeTextureMode = true; }
         this.transform = skinningRoot;
@@ -178,6 +179,15 @@ export class SkinningModel extends MorphModel {
             const buffers: number[] = [];
             if (!jointMaps) { indices.push(index); buffers.push(0); } else { getRelevantBuffers(indices, buffers, jointMaps, index); }
             this._joints.push({ skeletonIndex: index, indices, buffers, bound, target, bindpose, transform });
+        }
+
+        // Rebind recreated resources without resetting caller-owned instanced attribute values.
+        const subModelCount = Math.min(this._subModels.length, this._bufferIndices.length);
+        if (subModelCount && prevRealTimeTextureMode !== this._realTimeTextureMode) {
+            this.onMacroPatchesStateChanged();
+        }
+        for (let i = 0; i < subModelCount; i++) {
+            this._updateLocalDescriptors(i, this._subModels[i].descriptorSet);
         }
     }
 

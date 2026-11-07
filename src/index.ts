@@ -13,3 +13,7 @@ export * from './exports/animation';
 export * from './exports/skeletal-animation';
 export * from './exports/primitive';
 export * from './exports/tween';
+
+export * from './exports/worker';
+export * from './exports/worker-pool';
+export * from './exports/webassembly';

@@ -404,9 +404,17 @@ export class Input {
         }
 
         if (sys.hasFeature(sys.Feature.EVENT_MOUSE)) {
+            // WeChat PC maps the left mouse button and configured keyboard/mouse controls to touch events.
+            // Use those platform touch events to avoid duplicates, while continuing to dispatch mouse events.
+            // https://developers.weixin.qq.com/minigame/dev/guide/open-ability/pc-game.html
+            // AIR Web keeps mouse-to-touch synthesis on hybrid touch/mouse computers.
+            // The upstream duplicate platform-touch suppression applies only off Web.
+            const shouldSimulateTouch = HTML5 || !sys.hasFeature(sys.Feature.INPUT_TOUCH);
             mouseInput.on(InputEventType.MOUSE_DOWN, (event): void => {
-                self._needSimulateTouchMoveEvent = true;
-                self._simulateEventTouch(event);
+                if (shouldSimulateTouch) {
+                    self._needSimulateTouchMoveEvent = true;
+                    self._simulateEventTouch(event);
+                }
                 self._dispatchEventMouse(event);
             });
             mouseInput.on(InputEventType.MOUSE_MOVE, (event): void => {
@@ -416,8 +424,10 @@ export class Input {
                 self._dispatchEventMouse(event);
             });
             mouseInput.on(InputEventType.MOUSE_UP, (event): void => {
-                self._needSimulateTouchMoveEvent = false;
-                self._simulateEventTouch(event);
+                if (shouldSimulateTouch) {
+                    self._needSimulateTouchMoveEvent = false;
+                    self._simulateEventTouch(event);
+                }
                 self._dispatchEventMouse(event);
             });
             mouseInput.on(InputEventType.MOUSE_WHEEL, (event): void => {

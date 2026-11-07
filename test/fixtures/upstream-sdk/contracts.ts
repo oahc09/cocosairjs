@@ -182,3 +182,34 @@ export type ContractAssertions = [
     DestroyIsBoolean,
     DefaultsAreVoid,
 ];
+
+// Cocos4 TS update additions must remain consumable through the installed package.
+import { UIMesh, WorkerPool, createWorker, MaxDPR, wasm } from 'cocosair';
+import type { UIMeshData, UIMeshSegment, WorkerPoolOptions, IWorker, AirAppOptions } from 'cocosair';
+const meshData: UIMeshData = {
+    vertexCount: 3,
+    vertexStride: 24,
+    vertexData: new Uint8Array(72),
+    indexCount: 3,
+    indexData: new Uint8Array(new Uint16Array([0, 1, 2]).buffer),
+    segments: [] as UIMeshSegment[],
+};
+const uiMesh: UIMesh = new UIMesh();
+uiMesh.setMeshData(meshData);
+uiMesh.enableBatch = true;
+const poolOptions: WorkerPoolOptions = { maxWorkers: 2, idleReleaseAfter: 100, timeout: 1000 };
+const workerPool = new WorkerPool((n: number) => n * 2, poolOptions);
+const workerResult: Promise<unknown> = workerPool.run([21]);
+workerPool.terminate();
+const rawWorker: IWorker = createWorker('/worker.js');
+rawWorker.postMessage({ task: 'custom' });
+rawWorker.terminate();
+const startupDPR: AirAppOptions = { canvas: '#GameCanvas', pixelRatioCap: MaxDPR.Quality };
+const wasmURL: Promise<string> = wasm.fetchUrl('/empty.wasm');
+// @ts-expect-error mesh geometry uses packed byte arrays, not arbitrary objects
+uiMesh.setMeshData({ ...meshData, vertexData: {} });
+// @ts-expect-error worker concurrency is numeric
+new WorkerPool((x: number) => x, { maxWorkers: '2' });
+// @ts-expect-error cap remains a numeric API
+const invalidDPR: AirAppOptions = { canvas: '#GameCanvas', pixelRatioCap: 'quality' };
+void [workerResult, startupDPR, wasmURL, invalidDPR];
