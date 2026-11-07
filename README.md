@@ -28,8 +28,6 @@
 
 [观看或下载宣传视频（MP4）](https://github.com/oahc09/cocosairjs/blob/main/assets/cocosairjs-promotion.mp4?raw=true)
 
-https://github.com/user-attachments/assets/689ea4e1-de14-47dd-a104-564cf1005c06
-
 https://github.com/user-attachments/assets/fb91e5d7-f39a-4182-a49c-5047bf190f1b
 
 ## 先选择使用方式
