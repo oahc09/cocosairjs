@@ -1,0 +1,645 @@
+{
+  "timestamp": "2026-11-06T19:20:07.179Z",
+  "engine": "webkit",
+  "scope": "Focused native Texture2D RGBA8 mip-level GPU readback; not full release acceptance",
+  "bundleSHA256": "b6361611cea83fc764b921f150987c91041296858dceb643c0d32ebc1cd60fc8",
+  "fixtureSHA256": "8dca5fabccbd7d417a185173a052f600d2d6cdfc0c51aed9a6e01a17f04266d4",
+  "collectorSHA256": "5c94bc70093ce16d4a79819e882980dbe77394e9eb1f77dc127f4d4ef91150f4",
+  "htmlSHA256": "95913d7681d1680f969392733084fc23f633db0059246c3a412c887eeed5b742",
+  "sourceBinding": {
+    "compared": 1009,
+    "mismatches": [],
+    "matches": true,
+    "receiptSha256": "7f0acca2afdabdb79d13b5099e5f610722f56de235c8d2c55898797541af9a4e",
+    "origin": "compiler-map"
+  },
+  "subset": true,
+  "errors": [],
+  "completed": true,
+  "passed": true,
+  "browserLaunch": {
+    "executablePath": "/workspace/scratch/62d43a81bbde/browser-runtime/run-webkit-local-deps.sh",
+    "args": []
+  },
+  "pid": 102,
+  "version": "26.5",
+  "result": {
+    "state": "complete",
+    "cases": [
+      {
+        "kind": "buffer",
+        "order": "before",
+        "levelCount": 3,
+        "expectedCount": 3,
+        "levels": [
+          {
+            "level": 0,
+            "status": 36053,
+            "error": 0,
+            "actual": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "expected": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "pass": true
+          },
+          {
+            "level": 1,
+            "status": 36053,
+            "error": 0,
+            "actual": [
+              0,
+              255,
+              0,
+              255
+            ],
+            "expected": [
+              0,
+              255,
+              0,
+              255
+            ],
+            "pass": true
+          },
+          {
+            "level": 2,
+            "status": 36053,
+            "error": 0,
+            "actual": [
+              0,
+              0,
+              255,
+              255
+            ],
+            "expected": [
+              0,
+              0,
+              255,
+              255
+            ],
+            "pass": true
+          }
+        ],
+        "pass": true
+      },
+      {
+        "kind": "buffer",
+        "order": "after",
+        "levelCount": 3,
+        "expectedCount": 3,
+        "levels": [
+          {
+            "level": 0,
+            "status": 36053,
+            "error": 0,
+            "actual": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "expected": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "pass": true
+          },
+          {
+            "level": 1,
+            "status": 36053,
+            "error": 0,
+            "actual": [
+              0,
+              255,
+              0,
+              255
+            ],
+            "expected": [
+              0,
+              255,
+              0,
+              255
+            ],
+            "pass": true
+          },
+          {
+            "level": 2,
+            "status": 36053,
+            "error": 0,
+            "actual": [
+              0,
+              0,
+              255,
+              255
+            ],
+            "expected": [
+              0,
+              0,
+              255,
+              255
+            ],
+            "pass": true
+          }
+        ],
+        "pass": true
+      },
+      {
+        "kind": "image",
+        "order": "before",
+        "levelCount": 3,
+        "expectedCount": 3,
+        "levels": [
+          {
+            "level": 0,
+            "status": 36053,
+            "error": 0,
+            "actual": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "expected": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "pass": true
+          },
+          {
+            "level": 1,
+            "status": 36053,
+            "error": 0,
+            "actual": [
+              0,
+              255,
+              0,
+              255
+            ],
+            "expected": [
+              0,
+              255,
+              0,
+              255
+            ],
+            "pass": true
+          },
+          {
+            "level": 2,
+            "status": 36053,
+            "error": 0,
+            "actual": [
+              0,
+              0,
+              255,
+              255
+            ],
+            "expected": [
+              0,
+              0,
+              255,
+              255
+            ],
+            "pass": true
+          }
+        ],
+        "pass": true
+      },
+      {
+        "kind": "image",
+        "order": "after",
+        "levelCount": 3,
+        "expectedCount": 3,
+        "levels": [
+          {
+            "level": 0,
+            "status": 36053,
+            "error": 0,
+            "actual": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "expected": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "pass": true
+          },
+          {
+            "level": 1,
+            "status": 36053,
+            "error": 0,
+            "actual": [
+              0,
+              255,
+              0,
+              255
+            ],
+            "expected": [
+              0,
+              255,
+              0,
+              255
+            ],
+            "pass": true
+          },
+          {
+            "level": 2,
+            "status": 36053,
+            "error": 0,
+            "actual": [
+              0,
+              0,
+              255,
+              255
+            ],
+            "expected": [
+              0,
+              0,
+              255,
+              255
+            ],
+            "pass": true
+          }
+        ],
+        "pass": true
+      },
+      {
+        "kind": "packed",
+        "order": "before",
+        "levelCount": 3,
+        "expectedCount": 3,
+        "levels": [
+          {
+            "level": 0,
+            "status": 36053,
+            "error": 0,
+            "actual": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "expected": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "pass": true
+          },
+          {
+            "level": 1,
+            "status": 36053,
+            "error": 0,
+            "actual": [
+              0,
+              255,
+              0,
+              255
+            ],
+            "expected": [
+              0,
+              255,
+              0,
+              255
+            ],
+            "pass": true
+          },
+          {
+            "level": 2,
+            "status": 36053,
+            "error": 0,
+            "actual": [
+              0,
+              0,
+              255,
+              255
+            ],
+            "expected": [
+              0,
+              0,
+              255,
+              255
+            ],
+            "pass": true
+          }
+        ],
+        "pass": true
+      },
+      {
+        "kind": "packed",
+        "order": "after",
+        "levelCount": 3,
+        "expectedCount": 3,
+        "levels": [
+          {
+            "level": 0,
+            "status": 36053,
+            "error": 0,
+            "actual": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "expected": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "pass": true
+          },
+          {
+            "level": 1,
+            "status": 36053,
+            "error": 0,
+            "actual": [
+              0,
+              255,
+              0,
+              255
+            ],
+            "expected": [
+              0,
+              255,
+              0,
+              255
+            ],
+            "pass": true
+          },
+          {
+            "level": 2,
+            "status": 36053,
+            "error": 0,
+            "actual": [
+              0,
+              0,
+              255,
+              255
+            ],
+            "expected": [
+              0,
+              0,
+              255,
+              255
+            ],
+            "pass": true
+          }
+        ],
+        "pass": true
+      },
+      {
+        "kind": "partial",
+        "order": "before",
+        "levelCount": 2,
+        "expectedCount": 2,
+        "levels": [
+          {
+            "level": 0,
+            "status": 36053,
+            "error": 0,
+            "actual": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "expected": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "pass": true
+          },
+          {
+            "level": 1,
+            "status": 36053,
+            "error": 0,
+            "actual": [
+              0,
+              255,
+              0,
+              255
+            ],
+            "expected": [
+              0,
+              255,
+              0,
+              255
+            ],
+            "pass": true
+          }
+        ],
+        "pass": true
+      },
+      {
+        "kind": "partial",
+        "order": "after",
+        "levelCount": 2,
+        "expectedCount": 2,
+        "levels": [
+          {
+            "level": 0,
+            "status": 36053,
+            "error": 0,
+            "actual": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "expected": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "pass": true
+          },
+          {
+            "level": 1,
+            "status": 36053,
+            "error": 0,
+            "actual": [
+              0,
+              255,
+              0,
+              255
+            ],
+            "expected": [
+              0,
+              255,
+              0,
+              255
+            ],
+            "pass": true
+          }
+        ],
+        "pass": true
+      },
+      {
+        "kind": "automatic-buffer",
+        "order": "before",
+        "levelCount": 3,
+        "expectedCount": 3,
+        "levels": [
+          {
+            "level": 0,
+            "status": 36053,
+            "error": 0,
+            "actual": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "expected": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "pass": true
+          },
+          {
+            "level": 1,
+            "status": 36053,
+            "error": 0,
+            "actual": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "expected": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "pass": true
+          },
+          {
+            "level": 2,
+            "status": 36053,
+            "error": 0,
+            "actual": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "expected": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "pass": true
+          }
+        ],
+        "pass": true
+      },
+      {
+        "kind": "automatic-image",
+        "order": "before",
+        "levelCount": 3,
+        "expectedCount": 3,
+        "levels": [
+          {
+            "level": 0,
+            "status": 36053,
+            "error": 0,
+            "actual": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "expected": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "pass": true
+          },
+          {
+            "level": 1,
+            "status": 36053,
+            "error": 0,
+            "actual": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "expected": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "pass": true
+          },
+          {
+            "level": 2,
+            "status": 36053,
+            "error": 0,
+            "actual": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "expected": [
+              255,
+              0,
+              0,
+              255
+            ],
+            "pass": true
+          }
+        ],
+        "pass": true
+      }
+    ],
+    "errors": [],
+    "passed": true
+  },
+  "inputsUnchanged": true,
+  "sourceBindingAfter": {
+    "compared": 1009,
+    "mismatches": [],
+    "matches": true,
+    "receiptSha256": "7f0acca2afdabdb79d13b5099e5f610722f56de235c8d2c55898797541af9a4e",
+    "origin": "compiler-map"
+  },
+  "preCloseBoundary": true,
+  "shutdown": {
+    "acknowledged": true,
+    "rootExit": {
+      "code": 0,
+      "signal": null
+    },
+    "elapsedMs": 71,
+    "scope": "BrowserServer close and root process exit observed; full descendant ECHILD not measured, non-canonical focused probe"
+  }
+}

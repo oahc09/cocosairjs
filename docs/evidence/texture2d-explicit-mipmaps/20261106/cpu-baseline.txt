@@ -1,0 +1,123 @@
+jest-haste-map: Haste module naming collision: cocosair.js
+  The following files share their name; please adjust your hasteImpl:
+    * <rootDir>/package.json
+    * <rootDir>/docs/evidence/examples/rendering-contracts/sources/package.json
+
+  console.log
+    Cannot access game frame or container.
+
+      at warnID (src/cocos/core/platform/debug.ts:314:5)
+
+FAIL test/smoke/texture2d-explicit-mipmaps.test.ts (7.437 s)
+  Texture2D explicit mip uploads
+    ✕ preserves buffer mip bytes with LINEAR configured before assignment (6 ms)
+    ✓ preserves buffer mip bytes with LINEAR configured after assignment (2 ms)
+    ✕ preserves DOM image mips with LINEAR configured before assignment (2 ms)
+    ✓ preserves DOM image mips with LINEAR configured after assignment (2 ms)
+    ✕ preserves multiple levels extracted from a single ImageAsset (1 ms)
+    ✕ preserves an explicitly allocated partial chain and direct buffer uploads (1 ms)
+    ✓ retains automatic generation for a single base buffer (1 ms)
+    ✓ retains automatic generation for a single base image (1 ms)
+    ✕ switches between explicit and automatic chains without retaining the previous generation flag (3 ms)
+
+  ● Texture2D explicit mip uploads › preserves buffer mip bytes with LINEAR configured before assignment
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      79 |     expect(texture.mipmapLevel).toBe(count);
+      80 |     expect(resources[0].levelCount).toBe(count);
+    > 81 |     expect(resources[0].flags & TextureFlagBit.GEN_MIPMAP).toBe(0);
+         |                                                            ^
+      82 |     expect(gl.generateMipmap).not.toHaveBeenCalled();
+      83 |     expect(gl.texSubImage2D.mock.calls.map((call) => call[1])).toEqual(
+      84 |         Array.from({ length: count }, (_, level) => level),
+
+      at expectExplicit (test/smoke/texture2d-explicit-mipmaps.test.ts:81:60)
+      at test/smoke/texture2d-explicit-mipmaps.test.ts:98:13
+
+  ● Texture2D explicit mip uploads › preserves DOM image mips with LINEAR configured before assignment
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      79 |     expect(texture.mipmapLevel).toBe(count);
+      80 |     expect(resources[0].levelCount).toBe(count);
+    > 81 |     expect(resources[0].flags & TextureFlagBit.GEN_MIPMAP).toBe(0);
+         |                                                            ^
+      82 |     expect(gl.generateMipmap).not.toHaveBeenCalled();
+      83 |     expect(gl.texSubImage2D.mock.calls.map((call) => call[1])).toEqual(
+      84 |         Array.from({ length: count }, (_, level) => level),
+
+      at expectExplicit (test/smoke/texture2d-explicit-mipmaps.test.ts:81:60)
+      at test/smoke/texture2d-explicit-mipmaps.test.ts:114:9
+
+  ● Texture2D explicit mip uploads › preserves multiple levels extracted from a single ImageAsset
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      79 |     expect(texture.mipmapLevel).toBe(count);
+      80 |     expect(resources[0].levelCount).toBe(count);
+    > 81 |     expect(resources[0].flags & TextureFlagBit.GEN_MIPMAP).toBe(0);
+         |                                                            ^
+      82 |     expect(gl.generateMipmap).not.toHaveBeenCalled();
+      83 |     expect(gl.texSubImage2D.mock.calls.map((call) => call[1])).toEqual(
+      84 |         Array.from({ length: count }, (_, level) => level),
+
+      at expectExplicit (test/smoke/texture2d-explicit-mipmaps.test.ts:81:60)
+      at Object.<anonymous> (test/smoke/texture2d-explicit-mipmaps.test.ts:123:9)
+
+  ● Texture2D explicit mip uploads › preserves an explicitly allocated partial chain and direct buffer uploads
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 2
+    Received: 3
+
+      77 |
+      78 | function expectExplicit({ texture, gl, resources }: ReturnType<typeof setup>, count = 3) {
+    > 79 |     expect(texture.mipmapLevel).toBe(count);
+         |                                 ^
+      80 |     expect(resources[0].levelCount).toBe(count);
+      81 |     expect(resources[0].flags & TextureFlagBit.GEN_MIPMAP).toBe(0);
+      82 |     expect(gl.generateMipmap).not.toHaveBeenCalled();
+
+      at expectExplicit (test/smoke/texture2d-explicit-mipmaps.test.ts:79:33)
+      at Object.<anonymous> (test/smoke/texture2d-explicit-mipmaps.test.ts:137:9)
+
+  ● Texture2D explicit mip uploads › switches between explicit and automatic chains without retaining the previous generation flag
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Array [
+        true,
+    -   false,
+    +   true,
+        true,
+      ]
+
+      154 |         state.texture.mipmaps = [memoryImage(4, 11), memoryImage(2, 22), memoryImage(1, 33)];
+      155 |         state.texture.image = memoryImage(4, 44);
+    > 156 |         expect(state.resources.map((resource) => Boolean(resource.flags & TextureFlagBit.GEN_MIPMAP))).toEqual([
+          |                                                                                                        ^
+      157 |             true,
+      158 |             false,
+      159 |             true,
+
+      at Object.<anonymous> (test/smoke/texture2d-explicit-mipmaps.test.ts:156:104)
+
+Test Suites: 1 failed, 1 total
+Tests:       5 failed, 4 passed, 9 total
+Snapshots:   0 total
+Time:        7.724 s
+Ran all test suites within paths "test/smoke/texture2d-explicit-mipmaps.test.ts".
