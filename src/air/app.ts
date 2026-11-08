@@ -118,7 +118,8 @@ export interface AirAppOptions {
     contextLoss?: AirContextLossOptions;
     /** 原生日志与有界观察通道；默认 errors，warnings 显示并收集引擎警告。 */
     diagnostics?: AirDiagnosticMode;
-    /** Effective browser DPR is min(devicePixelRatio, cap); configure before importing the engine. Default 2. */
+    /** Effective browser DPR is min(devicePixelRatio, cap). Set at createAirApp startup.
+     * Explicit positive AIR caps override screen.maxDevicePixelRatio settings; default 2. */
     pixelRatioCap?: number;
     /** Explicit window fill or host-container layout; omitted preserves native screen settings. */
     screenMode?: 'window' | 'container';
