@@ -1,5 +1,10 @@
 # Cocos AIR 工具
 
+## 本地 Agent MCP
+
+`tools/mcp/` 是独立安装的开发工具，`tools/debug/mcp-bridge.ts` 复用现有 AgentSession。
+不进入默认 Runtime/npm 包。启动、工具边界、验证与写入范围见[本地 MCP 指南](../docs/guides/agent-mcp.md)。
+
 ## Buffer / UBO 定向 WebKit / Firefox 验证
 
 `tools/verify/webgl2-buffer-browser.cjs` 从选定源码抽取真实 GFX 函数并用 TypeScript 编译，在显式选择的 WebKit 或 Firefox 原生 WebGL2 中验证 TypedArray 字节子视图连续上传/读回、UBO 独立范围、dynamic offset、范围变化、绘制像素和删除绑定。它不读取历史 `build/`，不构建完整引擎，不将单浏览器结果当作其他浏览器、硬件性能或 compositor present 的证明。

@@ -732,6 +732,14 @@
       ]
     },
     {
+      "file": "test/smoke/mcp-bridge.test.ts",
+      "tests": [
+        "capture rejection waits for pending step before releasing clock",
+        "post-write destroyed target retains committed success and frame error",
+        "read-only, closed and replaced scenes reject without a write or clock lease"
+      ]
+    },
+    {
       "file": "test/smoke/port-gap-action-input-dom.test.ts",
       "tests": [
         "PG-28 adapter lifecycle remediations (Lead review fixes 2-4) blur/hidden lifecycle listeners are removed on detach/dispose (precise cleanup)",
@@ -4311,8 +4319,8 @@
     }
   ],
   "totals": {
-    "suites": 200,
-    "tests": 3308,
+    "suites": 201,
+    "tests": 3311,
     "passed": null,
     "failed": null
   }
