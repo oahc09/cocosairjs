@@ -29,7 +29,7 @@ async function fixture(t, writable = false, call = async () => ({ ok: true })) {
 test('real SDK negotiation, compact capabilities and read-only denial', async (t) => {
     const { client, calls } = await fixture(t);
     const list = await client.listTools();
-    assert.equal(list.tools.length, 6);
+    assert.equal(list.tools.length, 7);
     assert.ok(Buffer.byteLength(JSON.stringify(list)) < 16000);
     const capabilities = await client.callTool({ name: 'air_capabilities', arguments: {} });
     assert.equal(capabilities.structuredContent.writable, false);

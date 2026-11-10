@@ -2,6 +2,7 @@
 import { createStepClock } from 'cocosair';
 import type { AirApp } from 'cocosair';
 import { createAgentSession } from './agent-session';
+import { captureControlled, reviewCamera, ReviewRequest } from './mcp-review';
 
 export function attachMcpBridge(app: AirApp, writable: boolean) {
     const scene = app.getScene();
@@ -43,29 +44,16 @@ export function attachMcpBridge(app: AirApp, writable: boolean) {
             if (method !== 'capture' && !writable) {
                 return { ok: false, error: { code: 'OUT_OF_SCOPE', message: 'Read-only session' } };
             }
+            if (method === 'review') {
+                return reviewCamera(session, clock, args as unknown as ReviewRequest, () => app.getScene() === scene);
+            }
             if (!['capture', 'createNode', 'setTransform'].includes(method)) {
                 throw new Error('Unsupported bridge method');
             }
             clock.begin();
             try {
                 if (method === 'capture') {
-                    const capture = session.captureFrame();
-                    // Observe both promises immediately so cancellation cannot create an unhandled rejection.
-                    // Wait for BOTH lifecycles before ending the clock lease (capture can reject first).
-                    const settled = await Promise.all(
-                        [capture, clock.step()].map((promise) =>
-                            promise.then(
-                                (value) => ({ ok: true, value }),
-                                (error) => ({ ok: false, error }),
-                            ),
-                        ),
-                    );
-                    for (const result of settled) {
-                        if (!result.ok) {
-                            throw (result as { error: unknown }).error;
-                        }
-                    }
-                    return (settled[0] as { value: unknown }).value;
+                    return await captureControlled(session, clock);
                 }
                 if (method === 'createNode' && created >= 128) {
                     return {

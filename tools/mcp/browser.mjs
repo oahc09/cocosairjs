@@ -98,7 +98,7 @@ export async function openBrowser({ url, writable = false, executablePath }) {
                 let timer;
                 let timedOut = false;
                 try {
-                    return await Promise.race([
+                    const result = await Promise.race([
                         handle.evaluate(
                             async (bridge, request) => {
                                 try {
@@ -125,6 +125,8 @@ export async function openBrowser({ url, writable = false, executablePath }) {
                             }, 10000);
                         }),
                     ]);
+                    if (result?.closeRequired) await close();
+                    return result;
                 } catch (error) {
                     if (timedOut) {
                         try {

@@ -1,6 +1,12 @@
 /** Bridge lifecycle regressions; protocol/browser coverage lives in tools/mcp. */
 const mockClock = { begin: jest.fn(), step: jest.fn(), end: jest.fn() };
-const mockSession = { captureFrame: jest.fn(), dispatch: jest.fn(), inspectNode: jest.fn(), close: jest.fn() };
+const mockSession = {
+    inspectScene: jest.fn(),
+    captureFrame: jest.fn(),
+    dispatch: jest.fn(),
+    inspectNode: jest.fn(),
+    close: jest.fn(),
+};
 jest.mock('cocosair', () => ({ createStepClock: () => mockClock }));
 jest.mock('../../tools/debug/agent-session', () => ({ createAgentSession: () => mockSession }));
 import { attachMcpBridge } from '../../tools/debug/mcp-bridge';
@@ -64,4 +70,94 @@ test('read-only, closed and replaced scenes reject without a write or clock leas
     expect(mockSession.close).toHaveBeenCalledTimes(1);
     expect(mockSession.dispatch).not.toHaveBeenCalled();
     expect(mockClock.begin).not.toHaveBeenCalled();
+});
+
+function reviewFixture() {
+    const f = fixture();
+    let pose = { position: [0, 2, 6], rotationEuler: [-18, 0, 0], scale: [1, 1, 1] };
+    mockSession.inspectScene.mockReturnValue({ cameraCount: 1 });
+    mockSession.inspectNode.mockImplementation(() => ({
+        active: true,
+        components: [{ type: 'Camera', enabled: true }],
+        local: JSON.parse(JSON.stringify(pose)),
+    }));
+    mockSession.dispatch.mockImplementation(async (request) => {
+        pose = { ...pose, ...request.params };
+        return { ok: true };
+    });
+    mockSession.captureFrame.mockResolvedValue({
+        png: 'data:image/png;base64,eA==',
+        width: 640,
+        height: 480,
+        frameIndex: 1,
+        sceneId: 'scene',
+    });
+    mockClock.step.mockResolvedValue({ afterDraw: true });
+    return {
+        ...f,
+        pose: () => pose,
+        shots: [
+            { label: 'Front', position: [0, 0, 6], rotationEuler: [0, 0, 0] },
+            { label: 'Side', position: [6, 0, 0], rotationEuler: [0, 90, 0] },
+        ],
+    };
+}
+test('review captures bounded independent camera poses and restores original before releasing clock', async () => {
+    const f = reviewFixture();
+    const original = JSON.parse(JSON.stringify(f.pose()));
+    const result = (await f.bridge.call('review', { cameraNodeId: 'camera', shots: f.shots })) as any;
+    expect(result.ok).toBe(true);
+    expect(result.cameraRestored).toBe(true);
+    expect(result.frames).toHaveLength(2);
+    expect(result.frames[1].requestedCamera.position).toEqual([6, 0, 0]);
+    expect(f.pose().position).toEqual(original.position);
+    expect(f.pose().rotationEuler).toEqual(original.rotationEuler);
+    expect(mockClock.step.mock.calls).toEqual([[0], [0]]);
+    expect(mockClock.end).toHaveBeenCalledTimes(1);
+});
+test('review validates every shot and rejects unsupported cameras before mutation', async () => {
+    const f = reviewFixture();
+    const bad = (await f.bridge.call('review', {
+        cameraNodeId: 'camera',
+        shots: [f.shots[0], { ...f.shots[1], position: [NaN, 0, 0] }],
+    })) as any;
+    expect(bad.error.code).toBe('INVALID_ARGUMENT');
+    mockSession.inspectScene.mockReturnValue({ cameraCount: 2 });
+    expect(((await f.bridge.call('review', { cameraNodeId: 'camera', shots: f.shots })) as any).error.code).toBe(
+        'UNSUPPORTED_REVIEW',
+    );
+    expect(mockSession.dispatch).not.toHaveBeenCalled();
+    expect(mockClock.begin).not.toHaveBeenCalled();
+});
+test('review capture failure restores camera and returns no partial frames', async () => {
+    const f = reviewFixture();
+    mockSession.captureFrame.mockRejectedValue(new Error('tainted canvas'));
+    const result = (await f.bridge.call('review', { cameraNodeId: 'camera', shots: f.shots })) as any;
+    expect(result.ok).toBe(false);
+    expect(result.cameraRestored).toBe(true);
+    expect(result.frames).toBeUndefined();
+    expect(f.pose().position).toEqual([0, 2, 6]);
+    expect(mockClock.end).toHaveBeenCalledTimes(1);
+});
+test('review restore failure requests fail-closed browser shutdown', async () => {
+    const f = reviewFixture();
+    mockSession.dispatch.mockImplementation(async (request) =>
+        request.requestId.endsWith('-restore')
+            ? { ok: false, error: { code: 'STALE_TARGET', message: 'gone' } }
+            : { ok: true },
+    );
+    const result = (await f.bridge.call('review', { cameraNodeId: 'camera', shots: f.shots })) as any;
+    expect(result.error.code).toBe('RESTORE_FAILED');
+    expect(result.cameraRestored).toBe(false);
+    expect(result.closeRequired).toBe(true);
+    expect(mockClock.end).toHaveBeenCalledTimes(1);
+});
+test('failed review clock acquisition never releases another owner', async () => {
+    const f = reviewFixture();
+    mockClock.begin.mockImplementation(() => {
+        throw new Error('clock busy');
+    });
+    await expect(f.bridge.call('review', { cameraNodeId: 'camera', shots: f.shots })).rejects.toThrow('clock busy');
+    expect(mockSession.dispatch).not.toHaveBeenCalled();
+    expect(mockClock.end).not.toHaveBeenCalled();
 });

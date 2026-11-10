@@ -1,6 +1,7 @@
 /** Optional development transport. No imports from the runtime or default SDK package. */
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
+import { reviewGrid } from './review-grid.mjs';
 
 export const LIMITS = Object.freeze({ responseBytes: 128 * 1024, imageBytes: 1024 * 1024, queuedCalls: 8 });
 const id = z.string().min(1).max(128);
@@ -71,7 +72,13 @@ export function createServer(adapter) {
                 protocolVersion: 1,
                 writable: adapter.writable,
                 limits: LIMITS,
-                actions: adapter.writable ? ['createNode', 'setTransform'] : [],
+                actions: adapter.writable ? ['createNode', 'setTransform', 'review'] : [],
+                review: {
+                    maxShots: 4,
+                    camera: 'Exactly one enabled Camera on the chosen active node',
+                    frameDelta: 0,
+                    restore: 'Camera local pose only, not application state',
+                },
                 scope: 'The scene attached at launch only; existing-node edits persist after close.',
                 unsupported: [
                     'asset loading',
@@ -149,6 +156,43 @@ export function createServer(adapter) {
                 ...textResult(metadata),
                 content: [...textResult(metadata).content, { type: 'image', mimeType: 'image/png', data: match[1] }],
             };
+        },
+    );
+    register(
+        'air_review',
+        'Compare 1–4 local camera poses in one numbered PNG grid. Requires --writable and exactly one enabled Camera. Restores camera pose; zero-delta ticks can still run callbacks. No scene snapshot or rewind.',
+        {
+            cameraNodeId: id,
+            shots: z
+                .array(z.object({ label: z.string().min(1).max(32), position: vector, rotationEuler: vector }).strict())
+                .min(1)
+                .max(4),
+        },
+        false,
+        async (args) => {
+            if (!adapter.writable)
+                return failure('OUT_OF_SCOPE', 'Restart with --writable for temporary camera edits.');
+            const result = await adapter.call('review', args);
+            if (result.ok === false) return { ...textResult(result), isError: true };
+            try {
+                const grid = reviewGrid(result, LIMITS.imageBytes);
+                return {
+                    ...textResult(grid.metadata),
+                    content: [
+                        ...textResult(grid.metadata).content,
+                        { type: 'image', mimeType: 'image/png', data: grid.data },
+                    ],
+                };
+            } catch (error) {
+                return {
+                    ...failure('REVIEW_IMAGE_FAILED', String(error.message)),
+                    structuredContent: {
+                        ok: false,
+                        error: { code: 'REVIEW_IMAGE_FAILED', message: String(error.message) },
+                        cameraRestored: result.cameraRestored,
+                    },
+                };
+            }
         },
     );
     register(

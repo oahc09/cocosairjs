@@ -57,7 +57,18 @@ async function run(writable) {
         assert.equal(first.structuredContent.width, 640);
         const denied = await call('air_set_transform', { requestId: 'bad', nodeId: cube.id, scale: [0, 1, 1] }, true);
         assert.equal(denied.isError, true);
+        const camera = scene.nodes.find((node) => /camera/i.test(node.name));
+        assert.ok(camera);
+        const reviewRequest = {
+            cameraNodeId: camera.id,
+            shots: [
+                { label: 'Front', position: [0, 0, 6], rotationEuler: [0, 0, 0] },
+                { label: 'Side', position: [6, 0, 0], rotationEuler: [0, 90, 0] },
+            ],
+        };
         if (!writable) {
+            const review = await call('air_review', reviewRequest, true);
+            assert.equal(review.structuredContent.error.code, 'OUT_OF_SCOPE');
             const response = await call(
                 'air_create_node',
                 { requestId: 'read-only', parentId: cube.id, name: 'probe' },
@@ -65,6 +76,30 @@ async function run(writable) {
             );
             assert.equal(response.structuredContent.error.code, 'OUT_OF_SCOPE');
         } else {
+            const cameraBefore = (await call('air_inspect', { kind: 'node', nodeId: camera.id })).structuredContent
+                .local;
+            const review = await call('air_review', reviewRequest);
+            const grid = review.content.find((part) => part.type === 'image');
+            assert.ok(grid);
+            assert.equal(review.structuredContent.cameraRestored, true);
+            assert.equal(review.structuredContent.shots.length, 2);
+            assert.ok(review.structuredContent.shots.every((shot) => shot.sampledCamera));
+            const cameraAfter = (await call('air_inspect', { kind: 'node', nodeId: camera.id })).structuredContent
+                .local;
+            assert.deepEqual(cameraAfter.position, cameraBefore.position);
+            assert.deepEqual(cameraAfter.rotationEuler, cameraBefore.rotationEuler);
+            const decodedGrid = PNG.sync.read(Buffer.from(grid.data, 'base64'));
+            assert.equal(decodedGrid.width, 1280);
+            assert.equal(decodedGrid.height, 502);
+            const tiles = review.structuredContent.shots.map((shot) => {
+                const tile = new PNG({ width: shot.tile.width, height: shot.tile.height });
+                PNG.bitblt(decodedGrid, tile, shot.tile.x, shot.tile.y, tile.width, tile.height, 0, 0);
+                const encoded = PNG.sync.write(tile).toString('base64');
+                assert.ok(foreground(encoded) > 500, 'Each review tile must contain visible geometry');
+                return encoded;
+            });
+            assert.notEqual(tiles[0], tiles[1], 'Distinct camera poses must produce distinct views');
+            await save('review-grid.png', grid.data);
             const response = await call('air_set_transform', {
                 requestId: 'move',
                 nodeId: cube.id,
@@ -111,7 +146,7 @@ async function run(writable) {
             scene: scene.name,
             pngBytes: Buffer.from(image.data, 'base64').length,
             foregroundBefore,
-            checks: 'schema, scope, controlled frame, PNG, close',
+            checks: 'schema, scope, controlled frame, PNG, bounded review, camera restore, close',
             stderr,
         };
     } catch (error) {
