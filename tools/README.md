@@ -1,5 +1,7 @@
 # Cocos AIR 工具
 
+`tools/verify/runtime-interop-android-recreate.py` 使用显式 APK/宿主源码、授权设备和新输出目录，调用真实 debug `Activity.recreate()`，默认连续2次、共3个冷启动会话；`runtime-interop-android-recreate-audit.py --report=<closed.json> --out=<new-directory>` 离线独立重算图像、会话血缘、owner顺序、资源和实际退出。报告参数可重复，不连接设备、不改原记录。合同保持同PID并重启场景，不声称任意JS状态持久化。详见 [Android 互操作](../docs/reference/android-runtime-interop.md)。
+
 ## 本地 Agent MCP
 
 `tools/mcp/` 是独立安装的开发工具，`tools/debug/mcp-bridge.ts` 复用现有 AgentSession。

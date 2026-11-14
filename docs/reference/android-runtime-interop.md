@@ -56,3 +56,17 @@ MystralNative 功能分支在 `b3786ab6` 上修复了停止状态下的退出请
 两ABI构建、签名、29资产、仅2SO、16KB ELF/RELRO/ZIP与static链接闭包均通过。测试固定使用原 SDK `417509cb...` 作为宿主回归夹具，**不代表当前 AIR main SDK 的 GPU/Android 验收**。工具当前 main 的CPU/辅助回归11项通过；旧普通PR的文件符号链接环境限制未在本专项中更改或重标。
 
 专项模拟器临时严格策略已恢复，进程及日志写入句柄已关闭；手机未改凭据、锁屏/系统超时或权限设置。用户已授权本轮本地Git提交，不push；旧验收记录的生成时状态不改。Activity重建、进程回收、device-loss/OOM、长期/功耗/性能、全部分配无泄漏、实际ARM64 16KB及发布门禁仍需独立验收。
+
+## Activity 重建候选（2026-11-01）
+
+`runtime-interop-android-recreate.py` 必填 `--serial`、`--apk`、`--host-source`、`--out`、`--expected-page-size`，可选 `--cycles=1|2|3`（默认2），仅 `--install` 才安装专用debug包。`runtime-interop-android-recreate-audit.py` 使用可重复的 `--report=<closed.json>` 和 `--out=<新目录>` 离线复核；原退出10秒、新会话就绪30秒、呈现/输入15秒分别有界，缺步骤不通过。
+
+MystralNative 在本地后台退出修复 `746994a` 上继续实现真实 Activity.recreate 冷会话重启。每个Activity使用独立epoch、runId、目录和token，保存父会话；JNI回调固定到原实例，原生owner租约排除并发Runtime，旧Surface回调不能覆盖或清理新窗口。Android音频不再沿用macOS专用泄漏规避，VIDEO/EVENTS/GAMEPAD/AUDIO配对释放；V8销毁时显式完成剩余弱引用的native释放。
+
+这保持同PID并重新加载场景，**不保留任意JS堆/场景状态**。仅debug APK接受single-top Intent中的 `--ez mystral.debug.recreate true`，实际调用框架recreate，不模拟Surface，不修改“不要保留活动”等全局设置。采集器等待旧native exit0、完整拆卸、lease释放和SDL实际返回，然后才接受新owner；每阶段重新验证系统画面与可信输入。
+
+官方实际16KB模拟器已通过连续2次重建/3会话，初始与后续native/wrapper init均为0，旧API引用及Context/ANW/SDL已用子系统在边界归零；同最终x64 APK的前台/HOME/Settings退出回归3/3通过。ARM64候选完成构建、签名、16KB静态与同源映射核验后，在V2520A/API37/实际4KB真机也完成2次重建/3会话，PID25680与新epoch1/2/3分别隔离，三次新会话真实输入/绘制frames130/131/138；该包三项退出回归也通过。
+
+模拟器及手机联合独立审计6会话、480输入/证据哈希通过，三张真机P3整屏使用原ICC重算，整个RGBA、alpha、原坐标裁图逐像素相符，六张图的bounds均在实际原图范围内。失败基线、修正前候选及首次物理输入超时原件保留；首次真机失败尚未进入recreate，新尝试采用相同预算、同APK和同源码，不放宽门槛或重标旧FAIL。
+
+本候选仍使用历史SDK `417509cb...` 检验新宿主，不是当前AIR main GPU验收。本批 Activity 源码、工具及验收说明按用户要求仅作本地提交，不 push；原始验收记录保留生成时状态。进程回收、device-loss/OOM、完整状态恢复、长期/性能、实际ARM64 16KB及Windows V8 13重采仍在范围外。
