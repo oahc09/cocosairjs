@@ -9,8 +9,9 @@
 
 - 显式 attach：`createAgentSession({ app, writableScenes?: Scene[] })`。
   未列出的 Scene 只能观察（写操作 → `OUT_OF_SCOPE`）。
-- 本版仅支持同一开发页面内调用；**无 MCP、无远程 HTTP/WebSocket 控制协议**，
-  不向任何外部服务发送截图或场景数据。
+- AgentSession 本身仅支持同一开发页面内调用，无远程 HTTP/WebSocket 控制协议。
+  可选的[本地 stdio MCP 适配器](agent-mcp.md)显式打开独立浏览器并复用本会话；
+  仅启用该工具时，观察数据和截图才返回连接它的 MCP 客户端。
 - dev 页面的启用入口：右下角 `debug` 按钮（dev server 注入，点击才加载 panel.js，
   默认页面加载请求不含 debug/agent 模块）。
 - 面板要求页面显式暴露 `window.__airApp`（不读取隐藏全局引擎状态猜测目标）。
@@ -37,13 +38,13 @@
 `STALE_TARGET` / `OUT_OF_SCOPE` / `UNSUPPORTED_ACTION` / `LOAD_FAILED` /
 `SESSION_CLOSED`（capture 另有 `CAPTURE_FAILED`）。
 
-| action | 行为 | 边界 |
-|---|---|---|
-| createNode | 在许可父节点下创建原 Node | 不生成场景 DSL |
-| addComponent | 白名单：MeshRenderer/Camera/DirectionalLight/PointLight/SphereLight/SpotLight/Animation | 白名单外 → `INVALID_ARGUMENT`；不动态 import |
-| setTransform | `space: local/world` × position/rotationEuler/scale | **先验证全部参数再统一应用**（失败请求零副作用）；scale 支持 world 语义（`setWorldScale`）；world 欧拉角本版要求父级无旋转 |
-| loadAsset | `GLTFLoader.loadAsync(url)` | glTF 稳定错误码保留在 `error.cause.code`；失败记入错误缓冲；session 明式 `addRef` 持有一份引用 |
-| instantiateAsset | 资产现有 `instantiate()`；`params.parentId` 需可写 | 实例生命周期沿用 GLTFInstance.dispose |
+| action           | 行为                                                                                    | 边界                                                                                                                       |
+| ---------------- | --------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| createNode       | 在许可父节点下创建原 Node                                                               | 不生成场景 DSL                                                                                                             |
+| addComponent     | 白名单：MeshRenderer/Camera/DirectionalLight/PointLight/SphereLight/SpotLight/Animation | 白名单外 → `INVALID_ARGUMENT`；不动态 import                                                                               |
+| setTransform     | `space: local/world` × position/rotationEuler/scale                                     | **先验证全部参数再统一应用**（失败请求零副作用）；scale 支持 world 语义（`setWorldScale`）；world 欧拉角本版要求父级无旋转 |
+| loadAsset        | `GLTFLoader.loadAsync(url)`                                                             | glTF 稳定错误码保留在 `error.cause.code`；失败记入错误缓冲；session 明式 `addRef` 持有一份引用                             |
+| instantiateAsset | 资产现有 `instantiate()`；`params.parentId` 需可写                                      | 实例生命周期沿用 GLTFInstance.dispose                                                                                      |
 
 - 同步变更串行执行；无事务/跨命令回滚承诺。
 - **共享资产所有权**：加载走的 asset-manager 按 URL 缓存，同 URL 可能返回被其他

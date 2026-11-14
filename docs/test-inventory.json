@@ -732,6 +732,19 @@
       ]
     },
     {
+      "file": "test/smoke/mcp-bridge.test.ts",
+      "tests": [
+        "capture rejection waits for pending step before releasing clock",
+        "failed review clock acquisition never releases another owner",
+        "post-write destroyed target retains committed success and frame error",
+        "read-only, closed and replaced scenes reject without a write or clock lease",
+        "review capture failure restores camera and returns no partial frames",
+        "review captures bounded independent camera poses and restores original before releasing clock",
+        "review restore failure requests fail-closed browser shutdown",
+        "review validates every shot and rejects unsupported cameras before mutation"
+      ]
+    },
+    {
       "file": "test/smoke/port-gap-action-input-dom.test.ts",
       "tests": [
         "PG-28 adapter lifecycle remediations (Lead review fixes 2-4) blur/hidden lifecycle listeners are removed on detach/dispose (precise cleanup)",
@@ -3728,6 +3741,8 @@
         "agent session — 操作合同（G4） create → setTransform → inspect 闭环生效",
         "agent session — 操作合同（G4） loadAsset 失败 → LOAD_FAILED 且保留 glTF 稳定错误码在 cause；失败记入错误缓冲",
         "agent session — 操作合同（G4） requestId 执行中/保留窗口内重复 → INVALID_ARGUMENT；窗口过期后可复用",
+        "agent session — 操作合同（G4） review capture binds camera metadata to draw and rejects changed cameras or oversized canvas before PNG",
+        "agent session — 操作合同（G4） review capture rejects an offscreen target before PNG encoding at either boundary",
         "agent session — 操作合同（G4） setTransform 先验证后应用：合法 position + 非法 rotation → 节点完全不变",
         "agent session — 操作合同（G4） world scale 走 setWorldScale：有缩放父节点时 local = world/parent",
         "agent session — 操作合同（G4） 共享缓存资产：两个 session 加载同 URL，关闭其一不销毁资产",
@@ -4311,8 +4326,8 @@
     }
   ],
   "totals": {
-    "suites": 200,
-    "tests": 3308,
+    "suites": 201,
+    "tests": 3318,
     "passed": null,
     "failed": null
   }

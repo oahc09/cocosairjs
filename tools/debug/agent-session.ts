@@ -38,7 +38,11 @@ export type AgentErrorCode =
     | 'CAPTURE_FAILED';
 
 export class AgentSessionError extends Error {
-    constructor (public readonly code: AgentErrorCode, message: string, public readonly cause?: unknown) {
+    constructor(
+        public readonly code: AgentErrorCode,
+        message: string,
+        public readonly cause?: unknown,
+    ) {
         super(message);
         this.name = 'AgentSessionError';
     }
@@ -57,15 +61,17 @@ export interface AgentErrorPayload {
     /** glTF 等稳定错误码保留在 cause 中，不统一抹平成 LOAD_FAILED。 */
     cause?: { code?: string; message?: string };
 }
-export type AgentResponse = {
-    requestId: string;
-    ok: true;
-    result: unknown;
-} | {
-    requestId: string;
-    ok: false;
-    error: AgentErrorPayload;
-};
+export type AgentResponse =
+    | {
+          requestId: string;
+          ok: true;
+          result: unknown;
+      }
+    | {
+          requestId: string;
+          ok: false;
+          error: AgentErrorPayload;
+      };
 
 /** 场景观察结果（§5 观察数据合同：区分组件数、节点数、唯一资源数）。 */
 export interface SceneSummary {
@@ -98,12 +104,21 @@ export interface NodeSummary {
     visual: {
         ui: { size: number[]; anchor: number[] } | null;
         label: { text: string; overflow: number; fontSize: number } | null;
-        sprite: { frameId: string | null; frameName: string | null; rect: number[] | null;
-            textureId: string | null; textureValid: boolean | null;
-            frameLabel: string | null; textureLabel: string | null } | null;
-        mesh: { meshId: string | null; materialIds: (string | null)[];
+        sprite: {
+            frameId: string | null;
+            frameName: string | null;
+            rect: number[] | null;
+            textureId: string | null;
+            textureValid: boolean | null;
+            frameLabel: string | null;
+            textureLabel: string | null;
+        } | null;
+        mesh: {
+            meshId: string | null;
+            materialIds: (string | null)[];
             skinning: ReturnType<typeof inspectSkinning> | null;
-            visibility: ReturnType<typeof inspectRenderVisibility> } | null;
+            visibility: ReturnType<typeof inspectRenderVisibility>;
+        } | null;
     };
 }
 
@@ -117,6 +132,12 @@ export interface AssetReport {
     truncated: boolean;
 }
 
+export interface ReviewCaptureOptions {
+    cameraNodeId: string;
+    position: number[];
+    rotationEuler: number[];
+}
+
 export interface FrameCapture {
     /** PNG data URL（浏览器侧）。 */
     png: string;
@@ -125,12 +146,14 @@ export interface FrameCapture {
     sceneId: string;
     frameIndex: number;
     sampledAt: string;
+    sampledCamera?: unknown;
 }
 
 export interface RuntimeErrorMessage {
     seq: number;
     time: string;
-    category: 'window-error' | 'unhandled-rejection' | 'shader' | 'link' | 'session-load' | 'engine-warning' | 'engine-error';
+    category:
+        'window-error' | 'unhandled-rejection' | 'shader' | 'link' | 'session-load' | 'engine-warning' | 'engine-error';
     message: string;
     source?: string;
     requestId?: string;
@@ -173,7 +196,7 @@ const REQUEST_RETENTION_MS = 60_000;
 
 /** air-prelude.js 的分发契约（若页面已注入 prelude 则共享，绝不二次包裹 WebGL）。 */
 interface AirErrorHub {
-    subscribe (listener: (entry: { category: string; message: string; source?: string }) => void): () => void;
+    subscribe(listener: (entry: { category: string; message: string; source?: string }) => void): () => void;
 }
 
 declare global {
@@ -198,9 +221,9 @@ class Collector {
     private seq = 0;
     private dropped = 0;
 
-    constructor (private readonly limit: number) {}
+    constructor(private readonly limit: number) {}
 
-    static for (app: AirApp, limit: number): Collector {
+    static for(app: AirApp, limit: number): Collector {
         const key = app.canvas;
         let collector = collectors.get(key);
         if (!collector) {
@@ -210,11 +233,18 @@ class Collector {
         return collector;
     }
 
-    attach (session: AgentSessionImpl, app: AirApp): void {
+    attach(session: AgentSessionImpl, app: AirApp): void {
         this.owners.add(session);
-        if (this.owners.size > 1 && this.hook) { return; } // 已安装（attach 幂等）
+        if (this.owners.size > 1 && this.hook) {
+            return;
+        } // 已安装（attach 幂等）
         const ownership: HookOwnership = { subscribers: new Set(), ownedListeners: [], ownedContextWrap: null };
-        const push = (category: RuntimeErrorMessage['category'], message: string, source?: string, requestId?: string): void => {
+        const push = (
+            category: RuntimeErrorMessage['category'],
+            message: string,
+            source?: string,
+            requestId?: string,
+        ): void => {
             this.emit({ seq: ++this.seq, time: new Date().toISOString(), category, message, source, requestId });
         };
         // AIR's native diagnostic channel is independent of window errors/shader hooks.
@@ -222,10 +252,15 @@ class Collector {
         const diagnostics = app.diagnostics;
         if (diagnostics) {
             const collect = (entry: Readonly<import('cocosair').AirDiagnosticMessage>): void => {
-                push(entry.severity === 'warning' ? 'engine-warning' : 'engine-error', entry.message,
-                    entry.id === null ? undefined : `cocos:${entry.id}`);
+                push(
+                    entry.severity === 'warning' ? 'engine-warning' : 'engine-error',
+                    entry.message,
+                    entry.id === null ? undefined : `cocos:${entry.id}`,
+                );
             };
-            for (const entry of diagnostics.snapshot()) { collect(entry); }
+            for (const entry of diagnostics.snapshot()) {
+                collect(entry);
+            }
             ownership.subscribers.add(diagnostics.onMessage(collect));
         }
         // 共享 air-prelude hub：只订阅/分发——同一事件绝不能被 hub 与自有监听各记一次
@@ -233,7 +268,8 @@ class Collector {
         if (window.__airErrorHub) {
             const unsubscribe = window.__airErrorHub.subscribe((entry) => {
                 const known = entry.category as RuntimeErrorMessage['category'];
-                const category = known === 'shader' || known === 'link' || known === 'unhandled-rejection' ? known : 'window-error';
+                const category =
+                    known === 'shader' || known === 'link' || known === 'unhandled-rejection' ? known : 'window-error';
                 push(category, entry.message, entry.source);
             });
             ownership.subscribers.add(unsubscribe);
@@ -242,27 +278,56 @@ class Collector {
             const onError = ((event: ErrorEvent) => {
                 const isResource = event.target && (event.target as HTMLElement).tagName;
                 const target = event.target as HTMLElement & { error?: { code?: number }; src?: string };
-                const mediaError = target?.error?.code ?? (target?.parentElement as HTMLMediaElement | null)?.error?.code ?? null;
-                push('window-error', isResource
-                    ? `RESOURCE: ${target.src || target.tagName} [tag=${target.tagName}, mediaCode=${mediaError}, connected=${target.isConnected}]`
-                    : String(event.error && (event.error as Error).stack || event.message).slice(0, 600));
+                const mediaError =
+                    target?.error?.code ?? (target?.parentElement as HTMLMediaElement | null)?.error?.code ?? null;
+                push(
+                    'window-error',
+                    isResource
+                        ? `RESOURCE: ${target.src || target.tagName} [tag=${target.tagName}, mediaCode=${mediaError}, connected=${target.isConnected}]`
+                        : String((event.error && (event.error as Error).stack) || event.message).slice(0, 600),
+                );
             }) as EventListener;
             const onRejection = ((event: PromiseRejectionEvent) => {
-                push('unhandled-rejection', String(event.reason && ((event.reason as Error).stack || event.reason) || event.reason).slice(0, 600));
+                push(
+                    'unhandled-rejection',
+                    String((event.reason && ((event.reason as Error).stack || event.reason)) || event.reason).slice(
+                        0,
+                        600,
+                    ),
+                );
             }) as EventListener;
             window.addEventListener('error', onError, true);
             window.addEventListener('unhandledrejection', onRejection);
             ownership.ownedListeners.push({ target: window, type: 'error', fn: onError, capture: true });
-            ownership.ownedListeners.push({ target: window, type: 'unhandledrejection', fn: onRejection, capture: false });
+            ownership.ownedListeners.push({
+                target: window,
+                type: 'unhandledrejection',
+                fn: onRejection,
+                capture: false,
+            });
             const original = HTMLCanvasElement.prototype.getContext;
-            HTMLCanvasElement.prototype.getContext = function (this: HTMLCanvasElement, type: string, ...rest: unknown[]) {
-                const gl = original.apply(this, [type, ...rest] as Parameters<typeof original>) as (WebGLRenderingContext & { __agentObserved?: boolean }) | null;
-                if (!gl || typeof type !== 'string' || type.indexOf('webgl') !== 0 || gl.__agentObserved) { return gl; }
+            HTMLCanvasElement.prototype.getContext = function (
+                this: HTMLCanvasElement,
+                type: string,
+                ...rest: unknown[]
+            ) {
+                const gl = original.apply(this, [type, ...rest] as Parameters<typeof original>) as
+                    (WebGLRenderingContext & { __agentObserved?: boolean }) | null;
+                if (!gl || typeof type !== 'string' || type.indexOf('webgl') !== 0 || gl.__agentObserved) {
+                    return gl;
+                }
                 gl.__agentObserved = true;
-                const check = (queryName: 'getShaderParameter' | 'getProgramParameter', statusName: 'COMPILE_STATUS' | 'LINK_STATUS',
-                    logName: 'getShaderInfoLog' | 'getProgramInfoLog', category: 'shader' | 'link') => {
+                const check = (
+                    queryName: 'getShaderParameter' | 'getProgramParameter',
+                    statusName: 'COMPILE_STATUS' | 'LINK_STATUS',
+                    logName: 'getShaderInfoLog' | 'getProgramInfoLog',
+                    category: 'shader' | 'link',
+                ) => {
                     const query = gl[queryName] as (o: WebGLShader | WebGLProgram, p: number) => boolean;
-                    (gl as unknown as Record<string, unknown>)[queryName] = (object: WebGLShader | WebGLProgram, parameter: number) => {
+                    (gl as unknown as Record<string, unknown>)[queryName] = (
+                        object: WebGLShader | WebGLProgram,
+                        parameter: number,
+                    ) => {
                         const okResult = query.call(gl, object, parameter);
                         if (parameter === gl[statusName] && !okResult) {
                             push(category, String((gl as WebGLRenderingContext)[logName](object)).slice(0, 600));
@@ -279,18 +344,26 @@ class Collector {
         this.hook = ownership;
     }
 
-    detach (session: AgentSessionImpl): void {
+    detach(session: AgentSessionImpl): void {
         this.owners.delete(session);
-        if (this.owners.size > 0 || !this.hook) { return; } // 其他 session 仍在使用
+        if (this.owners.size > 0 || !this.hook) {
+            return;
+        } // 其他 session 仍在使用
         const { ownedListeners, ownedContextWrap, subscribers } = this.hook;
-        for (const unsub of subscribers) { unsub(); }
-        for (const { target, type, fn, capture } of ownedListeners) { target.removeEventListener(type, fn, capture); }
-        if (ownedContextWrap) { HTMLCanvasElement.prototype.getContext = ownedContextWrap.original; }
+        for (const unsub of subscribers) {
+            unsub();
+        }
+        for (const { target, type, fn, capture } of ownedListeners) {
+            target.removeEventListener(type, fn, capture);
+        }
+        if (ownedContextWrap) {
+            HTMLCanvasElement.prototype.getContext = ownedContextWrap.original;
+        }
         this.hook = null;
     }
 
     /** 唤醒等待中的 session（getRuntimeErrors 是拉取式，这里仅统一入口）。 */
-    private emit (entry: RuntimeErrorMessage): void {
+    private emit(entry: RuntimeErrorMessage): void {
         this.entries.push(entry);
         while (this.entries.length > this.limit) {
             this.entries.shift();
@@ -299,11 +372,11 @@ class Collector {
     }
 
     /** session 自己的加载失败也进入缓冲（category session-load）。 */
-    noteSessionLoad (message: string, requestId?: string): void {
+    noteSessionLoad(message: string, requestId?: string): void {
         this.emit({ seq: ++this.seq, time: new Date().toISOString(), category: 'session-load', message, requestId });
     }
 
-    list ({ since, limit }: { since?: number; limit?: number }): { errors: RuntimeErrorMessage[]; dropped: number } {
+    list({ since, limit }: { since?: number; limit?: number }): { errors: RuntimeErrorMessage[]; dropped: number } {
         let source = this.entries;
         if (since !== undefined) {
             source = this.entries.filter((e) => e.seq > since);
@@ -312,7 +385,7 @@ class Collector {
         return { errors: capped, dropped: this.dropped };
     }
 
-    clear (): void {
+    clear(): void {
         this.entries.length = 0;
         this.dropped = 0;
     }
@@ -325,7 +398,10 @@ class Collector {
 const sceneIds = new WeakMap<cc.Scene, string>();
 let sceneIdCounter = 0;
 
-interface RequestRecord { status: 'running' | 'done'; settledAt: number }
+interface RequestRecord {
+    status: 'running' | 'done';
+    settledAt: number;
+}
 
 export class AgentSessionImpl {
     readonly id: string;
@@ -338,59 +414,70 @@ export class AgentSessionImpl {
     private readonly assetsById = new Map<string, cc.Asset>();
     private readonly assetLabels = new Map<cc.Asset, string>();
     private readonly ownedNodes = new Set<cc.Node>();
-    private readonly ownedInstances: { id: string; assetId: string; instance: { dispose (): void; root: cc.Node } }[] = [];
+    private readonly ownedInstances: { id: string; assetId: string; instance: { dispose(): void; root: cc.Node } }[] =
+        [];
     private readonly ownedAssets = new Set<cc.Asset>();
     private readonly requestLog = new Map<string, RequestRecord>();
     private queue: Promise<unknown> = Promise.resolve();
     private captureSeq = 0;
     /** 进行中的 captureFrame：close 时取消监听/定时器并拒绝（§6.3 生命周期）。 */
-    private readonly pendingCaptures = new Set<{ cancel (): void; reject (error: AgentSessionError): void }>();
+    private readonly pendingCaptures = new Set<{ cancel(): void; reject(error: AgentSessionError): void }>();
     private readonly collector: Collector;
 
-    constructor (private readonly options: AgentSessionOptions) {
+    constructor(private readonly options: AgentSessionOptions) {
         this.id = `agent-session-${++AgentSessionImpl.counter}`;
         this.collector = Collector.for(options.app, options.errorBufferLimit ?? DEFAULT_ERROR_LIMIT);
         this.collector.attach(this, options.app);
     }
 
     /** Business-supplied names for assets such as atlas frames; never inferred from a texture UUID. */
-    registerAssetLabel (asset: cc.Asset, label: string): void {
+    registerAssetLabel(asset: cc.Asset, label: string): void {
         this.requireOpen();
-        if (!cc.isValid(asset, true) || !label) { throw new AgentSessionError('INVALID_ARGUMENT', 'a live asset and nonempty label are required'); }
+        if (!cc.isValid(asset, true) || !label) {
+            throw new AgentSessionError('INVALID_ARGUMENT', 'a live asset and nonempty label are required');
+        }
         this.assetLabels.set(asset, label);
     }
 
     private static counter = 0;
 
     /** 显式可写范围；未列出 = 只读观察。 */
-    private isWritable (node: cc.Node): boolean {
+    private isWritable(node: cc.Node): boolean {
         const writable = this.options.writableScenes ?? [];
         for (const scene of writable) {
             let cursor: cc.Node | null = node;
             while (cursor) {
-                if (cursor === scene) { return true; }
+                if (cursor === scene) {
+                    return true;
+                }
                 cursor = cursor.parent;
             }
         }
         return false;
     }
 
-    private requireOpen (): void {
-        if (this.closed) { throw new AgentSessionError('SESSION_CLOSED', `session ${this.id} is closed`); }
+    private requireOpen(): void {
+        if (this.closed) {
+            throw new AgentSessionError('SESSION_CLOSED', `session ${this.id} is closed`);
+        }
     }
 
     /** 当前运行场景；未运行/已替换由可达性检查兜底。 */
-    private currentScene (): cc.Scene {
+    private currentScene(): cc.Scene {
         const scene = this.options.app.getScene();
-        if (!scene) { throw new AgentSessionError('STALE_TARGET', 'no running scene'); }
+        if (!scene) {
+            throw new AgentSessionError('STALE_TARGET', 'no running scene');
+        }
         return scene;
     }
 
-    private reachable (node: cc.Node): boolean {
+    private reachable(node: cc.Node): boolean {
         let cursor: cc.Node | null = node;
         const scene = this.currentScene();
         while (cursor) {
-            if (cursor === scene) { return true; }
+            if (cursor === scene) {
+                return true;
+            }
             cursor = cursor.parent;
         }
         return false;
@@ -398,7 +485,7 @@ export class AgentSessionImpl {
 
     // ---- ID 注册（session 内稳定；对象键，同名不同 ID）----
 
-    private nodeId (node: cc.Node): string {
+    private nodeId(node: cc.Node): string {
         let id = this.nodeIds.get(node);
         if (!id) {
             id = `node-${++this.idCounter}`;
@@ -408,13 +495,16 @@ export class AgentSessionImpl {
         return id;
     }
 
-    private componentId (component: cc.Component): string {
+    private componentId(component: cc.Component): string {
         let id = this.componentIds.get(component);
-        if (!id) { id = `comp-${++this.idCounter}`; this.componentIds.set(component, id); }
+        if (!id) {
+            id = `comp-${++this.idCounter}`;
+            this.componentIds.set(component, id);
+        }
         return id;
     }
 
-    private assetId (asset: cc.Asset): string {
+    private assetId(asset: cc.Asset): string {
         let id = this.assetIds.get(asset);
         if (!id) {
             id = `asset-${++this.idCounter}`;
@@ -425,22 +515,33 @@ export class AgentSessionImpl {
     }
 
     /** 按 ID 取有效且仍在当前场景树中的节点；否则 STALE_TARGET（并回收 ID）。 */
-    private nodeById (targetId: string | undefined): cc.Node {
-        if (!targetId) { throw new AgentSessionError('INVALID_ARGUMENT', 'targetId is required'); }
+    private nodeById(targetId: string | undefined): cc.Node {
+        if (!targetId) {
+            throw new AgentSessionError('INVALID_ARGUMENT', 'targetId is required');
+        }
         const node = this.nodesById.get(targetId);
         if (!node || !cc.isValid(node, true)) {
             this.nodesById.delete(targetId);
-            if (node) { this.nodeIds.delete(node); }
+            if (node) {
+                this.nodeIds.delete(node);
+            }
             throw new AgentSessionError('STALE_TARGET', `unknown or destroyed target: ${targetId}`);
         }
         if (!this.reachable(node)) {
-            throw new AgentSessionError('STALE_TARGET', `target ${targetId} is not in the running scene (scene replaced?)`);
+            throw new AgentSessionError(
+                'STALE_TARGET',
+                `target ${targetId} is not in the running scene (scene replaced?)`,
+            );
         }
         return node;
     }
 
-    private static number3 (value: unknown, field: string): [number, number, number] {
-        if (!Array.isArray(value) || value.length !== 3 || value.some((v) => typeof v !== 'number' || !Number.isFinite(v))) {
+    private static number3(value: unknown, field: string): [number, number, number] {
+        if (
+            !Array.isArray(value) ||
+            value.length !== 3 ||
+            value.some((v) => typeof v !== 'number' || !Number.isFinite(v))
+        ) {
             throw new AgentSessionError('INVALID_ARGUMENT', `${field} must be [x, y, z] finite numbers`);
         }
         return value as [number, number, number];
@@ -448,7 +549,7 @@ export class AgentSessionImpl {
 
     // ---- 观察（§5）----
 
-    inspectScene (): SceneSummary {
+    inspectScene(): SceneSummary {
         this.requireOpen();
         const scene = this.currentScene();
         let sceneId = sceneIds.get(scene);
@@ -470,10 +571,20 @@ export class AgentSessionImpl {
                 componentCount++;
                 const type = component.constructor.name;
                 componentsByType[type] = (componentsByType[type] || 0) + 1;
-                if (component instanceof cc.Camera) { cameraCount++; }
-                if (component instanceof cc.DirectionalLight || component instanceof cc.SphereLight
-                    || component instanceof cc.SpotLight || component instanceof cc.PointLight) { lightCount++; }
-                if (component instanceof cc.MeshRenderer || component instanceof cc.SkinnedMeshRenderer) { rendererCount++; }
+                if (component instanceof cc.Camera) {
+                    cameraCount++;
+                }
+                if (
+                    component instanceof cc.DirectionalLight ||
+                    component instanceof cc.SphereLight ||
+                    component instanceof cc.SpotLight ||
+                    component instanceof cc.PointLight
+                ) {
+                    lightCount++;
+                }
+                if (component instanceof cc.MeshRenderer || component instanceof cc.SkinnedMeshRenderer) {
+                    rendererCount++;
+                }
             }
             const id = this.nodeId(node);
             if (nodes.length < INSPECT_ROWS_LIMIT) {
@@ -481,7 +592,9 @@ export class AgentSessionImpl {
             } else {
                 truncated = true;
             }
-            for (const child of node.children) { visit(child, id); }
+            for (const child of node.children) {
+                visit(child, id);
+            }
         };
         visit(scene, null);
         const report = inspectRuntimeAssets(scene, cc);
@@ -502,7 +615,7 @@ export class AgentSessionImpl {
         };
     }
 
-    inspectNode (targetId: string): NodeSummary {
+    inspectNode(targetId: string): NodeSummary {
         this.requireOpen();
         const node = this.nodeById(targetId);
         const parent = node.parent;
@@ -537,38 +650,61 @@ export class AgentSessionImpl {
             visual: {
                 ui: ui ? { size: [ui.width, ui.height], anchor: [ui.anchorX, ui.anchorY] } : null,
                 label: label ? { text: label.string, overflow: label.overflow, fontSize: label.fontSize } : null,
-                sprite: sprite ? {
-                    frameId: frame ? this.assetId(frame) : null,
-                    frameName: frame?.name ?? null,
-                    rect: rect ? [rect.x, rect.y, rect.width, rect.height] : null,
-                    textureId: texture ? this.assetId(texture) : null,
-                    textureValid: texture ? cc.isValid(texture, true) : null,
-                    frameLabel: frame ? this.assetLabels.get(frame) ?? null : null,
-                    textureLabel: texture ? this.assetLabels.get(texture) ?? null : null,
-                } : null,
-                mesh: renderer ? {
-                    meshId: renderer.mesh ? this.assetId(renderer.mesh) : null,
-                    materialIds: renderer.sharedMaterials.map((material) => material ? this.assetId(material) : null),
-                    skinning: renderer instanceof cc.SkinnedMeshRenderer ? inspectSkinning(renderer) : null,
-                    visibility: inspectRenderVisibility(renderer,this.currentScene().getComponentsInChildren(cc.Camera),
-                        (bounds,frustum)=>cc.geometry.intersect.aabbFrustum(bounds,frustum)),
-                } : null,
+                sprite: sprite
+                    ? {
+                          frameId: frame ? this.assetId(frame) : null,
+                          frameName: frame?.name ?? null,
+                          rect: rect ? [rect.x, rect.y, rect.width, rect.height] : null,
+                          textureId: texture ? this.assetId(texture) : null,
+                          textureValid: texture ? cc.isValid(texture, true) : null,
+                          frameLabel: frame ? (this.assetLabels.get(frame) ?? null) : null,
+                          textureLabel: texture ? (this.assetLabels.get(texture) ?? null) : null,
+                      }
+                    : null,
+                mesh: renderer
+                    ? {
+                          meshId: renderer.mesh ? this.assetId(renderer.mesh) : null,
+                          materialIds: renderer.sharedMaterials.map((material) =>
+                              material ? this.assetId(material) : null,
+                          ),
+                          skinning: renderer instanceof cc.SkinnedMeshRenderer ? inspectSkinning(renderer) : null,
+                          visibility: inspectRenderVisibility(
+                              renderer,
+                              this.currentScene().getComponentsInChildren(cc.Camera),
+                              (bounds, frustum) => cc.geometry.intersect.aabbFrustum(bounds, frustum),
+                          ),
+                      }
+                    : null,
             },
         };
     }
 
-    inspectAsset (): AssetReport {
+    inspectAsset(): AssetReport {
         this.requireOpen();
         const scene = this.currentScene();
-        const sessionCollections: Record<string, Set<unknown>> = { meshes: new Set(), materials: new Set(), textures: new Set(), skeletons: new Set(), animations: new Set() };
+        const sessionCollections: Record<string, Set<unknown>> = {
+            meshes: new Set(),
+            materials: new Set(),
+            textures: new Set(),
+            skeletons: new Set(),
+            animations: new Set(),
+        };
         for (const asset of this.assetIds.keys()) {
             const owned = (asset as unknown as { owned?: Record<string, unknown[]> }).owned;
-            if (!owned) { continue; }
+            if (!owned) {
+                continue;
+            }
             const kindMap: [string, keyof typeof sessionCollections][] = [
-                ['meshes', 'meshes'], ['materials', 'materials'], ['textures', 'textures'], ['skeletons', 'skeletons'], ['animations', 'animations'],
+                ['meshes', 'meshes'],
+                ['materials', 'materials'],
+                ['textures', 'textures'],
+                ['skeletons', 'skeletons'],
+                ['animations', 'animations'],
             ];
             for (const [field, kind] of kindMap) {
-                for (const item of owned[field] ?? []) { (sessionCollections[kind] as Set<unknown>).add(item); }
+                for (const item of owned[field] ?? []) {
+                    (sessionCollections[kind] as Set<unknown>).add(item);
+                }
             }
         }
         const report = inspectRuntimeAssets(scene, cc, sessionCollections as never);
@@ -586,16 +722,69 @@ export class AgentSessionImpl {
 
     // ---- captureFrame（§6.3）----
 
-    captureFrame (): Promise<FrameCapture> {
+    captureFrame(review?: ReviewCaptureOptions): Promise<FrameCapture> {
         this.requireOpen();
         // 请求时的场景快照：绘制回调里场景若已替换，必须报错而不是返回另一场景的画面。
         const sceneAtRequest = this.currentScene();
         const canvas = this.options.app.canvas;
+        const cameraSnapshot = () => {
+            if (!review) return undefined;
+            if (canvas.width < 1 || canvas.width > 640 || canvas.height < 1 || canvas.height > 480) {
+                throw new Error('Review canvas exceeds 640 x 480 capture budget');
+            }
+            const node = this.nodeById(review.cameraNodeId);
+            const cameras = sceneAtRequest.getComponentsInChildren(cc.Camera);
+            const camera = cameras[0];
+            if (
+                cameras.length !== 1 ||
+                camera.node !== node ||
+                !camera.enabledInHierarchy ||
+                !node.activeInHierarchy ||
+                camera.targetTexture
+            ) {
+                throw new Error('Review requires exactly one enabled main-canvas camera');
+            }
+            const position = [node.position.x, node.position.y, node.position.z];
+            const rotationEuler = [node.eulerAngles.x, node.eulerAngles.y, node.eulerAngles.z];
+            const angleDistance = (a: number, b: number) => Math.abs(((((a - b + 540) % 360) + 360) % 360) - 180);
+            if (
+                !position.every((v, i) => Math.abs(v - review.position[i]) <= 1e-5) ||
+                !rotationEuler.every((v, i) => angleDistance(v, review.rotationEuler[i]) <= 1e-3)
+            ) {
+                throw new Error('Application changed the requested review camera pose');
+            }
+            return {
+                cameraNodeId: review.cameraNodeId,
+                position,
+                rotationEuler,
+                worldMatrix: cc.Mat4.toArray([], node.worldMatrix),
+                projection: camera.projection,
+                fov: camera.fov,
+                fovAxis: camera.fovAxis,
+                orthoHeight: camera.orthoHeight,
+                near: camera.near,
+                far: camera.far,
+                rect: [camera.rect.x, camera.rect.y, camera.rect.width, camera.rect.height],
+                visibility: camera.visibility,
+                width: canvas.width,
+                height: canvas.height,
+            };
+        };
         return new Promise<FrameCapture>((resolve, reject) => {
+            let beforeDraw: ReturnType<typeof cameraSnapshot>;
+            let boundaryError: unknown;
+            const onBeforeDraw = () => {
+                try {
+                    beforeDraw = cameraSnapshot();
+                } catch (error) {
+                    boundaryError = error;
+                }
+            };
             const pending = {
                 cancel: () => {
                     this.pendingCaptures.delete(pending);
                     cc.director.off(cc.Director.EVENT_AFTER_DRAW, onDraw);
+                    cc.director.off(cc.Director.EVENT_BEFORE_DRAW, onBeforeDraw);
                     clearTimeout(timer);
                 },
                 reject: (error: AgentSessionError) => {
@@ -604,8 +793,12 @@ export class AgentSessionImpl {
                 },
             };
             const timer = setTimeout(() => {
-                pending.reject(new AgentSessionError('CAPTURE_FAILED',
-                    `no rendered frame within ${this.options.captureTimeoutMs ?? DEFAULT_CAPTURE_TIMEOUT}ms`));
+                pending.reject(
+                    new AgentSessionError(
+                        'CAPTURE_FAILED',
+                        `no rendered frame within ${this.options.captureTimeoutMs ?? DEFAULT_CAPTURE_TIMEOUT}ms`,
+                    ),
+                );
             }, this.options.captureTimeoutMs ?? DEFAULT_CAPTURE_TIMEOUT);
             const onDraw = (): void => {
                 try {
@@ -614,12 +807,20 @@ export class AgentSessionImpl {
                         return;
                     }
                     if (this.currentScene() !== sceneAtRequest) {
-                        pending.reject(new AgentSessionError('CAPTURE_FAILED', 'scene replaced between request and draw'));
+                        pending.reject(
+                            new AgentSessionError('CAPTURE_FAILED', 'scene replaced between request and draw'),
+                        );
                         return;
                     }
                     pending.cancel();
                     const sceneId = sceneIds.get(sceneAtRequest) ?? `scene:${sceneAtRequest.name}`;
+                    if (boundaryError) throw boundaryError;
+                    const sampledCamera = cameraSnapshot();
+                    if (review && (!beforeDraw || JSON.stringify(beforeDraw) !== JSON.stringify(sampledCamera))) {
+                        throw new Error('Review camera changed between render and capture boundaries');
+                    }
                     const png = canvas.toDataURL('image/png');
+                    if (review && png.length > 1398126) throw new Error('Review PNG exceeds 1 MiB budget');
                     if (!png || !png.startsWith('data:image/png')) {
                         throw new Error('canvas produced no PNG data');
                     }
@@ -630,21 +831,27 @@ export class AgentSessionImpl {
                         sceneId,
                         frameIndex: ++this.captureSeq,
                         sampledAt: new Date().toISOString(),
+                        ...(review ? { sampledCamera } : {}),
                     });
                 } catch (error) {
                     pending.cancel();
-                    reject(new AgentSessionError('CAPTURE_FAILED',
-                        `frame capture failed: ${error instanceof Error ? error.message : String(error)}`));
+                    reject(
+                        new AgentSessionError(
+                            'CAPTURE_FAILED',
+                            `frame capture failed: ${error instanceof Error ? error.message : String(error)}`,
+                        ),
+                    );
                 }
             };
             this.pendingCaptures.add(pending);
+            if (review) cc.director.on(cc.Director.EVENT_BEFORE_DRAW, onBeforeDraw);
             cc.director.on(cc.Director.EVENT_AFTER_DRAW, onDraw);
         });
     }
 
     // ---- 错误收集（§6.4）----
 
-    getRuntimeErrors (query?: { since?: number; limit?: number }): { errors: RuntimeErrorMessage[]; dropped: number } {
+    getRuntimeErrors(query?: { since?: number; limit?: number }): { errors: RuntimeErrorMessage[]; dropped: number } {
         this.requireOpen();
         if (query?.since !== undefined && (!Number.isFinite(query.since) || query.since < 0)) {
             throw new AgentSessionError('INVALID_ARGUMENT', 'since must be a non-negative seq number');
@@ -655,40 +862,66 @@ export class AgentSessionImpl {
         return this.collector.list(query ?? {});
     }
 
-    clearRuntimeErrors (): void {
+    clearRuntimeErrors(): void {
         this.requireOpen();
         this.collector.clear();
     }
 
     // ---- 操作分发（§6.2）----
 
-    dispatch (request: AgentRequest): Promise<AgentResponse> {
+    dispatch(request: AgentRequest): Promise<AgentResponse> {
         if (this.closed) {
-            return Promise.resolve(this.failure(request, new AgentSessionError('SESSION_CLOSED', `session ${this.id} is closed`)));
+            return Promise.resolve(
+                this.failure(request, new AgentSessionError('SESSION_CLOSED', `session ${this.id} is closed`)),
+            );
         }
-        if (!request || typeof request.requestId !== 'string' || !request.requestId
-            || typeof request.action !== 'string' || !request.action) {
-            return Promise.resolve(this.failure(request, new AgentSessionError('INVALID_ARGUMENT', 'requestId and action are required strings')));
+        if (
+            !request ||
+            typeof request.requestId !== 'string' ||
+            !request.requestId ||
+            typeof request.action !== 'string' ||
+            !request.action
+        ) {
+            return Promise.resolve(
+                this.failure(
+                    request,
+                    new AgentSessionError('INVALID_ARGUMENT', 'requestId and action are required strings'),
+                ),
+            );
         }
         const existing = this.requestLog.get(request.requestId);
         const now = Date.now();
         if (existing && (existing.status === 'running' || now - existing.settledAt < REQUEST_RETENTION_MS)) {
-            return Promise.resolve(this.failure(request, new AgentSessionError('INVALID_ARGUMENT',
-                `requestId '${request.requestId}' is ${existing.status === 'running' ? 'already executing' : 'within the retention window'}; do not blind-retry create/addComponent`)));
+            return Promise.resolve(
+                this.failure(
+                    request,
+                    new AgentSessionError(
+                        'INVALID_ARGUMENT',
+                        `requestId '${request.requestId}' is ${existing.status === 'running' ? 'already executing' : 'within the retention window'}; do not blind-retry create/addComponent`,
+                    ),
+                ),
+            );
         }
         // FIFO 清理保留窗口之外的记录
         for (const [key, record] of this.requestLog) {
-            if (record.status === 'done' && now - record.settledAt >= REQUEST_RETENTION_MS) { this.requestLog.delete(key); }
+            if (record.status === 'done' && now - record.settledAt >= REQUEST_RETENTION_MS) {
+                this.requestLog.delete(key);
+            }
         }
         if (this.requestLog.size >= (this.options.requestIdWindow ?? DEFAULT_REQUEST_WINDOW) * 2) {
             const oldest = this.requestLog.keys().next().value;
-            if (oldest !== undefined) { this.requestLog.delete(oldest); }
+            if (oldest !== undefined) {
+                this.requestLog.delete(oldest);
+            }
         }
         this.requestLog.set(request.requestId, { status: 'running', settledAt: now });
 
         // 串行执行；失败不吞掉原始原因。
         const run = this.queue.then(() => this.execute(request));
-        this.queue = run.then(() => undefined, () => undefined);
+        this.queue = run.then(
+            () => undefined,
+            () => undefined,
+        );
         return run.then(
             (result) => {
                 this.markDone(request.requestId);
@@ -696,22 +929,30 @@ export class AgentSessionImpl {
             },
             (error: unknown) => {
                 this.markDone(request.requestId);
-                if (error instanceof AgentSessionError) { return this.failure(request, error); }
+                if (error instanceof AgentSessionError) {
+                    return this.failure(request, error);
+                }
                 return {
                     requestId: request.requestId,
                     ok: false as const,
-                    error: { code: 'LOAD_FAILED' as const, message: error instanceof Error ? error.message : String(error) },
+                    error: {
+                        code: 'LOAD_FAILED' as const,
+                        message: error instanceof Error ? error.message : String(error),
+                    },
                 };
             },
         );
     }
 
-    private markDone (requestId: string): void {
+    private markDone(requestId: string): void {
         const record = this.requestLog.get(requestId);
-        if (record) { record.status = 'done'; record.settledAt = Date.now(); }
+        if (record) {
+            record.status = 'done';
+            record.settledAt = Date.now();
+        }
     }
 
-    private failure (request: Partial<AgentRequest>, error: AgentSessionError): AgentResponse {
+    private failure(request: Partial<AgentRequest>, error: AgentSessionError): AgentResponse {
         const cause = (error.cause ?? undefined) as unknown;
         return {
             requestId: request?.requestId ?? '',
@@ -720,31 +961,44 @@ export class AgentSessionImpl {
                 code: error.code,
                 message: error.message,
                 ...(cause && typeof cause === 'object' && 'code' in (cause as object)
-                    ? { cause: { code: String((cause as { code: unknown }).code), message: String((cause as { message?: unknown }).message ?? '') } }
+                    ? {
+                          cause: {
+                              code: String((cause as { code: unknown }).code),
+                              message: String((cause as { message?: unknown }).message ?? ''),
+                          },
+                      }
                     : {}),
             },
         };
     }
 
-    private async execute (request: AgentRequest): Promise<unknown> {
+    private async execute(request: AgentRequest): Promise<unknown> {
         this.requireOpen();
         const { action } = request;
         if (!OPERATION_ACTIONS.has(action)) {
             throw new AgentSessionError('UNSUPPORTED_ACTION', `unknown action: ${action}`);
         }
         switch (action) {
-            case 'createNode': return this.opCreateNode(request);
-            case 'addComponent': return this.opAddComponent(request);
-            case 'setTransform': return this.opSetTransform(request);
-            case 'loadAsset': return this.opLoadAsset(request);
-            case 'instantiateAsset': return this.opInstantiateAsset(request);
-            default: throw new AgentSessionError('UNSUPPORTED_ACTION', `unknown action: ${action}`);
+            case 'createNode':
+                return this.opCreateNode(request);
+            case 'addComponent':
+                return this.opAddComponent(request);
+            case 'setTransform':
+                return this.opSetTransform(request);
+            case 'loadAsset':
+                return this.opLoadAsset(request);
+            case 'instantiateAsset':
+                return this.opInstantiateAsset(request);
+            default:
+                throw new AgentSessionError('UNSUPPORTED_ACTION', `unknown action: ${action}`);
         }
     }
 
-    private opCreateNode (request: AgentRequest): { nodeId: string } {
+    private opCreateNode(request: AgentRequest): { nodeId: string } {
         const params = request.params ?? {};
-        const parent = this.nodeById(request.targetId ?? (typeof params.parentId === 'string' ? params.parentId : undefined));
+        const parent = this.nodeById(
+            request.targetId ?? (typeof params.parentId === 'string' ? params.parentId : undefined),
+        );
         if (!this.isWritable(parent)) {
             throw new AgentSessionError('OUT_OF_SCOPE', 'parent node is not in the writable scope');
         }
@@ -755,13 +1009,16 @@ export class AgentSessionImpl {
         return { nodeId: this.nodeId(node) };
     }
 
-    private opAddComponent (request: AgentRequest): { componentId: string; type: string } {
+    private opAddComponent(request: AgentRequest): { componentId: string; type: string } {
         const params = request.params ?? {};
         const node = this.nodeById(request.targetId);
         const typeName = typeof params.component === 'string' ? params.component : '';
         const ctor = COMPONENT_WHITELIST[typeName];
         if (!ctor) {
-            throw new AgentSessionError('INVALID_ARGUMENT', `component type '${typeName}' is not in the addComponent whitelist: ${Object.keys(COMPONENT_WHITELIST).join(', ')}`);
+            throw new AgentSessionError(
+                'INVALID_ARGUMENT',
+                `component type '${typeName}' is not in the addComponent whitelist: ${Object.keys(COMPONENT_WHITELIST).join(', ')}`,
+            );
         }
         if (!this.isWritable(node)) {
             throw new AgentSessionError('OUT_OF_SCOPE', 'target node is not in the writable scope');
@@ -770,7 +1027,7 @@ export class AgentSessionImpl {
         return { componentId: this.componentId(component), type: component.constructor.name };
     }
 
-    private opSetTransform (request: AgentRequest): { applied: string[] } {
+    private opSetTransform(request: AgentRequest): { applied: string[] } {
         const params = request.params ?? {};
         const node = this.nodeById(request.targetId);
         if (!this.isWritable(node)) {
@@ -792,7 +1049,10 @@ export class AgentSessionImpl {
                 // 发生在任何应用之前。
                 const parentEuler = node.parent ? node.parent.eulerAngles : null;
                 if (parentEuler && (parentEuler.x || parentEuler.y || parentEuler.z)) {
-                    throw new AgentSessionError('INVALID_ARGUMENT', 'world rotationEuler requires an unrotated parent in this version');
+                    throw new AgentSessionError(
+                        'INVALID_ARGUMENT',
+                        'world rotationEuler requires an unrotated parent in this version',
+                    );
                 }
             }
             plan.push({ kind: 'rotationEuler', value });
@@ -805,72 +1065,100 @@ export class AgentSessionImpl {
             plan.push({ kind: 'scale', value });
         }
         if (plan.length === 0) {
-            throw new AgentSessionError('INVALID_ARGUMENT', 'setTransform requires at least one of position / rotationEuler / scale');
+            throw new AgentSessionError(
+                'INVALID_ARGUMENT',
+                'setTransform requires at least one of position / rotationEuler / scale',
+            );
         }
         const applied: string[] = [];
         for (const step of plan) {
             const [x, y, z] = step.value;
             if (step.kind === 'position') {
-                if (space === 'local') { node.setPosition(x, y, z); } else { node.setWorldPosition(x, y, z); }
+                if (space === 'local') {
+                    node.setPosition(x, y, z);
+                } else {
+                    node.setWorldPosition(x, y, z);
+                }
             } else if (step.kind === 'rotationEuler') {
                 // world 的父级无旋转约束已在验证期成立：此时 world 欧拉角 == local 欧拉角。
                 node.setRotationFromEuler(x, y, z);
             } else {
-                if (space === 'local') { node.setScale(x, y, z); } else { node.setWorldScale(x, y, z); }
+                if (space === 'local') {
+                    node.setScale(x, y, z);
+                } else {
+                    node.setWorldScale(x, y, z);
+                }
             }
             applied.push(step.kind);
         }
         return { applied };
     }
 
-    private opLoadAsset (request: AgentRequest): Promise<{ assetId: string; summary: Record<string, unknown> }> {
+    private opLoadAsset(request: AgentRequest): Promise<{ assetId: string; summary: Record<string, unknown> }> {
         const params = request.params ?? {};
         const url = typeof params.url === 'string' ? params.url : '';
         if (!url) {
             return Promise.reject(new AgentSessionError('INVALID_ARGUMENT', 'params.url (string) is required'));
         }
-        if (this.closed) { return Promise.reject(new AgentSessionError('SESSION_CLOSED', `session ${this.id} is closed`)); }
+        if (this.closed) {
+            return Promise.reject(new AgentSessionError('SESSION_CLOSED', `session ${this.id} is closed`));
+        }
         // 走已有公开加载入口；不解析格式、不重新实现 dependency cache / decoder cleanup（§6.2）。
         const loader = new cc.GLTFLoader();
-        return loader.loadAsync(url).then((asset) => {
-            if (this.closed) {
-                // 关闭后完成的加载：本 session 从未持有引用（addRef 尚未发生），
-                // 资产归 asset-manager 缓存所有——不得销毁可能被其他消费者共享的对象。
-                throw new AgentSessionError('SESSION_CLOSED', `session ${this.id} closed while loading; asset left to its owner`);
-            }
-            // session 明式持有一份引用：close 只 decRef 自己这份，绝不 destroy 缓存中
-            // 可能被其他 session/业务共享的资产（§6.2 "不销毁已有共享资产"）。
-            asset.addRef();
-            this.ownedAssets.add(asset);
-            const summary: Record<string, unknown> = {
-                url,
-                sceneNames: (asset as unknown as { sceneNames?: readonly string[] }).sceneNames ?? [],
-                warnings: (asset as unknown as { warnings?: readonly string[] }).warnings ?? [],
-                meshes: (asset as unknown as { meshes?: readonly unknown[] }).meshes?.length ?? 0,
-                materials: (asset as unknown as { materials?: readonly unknown[] }).materials?.length ?? 0,
-                textures: (asset as unknown as { textures?: readonly unknown[] }).textures?.length ?? 0,
-                animations: (asset as unknown as { animations?: readonly unknown[] }).animations?.length ?? 0,
-            };
-            return { assetId: this.assetId(asset), summary };
-        }, (error: unknown) => {
-            this.collector.noteSessionLoad(`loadAsset ${url} failed: ${error instanceof Error ? error.message : String(error)}`, request.requestId);
-            // glTF 稳定错误码保留在 cause 中，不仅转换成无差别 LOAD_FAILED。
-            const code = (error as { code?: string })?.code;
-            throw new AgentSessionError('LOAD_FAILED',
-                `loadAsset failed for ${url}: ${error instanceof Error ? error.message : String(error)}`,
-                code ? { code, message: error instanceof Error ? error.message : String(error) } : undefined);
-        });
+        return loader.loadAsync(url).then(
+            (asset) => {
+                if (this.closed) {
+                    // 关闭后完成的加载：本 session 从未持有引用（addRef 尚未发生），
+                    // 资产归 asset-manager 缓存所有——不得销毁可能被其他消费者共享的对象。
+                    throw new AgentSessionError(
+                        'SESSION_CLOSED',
+                        `session ${this.id} closed while loading; asset left to its owner`,
+                    );
+                }
+                // session 明式持有一份引用：close 只 decRef 自己这份，绝不 destroy 缓存中
+                // 可能被其他 session/业务共享的资产（§6.2 "不销毁已有共享资产"）。
+                asset.addRef();
+                this.ownedAssets.add(asset);
+                const summary: Record<string, unknown> = {
+                    url,
+                    sceneNames: (asset as unknown as { sceneNames?: readonly string[] }).sceneNames ?? [],
+                    warnings: (asset as unknown as { warnings?: readonly string[] }).warnings ?? [],
+                    meshes: (asset as unknown as { meshes?: readonly unknown[] }).meshes?.length ?? 0,
+                    materials: (asset as unknown as { materials?: readonly unknown[] }).materials?.length ?? 0,
+                    textures: (asset as unknown as { textures?: readonly unknown[] }).textures?.length ?? 0,
+                    animations: (asset as unknown as { animations?: readonly unknown[] }).animations?.length ?? 0,
+                };
+                return { assetId: this.assetId(asset), summary };
+            },
+            (error: unknown) => {
+                this.collector.noteSessionLoad(
+                    `loadAsset ${url} failed: ${error instanceof Error ? error.message : String(error)}`,
+                    request.requestId,
+                );
+                // glTF 稳定错误码保留在 cause 中，不仅转换成无差别 LOAD_FAILED。
+                const code = (error as { code?: string })?.code;
+                throw new AgentSessionError(
+                    'LOAD_FAILED',
+                    `loadAsset failed for ${url}: ${error instanceof Error ? error.message : String(error)}`,
+                    code ? { code, message: error instanceof Error ? error.message : String(error) } : undefined,
+                );
+            },
+        );
     }
 
-    private opInstantiateAsset (request: AgentRequest): { instanceId: string; nodeId: string; assetId: string } {
+    private opInstantiateAsset(request: AgentRequest): { instanceId: string; nodeId: string; assetId: string } {
         const params = request.params ?? {};
         const assetId = request.targetId ?? (typeof params.assetId === 'string' ? params.assetId : undefined);
-        if (!assetId) { throw new AgentSessionError('INVALID_ARGUMENT', 'targetId or params.assetId is required'); }
+        if (!assetId) {
+            throw new AgentSessionError('INVALID_ARGUMENT', 'targetId or params.assetId is required');
+        }
         const asset = this.assetsById.get(assetId);
         if (!asset || !cc.isValid(asset, true)) {
             throw new AgentSessionError('STALE_TARGET', `unknown or destroyed asset: ${assetId}`);
         }
-        const instantiate = (asset as unknown as { instantiate?: (sceneIndex?: number) => { dispose (): void; root: cc.Node } }).instantiate;
+        const instantiate = (
+            asset as unknown as { instantiate?: (sceneIndex?: number) => { dispose(): void; root: cc.Node } }
+        ).instantiate;
         if (typeof instantiate !== 'function') {
             throw new AgentSessionError('UNSUPPORTED_ACTION', `asset ${assetId} has no instantiate capability`);
         }
@@ -882,7 +1170,9 @@ export class AgentSessionImpl {
             }
         }
         const instance = instantiate.call(asset, typeof params.sceneIndex === 'number' ? params.sceneIndex : undefined);
-        if (parent) { parent.addChild(instance.root); }
+        if (parent) {
+            parent.addChild(instance.root);
+        }
         this.ownedInstances.push({
             id: `instance-${++this.idCounter}`,
             assetId,
@@ -899,8 +1189,10 @@ export class AgentSessionImpl {
      * 节点/实例，并只释放自己持有的资产引用（decRef——不销毁可能被共享的资产）；
      * 已有节点的显式编辑不自动撤销。之后所有请求返回 SESSION_CLOSED。
      */
-    close (): void {
-        if (this.closed) { return; }
+    close(): void {
+        if (this.closed) {
+            return;
+        }
         this.closed = true;
         this.collector.detach(this);
         // 进行中的 captureFrame：取消监听与定时器，以 SESSION_CLOSED 拒绝。
@@ -909,15 +1201,23 @@ export class AgentSessionImpl {
         }
         this.pendingCaptures.clear();
         for (const instance of this.ownedInstances) {
-            try { instance.instance.dispose(); } catch { /* 引擎已回收 */ }
+            try {
+                instance.instance.dispose();
+            } catch {
+                /* 引擎已回收 */
+            }
         }
         this.ownedInstances.length = 0;
         for (const asset of this.ownedAssets) {
-            if (cc.isValid(asset, true)) { asset.decRef(); }
+            if (cc.isValid(asset, true)) {
+                asset.decRef();
+            }
         }
         this.ownedAssets.clear();
         for (const node of this.ownedNodes) {
-            if (cc.isValid(node, true)) { node.destroy(); }
+            if (cc.isValid(node, true)) {
+                node.destroy();
+            }
         }
         this.ownedNodes.clear();
         // 释放全部强引用映射（componentIds/assetIds/assetsById 也持有 Component/Asset）。
@@ -932,6 +1232,6 @@ export class AgentSessionImpl {
 }
 
 /** 显式 attach 一个 agent development session（默认只观察；可写范围必须显式给出）。 */
-export function createAgentSession (options: AgentSessionOptions): AgentSessionImpl {
+export function createAgentSession(options: AgentSessionOptions): AgentSessionImpl {
     return new AgentSessionImpl(options);
 }
