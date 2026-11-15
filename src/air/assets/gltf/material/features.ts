@@ -41,6 +41,8 @@ export const TEXTURE_SLOTS = [
     'bump',
     'transmission',
     'volumeThickness',
+    'sheenColor',
+    'sheenRoughness',
 ] as const;
 export type TextureSlotName = (typeof TEXTURE_SLOTS)[number];
 
@@ -60,6 +62,7 @@ export interface GLTFMaterialFeatures {
 
 /** Normalized scalar features populated by KHR_materials_* handlers. */
 export interface PhysicalScalars {
+    sheen?: { color: number[]; roughness: number };
     /** KHR_materials_emissive_strength: linear multiplier >= 1 applied to emissive. */
     emissiveStrength?: number;
     /** KHR_materials_ior: index of refraction >= 1 (drives dielectric F0). */
@@ -90,6 +93,10 @@ export function physicalScalars(features: GLTFMaterialFeatures): PhysicalScalars
 /** Slot → TextureInfo mapping shared by feature population, mesh UV checks and material build. */
 export function slotTextureInfo(source: GLTFMaterial, slot: TextureSlotName): TextureInfo | undefined {
     switch (slot) {
+        case 'sheenColor':
+            return (source.extensions?.KHR_materials_sheen as { sheenColorTexture?: TextureInfo } | undefined)?.sheenColorTexture;
+        case 'sheenRoughness':
+            return (source.extensions?.KHR_materials_sheen as { sheenRoughnessTexture?: TextureInfo } | undefined)?.sheenRoughnessTexture;
         case 'baseColor':
             return source.pbrMetallicRoughness?.baseColorTexture;
         case 'metallicRoughness':

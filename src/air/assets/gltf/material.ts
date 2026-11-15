@@ -32,7 +32,7 @@ import type { TextureInfo } from './schema';
 import { GLTFMaterialFeatures, TEXTURE_SLOTS, TextureSlotName } from './material/features';
 import { coreTextureCoordinates } from './material/texture-slots';
 import type { PhysicalScalars } from './material/features';
-import { gltfPhysicalEffect, needsPhysicalEffect, physicalParams, PHYSICAL_CONSTANT, PHYSICAL_COLOR_CONSTANT, CLEARCOAT_CONSTANT, ANISO_CONSTANT, IRIDESCENCE_CONSTANT, BUMP_CONSTANT, TRANSMISSION_CONSTANT, ATTENUATION_CONSTANT } from './material/physical-effect';
+import { SHEEN_CONSTANT, gltfPhysicalEffect, needsPhysicalEffect, physicalParams, PHYSICAL_CONSTANT, PHYSICAL_COLOR_CONSTANT, CLEARCOAT_CONSTANT, ANISO_CONSTANT, IRIDESCENCE_CONSTANT, BUMP_CONSTANT, TRANSMISSION_CONSTANT, ATTENUATION_CONSTANT } from './material/physical-effect';
 import { transmissionPipelineAvailable } from './material/transmission-capability';
 import type { DecodedTextureSource } from './decoder/types';
 import { KTX2_RAW_MIME } from './decoder/types';
@@ -184,6 +184,7 @@ export function createGLTFMaterial (features: GLTFMaterialFeatures, textures: re
     const bumpExt = source.extensions?.EXT_materials_bump as { bumpTexture?: TextureInfo } | undefined;
     const transmissionExt = source.extensions?.KHR_materials_transmission as { transmissionTexture?: TextureInfo } | undefined;
     const volumeExt = source.extensions?.KHR_materials_volume as { thicknessTexture?: TextureInfo } | undefined;
+    const sheenExt = source.extensions?.KHR_materials_sheen as { sheenColorTexture?: TextureInfo; sheenRoughnessTexture?: TextureInfo } | undefined;
     const maps = [
         [pbr.baseColorTexture, 'mainTexture', 'USE_ALBEDO_MAP', 'ALBEDO_UV'],
         [pbr.metallicRoughnessTexture, 'metallicRoughnessMap', 'USE_METALLIC_ROUGHNESS_MAP', 'PBR_UV'],
@@ -202,6 +203,8 @@ export function createGLTFMaterial (features: GLTFMaterialFeatures, textures: re
         [bumpExt?.bumpTexture, 'bumpMap', 'USE_AIR_BUMP', 'BUMP_UV'],
         [transmissionExt?.transmissionTexture, 'transmissionMap', 'USE_AIR_TRANSMISSION_MAP', 'TRANSMISSION_UV'],
         [volumeExt?.thicknessTexture, 'volumeThicknessMap', 'USE_AIR_VOLUME_THICKNESS_MAP', 'VOLUMETHICKNESS_UV'],
+        [sheenExt?.sheenColorTexture, 'sheenColorMap', 'USE_AIR_SHEEN_COLOR_MAP', 'SHEENCOLOR_UV'],
+        [sheenExt?.sheenRoughnessTexture, 'sheenRoughnessMap', 'USE_AIR_SHEEN_ROUGHNESS_MAP', 'SHEENROUGHNESS_UV'],
     ] as const;
     for (const [index, [info, , macro, uv]] of maps.entries()) {
         defines[macro] = !!info;
@@ -219,6 +222,8 @@ export function createGLTFMaterial (features: GLTFMaterialFeatures, textures: re
     const specularColor = physical.specular?.color;
     const colorActive = !!specularColor && specularColor.some((v) => Math.abs(v - 1) > 1e-6);
     const physicalScalar = !unlit && (needsPhysicalEffect(ior, specularFactor0, emissiveStrength) || colorActive);
+    const sheen = physical.sheen;
+    const sheenActive = !unlit && !!sheen && sheen.color.some((v) => v > 0);
     const clearcoat = physical.clearcoat;
     const clearcoatScalar = !unlit && !!clearcoat && clearcoat.factor > 0;
     const anisotropy = physical.anisotropy;
@@ -239,8 +244,8 @@ export function createGLTFMaterial (features: GLTFMaterialFeatures, textures: re
         || !!ccExt?.clearcoatTexture || !!ccExt?.clearcoatRoughnessTexture || !!ccExt?.clearcoatNormalTexture
         || !!anisoExt?.anisotropyTexture || !!bumpExt?.bumpTexture
         || (transmissionArmed && (!!transmissionExt?.transmissionTexture || !!volumeExt?.thicknessTexture));
-    const usePhysical = physicalScalar || clearcoatScalar || anisotropyScalar || iridescenceScalar || transmissionScalar || (!unlit && physicalMaps);
-    const definesForPhysical: MacroRecord = {};
+    const usePhysical = sheenActive || physicalScalar || clearcoatScalar || anisotropyScalar || iridescenceScalar || transmissionScalar || (!unlit && physicalMaps);
+    const definesForPhysical: MacroRecord = { USE_AIR_SHEEN: sheenActive };
     if (physicalScalar) { definesForPhysical.USE_AIR_SPECULAR_COLOR = colorActive; }
     // Specular extension presence gates the energy-conservation diffuse attenuation (the
     // airDielectric Fresnel term), separate from USE_AIR_SPECULAR_COLOR which gates the color mix.
@@ -296,6 +301,7 @@ export function createGLTFMaterial (features: GLTFMaterialFeatures, textures: re
         material.setProperty('emissive', new Vec4(emissive[0], emissive[1], emissive[2], 1));
         check(Number.isFinite(source.normalTexture?.scale ?? 1), 'invalid normal scale');
         if (usePhysical) {
+            if (sheen) { material.setProperty(SHEEN_CONSTANT, new Vec4(sheen.color[0], sheen.color[1], sheen.color[2], sheen.roughness)); }
             material.setProperty(PHYSICAL_CONSTANT, physicalParams(ior, specularFactor0, emissiveStrength));
             if (clearcoat) { material.setProperty(CLEARCOAT_CONSTANT, new Vec4(clearcoat.factor, clearcoat.roughness, clearcoat.normalScale, 1)); }
             if (anisotropy) { material.setProperty(ANISO_CONSTANT, new Vec4(anisotropy.strength, Math.cos(anisotropy.rotation), Math.sin(anisotropy.rotation), 1)); }

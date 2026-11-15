@@ -97,7 +97,7 @@ Draco 的 adapter 支持应用注入 decoder；随包提供的 Draco 入口是 N
 > 每个扩展携带 registry 实时 status、decoder/设备要求、自动化证据（smoke / 真机浏览器脚本）、
 > 计划对照的官方模型与 catalog revision；稳定错误码清单在 `errorCodes`。V0.5.1 直接消费本文件。
 
-| 扩展 | KHR_materials_unlit、KHR_materials_emissive_strength、KHR_materials_ior、KHR_materials_specular、KHR_materials_clearcoat、KHR_materials_anisotropy、KHR_materials_iridescence、EXT_materials_bump、KHR_materials_transmission、KHR_materials_volume、KHR_materials_dispersion、KHR_texture_transform、KHR_mesh_quantization、KHR/EXT_meshopt_compression、KHR_draco_mesh_compression、KHR_lights_punctual、EXT_mesh_gpu_instancing、EXT_texture_webp、EXT_texture_avif、KHR_texture_basisu |
+| 扩展 | KHR_materials_unlit、KHR_materials_emissive_strength、KHR_materials_ior、KHR_materials_specular、KHR_materials_clearcoat、KHR_materials_sheen、KHR_materials_anisotropy、KHR_materials_iridescence、EXT_materials_bump、KHR_materials_transmission、KHR_materials_volume、KHR_materials_dispersion、KHR_texture_transform、KHR_mesh_quantization、KHR/EXT_meshopt_compression、KHR_draco_mesh_compression、KHR_lights_punctual、EXT_mesh_gpu_instancing、EXT_texture_webp、EXT_texture_avif、KHR_texture_basisu |
 
 `KHR_texture_transform` 支持每个 textureInfo 独立的 `offset`、`rotation`（弧度）、`scale` 和 `texCoord` 覆盖，作用于 baseColor、metallicRoughness、normal、occlusion、emissive。变换围绕 UV 原点应用，支持负缩放；UV 通道仍限于 UV0/UV1。共享纹理可以在不同材质槽使用不同变换，网格 UV 不会被改写。缺少切线时，法线贴图使用有效 UV 通道及其变换生成切线。
 
@@ -114,6 +114,8 @@ emissive 分量乘以 .x；ior 换算 `iorF0 = ((ior-1)/(ior+1))²` 并除以引
 `specularColorTexture.RGB` 逐通道调制；两者支持各自 texCoord 与 KHR_texture_transform（绑定 15/16 采样器、
 独立 UV 变换 uniform）。unlit 材质忽略全部 BRDF 修饰并告警。非法值（strength<1、ior<1、factor 越界）
 以 `GLTF_EXTENSION_INVALID` 失败。
+
+`KHR_materials_sheen` 接入颜色因子（默认黑色）、粗糙度因子（默认 0）、sRGB RGB 颜色纹理和线性 Alpha 粗糙度纹理；纹理沿用 UV0/UV1 与 `KHR_texture_transform`。黑色因子禁用该层，与 unlit/specular-glossiness 同材质组合会报错。当前实现为 Charlie 分布 + Ashikhmin visibility 的主方向光光泽，使用保守基底衰减；尚无专用 sheen IBL 卷积或积分 LUT，不能视为完整参考渲染器一致性验收。
 
 `KHR_materials_clearcoat` 在同一 `air-gltf-physical` effect 上叠加独立 GGX 第二层（层 F0 固定 0.04 +
 Schlick Fresnel）：`airClearcoat = (factor, roughness, normalScale, 1)`（UBO 追加成员，偏移不扰动

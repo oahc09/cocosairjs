@@ -7,6 +7,7 @@
 | BoxTextured.glb | Cesium，CC BY 4.0；Cesium 标志另受商标声明约束 | [原目录](https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/BoxTextured) · [署名](BoxTextured.LICENSE.md) |
 | SimpleSkin.gltf、SimpleSkin_*.bin | Marco Hutter，CC0 1.0 | [原目录](https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/SimpleSkin) · [署名](SimpleSkin.LICENSE.md) |
 | AnimatedMorphCube.glb | Microsoft，CC0 1.0 | [原目录](https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/AnimatedMorphCube) · [署名](AnimatedMorphCube.LICENSE.md) |
+| sheen.glb | 本项目原创，MIT | [生成脚本](../../../tools/fixtures/generate-gltf-sheen.cjs) · [示例说明](../README.md) |
 | combined.glb、diagnostics.glb | 本项目原创，MIT | [生成脚本](../../../tools/fixtures/generate-gltf-viewer-fixtures.cjs) |
 | official/SimpleSparseAccessor.gltf | Marco Hutter，CC BY 4.0 | [署名与固定版本](official/SimpleSparseAccessor.LICENSE.md) |
 | official/InterpolationTest.glb | Khronos，CC0 1.0 | [署名与固定版本](official/InterpolationTest.LICENSE.md) |

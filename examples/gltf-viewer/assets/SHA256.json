@@ -34,5 +34,9 @@
   {
     "file": "diagnostics.glb",
     "sha256": "bf0f25d0ac58a074908671e7a90ff59613821d72c5161f3ed4397ee25704096b"
+  },
+  {
+    "file": "sheen.glb",
+    "sha256": "b8ed56f2c6724bd27b0878e16c0ff27edebc16c52a4b9a9314d72d435ccd33ab"
   }
 ]

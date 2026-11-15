@@ -38,6 +38,7 @@ import { unlitFactory } from './extensions/material/unlit';
 import { emissiveStrengthFactory } from './extensions/material/emissive-strength';
 import { iorFactory } from './extensions/material/ior';
 import { specularFactory } from './extensions/material/specular';
+import { sheenFactory } from './extensions/material/sheen';
 import { clearcoatFactory } from './extensions/material/clearcoat';
 import { anisotropyFactory } from './extensions/material/anisotropy';
 import { iridescenceFactory } from './extensions/material/iridescence';
@@ -90,6 +91,7 @@ export class GLTFLoader {
         .register(iorFactory)
         .register(specularFactory)
         .register(clearcoatFactory)
+        .register(sheenFactory)
         .register(anisotropyFactory)
         .register(iridescenceFactory)
         .register(bumpFactory)

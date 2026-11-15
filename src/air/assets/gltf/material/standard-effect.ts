@@ -41,6 +41,8 @@ export const UV_SLOTS = [
     ['bumpMap', 'BUMP_UV', 'airBump'],
     ['transmissionMap', 'TRANSMISSION_UV', 'airTransmission'],
     ['volumeThicknessMap', 'VOLUMETHICKNESS_UV', 'airVolumeThickness'],
+    ['sheenColorMap', 'SHEENCOLOR_UV', 'airSheenColor'],
+    ['sheenRoughnessMap', 'SHEENROUGHNESS_UV', 'airSheenRoughness'],
 ] as const;
 const UV_UNIFORMS = UV_SLOTS.map(([, , prefix]) => `${prefix}UV0`).concat(
     UV_SLOTS.map(([, , prefix]) => `${prefix}UV1`),

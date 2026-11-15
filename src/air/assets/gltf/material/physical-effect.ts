@@ -43,6 +43,8 @@ import { check } from '../schema';
 import { gltfEffect } from './standard-effect';
 import { textureTransform, textureUVExpression } from './texture-slots';
 
+export const SHEEN_CONSTANT = 'airSheen';
+
 export const PHYSICAL_CONSTANT = 'airPhysicalParams';
 
 /** Scalar specular color factor (rgb in .xyz) so white default stays identity. */
@@ -78,6 +80,8 @@ export const PHYSICAL_SAMPLERS = [
     { name: 'transmissionMap', binding: 25, macro: 'USE_AIR_TRANSMISSION_MAP' },
     { name: 'volumeThicknessMap', binding: 26, macro: 'USE_AIR_VOLUME_THICKNESS_MAP' },
     { name: 'cc_sceneColorTex', binding: 27, macro: 'USE_AIR_TRANSMISSION' },
+    { name: 'sheenColorMap', binding: 28, macro: 'USE_AIR_SHEEN_COLOR_MAP' },
+    { name: 'sheenRoughnessMap', binding: 29, macro: 'USE_AIR_SHEEN_ROUGHNESS_MAP' },
 ] as const;
 
 /** Normalized scalars for the physical uniform (identity when all defaults hold). */
@@ -115,6 +119,11 @@ export function gltfPhysicalEffect(): EffectAsset {
         shader.name = `${name}|${oldName.split('|').slice(1).join('|')}`;
         shader.hash = (shader.hash ^ 0x2f6a19d4) >>> 0;
         shader.defines = [
+            { name: 'USE_AIR_SHEEN', type: 'boolean' },
+            { name: 'USE_AIR_SHEEN_COLOR_MAP', type: 'boolean' },
+            { name: 'USE_AIR_SHEEN_ROUGHNESS_MAP', type: 'boolean' },
+            { name: 'SHEENCOLOR_UV', type: 'string', options: ['v_uv', 'v_uv1'] },
+            { name: 'SHEENROUGHNESS_UV', type: 'string', options: ['v_uv', 'v_uv1'] },
             ...(shader.defines || []),
             { name: 'USE_AIR_SPECULAR_COLOR', type: 'boolean' },
             { name: 'USE_AIR_SPECULAR_MAP', type: 'boolean' },
@@ -163,6 +172,7 @@ export function gltfPhysicalEffect(): EffectAsset {
             // two scalar constants are added here.
             if (!block.members.some((m) => m.name === PHYSICAL_CONSTANT)) {
                 block.members.push(new Uniform(PHYSICAL_CONSTANT, Type.FLOAT4, 1));
+                block.members.push(new Uniform(SHEEN_CONSTANT, Type.FLOAT4, 1));
             }
             if (!block.members.some((m) => m.name === PHYSICAL_COLOR_CONSTANT)) {
                 block.members.push(new Uniform(PHYSICAL_COLOR_CONSTANT, Type.FLOAT4, 1));
@@ -220,6 +230,7 @@ export function gltfPhysicalEffect(): EffectAsset {
             // in-variable declarations. A file-global carries the product into the shading
             // function, which only references it (declaration before the function is legal).
             const texVar =
+                `#if USE_AIR_SHEEN\nvec3 airSheenColorTex = vec3(0.0);\nfloat airSheenRoughTex = 0.0;\n#endif\n` +
                 `#if USE_AIR_SPECULAR_MAP\nfloat airSpecScale = 1.0;\n#endif\n` +
                 `#if USE_AIR_SPECULAR_COLOR_MAP\nvec3 airSpecColor = vec3(1.0);\n#endif\n` +
                 `#if USE_AIR_CLEARCOAT\nfloat airCCFactorTex = 1.0;\nfloat airCCRoughTex = 0.0;\nvec3 airCCNormal = vec3(0.0, 0.0, 1.0);\n#endif\n` +
@@ -237,7 +248,7 @@ export function gltfPhysicalEffect(): EffectAsset {
             };
             if (language === 'glsl1') {
                 frag = prependAfterPrecision(
-                    `uniform highp vec4 ${PHYSICAL_CONSTANT};` +
+                    `uniform highp vec4 ${PHYSICAL_CONSTANT};` + nl + `uniform highp vec4 ${SHEEN_CONSTANT};` +
                         nl +
                         `uniform highp vec4 ${PHYSICAL_COLOR_CONSTANT};` +
                         nl +
@@ -265,7 +276,7 @@ export function gltfPhysicalEffect(): EffectAsset {
                         (_m, head, tail) =>
                             head +
                             nl +
-                            `vec4 ${PHYSICAL_CONSTANT};` +
+                            `vec4 ${PHYSICAL_CONSTANT};` + nl + `vec4 ${SHEEN_CONSTANT};` +
                             nl +
                             `vec4 ${PHYSICAL_COLOR_CONSTANT};` +
                             nl +
@@ -377,6 +388,24 @@ export function gltfPhysicalEffect(): EffectAsset {
                     '#endif',
             );
             // Clearcoat second-lobe direct term (layer F0 0.04, Schlick, GGX via engine helper).
+            const sheenDirect = [
+                '#if USE_AIR_SHEEN',
+                '{',
+                'float shNL = max(dot(N, L), 0.0);',
+                'float shNV = max(dot(N, V), 0.0);',
+                'float shNH = clamp(dot(N, H), 0.0, 1.0);',
+                'float shInv = 1.0 / max(airSheenRoughTex * airSheenRoughTex, 0.0001);',
+                'float shD = (2.0 + shInv) * pow(max(1.0 - shNH * shNH, 0.0), shInv * 0.5) / (2.0 * PI);',
+                'float shVis = 1.0 / max(4.0 * (shNL + shNV - shNL * shNV), 0.0001);',
+                'dirlightContrib *= 1.0 - max(airSheenColorTex.r, max(airSheenColorTex.g, airSheenColorTex.b));',
+                '#if CC_RECEIVE_SHADOW',
+                'finalColor += airSheenColorTex * shD * shVis * shNL * cc_mainLitColor.rgb * cc_mainLitColor.w * shadow;',
+                '#else',
+                'finalColor += airSheenColorTex * shD * shVis * shNL * cc_mainLitColor.rgb * cc_mainLitColor.w;',
+                '#endif',
+                '}',
+                '#endif',
+            ].join(nl);
             const ccDirect = [
                 '{',
                 'float ccF = clamp(airCCFactorTex, 0.0, 1.0);',
@@ -398,7 +427,7 @@ export function gltfPhysicalEffect(): EffectAsset {
             if (!frag.includes(ccAnchor)) {
                 throw new Error(`physical effect: '${ccAnchor}' missing in ${shader.name} [${language}]`);
             }
-            frag = frag.replace(ccAnchor, `#if USE_AIR_CLEARCOAT\n${ccDirect}\n#endif\n${ccAnchor}`);
+            frag = frag.replace(ccAnchor, `${sheenDirect}\n#if USE_AIR_CLEARCOAT\n${ccDirect}\n#endif\n${ccAnchor}`);
             // Clearcoat IBL lobe: low-roughness environment reflection off the layer normal.
             const ccIBL = [
                 '#if USE_AIR_CLEARCOAT && CC_USE_IBL',
@@ -536,6 +565,16 @@ export function gltfPhysicalEffect(): EffectAsset {
             }
             frag = frag.replace(returnAnchor, transmission);
             const modulate = [
+                '#if USE_AIR_SHEEN',
+                `airSheenColorTex = ${SHEEN_CONSTANT}.rgb;`,
+                `airSheenRoughTex = ${SHEEN_CONSTANT}.a;`,
+                '#if USE_AIR_SHEEN_COLOR_MAP',
+                `airSheenColorTex *= SRGBToLinear(${tex('sheenColorMap', 'SHEENCOLOR_UV', 'airSheenColor')}.rgb);`,
+                '#endif',
+                '#if USE_AIR_SHEEN_ROUGHNESS_MAP',
+                `airSheenRoughTex *= ${tex('sheenRoughnessMap', 'SHEENROUGHNESS_UV', 'airSheenRoughness')}.a;`,
+                '#endif',
+                '#endif',
                 '#if USE_AIR_TRANSMISSION',
                 `airTrFactorTex = ${TRANSMISSION_CONSTANT}.x;`,
                 `airThickTex = ${TRANSMISSION_CONSTANT}.z;`,
@@ -667,6 +706,9 @@ export function gltfPhysicalEffect(): EffectAsset {
             if (!pass.properties) {
                 continue;
             }
+            pass.properties[SHEEN_CONSTANT] = { type: Type.FLOAT4, value: [0, 0, 0, 0] };
+            pass.properties.sheenColorMap = { value: 'white', type: Type.SAMPLER2D };
+            pass.properties.sheenRoughnessMap = { value: 'white', type: Type.SAMPLER2D };
             pass.properties[PHYSICAL_CONSTANT] = { type: Type.FLOAT4, value: [1, 1, 1, 1] };
             pass.properties[PHYSICAL_COLOR_CONSTANT] = { type: Type.FLOAT4, value: [1, 1, 1, 1] };
             pass.properties[CLEARCOAT_CONSTANT] = { type: Type.FLOAT4, value: [1, 0, 1, 1] };
