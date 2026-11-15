@@ -50,6 +50,7 @@ import { WebGPUSampler } from './webgpu-sampler';
 import { WebGPUShader } from './webgpu-shader';
 import { WebGPUStateCache } from './webgpu-state-cache';
 import { WebGPUTexture } from './webgpu-texture';
+import { assertWebGPUDeviceActive, closeWebGPUResourceUses } from '../../../air/rendering/webgpu-resource-lifetime';
 import { DefaultResources, hashCombineNum, hashCombineStr, webGPU, WebGPUDeviceManager } from './define';
 import {
     Filter, Format,
@@ -137,6 +138,7 @@ export class WebGPUDevice extends Device {
         throw Object.assign(new Error('WebGPU readback is asynchronous; use copyTextureToBuffersAsync.'), { code: 'WEBGPU_ASYNC_READBACK_REQUIRED' });
     }
     public async copyTextureToBuffersAsync (texture: Readonly<Texture>, buffers: ArrayBufferView[], regions: readonly BufferTextureCopy[]): Promise<void> {
+        assertWebGPUDeviceActive(this);
         if (!(texture.usage & TextureUsageBit.TRANSFER_SRC)) throw new Error('WEBGPU_READBACK_REQUIRES_TRANSFER_SRC');
         const view = texture.viewInfo;
         const adjusted = regions.map((region) => {
@@ -148,7 +150,11 @@ export class WebGPUDevice extends Device {
             copy.texSubres.baseArrayLayer += view.baseLayer;
             return copy;
         });
-        await WebGPUCmdFuncCopyTextureToBuffer(this, (texture as WebGPUTexture).gpuTexture, buffers, adjusted);
+        const source = (texture as WebGPUTexture).gpuTexture;
+        if (!source?.gpuTexture) throw Object.assign(new Error('Readback source texture or view was destroyed.'),
+            { code: 'WEBGPU_READBACK_TEXTURE_DESTROYED' });
+        await WebGPUCmdFuncCopyTextureToBuffer(this, source, buffers, adjusted,
+            () => !!(texture as WebGPUTexture).gpuTexture);
     }
     public flushCommands (cmdBuffs: CommandBuffer[]): void {
         // noop
@@ -351,11 +357,19 @@ export class WebGPUDevice extends Device {
         } catch (cause) {
             throw Object.assign(new Error('WebGPU device request failed.'), { code: 'WEBGPU_DEVICE_REQUEST_FAILED', cause });
         }
-        this._device.lost.then(() => { this.isLost = true; });
+        const initializedDevice = this._device;
+        initializedDevice.lost.then(() => {
+            if (this._device === initializedDevice) this.isLost = true;
+            closeWebGPUResourceUses(initializedDevice);
+        });
         this._device.addEventListener('uncapturederror', (event) => {
             error('[WEBGPU_VALIDATION_ERROR]', (event as GPUUncapturedErrorEvent).error.message);
         });
         await loadWebGPUWasmModule();
+        if (this._device !== initializedDevice || this.isLost) {
+            throw Object.assign(new Error('WebGPU device was lost or closed during shader translator initialization.'),
+                { code: 'WEBGPU_DEVICE_LOST' });
+        }
         this._glslang = webGPU.glslang;
         this._twgsl = webGPU.twgsl;
 
@@ -405,6 +419,8 @@ export class WebGPUDevice extends Device {
         this._caps.maxFragmentUniformVectors = Math.floor(limits.maxUniformBufferBindingSize / 16);
         this._caps.maxVertexUniformVectors = Math.floor(limits.maxUniformBufferBindingSize / 16);
         this._caps.maxVertexAttributes = limits.maxVertexAttributes;
+        // Older host declarations omit this required WebGPU limit; the standard default is eight.
+        this._caps.maxColorRenderTargets = (limits as GPUSupportedLimits & { maxColorAttachments?: number }).maxColorAttachments ?? 8;
         this._caps.maxUniformBufferBindings = limits.maxUniformBuffersPerShaderStage;
         this._caps.maxTextureSize = limits.maxTextureDimension2D;
         this._caps.maxArrayTextureLayers = limits.maxTextureArrayLayers;
@@ -539,6 +555,7 @@ export class WebGPUDevice extends Device {
         this.defaultResource.buffersDescLayout.clear();
         this.defaultResource.texturesDescLayout.clear();
         this._context?.unconfigure();
+        if (this._device) closeWebGPUResourceUses(this._device);
         this._device?.destroy();
         this._device = null;
         this._context = null;
@@ -586,12 +603,14 @@ export class WebGPUDevice extends Device {
     }
 
     public createBuffer (info: Readonly<BufferInfo> | Readonly<BufferViewInfo>): Buffer {
+        assertWebGPUDeviceActive(this);
         const buffer = new WebGPUBuffer();
         buffer.initialize(info);
         return buffer;
     }
 
     public createTexture (info: Readonly<TextureInfo> | Readonly<TextureViewInfo>): Texture {
+        assertWebGPUDeviceActive(this);
         const texture = new WebGPUTexture();
         texture.initialize(info);
         return texture;
@@ -604,6 +623,7 @@ export class WebGPUDevice extends Device {
     }
 
     public createShader (info: Readonly<ShaderInfo>): Shader {
+        assertWebGPUDeviceActive(this);
         const shader = new WebGPUShader();
         shader.initialize(info);
         return shader;
@@ -656,6 +676,7 @@ export class WebGPUDevice extends Device {
     }
 
     public copyBuffersToTexture (buffers: ArrayBufferView[], texture: Texture, regions: BufferTextureCopy[]): void {
+        assertWebGPUDeviceActive(this);
         WebGPUCmdFuncCopyBuffersToTexture(
             this,
             buffers,
@@ -669,6 +690,7 @@ export class WebGPUDevice extends Device {
         texture: Texture,
         regions: BufferTextureCopy[],
     ): void {
+        assertWebGPUDeviceActive(this);
         WebGPUCmdFuncCopyTexImagesToTexture(
             this,
             texImages,

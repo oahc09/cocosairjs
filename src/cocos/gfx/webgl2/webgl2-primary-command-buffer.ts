@@ -85,7 +85,7 @@ export class WebGL2PrimaryCommandBuffer extends WebGL2CommandBuffer {
                         colorView.gpuTexture,
                         colorView.gpuTexture.resolveTex,
                         [textureBlit],
-                        Filter.LINEAR,
+                        Filter.POINT,
                     );
                 }
             }

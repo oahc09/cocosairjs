@@ -156,6 +156,10 @@ const transform = Mat4.fromRTS(new Mat4(), new Quat(), new Vec3(1, 2, 3), new Ve
 
 该入口提供 Vec2/3/4、Mat3/4、Quat、Color、Size、Rect 及数学工具，可在 Node、Worker 和浏览器使用。它与主入口具有独立的构造器和随机数状态；跨入口不要依赖 `instanceof`，调用引擎 API 时使用引擎自己的值类型。构建、类型与使用边界见[数学入口](docs/guides/math-entry.md)。
 
+编写自定义 Shader 时，可选用独立的 `cocosair.js/shader-preflight` 子入口或 `cocosair-shader-preflight` CLI 检查 Effect JSON 的身份、引用和可确定的布局错误。该工具不需要 DOM，不进入主运行时；unknown 和静态通过均不能代替 GPU 编译与画面验证，见 [Shader 预检](docs/guides/shader-preflight.md)。
+
+渲染目标、GPU 生命周期、HTML 纹理与定向验证的入口和产物身份，见 [Web 渲染能力与 Agent 使用索引](docs/guides/web-engine-reliability.md)。该索引明确区分当前源码能力、候选证据与已发布包。
+
 ## 方式二：不通过 npm 安装 SDK，直接使用 build 文件
 
 普通网页运行只需主 JS。将构建产物复制到自己的站点，例如：

@@ -33,11 +33,14 @@ const app = await createAirApp({
 - `WEBGPU_UNSUPPORTED`：环境未提供 WebGPU。
 - `WEBGPU_ADAPTER_UNAVAILABLE`：requestAdapter 返回 null。
 - `WEBGPU_DEVICE_REQUEST_FAILED`：设备能力协商或创建失败，cause 保留原错误。
+- `WEBGPU_DEVICE_LOST`：初始化期间设备丢失或关闭；异步 shader translator 加载完成后也会重新检查，不返回失效的应用实例。
 - `WEBGPU_SHADER_ASSETS_FAILED`：JS/WASM 加载、实例化或导出不正确。
 - `WEBGPU_CANVAS_FAILED`：无法取得目标画布的 WebGPU context。
 - shader 转换错误保留 shader 名称、stage 和 cause；GPU validation error 仍属于失败。
 
 初始化失败为本页终态；清理本轮资源后重载页面再试。不得假设已经取得 WebGPU context 的同一 canvas 可以切换为 WebGL2。设备丢失会停止提交，健康状态进入 failed，使用已有 `contextHealth.requestReload()` 受控重载，不承诺透明重建业务资源。
+
+异步加载的 AbortSignal、session token 与场景私有模型释放示例见 [GPU 生命周期与会话所有权](gpu-lifecycle.md)。
 
 ## 读取 GPU 纹理
 
@@ -46,6 +49,10 @@ await director.root!.device.copyTextureToBuffersAsync(texture, buffers, regions)
 ```
 
 WebGPU 不允许用旧同步读回入口伪装完成：它会抛出 `WEBGPU_ASYNC_READBACK_REQUIRED`。当前异步路径支持单采样、非压缩颜色纹理，处理 GPU 行对齐、buffer 子视图、步幅、mip/layer。深度、压缩和多采样纹理读回明确拒绝；先 resolve 到可读颜色目标。
+
+同一次调用的全部 region 在等待映射前一起提交，读回过程中 resize 不会混合新旧纹理内容。所有 staging 映射完成且所属设备、源纹理/view 仍有效后才写目标缓冲；native device 丢失或关闭时以 `WEBGPU_DEVICE_LOST` 拒绝，保留底层 cause，源纹理/view 已释放则报 `WEBGPU_READBACK_TEXTURE_DESTROYED`，两者均不交付部分结果。失效设备上的资源创建、上传及新读回也会明确拒绝。`app.close()` 保留共享 GFX 设备，其会话自有源纹理释放会取消相应读回。
+
+如果 native 映射取消早于 device-lost 通知，读回返回 `WEBGPU_READBACK_ABORTED` 并保留原始 AbortError 为 cause；同样不写目标缓冲且释放 staging。[WebGPU promise ordering](https://www.w3.org/TR/webgpu/#promise-ordering) 不保证 mapAsync 与 device.lost 的结算先后，应用应结合 contextHealth 处理设备级终态，不能把较早收到的取消误当成成功或强行判为设备丢失。
 
 ## 验证与边界
 
@@ -60,3 +67,5 @@ node tools/verify/webgpu-backend.cjs --examples --custom
 二维颜色 blit 支持 nearest/linear 缩放与区域更新，同尺寸同格式且具备 transfer usage 时走 copy；深度、三维和不支持的过滤组合明确拒绝。移动端、自动后端回退、透明设备恢复、transient MSAA 优化不在本轮。AIR 原有 WebGL2 专用高级 helper 仍按其自身设备合同判断，不因引入后端就自动扩大兼容声明。
 
 当前实现、验证范围和复跑入口见 [验收说明](../reference/webgpu-acceptance.md)。
+
+多颜色附件、整数输出及 MSAA 格式边界见 [MRT 指南](mrt.md)；浮点多采样通过不能代替整数采样组合的验收。

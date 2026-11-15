@@ -52,6 +52,7 @@ import { WebGL2Sampler } from './states/webgl2-sampler';
 import { WebGL2Shader } from './webgl2-shader';
 import { WebGL2Swapchain, getExtensions, getContext } from './webgl2-swapchain';
 import { WebGL2Texture } from './webgl2-texture';
+import { assertWebGL2ContextActive } from '../../../air/rendering/webgl2-context-health';
 import {
     CommandBufferType, DescriptorSetLayoutInfo, DescriptorSetInfo,
     PipelineLayoutInfo, BufferViewInfo, CommandBufferInfo, BufferInfo, FramebufferInfo, InputAssemblerInfo,
@@ -170,6 +171,8 @@ export class WebGL2Device extends Device {
 
         const caps = this._caps;
         caps.maxVertexAttributes = glGetParameter(WebGLConstants.MAX_VERTEX_ATTRIBS);
+        caps.maxColorRenderTargets = Math.min(glGetParameter(WebGLConstants.MAX_COLOR_ATTACHMENTS),
+            glGetParameter(WebGLConstants.MAX_DRAW_BUFFERS));
         caps.maxVertexUniformVectors = glGetParameter(WebGLConstants.MAX_VERTEX_UNIFORM_VECTORS);
         // Implementation of WebGL2 in WECHAT browser and Safari in IOS exist bugs.
         // It seems to be related to Safari's experimental features 'WebGL via Metal'.
@@ -545,12 +548,14 @@ export class WebGL2Device extends Device {
     }
 
     public createBuffer (info: Readonly<BufferInfo> | Readonly<BufferViewInfo>): Buffer {
+        assertWebGL2ContextActive(this.gl);
         const buffer = new WebGL2Buffer();
         buffer.initialize(info);
         return buffer;
     }
 
     public createTexture (info: Readonly<TextureInfo> | Readonly<TextureViewInfo>): Texture {
+        assertWebGL2ContextActive(this.gl);
         const texture = new WebGL2Texture();
         texture.initialize(info);
         return texture;
@@ -563,6 +568,7 @@ export class WebGL2Device extends Device {
     }
 
     public createShader (info: Readonly<ShaderInfo>): Shader {
+        assertWebGL2ContextActive(this.gl);
         const shader = new WebGL2Shader();
         shader.initialize(info);
         return shader;
@@ -661,6 +667,7 @@ export class WebGL2Device extends Device {
     }
 
     public copyBuffersToTexture (buffers: Readonly<ArrayBufferView[]>, texture: Texture, regions: Readonly<BufferTextureCopy[]>): void {
+        assertWebGL2ContextActive(this.gl);
         WebGL2CmdFuncCopyBuffersToTexture(
             this,
             buffers,
@@ -670,6 +677,7 @@ export class WebGL2Device extends Device {
     }
 
     public copyTextureToBuffers (texture: Readonly<Texture>, buffers: ArrayBufferView[], regions: Readonly<BufferTextureCopy[]>): void {
+        assertWebGL2ContextActive(this.gl);
         WebGL2CmdFuncCopyTextureToBuffers(
             this,
             (texture as WebGL2Texture).gpuTextureView,
@@ -683,6 +691,7 @@ export class WebGL2Device extends Device {
         texture: Texture,
         regions: Readonly<BufferTextureCopy[]>,
     ): void {
+        assertWebGL2ContextActive(this.gl);
         WebGL2CmdFuncCopyTexImagesToTexture(
             this,
             texImages,

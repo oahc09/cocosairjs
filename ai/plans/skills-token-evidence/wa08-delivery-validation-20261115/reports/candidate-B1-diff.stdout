@@ -1,0 +1,165 @@
+{
+  "schema": 1,
+  "mode": "fixed-scenarios",
+  "status": "PASS",
+  "validation_status": "PASS",
+  "tool_version": "skills-measure-p1-recovery1",
+  "metric_version": "air-document-input-1",
+  "parser_version": "air-markdown-1",
+  "projection_version": "air-routing-1",
+  "snapshot_hash": "6ad321944d86966c945b6ea85a9c3f1b4e1315761c48910f2706941be4f36b80",
+  "source_snapshot_hash": "1e9c6637a512b819e822d8d06ea64d444c1e5640f35c48134f70fe80a5363e19",
+  "scenario_fixture_hash": "37604a27b0a77e634dbfac285bdbaa8c84a10c2c84229b9fd7fe1e23a76c3a85",
+  "loads_hash": "4d5f331821fa7137ed600b6b9366b3af7e5cb61e16d1d25af6b1616559a81922",
+  "l0": {
+    "view": "host-minimal",
+    "rendering": "serializeRoutingRecord(record,host-minimal),name-sort,join-LF",
+    "record_count": 22,
+    "text": "name: cocosair\ndescription: Route AIR tasks by subsystem or visual symptom; choose direct dependencies and check capabilities.\n\nname: cocosair-2d-subsystems\ndescription: Build DragonBones, TiledMap, 2D/3D particles and billboards from runtime data. Use for raw asset strings, missing pixels, MotionStreak or Spine backend limits.\n\nname: cocosair-agent-session\ndescription: Inspect live scenes and frames with devtools; read runtime diagnostics. Use for scoped session writes, pixel probes or duplicate requestId INVALID_ARGUMENT errors.\n\nname: cocosair-animation-tween\ndescription: Animate tweens and AnimationClip tracks with one step clock. Use to loop a sequence on a target, reverseTime, clean up playback or diagnose unavailable pose graphs.\n\nname: cocosair-application\ndescription: Configure createAirApp options, canvas, lifecycle, screen sizing and context health. Use for WEBGL2_REQUIRED startup errors, scene replacement, session cleanup or lost contexts.\n\nname: cocosair-assets\ndescription: Load asset URL textures, atlases and BMFont with AssetBank. Use for refcounted disposal, extension selection, cache reuse or AIR_E_ATLAS_IN_USE/AIR_E_FNT_IN_USE cleanup.\n\nname: cocosair-audio-video\ndescription: Play media with AudioService, VideoPlayer and WebView. Use for silent autoplay, advancing currentTime, BGM/SFX channels or DOM video and iframe overlays.\n\nname: cocosair-camera\ndescription: Configure Camera projection, viewports, framing and screen/world conversion. Use for split-screen, pointer rays, wrong screenToWorld results or AIR_E_ORTHO_WIDTH.\n\nname: cocosair-gltf\ndescription: Load glTF/GLB models, extensions, decoder injection and instances. Use for Draco/meshopt/KTX2 deployment, GLTF_DECODER_MISSING, uncoded load errors or animation loops.\n\nname: cocosair-graphics-and-dom\ndescription: Draw Graphics/SVG shapes and sprite masks; align a DOM overlay with UI/canvas nodes. Use for overlay placement, input interception, experimental HTML textures or AirUIMesh.\n\nname: cocosair-input-action\ndescription: Wire keyboard, mouse, touch and action state; navigate SceneStack pages. Use for focus, held-key resets, session gates, DOM canvas errors or persistent push/pop.\n\nname: cocosair-materials-effects\ndescription: Configure materials, effects, uniforms, defines and GLSL. Diagnose black/invisible effects, missing textures, setProperty, AIR_E_MATERIAL_NOT_READY or AIR_E_MATERIAL_TYPE.\n\nname: cocosair-math\ndescription: Compute vectors, matrices, quaternions, colors and easing. Use for out-first math, frozen Vec3.UP errors, transform composition, rotation units or Mat4.invert.\n\nname: cocosair-performance\ndescription: Optimize draw calls: static merge, instancing, dynamic atlases and GPU morph fields. Frame budgets, on-demand rendering, AIR_E_MESH_CAPACITY, AIR_E_PIXEL_RATIO_IMPORT_ORDER.\n\nname: cocosair-physics\ndescription: Choose builtin, cannon or Box2D physics; wire rigid bodies, colliders and raycasts. Use for missing gravity, trigger filters, backend limits or material error 9642.\n\nname: cocosair-primitives-mesh\ndescription: Build primitive geometry, Mesh buffers and MeshRenderer bindings. Use for vertex attributes, indices, wireframes or AIR_E_PRIMITIVE_DESCRIPTOR validation.\n\nname: cocosair-project-setup\ndescription: Set up npm imports, package entries, importmap, TypeScript and variant builds. Use for cocosair.js installation, unresolved-import errors, page shells or build artifacts.\n\nname: cocosair-rendering\ndescription: Configure lighting, shadows, render targets, MSAA and sRGB. Use for offscreen pixels, post-processing, AIR_E_RENDER_TARGET_SAMPLES or AIR_E_TEXTURE_COLOR.\n\nname: cocosair-scene-graph\ndescription: Build Scene/Node hierarchies, Component lifecycles, layers and events. Use for reparenting, active inheritance, NodePool reuse, scene globals or resource release.\n\nname: cocosair-skinning-morph\ndescription: Bind skeletons, restore bind poses and drive morph weights. Use for realtime/baked deformation, AIR_E_SKINNING_JOINT_PATH or AIR_E_SKINNING_CAPACITY.\n\nname: cocosair-ui-2d\ndescription: Build Canvas UI with sprites, Label text, layout and widgets. Use for missing UI, viewport alignment, 2D draw order, BMFont binding or AIR_E_LABEL_WRAP.\n\nname: cocosair-verification\ndescription: Choose verification gates and assess browser/package evidence, write behavior and fingerprints. Use to validate changes, distinguish FAIL/UNSUPPORTED or check release readiness.\n",
+    "hash": "a5a9dd411b2e6d9562664e12def2089a8b8df038f9c07ae62742d002ceb90660",
+    "chars": 4435,
+    "bytes": 4435,
+    "han_chars": 0,
+    "other_chars": 4435,
+    "estimated_tokens": 1167.1052631578948
+  },
+  "task_count": 1,
+  "valid_task_count": 1,
+  "tasks": [
+    {
+      "task_id": "reading-wa08-delivery-B1-20261115",
+      "line": 1,
+      "started_at": "2026-11-15T13:47:30.192Z",
+      "outcome": "success",
+      "complete": true,
+      "task_kind": null,
+      "scenario_id": "B1",
+      "status": "PASS",
+      "snapshot_hash": "6ad321944d86966c945b6ea85a9c3f1b4e1315761c48910f2706941be4f36b80",
+      "source_snapshot_hash": "1e9c6637a512b819e822d8d06ea64d444c1e5640f35c48134f70fe80a5363e19",
+      "metric_version": "air-document-input-1",
+      "question_hash": "56e885d6561733e853ec6a075cfb7824c3fe15a55f4745b1a354ce37d0f26796",
+      "read_protocol_hash": "15cb41ae79f3c5e9ac24b3812f0f89713e282803479c9f1e4f1f7f74fb6edb0b",
+      "scenario_fixture_hash": "37604a27b0a77e634dbfac285bdbaa8c84a10c2c84229b9fd7fe1e23a76c3a85",
+      "l0_hash": "a5a9dd411b2e6d9562664e12def2089a8b8df038f9c07ae62742d002ceb90660",
+      "l0_received_untruncated": true,
+      "C": 40675,
+      "bytes": 40871,
+      "estimated_tokens": 10737.842105263158,
+      "read_chars": 36240,
+      "read_bytes": 36436,
+      "recorded_C": 40675,
+      "recorded_bytes": 40871,
+      "unique_references": 2,
+      "giant_reference_hit": false,
+      "reads": [
+        {
+          "path": "skills/cocosair/SKILL.md",
+          "content_hash": "c8fe00387e77e1da67891d4cb46ac5a7958fb5a739c437bf9661489d44d45f65",
+          "read_chars": 4087,
+          "read_bytes": 4189,
+          "whole_file": true,
+          "fragments": [],
+          "payload": "payloads/01.txt",
+          "observed_at": "2026-11-15T13:47:40.652Z",
+          "received_complete": true,
+          "received_untruncated": true,
+          "tool_chunk_id": "5742af"
+        },
+        {
+          "path": "skills/cocosair-rendering/SKILL.md",
+          "content_hash": "54141645de2a54ca8029a4522c7275d656c3b52edebd5a1d0a2a277dde5aaab6",
+          "read_chars": 3852,
+          "read_bytes": 3946,
+          "whole_file": true,
+          "fragments": [],
+          "payload": "payloads/02.txt",
+          "observed_at": "2026-11-15T13:47:46.413Z",
+          "received_complete": true,
+          "received_untruncated": true,
+          "tool_chunk_id": "ae5a26"
+        },
+        {
+          "path": "skills/cocosair-rendering/references/lighting-units.md",
+          "content_hash": "4008359e0472e965874a8a164b5d0bc4709c1bca24d08f6b68ae92ecd20132c1",
+          "read_chars": 14228,
+          "read_bytes": 14228,
+          "whole_file": true,
+          "fragments": [],
+          "payload": "payloads/03.txt",
+          "observed_at": "2026-11-15T13:47:51.433Z",
+          "received_complete": true,
+          "received_untruncated": true,
+          "tool_chunk_id": "00b2ea"
+        },
+        {
+          "path": "skills/cocosair-rendering/references/shadow-matrix.md",
+          "content_hash": "9257147cb7f00db9d946ec38b58742f545eb3f414f12789469f4709e40f71d7c",
+          "read_chars": 14073,
+          "read_bytes": 14073,
+          "whole_file": true,
+          "fragments": [],
+          "payload": "payloads/04.txt",
+          "observed_at": "2026-11-15T13:47:59.542Z",
+          "received_complete": true,
+          "received_untruncated": true,
+          "tool_chunk_id": "577df1"
+        }
+      ],
+      "answer_checks": [
+        {
+          "id": "lighting-units",
+          "passed": true,
+          "evidence": "- `DirectionalLight.illuminance` 使用 Lux（lx），组件 HDR 默认值为 65000。HDR 写入为 illuminance × camera.exposure；LDR 使用 illuminanceLDR，不再乘 exposure。`Ambient.skyIllum` 同样在 HDR 乘 camera.exposure，LDR 使用 skyIllumLDR。\n- `PointLight`、`SphereLight`、`SpotLight` 区分 `luminousFlux`（光通量，lm）与 `luminance`（亮度，nt）。`nt2lm(size) = 4 * PI * PI * size * size`；HDR luminousFlux setter 先除以 nt2lm(size)，再按 luminance 写入。Point 的转换固定用 size=1，Sphere/Spot 用各自 size，不能混用尺寸。"
+        },
+        {
+          "id": "exposure-slots",
+          "passed": true,
+          "evidence": "- `DirectionalLight.illuminance` 使用 Lux（lx），组件 HDR 默认值为 65000。HDR 写入为 illuminance × camera.exposure；LDR 使用 illuminanceLDR，不再乘 exposure。`Ambient.skyIllum` 同样在 HDR 乘 camera.exposure，LDR 使用 skyIllumLDR。\n- `PointLight`、`SphereLight`、`SpotLight` 区分 `luminousFlux`（光通量，lm）与 `luminance`（亮度，nt）。`nt2lm(size) = 4 * PI * PI * size * size`；HDR luminousFlux setter 先除以 nt2lm(size)，再按 luminance 写入。Point 的转换固定用 size=1，Sphere/Spot 用各自 size，不能混用尺寸。\n- 三种局部光在 HDR 都写入 luminance × camera.exposure × standardLightMeterScale；`standardLightMeterScale = 10000`，并非仅 Spot 使用。LDR 写入 luminanceLDR；LDR luminousFlux setter 直接保存 LDR 标量。`Camera.standardExposureValue = 1 / 38400`。"
+        },
+        {
+          "id": "main-light",
+          "passed": true,
+          "evidence": "- legacy forward 普通方向光只有一个有效 `renderScene.mainLight`；第二盏普通方向光不会叠加照明，可能出现一次性 `AIR_W_DIRECTIONAL_LIGHT_LIMIT` 警告。用 `inspectAirDirectionalLights(scene)` 检查 `status`、`mainLight`、各项 `effective`，其 ordinaryDirectionalCapacity 为 1。该 inspector 只报告身份，不检验像素，也不覆盖自定义管线或 ranged directionals。"
+        },
+        {
+          "id": "shadow-support",
+          "passed": true,
+          "evidence": "默认 WebGL2 legacy pipeline 的支持边界：\n\n| 光源 | Planar | ShadowMap |\n| --- | --- | --- |\n| 主 DirectionalLight | 沿 mainLight 方向投射到单一平面 | 支持 fixed-area / CSM 路径 |\n| SpotLight | 不是平面投影源 | 有 shadowEnabled 支持路径，但该轮未独立采样验证 |\n| PointLight | 不是平面投影源 | 不支持，AIR_SHADOW_POINT_UNSUPPORTED；没有仓库内 workaround，不能用 Spot 的结果替代 Point 证明 |\n| SphereLight | 不是平面投影源 | 没有默认 sphere shadow 路径 |\n| RangedDirectionalLight | 不是 mainLight 平面投影源 | 此矩阵没有默认主阴影契约 |\n| Ambient | 无 | 无 |"
+        },
+        {
+          "id": "switches-and-bounds",
+          "passed": true,
+          "evidence": "1. 全局 shadows.enabled 为 true，shadows.type 必须为 ShadowType.ShadowMap；ShadowType.Planar=0，ShadowMap=1。默认全局 enabled=false，内部默认 type=2 是 none 状态；不要假设存在可直接用的 ShadowType.None。\n2. 生效的 main DirectionalLight.shadowEnabled=true，默认是 false；额外普通方向光不能代替 mainLight 投影。全局或灯光关闭时可能静默没有阴影，不应依赖警告出现。\n3. 投射物 MeshRenderer.shadowCastingMode = MeshRenderer.ShadowCastingMode.ON；接收物 receiveShadow=true。\n4. 检查模型有效 bounds，缺少有效包围盒会被方向光阴影裁剪队列跳过。"
+        },
+        {
+          "id": "evidence-limits",
+          "passed": true,
+          "evidence": "Planar 路径虽存在，但文档该轮没有得到可判定 ROI 像素变化（AIR_SHADOW_PLANAR_ROI_NOT_VERIFIED）；应记录投影范围、接收平面及 bias 并验证实际像素。Spot 为 AIR_SHADOW_SPOT_RUNTIME_NOT_SAMPLED。主方向光已有的 ShadowMap 像素证据仅对应文档记录的 campfire-night 固定场景与旧指纹，不能据此宣称当前场景通过。"
+        }
+      ],
+      "answer_artifact": {
+        "path": "answer.md",
+        "sha256": "ff7bd1d0e6f503ea93bea374c65336a411399b285292f24b0ad05e5a033a2fdf",
+        "bytes": 4640
+      },
+      "errors": []
+    }
+  ],
+  "errors": [],
+  "diff": {
+    "status": "PASS",
+    "comparisons": [
+      {
+        "scenario_id": "B1",
+        "baseline_C": 85260,
+        "candidate_C": 40675,
+        "reduction": 0.5229298615998124,
+        "required_reduction": 0,
+        "status": "PASS"
+      }
+    ],
+    "errors": [],
+    "phase_two_authorized": false
+  }
+}

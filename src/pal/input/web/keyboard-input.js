@@ -52,7 +52,14 @@ export class KeyboardInputSource {
         const eventKeyboard = new EventKeyboard(keyCode, eventType);
         return eventKeyboard;
     }
+    // Native HTML-in-Canvas descendants keep their browser keyboard defaults.
+    _isDOMDescendant(event) {
+        const host = event.currentTarget;
+        return host?.tagName === 'CANVAS' && event.target !== host && host.contains(event.target);
+    }
     _handleKeyboardDown(event) {
+        if (this._isDOMDescendant(event))
+            return;
         event.stopPropagation();
         event.preventDefault();
         if (!event.repeat) {
@@ -66,8 +73,11 @@ export class KeyboardInputSource {
     }
     _handleKeyboardUp(event) {
         const inputEvent = this._getInputEvent(event, InputEventType.KEY_UP);
-        event.stopPropagation();
-        event.preventDefault();
+        if (!this._isDOMDescendant(event)) {
+            event.stopPropagation();
+            event.preventDefault();
+        }
+        // Preserve keyup delivery so keys held before DOM focus still retire.
         this._eventTarget.emit(InputEventType.KEY_UP, inputEvent);
     }
 }

@@ -1,0 +1,34 @@
+✔ late and out-of-order queries retain submission phase and frame (1.1599ms)
+✔ disjoint discards ready and unresolved pending queries before recovery (0.1437ms)
+✔ disjoint during a draw discards both that draw and earlier pending queries (0.0869ms)
+✔ polling an active disjoint query safely closes and discards it (0.0771ms)
+✔ disjoint before draw skips timing and does not turn prior samples invalid (0.1202ms)
+✔ warmup and drain frames submit no samples; unresolved results remain unavailable (0.1044ms)
+✔ missing contexts, unsupported timers and query allocation failures remain unavailable (0.1348ms)
+✔ invalid timings are rejected but a measured zero remains valid (0.7343ms)
+✔ phase medians enforce the submitted frame window and preserve null for absent evidence (0.1275ms)
+✔ dispose closes active queries, drops pending ones, and does not duplicate deletion (0.142ms)
+✔ collector serializes into the browser without Node dependencies or outer closures (0.9781ms)
+✔ rejected nested region cannot close the outer query and metadata stays bound to the submission (2.8628ms)
+✔ lost context invalidates active and pending work without issuing GL calls or re-admitting restored context (0.7607ms)
+✔ query backpressure is bounded and missing results remain unavailable (0.6512ms)
+✔ missing optional arrays normalize without mutating caller data; source identities differ (1027.1162ms)
+✔ hash and global program collisions fail before registration, independent of input order (0.7582ms)
+✔ explicit effect identity wins; invalid identity never falls back to a name (0.9938ms)
+✔ definite stage/output errors retain stage, path and source line (0.6943ms)
+✔ conditional uncertainty is not PASS or a definite source error (0.1998ms)
+✔ malformed resources, cycles, getters and sparse arrays are bounded refusals, not crashes (0.4591ms)
+✔ accepted builtin payloads assembled through canonical toGlsl3 produce no false definite errors (476.0846ms)
+✔ installed-shaped CLI returns distinct pass/error/unknown exits without DOM (442.4613ms)
+✔ standalone generator emits identical bytes in two clean checkout roots (2123.1661ms)
+✔ signed and unsigned combined samplers retain texture and constructor scalar types (1.0542ms)
+✔ compact layout spelling and sampler function parameters preserve unsigned identity (0.365ms)
+✔ already separate samplers are not rewritten as nonexistent texture types (0.0775ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4713.9874

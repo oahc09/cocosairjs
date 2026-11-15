@@ -43,3 +43,13 @@ GLSL 源位于 `shaders/`。运行 `node examples/water-multipass/generate-effec
 相机 BEGIN 回调晚于模型 UBO 的本帧上传。示例在回调中写入投影相关材质参数后明确执行 `material.passes[].update()`，保证水面、深度重建和查看器使用**本帧**矩阵，避免相机移动或 resize 时读前一帧 UBO。
 
 验证：`node examples/water-multipass/verify-browser.cjs --url=http://127.0.0.1:7454/examples/water-multipass/ --browser=chromium --out=output/water-multipass/chromium`。`--browser` 也支持 `firefox` 与 `webkit`，报告与截图应分别放到各自目录。默认只做独立 GLSL 编译/链接检查；带 URL 才执行真实场景、各通道输出、固定状态、鼠标、雨、resize 和 lifecycle，每次捕获都检查真实 WebGL error queue。CPU 回调计数不代表GPU耗时或屏幕 present 性能。
+
+首帧/多帧验收可不启动开发服务：
+
+```bash
+node examples/water-multipass/verify-browser.cjs --serve --bundle=build/cocosair.module.js --first-frame --out=output/water-new-first-frame
+```
+
+必须提供新 out 目录，拒绝覆盖旧尝试。serve 使用只读本地服务；bundle 校验实际源码绑定并在测试页选择该 SDK。first-frame 仅在采集器内对 app.run 的单一锚点加首帧钩子，不修改磁盘示例：首个场景 AFTER_DRAW 就暂停原生 pacer，保留首次画面，单步到第五帧并逐字节比较，后续控制用同一 step clock。每次 compositor 等待检查帧号未推进；resize 先等待真实 canvas backing size 更新，再单步检查新附件。生命周期阶段显式恢复 native pacing 后执行真实释放/重建。
+
+报告始终是局部 subset；shader-only 不被认定为完整 runtime 成功，也不更新 Gallery 或 canonical campaign。主 SDK、示例输入和所有失败截图/报告必须保留各自身份。

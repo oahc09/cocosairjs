@@ -9,6 +9,11 @@ or failed device initialization rejects `createAirApp()` with error code `WEBGL2
 It must never silently substitute the non-rendering `EmptyDevice`. Explicit `renderMode: 3`
 (`HEADLESS`) remains available for engine tests.
 
+After context loss, late resource creation, uploads, readback and lazy shader compilation
+reject with `WEBGL2_CONTEXT_LOST`. A native restore does not rebuild the engine's resource
+caches; the page remains failed and requires controlled reload. Normal application close
+does not invalidate a healthy shared context. See [GPU lifecycle and asynchronous ownership](guides/gpu-lifecycle.md).
+
 `gfx-webgl` is no longer a declared or default feature, and `WebGLDevice` is no longer
 exported or registered. The `src/cocos/gfx/webgl/` source and retired export-module path
 are retained for upstream extraction provenance; their presence does not establish support.

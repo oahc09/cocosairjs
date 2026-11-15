@@ -20,11 +20,16 @@ async function wait() {
         if (performance.now() - start > 5000) throw new Error('HTML paint timeout');
         await new Promise((r) => requestAnimationFrame(r));
     }
-    display.frame.texture = texture;
+    if (display.frame.texture !== texture) {
+        display.dispose();
+        display = createAirTextureSprite(lab.ui, texture, { name: 'HTML texture surface', size: [256, 256] });
+    } else display.refresh();
     await lab.clock.step();
 }
 async function attach(snapshot = false) {
     if (!support.supported) return;
+    const mode = getAirHTMLSourceSupport(lab.canvas, { snapshot });
+    if (!mode.supported) throw new Error(mode.reason || 'HTML source mode unavailable');
     source?.dispose();
     element?.remove();
     element = document.createElement('div');
@@ -49,11 +54,13 @@ async function attach(snapshot = false) {
         snapshot,
         onUpdate: () => {
             uploads++;
+            if (display.frame.texture === texture) display.refresh();
         },
     });
     await wait();
     const rect = lab.canvas.getBoundingClientRect();
-    source.updateGeometry({ canvasTransform: { a: rect.width / 64, d: rect.height / 64 } });
+    if (support.capabilities.geometry)
+        source.updateGeometry({ canvasTransform: { a: rect.width / 64, d: rect.height / 64 } });
 }
 lab.button('live', () => attach(false));
 lab.button('snapshot', () => attach(true));
@@ -65,10 +72,12 @@ lab.button('color', async () => {
 });
 if (support.supported) {
     await attach();
-    document.getElementById('availability')!.textContent = 'SUPPORTED · 可查看实时 HTML 重绘与不可变快照。';
-} else {
     document.getElementById('availability')!.textContent =
-        'UNSUPPORTED · 此浏览器未提供实验 HTML-in-Canvas API。可在启用实验特性的 Chrome 中查看。';
+        `SUPPORTED · 实时 HTML${support.capabilities.snapshot ? ' 与不可变快照' : ''}` +
+        `${support.capabilities.geometry ? ' · 原生命中' : ' · 仅纹理上传'}`;
+    (document.getElementById('snapshot') as HTMLButtonElement).disabled = !support.capabilities.snapshot;
+} else {
+    document.getElementById('availability')!.textContent = `UNSUPPORTED · ${support.reason}`;
     for (const id of ['live', 'snapshot', 'color']) (document.getElementById(id) as HTMLButtonElement).disabled = true;
     await lab.clock.step();
 }
@@ -115,7 +124,8 @@ lab.expose({
             source.update();
             await wait();
             const rect = lab.canvas.getBoundingClientRect();
-            source.updateGeometry({ canvasTransform: { a: rect.width / 64, d: rect.height / 64 } });
+            if (support.capabilities.geometry)
+                source.updateGeometry({ canvasTransform: { a: rect.width / 64, d: rect.height / 64 } });
         } else await lab.clock.step();
     },
     async test() {

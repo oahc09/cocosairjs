@@ -1,0 +1,8 @@
+{
+  "command": "node ai/plans/skills-token-evidence/recovery/read-trial.cjs init --snapshot C:\\Users\\caosh\\AppData\\Local\\Temp\\air-wa08-delivery-skills-E4wGPP --trial ai/plans/skills-token-evidence/reading-wa08-delivery-B1-20261115",
+  "tool_chunk_id": "44c3f3",
+  "exit_code": 1,
+  "error": "Unknown scenario",
+  "cause": "Incorrect flag-based invocation before positional CLI protocol was supplied",
+  "document_payload_received": false
+}

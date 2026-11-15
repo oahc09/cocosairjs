@@ -1,5 +1,7 @@
 # Cocos AIR 工具
 
+`tools/verify/runtime-interop-android-process-recovery.py` 使用显式 `--termination=am-kill|uid-sigkill`，在确认目标 Activity 为 STOPPED 后终止专用 debug 包的进程，再通过原 task ID 恢复。`runtime-interop-android-process-recovery-audit.py` 离线核验 PID 更换、任务/父会话保留、真实绘制输入、旧记录不变及最终正常拆卸。它验证受控进程终止后的冷恢复，不代表实际 LMK/OOM 或 JS 堆恢复；参数与验收范围见 [Android 互操作](../docs/reference/android-runtime-interop.md)。
+
 `tools/verify/runtime-interop-android-recreate.py` 使用显式 APK/宿主源码、授权设备和新输出目录，调用真实 debug `Activity.recreate()`，默认连续2次、共3个冷启动会话；`runtime-interop-android-recreate-audit.py --report=<closed.json> --out=<new-directory>` 离线独立重算图像、会话血缘、owner顺序、资源和实际退出。报告参数可重复，不连接设备、不改原记录。合同保持同PID并重启场景，不声称任意JS状态持久化。详见 [Android 互操作](../docs/reference/android-runtime-interop.md)。
 
 ## 本地 Agent MCP
@@ -333,6 +335,28 @@ C04 `shaders-input-dissolve-browser.cjs --phase=functional --browser=all --out=<
 
 WebGPU 的冻结 shader/builtin 资产校验、重建、浏览器及安装包命令见 [npm 脚本写入说明](../docs/reference/npm-scripts.md#webgpu-接入的资产写入) 和 [专项验收](../docs/reference/webgpu-acceptance.md)。浏览器采集默认写 `output/webgpu-backend/`；无 adapter 的环境返回 BLOCKED，不自动回退。
 
+`node tools/verify/webgpu-texture-retirement.cjs --bundle=<SDK JS> --out=<新目录>` 验证真实 WebGPU 上 draw/compute 暂存后、native submit 前的纹理 resize/destroy，以及共享旧资源、MSAA resolve、放弃命令、提交异常、30 次 resize 和设备丢失；`--renderer=webgl2` 检查普通纹理 resize/upload/readback。需要可用的 Playwright/Chromium 及相应后端；写新报告，不构建、不修改 canonical evidence、不覆写旧尝试。报告包含像素读回、实际销毁计数、逻辑资源字节、源码/SDK 指纹及 validation errors；不把逻辑字节称为物理 GPU 内存，不是完整视觉或发布验收。
+
+同一探针的 `--init-loss=1` 在首次 translator WASM fetch 期间销毁真实 native device，检查启动以 `WEBGPU_DEVICE_LOST` 结束且不再创建 GPU 资源。它使用独立页面，不尝试在失效 canvas 上切换后端或重试启动。
+
+`--readback-race=resize|close|view|loss` 检查多 region 一致性、源释放与映射取消，保留原始 cause 并验证每份 staging 恰好释放一次；`--asset-terminal=loss|abort` 检查 glTF 图片晚到和 AbortSignal，配合 `--renderer=webgl2` 可检查默认后端，WebGL2 另支持 `--asset-terminal=restored`。`--native-contracts=1` 复用现有原生 mip/layer/步幅/MSAA/MRT/compute 资源回归。各模式均需独立的新输出目录；应用关闭不等于共享 native device 被销毁，见 [GPU 生命周期](../docs/guides/gpu-lifecycle.md)。
+
+`node tools/verify/mrt-attachments.cjs --renderer=webgl2|webgpu --bundle=<SDK JS> --out=<新目录>` 检查混合格式 MRT、未写附件保持、独立混合/写掩码、A→B→A、掩码之后的清屏与精确整数 ID。`--samples=4` 检查合法浮点 MSAA；`--samples=4 --integer-msaa=1` 检查整数 MSAA 的明确拒绝；WebGL2 的 `--without-indexed=1` 是特性缺失负控。只写新报告及测试页，不构建、不覆写 canonical evidence，不将 unsupported 行当成该功能支持；原理与边界见 [MRT 指南](../docs/guides/mrt.md)。
+
+同一 MRT 探针的 `--helper=1` 覆盖资源组、材质实际采样、resize 回滚、深度 LOAD、重复释放和 legacy 单附件绑定。`node tools/verify/mrt-consumer.cjs --out=<新目录>` 编译当前生成主声明的直接文件消费者，包含非法格式和采样数的负例；只写测试源码与报告，不 pack、不重建。
+
+`node tools/verify/mrt-view.cjs --renderer=webgl2|webgpu --bundle=<SDK JS> --out=<新目录>` 驱动独立 MRT 页的实际控件，保存首帧/多帧、三个附件、overlay、resize 和释放/重入的 compositor 与 GPU 数据证明；只用新目录、不重建或发布证据。交互页由 dev server 的 `/__probes/mrt-attachments/` 显式提供，不在普通页面自动加载。布局与整数 sampler 边界见 [MRT 指南](../docs/guides/mrt.md)。
+
+`node tools/verify/gpu-timing.cjs --renderer=webgl2|webgpu --bundle=<SDK JS> --out=<新目录>` 验证原生 GPU 时间戳、区域/Pass/提交身份及不可用终态，保留实际计算/像素与负控；不更新 canonical 性能证据。计时工具独立于默认 runtime，功能与指标边界见 [GPU 计时](../docs/guides/gpu-timing.md)。
+
+`node tools/build/shader-preflight.cjs [--out=<目录>]` 构建无引擎/DOM 依赖的独立 Effect JSON 预检入口、声明与 CLI；默认写 build 的三份可选产物及 metadata 收据。`node --test tools/verify/shader-preflight.test.cjs` 做 CPU 合同回归，保留 output 下的构建和内建报告；`node tools/verify/shader-preflight-package.cjs --out=<新目录>` 生成可选发布文件、打包并离线安装验证。两者不认证主引擎发布副本或 GPU 画面，见 [Shader 预检](../docs/guides/shader-preflight.md)。
+
+`node tools/verify/shader-preflight-browser.cjs --bundle=<SDK JS> --out=<新目录>` 核对独立入口收据与当前主 SDK 源码绑定，在 Chromium WebGL2 经原生 GFX 验证 struct 值语义、early return 和 MRT 精确输出。仅写新测试页/报告，不构建、不更新 canonical evidence，不代表通用 GLSL 编译器或跨浏览器验收。
+
+`node tools/verify/html-source.cjs --channel=chrome --case=live|nested|snapshot|no-snapshot --dpr=1|2 --bundle=<SDK JS> --out=<新目录>` 在选定 Chrome 原生 HTML-in-Canvas 上检查纹理、真实输入、图像方向、resize、compositor 和释放。省略 channel 使用匹配的普通 Chromium；只写新报告/截图，不扩大 unsupported 为功能支持。`--experimental=1` 与 `--keyboard-control=1` 是显式兼容/归因模式，不能代替无绕行的正式结果。见 [HTML 纹理](../docs/guides/html-texture.md)。
+
+已有 graphics-examples 本地采集器支持开发模式 `--id=html-texture-experimental --bundle=<隔离 SDK>`，保留默认四例范围；显式选择单例时报告必为 subset，校验候选源码绑定，并在测试页 importmap 中选择该 SDK。它不更新磁盘 HTML 或 canonical evidence；不能与 --static 混用。
+
 - `node tools/build/build.cjs --format esm --spark`: rebuild the full default feature set plus Spark directly as `build/spark.module.js` and its correctly named map. This increments the build counter once, does not overwrite default/npm copies, and accepts AIR_OUT_DIR for an isolated destination. Do not combine --spark with AIR_FEATURES, --min or SystemJS.
 - `tools/build/startup-binding-patch.cjs`: internal checked PAL adaptation; only pal-source --write changes generated PAL outputs.
 - `node tools/verify/build-layout-consumer.cjs --modern-ts=/path/to/tsc --out=new.json`: real tarball installation, clean/upgrade npm-copy regeneration, recursive exports, single main entry, consumer bundler resolution, and isolated TS4.9/modern subpath checks. Writes build/npm and temporary consumers; optional report refuses overwrite. Does not build runtime JS or change the build number.
@@ -384,6 +408,8 @@ The output directory must not exist. The tool checks all four archives before wr
 ### HDR post-processing pixel regression
 
 `node tools/verify/hdr-post-process.cjs --out=output/hdr-attempt` runs bounded real Chromium calibration and the neon-city controls. Optional `--bundle=<candidate.js>` selects a candidate runtime. Requires Playwright/browser, pngjs and esbuild. Writes a new attempt directory with raw screenshots, source/runtime fingerprints and report; refuses an existing directory and never publishes canonical example evidence. Validates float HDR capture, tone curves, exposure, Bloom spread, resize and release/recreation. Browser close acknowledgement is separate from compositor presentation and OS shutdown evidence.
+
+HDR 的 `--raster-diagnostic=1` 保存原生 HDR/framebuffer、矩阵及 draw/upload 追踪；`--freeze-frame-uniform=1` 必须与其一起使用，仅用于归因。正式路径保持原精确像素断言。水体 `verify-browser.cjs --serve --bundle=<SDK> --first-frame --out=<新目录>` 直接检查首个场景帧、第五帧、光学通道和释放，支持显式选定当前候选。参考渲染器与硬件已知差异、时钟及写入边界见 [画面回归](../docs/guides/visual-regression.md)。
 
 `node tools/verify/hdr-skybox.cjs --out=output/hdr-skybox-attempt` is an asset-free focused regression for stock RGBE skybox capture. Optional `--bundle=<candidate.js>` selects a runtime. It checks linear HDR source pixels, ordinary-camera output, camera alternation, enable/disable, material restoration, and disposal against a constant-radiance mesh control. Each attempt retains raw fingerprints, checks, screenshots and shutdown observations; existing output directories are rejected. This does not publish canonical example evidence or claim a complete browser matrix. See [the skybox capture note](../docs/reference/hdr-skybox-capture.md).
 

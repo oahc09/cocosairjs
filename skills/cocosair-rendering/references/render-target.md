@@ -1,3 +1,21 @@
+# Current MRT and resource lifetime supplement (2026-11-15)
+
+This section supersedes conflicting snapshot-specific statements below; the original inventory remains intact. Await createAirApp() before allocating targets. The main entry exports createAirMRTTarget for native WebGL2 and explicitly selected experimental WebGPU; AirRenderTarget remains the WebGL2 single-color Camera helper. MRT does not automatically add outputs to Forward Camera shaders or supply another render loop.
+
+Use native gfx.Format per colorAttachments entry. RGBA16F/RG16F/R32UI is a supported single-sample recipe on the tested devices; inspect info for actual formats, dimensions, backend and requested/effective samples. Unsupported combinations fail. sampleFallback: 'lower' only permits a lower legal sample count, never another format. Current WebGPU automatic resolve rejects integer and 32-bit-per-component float MSAA; a float MSAA result does not certify integer MSAA.
+
+Pair beginPass/endPass on a caller-owned primary command buffer in try/finally, then end/submit that command. textures are resolved single-sample colors; renderTextures are draw attachments; depth has no implicit single-sample resolve. Unwritten output locations preserve their attachments, but a declared output unassigned on a branch is a shader bug. R32UI needs uint output, usampler sampling and Uint32Array readback; never round IDs through Float32Array. Independent WebGL blend requires OES_draw_buffers_indexed; integer blending is disabled.
+
+Successful resize changes generation and refreshes registered bindTexture material bindings. Reacquire manually retained native resources and compatible PSOs/descriptors. bindTexture supports scalar sampler2D float/normalized views and skips passes without that property; integer attachments require native integer descriptors. Open passes reject resize/dispose. A failed allocation preserves the old target. The target owns its attachments/views, borrows the device, materials and cached samplers, and dispose is idempotent.
+
+WebGPU retirement retains replaced textures until already-recorded unsubmitted pass uses submit or abandon. This is not a queue-wide completion wait. Device loss rejects new work; asynchronous readback publishes only after every region succeeds, preserving cause on failure. WebGL context restoration does not reconstruct AIR caches: reload rather than resuming stale resources. app.close() retains the shared device. Native destroy evidence is not proof of physical resident memory zero.
+
+In a source checkout, use docs/guides/mrt.md and docs/guides/gpu-lifecycle.md. The optional developer page /__probes/mrt-attachments/ shows real color/velocity/integer-ID attachments with overlay, resize and release/rebuild; it is not a Gallery promotion. An installed whole-tree skills copy supplies this guidance, not those checkout tools. Browser evidence remains candidate/backend/device scoped.
+
+---
+
+# Historical single-target inventory
+
 Derived from `src/air/rendering/render-target.ts`, `src/air/rendering/transmission-capture.ts`, `docs/manual/rendering-contracts.md`, `build/cocosair.module.d.ts` (declarations, current lines only), `build/cocosair.module.js`, `tools/verify/rendering-contracts.cjs` (as of 2026-10-09).
 
 ## AirTargetColorFormat

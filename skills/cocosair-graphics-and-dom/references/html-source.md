@@ -1,3 +1,19 @@
+# Current HTML source contract (2026-11-15)
+
+This section supersedes conflicting requirements in the retained dated inventory below. Import from cocosair.js, the single browser runtime entry. Dynamic HTML upload requires canvas.requestPaint and WebGL2 texElementSubImage2D. getAirHTMLSourceSupport(canvas, { snapshot: true }) separately requires captureElementImage; geometry and naturalSize are optional capabilities. Missing geometry does not block upload, but updateGeometry rejects with AIR_E_HTML_SOURCE_GEOMETRY_UNSUPPORTED. Old texElementImage2D alone remains unsupported. Capability presence is not proof of healthy context or successful painting.
+
+Elements may be nested under their owning canvas; the nearest canvas must match, and duplicate sources/cross-inner-canvas ownership remain errors. Default size prefers native backing-pixel naturalSize, otherwise CSS offset size times DPR. Explicit resolution is a CSS multiplier; do not multiply native backing size by DPR again. Geometry transforms use CSS pixels and must be updated after layout/projection changes, after paint is ready. Regular primitives.quad UV V runs upward while DOM images start at the top: match geometry UVs; do not also flip UI SpriteFrame uploads.
+
+First paint/resize can reset Texture2D's native allocation. Rebind MeshRenderer material properties in onUpdate, or refresh the existing createAirTextureSprite display. The source borrows the texture and owns paint listeners, captured ElementImage, its geometry and attribute leases. Dispose source before business-owned display/texture/DOM; shared resources retain their original owners. Snapshot freezes image and dimensions and closes once. Synchronous repaint errors enter failed and can be retried, not permanent waiting.
+
+Canvas descendant input controls retain browser keyboard defaults; their keydown does not become a game press. Keyup still retires an earlier held game key without canceling DOM defaults. Direct canvas keys and explicit forwarding keep their contracts. Verify actual focus, typed text and changed GPU glyph pixels; do not treat only dispatched events as success or add a stopPropagation workaround as acceptance.
+
+Actual desktop Chrome 157 supported live/nested/snapshot and DPR1/2 probes. Ordinary Chromium 151 was unsupported; a controlled hidden-capture test proved dynamic independence, not that Chrome naturally lacks capture. No mobile or universal-browser support is inferred. At paused screenshot time render on the native paint boundary, then inspect compositor pixels independently of texture readback. Checkout docs/guides/html-texture.md supplies commands; a copied skills tree does not install browsers or collectors.
+
+---
+
+# Historical HTML source inventory
+
 Derived from src/air/html-source.ts, docs/manual/graphics-and-dom.md, and build/cocosair.module.js (as of 2026-10-10)
 
 # Experimental HTML-in-canvas textures

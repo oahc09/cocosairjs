@@ -113,6 +113,32 @@ describe('PG-28 native backend adapter (real engine dispatch chain)', () => {
         adapter.dispose();
     });
 
+    test('HTML-in-Canvas keeps DOM keyboard defaults while keyup retires a previously held engine key', () => {
+        const { state, adapter } = nativeSetup();
+        const editable = document.createElement('input');
+        canvasEl().appendChild(editable);
+        const rawDown = jest.fn();
+        inputMod.input.on(inputMod.Input.EventType.KEY_DOWN, rawDown);
+        adapter.attach();
+        key('keydown', 'KeyA');
+        expect(state.held('fire')).toBe(true);
+        rawDown.mockClear();
+        const down = new KeyboardEvent('keydown', { code: 'KeyB', bubbles: true, cancelable: true });
+        const up = new KeyboardEvent('keyup', { code: 'KeyA', bubbles: true, cancelable: true });
+        try {
+            editable.dispatchEvent(down);
+            editable.dispatchEvent(up);
+            expect(down.defaultPrevented).toBe(false);
+            expect(up.defaultPrevented).toBe(false);
+            expect(rawDown).not.toHaveBeenCalled();
+            expect(state.held('fire')).toBe(false);
+        } finally {
+            adapter.dispose();
+            inputMod.input.off(inputMod.Input.EventType.KEY_DOWN, rawDown);
+            editable.remove();
+        }
+    });
+
     test('duplicate KEY_DOWN without repeat is deduped by the (action, source) contract', () => {
         const { state, adapter } = nativeSetup();
         adapter.attach();

@@ -123,16 +123,22 @@ import { getAirHTMLSourceSupport, createAirHTMLSource } from 'cocosair.js';
 
 const support = getAirHTMLSourceSupport(canvas);
 if (support.supported) {
-    canvas.appendChild(formElement); // 必须是直接子节点。
-    const source = createAirHTMLSource({ canvas, element: formElement, texture,
-        autoUpdate: true, onError: console.error });
+    canvas.appendChild(formElement); // 也可嵌套在 canvas 内；最近的 canvas 必须是当前所有者。
+    let source: ReturnType<typeof createAirHTMLSource> | undefined;
+    source = createAirHTMLSource({ canvas, element: formElement, texture,
+        autoUpdate: true, onError: console.error,
+        onUpdate: () => {
+            if (support.capabilities.geometry)
+                source?.updateGeometry({ canvasTransform: { a: 1, d: 1, e: 100, f: 50 } });
+        } });
     source.update(); // 请求 paint；通过 source.status 或 onUpdate 检查完成。
-    source.updateGeometry({ canvasTransform: { a: 1, d: 1, e: 100, f: 50 } });
-    source.dispose(); // 移除监听、清理 geometry/快照；不释放 texture/DOM。
+    // 场景关闭时调用 source.dispose()：移除监听、清理 geometry/快照；不释放 texture/DOM。
 }
 ```
 
-texture 必须是当前 canvas 对应 WebGL2 设备创建的单 mip RGBA8 原生 Texture2D。调用者持有它；尺寸由源的布局与 resolution 更新。默认 autoUpdate=true；snapshot=true 捕获一次不可变 ElementImage，后续 update 复用快照。
+texture 必须是当前 canvas 对应 WebGL2 设备创建的单 mip RGBA8 原生 Texture2D。调用者持有它；默认优先采用浏览器的自然 backing size，显式 resolution 则按 CSS 尺寸乘该倍率。默认 autoUpdate=true；snapshot=true 捕获一次不可变 ElementImage，后续 update 复用快照。快照可先用 `getAirHTMLSourceSupport(canvas, { snapshot: true })` 单独查询，缺 captureElementImage 不阻断动态上传。
+
+源可能因尺寸变化调用 texture.reset，消费者应在 onUpdate 中刷新 SpriteFrame，或重新 setProperty 绑定材质；示例使用 createAirTextureSprite 返回的 refresh()。完整的尺寸、UV、命中、资源所有权和真实浏览器验证范围见 [HTML 纹理指南](../guides/html-texture.md)。
 
 HTML 纹理接口由完整主引擎导出，不再提供独立子路径。未提供浏览器实验 API 时 `AIR_E_HTML_SOURCE_UNSUPPORTED` 在 DOM/纹理修改前抛出。异步上传错误保存在 error，status 为 failed；调用 update 可重试。context lost、元素移出 canvas、零尺寸或非法 GPU 纹理明确失败。
 
@@ -181,4 +187,4 @@ node tools/verify/graphics-and-dom.cjs --browser=chromium --channel=chrome --exp
 
 HTML 实验 API 正在迁移。模块同时兼容旧 `layoutsubtree` 与新 `content="drawable"` 属性，并使用具备预分配能力的 `texElementSubImage2D`。不支持仅有旧 `texElementImage2D` 的浏览器。变更来源见 [Chrome API 迁移说明](https://developer.chrome.com/blog/html-in-canvas-ot-changes)。本轮系统 Chrome 的实际结果以执行计划链接的 JSON 为准；默认浏览器中的 UNSUPPORTED 不会转换成实验功能通过。
 
-WebGPU transient MSAA 仍未实现：当前 WebGPU 子图缺少公开后端接线及外部编译资产，见 [上游记录](../UPSTREAM.md)。建立新后端、对应 shader 管线和跨浏览器合同后才能评估 transient attachments；WebGL2 resolve 不提供同一机制。
+WebGPU 已有显式实验后端和普通 MSAA 路径，但 transient attachments 尚无公开合同；不能用普通 MSAA 或 WebGL2 resolve 结果替代其验收。范围见 [WebGPU 指南](../guides/webgpu.md)和 [MRT/MSAA](../guides/mrt.md)。

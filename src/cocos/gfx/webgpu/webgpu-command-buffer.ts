@@ -77,6 +77,7 @@ import { WebGPUDeviceManager } from './define';
 import { WebGPUSwapchain } from './webgpu-swapchain';
 import { WebGPUPipelineLayout } from './webgpu-pipeline-layout';
 import { error, errorID } from '../../core';
+import { beginWebGPUResourceUse } from '../../../air/rendering/webgpu-resource-lifetime';
 
 export interface IWebGPUDepthBias {
     constantFactor: number;
@@ -150,6 +151,18 @@ export class WebGPUCommandBuffer extends CommandBuffer {
 
     private _renderPassFuncQueue: ((renPassEncoder: GPURenderPassEncoder) => void)[] = [];
     private _computeFuncQueue: ((computePassEncoder: GPUComputePassEncoder) => void)[] = [];
+    private _releaseRenderResources: (() => void) | null = null;
+    private _releaseComputeResources: (() => void) | null = null;
+
+    private _discardPendingPasses (): void {
+        this._renderPassFuncQueue.length = 0;
+        this._computeFuncQueue.length = 0;
+        this._isInRenderPass = false;
+        this._nativePassDesc = null;
+        this._releaseRenderResources?.();
+        this._releaseComputeResources?.();
+        this._releaseRenderResources = this._releaseComputeResources = null;
+    }
 
     public initialize (info: CommandBufferInfo): boolean {
         this._type = info.type;
@@ -168,6 +181,7 @@ export class WebGPUCommandBuffer extends CommandBuffer {
     }
 
     public destroy (): void {
+        this._discardPendingPasses();
         if (this._webGPUAllocator) {
             this._webGPUAllocator.clearCmds(this.cmdPackage);
             this._webGPUAllocator = null;
@@ -175,6 +189,7 @@ export class WebGPUCommandBuffer extends CommandBuffer {
     }
 
     public begin (renderPass?: RenderPass, subpass?: number, frameBuffer?: Framebuffer): void {
+        this._discardPendingPasses();
         if (WebGPUDeviceManager.instance.isLost) throw new Error('WEBGPU_DEVICE_LOST');
         this._webGPUAllocator!.clearCmds(this.cmdPackage);
         renderAreas.length = 0;
@@ -216,6 +231,7 @@ export class WebGPUCommandBuffer extends CommandBuffer {
         clearDepth: number,
         clearStencil: number,
     ): void {
+        if (this._isInRenderPass) throw new Error('WEBGPU_RENDER_PASS_NOT_ENDED');
         this.submitComputePass();
         const device = WebGPUDeviceManager.instance;
         if (device.isLost) throw new Error('WEBGPU_DEVICE_LOST');
@@ -290,28 +306,33 @@ export class WebGPUCommandBuffer extends CommandBuffer {
             });
         }
 
+        this._releaseRenderResources = beginWebGPUResourceUse(device.nativeDevice!);
         this._isInRenderPass = true;
     }
 
     public endRenderPass (): void {
+        if (!this._isInRenderPass || !this._nativePassDesc) throw new Error('WEBGPU_RENDER_PASS_NOT_STARTED');
         const device = WebGPUDeviceManager.instance;
-        const nativeDevice = (device).nativeDevice!;
-        const cmdEncoder = nativeDevice.createCommandEncoder();
-        const passEncoder = cmdEncoder.beginRenderPass(this._nativePassDesc!);
-        this._renderPassFuncQueue.forEach((cb) => {
-            cb(passEncoder);
-        });
-
-        passEncoder.end();
-        nativeDevice?.queue.submit([cmdEncoder.finish()]);
-        let idx = 0;
-        for (const attachment of this._nativePassDesc!.colorAttachments) {
-            attachment!.loadOp = this._wgpuRenderPass.gpuRenderPass.originalRP!.colorAttachments[idx].loadOp;
-            idx++;
+        try {
+            if (device.isLost) throw new Error('WEBGPU_DEVICE_LOST');
+            const nativeDevice = device.nativeDevice!;
+            const cmdEncoder = nativeDevice.createCommandEncoder();
+            const passEncoder = cmdEncoder.beginRenderPass(this._nativePassDesc!);
+            this._renderPassFuncQueue.forEach((cb) => { cb(passEncoder); });
+            passEncoder.end();
+            nativeDevice.queue.submit([cmdEncoder.finish()]);
+        } finally {
+            let idx = 0;
+            for (const attachment of this._nativePassDesc!.colorAttachments) {
+                attachment!.loadOp = this._wgpuRenderPass.gpuRenderPass.originalRP!.colorAttachments[idx].loadOp;
+                idx++;
+            }
+            this._isInRenderPass = false;
+            this._isStateValid = false;
+            this._renderPassFuncQueue.length = 0;
+            this._releaseRenderResources?.();
+            this._releaseRenderResources = null;
         }
-        this._isInRenderPass = false;
-        this._isStateValid = false;
-        this._renderPassFuncQueue.length = 0;
     }
 
     public bindPipelineState (pipelineState: PipelineState): void {
@@ -649,25 +670,30 @@ export class WebGPUCommandBuffer extends CommandBuffer {
             else passEncoder.dispatchWorkgroups(groupCountX, groupCountY, groupCountZ);
         };
         this._computeFuncQueue.push(func);
+        this._releaseComputeResources ??= beginWebGPUResourceUse(WebGPUDeviceManager.instance.nativeDevice!);
         ++this._numDispatches;
         this._isStateValid = false;
     }
 
     public submitComputePass (): void {
-        if (WebGPUDeviceManager.instance.isLost) throw new Error('WEBGPU_DEVICE_LOST');
         if (this._computeFuncQueue.length === 0) {
+            if (WebGPUDeviceManager.instance.isLost) throw new Error('WEBGPU_DEVICE_LOST');
             return;
         }
         const device = WebGPUDeviceManager.instance;
-        const nativeDevice = device.nativeDevice!;
-        const cmdEncoder = nativeDevice.createCommandEncoder();
-        const computePassEncoder = cmdEncoder.beginComputePass();
-        this._computeFuncQueue.forEach((cb) => {
-            cb(computePassEncoder);
-        });
-        computePassEncoder.end();
-        nativeDevice.queue.submit([cmdEncoder.finish()]);
-        this._computeFuncQueue.length = 0;
+        try {
+            if (device.isLost) throw new Error('WEBGPU_DEVICE_LOST');
+            const nativeDevice = device.nativeDevice!;
+            const cmdEncoder = nativeDevice.createCommandEncoder();
+            const computePassEncoder = cmdEncoder.beginComputePass();
+            this._computeFuncQueue.forEach((cb) => { cb(computePassEncoder); });
+            computePassEncoder.end();
+            nativeDevice.queue.submit([cmdEncoder.finish()]);
+        } finally {
+            this._computeFuncQueue.length = 0;
+            this._releaseComputeResources?.();
+            this._releaseComputeResources = null;
+        }
     }
 
     protected bindStates (): void {

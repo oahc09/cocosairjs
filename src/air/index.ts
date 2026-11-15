@@ -63,6 +63,7 @@ export * from './assets/atlas/atlas-loader';
 export * from './rendering/transmission-capture';
 export { createAirUnlitFogEffect } from './effects/unlit-fog';
 export * from './rendering/render-target';
+export * from './rendering/mrt-target';
 export * from './rendering/screen-effect';
 export * from './rendering/screen-pass';
 export * from './rendering/post-process';

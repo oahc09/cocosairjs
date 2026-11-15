@@ -1,3 +1,17 @@
+# Current candidate and visual evidence supplement (2026-11-15)
+
+Keep API/source, actual bundle/package, GPU results and compositor presentation as separate claims. Record exact SDK JS/map/source receipt, optional entry build receipt, test source, browser version, renderer/backend/features and raw attempt identity. Concurrent edits can invalidate an otherwise successful candidate; rebuild a fresh candidate rather than relabeling old hashes. A failed build that wrote a file is still failed. An installed optional preflight consumer does not certify freshness of main runtime publication copies.
+
+For deterministic visual checks pause native pacing, advance one step clock and preserve first-frame versus later-frame images. Screenshot settlement must not advance the scene clock. Numeric HDR/readback, same-frame repeated readback and a visible compositor screenshot answer different questions. CPU submission, GPU Pass sum, GPU timestamp span, completion wait and continuous present intervals are separate axes. Missing timing support is unavailable, not zero; a valid quantized zero alone proves no frame-rate target.
+
+Retain failed retries and explicit unsupported branches. A scoped Chromium/WebGPU or Chrome HTML probe cannot fill other-browser, mobile or full-campaign gaps. Current Intel ANGLE D3D11 HDR exact redraw equality remains open despite a passing explicit SwiftShader reference profile. Do not clear it by deleting the comparison, changing tolerance or promoting software results to hardware acceptance. Water/MRT scene passes and their native release checks are independent scoped claims.
+
+Resource evidence distinguishes cleanup callbacks, queued destruction, invalid objects, actual native destroy calls and intentionally retained shared caches. Native release does not prove physical residency zero. Skills P1/B1 proves preservation/routing/document-answer behavior for a frozen skills snapshot, not runtime rendering or a billing-token benchmark. Unknown preflight is not a GPU PASS. Checkout guides: docs/guides/visual-regression.md, gpu-timing.md and gpu-lifecycle.md; installed guidance alone does not ship the checkout tooling.
+
+---
+
+# Historical verification layers
+
 Derived from `docs/reference/verification.md`, `docs/reference/example-specification.md`, `tools/verify/verify-feature-exports.cjs`, `tools/verify/verify-custom-exports.cjs`, `tools/verify/example-spec-browser.cjs`, `tools/verify/devtools-examples.cjs`, `tools/verify/release-readiness.cjs`, `tools/examples/coverage-report.cjs` (as of 2026-10-10).
 
 Cocos AIR verification answers three different questions. An agent that collapses them will over-claim, so keep each claim tied to the layer that actually produced it.

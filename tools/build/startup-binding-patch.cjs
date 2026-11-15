@@ -60,6 +60,28 @@ exports.patchStartupBinding = (source, file) => {
                 "import { KeyboardCallback } from 'pal/input';",
                 "import { KeyboardCallback } from 'pal/input';\nimport { screenAdapter } from 'pal/screen-adapter';",
             );
+            replace(
+                '    private _handleKeyboardDown (event: KeyboardEvent): void {',
+                `    // Native HTML-in-Canvas descendants keep their browser keyboard defaults.
+    private _isDOMDescendant (event: KeyboardEvent): boolean {
+        const host = event.currentTarget as HTMLCanvasElement | null;
+        return host?.tagName === 'CANVAS' && event.target !== host && host.contains(event.target as Node);
+    }
+
+    private _handleKeyboardDown (event: KeyboardEvent): void {
+        if (this._isDOMDescendant(event)) return;`,
+            );
+            replace(
+                `        const inputEvent = this._getInputEvent(event, InputEventType.KEY_UP);
+        event.stopPropagation();
+        event.preventDefault();`,
+                `        const inputEvent = this._getInputEvent(event, InputEventType.KEY_UP);
+        if (!this._isDOMDescendant(event)) {
+            event.stopPropagation();
+            event.preventDefault();
+        }
+        // Preserve keyup delivery so keys held before DOM focus still retire.`,
+            );
         }
         replace(
             '    constructor () {',

@@ -1,0 +1,6 @@
+
+> cocosair.js@1.0.0 verify:doc-refs
+> node tools/verify/verify-doc-refs.cjs
+
+{"ok":false,"docs":274,"refsChecked":2093,"skippedCounts":{"glob":45,"external":0,"outOfRepo":0,"removedEvidence":48,"removedAudit":1},"baseline":{"entries":1,"hits":1},"unresolvedCount":1,"staleBaselineCount":0}
+  ! R1 新断链（不在棘轮基线内）：docs/reference/android-runtime-interop.md -> build/runtime-interop-android.cjs

@@ -5,23 +5,47 @@ const fs = require('node:fs'),
 const { startExampleServer } = require('./competitive-example-server.cjs');
 const { launchOptions } = require('./browser-engines.cjs');
 const root = path.resolve(__dirname, '../..');
-const ids = ['graphics-svg-paints', 'sprite-mask-blend', 'dom-overlay-texture', 'html-texture-experimental'];
+const allIds = ['graphics-svg-paints', 'sprite-mask-blend', 'dom-overlay-texture', 'html-texture-experimental'];
 async function main() {
     const args = process.argv.slice(2),
         out = args.find((v) => v.startsWith('--out='))?.slice(6),
         selected = args.find((v) => v.startsWith('--browser='))?.slice(10) ?? 'all';
+    const selectedId = args.find((v) => v.startsWith('--id='))?.slice(5);
+    const bundleArg = args.find((v) => v.startsWith('--bundle='))?.slice(9);
+    const ids = selectedId ? [selectedId] : allIds;
+    assert(
+        ids.every((id) => allIds.includes(id)),
+        'Unknown example ID',
+    );
+    assert(!bundleArg || !args.includes('--static'), 'Custom bundles are development-only');
+    const bundle = path.resolve(root, bundleArg || 'build/cocosair.module.js');
+    assert(bundle.startsWith(root + path.sep), 'SDK must be inside this checkout');
+    const bundleLogical = path.relative(root, bundle).replace(/\\/g, '/');
+    const sourceBinding = bundleArg ? require('../build/source-binding.cjs').verifySourceBinding(root, bundle) : null;
+    if (sourceBinding) assert.equal(sourceBinding.matches, true, 'Custom candidate must match current sources');
     assert(out && !fs.existsSync(path.resolve(root, out)), '--out=<new.json> required');
     assert(
-        args.every((v) => /^(?:--out=|--browser=|--channel=chrome$|--experimental-html$|--static$|--mobile$)/.test(v)),
+        args.every((v) =>
+            /^(?:--out=|--browser=|--id=|--bundle=|--channel=chrome$|--experimental-html$|--static$|--mobile$)/.test(v),
+        ),
         'unknown argument',
     );
     const engines = selected === 'all' ? ['chromium', 'firefox', 'webkit'] : [selected];
     assert(engines.every((v) => ['chromium', 'firefox', 'webkit'].includes(v)));
-    const files = ['build/cocosair.module.js', 'src/air/texture-sprite.ts', 'examples/shared/capability-lab.ts', 'examples/shared/capability-lab.css', 'tools/verify/graphics-examples.cjs', 'tools/verify/gallery-artifact.cjs', 'tools/verify/competitive-example-server.cjs', ...ids.flatMap((id) => [
+    const files = [
+        bundleLogical,
+        'src/air/texture-sprite.ts',
+        'examples/shared/capability-lab.ts',
+        'examples/shared/capability-lab.css',
+        'tools/verify/graphics-examples.cjs',
+        'tools/verify/gallery-artifact.cjs',
+        'tools/verify/competitive-example-server.cjs',
+        ...ids.flatMap((id) => [
             `examples/${id}/src/main.ts`,
             `examples/${id}/index.html`,
             `examples/${id}/example.json`,
-        ])];
+        ]),
+    ];
     const hash = (f) =>
             crypto
                 .createHash('sha256')
@@ -108,6 +132,15 @@ async function main() {
                         if (!staticDirectory)
                             await page.route('**/src/main.ts', (route) =>
                                 route.fulfill({ contentType: 'text/javascript', body: built.outputFiles[0].text }),
+                            );
+                        if (bundleArg)
+                            await page.route(`**/examples/${id}/`, (route) =>
+                                route.fulfill({
+                                    contentType: 'text/html',
+                                    body: fs
+                                        .readFileSync(path.join(root, `examples/${id}/index.html`), 'utf8')
+                                        .replace('/build/cocosair.module.js', '/' + bundleLogical),
+                                }),
                             );
                         await page.goto(`${server.origin}/${staticDirectory ? '' : 'examples/'}${id}/`);
                         await page.waitForFunction(() => window.__exampleProbe?.ready, null, { timeout: 60000 });
@@ -256,7 +289,9 @@ async function main() {
                 endedAt: new Date().toISOString(),
                 fingerprints,
                 drift,
-                subset: engines.length !== 3,
+                subset: engines.length !== 3 || ids.length !== allIds.length,
+                bundle: bundleLogical,
+                sourceBinding,
                 scope: ids,
                 deployment: staticDirectory ? 'static-gallery' : 'development',
                 initialViewport: args.includes('--mobile') ? 'mobile' : 'desktop',

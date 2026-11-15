@@ -26,7 +26,8 @@ import { PipelineState, PipelineStateInfo } from '../base/pipeline-state';
 import { IWebGPUGPUInputAssembler, IWebGPUGPUPipelineState } from './webgpu-gpu-objects';
 import { WebGPURenderPass } from './webgpu-render-pass';
 import { WebGPUShader } from './webgpu-shader';
-import { BlendFactor, BlendOp, CullMode, DynamicStateFlagBit, Format, FormatInfos, PipelineBindPoint, PrimitiveMode, ShaderStageFlagBit } from '../base/define';
+import { BlendFactor, BlendOp, CullMode, DynamicStateFlagBit, Format, FormatInfos, FormatType, PipelineBindPoint, PrimitiveMode, ShaderStageFlagBit } from '../base/define';
+import { reflectWGSLFragmentOutputs } from '../../../air/rendering/shader-output-interface';
 import { DescriptorSet } from '../base/descriptor-set';
 import { WebGPUDescriptorSet } from './webgpu-descriptor-set';
 import { WebGPUDescriptorSetLayout } from './webgpu-descriptor-set-layout';
@@ -210,24 +211,36 @@ export class WebGPUPipelineState extends PipelineState {
             const colorAttachments = this._renderPass.colorAttachments;
             const colorDescs: GPUColorTargetState[] = [];
             const colAttachmentSize = colorAttachments.length;
+            const fragment = shaderStages.find((stage) => stage.type === ShaderStageFlagBit.FRAGMENT);
+            const outputs = fragment ? reflectWGSLFragmentOutputs(fragment.source, fragment.gpuShader?.entryPoint || 'main')
+                : { status: 'unknown' as const, reason: 'Fragment stage was not found.' };
+            if (colAttachmentSize > 1 && outputs.status === 'unknown') {
+                throw Object.assign(new Error(`Cannot determine fragment outputs for MRT: ${outputs.reason}`),
+                    { code: 'AIR_E_FRAGMENT_OUTPUTS_UNKNOWN', shader: gpuShader.name, stage: 'fragment' });
+            }
             for (let i = 0; i < colAttachmentSize; i++) {
+                const target = this._bs.targets[this._bs.isIndepend ? i : 0];
+                if (!target) throw new Error(`WEBGPU_BLEND_TARGET_MISSING: ${i}`);
+                const writes = outputs.status === 'unknown' || outputs.locations.includes(i);
+                const formatType = FormatInfos[colorAttachments[i].format].type;
+                const integer = formatType === FormatType.INT || formatType === FormatType.UINT;
                 const colDesc: GPUColorTargetState = {
                     format: GFXFormatToWGPUFormat(colorAttachments[i].format),
-                    writeMask: WebGPUBlendMask(this._bs.targets[i].blendColorMask),
+                    writeMask: writes ? WebGPUBlendMask(target.blendColorMask) : 0,
                 };
-                if (this._bs.targets[i].blend) {
-                    const colorMinMax = this._bs.targets[i].blendEq === BlendOp.MIN || this._bs.targets[i].blendEq === BlendOp.MAX;
-                    const alphaMinMax = this._bs.targets[i].blendAlphaEq === BlendOp.MIN || this._bs.targets[i].blendAlphaEq === BlendOp.MAX;
+                if (writes && target.blend && !integer) {
+                    const colorMinMax = target.blendEq === BlendOp.MIN || target.blendEq === BlendOp.MAX;
+                    const alphaMinMax = target.blendAlphaEq === BlendOp.MIN || target.blendAlphaEq === BlendOp.MAX;
                     colDesc.blend = {
                         color: {
-                            dstFactor: colorMinMax ? 'one' : WebGPUBlendFactors[this._bs.targets[i].blendDst],
-                            operation: WebGPUBlendOps[this._bs.targets[i].blendEq],
-                            srcFactor: colorMinMax ? 'one' : WebGPUBlendFactors[this._bs.targets[i].blendSrc],
+                            dstFactor: colorMinMax ? 'one' : WebGPUBlendFactors[target.blendDst],
+                            operation: WebGPUBlendOps[target.blendEq],
+                            srcFactor: colorMinMax ? 'one' : WebGPUBlendFactors[target.blendSrc],
                         },
                         alpha: {
-                            dstFactor: alphaMinMax ? 'one' : WebGPUBlendFactors[this._bs.targets[i].blendDstAlpha],
-                            operation: WebGPUBlendOps[this._bs.targets[i].blendAlphaEq],
-                            srcFactor: alphaMinMax ? 'one' : WebGPUBlendFactors[this._bs.targets[i].blendSrcAlpha],
+                            dstFactor: alphaMinMax ? 'one' : WebGPUBlendFactors[target.blendDstAlpha],
+                            operation: WebGPUBlendOps[target.blendAlphaEq],
+                            srcFactor: alphaMinMax ? 'one' : WebGPUBlendFactors[target.blendSrcAlpha],
                         },
                     };
                 }

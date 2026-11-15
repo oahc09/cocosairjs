@@ -36,10 +36,19 @@ async function preparePackage() {
 
     await require('./math-module.cjs').buildMathModule(root, buildDir);
     fs.copyFileSync(path.join(buildDir, 'cocosair.math.js'), path.join(packageDir, 'cocosair.math.js'));
+    await require('./shader-preflight.cjs').buildShaderPreflight(root, buildDir);
+    for (const file of ['shader-preflight.js', 'shader-preflight-cli.cjs'])
+        fs.copyFileSync(path.join(buildDir, file), path.join(packageDir, file));
 
     const unexpected = fs
         .readdirSync(packageDir)
-        .filter((name) => !bundles.includes(name) && !['webgpu', 'box2d3', 'cocosair.math.js'].includes(name));
+        .filter(
+            (name) =>
+                !bundles.includes(name) &&
+                !['webgpu', 'box2d3', 'cocosair.math.js', 'shader-preflight.js', 'shader-preflight-cli.cjs'].includes(
+                    name,
+                ),
+        );
     if (unexpected.length) {
         throw new Error(`Unexpected files in ${path.relative(root, packageDir)}: ${unexpected.join(', ')}`);
     }

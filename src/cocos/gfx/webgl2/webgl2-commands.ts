@@ -24,9 +24,13 @@
 
 import { systemInfo } from 'pal/system-info';
 import { shaderDiagnostic } from '../../../air/rendering/shader-diagnostics';
+import { assertWebGL2ContextActive } from '../../../air/rendering/webgl2-context-health';
+import { validateIntegerAttachmentClear } from '../../../air/rendering/attachment-clear';
+import { registerWebGL2Attachments, forgetWebGL2Attachments, beginWebGL2AttachmentPass,
+    invalidateWebGL2IndexedBlend, applyWebGL2AttachmentOutputs } from '../../../air/rendering/webgl2-attachment-state';
 import {
     BufferUsageBit, ColorMask, CullMode, DynamicStateFlagBit, Filter, Format, TextureType, Type, FormatInfo,
-    FormatInfos, FormatType, FormatSize, LoadOp, MemoryUsageBit, SampleCount, ShaderStageFlagBit, TextureFlagBit,
+    FormatInfos, FormatType, FormatFeatureBit, FormatSize, LoadOp, MemoryUsageBit, SampleCount, ShaderStageFlagBit, TextureFlagBit,
     Color, Rect, BufferTextureCopy, BufferSource, DrawInfo, IndirectBuffer, UniformBlock, DynamicStates,
     UniformSamplerTexture, alignTo, Extent, formatAlignment, getTypedArrayConstructor, Offset, TextureBlit,
 } from '../base/define';
@@ -68,17 +72,9 @@ const max = Math.max;
 const min = Math.min;
 
 function validateIntegerClear (format: Format, color: Readonly<Color>): void {
-    const info = FormatInfos[format];
-    if (info.type !== FormatType.INT && info.type !== FormatType.UINT) return;
-    const values = [color.x, color.y, color.z, color.w];
-    for (let c = 0; c < info.count; ++c) {
-        const bits = format === Format.RGB10A2UI ? (c === 3 ? 2 : 10) : info.size * 8 / info.count;
-        const lower = info.type === FormatType.INT ? -(2 ** (bits - 1)) : 0;
-        const upper = info.type === FormatType.INT ? 2 ** (bits - 1) - 1 : 2 ** bits - 1;
-        if (!Number.isInteger(values[c]) || values[c] < lower || values[c] > upper) {
-            throw new RangeError(`WEBGL2_INTEGER_CLEAR_RANGE: ${info.name} channel ${c}`);
-        }
-    }
+    const type = FormatInfos[format].type;
+    if (type !== FormatType.INT && type !== FormatType.UINT) return;
+    validateIntegerAttachmentClear(format, [color.x, color.y, color.z, color.w], 'WEBGL2_INTEGER_CLEAR_RANGE');
 }
 
 function bindVertexAttribute (
@@ -692,6 +688,7 @@ const WebGLBlendFactors: GLenum[] = [
 ];
 
 export function WebGL2CmdFuncCreateBuffer (device: WebGL2Device, gpuBuffer: IWebGL2GPUBuffer): void {
+    assertWebGL2ContextActive(device.gl);
     const { gl } = device;
     const cache = device.getStateCache();
     const glUsage: GLenum = gpuBuffer.memUsage & MemoryUsageBit.HOST ? WebGLConstants.DYNAMIC_DRAW : WebGLConstants.STATIC_DRAW;
@@ -1001,6 +998,7 @@ export function WebGL2CmdFuncUpdateBuffer (
 }
 
 export function WebGL2CmdFuncCreateTexture (device: WebGL2Device, gpuTexture: IWebGL2GPUTexture): void {
+    assertWebGL2ContextActive(device.gl);
     const { gl } = device;
     const cache = device.getStateCache();
     const capabilities = device.capabilities;
@@ -1008,6 +1006,16 @@ export function WebGL2CmdFuncCreateTexture (device: WebGL2Device, gpuTexture: IW
     gpuTexture.glInternalFmt = GFXFormatToWebGLInternalFormat(gpuTexture.format, gl);
     gpuTexture.glFormat = GFXFormatToWebGLFormat(gpuTexture.format, gl);
     gpuTexture.glType = GFXFormatToWebGLType(gpuTexture.format, gl);
+
+    if (gpuTexture.samples !== SampleCount.X1) {
+        const renderable = device.getFormatFeatures(gpuTexture.format) & FormatFeatureBit.RENDER_TARGET;
+        const supported = renderable && gpuTexture.type === TextureType.TEX2D && gpuTexture.mipLevel === 1 && gpuTexture.arrayLayer === 1
+            ? Array.from(gl.getInternalformatParameter(gl.RENDERBUFFER, gpuTexture.glInternalFmt, gl.SAMPLES) as Int32Array) : [];
+        if (!supported.includes(gpuTexture.samples)) {
+            throw Object.assign(new Error(`${Format[gpuTexture.format]} cannot use ${gpuTexture.samples} samples; supported=${supported.join(',')}`),
+                { code: 'WEBGL2_TEXTURE_SAMPLES_UNSUPPORTED', format: gpuTexture.format, samples: gpuTexture.samples });
+        }
+    }
 
     let w = gpuTexture.width;
     let h = gpuTexture.height;
@@ -1203,6 +1211,7 @@ export function WebGL2CmdFuncDestroyTexture (device: WebGL2Device, gpuTexture: I
 }
 
 export function WebGL2CmdFuncResizeTexture (device: WebGL2Device, gpuTexture: IWebGL2GPUTexture): void {
+    assertWebGL2ContextActive(device.gl);
     if (!gpuTexture.size) return;
     if ((gpuTexture.type === TextureType.TEX2D_ARRAY || gpuTexture.type === TextureType.TEX3D)
         && !FormatInfos[gpuTexture.format].isCompressed) {
@@ -1457,6 +1466,7 @@ export function WebGL2CmdFuncCreateFramebuffer (device: WebGL2Device, gpuFramebu
             throw new Error('WEBGL2_FRAMEBUFFER_INCOMPLETE');
         }
         gpuFramebuffer.glFramebuffer = framebuffer;
+        registerWebGL2Attachments(framebuffer, attachments, views.map((view) => view.format));
         gpuFramebuffer.glAttachments = [...views, ...(depthView ? [depthView] : [])]
             .map((view) => view.gpuTexture.glTexture || view.gpuTexture.glRenderbuffer);
     } catch (cause) {
@@ -1475,6 +1485,7 @@ export function WebGL2CmdFuncDestroyFramebuffer (device: WebGL2Device, gpuFrameb
     const { gl } = device;
     const cache = device.getStateCache();
     if (gpuFramebuffer.glFramebuffer) {
+        forgetWebGL2Attachments(gpuFramebuffer.glFramebuffer);
         gl.deleteFramebuffer(gpuFramebuffer.glFramebuffer);
         if (cache.glFramebuffer === gpuFramebuffer.glFramebuffer) {
             gl.bindFramebuffer(WebGLConstants.DRAW_FRAMEBUFFER, null);
@@ -1489,6 +1500,7 @@ export function WebGL2CmdFuncDestroyFramebuffer (device: WebGL2Device, gpuFrameb
 }
 
 export function WebGL2CmdFuncCreateShader (device: WebGL2Device, gpuShader: IWebGL2GPUShader): void {
+    assertWebGL2ContextActive(device.gl);
     const { gl } = device;
     const cache = device.getStateCache();
     const capabilities = device.capabilities;
@@ -1924,6 +1936,7 @@ export function WebGL2CmdFuncBeginRenderPass (
             gl.bindFramebuffer(WebGLConstants.DRAW_FRAMEBUFFER, gpuFramebuffer.glFramebuffer);
             cache.glFramebuffer = gpuFramebuffer.glFramebuffer;
         }
+        beginWebGL2AttachmentPass(gl, cache.glFramebuffer, cache.bs.targets[0], WebGLBlendOps, WebGLBlendFactors);
 
         if (cache.viewport.left !== renderArea.x
             || cache.viewport.top !== renderArea.y
@@ -2095,6 +2108,8 @@ export function WebGL2CmdFuncBindStates (
     dynamicOffsets: Readonly<number[]>,
     dynamicStates: Readonly<DynamicStates>,
 ): void {
+    if (gpuPipelineState?.bs && !gpuPipelineState.bs.targets[0])
+        throw Object.assign(new Error('WEBGL2_BLEND_TARGET_MISSING: 0'), { code: 'WEBGL2_BLEND_TARGET_MISSING', index: 0 });
     const { gl } = device;
     const capabilities = device.capabilities;
     const cache = device.getStateCache();
@@ -2118,6 +2133,7 @@ export function WebGL2CmdFuncBindStates (
 
     // bind pipeline
     if (gpuPipelineState && gfxStateCache.gpuPipelineState !== gpuPipelineState) {
+        invalidateWebGL2IndexedBlend(gl);
         gfxStateCache.gpuPipelineState = gpuPipelineState;
         gfxStateCache.glPrimitive = gpuPipelineState.glPrimitive;
 
@@ -2663,6 +2679,9 @@ export function WebGL2CmdFuncDraw (device: WebGL2Device, drawInfo: Readonly<Draw
     const md = device.extensions.WEBGL_multi_draw;
 
     if (gpuInputAssembler) {
+        const pipeline = gfxStateCache.gpuPipelineState;
+        applyWebGL2AttachmentOutputs(gl, device.getStateCache().glFramebuffer, pipeline?.gpuShader || null,
+            pipeline?.bs || null, device.capabilities.maxColorRenderTargets, WebGLBlendOps, WebGLBlendFactors);
         const indexBuffer = gpuInputAssembler.gpuIndexBuffer;
         if (gpuInputAssembler.gpuIndirectBuffer) {
             const { indirects } = gpuInputAssembler.gpuIndirectBuffer;

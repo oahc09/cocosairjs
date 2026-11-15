@@ -226,3 +226,55 @@ test('collector serializes into the browser without Node dependencies or outer c
     snapshot[0].ms = 999;
     assert.equal(collector.snapshot()[0].ms, 6);
 });
+
+test('rejected nested region cannot close the outer query and metadata stays bound to the submission', () => {
+    const f = fixture();
+    const metadata = { regionId: 'frame-12', passIds: ['reflection', 'copy', 'water'], submissionIds: [21, 22] };
+    const outer = f.collector.begin('scene', 12, metadata);
+    const inner = f.collector.begin('nested', 12, metadata);
+    assert.deepEqual(inner, { status: 'unsupported', reason: 'overlapping-webgl-elapsed-query' });
+    f.collector.end(inner);
+    assert.equal(f.collector.pendingCount, 1);
+    f.collector.end(outer);
+    metadata.passIds[0] = 'changed';
+    metadata.submissionIds[0] = 999;
+    f.resolve(f.queries[0], 7);
+    f.collector.poll();
+    const sample = f.collector.snapshot()[0];
+    assert.equal(sample.frame, 12);
+    assert.equal(sample.regionId, 'frame-12');
+    assert.equal(sample.metric, 'gpu-elapsed-span');
+    assert.deepEqual(sample.passIds, ['reflection', 'copy', 'water']);
+    assert.deepEqual(sample.submissionIds, [21, 22]);
+    assert(sample.resultObservedAtMs >= sample.endObservedAtMs);
+    sample.passIds.push('tampered');
+    assert.equal(f.collector.snapshot()[0].passIds.length, 3);
+    f.collector.dispose();
+});
+
+test('lost context invalidates active and pending work without issuing GL calls or re-admitting restored context', () => {
+    const f = fixture();
+    f.submit('old', 1);
+    const token = f.collector.begin('active', 2);
+    let lost = true;
+    f.gl.isContextLost = () => lost;
+    f.gl.endQuery = f.gl.deleteQuery = f.gl.getQueryParameter = () => assert.fail('no GL work after loss');
+    f.collector.end(token);
+    assert.deepEqual(f.collector.state, { status: 'unavailable', reason: 'context-lost', pendingCount: 0 });
+    lost = false;
+    assert.equal(f.collector.begin('restored', 3).reason, 'context-lost');
+    f.collector.dispose();
+    assert.equal(f.collector.begin('disposed', 4).reason, 'disposed');
+    assert.deepEqual(f.collector.snapshot(), []);
+});
+
+test('query backpressure is bounded and missing results remain unavailable', () => {
+    const f = fixture();
+    const collector = createGpuTimerCollector(f.gl, { capacity: 1 });
+    collector.end(collector.begin('one', 1));
+    assert.deepEqual(collector.begin('two', 2), { status: 'unavailable', reason: 'query-capacity-exhausted' });
+    assert.equal(f.queries.length, 1);
+    assert.deepEqual(collector.snapshot(), []);
+    collector.dispose();
+    assert.equal(collector.state.reason, 'disposed');
+});

@@ -8,12 +8,20 @@
   "main": "build/npm/cocosair.module.js",
   "module": "build/npm/cocosair.module.js",
   "types": "./build/cocosair.module.d.ts",
+  "bin": {
+    "cocosair-shader-preflight": "build/npm/shader-preflight-cli.cjs"
+  },
   "exports": {
     ".": {
       "types@<5.0": "./build/cocosair.legacy.d.ts",
       "types": "./build/cocosair.module.d.ts",
       "import": "./build/npm/cocosair.module.js",
       "default": "./build/npm/cocosair.module.js"
+    },
+    "./shader-preflight": {
+      "types": "./build/shader-preflight.d.ts",
+      "import": "./build/npm/shader-preflight.js",
+      "default": "./build/npm/shader-preflight.js"
     },
     "./math": {
       "types@<5.0": "./build/cocosair.math.legacy.d.ts",
@@ -27,11 +35,17 @@
       "build/cocosair.module.d.ts": [
         "build/cocosair.legacy.d.ts"
       ],
+      "shader-preflight": [
+        "build/shader-preflight.d.ts"
+      ],
       "math": [
         "build/cocosair.math.legacy.d.ts"
       ]
     },
     "*": {
+      "shader-preflight": [
+        "build/shader-preflight.d.ts"
+      ],
       "math": [
         "build/cocosair.math.d.ts"
       ]
@@ -42,6 +56,9 @@
     "build/package.json",
     "build/npm/cocosair.module.js",
     "build/npm/cocosair.module.min.js",
+    "build/npm/shader-preflight.js",
+    "build/npm/shader-preflight-cli.cjs",
+    "build/shader-preflight.d.ts",
     "skills/",
     "build/cocosair.legacy.d.ts",
     "build/cocosair.module.d.ts",

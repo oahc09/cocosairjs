@@ -52,7 +52,9 @@ npm run dev
 运行时 `build`、`build:min`、`build:system`（包括 `AIR_OUT_DIR` 变体）还写入与 JS 相邻的 `<bundle>.sources.json`，
 绑定最终 JS、无嵌入源码的 map 及全部映射源码的 SHA-256；生成时对照编译器源码内容，缺失或漂移即失败。
 该 receipt 是可信工具生成的一致性记录，不是签名构建证明；旧产物迁移与信任边界见 [interop 指南](runtime-interop.md#source-map-绑定与信任边界)。
-Spark 与数学入口不使用此主运行时 receipt。
+Spark、数学与独立 Shader 预检入口不使用此主运行时 receipt。
+
+`prepack`（也由 `build:all` 调用）还构建 CPU-only 数学入口和独立 Shader 预检入口。后者写入 `build/shader-preflight.js`、`build/shader-preflight.d.ts`、`build/shader-preflight-cli.cjs` 与 `build/metadata/shader-preflight-build.json`，并把 JS/CLI 复制到 `build/npm/`。这些构建不递增主运行时计数、不初始化引擎；独立使用和退出码见 [Shader 预检](../guides/shader-preflight.md)。
 
 默认 `build`、`build:min`、`build:system` 会写入 `build/package.json`（`type: module`）与
 `build/gltf-decoders/package.json`（`type: commonjs`）。后者只声明既有 decoder 文件的模块格式；

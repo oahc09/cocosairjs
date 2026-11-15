@@ -1,3 +1,15 @@
+# Current output and timing boundaries (2026-11-15)
+
+The public HDR recipe below remains a WebGL2 ForwardPipeline helper. Experimental WebGPU selection and native createAirMRTTarget do not make createAirPostProcess a WebGPU compositor. Preserve that distinction when choosing a path; do not infer a backend from an exported symbol.
+
+Compare fixed-time captures with native pacing paused and one createStepClock. Retain first-frame and settled-frame images, raw values, backend/renderer, SDK and tool/source fingerprints, plus every failed attempt. Current Intel ANGLE D3D11 HDR exact redraw equality remains an open failure: source HDR values and a few final pixels differ between redraws. SwiftShader reference-profile equality passed in its explicit software configuration; it does not clear the hardware gate, justify tolerance changes or imply a performance result. Water and MRT scoped scene checks are separate evidence.
+
+Optional GPU timers live in development tooling, outside the default runtime. WebGL TIME_ELAPSED cannot overlap; rejected nested regions must not end the outer query. WebGPU timestamps require optional feature negotiation before device creation and explicit instrumented command encoding/submission; they do not automatically profile Forward passes. Distinguish GPU Pass sum from earliest/latest timestamp span, CPU submit, completion waiting and compositor presentation. Unsupported/lost/abandoned results are unavailable, while a valid quantized zero is not proof of speed.
+
+Checkout details: docs/guides/gpu-timing.md and docs/guides/visual-regression.md. Historical inventories below retain their original dates and claims; they are not current acceptance evidence.
+
+---
+
 # Code First HDR output
 
 Current entry: `createAirPostProcess`, exported by the main `cocosair.js` runtime. Read this section for Bloom/ACES/Reinhard; the older source inventories below describe their recorded snapshots and are not a reason to hand-build the same chain. The AIR helper and native `camera.postProcess` settings are different paths.

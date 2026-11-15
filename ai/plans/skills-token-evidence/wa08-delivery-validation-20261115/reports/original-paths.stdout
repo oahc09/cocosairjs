@@ -1,0 +1,32 @@
+{
+  "status": "FAIL",
+  "files": 190,
+  "skills": 22,
+  "links": 522,
+  "failures": [
+    {
+      "file": "cocosair-graphics-and-dom/references/commands.md",
+      "line": 88,
+      "reason": "missing link target",
+      "reference": "../../../docs/manual/graphics-and-dom.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/references/sprite-mask.md",
+      "line": 71,
+      "reason": "missing link target",
+      "reference": "../../../docs/manual/graphics-and-dom.md"
+    },
+    {
+      "file": "cocosair-verification/references/contracts.md",
+      "line": 14,
+      "reason": "use a relative Markdown link for skill navigation",
+      "reference": "v06-final-gate.md"
+    },
+    {
+      "file": "cocosair-verification/references/gate-catalog.md",
+      "line": 34,
+      "reason": "use a relative Markdown link for skill navigation",
+      "reference": "v06-final-gate.md"
+    }
+  ]
+}

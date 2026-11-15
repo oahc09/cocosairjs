@@ -1,0 +1,75 @@
+PASS test/smoke/air-html-source.test.ts (9.537 s)
+  ● Console
+
+    console.log
+      Cannot access game frame or container.
+
+      at warnID (src/cocos/core/platform/debug.ts:314:5)
+
+PASS test/smoke/attachment-binding.test.ts
+  ● Console
+
+    console.log
+      Cannot access game frame or container.
+
+      at warnID (src/cocos/core/platform/debug.ts:314:5)
+
+PASS test/smoke/webgl2-lost-admission.test.ts
+  ● Console
+
+    console.log
+      Cannot access game frame or container.
+
+      at warnID (src/cocos/core/platform/debug.ts:314:5)
+
+PASS test/smoke/port-gap-action-input-native.test.ts
+  ● Console
+
+    console.log
+      Cannot access game frame or container.
+
+      at warnID (src/cocos/core/platform/debug.ts:314:5)
+
+    console.log
+      Cannot access game frame or container.
+
+      at warnID (src/cocos/core/platform/debug.ts:314:5)
+
+PASS test/smoke/shader-output-interface.test.ts
+  ● Console
+
+    console.log
+      Cannot access game frame or container.
+
+      at warnID (src/cocos/core/platform/debug.ts:314:5)
+
+PASS test/smoke/mrt-options.test.ts
+  ● Console
+
+    console.log
+      Cannot access game frame or container.
+
+      at warnID (src/cocos/core/platform/debug.ts:314:5)
+
+PASS test/smoke/webgpu-resource-lifetime.test.ts
+  ● Console
+
+    console.log
+      Cannot access game frame or container.
+
+      at warnID (src/cocos/core/platform/debug.ts:314:5)
+
+PASS test/smoke/context-health-device-identity.test.ts
+  ● Console
+
+    console.log
+      Cannot access game frame or container.
+
+      at warnID (src/cocos/core/platform/debug.ts:314:5)
+
+
+Test Suites: 8 passed, 8 total
+Tests:       46 passed, 46 total
+Snapshots:   0 total
+Time:        20.481 s, estimated 44 s
+Ran all test suites within paths "test/smoke/webgpu-resource-lifetime.test.ts", "test/smoke/context-health-device-identity.test.ts", "test/smoke/webgl2-lost-admission.test.ts", "test/smoke/attachment-binding.test.ts", "test/smoke/mrt-options.test.ts", "test/smoke/shader-output-interface.test.ts", "test/smoke/air-html-source.test.ts", "test/smoke/port-gap-action-input-native.test.ts".

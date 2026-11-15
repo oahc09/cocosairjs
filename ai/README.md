@@ -23,6 +23,7 @@
 | 开发者生态 | [计划](plans/developer-ecosystem.md) | — |
 | PixiJS June 能力借鉴 | [实施顺序与状态](plans/pixi-capability-implementation.md) | — |
 | WebGPU 后端 | [计划](plans/webgpu-backend.md) | [执行台账](ledgers/webgpu-backend.md) |
+| Web 引擎技术借鉴与可靠性补全 | [八项任务书](plans/web-engine-technical-absorption.md) | [执行台账](ledgers/web-engine-technical-absorption.md) |
 | 开发手册 | [计划](plans/development-manual.md) | — |
 | Creator 指南对照补缺 | [计划](plans/manual-creator-guide-coverage.md) | — |
 | Gallery 与 API 覆盖 | [计划](plans/examples-gallery-api-coverage.md) | — |

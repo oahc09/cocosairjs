@@ -9,8 +9,19 @@ const { loopbackBrowserEnv } = require('../../tools/verify/loopback-browser-env.
 const args = process.argv.slice(2);
 const engine = args.find((value) => value.startsWith('--browser='))?.slice(10) || 'chromium';
 if (!['chromium', 'firefox', 'webkit'].includes(engine)) throw new Error('unknown browser');
-const url = args.find((value) => value.startsWith('--url='))?.slice(6);
-const out = path.resolve(args.find((value) => value.startsWith('--out='))?.slice(6) || 'output/water-multipass');
+let url = args.find((value) => value.startsWith('--url='))?.slice(6);
+const root = path.resolve(__dirname, '../..');
+const bundle = path.resolve(
+    root,
+    args.find((value) => value.startsWith('--bundle='))?.slice(9) || 'build/cocosair.module.js',
+);
+const firstFrame = args.includes('--first-frame');
+if (!bundle.startsWith(root + path.sep)) throw Error('SDK must be inside this checkout');
+const outArg = args.find((value) => value.startsWith('--out='))?.slice(6);
+if (!outArg) throw Error('--out=<new directory> required');
+const out = path.resolve(outArg);
+if (fs.existsSync(out)) throw Error('Retain prior attempts; use a new output directory');
+if (args.includes('--serve') && url) throw Error('Choose --serve or --url, not both');
 const hash = (data) => crypto.createHash('sha256').update(data).digest('hex');
 function sourceFiles(directory = __dirname, prefix = '') {
     return fs
@@ -26,20 +37,64 @@ function sourceFiles(directory = __dirname, prefix = '') {
 }
 async function run() {
     const sourceStart = sourceFiles();
-    const candidateStart = fs.existsSync('build/cocosair.module.js')
-        ? hash(fs.readFileSync('build/cocosair.module.js'))
+    const sharedFiles = [
+        'examples/shared/asset-lifecycle.js',
+        'tools/verify/browser-engines.cjs',
+        'tools/verify/loopback-browser-env.cjs',
+        'tools/verify/competitive-example-server.cjs',
+        'tools/build/source-binding.cjs',
+    ];
+    const sharedInputs = Object.fromEntries(
+        sharedFiles.map((file) => [file, hash(fs.readFileSync(path.join(root, file)))]),
+    );
+    const candidateStart = fs.existsSync(bundle) ? hash(fs.readFileSync(bundle)) : null;
+    let server;
+    if (args.includes('--serve')) {
+        server = await require('../../tools/verify/competitive-example-server.cjs').startExampleServer(root);
+        url = server.origin + '/examples/water-multipass/';
+    }
+    const sourceBinding = url
+        ? require('../../tools/build/source-binding.cjs').verifySourceBinding(root, bundle)
         : null;
+    if (sourceBinding && !sourceBinding.matches) {
+        await server?.close();
+        throw Error('Runtime candidate source binding mismatch');
+    }
     fs.mkdirSync(out, { recursive: true });
-    const browser = await playwright[engine].launch({
-        ...launchOptions(engine),
-        env: loopbackBrowserEnv(),
-        headless: true,
-    });
-    const page = await browser.newPage({ viewport: { width: 800, height: 600 }, deviceScaleFactor: 1 });
+    let browser, page;
+    try {
+        browser = await playwright[engine].launch({
+            ...launchOptions(engine),
+            env: loopbackBrowserEnv(),
+            headless: true,
+        });
+        page = await browser.newPage({ viewport: { width: 800, height: 600 }, deviceScaleFactor: 1 });
+    } catch (error) {
+        fs.writeFileSync(
+            path.join(out, 'report.json'),
+            JSON.stringify(
+                {
+                    completed: false,
+                    subset: true,
+                    stage: 'browser-start',
+                    candidateStart,
+                    sourceBinding,
+                    sourceFiles: sourceStart,
+                    error: String(error.stack || error),
+                },
+                null,
+                2,
+            ) + '\n',
+        );
+        if (browser) await browser.close();
+        await server?.close();
+        throw error;
+    }
     const errors = [],
         checks = [],
         snapshots = [];
     let runtimeCompleted = false;
+    let environment = null;
     const check = (name, ok, detail) => {
         checks.push({ name, ok, detail });
         if (!ok) throw new Error(`${name}: ${JSON.stringify(detail)}`);
@@ -93,16 +148,82 @@ async function run() {
             shaders,
         );
         if (url) {
+            const bundleURL = '/' + path.relative(root, bundle).replace(/\\/g, '/');
+            await page.route(
+                (requestURL) => requestURL.href === new URL(url).href,
+                (route) =>
+                    route.fulfill({
+                        contentType: 'text/html',
+                        body: fs
+                            .readFileSync(path.join(__dirname, 'index.html'), 'utf8')
+                            .replace('/build/cocosair.module.js', bundleURL),
+                    }),
+            );
+            if (firstFrame) {
+                const source = fs.readFileSync(path.join(__dirname, 'src/main.ts'), 'utf8');
+                const anchor = '    app.run(scene);';
+                if (source.split(anchor).length !== 2)
+                    throw Error('Review first-frame instrumentation: app.run anchor changed');
+                const instrumented =
+                    "import { createStepClock as waCreateStepClock } from 'cocosair';\n" +
+                    source.replace(
+                        anchor,
+                        `    window.__waterClock = waCreateStepClock();
+    director.once(Director.EVENT_AFTER_DRAW, () => {
+        window.__waterClock.begin();
+        window.__waterFirstSceneFrame = director.getTotalFrames();
+    });
+${anchor}`,
+                    );
+                const built = require('esbuild').buildSync({
+                    stdin: {
+                        contents: instrumented,
+                        resolveDir: path.join(__dirname, 'src'),
+                        sourcefile: 'water-first-frame.ts',
+                        loader: 'ts',
+                    },
+                    bundle: true,
+                    format: 'esm',
+                    target: 'es2022',
+                    external: ['cocosair'],
+                    write: false,
+                });
+                await page.route('**/water-multipass/src/main.ts', (route) =>
+                    route.fulfill({ contentType: 'text/javascript', body: built.outputFiles[0].text }),
+                );
+            }
             await page.goto(url, { waitUntil: 'networkidle' });
             await page.waitForFunction(() => window.__appReady === true, { timeout: 30000 });
+            environment = await page.evaluate(async (sdk) => {
+                const m = await import(sdk),
+                    device = m.director.root.device;
+                return { gfxAPI: device.gfxAPI, renderer: device.renderer, vendor: device.vendor };
+            }, bundleURL);
             const frame = async () => {
+                if (firstFrame) {
+                    await page.evaluate(() => window.__waterClock.step(0));
+                    return;
+                }
                 await page.evaluate(
                     () => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))),
                 );
             };
             const probe = () => page.evaluate(() => window.__probe());
-            const capture = async (name) => {
-                await frame();
+            const capture = async (name, step = true) => {
+                if (step) await frame();
+                if (firstFrame) {
+                    const state = await page.evaluate(async (sdk) => {
+                        const m = await import(sdk),
+                            before = m.director.getTotalFrames();
+                        await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+                        return { before, after: m.director.getTotalFrames(), paused: m.game.isPaused() };
+                    }, bundleURL);
+                    check(
+                        `${name}: compositor wait preserves single clock`,
+                        state.paused && state.before === state.after,
+                        state,
+                    );
+                }
                 const glErrors = await page.evaluate(() => {
                     const gl = document.getElementById('GameCanvas').getContext('webgl2');
                     if (!gl) throw new Error('runtime canvas WebGL2 context missing');
@@ -121,6 +242,22 @@ async function run() {
                 snapshots.push({ name, sha256: digest });
                 return digest;
             };
+            let firstHash;
+            if (firstFrame) {
+                const initialState = await probe();
+                check(
+                    'first scene frame captured before warmup',
+                    initialState.frames === 1 && initialState.time === 1.25,
+                    initialState,
+                );
+                firstHash = await capture('first-scene-frame', false);
+                for (let i = 0; i < 4; ++i) await frame();
+                check(
+                    'first and fifth scene frame agree at fixed time',
+                    (await capture('fifth-scene-frame', false)) === firstHash,
+                    snapshots,
+                );
+            }
             await page.evaluate(() => window.__water.setTime(1.25));
             const initial = await probe();
             check(
@@ -279,6 +416,15 @@ async function run() {
             await capture('rain');
             const generation = (await probe()).targets.refraction.generation;
             await page.setViewportSize({ width: 640, height: 480 });
+            if (firstFrame)
+                await page.waitForFunction(
+                    () => {
+                        const canvas = document.getElementById('GameCanvas');
+                        return canvas.width === 640 && canvas.height === 480;
+                    },
+                    null,
+                    { timeout: 5000 },
+                );
             await frame();
             await frame();
             const resized = await probe();
@@ -289,6 +435,7 @@ async function run() {
                 resized.targets,
             );
             await capture('resized');
+            if (firstFrame) await page.evaluate(() => window.__waterClock.end());
             const lifecycle = await page.evaluate(() => window.__lifecycle());
             check(
                 'owned resources released and rebuilt',
@@ -298,8 +445,9 @@ async function run() {
             check('no runtime or WebGL errors', errors.length === 0, errors);
             check(
                 'candidate and all example inputs stayed unchanged',
-                candidateStart === hash(fs.readFileSync('build/cocosair.module.js')) &&
-                    JSON.stringify(sourceStart) === JSON.stringify(sourceFiles()),
+                candidateStart === hash(fs.readFileSync(bundle)) &&
+                    JSON.stringify(sourceStart) === JSON.stringify(sourceFiles()) &&
+                    sharedFiles.every((file) => sharedInputs[file] === hash(fs.readFileSync(path.join(root, file)))),
                 { candidateStart, sourceStart },
             );
             runtimeCompleted = true;
@@ -311,20 +459,34 @@ async function run() {
         const report = {
             scope: url ? 'water-multipass-runtime' : 'water-multipass-shader-only',
             browser: engine,
+            browserVersion: browser.version(),
+            environment,
+            sharedInputs,
             completed: runtimeCompleted && checks.every((item) => item.ok),
             checks,
             errors,
             snapshots,
-            candidate: fs.existsSync('build/cocosair.module.js')
-                ? hash(fs.readFileSync('build/cocosair.module.js'))
-                : null,
+            candidate: fs.existsSync(bundle) ? hash(fs.readFileSync(bundle)) : null,
+            subset: true,
+            firstFrame,
+            sourceBinding,
             source: hash(fs.readFileSync(path.join(__dirname, 'src/main.ts'))),
             sourceFiles: sourceStart,
             candidateStart,
         };
         fs.writeFileSync(path.join(out, 'report.json'), JSON.stringify(report, null, 2) + '\n');
         await browser.close();
-        console.log(JSON.stringify(report, null, 2));
+        await server?.close();
+        console.log(
+            JSON.stringify({
+                completed: report.completed,
+                scope: report.scope,
+                browser: report.browser,
+                checks: checks.length,
+                errors,
+                report: path.relative(root, path.join(out, 'report.json')).replace(/\\/g, '/'),
+            }),
+        );
     }
 }
 run().catch((error) => {

@@ -31,6 +31,7 @@ import {
     Filter,
     Format,
     FormatInfos,
+    FormatType,
     FormatFeatureBit,
     ShaderStageFlagBit,
     TextureType,
@@ -71,6 +72,7 @@ import {
 } from './webgpu-gpu-objects';
 import { error, log, warn } from '../../core';
 import { WebGPUDeviceManager } from './define';
+import { assertWebGPUDeviceActive, retireWebGPUResource } from '../../../air/rendering/webgpu-resource-lifetime';
 
 const WebGPUAdressMode: GPUAddressMode[] = [
     'repeat', // WRAP,
@@ -643,6 +645,7 @@ export function WebGPUCmdFuncUpdateBuffer (
 }
 
 export function WebGPUCmdFuncCreateTexture (device: WebGPUDevice, gpuTexture: IWebGPUTexture): void {
+    assertWebGPUDeviceActive(device);
     // dimension optional
     gpuTexture.gpuTarget = GFXTextureToWebGPUTexture(gpuTexture.type);
     gpuTexture.gpuInternalFmt = GFXFormatToWGPUTextureFormat(gpuTexture.format);
@@ -682,6 +685,12 @@ export function WebGPUCmdFuncCreateTexture (device: WebGPUDevice, gpuTexture: IW
         if (gpuTexture.type !== TextureType.TEX2D || gpuTexture.mipLevel !== 1 || gpuTexture.arrayLayer !== 1) {
             throw new Error('WEBGPU_MULTISAMPLE_TEXTURE_UNSUPPORTED');
         }
+        const formatInfo = FormatInfos[gpuTexture.format];
+        if (!formatInfo.hasDepth && (formatInfo.type === FormatType.INT || formatInfo.type === FormatType.UINT
+            || (formatInfo.type === FormatType.FLOAT && formatInfo.size / formatInfo.count === 4))) {
+            throw Object.assign(new Error('This GFX MSAA path requires a resolve-capable color format.'),
+                { code: 'WEBGPU_MULTISAMPLE_FORMAT_UNSUPPORTED', format: gpuTexture.format, samples: gpuTexture.samples });
+        }
         if (!FormatInfos[gpuTexture.format].hasDepth) {
             const resolved = device.nativeDevice!.createTexture({ ...texDescriptor, sampleCount: 1,
                 usage: texDescriptor.usage | GPUTextureUsage.COPY_SRC });
@@ -694,10 +703,18 @@ export function WebGPUCmdFuncCreateTexture (device: WebGPUDevice, gpuTexture: IW
 }
 
 export function WebGPUCmdFuncDestroyTexture (gpuTexture: IWebGPUTexture): void {
-    gpuTexture.resolveTex?.gpuTexture?.destroy();
+    const resolved = gpuTexture.resolveTex?.gpuTexture;
+    const texture = gpuTexture.gpuTexture;
     gpuTexture.resolveTex = null;
-    if (gpuTexture.gpuTexture) {
-        gpuTexture.gpuTexture.destroy();
+    gpuTexture.gpuTexture = undefined;
+    const nativeDevice = WebGPUDeviceManager.instance.nativeDevice;
+    if (resolved) {
+        if (nativeDevice) retireWebGPUResource(nativeDevice, resolved);
+        else resolved.destroy();
+    }
+    if (texture) {
+        if (nativeDevice) retireWebGPUResource(nativeDevice, texture);
+        else texture.destroy();
     }
 }
 
@@ -750,13 +767,16 @@ export function WebGPUCmdFuncDestroyFramebuffer (device: WebGPUDevice, gpuFrameb
 
 export async function WebGPUCmdFuncCopyTextureToBuffer (
     device: WebGPUDevice, texture: IWebGPUTexture, buffers: ArrayBufferView[], regions: readonly BufferTextureCopy[],
+    sourceIsAlive?: () => boolean,
 ): Promise<void> {
     const info = FormatInfos[texture.format];
     if (info.hasDepth || info.hasStencil || info.isCompressed || texture.samples !== 1) {
         throw new Error('WEBGPU_READBACK_UNSUPPORTED: requires a single-sample uncompressed color texture.');
     }
     if (buffers.length !== regions.length) throw new Error('WEBGPU_READBACK_BUFFERS');
-    const layouts = regions.map((region, index) => {
+    if (!regions.length) return;
+    const copies = regions.map((region) => new BufferTextureCopy().copy(region));
+    const layouts = copies.map((region, index) => {
         const { width, height, depth } = region.texExtent;
         const layers = texture.type === TextureType.TEX3D ? depth : region.texSubres.layerCount;
         const stride = region.buffStride || width;
@@ -773,31 +793,60 @@ export async function WebGPUCmdFuncCopyTextureToBuffer (
                 : region.texSubres.baseArrayLayer + layers > texture.arrayLayer)
             || buffers[index].byteLength < required) throw new Error('WEBGPU_READBACK_RANGE');
         const bytesPerRow = Math.ceil(width * info.size / 256) * 256;
-        return { width, height, layers, stride, imageHeight, bytesPerRow };
+        return { width, height, layers, stride, imageHeight, bytesPerRow, required };
     });
-    const native = device.nativeDevice!;
-    for (let index = 0; index < regions.length; index++) {
-        const region = regions[index];
-        const layout = layouts[index];
-        const staging = native.createBuffer({ size: layout.bytesPerRow * layout.height * layout.layers,
-            usage: GPUBufferUsage.MAP_READ | GPUBufferUsage.COPY_DST });
-        try {
-            const encoder = native.createCommandEncoder();
-            encoder.copyTextureToBuffer({ texture: texture.gpuTexture!, mipLevel: region.texSubres.mipLevel,
+    const destinations = buffers.map((buffer) => new Uint8Array(buffer.buffer, buffer.byteOffset, buffer.byteLength));
+    const native = assertWebGPUDeviceActive(device);
+    const sourceTexture = texture.gpuTexture;
+    if (!sourceTexture) throw Object.assign(new Error('Readback texture has been destroyed.'), { code: 'WEBGPU_READBACK_TEXTURE_DESTROYED' });
+    const staging: GPUBuffer[] = [];
+    try {
+        // One native submission snapshots every region before awaiting mappings. A resize
+        // during mapAsync must not mix generations or partially publish caller buffers.
+        const encoder = native.createCommandEncoder();
+        for (let index = 0; index < copies.length; index++) {
+            const region = copies[index];
+            const layout = layouts[index];
+            const buffer = native.createBuffer({ size: layout.bytesPerRow * layout.height * layout.layers,
+                usage: GPUBufferUsage.MAP_READ | GPUBufferUsage.COPY_DST });
+            staging.push(buffer);
+            encoder.copyTextureToBuffer({ texture: sourceTexture, mipLevel: region.texSubres.mipLevel,
                 origin: { x: region.texOffset.x, y: region.texOffset.y,
                     z: texture.type === TextureType.TEX3D ? region.texOffset.z : region.texSubres.baseArrayLayer } },
-            { buffer: staging, bytesPerRow: layout.bytesPerRow, rowsPerImage: layout.height },
+            { buffer, bytesPerRow: layout.bytesPerRow, rowsPerImage: layout.height },
             { width: layout.width, height: layout.height, depthOrArrayLayers: layout.layers });
-            native.queue.submit([encoder.finish()]);
-            await staging.mapAsync(GPUMapMode.READ);
-            const source = new Uint8Array(staging.getMappedRange());
-            const destination = new Uint8Array(buffers[index].buffer, buffers[index].byteOffset, buffers[index].byteLength);
+        }
+        native.queue.submit([encoder.finish()]);
+        await Promise.all(staging.map((buffer) => buffer.mapAsync(GPUMapMode.READ)));
+        if (assertWebGPUDeviceActive(device) !== native) throw Object.assign(new Error('Readback device changed.'), { code: 'WEBGPU_DEVICE_LOST' });
+        if (!texture.gpuTexture || sourceIsAlive?.() === false) {
+            throw Object.assign(new Error('Readback source texture or view was destroyed.'), { code: 'WEBGPU_READBACK_TEXTURE_DESTROYED' });
+        }
+        const sources = staging.map((buffer) => new Uint8Array(buffer.getMappedRange()));
+        if (destinations.some((buffer, index) => buffer.byteLength < layouts[index].required)) throw new Error('WEBGPU_READBACK_BUFFERS');
+        for (let index = 0; index < copies.length; index++) {
+            const region = copies[index];
+            const layout = layouts[index];
+            const source = sources[index];
+            const destination = destinations[index];
             for (let layer = 0; layer < layout.layers; layer++) for (let row = 0; row < layout.height; row++) {
                 const from = (layer * layout.height + row) * layout.bytesPerRow;
                 const to = region.buffOffset + (layer * layout.imageHeight + row) * layout.stride * info.size;
                 destination.set(source.subarray(from, from + layout.width * info.size), to);
             }
-        } finally { staging.unmap(); staging.destroy(); }
+        }
+    } catch (cause) {
+        if (device.isLost || device.nativeDevice !== native) {
+            throw Object.assign(new Error('WebGPU device was lost or closed during readback.'), { code: 'WEBGPU_DEVICE_LOST', cause });
+        }
+        // WebGPU does not order mapAsync rejection relative to device.lost. Preserve
+        // cancellation as its own terminal state instead of guessing device loss.
+        if (cause && typeof cause === 'object' && (cause as { name?: string }).name === 'AbortError') {
+            throw Object.assign(new Error('WebGPU readback mapping was aborted.'), { code: 'WEBGPU_READBACK_ABORTED', cause });
+        }
+        throw cause;
+    } finally {
+        for (const buffer of staging) { buffer.unmap(); buffer.destroy(); }
     }
 }
 
@@ -922,26 +971,15 @@ export function WebGPUCmdFuncBlitTexture (
 }
 
 function seperateCombinedSamplerTexture (shaderSource: string): string {
-    // gather
-    const samplerReg = /layout\s*(\(set = \d+, binding = )(\d+)\) uniform[^;]+sampler(\w*) (\w+);/g;
-    let iter = samplerReg.exec(shaderSource);
-    // samplerName, samplerType
+    // Preserve the scalar prefix: converting usampler/isampler to float silently
+    // changes texelFetch/textureSize overloads and makes integer sampling invalid.
+    const samplerReg = /layout\s*\(\s*set\s*=\s*(\d+)\s*,\s*binding\s*=\s*(\d+)\s*\)\s*uniform\s+(?:(?:highp|mediump|lowp)\s+)?([iu]?)sampler(\w+)\s+(\w+)\s*;/g;
     const referredMap = new Map<string, string>();
-    while (iter) {
-        const samplerName = iter[4];
-        const samplerType = iter[3];
-        referredMap.set(samplerName, samplerType);
-        iter = samplerReg.exec(shaderSource);
-    }
-
-    let code = shaderSource;
-    const sampReg = /layout\s*(\(set = \d+, binding = )(\d+)\) uniform[^;]+sampler(\w*) (\w+);/g;
-    let it = sampReg.exec(code);
-    while (it) {
-        code = code.replace(sampReg, `layout$1 $2) uniform texture$3 $4;\n
-        layout$1 $2 + ${SEPARATE_SAMPLER_BINDING_OFFSET}) uniform sampler $4_sampler;\n`);
-        it = sampReg.exec(code);
-    }
+    let code = shaderSource.replace(samplerReg, (_declaration, set: string, binding: string, prefix: string, dimension: string, name: string) => {
+        referredMap.set(name, `${prefix}sampler${dimension}`);
+        return `layout(set = ${set}, binding = ${binding}) uniform ${prefix}texture${dimension} ${name};\n`
+            + `layout(set = ${set}, binding = ${binding} + ${SEPARATE_SAMPLER_BINDING_OFFSET}) uniform sampler ${name}_sampler;\n`;
+    });
 
     const builtinSample = ['texture', 'textureSize', 'texelFetch', 'textureLod'];
     const replaceBultin = (samplerName: string, samplerType: string, target: string): string => {
@@ -949,7 +987,7 @@ function seperateCombinedSamplerTexture (shaderSource: string): string {
             const builtinSampleReg = new RegExp(`${sampleFunc}\\s*\\(\\s*${samplerName}\\s*,`);
             let builtinFuncIter = builtinSampleReg.exec(target);
             while (builtinFuncIter) {
-                target = target.replace(builtinFuncIter[0], `${sampleFunc}(sampler${samplerType}(${samplerName}, ${samplerName}_sampler),`);
+                target = target.replace(builtinFuncIter[0], `${sampleFunc}(${samplerType}(${samplerName}, ${samplerName}_sampler),`);
                 builtinFuncIter = builtinSampleReg.exec(target);
             }
         });
@@ -970,12 +1008,12 @@ function seperateCombinedSamplerTexture (shaderSource: string): string {
             const paramArr = params.split(',');
             const paramSize = paramArr.length;
             for (let i = 0; i < paramSize; ++i) {
-                const paramDecl = paramArr[i].split(' ');
+                const paramDecl = paramArr[i].trim().split(/\s+/);
                 const typeDecl = paramDecl[paramDecl.length - 2];
                 if (typeDecl.includes('sampler') && typeDecl !== 'sampler') {
-                    const samplerType = typeDecl.replace('sampler', '');
+                    const samplerType = typeDecl;
                     const paramName = paramDecl[paramDecl.length - 1];
-                    paramsRes = paramsRes.replace(paramArr[i], ` texture${samplerType} ${paramName}, sampler ${paramName}_sampler`);
+                    paramsRes = paramsRes.replace(paramArr[i], ` ${samplerType.replace('sampler', 'texture')} ${paramName}, sampler ${paramName}_sampler`);
                     paramIndexSet.add(i);
                     paramTypeMap.set(paramName, samplerType);
                 }

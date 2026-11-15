@@ -44,11 +44,18 @@ function devicePresentAxis() {
 
 // Keep this function self-contained: the browser runs the same implementation as
 // the dependency-free Node regression tests via Function#toString below.
-function createGpuTimerCollector(gl) {
+function createGpuTimerCollector(gl, options = {}) {
     const timer = gl?.getExtension('EXT_disjoint_timer_query_webgl2');
+    const capacity = options.capacity ?? 64;
+    if (!Number.isSafeInteger(capacity) || capacity < 1) throw new Error('GPU query capacity must be positive');
     const pending = [];
     const samples = [];
     let active = null;
+    let disposed = false,
+        lost = false,
+        serial = 0;
+    let reason = timer ? null : 'timer-feature-unavailable';
+    const reject = (status, value) => ({ status, reason: value });
 
     function discardPending() {
         for (const entry of pending) gl.deleteQuery(entry.query);
@@ -56,7 +63,15 @@ function createGpuTimerCollector(gl) {
     }
 
     function poll() {
-        if (!timer) return false;
+        if (disposed || !timer || lost) return false;
+        if (gl.isContextLost?.()) {
+            lost = true;
+            reason = 'context-lost';
+            // The context is invalid: release JS references; do not issue GL work.
+            active = null;
+            pending.length = 0;
+            return false;
+        }
         // Check even when no query is ready. A disjoint interval invalidates all
         // outstanding measurements, not only the queries available right now.
         if (gl.getParameter(timer.GPU_DISJOINT_EXT)) {
@@ -66,14 +81,24 @@ function createGpuTimerCollector(gl) {
                 active = null;
             }
             discardPending();
+            reason = 'timer-disjoint';
             return false;
         }
+        reason = null;
         for (let i = pending.length - 1; i >= 0; i--) {
             const entry = pending[i];
             if (!gl.getQueryParameter(entry.query, gl.QUERY_RESULT_AVAILABLE)) continue;
             const nanoseconds = gl.getQueryParameter(entry.query, gl.QUERY_RESULT);
             if (Number.isFinite(nanoseconds) && nanoseconds >= 0) {
-                samples.push({ phase: entry.phase, frame: entry.frame, ms: nanoseconds / 1e6 });
+                const sample = { phase: entry.phase, frame: entry.frame, ms: nanoseconds / 1e6 };
+                if (entry.metadata)
+                    Object.assign(sample, entry.metadata, {
+                        metric: 'gpu-elapsed-span',
+                        feature: 'EXT_disjoint_timer_query_webgl2',
+                        queryType: 'TIME_ELAPSED',
+                        resultObservedAtMs: performance.now(),
+                    });
+                samples.push(sample);
             }
             gl.deleteQuery(entry.query);
             pending.splice(i, 1);
@@ -83,16 +108,46 @@ function createGpuTimerCollector(gl) {
 
     return {
         available: !!timer,
-        begin(phase, frame) {
-            if (!poll() || active || phase === null) return;
+        begin(phase, frame, metadata) {
+            if (!poll()) return reject('unavailable', disposed ? 'disposed' : reason);
+            if (active) return reject('unsupported', 'overlapping-webgl-elapsed-query');
+            if (phase === null) return reject('unavailable', 'outside-measurement-region');
+            if (pending.length >= capacity) return reject('unavailable', 'query-capacity-exhausted');
+            let captured;
+            if (metadata !== undefined) {
+                const { regionId, submissionIds, passIds } = metadata;
+                if (
+                    typeof regionId !== 'string' ||
+                    !regionId ||
+                    !Array.isArray(submissionIds) ||
+                    !submissionIds.every((id) => Number.isSafeInteger(id) && id >= 0) ||
+                    !Array.isArray(passIds) ||
+                    !passIds.every((id) => typeof id === 'string')
+                )
+                    throw new Error('GPU region metadata requires regionId, submissionIds and passIds');
+                captured = {
+                    regionId,
+                    submissionIds: submissionIds.slice(),
+                    passIds: passIds.slice(),
+                    beginObservedAtMs: performance.now(),
+                };
+            }
             const query = gl.createQuery();
-            if (!query) return;
-            active = { query, phase, frame };
+            if (!query) return reject('unavailable', 'query-allocation-failed');
+            const token = Object.freeze({ status: 'pending', id: ++serial });
+            active = { query, phase, frame, metadata: captured, token };
             gl.beginQuery(timer.TIME_ELAPSED_EXT, query);
+            return token;
         },
-        end() {
+        end(token) {
+            if (disposed || lost || (token !== undefined && token !== active?.token)) return;
+            if (gl?.isContextLost?.()) {
+                poll();
+                return;
+            }
             if (active) {
                 gl.endQuery(timer.TIME_ELAPSED_EXT);
+                if (active.metadata) active.metadata.endObservedAtMs = performance.now();
                 pending.push(active);
                 active = null;
             }
@@ -103,15 +158,37 @@ function createGpuTimerCollector(gl) {
             return pending.length + (active ? 1 : 0);
         },
         snapshot() {
-            return samples.map((sample) => ({ ...sample }));
+            return samples.map((sample) => ({
+                ...sample,
+                ...(sample.passIds
+                    ? {
+                          passIds: sample.passIds.slice(),
+                          submissionIds: sample.submissionIds.slice(),
+                      }
+                    : {}),
+            }));
+        },
+        get state() {
+            return {
+                status: disposed || lost || !timer || reason ? 'unavailable' : 'available',
+                reason: disposed ? 'disposed' : reason,
+                pendingCount: pending.length + (active ? 1 : 0),
+            };
         },
         dispose() {
+            if (disposed) return;
+            if (gl?.isContextLost?.()) {
+                poll();
+                disposed = true;
+                return;
+            }
             if (active) {
                 gl.endQuery(timer.TIME_ELAPSED_EXT);
                 gl.deleteQuery(active.query);
                 active = null;
             }
             discardPending();
+            disposed = true;
         },
     };
 }

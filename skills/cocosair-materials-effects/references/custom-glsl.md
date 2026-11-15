@@ -1,3 +1,19 @@
+# Current independent preflight and backend supplement (2026-11-15)
+
+This section supersedes conflicting dated backend claims below, without removing the original inventory. Default rendering uses WebGL2/glsl3. Explicit experimental WebGPU uses the existing glsl4 translation path; validate the chosen backend with a real draw, not merely an available export. AIR still has no ShaderMaterial or runtime effect-YAML compiler.
+
+A newly built package exposes preflightEffect/preflightEffects through cocosair.js/shader-preflight and the cocosair-shader-preflight CLI. This optional CPU-only entry works without DOM and does not import or register the main engine. Supply compiled plain Effect JSON. Missing optional resource arrays normalize to empty; invalid types fail. Hash identity uses the runtime content signature; differing sources must have different global program names. Effect display names and explicit offline effectIndex references do not change ProgramLib's global program lookup.
+
+Reports state analysisScope: 'compiled-json-identity-and-bounded-layout' and gpuValidated: false. failed means a definite bounded error; unknown covers macros/includes, missing runtime builtin bindings and out-of-scope layouts. passed is only the checked scope, never full GLSL compilation, render correctness or an Agent Gate GPU pass. Preserve code/path/stage/line diagnostics and then run native compilation with numbered source. No second shader language or lowering pipeline is introduced.
+
+MRT outputs need compatible location and scalar types: uint output and usampler2D for R32UI, signed equivalents for signed integer attachments. The WebGPU combined-sampler split now preserves u/i prefixes, including function parameters; this targeted fix is not a claim that arbitrary GLSL is accepted. Use the actual public bindingMappingInfo to avoid reserved UBO slots rather than guessing global sampler binding 1. Keep write-pass sampled descriptors separate from attachment descriptors to avoid feedback.
+
+Checkout guidance: docs/guides/shader-preflight.md and docs/guides/mrt.md. An installed skills copy does not itself include checkout collectors or establish that an older tarball contains the new optional entry. Check actual package exports/build identity before recommending it.
+
+---
+
+# Historical shader inventory
+
 Derived from `src/air/builtin/register.ts`, `src/air/builtin/builtin-glsl4.ts`, `src/air/builtin/builtin-effects.ts`, `src/air/effects/unlit-fog.ts`, `src/air/effects/sprite-mask.ts`, `src/cocos/3d/models/skinning-model.ts`, `src/cocos/asset/assets/effect-asset.ts`, `src/cocos/asset/assets/material.ts`, `src/cocos/render-scene/core/program-lib.ts`, `src/cocos/rendering/define.ts`, `src/cocos/gfx/base/define.ts`, `tools/build/effect-json.mjs`, `tools/debug/effect-layout.ts`, `examples/shader-custom-gradient/src/main.ts`, `examples/shader-dissolve/src/main.ts`, `docs/manual/custom-shaders.md`, `docs/manual/materials.md` (as of 2026-10-09).
 
 ## There is no `ShaderMaterial`

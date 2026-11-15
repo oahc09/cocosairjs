@@ -201,3 +201,69 @@ test('partial DOM initialization failure releases the element lease and restores
     const retry = createAirHTMLSource({ canvas, element, texture, resolution: 1 });
     retry.dispose();
 });
+
+test('dynamic upload needs neither snapshot nor optional geometry methods', () => {
+    const { canvas, element, surface, texture, gl } = createSupportedSourceFixture();
+    delete (surface as any).captureElementImage;
+    delete (surface as any).updateElementGeometry;
+    delete (surface as any).clearElementGeometry;
+    expect(getAirHTMLSourceSupport(canvas).supported).toBe(true);
+    const source = createAirHTMLSource({ canvas, element, texture });
+    canvas.dispatchEvent(new Event('paint'));
+    expect(source.status).toBe('ready');
+    expect(gl.texElementSubImage2D.mock.calls[0][4]).toBe(element);
+    expect(() => source.updateGeometry({})).toThrow(
+        expect.objectContaining({ code: 'AIR_E_HTML_SOURCE_GEOMETRY_UNSUPPORTED' }),
+    );
+    source.dispose();
+    expect(canvas.hasAttribute('content')).toBe(false);
+    expect(() => createAirHTMLSource({ canvas, element, texture, snapshot: true })).toThrow(/captureElementImage/);
+    expect(element.hasAttribute('drawable')).toBe(false);
+});
+
+test('nested sources belong to their nearest canvas, including paint-time movement checks', () => {
+    const { canvas, element, texture, gl } = createSupportedSourceFixture();
+    const parent = document.createElement('div');
+    parent.appendChild(element);
+    canvas.appendChild(parent);
+    const source = createAirHTMLSource({ canvas, element, texture });
+    canvas.dispatchEvent(new Event('paint'));
+    expect(source.status).toBe('ready');
+    const other = document.createElement('canvas');
+    parent.appendChild(other);
+    other.appendChild(element);
+    canvas.dispatchEvent(new Event('paint'));
+    expect(source.status).toBe('failed');
+    expect(String(source.error)).toContain('ELEMENT_MOVED');
+    expect(gl.texElementSubImage2D).toHaveBeenCalledTimes(1);
+    source.dispose();
+});
+
+test('natural backing size is preferred, while explicit resolution remains a CSS-pixel multiplier', () => {
+    for (const resolution of [undefined, 2]) {
+        const { canvas, element, surface, texture, gl } = createSupportedSourceFixture();
+        Object.assign(surface, { getElementImageDefaultSize: () => ({ width: 15.2, height: 25.1 }) });
+        const source = createAirHTMLSource({ canvas, element, texture, resolution });
+        canvas.dispatchEvent(new Event('paint'));
+        const [width, height] = resolution === undefined ? [16, 26] : [20, 40];
+        expect(texture.reset).toHaveBeenCalledWith({ width, height, mipmapLevel: 1 });
+        expect(gl.texElementSubImage2D.mock.calls[0][5]).toEqual({ width, height });
+        source.dispose();
+    }
+});
+
+test('a failed explicit paint request has a terminal error and can be retried', () => {
+    const { canvas, element, surface, texture } = createSupportedSourceFixture();
+    const source = createAirHTMLSource({ canvas, element, texture });
+    const error = Error('repaint failed');
+    surface.requestPaint.mockImplementationOnce(() => {
+        throw error;
+    });
+    expect(() => source.update()).toThrow(error);
+    expect(source.status).toBe('failed');
+    expect(source.error).toBe(error);
+    source.update();
+    canvas.dispatchEvent(new Event('paint'));
+    expect(source.status).toBe('ready');
+    source.dispose();
+});

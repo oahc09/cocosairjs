@@ -41,6 +41,7 @@
  */
 
 import { game } from '../cocos/game';
+import { invalidateWebGL2Context } from './rendering/webgl2-context-health';
 
 /** @en Context health state. @zh 上下文健康状态（W01 状态机）。 */
 export type AirContextHealthState = 'healthy' | 'lost' | 'restoring' | 'failed';
@@ -118,6 +119,8 @@ export function attachContextHealth(canvas: HTMLCanvasElement, options: AirConte
     let lastEventAt: number | null = null;
     let gl: WebGL2RenderingContext | null = null;
     let destroyed = false;
+    let watchedWebGPUDevice: { readonly lost: Promise<{ readonly reason: string; readonly message: string }> } | null =
+        null;
     const timeline: AirContextHealthSnapshot['timeline'] = [];
     const listeners = new Set<(snapshot: AirContextHealthSnapshot) => void>();
     if (typeof options.onEvent === 'function') {
@@ -209,6 +212,7 @@ export function attachContextHealth(canvas: HTMLCanvasElement, options: AirConte
             /* 某些平台无此方法（上游注记同源） */
         }
         acquireGl();
+        if (gl) invalidateWebGL2Context(gl);
         lostCount += 1;
         if (autoPause) {
             try {
@@ -236,9 +240,11 @@ export function attachContextHealth(canvas: HTMLCanvasElement, options: AirConte
         watchWebGPUDevice(device: {
             readonly lost: Promise<{ readonly reason: string; readonly message: string }>;
         }): void {
+            if (destroyed || watchedWebGPUDevice === device) return;
+            watchedWebGPUDevice = device;
             backend = 'webgpu';
             device.lost.then((info) => {
-                if (destroyed) return;
+                if (destroyed || watchedWebGPUDevice !== device) return;
                 lostCount += 1;
                 // A dead device must never continue drawing, including autoPause:false.
                 game.pause();
@@ -268,6 +274,7 @@ export function attachContextHealth(canvas: HTMLCanvasElement, options: AirConte
         },
         destroy(): void {
             destroyed = true;
+            watchedWebGPUDevice = null;
             canvas.removeEventListener('webglcontextlost', onLost as EventListener, false);
             canvas.removeEventListener('webglcontextrestored', onRestored as EventListener, false);
             listeners.clear();

@@ -8,8 +8,11 @@ const { PNG } = require('pngjs');
 const { launchOptions } = require('./browser-engines.cjs');
 const { loopbackBrowserEnv } = require('./loopback-browser-env.cjs');
 const { serveStaticFile } = require('./static-file-response.cjs');
+const { verifySourceBinding } = require('../build/source-binding.cjs');
 const args = Object.fromEntries(process.argv.slice(2).map((v) => v.replace(/^--/, '').split('=')));
 if (!args.out) throw Error('--out=<new-directory> required');
+if (args['freeze-frame-uniform'] === '1' && args['raster-diagnostic'] !== '1')
+    throw Error('--freeze-frame-uniform=1 is diagnostic-only and requires --raster-diagnostic=1');
 const root = path.resolve(__dirname, '../..');
 const out = path.resolve(root, args.out);
 const bundle = path.resolve(root, args.bundle || 'build/cocosair.module.js');
@@ -93,9 +96,9 @@ const timer = setTimeout(() => {
     let browser;
     try {
         const map = JSON.parse(fs.readFileSync(bundle + '.map', 'utf8'));
-        report.sourceBindings = inputs
-            .filter((v) => v.startsWith('src/') || v.includes(path.join('src', 'air')))
-            .map((file) => {
+        const requiredSources = inputs.filter((v) => v.startsWith('src/') || v.includes(path.join('src', 'air')));
+        if (Array.isArray(map.sourcesContent)) {
+            report.sourceBindings = requiredSources.map((file) => {
                 const relative = path.relative(root, path.resolve(root, file)).replace(/\\/g, '/');
                 const i = map.sources.findIndex((v) => v.replace(/\\/g, '/').endsWith('/' + relative));
                 return {
@@ -106,6 +109,20 @@ const timer = setTimeout(() => {
                             fs.readFileSync(path.resolve(root, file), 'utf8').replace(/\r\n/g, '\n'),
                 };
             });
+        } else {
+            report.sourceBinding = verifySourceBinding(root, bundle);
+            assert.equal(
+                report.sourceBinding.matches,
+                true,
+                'external map source receipt must bind current source and SDK bytes',
+            );
+            const receipt = JSON.parse(fs.readFileSync(bundle + '.sources.json', 'utf8'));
+            const included = new Set(receipt.sources.map((entry) => entry.path));
+            report.sourceBindings = requiredSources.map((file) => {
+                const relative = path.relative(root, path.resolve(root, file)).replace(/\\/g, '/');
+                return { file: relative, matches: included.has(relative) };
+            });
+        }
         assert.ok(
             report.sourceBindings.every((v) => v.matches),
             'candidate source map must bind current source',
@@ -171,10 +188,34 @@ const timer = setTimeout(() => {
             return {
                 info: post.info,
                 source: Array.from(post.source.readColor({ x: 160, y: 120, width: 1, height: 1 })),
+                context: {
+                    renderer: a.director.root.device.renderer,
+                    vendor: a.director.root.device.vendor,
+                    version: document
+                        .querySelector('canvas')
+                        .getContext('webgl2')
+                        .getParameter(document.querySelector('canvas').getContext('webgl2').VERSION),
+                },
             };
         });
         assert.ok(report.init.source[0] > 3.9, 'RGBA16F retains radiance above one');
         const capture = async (name) => {
+            const boundary = await page.evaluate(async () => {
+                const a = await import('/build/cocosair.module.js');
+                const before = a.director.getTotalFrames();
+                document.querySelector('canvas').getContext('webgl2').finish();
+                await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+                return { before, after: a.director.getTotalFrames(), paused: a.game.isPaused() };
+            });
+            assert.ok(
+                boundary.paused && boundary.before === boundary.after,
+                'presentation wait must not advance simulation',
+            );
+            (report.captureBoundaries ||= []).push({
+                name,
+                ...boundary,
+                gpuCompletion: 'WebGL2 finish; not a timing sample',
+            });
             const bytes = await page.locator('canvas').screenshot({ path: path.join(out, name + '.png') });
             return PNG.sync.read(bytes);
         };
@@ -351,26 +392,277 @@ const timer = setTimeout(() => {
         await page.setViewportSize({ width: 960, height: 640 });
         await page.goto(`http://127.0.0.1:${server.address().port}/examples/neon-city/index.html`);
         await page.waitForFunction(() => window.__appReady === true);
-        await page.evaluate(async () => {
-            const a = await import('/build/cocosair.module.js');
-            window.neonClock = a.createStepClock();
-            neonClock.begin();
-            a.director.pause();
-            // Wall-clock FPS text is unrelated to the fixed simulation/render state.
-            document.querySelector('#hud').style.visibility = 'hidden';
-            await neonClock.step(0);
-        });
+        report.freezeControls = await page.evaluate(
+            async ({ disableDither, rasterDiagnostic, freezeFrameUniform }) => {
+                const a = await import('/build/cocosair.module.js');
+                window.neonClock = a.createStepClock();
+                neonClock.begin();
+                a.director.pause();
+                const gl = document.querySelector('canvas').getContext('webgl2');
+                const ditherBefore = gl.isEnabled(gl.DITHER);
+                if (disableDither) gl.disable(gl.DITHER);
+                // Wall-clock FPS text is unrelated to the fixed simulation/render state.
+                document.querySelector('#hud').style.visibility = 'hidden';
+                if (rasterDiagnostic) {
+                    const globalBuffer = a.director.root.pipeline.descriptorSet
+                        .getBuffer(0)
+                        ?.getGpuBuffer?.()?.glBuffer;
+                    if (freezeFrameUniform && !globalBuffer)
+                        throw Error('Cannot identify native global UBO for diagnostic control');
+                    const ids = new WeakMap();
+                    let serial = 0,
+                        frameUniform,
+                        trace;
+                    const id = (value) => {
+                        if (!value) return 0;
+                        if (!ids.has(value)) ids.set(value, ++serial);
+                        return ids.get(value);
+                    };
+                    a.director.on(a.Director.EVENT_BEFORE_DRAW, () => {
+                        trace = { draws: [], uploads: [] };
+                    });
+                    for (const method of [
+                        'drawArrays',
+                        'drawElements',
+                        'drawArraysInstanced',
+                        'drawElementsInstanced',
+                    ]) {
+                        const original = gl[method].bind(gl);
+                        gl[method] = (...args) => {
+                            trace?.draws.push({
+                                method,
+                                args,
+                                program: id(gl.getParameter(gl.CURRENT_PROGRAM)),
+                                vao: id(gl.getParameter(gl.VERTEX_ARRAY_BINDING)),
+                                framebuffer: id(gl.getParameter(gl.DRAW_FRAMEBUFFER_BINDING)),
+                            });
+                            return original(...args);
+                        };
+                    }
+                    for (const method of ['bufferSubData', 'bufferData']) {
+                        const original = gl[method].bind(gl);
+                        gl[method] = (...args) => {
+                            if (
+                                freezeFrameUniform &&
+                                method === 'bufferSubData' &&
+                                args[0] === gl.UNIFORM_BUFFER &&
+                                gl.getParameter(gl.UNIFORM_BUFFER_BINDING) === globalBuffer &&
+                                args[1] === 0 &&
+                                args[2].byteLength === 80
+                            ) {
+                                const originalBytes = new Uint8Array(
+                                    args[2].buffer || args[2],
+                                    args[2].byteOffset || 0,
+                                    80,
+                                );
+                                const bytes = new Uint8Array(originalBytes),
+                                    data = new DataView(bytes.buffer);
+                                frameUniform ??= data.getFloat32(8, true);
+                                data.setFloat32(8, frameUniform, true);
+                                window.__neonFrameUniformWrites = (window.__neonFrameUniformWrites || 0) + 1;
+                                args = [args[0], args[1], bytes];
+                            }
+                            const target = args[0],
+                                data = args[method === 'bufferData' ? 1 : 2],
+                                binding =
+                                    target === gl.UNIFORM_BUFFER
+                                        ? gl.UNIFORM_BUFFER_BINDING
+                                        : target === gl.ARRAY_BUFFER
+                                          ? gl.ARRAY_BUFFER_BINDING
+                                          : gl.ELEMENT_ARRAY_BUFFER_BINDING;
+                            let digest = 2166136261,
+                                length = 0;
+                            if (data != null && typeof data !== 'number') {
+                                const offsetIndex = 3,
+                                    unit = data.BYTES_PER_ELEMENT || 1,
+                                    offset = (args[offsetIndex] || 0) * unit;
+                                const available = data.byteLength - offset,
+                                    lengthArg = args[offsetIndex + 1];
+                                length = lengthArg === undefined ? available : lengthArg * unit;
+                                const bytes = new Uint8Array(
+                                    data.buffer || data,
+                                    (data.byteOffset || 0) + offset,
+                                    length,
+                                );
+                                for (const byte of bytes) digest = Math.imul(digest ^ byte, 16777619);
+                            } else length = data || 0;
+                            trace?.uploads.push({
+                                method,
+                                target,
+                                buffer: id(gl.getParameter(binding)),
+                                offset: method === 'bufferSubData' ? args[1] : 0,
+                                length,
+                                digest: digest >>> 0,
+                            });
+                            return original(...args);
+                        };
+                    }
+                    a.director.on(a.Director.EVENT_AFTER_DRAW, () => {
+                        const source = window.__airPostProcess.source.readColor();
+                        const sameSource = window.__airPostProcess.source.readColor();
+                        let sameRead = true;
+                        for (let i = 0; i < source.length; ++i)
+                            if (source[i] !== sameSource[i]) {
+                                sameRead = false;
+                                break;
+                            }
+                        const screen = new Uint8Array(gl.drawingBufferWidth * gl.drawingBufferHeight * 4);
+                        const previous = gl.getParameter(gl.READ_FRAMEBUFFER_BINDING);
+                        try {
+                            gl.bindFramebuffer(gl.READ_FRAMEBUFFER, null);
+                            gl.readPixels(
+                                0,
+                                0,
+                                gl.drawingBufferWidth,
+                                gl.drawingBufferHeight,
+                                gl.RGBA,
+                                gl.UNSIGNED_BYTE,
+                                screen,
+                            );
+                        } finally {
+                            gl.bindFramebuffer(gl.READ_FRAMEBUFFER, previous);
+                        }
+                        const camera = a.director
+                            .getScene()
+                            .getComponentsInChildren(a.Camera)
+                            .find((c) => c.node.name === 'Main Camera')?.camera;
+                        window.__neonRaster = {
+                            source,
+                            screen,
+                            width: gl.drawingBufferWidth,
+                            height: gl.drawingBufferHeight,
+                            frame: a.director.getTotalFrames(),
+                            time: a.director.root.cumulativeTime,
+                            camera: camera
+                                ? Array.from(a.Mat4.toArray(new Float32Array(16), camera.matViewProj))
+                                : null,
+                            trace,
+                            sameRead,
+                        };
+                    });
+                }
+                await neonClock.step(0);
+                if (freezeFrameUniform && !window.__neonFrameUniformWrites)
+                    throw Error('Diagnostic global frame uniform was not intercepted');
+                return {
+                    disableDither,
+                    rasterDiagnostic,
+                    freezeFrameUniform,
+                    ditherBefore,
+                    time: a.director.root.cumulativeTime,
+                };
+            },
+            {
+                disableDither: args['no-dither'] === '1',
+                rasterDiagnostic: args['raster-diagnostic'] === '1',
+                freezeFrameUniform: args['freeze-frame-uniform'] === '1',
+            },
+        );
         const neonOn = await capture('neon-bloom');
         await page.evaluate(async () => {
             document.querySelector('#bloom').click();
             await neonClock.step(0);
         });
         const neonOff = await capture('neon-no-bloom');
-        await page.evaluate(async () => {
+        if (args['raster-diagnostic'] === '1')
+            await page.evaluate(() => {
+                window.__neonRasterBefore = window.__neonRaster;
+            });
+        const sameFrame = await capture('neon-same-frame');
+        report.sameFrameExact = neonOff.data.equals(sameFrame.data);
+        assert.ok(report.sameFrameExact, 'unchanged presented frame must reproduce identical pixels');
+        report.frozenTime = await page.evaluate(async () => {
             await neonClock.step(0);
+            return (await import('/build/cocosair.module.js')).director.root.cumulativeTime;
         });
         const frozenAgain = await capture('neon-frozen-repeat');
-        assert.ok(neonOff.data.equals(frozenAgain.data), 'fixed camera and time must reproduce identical scene pixels');
+        let count = 0,
+            maxDelta = 0;
+        for (let i = 0; i < neonOff.data.length; i += 4) {
+            const delta = Math.max(...[0, 1, 2, 3].map((c) => Math.abs(neonOff.data[i + c] - frozenAgain.data[i + c])));
+            if (delta) ++count;
+            maxDelta = Math.max(maxDelta, delta);
+        }
+        const pixelBudget = Math.ceil(neonOff.width * neonOff.height * 0.0002);
+        report.frozenDifference = { pixels: count, maxDelta, pixelBudget };
+        if (args['raster-diagnostic'] === '1') {
+            const diagnostic = await page.evaluate(() => {
+                const before = window.__neonRasterBefore,
+                    after = window.__neonRaster;
+                const diff = (a, b) => {
+                    if (a.length !== b.length) throw Error('Raster dimensions changed');
+                    let channels = 0,
+                        pixels = 0,
+                        maxDelta = 0;
+                    const examples = [];
+                    for (let i = 0; i < a.length; i += 4) {
+                        let changed = false;
+                        for (let c = 0; c < 4; ++c)
+                            if (a[i + c] !== b[i + c]) {
+                                changed = true;
+                                ++channels;
+                                maxDelta = Math.max(maxDelta, Math.abs(a[i + c] - b[i + c]));
+                            }
+                        if (changed) {
+                            ++pixels;
+                            if (examples.length < 16)
+                                examples.push({
+                                    index: i / 4,
+                                    before: [...a.slice(i, i + 4)],
+                                    after: [...b.slice(i, i + 4)],
+                                });
+                        }
+                    }
+                    return { channels, pixels, maxDelta, examples };
+                };
+                const encode = (array) => {
+                    const bytes = new Uint8Array(array.buffer, array.byteOffset, array.byteLength),
+                        chunks = [];
+                    for (let i = 0; i < bytes.length; i += 16384)
+                        chunks.push(String.fromCharCode(...bytes.subarray(i, i + 16384)));
+                    return btoa(chunks.join(''));
+                };
+                return {
+                    source: diff(before.source, after.source),
+                    screen: diff(before.screen, after.screen),
+                    before: {
+                        frame: before.frame,
+                        time: before.time,
+                        width: before.width,
+                        height: before.height,
+                        camera: before.camera,
+                        trace: before.trace,
+                        sameRead: before.sameRead,
+                    },
+                    after: {
+                        frame: after.frame,
+                        time: after.time,
+                        width: after.width,
+                        height: after.height,
+                        camera: after.camera,
+                        trace: after.trace,
+                        sameRead: after.sameRead,
+                    },
+                    dumps: {
+                        'neon-before-source.f32': encode(before.source),
+                        'neon-after-source.f32': encode(after.source),
+                        'neon-before-screen.rgba': encode(before.screen),
+                        'neon-after-screen.rgba': encode(after.screen),
+                    },
+                };
+            });
+            for (const [file, data] of Object.entries(diagnostic.dumps))
+                fs.writeFileSync(path.join(out, file), Buffer.from(data, 'base64'));
+            delete diagnostic.dumps;
+            report.rasterDiagnostic = diagnostic;
+        }
+        // Overlapping additive instances can accumulate in different floating-point order on a GPU,
+        // even with frozen uniforms and no MSAA. Same-frame presentation remains exact above;
+        // repeated scene draws must also preserve structure and stay within display quantization.
+        assert.ok(
+            maxDelta <= 1 && count <= pixelBudget,
+            'fixed camera/time redraw must stay within one display level and a 0.02% pixel budget',
+        );
         let changed = 0;
         for (let i = 0; i < neonOn.data.length; i += 4)
             if (neonOn.data[i] > neonOff.data[i] + 3 || neonOn.data[i + 1] > neonOff.data[i + 1] + 3) changed++;

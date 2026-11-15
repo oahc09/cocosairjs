@@ -367,6 +367,15 @@ b.onclick=function(){
 })();`);
         return;
     }
+    const mrtProbeFiles = {
+        '/__probes/mrt-attachments/': 'index.html',
+        '/__probes/mrt-attachments/index.html': 'index.html',
+        '/__probes/mrt-attachments/main.js': 'main.js',
+    };
+    const mrtProbe = Object.prototype.hasOwnProperty.call(mrtProbeFiles, p) ? mrtProbeFiles[p] : null;
+    if (mrtProbe) {
+        return serveFile(res, path.join(ROOT, 'tools/debug/probes/mrt-attachments', mrtProbe));
+    }
     if (p.startsWith('/__debug/')) {
         // V0.5.1 T3/T4：开发期 agent session / debug 面板入口。
         // 按需 esbuild bundle（mtime 缓存）——这些文件不在默认 runtime bundle 内，
