@@ -534,7 +534,7 @@
         "live.canvasChildren": 4,
         "live.groundVerts": 96,
         "live.decoVerts": 0,
-        "live.diamondVerts": 60,
+        "live.diamondVerts": 64,
         "live.markerChildren.0": "img3",
         "summary": "tiledmap ortho=ground+deco iso=2:ISO filled=23 objects=5",
         "phaseKeys": 8

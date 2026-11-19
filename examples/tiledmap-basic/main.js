@@ -25,13 +25,8 @@
  * 6) 读与写不对称：CSV 里翻转标记藏在 gid 高位（本例 `2147483649 / 1073741825 / 536870913` 解析后
  *    `getTileFlagsAt` 能读到），但 `setTileGIDAt` 先把高位 `& FLIPPED_MASK` 抹掉（tiled-layer.ts:694），
  *    标记只认第 4 个入参 ⇒ 照抄 CSV 写法运行时会静默丢翻转（P5 做了正反两组实测）。
- * 7) 往**空格** `setTileGIDAt` 只置 `_cullingDirty`，assembler 的 `updateRenderData` 不被调用 ⇒
- *    数据改了、批次没重算（图上看不见）；手动 `setCullingDirty(true)` 同样无效，
- *    实测要重激活图层节点（`node.active=false→true`）才重建（P6 留了刷新/不刷新两组对照）。
- * 8) 关掉 `enableCulling` 后连**已占用格**的 `setTileGIDAt` 也不改像素：`_updateVertex` 只维护
- *    裁减簿记（顶点的行列区间），`_cullingDirty` 又只在裁减路径末尾被消费（tiled-layer.ts:865）
- *    ⇒ 运行时想真的每帧改图只能走 TSX `<animation>`：`lateUpdate` 换 `_texGrids[gid]`，
- *    assembler 靠 `hasAnimation()` 每帧重建（assembler/simple.ts:119）。P8 测的就是这条。
+ * 7) 单格与批量编辑均请求下一帧刷新；不需要切换图层激活状态或移动相机（P5/P6）。
+ * 8) TSX `<animation>` 独立推进 tile 动画；图层关闭裁剪也不会关闭动画（P8）。
  *
  * 决定性：关掉 `enableCulling`（视口相关的裁减会让三引擎/不同视口的批次数飘），
  * 图层级只读几何与 `tiledDataArray` 的批次数/顶点数；不做随机，无需种子。
@@ -393,16 +388,11 @@ function runSequence() {
         outOfRange: safe(() => ground.setTileGIDAt(1, 99, 0)),
     };
 
-    // P6 可见性 + 渲染刷新阶梯（实测）：往**空格**写 tile 只置 `_cullingDirty`（tiled-layer.ts:730），
-    // 而 `Simple.updateRenderData` 只在渲染器本身被标脏时才跑（assembler/simple.ts:115-121）
-    // ⇒ 数据已改、批次没重算；手动 `setCullingDirty(true)` 也不够，重激活图层节点才触发重建。
-    // 这里留两组：ground 改完立刻重激活（应当反映到新 tile），diamond 只改不刷新（应当保持旧批次数）。
+    // P6 修改静态等距图层的空格；正常下一帧应更新顶点，不重新激活图层。
     const diamond = isoMap.getLayer('diamond');
     diamond.setTileGIDAt(1, 2, 2);
     const decoNode = orthoMap.getLayer('deco').node;
     decoNode.active = !decoNode.active;
-    ground.node.active = false;
-    ground.node.active = true;
     results.p6RefreshLadder = {
         decoActive: decoNode.active,
         groundActive: ground.node.active,
@@ -429,7 +419,7 @@ function runSequence() {
     };
     swapMap.node.destroy();
 
-    // P8 TSX `<animation>`（唯一真正每帧改图的通路）：parser 把 `<frame>` 存进 `_animations`
+    // P8 TSX `<animation>`（与单格和批量编辑独立的动画通路）：parser 把 `<frame>` 存进 `_animations`
     // （键=被动画 tile 的 gid；`tileid` 已加 firstGid、`duration` 毫秒→秒，tmx-xml-parser.ts:752-764），
     // `TiledMap.lateUpdate` 每帧把当前帧的 grid 写进 `_texGrids[gid]`（tiled-map.ts:636-653），
     // assembler 见 `hasAnimation()` 就重建（assembler/simple.ts:119）⇒ 格内 gid 恒为 1，换的是 UV。
