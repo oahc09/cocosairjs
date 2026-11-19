@@ -10,7 +10,12 @@ const fixture = '/__tiled_loader_fixture/';
 const tmx =
     '<map version="1.4" orientation="orthogonal" width="2" height="1" tilewidth="16" tileheight="16">' +
     '<tileset firstgid="1" source="a/tiles.tsx"/><tileset firstgid="2" source="b/tiles.tsx"/>' +
-    '<layer name="floor" width="2" height="1"><data encoding="csv">1,2</data></layer></map>';
+    '<layer name="floor" width="2" height="1"><data encoding="csv">1,2</data></layer>' +
+    '<objectgroup name="markers" offsetx="6" offsety="12">' +
+    '<object id="1" x="5" y="4" name="spawn" class="Player" type="NotPlayer" rotation="45"/>' +
+    '<object id="2" x="8" y="7" name="trigger" type="Trigger"/>' +
+    '<object id="3" x="0" y="0" name="hidden" class="Player" visible="0"/>' +
+    '</objectgroup></map>';
 const tsx =
     '<tileset version="1.4" name="tiles" tilewidth="16" tileheight="16" tilecount="1" columns="1">' +
     '<image source="tiles.png" width="16" height="16"/></tileset>';
@@ -41,6 +46,7 @@ async function main() {
 
     const files = [
         'src/air/assets/tiled-loader.ts',
+        'src/air/assets/tiled-object-factory.ts',
         'src/air/index.ts',
         'src/cocos/tiledmap/tmx-xml-parser.ts',
         'build/cocosair.module.js',
@@ -49,7 +55,7 @@ async function main() {
     const fingerprints = Object.fromEntries(files.map((name) => [name, sha(fs.readFileSync(path.join(root, name)))]));
     const server = await startExampleServer(root);
     const report = {
-        scope: 'same-basename TSX, concurrent leases and repeated native Tiled rendering',
+        scope: 'same-basename TSX, concurrent leases, class markers and repeated native Tiled rendering',
         engine,
         fingerprints,
         status: 'FAIL',
@@ -84,7 +90,7 @@ async function main() {
         await page.waitForFunction(() => typeof window.__probe === 'function');
         await page.evaluate(
             async (fixtureURL) => {
-                const { AssetBank, Node, TiledMap, UITransform, createStepClock, director, loadTiledMap } =
+                const { AssetBank, Node, TiledMap, UITransform, createStepClock, director, loadTiledMap, instantiateTiledObjects } =
                     await import('/build/cocosair.module.js');
                 const scene = director.getScene();
                 for (const map of scene.getComponentsInChildren(TiledMap)) map.node.active = false;
@@ -103,14 +109,30 @@ async function main() {
                     const map = node.addComponent(TiledMap);
                     map.enableCulling = false;
                     map.tmxAsset = handle.asset;
-                    maps[key] = { handle, node };
+                    const factory = ({ source }) => new Node(source.name);
+                    const markers = instantiateTiledObjects(map, new Map([['Player', factory], ['Trigger', factory]]));
+                    const roots = markers.nodes;
+                    if (roots.map((n) => n.name).join(',') !== 'spawn,trigger') throw Error('Marker class/legacy filtering');
+                    const group = map.getObjectGroup('markers');
+                    const first = roots[0];
+                    if (first.parent !== group.node || first.position.x !== -11 || first.position.y !== 4
+                        || Math.abs(first.eulerAngles.z + 45) > 0.01) throw Error('Marker native placement');
+                    const old = first.worldPosition.clone(), transform = node.getComponent(UITransform);
+                    transform.setAnchorPoint(0, 1);
+                    const moved = first.worldPosition.clone();
+                    transform.setAnchorPoint(0.5, 0.5);
+                    if (moved.x - old.x !== 16 || moved.y - old.y !== -8) throw Error('Marker map anchor tracking');
+                    maps[key] = { handle, node, markers };
                     return [map.getLayer('floor').getTileGIDAt(0, 0), map.getLayer('floor').getTileGIDAt(1, 0)];
                 }
                 async function release(key) {
-                    const { node, handle } = maps[key];
+                    const { node, handle, markers } = maps[key];
+                    if (key === 'bottom') markers.dispose();
                     node.removeFromParent();
                     node.destroy();
                     await clock.step();
+                    if (markers.nodes.some((n) => n.isValid)) throw Error('Marker node survived map disposal');
+                    markers.dispose();
                     handle.dispose();
                     delete maps[key];
                 }
@@ -120,6 +142,7 @@ async function main() {
                     refs: () =>
                         ['a', 'b'].map((name) => bank.refCount(new URL(name + '/tiles.png', fixtureURL).href, 'png')),
                     step: () => clock.step(),
+                    activeMarkers: () => Object.values(maps).map((value) => value.markers.nodes.filter((n) => n.isValid).length),
                     close: async () => {
                         for (const key of Object.keys(maps)) await release(key);
                         const entries = bank.size;
@@ -179,6 +202,8 @@ async function main() {
             Object.keys(routes).sort(),
             'concurrent loads must share each fetch',
         );
+        assert.deepEqual(await page.evaluate(() => window.__tiledLoaderCheck.activeMarkers()), [2, 2]);
+        report.stages.markerPlacement = 'class and legacy type, two live map instances, offset/anchor/rotation, detach and destruction';
         const both = await screen('two-maps');
         assert(
             both.every((half) => half.every((color) => color >= 140)),
@@ -193,6 +218,7 @@ async function main() {
             }),
             [1, 1],
         );
+        assert.deepEqual(await page.evaluate(() => window.__tiledLoaderCheck.activeMarkers()), [2]);
         assert.deepEqual(
             await screen('released-first'),
             [[0, 0], both[1]],

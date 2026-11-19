@@ -58,6 +58,7 @@ export { Billboard } from '../cocos/particle/billboard';
 export * from './assets/gltf';
 export * from './assets/bmfont';
 export * from './assets/tiled-loader';
+export * from './assets/tiled-object-factory';
 export * from './assets/atlas/atlas-parser';
 export * from './assets/atlas/atlas-factory';
 export * from './assets/atlas/atlas-loader';
