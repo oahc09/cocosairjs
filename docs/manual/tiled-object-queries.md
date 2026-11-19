@@ -1,5 +1,6 @@
 # Tiled 对象与瓦片查询
 
+需要从 URL 装配地图和外链 TSX 时，见 [Code First 加载 Tiled 地图](./tiled-loader.md)。
 渲染刷新与裁剪边界见 [Tiled 裁剪与更新标记](./tiled-culling-and-dirty-state.md)。
 
 `TiledObjectGroup.getObjects()` 保留引擎坐标和可变对象的原有合同。
