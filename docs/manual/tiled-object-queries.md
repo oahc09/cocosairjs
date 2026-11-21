@@ -1,5 +1,6 @@
 # Tiled 对象与瓦片查询
 
+需要从 URL 装配地图和外链 TSX 时，见 [Code First 加载 Tiled 地图](./tiled-loader.md)。
 渲染刷新与裁剪边界见 [Tiled 裁剪与更新标记](./tiled-culling-and-dirty-state.md)。
 
 `TiledObjectGroup.getObjects()` 保留引擎坐标和可变对象的原有合同。
@@ -45,3 +46,30 @@ if (layer && column >= 0 && row >= 0
 现有 [tiledmap-basic 示例](../../examples/tiledmap-basic/) 覆盖正交/等距、外链 TSX、对象与瓦片动画。
 定向原生测试检查两类地图的原始/换算坐标、字符串/形状查询、快照冻结和重复初始化；
 `tools/verify/air-tiled-objects-browser.cjs --out=<new.json>` 对照原始 XML，并复跑该示例现有 P1–P8 合同。
+
+## 从对象 class 创建业务节点
+
+加载并赋值 `map.tmxAsset` 后，用显式注册表创建实例：
+
+```ts
+import { Node, instantiateTiledObjects } from 'cocosair.js';
+
+const markers = instantiateTiledObjects(map, new Map([
+    ['Player', ({ source, properties }) => {
+        const root = new Node(source.name);
+        // 在 root 下创建角色 Sprite/组件；可读取 properties 中的 TMX 属性。
+        return root;
+    }],
+]));
+// 替换或卸载地图前：markers.dispose();
+```
+
+只分派可见的非文字/非瓦片几何标记；未注册的 class 跳过，已有文字/瓦片对象保持由原生引擎管理。
+名称按原样匹配，有 `class` 时优先，否则使用旧版 `type`。不会按地图中的名字加载脚本或组件。
+工厂同步返回新建、无父节点的 `Node`，或返回 `undefined` 跳过；不要在回调里替换地图或重排对象。
+根节点按原生对象组坐标定位并应用 TMX 旋转，受地图 anchor、对象组 offset 和父级变换影响；
+如需额外偏移，在根节点之下创建子节点。
+
+每张地图只持有一个活动句柄，两张地图分别实例化。工厂抛错时回滚本次已接管的根节点；
+应用仍负责释放工厂未返回的临时资源。先 `dispose()` 再替换 `tmxAsset`，即使新旧地图组同名也不复用旧业务节点；
+若从 URL 加载资源，销毁地图后再释放 `loadTiledMap` 的素材句柄。

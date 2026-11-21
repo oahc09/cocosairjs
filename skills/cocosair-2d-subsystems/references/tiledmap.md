@@ -22,11 +22,9 @@ first. `TiledMap.enableCulling` fans the value out to every layer (`:125-131`) a
 # The refresh ladder (culling dirty is not render-data dirty)
 
 - `setTileGIDAt(gid, x, y, flags)` masks the flipped bits off the incoming gid (`src/cocos/tiledmap/tiled-layer.ts:693-694`), throws on an out-of-range cell (`:699`), and `flags` is the fourth argument (`:711`).
-- `_updateTileForGID` writes the cell, patches vertex bookkeeping and sets only `_cullingDirty` (`src/cocos/tiledmap/tiled-layer.ts:714-731`, flag at `:730`).
-- That flag is consumed inside `updateViewPort` (`src/cocos/tiledmap/tiled-layer.ts:865`), reached only through `updateCulling` when `_enableCulling` is true (`:910-933`, guard `:913`, camera re-resolve `:916`).
-- The assembler calls `updateCulling` first (`src/cocos/tiledmap/assembler/simple.ts:115-116`) and rebuilds on `colorChanged || isCullingDirty() || isUserNodeDirty() || hasAnimation() || hasTiledNode() || node.hasChangedFlags` (`:119-120`, `destroyRenderData()` `:122`).
-- But `updateRenderData` only runs when the renderer is already marked dirty, so the measured refresh for a runtime cell edit is `markForUpdateRenderData()` (`src/cocos/2d/framework/ui-renderer.ts:431-433`) or toggling the layer node active (`examples/tiledmap-basic/main.js:396-405` shows the ladder, reactivation at `:403-405`).
-- TSX `<animation>` is the one path that refreshes by itself: `lateUpdate` swaps `_texGrids[gid]` and re-marks animated layers (`src/cocos/tiledmap/tiled-map.ts:645-659`).
+- Single-cell and rectangle writes share `_updateTileForGID`, which updates tile data, marks culling state dirty and schedules the renderer. The UI renderer queue deduplicates the layer within a frame.
+- The assembler calls `updateCulling()` first, then rebuilds based on dirty state, animation, TiledNodes and transform changes. Culling recalculates the visible rectangle only when enabled.
+- Both setters update an active static layer on the next render even with culling off or a stationary camera. TSX animation still uses its independent native ticking path.
 
 # Object queries and coordinate rewriting
 
@@ -37,6 +35,6 @@ first. `TiledMap.enableCulling` fans the value out to every layer (`:125-131`) a
 
 # Gotchas
 
-- Editing a cell with `setTileGIDAt` changes data but not pixels until you call `markForUpdateRenderData` or reactivate the layer node; `setCullingDirty(true)` alone is never consumed with culling off.
+- `setCullingDirty(true)` only sets a flag. Use the tile setters to edit cells and schedule a refresh; no manual reactivation is needed.
 - Passing `flags` in the third position mis-throws or drops flip bits; the signature order is `(gid, x, y, flags)` (`src/cocos/tiledmap/tiled-layer.ts:711`).
 - Trusting `object.x` after `_init` gives the rewritten engine coordinate, not the authored TMX value; read `getRawObjects()` for the original (`src/cocos/tiledmap/tiled-object-group.ts:174`).

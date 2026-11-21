@@ -35,26 +35,26 @@ tm.tmxAsset = asset;                 // setter → _applyFile()（tiled-map.ts:1
 
 ## 3. 解析语义实测（钉进合同的可回读量）
 
-| 点 | 实测 |
-|---|---|
-| `Orientation` 枚举 | ORTHO=0 / **HEX=1 / ISO=2**（tiled-types.ts:54-72），不是 XML 字面顺序 ⇒ 合同写 `"0:ORTHO"` / `"2:ISO"` 字符串对 |
+| 点                      | 实测                                                                                                                                                                                                                                               |
+| ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Orientation` 枚举      | ORTHO=0 / **HEX=1 / ISO=2**（tiled-types.ts:54-72），不是 XML 字面顺序 ⇒ 合同写 `"0:ORTHO"` / `"2:ISO"` 字符串对                                                                                                                                   |
 | `<object type="solid">` | **引擎根本不读**：`objectProp.type` 只由子元素与 `gid` 推出（tmx-xml-parser.ts:964-1008）。带 `type="solid"` 的矩形与 `<point/>` 都是 `0:RECT`；`type` 只在 `<property type="bool">` 上表示值类型（TSX 的 `solid` 读回真布尔、`slip` 读回 `0.25`） |
-| 对象坐标 | `TiledObjectGroup._init` **就地改写** `object.x/y` 为引擎坐标（正交 `y = height - y`；等距分母是 tile **height**，tiled-object-group.ts:231-232），Tiled 原值只留在 `object.offset` ⇒ 读回分两套（spawn `engineXY [32,32] / tmxXY [32,96]`） |
-| 对象节点 | 只有 TEXT/IMAGE 建节点：markers 组 5 对象只有 `img3`（gid=2 torch）是子节点，RECT/ELLIPSE/POLYGON 纯数据 ⇒ 「object layer 已解析」必须逐对象回读字段，数 `children.length` 会得出反结论 |
-| POLYGON `points` | y 分量整体取反（TMX `24,4 8,20` ⇒ `[24,-4] [8,-20]`） |
-| 图层 offset 符号 | TMX 写 `offsetx="4" offsety="-6"` ⇒ `layer._offset` 读回 `[4, 6]`（y 取反）。**待核**：只在正交 deco 一层观察到，未做跨朝向推广 |
+| 对象坐标                | `TiledObjectGroup._init` **就地改写** `object.x/y` 为引擎坐标（正交 `y = height - y`；等距分母是 tile **height**，tiled-object-group.ts:231-232），Tiled 原值只留在 `object.offset` ⇒ 读回分两套（spawn `engineXY [32,32] / tmxXY [32,96]`）       |
+| 对象节点                | 只有 TEXT/IMAGE 建节点：markers 组 5 对象只有 `img3`（gid=2 torch）是子节点，RECT/ELLIPSE/POLYGON 纯数据 ⇒ 「object layer 已解析」必须逐对象回读字段，数 `children.length` 会得出反结论                                                            |
+| POLYGON `points`        | y 分量整体取反（TMX `24,4 8,20` ⇒ `[24,-4] [8,-20]`）                                                                                                                                                                                              |
+| 图层 offset 符号        | TMX 写 `offsetx="4" offsety="-6"` ⇒ `layer._offset` 读回 `[4, 6]`（y 取反）。**待核**：只在正交 deco 一层观察到，未做跨朝向推广                                                                                                                    |
 
 ## 4. 运行时改图的三种路径（本组最有价值的一条，F-99 候选）
 
-「改数据」与「改像素」在 tiledmap 里是三件事：
+以下读数保留为修复前证据。当前单格与批量编辑会请求下一帧刷新，参见[裁剪与更新标记](../manual/tiled-culling-and-dirty-state.md)。
 
-| 路径 | 数据 | 像素 | 源码位置 |
-|---|---|---|---|
-| A 往**空格** `setTileGIDAt` | 改 | **不改**，零报错：只置 `_cullingDirty`，`Simple.updateRenderData` 不被标脏 ⇒ 顶点数不变 | tiled-layer.ts:730 / assembler/simple.ts:115-121 |
-| A′ 补一步 `setCullingDirty(true)` | — | 仍不改（实测 60 顶点不动） | |
-| A″ 补一步 `node.active=false→true` | — | **改**，但重建推迟到下一次渲染遍历：点击回调里同步读 `vertsOf` 是 **0**，1500 ms 后 `live.groundVerts` 才读回 96 | |
-| B 往**已占用**格写 gid（含 flag），`enableCulling=false` | 改 | **不改**：`_updateTileForGID → _updateVertex(x,y)` 维护的是裁减簿记（顶点行列区间、`_hasAniGrid`），不重写 UV/顶点缓冲；`_cullingDirty` 只在 `_updateCullingOffsets()` 末尾被消费（tiled-layer.ts:865），而该路径仅在裁减开启时跑 | tiled-layer.ts:714-731, 865, 961-1146 |
-| C TSX `<animation>` | gid 不变 | **改，且每帧**：`TiledMap.lateUpdate` 写 `_texGrids[aniGID] = frames[frameIdx].grid`，并对 `hasAnimation()` 的图层 `_markForUpdateRenderData()`；assembler 脏判里 `hasAnimation()` 独立于裁减（simple.ts:119） | tiled-map.ts:636-660 / simple.ts:119 |
+| 路径                                                     | 数据     | 像素                                                                                                                                                                                                                              | 源码位置                                         |
+| -------------------------------------------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
+| A 往**空格** `setTileGIDAt`                              | 改       | **不改**，零报错：只置 `_cullingDirty`，`Simple.updateRenderData` 不被标脏 ⇒ 顶点数不变                                                                                                                                           | tiled-layer.ts:730 / assembler/simple.ts:115-121 |
+| A′ 补一步 `setCullingDirty(true)`                        | —        | 仍不改（实测 60 顶点不动）                                                                                                                                                                                                        |                                                  |
+| A″ 补一步 `node.active=false→true`                       | —        | **改**，但重建推迟到下一次渲染遍历：点击回调里同步读 `vertsOf` 是 **0**，1500 ms 后 `live.groundVerts` 才读回 96                                                                                                                  |                                                  |
+| B 往**已占用**格写 gid（含 flag），`enableCulling=false` | 改       | **不改**：`_updateTileForGID → _updateVertex(x,y)` 维护的是裁减簿记（顶点行列区间、`_hasAniGrid`），不重写 UV/顶点缓冲；`_cullingDirty` 只在 `_updateCullingOffsets()` 末尾被消费（tiled-layer.ts:865），而该路径仅在裁减开启时跑 | tiled-layer.ts:714-731, 865, 961-1146            |
+| C TSX `<animation>`                                      | gid 不变 | **改，且每帧**：`TiledMap.lateUpdate` 写 `_texGrids[aniGID] = frames[frameIdx].grid`，并对 `hasAnimation()` 的图层 `_markForUpdateRenderData()`；assembler 脏判里 `hasAnimation()` 独立于裁减（simple.ts:119）                    | tiled-map.ts:636-660 / simple.ts:119             |
 
 路径 B 的否证是一次真实踩坑：先前用 `Component.update` 每 20 帧在已占用格上 1↔2 交替，探针自证在跑（`pulseRunning:true`、`filled:24`），矩阵仍 `frameChanged:false`：
 
@@ -100,11 +100,11 @@ NODE_PATH=E:/AIProMax/Y2026M08/AIShaderBenchmark/node_modules node tools/verify/
 
 `tiledmap-basic` 三引擎逐条：`checks = {noConsoleError, noFailedRequest, frameChanged, pngBytesAboveFloor, probeAssertions}` **全 true**，`failedAssertions []`，控制台只有既有良性一条 `[Physics] PhysicsSystem initDefaultMaterial()`。截图与出处（一次运行一次捕获）：
 
-| 引擎 | 截图 | bytes | sha256_16 |
-|---|---|---|---|
+| 引擎     | 截图                                                              | bytes | sha256_16        |
+| -------- | ----------------------------------------------------------------- | ----- | ---------------- |
 | chromium | `docs/evidence/browser-matrix/tiledmap-basic/matrix-chromium.png` | 12297 | 0b7d30543716d15e |
-| firefox | `…/matrix-firefox.png` | 16267 | 95593b5988aa50e2 |
-| webkit | `…/matrix-webkit.png` | 13273 | cdff8fb5b6fb04d3 |
+| firefox  | `…/matrix-firefox.png`                                            | 16267 | 95593b5988aa50e2 |
+| webkit   | `…/matrix-webkit.png`                                             | 13273 | cdff8fb5b6fb04d3 |
 
 合同规模：161 条 `probeEquals`（P1 类型/头部、P2 TSX、P3 图层几何与批次顶点数、P4 object layer 逐对象字段、P5 flag 读写正反、P6 刷新阶梯、P7 换 asset 重建、P8 tile 动画、`live.*` 终态）+ 5 条 `probeNonEmpty` + 4 条 `probePresent`。
 

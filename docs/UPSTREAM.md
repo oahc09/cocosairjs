@@ -429,6 +429,10 @@ PG-02 also corrects native BMFont kerning in `cocos/2d/assembler/label/text-proc
 
 The TMX parser retains the modern `class` attribute (falling back to legacy `type`) in optional `className`, independently of the existing numeric shape enum. TiledObjectGroup adds string-class/numeric-shape queries and immutable original geometry snapshots. Reinitializing the same parsed objects now converts from the original coordinates and polygon/polyline points, preventing repeated Y flips or cumulative isometric conversion. First initialization retains the native coordinate formulas and rendering behavior. This is an intentional change to three extracted Tiled files; it does not add a collision solver or alter tile rendering/culling.
 
+## Tiled static-layer refresh
+
+The native single-cell and rectangle setters share `_updateTileForGID`. A changed tile still updates the existing culling bookkeeping, and now also queues its renderer so a stationary camera or disabled culling does not strand the edit. The existing UI renderer queue coalesces multiple requests in the same frame. Public GID/flag semantics, culling geometry and TSX animation are unchanged.
+
 ## Input action ownership (PG-28)
 
 `cocos/input/input.ts` includes the already-dispatched `MOUSE_ENTER` and `MOUSE_LEAVE` events in its native input type map (PG-28). This adds typed subscriptions without changing event dispatch. The optional AIR action adapter uses mouse-leave to release its simulated mouse source and PAL's existing physical-key map to clean up held keys released after focus moves away from the canvas. It does not admit a second keydown channel or synthesize engine events.

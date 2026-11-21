@@ -728,6 +728,8 @@ export class TiledLayer extends UIRenderer {
             this.tiles[idx] = 0;
         }
         this._cullingDirty = true;
+        // Tile data can change even when the viewport does not. Schedule the assembler.
+        this._markForUpdateRenderData();
     }
 
     /**
