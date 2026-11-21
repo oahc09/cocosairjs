@@ -487,10 +487,21 @@ var debugInfos = {
 	"9007": "Since v3.6, Because mask changes the inheritance relationship, you can directly manipulate the rendering components under the same node to complete the operation.",
 	"9008": "request fullscreen is not supported on this platform.",
 	"9009": "exit fullscreen is not supported on this platform.",
+	"9010": "UIMesh.setMeshData: unsupported vertexStride %d, expected %d (V3F_T2F_C4B) or %d (V3F_T2F_C4B_C4B); data rejected.",
+	"9011": "UIMesh.setMeshData: negative counts (vertexCount %d, indexCount %d); data rejected.",
+	"9012": "UIMesh.setMeshData: vertexData holds %d bytes, but %d vertices x %d bytes are declared; data rejected.",
+	"9013": "UIMesh.setMeshData: indexData is %d bytes at offset %d, but %d Uint16 indices need %d bytes (2-byte aligned view); data rejected.",
+	"9014": "UIMesh.setMeshData: indices[%d] = %d is out of range for %d vertices; data rejected.",
+	"9015": "UIMesh.setMeshData: segment %d range [%d, %d) is out of bounds for indexCount %d; data rejected.",
+	"9016": "UIMesh.setMeshData: %d vertices / %d indices exceed the accessor cap (%d / %d); split the mesh. Data rejected.",
+	"9017": "UIMesh: render data allocation failed for %d vertices / %d indices (accessor cap: %d / %d).",
 	"9100": "texture size exceeds current device limits %d/%d",
 	"9101": "The length of the TypedArrayBuffer must be an integer.",
 	"9201": "Cannot access game frame or container.",
 	"9202": "Setting window size is not supported.",
+	"9204": "maxDevicePixelRatio, when specified, must be a finite number >= 1.",
+	"9205": "PAL did not apply the configured maximum DPR. Check that the engine and PAL versions match.",
+	"9206": "maxDevicePixelRatio cannot change after ScreenAdapter.init().",
 	"9300": "The current buffer beyond the limit in ui static component, please reduce the amount",
 	"9301": "The UI has not been initialized",
 	"9302": "Can't getGFXSampler with out device",
@@ -679,6 +690,23 @@ var debugInfos = {
 	"16418": "Debug bones or slots is invalid in cached mode.",
 	"16419": "Spine version not supported.",
 	"16420": "End time must bigger than start time.",
+	"16500": "WorkerPool script path must be a non-empty string",
+	"16501": "WorkerPool requires a self-contained task function or a worker script path",
+	"16502": "WorkerPool has been terminated",
+	"16503": "WorkerPool has no available execution backend",
+	"16504": "No worker backend for \"%s\" (%s). Provide options.fallback to run single-threaded, or fix packaging (docs/worker/README.md).",
+	"16505": "WorkerPool degraded to single-threaded for \"%s\": worker backend failed (%s). %s",
+	"16506": "WorkerPool is rejecting tasks (no options.fallback) for \"%s\": worker backend failed (%s). %s",
+	"16507": "WorkerPool could not use a worker for \"%s\" and is running single-threaded via options.fallback. Reason: %s. %s",
+	"16508": "WorkerPool could not use a worker for \"%s\" and is REJECTING tasks (no options.fallback). Reason: %s. %s",
+	"16509": "Worker error",
+	"16510": "Worker is unavailable and no synchronous fallback exists",
+	"16511": "Worker task timed out after %sms — the worker never replied (deadlock, infinite loop, or non-protocol script). Worker discarded; see docs/worker/README.md",
+	"16512": "Worker has been disposed",
+	"16513": "Worker script sent a malformed reply — it must implement the engine protocol: receive { id, args }, post back { id, ok, value } or { id, ok: false, error } (docs/worker/cc-worker-template.js)",
+	"16514": "Worker task failed",
+	"16515": "createWorker(path) requires a non-empty worker script path",
+	"16516": "Function workers are unavailable; use WorkerPool for an automatic sync fallback, or createWorker(path) (mode 2).",
 	"0100": "%s not yet implemented.",
 	"0200": "You should specify a valid DOM canvas element."
 };
@@ -14783,10 +14811,14 @@ class ScreenAdapter extends EventTarget {
     }
     return !!document[this._fn.fullscreenElement];
   }
+  get maxDevicePixelRatio() {
+    return this._maxDevicePixelRatio;
+  }
   get devicePixelRatio() {
-    var _window$devicePixelRa;
-    const cap = Number(window.__CCDPR_CAP__);
-    return Math.min((_window$devicePixelRa = window.devicePixelRatio) !== null && _window$devicePixelRa !== void 0 ? _window$devicePixelRa : 1, Number.isFinite(cap) && cap > 0 ? cap : 2);
+    var _this$_maxDevicePixel, _window$devicePixelRa;
+    const airCap = Number(window.__CCDPR_CAP__);
+    const cap = Number.isFinite(airCap) && airCap > 0 ? airCap : (_this$_maxDevicePixel = this._maxDevicePixelRatio) !== null && _this$_maxDevicePixel !== void 0 ? _this$_maxDevicePixel : 2;
+    return Math.min((_window$devicePixelRa = window.devicePixelRatio) !== null && _window$devicePixelRa !== void 0 ? _window$devicePixelRa : 1, cap);
   }
   get windowSize() {
     const result = this._windowSizeInCssPixels;
@@ -14936,6 +14968,7 @@ class ScreenAdapter extends EventTarget {
     super();
     this.isFrameRotated = false;
     this.handleResizeEvent = true;
+    this._maxDevicePixelRatio = null;
     this._isProportionalToFrame = false;
     this._cachedFrameStyle = {
       width: '0px',
@@ -15007,6 +15040,11 @@ class ScreenAdapter extends EventTarget {
     for (const callback of waiters) callback();
   }
   init(options, cbToRebuildFrameBuffer) {
+    const maximum = options.maxDevicePixelRatio;
+    if (maximum != null && (typeof maximum !== 'number' || !Number.isFinite(maximum) || maximum < 1)) {
+      throw new RangeError('screen.maxDevicePixelRatio must be a finite number >= 1.');
+    }
+    this._maxDevicePixelRatio = maximum !== null && maximum !== void 0 ? maximum : null;
     this.bindCanvas();
     this._cbToUpdateFrameBuffer = cbToRebuildFrameBuffer;
     this.orientation = orientationMap$2[options.configOrientation];
@@ -15305,17 +15343,28 @@ class ScreenAdapter extends EventTarget {
 }
 const screenAdapter = new ScreenAdapter();
 
+let MaxDPR;
+(function (MaxDPR) {
+  MaxDPR[MaxDPR["Performance"] = 1] = "Performance";
+  MaxDPR[MaxDPR["Balanced"] = 2] = "Balanced";
+  MaxDPR[MaxDPR["Quality"] = 4] = "Quality";
+})(MaxDPR || (MaxDPR = {}));
 class Screen {
   init() {
     var _settings$querySettin, _settings$querySettin2;
+    const maximum = settings.querySettings(SettingsCategory.SCREEN, 'maxDevicePixelRatio');
     const exactFitScreen = (_settings$querySettin = settings.querySettings(SettingsCategory.SCREEN, 'exactFitScreen')) !== null && _settings$querySettin !== void 0 ? _settings$querySettin : true;
     const orientation = (_settings$querySettin2 = settings.querySettings(SettingsCategory.SCREEN, 'orientation')) !== null && _settings$querySettin2 !== void 0 ? _settings$querySettin2 : 'auto';
     const isHeadlessMode = settings.querySettings(SettingsCategory.RENDERING, 'renderMode') === 3;
-    screenAdapter.init({
+    const options = {
       exactFitScreen,
       configOrientation: orientation,
       isHeadlessMode
-    }, () => {
+    };
+    if (maximum != null) {
+      options.maxDevicePixelRatio = maximum;
+    }
+    screenAdapter.init(options, () => {
       var _director$root;
       const director = legacyCC.director;
       if (!((_director$root = director.root) != null && _director$root.pipeline)) {
@@ -15324,6 +15373,9 @@ class Screen {
       }
       director.root.pipeline.shadingScale = screenAdapter.resolutionScale;
     });
+    if (maximum != null && 'maxDevicePixelRatio' in screenAdapter && screenAdapter.maxDevicePixelRatio !== maximum) {
+      throw new Error(getError(9205));
+    }
   }
   get devicePixelRatio() {
     return screenAdapter.devicePixelRatio;
@@ -16548,7 +16600,7 @@ var _decorator = /*#__PURE__*/Object.freeze({
     visible: visible
 });
 
-var _dec$3s, _class$3t, _class2$2O, _initializer$2H, _initializer2$2a, _initializer3$1E, _initializer4$1o, _CompactValueTypeArray;
+var _dec$3t, _class$3u, _class2$2P, _initializer$2I, _initializer2$2b, _initializer3$1E, _initializer4$1o, _CompactValueTypeArray;
 let StorageUnit;
 (function (StorageUnit) {
   StorageUnit[StorageUnit["Uint8"] = 0] = "Uint8";
@@ -16579,10 +16631,10 @@ function extractStorageUnitElementType(combined) {
     elementType: combined >> elementTypeBits
   };
 }
-let CompactValueTypeArray = (_dec$3s = ccclass$x('cc.CompactValueTypeArray'), _dec$3s(_class$3t = (_class2$2O = (_CompactValueTypeArray = class CompactValueTypeArray {
+let CompactValueTypeArray = (_dec$3t = ccclass$x('cc.CompactValueTypeArray'), _dec$3t(_class$3u = (_class2$2P = (_CompactValueTypeArray = class CompactValueTypeArray {
   constructor() {
-    this._byteOffset = _initializer$2H && _initializer$2H();
-    this._unitCount = _initializer2$2a && _initializer2$2a();
+    this._byteOffset = _initializer$2I && _initializer$2I();
+    this._unitCount = _initializer2$2b && _initializer2$2b();
     this._unitElement = _initializer3$1E && _initializer3$1E();
     this._length = _initializer4$1o && _initializer4$1o();
   }
@@ -16619,15 +16671,15 @@ let CompactValueTypeArray = (_dec$3s = ccclass$x('cc.CompactValueTypeArray'), _d
     }
     return result;
   }
-}, _CompactValueTypeArray.StorageUnit = StorageUnit, _CompactValueTypeArray.ElementType = ElementType, _CompactValueTypeArray), _initializer$2H = applyDecoratedInitializer(_class2$2O.prototype, "_byteOffset", [serializable$c], function () {
+}, _CompactValueTypeArray.StorageUnit = StorageUnit, _CompactValueTypeArray.ElementType = ElementType, _CompactValueTypeArray), _initializer$2I = applyDecoratedInitializer(_class2$2P.prototype, "_byteOffset", [serializable$c], function () {
   return 0;
-}), _initializer2$2a = applyDecoratedInitializer(_class2$2O.prototype, "_unitCount", [serializable$c], function () {
+}), _initializer2$2b = applyDecoratedInitializer(_class2$2P.prototype, "_unitCount", [serializable$c], function () {
   return 0;
-}), _initializer3$1E = applyDecoratedInitializer(_class2$2O.prototype, "_unitElement", [serializable$c], function () {
+}), _initializer3$1E = applyDecoratedInitializer(_class2$2P.prototype, "_unitElement", [serializable$c], function () {
   return combineStorageUnitElementType(StorageUnit.Uint8, ElementType.Scalar);
-}), _initializer4$1o = applyDecoratedInitializer(_class2$2O.prototype, "_length", [serializable$c], function () {
+}), _initializer4$1o = applyDecoratedInitializer(_class2$2P.prototype, "_length", [serializable$c], function () {
   return 0;
-}), _class2$2O)) || _class$3t);
+}), _class2$2P)) || _class$3u);
 function getElementTraits(elementType) {
   return BuiltinElementTypeTraits[elementType];
 }
@@ -17695,32 +17747,32 @@ function bezierByTime(controlPoints, x) {
 }
 legacyCC.bezierByTime = bezierByTime;
 
-var _dec$3r, _class$3s, _class2$2N, _initializer$2G, _initializer2$29, _initializer3$1D, _dec2$2u, _class3$m, _class4$l, _initializer4$1n, _initializer5$16;
+var _dec$3s, _class$3t, _class2$2O, _initializer$2H, _initializer2$2a, _initializer3$1D, _dec2$2u, _class3$m, _class4$l, _initializer4$1n, _initializer5$16;
 let QuatInterpolationMode;
 (function (QuatInterpolationMode) {
   QuatInterpolationMode[QuatInterpolationMode["SLERP"] = 0] = "SLERP";
   QuatInterpolationMode[QuatInterpolationMode["CONSTANT"] = 1] = "CONSTANT";
 })(QuatInterpolationMode || (QuatInterpolationMode = {}));
-let QuatKeyframeValue = (_dec$3r = ccclass$x('cc.QuatKeyframeValue'), _dec$3r(_class$3s = uniquelyReferenced(_class$3s = (_class2$2N = class QuatKeyframeValue {
+let QuatKeyframeValue = (_dec$3s = ccclass$x('cc.QuatKeyframeValue'), _dec$3s(_class$3t = uniquelyReferenced(_class$3t = (_class2$2O = class QuatKeyframeValue {
   constructor({
     value,
     interpolationMode,
     easingMethod
   } = {}) {
-    this.interpolationMode = _initializer$2G && _initializer$2G();
-    this.value = _initializer2$29 && _initializer2$29();
+    this.interpolationMode = _initializer$2H && _initializer$2H();
+    this.value = _initializer2$2a && _initializer2$2a();
     this.easingMethod = _initializer3$1D && _initializer3$1D();
     this.value = value ? Quat.clone(value) : this.value;
     this.interpolationMode = interpolationMode !== null && interpolationMode !== void 0 ? interpolationMode : this.interpolationMode;
     this.easingMethod = easingMethod !== null && easingMethod !== void 0 ? easingMethod : this.easingMethod;
   }
-}, _initializer$2G = applyDecoratedInitializer(_class2$2N.prototype, "interpolationMode", [serializable$c], function () {
+}, _initializer$2H = applyDecoratedInitializer(_class2$2O.prototype, "interpolationMode", [serializable$c], function () {
   return QuatInterpolationMode.SLERP;
-}), _initializer2$29 = applyDecoratedInitializer(_class2$2N.prototype, "value", [serializable$c], function () {
+}), _initializer2$2a = applyDecoratedInitializer(_class2$2O.prototype, "value", [serializable$c], function () {
   return Quat.clone(Quat.IDENTITY);
-}), _initializer3$1D = applyDecoratedInitializer(_class2$2N.prototype, "easingMethod", [serializable$c], function () {
+}), _initializer3$1D = applyDecoratedInitializer(_class2$2O.prototype, "easingMethod", [serializable$c], function () {
   return EasingMethod.LINEAR;
-}), _class2$2N)) || _class$3s) || _class$3s);
+}), _class2$2O)) || _class$3t) || _class$3t);
 function createQuatKeyframeValue(params) {
   return new QuatKeyframeValue(params);
 }
@@ -17972,8 +18024,8 @@ const EASING_METHOD_BYTES = 1;
 const EASING_METHOD_BEZIER_TAG = 255;
 const EASING_METHOD_BEZIER_COMPONENT_BYTES = 4;
 
-var _dec$3q, _class$3r;
-let ObjectCurve = (_dec$3q = ccclass$x('cc.ObjectCurve'), _dec$3q(_class$3r = class ObjectCurve extends KeyframeCurve {
+var _dec$3r, _class$3s;
+let ObjectCurve = (_dec$3r = ccclass$x('cc.ObjectCurve'), _dec$3r(_class$3s = class ObjectCurve extends KeyframeCurve {
   evaluate(time) {
     const iSearch = this.searchKeyframe(time);
     if (iSearch >= 0) {
@@ -17982,7 +18034,7 @@ let ObjectCurve = (_dec$3q = ccclass$x('cc.ObjectCurve'), _dec$3q(_class$3r = cl
     const iPrev = clamp$1(~iSearch - 1, 0, this._values.length - 1);
     return this._values[iPrev];
   }
-}) || _class$3r);
+}) || _class$3s);
 
 var GradientMode;
 (function (GradientMode) {
@@ -22882,13 +22934,13 @@ var helper = /*#__PURE__*/Object.freeze({
     transform: transform
 });
 
-var _dec$3p, _class$3q, _class2$2M, _initializer$2F;
+var _dec$3q, _class$3r, _class2$2N, _initializer$2G;
 const {
   ccclass: ccclass$w,
   serializable: serializable$b,
   property: property$2
 } = _decorator;
-let Asset = (_dec$3p = ccclass$w('cc.Asset'), _dec$3p(_class$3q = (_class2$2M = class Asset extends Eventify(CCObject) {
+let Asset = (_dec$3q = ccclass$w('cc.Asset'), _dec$3q(_class$3r = (_class2$2N = class Asset extends Eventify(CCObject) {
   static deserialize(data) {
     return cclegacy.deserialize(data);
   }
@@ -22929,7 +22981,7 @@ let Asset = (_dec$3p = ccclass$w('cc.Asset'), _dec$3p(_class$3q = (_class2$2M = 
   constructor(name) {
     super(name);
     this.loaded = true;
-    this._native = _initializer$2F && _initializer$2F();
+    this._native = _initializer$2G && _initializer$2G();
     this._nativeUrl = '';
     this._file = null;
     this._ref = 0;
@@ -22989,9 +23041,9 @@ let Asset = (_dec$3p = ccclass$w('cc.Asset'), _dec$3p(_class$3q = (_class2$2M = 
     debug(getError(12101, this._uuid));
     return super.destroy();
   }
-}, _initializer$2F = applyDecoratedInitializer(_class2$2M.prototype, "_native", [serializable$b], function () {
+}, _initializer$2G = applyDecoratedInitializer(_class2$2N.prototype, "_native", [serializable$b], function () {
   return '';
-}), _applyDecoratedDescriptor(_class2$2M.prototype, "_nativeAsset", [property$2], Object.getOwnPropertyDescriptor(_class2$2M.prototype, "_nativeAsset"), _class2$2M.prototype), _class2$2M)) || _class$3q);
+}), _applyDecoratedDescriptor(_class2$2N.prototype, "_nativeAsset", [property$2], Object.getOwnPropertyDescriptor(_class2$2N.prototype, "_nativeAsset"), _class2$2N.prototype), _class2$2N)) || _class$3r);
 Asset.prototype.createNode = null;
 cclegacy.Asset = Asset;
 
@@ -23054,7 +23106,7 @@ let TextureFilter;
   TextureFilter[TextureFilter["NEAREST"] = Filter.POINT] = "NEAREST";
 })(TextureFilter || (TextureFilter = {}));
 
-var _dec$3o, _class$3p, _class2$2L, _ImageAsset;
+var _dec$3p, _class$3q, _class2$2M, _ImageAsset;
 const COMPRESSED_HEADER_LENGTH = 4;
 const COMPRESSED_MIPMAP_DATA_SIZE_LENGTH = 4;
 const COMPRESSED_MIPMAP_LEVEL_COUNT_LENGTH = 4;
@@ -23133,7 +23185,7 @@ function isImageBitmap(imageSource) {
 function isNativeImage(imageSource) {
   return imageSource instanceof HTMLImageElement || imageSource instanceof HTMLCanvasElement || isImageBitmap(imageSource);
 }
-let ImageAsset = (_dec$3o = ccclass$x('cc.ImageAsset'), _dec$3o(_class$3p = (_class2$2L = (_ImageAsset = class ImageAsset extends Asset {
+let ImageAsset = (_dec$3p = ccclass$x('cc.ImageAsset'), _dec$3p(_class$3q = (_class2$2M = (_ImageAsset = class ImageAsset extends Asset {
   static mergeCompressedTextureMips(files) {
     let out = new Uint8Array(0);
     let err = null;
@@ -23481,16 +23533,16 @@ let ImageAsset = (_dec$3o = ccclass$x('cc.ImageAsset'), _dec$3o(_class$3p = (_cl
   validate() {
     return !!this.data;
   }
-}, _ImageAsset.extnames = ['.png', '.jpg', '.jpeg', '.bmp', '.webp', '.pvr', '.pkm', '.astc'], _ImageAsset._sharedPlaceHolderCanvas = null, _ImageAsset), _applyDecoratedDescriptor(_class2$2L.prototype, "_nativeAsset", [override$1], Object.getOwnPropertyDescriptor(_class2$2L.prototype, "_nativeAsset"), _class2$2L.prototype), _class2$2L)) || _class$3p);
+}, _ImageAsset.extnames = ['.png', '.jpg', '.jpeg', '.bmp', '.webp', '.pvr', '.pkm', '.astc'], _ImageAsset._sharedPlaceHolderCanvas = null, _ImageAsset), _applyDecoratedDescriptor(_class2$2M.prototype, "_nativeAsset", [override$1], Object.getOwnPropertyDescriptor(_class2$2M.prototype, "_nativeAsset"), _class2$2M.prototype), _class2$2M)) || _class$3q);
 function _getGlobalDevice() {
   return deviceManager.gfxDevice;
 }
 cclegacy.ImageAsset = ImageAsset;
 
-var _dec$3n, _class$3o, _class2$2K, _initializer$2E, _initializer2$28, _initializer3$1C, _initializer4$1m, _initializer5$15, _initializer6$S, _initializer7$H, _initializer8$E, _TextureBase;
+var _dec$3o, _class$3p, _class2$2L, _initializer$2F, _initializer2$29, _initializer3$1C, _initializer4$1m, _initializer5$15, _initializer6$S, _initializer7$H, _initializer8$E, _TextureBase;
 ccenum(Format);
 const idGenerator$2 = new IDGenerator('Tex');
-let TextureBase = (_dec$3n = ccclass$x('cc.TextureBase'), _dec$3n(_class$3o = (_class2$2K = (_TextureBase = class TextureBase extends Asset {
+let TextureBase = (_dec$3o = ccclass$x('cc.TextureBase'), _dec$3o(_class$3p = (_class2$2L = (_TextureBase = class TextureBase extends Asset {
   get isCompressed() {
     return this._format >= PixelFormat.RGB_ETC1 && this._format <= PixelFormat.RGBA_ASTC_12x12 || this._format >= PixelFormat.RGB_A_PVRTC_2BPPV1 && this._format <= PixelFormat.RGBA_ETC1;
   }
@@ -23505,8 +23557,8 @@ let TextureBase = (_dec$3n = ccclass$x('cc.TextureBase'), _dec$3n(_class$3o = (_
   }
   constructor(name) {
     super(name);
-    this._format = _initializer$2E && _initializer$2E();
-    this._minFilter = _initializer2$28 && _initializer2$28();
+    this._format = _initializer$2F && _initializer$2F();
+    this._minFilter = _initializer2$29 && _initializer2$29();
     this._magFilter = _initializer3$1C && _initializer3$1C();
     this._mipFilter = _initializer4$1m && _initializer4$1m();
     this._wrapS = _initializer5$15 && _initializer5$15();
@@ -23630,23 +23682,23 @@ let TextureBase = (_dec$3n = ccclass$x('cc.TextureBase'), _dec$3n(_class$3o = (_
     }
     return format;
   }
-}, _TextureBase.PixelFormat = PixelFormat, _TextureBase.WrapMode = WrapMode$1, _TextureBase.Filter = TextureFilter, _TextureBase), _initializer$2E = applyDecoratedInitializer(_class2$2K.prototype, "_format", [serializable$c], function () {
+}, _TextureBase.PixelFormat = PixelFormat, _TextureBase.WrapMode = WrapMode$1, _TextureBase.Filter = TextureFilter, _TextureBase), _initializer$2F = applyDecoratedInitializer(_class2$2L.prototype, "_format", [serializable$c], function () {
   return PixelFormat.RGBA8888;
-}), _initializer2$28 = applyDecoratedInitializer(_class2$2K.prototype, "_minFilter", [serializable$c], function () {
+}), _initializer2$29 = applyDecoratedInitializer(_class2$2L.prototype, "_minFilter", [serializable$c], function () {
   return TextureFilter.LINEAR;
-}), _initializer3$1C = applyDecoratedInitializer(_class2$2K.prototype, "_magFilter", [serializable$c], function () {
+}), _initializer3$1C = applyDecoratedInitializer(_class2$2L.prototype, "_magFilter", [serializable$c], function () {
   return TextureFilter.LINEAR;
-}), _initializer4$1m = applyDecoratedInitializer(_class2$2K.prototype, "_mipFilter", [serializable$c], function () {
+}), _initializer4$1m = applyDecoratedInitializer(_class2$2L.prototype, "_mipFilter", [serializable$c], function () {
   return TextureFilter.NONE;
-}), _initializer5$15 = applyDecoratedInitializer(_class2$2K.prototype, "_wrapS", [serializable$c], function () {
+}), _initializer5$15 = applyDecoratedInitializer(_class2$2L.prototype, "_wrapS", [serializable$c], function () {
   return WrapMode$1.REPEAT;
-}), _initializer6$S = applyDecoratedInitializer(_class2$2K.prototype, "_wrapT", [serializable$c], function () {
+}), _initializer6$S = applyDecoratedInitializer(_class2$2L.prototype, "_wrapT", [serializable$c], function () {
   return WrapMode$1.REPEAT;
-}), _initializer7$H = applyDecoratedInitializer(_class2$2K.prototype, "_wrapR", [serializable$c], function () {
+}), _initializer7$H = applyDecoratedInitializer(_class2$2L.prototype, "_wrapR", [serializable$c], function () {
   return WrapMode$1.REPEAT;
-}), _initializer8$E = applyDecoratedInitializer(_class2$2K.prototype, "_anisotropy", [serializable$c], function () {
+}), _initializer8$E = applyDecoratedInitializer(_class2$2L.prototype, "_anisotropy", [serializable$c], function () {
   return 0;
-}), _class2$2K)) || _class$3o);
+}), _class2$2L)) || _class$3p);
 cclegacy.TextureBase = TextureBase;
 
 const owners$2 = new WeakMap();
@@ -23664,18 +23716,18 @@ function assertMutationAllowed(target, operation) {
   return;
 }
 
-var _dec$3m, _class$3n, _dec2$2t, _class2$2J, _dec3$1G, _class3$l;
-let Script = (_dec$3m = ccclass$x('cc.Script'), _dec$3m(_class$3n = class Script extends Asset {
+var _dec$3n, _class$3o, _dec2$2t, _class2$2K, _dec3$1G, _class3$l;
+let Script = (_dec$3n = ccclass$x('cc.Script'), _dec$3n(_class$3o = class Script extends Asset {
   constructor(name) {
     super(name);
   }
-}) || _class$3n);
+}) || _class$3o);
 cclegacy._Script = Script;
-let JavaScript = (_dec2$2t = ccclass$x('cc.JavaScript'), _dec2$2t(_class2$2J = class JavaScript extends Script {
+let JavaScript = (_dec2$2t = ccclass$x('cc.JavaScript'), _dec2$2t(_class2$2K = class JavaScript extends Script {
   constructor(name) {
     super(name);
   }
-}) || _class2$2J);
+}) || _class2$2K);
 cclegacy._JavaScript = JavaScript;
 let TypeScript = (_dec3$1G = ccclass$x('cc.TypeScript'), _dec3$1G(_class3$l = class TypeScript extends Script {
   constructor(name) {
@@ -23684,11 +23736,11 @@ let TypeScript = (_dec3$1G = ccclass$x('cc.TypeScript'), _dec3$1G(_class3$l = cl
 }) || _class3$l);
 cclegacy._TypeScript = TypeScript;
 
-var _dec$3l, _class$3m, _class2$2I, _initializer$2D, _initializer2$27, _initializer3$1B, _initializer4$1l, _initializer5$14;
-let EventHandler = (_dec$3l = ccclass$x('cc.ClickEvent'), _dec$3l(_class$3m = (_class2$2I = class EventHandler {
+var _dec$3m, _class$3n, _class2$2J, _initializer$2E, _initializer2$28, _initializer3$1B, _initializer4$1l, _initializer5$14;
+let EventHandler = (_dec$3m = ccclass$x('cc.ClickEvent'), _dec$3m(_class$3n = (_class2$2J = class EventHandler {
   constructor() {
-    this.target = _initializer$2D && _initializer$2D();
-    this.component = _initializer2$27 && _initializer2$27();
+    this.target = _initializer$2E && _initializer$2E();
+    this.component = _initializer2$28 && _initializer2$28();
     this._componentId = _initializer3$1B && _initializer3$1B();
     this.handler = _initializer4$1l && _initializer4$1l();
     this.customEventData = _initializer5$14 && _initializer5$14();
@@ -23744,27 +23796,27 @@ let EventHandler = (_dec$3l = ccclass$x('cc.ClickEvent'), _dec$3l(_class$3m = (_
       this.component = '';
     }
   }
-}, _initializer$2D = applyDecoratedInitializer(_class2$2I.prototype, "target", [serializable$c], function () {
+}, _initializer$2E = applyDecoratedInitializer(_class2$2J.prototype, "target", [serializable$c], function () {
   return null;
-}), _initializer2$27 = applyDecoratedInitializer(_class2$2I.prototype, "component", [serializable$c], function () {
+}), _initializer2$28 = applyDecoratedInitializer(_class2$2J.prototype, "component", [serializable$c], function () {
   return '';
-}), _initializer3$1B = applyDecoratedInitializer(_class2$2I.prototype, "_componentId", [serializable$c], function () {
+}), _initializer3$1B = applyDecoratedInitializer(_class2$2J.prototype, "_componentId", [serializable$c], function () {
   return '';
-}), _initializer4$1l = applyDecoratedInitializer(_class2$2I.prototype, "handler", [serializable$c], function () {
+}), _initializer4$1l = applyDecoratedInitializer(_class2$2J.prototype, "handler", [serializable$c], function () {
   return '';
-}), _initializer5$14 = applyDecoratedInitializer(_class2$2I.prototype, "customEventData", [serializable$c], function () {
+}), _initializer5$14 = applyDecoratedInitializer(_class2$2J.prototype, "customEventData", [serializable$c], function () {
   return '';
-}), _class2$2I)) || _class$3m);
+}), _class2$2J)) || _class$3n);
 
-var _dec$3k, _dec2$2s, _class$3l, _class2$2H, _initializer$2C, _initializer2$26, _initializer3$1A, _Component;
+var _dec$3l, _dec2$2s, _class$3m, _class2$2I, _initializer$2D, _initializer2$27, _initializer3$1A, _Component;
 const idGenerator$1 = new IDGenerator('Comp');
 const IsOnLoadCalled$1 = CCObjectFlags.IsOnLoadCalled;
 const NullNode = null;
-let Component = (_dec$3k = ccclass$x('cc.Component'), _dec2$2s = type$b(Script), _dec$3k(_class$3l = (_class2$2H = (_Component = class Component extends CCObject {
+let Component = (_dec$3l = ccclass$x('cc.Component'), _dec2$2s = type$b(Script), _dec$3l(_class$3m = (_class2$2I = (_Component = class Component extends CCObject {
   constructor() {
     super();
-    this.node = _initializer$2C && _initializer$2C();
-    this._enabled = _initializer2$26 && _initializer2$26();
+    this.node = _initializer$2D && _initializer$2D();
+    this._enabled = _initializer2$27 && _initializer2$27();
     this.__prefab = _initializer3$1A && _initializer3$1A();
     this._sceneGetter = null;
     this._id = idGenerator$1.getNewId();
@@ -23921,13 +23973,13 @@ let Component = (_dec$3k = ccclass$x('cc.Component'), _dec2$2s = type$b(Script),
   get internalOnDestroy() {
     return this.onDestroy;
   }
-}, _Component.EventHandler = EventHandler, _Component._executionOrder = 0, _Component._requireComponent = null, _Component.system = null, _Component), _applyDecoratedDescriptor(_class2$2H.prototype, "__scriptAsset", [_dec2$2s], Object.getOwnPropertyDescriptor(_class2$2H.prototype, "__scriptAsset"), _class2$2H.prototype), _initializer$2C = applyDecoratedInitializer(_class2$2H.prototype, "node", [serializable$c], function () {
+}, _Component.EventHandler = EventHandler, _Component._executionOrder = 0, _Component._requireComponent = null, _Component.system = null, _Component), _applyDecoratedDescriptor(_class2$2I.prototype, "__scriptAsset", [_dec2$2s], Object.getOwnPropertyDescriptor(_class2$2I.prototype, "__scriptAsset"), _class2$2I.prototype), _initializer$2D = applyDecoratedInitializer(_class2$2I.prototype, "node", [serializable$c], function () {
   return NullNode;
-}), _initializer2$26 = applyDecoratedInitializer(_class2$2H.prototype, "_enabled", [serializable$c], function () {
+}), _initializer2$27 = applyDecoratedInitializer(_class2$2I.prototype, "_enabled", [serializable$c], function () {
   return true;
-}), _initializer3$1A = applyDecoratedInitializer(_class2$2H.prototype, "__prefab", [serializable$c], function () {
+}), _initializer3$1A = applyDecoratedInitializer(_class2$2I.prototype, "__prefab", [serializable$c], function () {
   return null;
-}), _class2$2H)) || _class$3l);
+}), _class2$2I)) || _class$3m);
 value(Component, '_registerEditorProps', (cls, props) => {
   let reqComp = props.requireComponent;
   if (reqComp) {
@@ -23943,8 +23995,8 @@ value(Component, '_registerEditorProps', (cls, props) => {
 });
 legacyCC.Component = Component;
 
-var _dec$3j, _class$3k, _class2$2G, _initializer$2B;
-let MissingScript = (_dec$3j = ccclass$x('cc.MissingScript'), _dec$3j(_class$3k = (_class2$2G = class MissingScript extends Component {
+var _dec$3k, _class$3l, _class2$2H, _initializer$2C;
+let MissingScript = (_dec$3k = ccclass$x('cc.MissingScript'), _dec$3k(_class$3l = (_class2$2H = class MissingScript extends Component {
   static safeFindClass(id) {
     const cls = getClassById(id);
     if (cls) {
@@ -23955,14 +24007,14 @@ let MissingScript = (_dec$3j = ccclass$x('cc.MissingScript'), _dec$3j(_class$3k 
   }
   constructor() {
     super();
-    this._$erialized = _initializer$2B && _initializer$2B();
+    this._$erialized = _initializer$2C && _initializer$2C();
   }
   onLoad() {
     warnID(4600, this.node.name);
   }
-}, _initializer$2B = applyDecoratedInitializer(_class2$2G.prototype, "_$erialized", [serializable$c, editorOnly], function () {
+}, _initializer$2C = applyDecoratedInitializer(_class2$2H.prototype, "_$erialized", [serializable$c, editorOnly], function () {
   return null;
-}), _class2$2G)) || _class$3k);
+}), _class2$2H)) || _class$3l);
 cclegacy._MissingScript = MissingScript;
 try {
   const props = MissingScript.__values__;
@@ -25750,7 +25802,7 @@ class DependUtil {
 DependUtil._instance = void 0;
 var dependUtil = DependUtil.instance;
 
-var _dec$3i, _class$3j;
+var _dec$3j, _class$3k;
 const _regions = [new BufferTextureCopy()];
 function getMipLevel(width, height) {
   let size = Math.max(width, height);
@@ -25771,7 +25823,7 @@ function canGenerateMipmap(device, w, h) {
   }
   return true;
 }
-let SimpleTexture = (_dec$3i = ccclass$x('cc.SimpleTexture'), _dec$3i(_class$3j = class SimpleTexture extends TextureBase {
+let SimpleTexture = (_dec$3j = ccclass$x('cc.SimpleTexture'), _dec$3j(_class$3k = class SimpleTexture extends TextureBase {
   constructor(name) {
     super(name);
     this._gfxTexture = null;
@@ -25885,7 +25937,7 @@ let SimpleTexture = (_dec$3i = ccclass$x('cc.SimpleTexture'), _dec$3i(_class$3j 
       return;
     }
     let flags = TextureFlagBit.NONE;
-    if (this._mipFilter !== TextureFilter.NONE && canGenerateMipmap(device, this._width, this._height)) {
+    if (this._mipmapLevel === 1 && this._mipFilter !== TextureFilter.NONE && canGenerateMipmap(device, this._width, this._height)) {
       this._mipmapLevel = getMipLevel(this._width, this._height);
       if (!this.isUsingOfflineMipmaps() && !this.isCompressed) {
         flags = TextureFlagBit.GEN_MIPMAP;
@@ -25933,14 +25985,14 @@ let SimpleTexture = (_dec$3i = ccclass$x('cc.SimpleTexture'), _dec$3i(_class$3j 
       this._gfxTextureView = null;
     }
   }
-}) || _class$3j);
+}) || _class$3k);
 cclegacy.SimpleTexture = SimpleTexture;
 
-var _dec$3h, _dec2$2r, _class$3i, _class2$2F, _initializer$2A;
-let Texture2D = (_dec$3h = ccclass$x('cc.Texture2D'), _dec2$2r = type$b([ImageAsset]), _dec$3h(_class$3i = (_class2$2F = class Texture2D extends SimpleTexture {
+var _dec$3i, _dec2$2r, _class$3j, _class2$2G, _initializer$2B;
+let Texture2D = (_dec$3i = ccclass$x('cc.Texture2D'), _dec2$2r = type$b([ImageAsset]), _dec$3i(_class$3j = (_class2$2G = class Texture2D extends SimpleTexture {
   constructor(name) {
     super(name);
-    this._mipmaps = _initializer$2A && _initializer$2A();
+    this._mipmaps = _initializer$2B && _initializer$2B();
     this._generatedMipmaps = [];
   }
   get mipmaps() {
@@ -26085,12 +26137,12 @@ let Texture2D = (_dec$3h = ccclass$x('cc.Texture2D'), _dec2$2r = type$b([ImageAs
   validate() {
     return this.mipmaps && this.mipmaps.length !== 0;
   }
-}, _initializer$2A = applyDecoratedInitializer(_class2$2F.prototype, "_mipmaps", [_dec2$2r], function () {
+}, _initializer$2B = applyDecoratedInitializer(_class2$2G.prototype, "_mipmaps", [_dec2$2r], function () {
   return [];
-}), _class2$2F)) || _class$3i);
+}), _class2$2G)) || _class$3j);
 cclegacy.Texture2D = Texture2D;
 
-var _dec$3g, _class$3h, _class2$2E, _initializer$2z, _initializer2$25, _initializer3$1z, _initializer4$1k, _TextureCube;
+var _dec$3h, _class$3i, _class2$2F, _initializer$2A, _initializer2$26, _initializer3$1z, _initializer4$1k, _TextureCube;
 var FaceIndex;
 (function (FaceIndex) {
   FaceIndex[FaceIndex["right"] = 0] = "right";
@@ -26106,11 +26158,11 @@ let MipmapMode;
   MipmapMode[MipmapMode["AUTO"] = 1] = "AUTO";
   MipmapMode[MipmapMode["BAKED_CONVOLUTION_MAP"] = 2] = "BAKED_CONVOLUTION_MAP";
 })(MipmapMode || (MipmapMode = {}));
-let TextureCube = (_dec$3g = ccclass$x('cc.TextureCube'), _dec$3g(_class$3h = (_class2$2E = (_TextureCube = class TextureCube extends SimpleTexture {
+let TextureCube = (_dec$3h = ccclass$x('cc.TextureCube'), _dec$3h(_class$3i = (_class2$2F = (_TextureCube = class TextureCube extends SimpleTexture {
   constructor(name) {
     super(name);
-    this.isRGBE = _initializer$2z && _initializer$2z();
-    this._mipmapAtlas = _initializer2$25 && _initializer2$25();
+    this.isRGBE = _initializer$2A && _initializer$2A();
+    this._mipmapAtlas = _initializer2$26 && _initializer2$26();
     this._mipmapMode = _initializer3$1z && _initializer3$1z();
     this._mipmaps = _initializer4$1k && _initializer4$1k();
     this._generatedMipmaps = [];
@@ -26434,15 +26486,15 @@ let TextureCube = (_dec$3g = ccclass$x('cc.TextureCube'), _dec$3g(_class$3h = (_
       return this._mipmaps.length !== 0 && !this._mipmaps.find(x => !(x.top && x.bottom && x.front && x.back && x.left && x.right));
     }
   }
-}, _TextureCube.FaceIndex = FaceIndex, _TextureCube), _initializer$2z = applyDecoratedInitializer(_class2$2E.prototype, "isRGBE", [serializable$c], function () {
+}, _TextureCube.FaceIndex = FaceIndex, _TextureCube), _initializer$2A = applyDecoratedInitializer(_class2$2F.prototype, "isRGBE", [serializable$c], function () {
   return false;
-}), _initializer2$25 = applyDecoratedInitializer(_class2$2E.prototype, "_mipmapAtlas", [serializable$c], function () {
+}), _initializer2$26 = applyDecoratedInitializer(_class2$2F.prototype, "_mipmapAtlas", [serializable$c], function () {
   return null;
-}), _initializer3$1z = applyDecoratedInitializer(_class2$2E.prototype, "_mipmapMode", [serializable$c], function () {
+}), _initializer3$1z = applyDecoratedInitializer(_class2$2F.prototype, "_mipmapMode", [serializable$c], function () {
   return MipmapMode.NONE;
-}), _initializer4$1k = applyDecoratedInitializer(_class2$2E.prototype, "_mipmaps", [serializable$c], function () {
+}), _initializer4$1k = applyDecoratedInitializer(_class2$2F.prototype, "_mipmaps", [serializable$c], function () {
   return [];
-}), _class2$2E)) || _class$3h);
+}), _class2$2F)) || _class$3i);
 legacyCC.TextureCube = TextureCube;
 function _forEachFace(mipmap, callback) {
   callback(mipmap.front, FaceIndex.front);
@@ -27762,33 +27814,33 @@ Downloader._instance = void 0;
 const downloader = Downloader.instance;
 var downloader$1 = Downloader.instance;
 
-var _dec$3f, _class$3g, _class2$2D, _initializer$2y;
-let JsonAsset = (_dec$3f = ccclass$x('cc.JsonAsset'), _dec$3f(_class$3g = (_class2$2D = class JsonAsset extends Asset {
+var _dec$3g, _class$3h, _class2$2E, _initializer$2z;
+let JsonAsset = (_dec$3g = ccclass$x('cc.JsonAsset'), _dec$3g(_class$3h = (_class2$2E = class JsonAsset extends Asset {
   constructor(name) {
     super(name);
-    this.json = _initializer$2y && _initializer$2y();
+    this.json = _initializer$2z && _initializer$2z();
   }
-}, _initializer$2y = applyDecoratedInitializer(_class2$2D.prototype, "json", [serializable$c], function () {
+}, _initializer$2z = applyDecoratedInitializer(_class2$2E.prototype, "json", [serializable$c], function () {
   return null;
-}), _class2$2D)) || _class$3g);
+}), _class2$2E)) || _class$3h);
 cclegacy.JsonAsset = JsonAsset;
 
-var _dec$3e, _class$3f, _class2$2C, _initializer$2x;
-let TextAsset = (_dec$3e = ccclass$x('cc.TextAsset'), _dec$3e(_class$3f = (_class2$2C = class TextAsset extends Asset {
+var _dec$3f, _class$3g, _class2$2D, _initializer$2y;
+let TextAsset = (_dec$3f = ccclass$x('cc.TextAsset'), _dec$3f(_class$3g = (_class2$2D = class TextAsset extends Asset {
   toString() {
     return this.text;
   }
   constructor(name) {
     super(name);
-    this.text = _initializer$2x && _initializer$2x();
+    this.text = _initializer$2y && _initializer$2y();
   }
-}, _initializer$2x = applyDecoratedInitializer(_class2$2C.prototype, "text", [serializable$c], function () {
+}, _initializer$2y = applyDecoratedInitializer(_class2$2D.prototype, "text", [serializable$c], function () {
   return '';
-}), _class2$2C)) || _class$3f);
+}), _class2$2D)) || _class$3g);
 cclegacy.TextAsset = TextAsset;
 
-var _dec$3d, _class$3e, _class2$2B;
-let BufferAsset = (_dec$3d = ccclass$x('cc.BufferAsset'), _dec$3d(_class$3e = (_class2$2B = class BufferAsset extends Asset {
+var _dec$3e, _class$3f, _class2$2C;
+let BufferAsset = (_dec$3e = ccclass$x('cc.BufferAsset'), _dec$3e(_class$3f = (_class2$2C = class BufferAsset extends Asset {
   constructor(name) {
     super(name);
     this._buffer = null;
@@ -27810,7 +27862,7 @@ let BufferAsset = (_dec$3d = ccclass$x('cc.BufferAsset'), _dec$3d(_class$3e = (_
   validate() {
     return !!this._buffer;
   }
-}, _applyDecoratedDescriptor(_class2$2B.prototype, "_nativeAsset", [override$1], Object.getOwnPropertyDescriptor(_class2$2B.prototype, "_nativeAsset"), _class2$2B.prototype), _class2$2B)) || _class$3e);
+}, _applyDecoratedDescriptor(_class2$2C.prototype, "_nativeAsset", [override$1], Object.getOwnPropertyDescriptor(_class2$2C.prototype, "_nativeAsset"), _class2$2C.prototype), _class2$2C)) || _class$3f);
 cclegacy.BufferAsset = BufferAsset;
 
 function createImageAsset(id, data, options, onComplete) {
@@ -29558,13 +29610,18 @@ function normalizeEffectShader(input, effect = '<direct>', path = 'shader') {
     var _normalized$variant;
     const frag = (_normalized$variant = normalized[variant]) == null ? void 0 : _normalized$variant.frag;
     if (typeof frag !== 'string') continue;
+    let patched = frag;
     if (frag.includes('CC_AIR_LINEAR_HDR')) {
       hdrOutput = true;
-      continue;
+    } else {
+      patched = patched.replace(/(vec4\s+CCFragOutput\s*\(\s*vec4\s+color\s*\)\s*\{)/, '$1\n#if CC_AIR_LINEAR_HDR\nreturn color;\n#endif\n');
+      if (frag.includes('HDRToLDR') && frag.includes('LinearToSRGB')) {
+        patched = patched.replace(/#if\s+(!CC_USE_FLOAT_OUTPUT(?:\s*\|\|\s*CC_IS_TRANSPARENCY_PASS)?)(?=\s*\n)/g, '#if ($1) && !CC_AIR_LINEAR_HDR');
+      }
     }
-    let patched = frag.replace(/(vec4\s+CCFragOutput\s*\(\s*vec4\s+color\s*\)\s*\{)/, '$1\n#if CC_AIR_LINEAR_HDR\nreturn color;\n#endif\n');
-    if (frag.includes('HDRToLDR') && frag.includes('LinearToSRGB')) {
-      patched = patched.replace(/#if\s+(!CC_USE_FLOAT_OUTPUT(?:\s*\|\|\s*CC_IS_TRANSPARENCY_PASS)?)(?=\s*\n)/g, '#if ($1) && !CC_AIR_LINEAR_HDR');
+    patched = patched.replace(/(vec4\s+color\s*=\s*vec4\(c\s*\*\s*cc_ambientSky\.w,\s*1\.0\);\s*)(#if\s+CC_USE_RGBE_OUTPUT)/, '$1#if CC_AIR_LINEAR_HDR\nreturn color;\n#endif\n$2');
+    if (/vec4\s+color\s*=\s*vec4\(c\s*\*\s*cc_ambientSky\.w,\s*1\.0\);\s*#if CC_AIR_LINEAR_HDR\s+return color;\s*#endif\s*#if CC_USE_RGBE_OUTPUT/.test(patched) && !patched.includes('#if CC_AIR_LINEAR_HDR\nprecision highp float;')) {
+      patched = patched.replace(/precision\s+(?:lowp|mediump|highp)\s+float\s*;/, '$&\n#if CC_AIR_LINEAR_HDR\nprecision highp float;\nprecision highp sampler2D;\nprecision highp samplerCube;\n#endif');
     }
     if (patched !== frag) {
       normalized[variant].frag = patched;
@@ -30384,12 +30441,27 @@ class InstancedBuffer {
   }
   _appendInstance(instance, data, shader, descriptorSet) {
     if (instance.count >= instance.capacity) {
-      instance.capacity = Math.min(instance.capacity << 1, MAX_CAPACITY);
+      const requiredCapacity = instance.count + 1;
+      const targetCapacity = Math.min(Math.max(instance.capacity << 1, requiredCapacity), MAX_CAPACITY);
+      const targetSize = instance.stride * targetCapacity;
+      instance.vb.resize(targetSize);
+      if (instance.vb.size < targetSize) {
+        const requiredSize = instance.stride * requiredCapacity;
+        if (instance.vb.size < requiredSize) {
+          instance.vb.resize(requiredSize);
+        }
+      }
+      instance.capacity = Math.floor(instance.vb.size / instance.stride);
+      if (instance.count >= instance.capacity) {
+        instance.count = instance.capacity;
+        return;
+      }
       const newSize = instance.stride * instance.capacity;
-      const oldData = instance.data;
-      instance.data = new Uint8Array(newSize);
-      instance.data.set(oldData);
-      instance.vb.resize(newSize);
+      if (newSize > instance.data.byteLength) {
+        const oldData = instance.data;
+        instance.data = new Uint8Array(newSize);
+        instance.data.set(oldData.subarray(0, instance.count * instance.stride));
+      }
     }
     instance.shader = shader;
     instance.descriptorSet = descriptorSet;
@@ -31435,9 +31507,9 @@ class SubModel {
   }
 }
 
-var _dec$3c, _class$3d, _class2$2A, _initializer$2w, _initializer2$24, _initializer3$1y, _initializer4$1j, _EffectAsset;
+var _dec$3d, _class$3e, _class2$2B, _initializer$2x, _initializer2$25, _initializer3$1y, _initializer4$1j, _EffectAsset;
 const legacyBuiltinEffectNames = ['planar-shadow', 'skybox', 'deferred-lighting', 'bloom', 'hbao', 'copy-pass', 'post-process', 'profiler', 'splash-screen', 'unlit', 'sprite', 'particle', 'particle-gpu', 'particle-trail', 'billboard', 'terrain', 'graphics', 'clear-stencil', 'spine', 'occlusion-query', 'geometry-renderer', 'debug-renderer', 'ssss-blur', 'float-output-process'];
-let EffectAsset = (_dec$3c = ccclass$x('cc.EffectAsset'), _dec$3c(_class$3d = (_class2$2A = (_EffectAsset = class EffectAsset extends Asset {
+let EffectAsset = (_dec$3d = ccclass$x('cc.EffectAsset'), _dec$3d(_class$3e = (_class2$2B = (_EffectAsset = class EffectAsset extends Asset {
   static register(asset) {
     asset.shaders = normalizeEffectShaders(asset.shaders, asset.name);
     EffectAsset._effects[asset.name] = asset;
@@ -31486,8 +31558,8 @@ let EffectAsset = (_dec$3c = ccclass$x('cc.EffectAsset'), _dec$3c(_class$3d = (_
   }
   constructor(name) {
     super(name);
-    this.techniques = _initializer$2w && _initializer$2w();
-    this.shaders = _initializer2$24 && _initializer2$24();
+    this.techniques = _initializer$2x && _initializer$2x();
+    this.shaders = _initializer2$25 && _initializer2$25();
     this.combinations = _initializer3$1y && _initializer3$1y();
     this.hideInEditor = _initializer4$1j && _initializer4$1j();
   }
@@ -31564,15 +31636,15 @@ let EffectAsset = (_dec$3c = ccclass$x('cc.EffectAsset'), _dec$3c(_class$3d = (_
   validate() {
     return this.techniques.length > 0 && this.shaders.length > 0;
   }
-}, _EffectAsset._effects = {}, _EffectAsset._layoutValid = true, _EffectAsset), _initializer$2w = applyDecoratedInitializer(_class2$2A.prototype, "techniques", [serializable$c], function () {
+}, _EffectAsset._effects = {}, _EffectAsset._layoutValid = true, _EffectAsset), _initializer$2x = applyDecoratedInitializer(_class2$2B.prototype, "techniques", [serializable$c], function () {
   return [];
-}), _initializer2$24 = applyDecoratedInitializer(_class2$2A.prototype, "shaders", [serializable$c], function () {
+}), _initializer2$25 = applyDecoratedInitializer(_class2$2B.prototype, "shaders", [serializable$c], function () {
   return [];
-}), _initializer3$1y = applyDecoratedInitializer(_class2$2A.prototype, "combinations", [serializable$c], function () {
+}), _initializer3$1y = applyDecoratedInitializer(_class2$2B.prototype, "combinations", [serializable$c], function () {
   return [];
-}), _initializer4$1j = applyDecoratedInitializer(_class2$2A.prototype, "hideInEditor", [serializable$c, editorOnly], function () {
+}), _initializer4$1j = applyDecoratedInitializer(_class2$2B.prototype, "hideInEditor", [serializable$c, editorOnly], function () {
   return false;
-}), _class2$2A)) || _class$3d);
+}), _class2$2B)) || _class$3e);
 cclegacy.EffectAsset = EffectAsset;
 
 class PipelineStateManager {
@@ -31671,8 +31743,8 @@ function renderProfiler(device, renderPass, cmdBuff, profiler, camera) {
   cmdBuff.draw(inputAssembler);
 }
 
-var _dec$3b, _dec2$2q, _class$3c, _class2$2z, _initializer$2v, _initializer2$23, _initializer3$1x, _initializer4$1i, _initializer5$13;
-let Material = (_dec$3b = ccclass$x('cc.Material'), _dec2$2q = type$b(EffectAsset), _dec$3b(_class$3c = (_class2$2z = class Material extends Asset {
+var _dec$3c, _dec2$2q, _class$3d, _class2$2A, _initializer$2w, _initializer2$24, _initializer3$1x, _initializer4$1i, _initializer5$13;
+let Material = (_dec$3c = ccclass$x('cc.Material'), _dec2$2q = type$b(EffectAsset), _dec$3c(_class$3d = (_class2$2A = class Material extends Asset {
   static getHash(material) {
     let hash = 0;
     for (const pass of material.passes) {
@@ -31682,8 +31754,8 @@ let Material = (_dec$3b = ccclass$x('cc.Material'), _dec2$2q = type$b(EffectAsse
   }
   constructor(name) {
     super(name);
-    this._effectAsset = _initializer$2v && _initializer$2v();
-    this._techIdx = _initializer2$23 && _initializer2$23();
+    this._effectAsset = _initializer$2w && _initializer$2w();
+    this._techIdx = _initializer2$24 && _initializer2$24();
     this._defines = _initializer3$1x && _initializer3$1x();
     this._states = _initializer4$1i && _initializer4$1i();
     this._props = _initializer5$13 && _initializer5$13();
@@ -32009,17 +32081,17 @@ let Material = (_dec$3b = ccclass$x('cc.Material'), _dec2$2q = type$b(EffectAsse
   validate() {
     return !!this._effectAsset && !this._effectAsset.isDefault && this.passes.length > 0;
   }
-}, _initializer$2v = applyDecoratedInitializer(_class2$2z.prototype, "_effectAsset", [_dec2$2q], function () {
+}, _initializer$2w = applyDecoratedInitializer(_class2$2A.prototype, "_effectAsset", [_dec2$2q], function () {
   return null;
-}), _initializer2$23 = applyDecoratedInitializer(_class2$2z.prototype, "_techIdx", [serializable$c], function () {
+}), _initializer2$24 = applyDecoratedInitializer(_class2$2A.prototype, "_techIdx", [serializable$c], function () {
   return 0;
-}), _initializer3$1x = applyDecoratedInitializer(_class2$2z.prototype, "_defines", [serializable$c], function () {
+}), _initializer3$1x = applyDecoratedInitializer(_class2$2A.prototype, "_defines", [serializable$c], function () {
   return [];
-}), _initializer4$1i = applyDecoratedInitializer(_class2$2z.prototype, "_states", [serializable$c], function () {
+}), _initializer4$1i = applyDecoratedInitializer(_class2$2A.prototype, "_states", [serializable$c], function () {
   return [];
-}), _initializer5$13 = applyDecoratedInitializer(_class2$2z.prototype, "_props", [serializable$c], function () {
+}), _initializer5$13 = applyDecoratedInitializer(_class2$2A.prototype, "_props", [serializable$c], function () {
   return [];
-}), _class2$2z)) || _class$3c);
+}), _class2$2A)) || _class$3d);
 cclegacy.Material = Material;
 
 const ShadowSize = Enum({
@@ -33499,7 +33571,7 @@ NodeEventProcessor._maskComp = null;
 NodeEventProcessor.callbacksInvoker = globalCallbacksInvoker;
 cclegacy.NodeEventProcessor = NodeEventProcessor;
 
-var _dec$3a, _dec2$2p, _dec3$1F, _class$3b, _class2$2y, _initializer$2u, _initializer2$22, _initializer3$1w, _initializer4$1h, _initializer5$12, _initializer6$R, _initializer7$G, _initializer8$D, _initializer9$y, _initializer0$v, _initializer1$t, _Node;
+var _dec$3b, _dec2$2p, _dec3$1F, _class$3c, _class2$2z, _initializer$2v, _initializer2$23, _initializer3$1w, _initializer4$1h, _initializer5$12, _initializer6$R, _initializer7$G, _initializer8$D, _initializer9$y, _initializer0$v, _initializer1$t, _Node;
 const Destroying = CCObjectFlags.Destroying;
 const DontDestroy = CCObjectFlags.DontDestroy;
 const Deactivating$1 = CCObjectFlags.Deactivating;
@@ -33529,7 +33601,7 @@ const m4_2$3 = mat4();
 const dirtyNodes = [];
 const reserveContentsForAllSyncablePrefabTag = Symbol('ReserveContentsForAllSyncablePrefab');
 let globalFlagChangeVersion = 0;
-let Node$1 = (_dec$3a = ccclass$x('cc.Node'), _dec2$2p = type$b(Vec3), _dec3$1F = type$b(MobilityMode), _dec$3a(_class$3b = (_class2$2y = (_Node = class Node extends CCObject {
+let Node$1 = (_dec$3b = ccclass$x('cc.Node'), _dec2$2p = type$b(Vec3), _dec3$1F = type$b(MobilityMode), _dec$3b(_class$3c = (_class2$2z = (_Node = class Node extends CCObject {
   get components() {
     return this._components;
   }
@@ -34142,8 +34214,8 @@ let Node$1 = (_dec$3a = ccclass$x('cc.Node'), _dec2$2p = type$b(Vec3), _dec3$1F 
   constructor(name) {
     if (name === undefined) name = 'New Node';
     super(name);
-    this._parent = _initializer$2u && _initializer$2u();
-    this._children = _initializer2$22 && _initializer2$22();
+    this._parent = _initializer$2v && _initializer$2v();
+    this._children = _initializer2$23 && _initializer2$23();
     this._active = _initializer3$1w && _initializer3$1w();
     this._components = _initializer4$1h && _initializer4$1h();
     this._prefab = _initializer5$12 && _initializer5$12();
@@ -34901,32 +34973,32 @@ let Node$1 = (_dec$3a = ccclass$x('cc.Node'), _dec2$2p = type$b(Vec3), _dec3$1F 
   get isSkipTransformUpdate() {
     return (this._objFlags & CCObjectFlags.IsSkipTransformUpdate) !== 0;
   }
-}, _Node.idGenerator = idGenerator, _Node._stacks = [[]], _Node._stackId = 0, _Node.EventType = NodeEventType, _Node.NodeSpace = NodeSpace, _Node.TransformDirtyBit = TransformBit, _Node.TransformBit = TransformBit, _Node.reserveContentsForAllSyncablePrefabTag = reserveContentsForAllSyncablePrefabTag, _Node.ClearFrame = 0, _Node.ClearRound = 1000, _Node), _applyDecoratedDescriptor(_class2$2y.prototype, "_persistNode", [property$3], Object.getOwnPropertyDescriptor(_class2$2y.prototype, "_persistNode"), _class2$2y.prototype), _initializer$2u = applyDecoratedInitializer(_class2$2y.prototype, "_parent", [serializable$c], function () {
+}, _Node.idGenerator = idGenerator, _Node._stacks = [[]], _Node._stackId = 0, _Node.EventType = NodeEventType, _Node.NodeSpace = NodeSpace, _Node.TransformDirtyBit = TransformBit, _Node.TransformBit = TransformBit, _Node.reserveContentsForAllSyncablePrefabTag = reserveContentsForAllSyncablePrefabTag, _Node.ClearFrame = 0, _Node.ClearRound = 1000, _Node), _applyDecoratedDescriptor(_class2$2z.prototype, "_persistNode", [property$3], Object.getOwnPropertyDescriptor(_class2$2z.prototype, "_persistNode"), _class2$2z.prototype), _initializer$2v = applyDecoratedInitializer(_class2$2z.prototype, "_parent", [serializable$c], function () {
   return null;
-}), _initializer2$22 = applyDecoratedInitializer(_class2$2y.prototype, "_children", [serializable$c], function () {
+}), _initializer2$23 = applyDecoratedInitializer(_class2$2z.prototype, "_children", [serializable$c], function () {
   return [];
-}), _initializer3$1w = applyDecoratedInitializer(_class2$2y.prototype, "_active", [serializable$c], function () {
+}), _initializer3$1w = applyDecoratedInitializer(_class2$2z.prototype, "_active", [serializable$c], function () {
   return true;
-}), _initializer4$1h = applyDecoratedInitializer(_class2$2y.prototype, "_components", [serializable$c], function () {
+}), _initializer4$1h = applyDecoratedInitializer(_class2$2z.prototype, "_components", [serializable$c], function () {
   return [];
-}), _initializer5$12 = applyDecoratedInitializer(_class2$2y.prototype, "_prefab", [serializable$c], function () {
+}), _initializer5$12 = applyDecoratedInitializer(_class2$2z.prototype, "_prefab", [serializable$c], function () {
   return null;
-}), _initializer6$R = applyDecoratedInitializer(_class2$2y.prototype, "_lpos", [serializable$c], function () {
+}), _initializer6$R = applyDecoratedInitializer(_class2$2z.prototype, "_lpos", [serializable$c], function () {
   return new Vec3();
-}), _initializer7$G = applyDecoratedInitializer(_class2$2y.prototype, "_lrot", [serializable$c], function () {
+}), _initializer7$G = applyDecoratedInitializer(_class2$2z.prototype, "_lrot", [serializable$c], function () {
   return new Quat();
-}), _initializer8$D = applyDecoratedInitializer(_class2$2y.prototype, "_lscale", [serializable$c], function () {
+}), _initializer8$D = applyDecoratedInitializer(_class2$2z.prototype, "_lscale", [serializable$c], function () {
   return new Vec3(1, 1, 1);
-}), _initializer9$y = applyDecoratedInitializer(_class2$2y.prototype, "_mobility", [serializable$c], function () {
+}), _initializer9$y = applyDecoratedInitializer(_class2$2z.prototype, "_mobility", [serializable$c], function () {
   return MobilityMode.Static;
-}), _initializer0$v = applyDecoratedInitializer(_class2$2y.prototype, "_layer", [serializable$c], function () {
+}), _initializer0$v = applyDecoratedInitializer(_class2$2z.prototype, "_layer", [serializable$c], function () {
   return Layers.Enum.DEFAULT;
-}), _initializer1$t = applyDecoratedInitializer(_class2$2y.prototype, "_euler", [serializable$c], function () {
+}), _initializer1$t = applyDecoratedInitializer(_class2$2z.prototype, "_euler", [serializable$c], function () {
   return new Vec3();
-}), _applyDecoratedDescriptor(_class2$2y.prototype, "eulerAngles", [_dec2$2p], Object.getOwnPropertyDescriptor(_class2$2y.prototype, "eulerAngles"), _class2$2y.prototype), _applyDecoratedDescriptor(_class2$2y.prototype, "mobility", [_dec3$1F], Object.getOwnPropertyDescriptor(_class2$2y.prototype, "mobility"), _class2$2y.prototype), _class2$2y)) || _class$3b);
+}), _applyDecoratedDescriptor(_class2$2z.prototype, "eulerAngles", [_dec2$2p], Object.getOwnPropertyDescriptor(_class2$2z.prototype, "eulerAngles"), _class2$2z.prototype), _applyDecoratedDescriptor(_class2$2z.prototype, "mobility", [_dec3$1F], Object.getOwnPropertyDescriptor(_class2$2z.prototype, "mobility"), _class2$2z.prototype), _class2$2z)) || _class$3c);
 cclegacy.Node = Node$1;
 
-var _dec$39, _class$3a;
+var _dec$3a, _class$3b;
 const _colorAttachment = new ColorAttachment();
 _colorAttachment.format = Format.RGBA8;
 const _depthStencilAttachment = new DepthStencilAttachment();
@@ -34937,7 +35009,13 @@ const _windowInfo = {
   height: 1,
   renderPassInfo: passInfo
 };
-let RenderTexture = (_dec$39 = ccclass$x('cc.RenderTexture'), _dec$39(_class$3a = class RenderTexture extends TextureBase {
+const FALLBACK_MAX_RENDER_TEXTURE_SIZE = 2048;
+function getMaxRenderTextureSize() {
+  var _deviceManager$gfxDev;
+  const maxTextureSize = (_deviceManager$gfxDev = deviceManager.gfxDevice) == null ? void 0 : _deviceManager$gfxDev.capabilities.maxTextureSize;
+  return maxTextureSize && maxTextureSize > 0 ? maxTextureSize : null;
+}
+let RenderTexture = (_dec$3a = ccclass$x('cc.RenderTexture'), _dec$3a(_class$3b = class RenderTexture extends TextureBase {
   constructor(name) {
     super(name);
     this._window = null;
@@ -34963,8 +35041,10 @@ let RenderTexture = (_dec$39 = ccclass$x('cc.RenderTexture'), _dec$39(_class$3a 
     return super.destroy();
   }
   resize(width, height) {
-    this._width = Math.floor(clamp$1(width, 1, 2048));
-    this._height = Math.floor(clamp$1(height, 1, 2048));
+    var _getMaxRenderTextureS;
+    const maxSize = (_getMaxRenderTextureS = getMaxRenderTextureSize()) !== null && _getMaxRenderTextureS !== void 0 ? _getMaxRenderTextureS : FALLBACK_MAX_RENDER_TEXTURE_SIZE;
+    this._width = Math.floor(clamp$1(width, 1, maxSize));
+    this._height = Math.floor(clamp$1(height, 1, maxSize));
     if (this._window) {
       this._window.resize(this._width, this._height);
     }
@@ -35018,7 +35098,9 @@ let RenderTexture = (_dec$39 = ccclass$x('cc.RenderTexture'), _dec$39(_class$3a 
     this._initWindow();
   }
   validate() {
-    return this.width >= 1 && this.width <= 2048 && this.height >= 1 && this.height <= 2048;
+    const maxSize = getMaxRenderTextureSize();
+    const validLowerBound = this.width >= 1 && this.height >= 1;
+    return validLowerBound && (maxSize === null || this.width <= maxSize && this.height <= maxSize);
   }
   readPixels(x, y, width, height, buffer) {
     x = x || 0;
@@ -35050,7 +35132,7 @@ let RenderTexture = (_dec$39 = ccclass$x('cc.RenderTexture'), _dec$39(_class$3a 
     gfxDevice == null ? void 0 : gfxDevice.copyTextureToBuffers(gfxTexture, bufferViews, regions);
     return buffer;
   }
-}) || _class$3a);
+}) || _class$3b);
 cclegacy.RenderTexture = RenderTexture;
 
 let ProbeClearFlag;
@@ -39306,7 +39388,7 @@ class RenderingSubMesh {
   }
 }
 
-var _dec$38, _dec2$2o, _dec3$1E, _dec4$1c, _dec5$13, _class$39, _class2$2x, _initializer$2t, _initializer2$21, _initializer3$1v, _initializer4$1g, _initializer5$11, _initializer6$Q, _dec6$P, _dec7$E, _dec8$t, _dec9$p, _dec0$f, _dec1$a, _dec10$a, _dec11$9, _dec12$8, _dec13$7, _dec14$6, _dec15$6, _dec16$6, _dec17$6, _dec18$6, _class3$k, _class4$k, _initializer7$F, _initializer8$C, _initializer9$x, _initializer0$u, _initializer1$s, _initializer10$p, _initializer11$m, _initializer12$i, _initializer13$e, _initializer14$e, _initializer15$b, _dec19$6, _dec20$6, _dec21$6, _dec22$6, _dec23$6, _dec24$6, _dec25$6, _dec26$6, _class5$8, _class6$6, _initializer16$b, _initializer17$a, _initializer18$8, _initializer19$8, _initializer20$7, _initializer21$7, _initializer22$6, _initializer23$5, _initializer24$5, _initializer25$4, _FogInfo, _dec27$5, _dec28$4, _dec29$4, _dec30$3, _dec31$3, _dec32$3, _class7$5, _class8$5, _initializer26$4, _initializer27$4, _initializer28$4, _initializer29$4, _initializer30$4, _initializer31$4, _initializer32$4, _initializer33$4, _dec33$3, _dec34$3, _class9$5, _class0$5, _initializer34$3, _initializer35$3, _initializer36$3, _initializer37$3, _dec35$3, _dec36$3, _dec37$3, _class1$3, _class10$3, _initializer38$3, _initializer39$3, _initializer40$2, _dec38$2, _dec39$2, _class11$2, _class12$2, _initializer41$2, _dec40$2, _dec41$2, _dec42$2, _dec43$2, _dec44$2, _dec45$2, _class13$2, _class14$2, _initializer42$1, _initializer43$1, _initializer44$1, _initializer45, _initializer46, _initializer47, _initializer48, _initializer49, _initializer50, _dec46$1, _dec47$1, _class15, _class16, _initializer51, _initializer52, _initializer53, _initializer54, _initializer55, _initializer56, _initializer57, _initializer58, _initializer59, _initializer60;
+var _dec$39, _dec2$2o, _dec3$1E, _dec4$1c, _dec5$13, _class$3a, _class2$2y, _initializer$2u, _initializer2$22, _initializer3$1v, _initializer4$1g, _initializer5$11, _initializer6$Q, _dec6$P, _dec7$E, _dec8$t, _dec9$p, _dec0$f, _dec1$a, _dec10$a, _dec11$9, _dec12$8, _dec13$7, _dec14$6, _dec15$6, _dec16$6, _dec17$6, _dec18$6, _class3$k, _class4$k, _initializer7$F, _initializer8$C, _initializer9$x, _initializer0$u, _initializer1$s, _initializer10$p, _initializer11$m, _initializer12$i, _initializer13$e, _initializer14$e, _initializer15$b, _dec19$6, _dec20$6, _dec21$6, _dec22$6, _dec23$6, _dec24$6, _dec25$6, _dec26$6, _class5$8, _class6$6, _initializer16$b, _initializer17$a, _initializer18$8, _initializer19$8, _initializer20$7, _initializer21$7, _initializer22$6, _initializer23$5, _initializer24$5, _initializer25$4, _FogInfo, _dec27$5, _dec28$4, _dec29$4, _dec30$3, _dec31$3, _dec32$3, _class7$5, _class8$5, _initializer26$4, _initializer27$4, _initializer28$4, _initializer29$4, _initializer30$4, _initializer31$4, _initializer32$4, _initializer33$4, _dec33$3, _dec34$3, _class9$5, _class0$5, _initializer34$3, _initializer35$3, _initializer36$3, _initializer37$3, _dec35$3, _dec36$3, _dec37$3, _class1$3, _class10$3, _initializer38$3, _initializer39$3, _initializer40$2, _dec38$2, _dec39$2, _class11$2, _class12$2, _initializer41$2, _dec40$2, _dec41$2, _dec42$2, _dec43$2, _dec44$2, _dec45$2, _class13$2, _class14$2, _initializer42$1, _initializer43$1, _initializer44$1, _initializer45, _initializer46, _initializer47, _initializer48, _initializer49, _initializer50, _dec46$1, _dec47$1, _class15, _class16, _initializer51, _initializer52, _initializer53, _initializer54, _initializer55, _initializer56, _initializer57, _initializer58, _initializer59, _initializer60;
 const _up = new Vec3(0, 1, 0);
 const _v3$3 = new Vec3();
 const _v4$1 = new Vec4();
@@ -39320,10 +39402,10 @@ const normalizeHDRColor = color => {
     color.z *= intensity;
   }
 };
-let AmbientInfo = (_dec$38 = ccclass$x('cc.AmbientInfo'), _dec2$2o = type$b(CCFloat), _dec3$1E = formerlySerializedAs$3('_skyColor'), _dec4$1c = formerlySerializedAs$3('_skyIllum'), _dec5$13 = formerlySerializedAs$3('_groundAlbedo'), _dec$38(_class$39 = (_class2$2x = class AmbientInfo {
+let AmbientInfo = (_dec$39 = ccclass$x('cc.AmbientInfo'), _dec2$2o = type$b(CCFloat), _dec3$1E = formerlySerializedAs$3('_skyColor'), _dec4$1c = formerlySerializedAs$3('_skyIllum'), _dec5$13 = formerlySerializedAs$3('_groundAlbedo'), _dec$39(_class$3a = (_class2$2y = class AmbientInfo {
   constructor() {
-    this._skyColorHDR = _initializer$2t && _initializer$2t();
-    this._skyIllumHDR = _initializer2$21 && _initializer2$21();
+    this._skyColorHDR = _initializer$2u && _initializer$2u();
+    this._skyIllumHDR = _initializer2$22 && _initializer2$22();
     this._groundAlbedoHDR = _initializer3$1v && _initializer3$1v();
     this._skyColorLDR = _initializer4$1g && _initializer4$1g();
     this._skyIllumLDR = _initializer5$11 && _initializer5$11();
@@ -39423,19 +39505,19 @@ let AmbientInfo = (_dec$38 = ccclass$x('cc.AmbientInfo'), _dec2$2o = type$b(CCFl
     this._resource = resource;
     resource.initialize(this);
   }
-}, _applyDecoratedDescriptor(_class2$2x.prototype, "skyIllum", [_dec2$2o], Object.getOwnPropertyDescriptor(_class2$2x.prototype, "skyIllum"), _class2$2x.prototype), _initializer$2t = applyDecoratedInitializer(_class2$2x.prototype, "_skyColorHDR", [serializable$c, _dec3$1E], function () {
+}, _applyDecoratedDescriptor(_class2$2y.prototype, "skyIllum", [_dec2$2o], Object.getOwnPropertyDescriptor(_class2$2y.prototype, "skyIllum"), _class2$2y.prototype), _initializer$2u = applyDecoratedInitializer(_class2$2y.prototype, "_skyColorHDR", [serializable$c, _dec3$1E], function () {
   return new Vec4(0.2, 0.5, 0.8, 1.0);
-}), _initializer2$21 = applyDecoratedInitializer(_class2$2x.prototype, "_skyIllumHDR", [serializable$c, _dec4$1c], function () {
+}), _initializer2$22 = applyDecoratedInitializer(_class2$2y.prototype, "_skyIllumHDR", [serializable$c, _dec4$1c], function () {
   return Ambient.SKY_ILLUM;
-}), _initializer3$1v = applyDecoratedInitializer(_class2$2x.prototype, "_groundAlbedoHDR", [serializable$c, _dec5$13], function () {
+}), _initializer3$1v = applyDecoratedInitializer(_class2$2y.prototype, "_groundAlbedoHDR", [serializable$c, _dec5$13], function () {
   return new Vec4(0.2, 0.2, 0.2, 1.0);
-}), _initializer4$1g = applyDecoratedInitializer(_class2$2x.prototype, "_skyColorLDR", [serializable$c], function () {
+}), _initializer4$1g = applyDecoratedInitializer(_class2$2y.prototype, "_skyColorLDR", [serializable$c], function () {
   return new Vec4(0.2, 0.5, 0.8, 1.0);
-}), _initializer5$11 = applyDecoratedInitializer(_class2$2x.prototype, "_skyIllumLDR", [serializable$c], function () {
+}), _initializer5$11 = applyDecoratedInitializer(_class2$2y.prototype, "_skyIllumLDR", [serializable$c], function () {
   return Ambient.SKY_ILLUM;
-}), _initializer6$Q = applyDecoratedInitializer(_class2$2x.prototype, "_groundAlbedoLDR", [serializable$c], function () {
+}), _initializer6$Q = applyDecoratedInitializer(_class2$2y.prototype, "_groundAlbedoLDR", [serializable$c], function () {
   return new Vec4(0.2, 0.2, 0.2, 1.0);
-}), _class2$2x)) || _class$39);
+}), _class2$2y)) || _class$3a);
 legacyCC.AmbientInfo = AmbientInfo;
 let SkyboxInfo = (_dec6$P = ccclass$x('cc.SkyboxInfo'), _dec7$E = type$b(EnvironmentLightingType), _dec8$t = type$b(TextureCube), _dec9$p = type$b(CCFloat), _dec0$f = type$b(TextureCube), _dec1$a = type$b(TextureCube), _dec10$a = type$b(Material), _dec11$9 = type$b(TextureCube), _dec12$8 = formerlySerializedAs$3('_envmap'), _dec13$7 = type$b(TextureCube), _dec14$6 = type$b(TextureCube), _dec15$6 = type$b(TextureCube), _dec16$6 = type$b(Material), _dec17$6 = type$b(TextureCube), _dec18$6 = type$b(TextureCube), _dec6$P(_class3$k = (_class4$k = class SkyboxInfo {
   constructor() {
@@ -40389,23 +40471,23 @@ let SceneGlobals = (_dec46$1 = ccclass$x('cc.SceneGlobals'), _dec47$1 = type$b(S
 }), _class16)) || _class15);
 legacyCC.SceneGlobals = SceneGlobals;
 
-var _dec$37, _dec2$2n, _class$38, _class2$2w, _initializer$2s, _dec3$1D, _dec4$1b, _dec5$12, _dec6$O, _dec7$D, _dec8$s, _class3$j, _class4$j, _initializer2$20, _initializer3$1u, _initializer4$1f, _initializer5$10, _initializer6$P, _dec9$o, _class5$7, _class6$5, _initializer7$E, _dec0$e, _dec1$9, _dec10$9, _class7$4, _class8$4, _initializer8$B, _initializer9$w, _initializer0$t, _dec11$8, _dec12$7, _dec13$6, _class9$4, _class0$4, _initializer1$r, _initializer10$o, _dec14$5, _dec15$5, _dec16$5, _class1$2, _class10$2, _initializer11$l, _initializer12$h, _dec17$5, _dec18$5, _dec19$5, _dec20$5, _dec21$5, _dec22$5, _class11$1, _class12$1, _initializer13$d, _initializer14$d, _initializer15$a, _initializer16$a, _initializer17$9, _initializer18$7, _dec23$5, _dec24$5, _dec25$5, _dec26$5, _class13$1, _class14$1, _initializer19$7, _initializer20$6, _initializer21$6, _initializer22$5, _initializer23$4, _initializer24$4;
-let TargetInfo = (_dec$37 = ccclass$x('cc.TargetInfo'), _dec2$2n = type$b([CCString]), _dec$37(_class$38 = (_class2$2w = class TargetInfo {
+var _dec$38, _dec2$2n, _class$39, _class2$2x, _initializer$2t, _dec3$1D, _dec4$1b, _dec5$12, _dec6$O, _dec7$D, _dec8$s, _class3$j, _class4$j, _initializer2$21, _initializer3$1u, _initializer4$1f, _initializer5$10, _initializer6$P, _dec9$o, _class5$7, _class6$5, _initializer7$E, _dec0$e, _dec1$9, _dec10$9, _class7$4, _class8$4, _initializer8$B, _initializer9$w, _initializer0$t, _dec11$8, _dec12$7, _dec13$6, _class9$4, _class0$4, _initializer1$r, _initializer10$o, _dec14$5, _dec15$5, _dec16$5, _class1$2, _class10$2, _initializer11$l, _initializer12$h, _dec17$5, _dec18$5, _dec19$5, _dec20$5, _dec21$5, _dec22$5, _class11$1, _class12$1, _initializer13$d, _initializer14$d, _initializer15$a, _initializer16$a, _initializer17$9, _initializer18$7, _dec23$5, _dec24$5, _dec25$5, _dec26$5, _class13$1, _class14$1, _initializer19$7, _initializer20$6, _initializer21$6, _initializer22$5, _initializer23$4, _initializer24$4;
+let TargetInfo = (_dec$38 = ccclass$x('cc.TargetInfo'), _dec2$2n = type$b([CCString]), _dec$38(_class$39 = (_class2$2x = class TargetInfo {
   constructor() {
-    this.localID = _initializer$2s && _initializer$2s();
+    this.localID = _initializer$2t && _initializer$2t();
   }
-}, _initializer$2s = applyDecoratedInitializer(_class2$2w.prototype, "localID", [serializable$c, _dec2$2n], function () {
+}, _initializer$2t = applyDecoratedInitializer(_class2$2x.prototype, "localID", [serializable$c, _dec2$2n], function () {
   return [];
-}), _class2$2w)) || _class$38);
+}), _class2$2x)) || _class$39);
 let TargetOverrideInfo = (_dec3$1D = ccclass$x('cc.TargetOverrideInfo'), _dec4$1b = type$b(CCObject), _dec5$12 = type$b(TargetInfo), _dec6$O = type$b([CCString]), _dec7$D = type$b(Node$1), _dec8$s = type$b(TargetInfo), _dec3$1D(_class3$j = (_class4$j = class TargetOverrideInfo {
   constructor() {
-    this.source = _initializer2$20 && _initializer2$20();
+    this.source = _initializer2$21 && _initializer2$21();
     this.sourceInfo = _initializer3$1u && _initializer3$1u();
     this.propertyPath = _initializer4$1f && _initializer4$1f();
     this.target = _initializer5$10 && _initializer5$10();
     this.targetInfo = _initializer6$P && _initializer6$P();
   }
-}, _initializer2$20 = applyDecoratedInitializer(_class4$j.prototype, "source", [serializable$c, _dec4$1b], function () {
+}, _initializer2$21 = applyDecoratedInitializer(_class4$j.prototype, "source", [serializable$c, _dec4$1b], function () {
   return null;
 }), _initializer3$1u = applyDecoratedInitializer(_class4$j.prototype, "sourceInfo", [serializable$c, _dec5$12], function () {
   return null;
@@ -40839,8 +40921,8 @@ var utils$1 = /*#__PURE__*/Object.freeze({
     getTarget: getTarget
 });
 
-var _dec$36, _class$37, _class2$2v, _initializer$2r, _initializer2$1$;
-let Scene = (_dec$36 = ccclass$x('cc.Scene'), _dec$36(_class$37 = (_class2$2v = class Scene extends Node$1 {
+var _dec$37, _class$38, _class2$2w, _initializer$2s, _initializer2$20;
+let Scene = (_dec$37 = ccclass$x('cc.Scene'), _dec$37(_class$38 = (_class2$2w = class Scene extends Node$1 {
   get renderScene() {
     return this._renderScene;
   }
@@ -40852,8 +40934,8 @@ let Scene = (_dec$36 = ccclass$x('cc.Scene'), _dec$36(_class$37 = (_class2$2v = 
   }
   constructor(name) {
     super(name);
-    this.autoReleaseAssets = _initializer$2r && _initializer$2r();
-    this._globals = _initializer2$1$ && _initializer2$1$();
+    this.autoReleaseAssets = _initializer$2s && _initializer$2s();
+    this._globals = _initializer2$20 && _initializer2$20();
     this.dependAssets = null;
     this._renderScene = null;
     this._prefabSyncedInLiveReload = false;
@@ -40907,18 +40989,18 @@ let Scene = (_dec$36 = ccclass$x('cc.Scene'), _dec$36(_class$37 = (_class2$2v = 
       this._globals.activate(this);
     }
   }
-}, _initializer$2r = applyDecoratedInitializer(_class2$2v.prototype, "autoReleaseAssets", [serializable$c], function () {
+}, _initializer$2s = applyDecoratedInitializer(_class2$2w.prototype, "autoReleaseAssets", [serializable$c], function () {
   return false;
-}), _initializer2$1$ = applyDecoratedInitializer(_class2$2v.prototype, "_globals", [serializable$c], function () {
+}), _initializer2$20 = applyDecoratedInitializer(_class2$2w.prototype, "_globals", [serializable$c], function () {
   return new SceneGlobals();
-}), _class2$2v)) || _class$37);
+}), _class2$2w)) || _class$38);
 legacyCC.Scene = Scene;
 
-var _dec$35, _class$36, _class2$2u, _initializer$2q;
-let SceneAsset = (_dec$35 = ccclass$x('cc.SceneAsset'), _dec$35(_class$36 = (_class2$2u = class SceneAsset extends Asset {
+var _dec$36, _class$37, _class2$2v, _initializer$2r;
+let SceneAsset = (_dec$36 = ccclass$x('cc.SceneAsset'), _dec$36(_class$37 = (_class2$2v = class SceneAsset extends Asset {
   constructor(name) {
     super(name);
-    this.scene = _initializer$2q && _initializer$2q();
+    this.scene = _initializer$2r && _initializer$2r();
   }
   initDefault(uuid) {
     super.initDefault(uuid);
@@ -40927,9 +41009,9 @@ let SceneAsset = (_dec$35 = ccclass$x('cc.SceneAsset'), _dec$35(_class$36 = (_cl
   validate() {
     return !!this.scene;
   }
-}, _initializer$2q = applyDecoratedInitializer(_class2$2u.prototype, "scene", [serializable$c], function () {
+}, _initializer$2r = applyDecoratedInitializer(_class2$2v.prototype, "scene", [serializable$c], function () {
   return null;
-}), _class2$2u)) || _class$36);
+}), _class2$2v)) || _class$37);
 cclegacy.SceneAsset = SceneAsset;
 
 const _mat4Trans = new Mat4();
@@ -43093,7 +43175,12 @@ class KeyboardInputSource {
     const eventKeyboard = new EventKeyboard(keyCode, eventType);
     return eventKeyboard;
   }
+  _isDOMDescendant(event) {
+    const host = event.currentTarget;
+    return (host == null ? void 0 : host.tagName) === 'CANVAS' && event.target !== host && host.contains(event.target);
+  }
   _handleKeyboardDown(event) {
+    if (this._isDOMDescendant(event)) return;
     event.stopPropagation();
     event.preventDefault();
     if (!event.repeat) {
@@ -43106,8 +43193,10 @@ class KeyboardInputSource {
   }
   _handleKeyboardUp(event) {
     const inputEvent = this._getInputEvent(event, InputEventType.KEY_UP);
-    event.stopPropagation();
-    event.preventDefault();
+    if (!this._isDOMDescendant(event)) {
+      event.stopPropagation();
+      event.preventDefault();
+    }
     this._eventTarget.emit(InputEventType.KEY_UP, inputEvent);
   }
 }
@@ -43604,8 +43693,10 @@ class Input {
     }
     if (sys.hasFeature(sys.Feature.EVENT_MOUSE)) {
       mouseInput.on(InputEventType.MOUSE_DOWN, event => {
-        self._needSimulateTouchMoveEvent = true;
-        self._simulateEventTouch(event);
+        {
+          self._needSimulateTouchMoveEvent = true;
+          self._simulateEventTouch(event);
+        }
         self._dispatchEventMouse(event);
       });
       mouseInput.on(InputEventType.MOUSE_MOVE, event => {
@@ -43615,8 +43706,10 @@ class Input {
         self._dispatchEventMouse(event);
       });
       mouseInput.on(InputEventType.MOUSE_UP, event => {
-        self._needSimulateTouchMoveEvent = false;
-        self._simulateEventTouch(event);
+        {
+          self._needSimulateTouchMoveEvent = false;
+          self._simulateEventTouch(event);
+        }
         self._dispatchEventMouse(event);
       });
       mouseInput.on(InputEventType.MOUSE_WHEEL, event => {
@@ -43869,7 +43962,7 @@ markAsWarning(macro, 'macro', [{
   suggest: 'please use KeyCode instead'
 }]);
 
-var _dec$34, _class$35;
+var _dec$35, _class$36;
 replaceProperty(Node$1.prototype, 'Node', [{
   name: 'childrenCount',
   newName: 'children.length',
@@ -44066,13 +44159,13 @@ removeProperty(Layers.BitMask, 'Layers.BitMask', [{
 }]);
 const HideInHierarchy = CCObjectFlags.HideInHierarchy;
 const DontSave = CCObjectFlags.DontSave;
-let PrivateNode = (_dec$34 = ccclass$x('cc.PrivateNode'), _dec$34(_class$35 = class PrivateNode extends Node$1 {
+let PrivateNode = (_dec$35 = ccclass$x('cc.PrivateNode'), _dec$35(_class$36 = class PrivateNode extends Node$1 {
   constructor(name) {
     super(name);
     warnID(12003, this.name);
     this.hideFlags |= DontSave | HideInHierarchy;
   }
-}) || _class$35);
+}) || _class$36);
 replaceProperty(SystemEventType, 'SystemEventType', ['MOUSE_ENTER', 'MOUSE_LEAVE', 'TRANSFORM_CHANGED', 'SCENE_CHANGED_FOR_PERSISTS', 'SIZE_CHANGED', 'ANCHOR_CHANGED', 'COLOR_CHANGED', 'CHILD_ADDED', 'CHILD_REMOVED', 'PARENT_CHANGED', 'NODE_DESTROYED', 'LAYER_CHANGED', 'SIBLING_ORDER_CHANGED'].map(name => ({
   name,
   target: Node$1.EventType,
@@ -44312,17 +44405,17 @@ class NodeActivator {
   }
 }
 
-var _dec$33, _class$34, _class2$2t, _initializer$2p, _initializer2$1_, _initializer3$1t, _Prefab;
+var _dec$34, _class$35, _class2$2u, _initializer$2q, _initializer2$1$, _initializer3$1t, _Prefab;
 const OptimizationPolicy = Enum({
   AUTO: 0,
   SINGLE_INSTANCE: 1,
   MULTI_INSTANCE: 2
 });
-let Prefab = (_dec$33 = ccclass$x('cc.Prefab'), _dec$33(_class$34 = (_class2$2t = (_Prefab = class Prefab extends Asset {
+let Prefab = (_dec$34 = ccclass$x('cc.Prefab'), _dec$34(_class$35 = (_class2$2u = (_Prefab = class Prefab extends Asset {
   constructor() {
     super();
-    this.data = _initializer$2p && _initializer$2p();
-    this.optimizationPolicy = _initializer2$1_ && _initializer2$1_();
+    this.data = _initializer$2q && _initializer$2q();
+    this.optimizationPolicy = _initializer2$1$ && _initializer2$1$();
     this.persistent = _initializer3$1t && _initializer3$1t();
     this._createFunction = null;
     this._instantiatedTimes = 0;
@@ -44368,13 +44461,13 @@ let Prefab = (_dec$33 = ccclass$x('cc.Prefab'), _dec$33(_class$34 = (_class2$2t 
     expandNestedPrefabInstanceNode(rootNode);
     applyTargetOverrides(rootNode);
   }
-}, _Prefab.OptimizationPolicy = OptimizationPolicy, _Prefab.OptimizationPolicyThreshold = 3, _Prefab), _initializer$2p = applyDecoratedInitializer(_class2$2t.prototype, "data", [serializable$c], function () {
+}, _Prefab.OptimizationPolicy = OptimizationPolicy, _Prefab.OptimizationPolicyThreshold = 3, _Prefab), _initializer$2q = applyDecoratedInitializer(_class2$2u.prototype, "data", [serializable$c], function () {
   return null;
-}), _initializer2$1_ = applyDecoratedInitializer(_class2$2t.prototype, "optimizationPolicy", [serializable$c], function () {
+}), _initializer2$1$ = applyDecoratedInitializer(_class2$2u.prototype, "optimizationPolicy", [serializable$c], function () {
   return OptimizationPolicy.AUTO;
-}), _initializer3$1t = applyDecoratedInitializer(_class2$2t.prototype, "persistent", [serializable$c], function () {
+}), _initializer3$1t = applyDecoratedInitializer(_class2$2u.prototype, "persistent", [serializable$c], function () {
   return false;
-}), _class2$2t)) || _class$34);
+}), _class2$2u)) || _class$35);
 value(Prefab, '_utils', utils$1);
 legacyCC.Prefab = Prefab;
 {
@@ -44598,12 +44691,12 @@ intersect.rayModel = rayModel;
 intersect.raySubMesh = raySubMesh;
 intersect.rayMesh = rayMesh;
 
-var _dec$32, _class$33, _class2$2s, _initializer$2o, _initializer2$1Z, _initializer3$1s, _PostProcess;
-let PostProcess = (_dec$32 = ccclass$x('cc.PostProcess'), _dec$32(_class$33 = disallowMultiple$1(_class$33 = (_class2$2s = (_PostProcess = class PostProcess extends Component {
+var _dec$33, _class$34, _class2$2t, _initializer$2p, _initializer2$1_, _initializer3$1s, _PostProcess;
+let PostProcess = (_dec$33 = ccclass$x('cc.PostProcess'), _dec$33(_class$34 = disallowMultiple$1(_class$34 = (_class2$2t = (_PostProcess = class PostProcess extends Component {
   constructor() {
     super();
-    this.global = _initializer$2o && _initializer$2o();
-    this._shadingScale = _initializer2$1Z && _initializer2$1Z();
+    this.global = _initializer$2p && _initializer$2p();
+    this._shadingScale = _initializer2$1_ && _initializer2$1_();
     this.enableShadingScaleInEditor = _initializer3$1s && _initializer3$1s();
     this.settings = new Map();
   }
@@ -44631,15 +44724,15 @@ let PostProcess = (_dec$32 = ccclass$x('cc.PostProcess'), _dec$32(_class$33 = di
       PostProcess.all.splice(idx, 1);
     }
   }
-}, _PostProcess.all = [], _PostProcess), _initializer$2o = applyDecoratedInitializer(_class2$2s.prototype, "global", [property$3, serializable$c], function () {
+}, _PostProcess.all = [], _PostProcess), _initializer$2p = applyDecoratedInitializer(_class2$2t.prototype, "global", [property$3, serializable$c], function () {
   return true;
-}), _initializer2$1Z = applyDecoratedInitializer(_class2$2s.prototype, "_shadingScale", [serializable$c], function () {
+}), _initializer2$1_ = applyDecoratedInitializer(_class2$2t.prototype, "_shadingScale", [serializable$c], function () {
   return 1;
-}), _applyDecoratedDescriptor(_class2$2s.prototype, "shadingScale", [property$3], Object.getOwnPropertyDescriptor(_class2$2s.prototype, "shadingScale"), _class2$2s.prototype), _initializer3$1s = applyDecoratedInitializer(_class2$2s.prototype, "enableShadingScaleInEditor", [property$3, serializable$c], function () {
+}), _applyDecoratedDescriptor(_class2$2t.prototype, "shadingScale", [property$3], Object.getOwnPropertyDescriptor(_class2$2t.prototype, "shadingScale"), _class2$2t.prototype), _initializer3$1s = applyDecoratedInitializer(_class2$2t.prototype, "enableShadingScaleInEditor", [property$3, serializable$c], function () {
   return false;
-}), _class2$2s)) || _class$33) || _class$33);
+}), _class2$2t)) || _class$34) || _class$34);
 
-var _dec$31, _dec2$2m, _dec3$1C, _dec4$1a, _dec5$11, _dec6$N, _dec7$C, _dec8$r, _dec9$n, _dec0$d, _class$32, _class2$2r, _initializer$2n, _initializer2$1Y, _initializer3$1r, _initializer4$1e, _initializer5$$, _initializer6$O, _initializer7$D, _initializer8$A, _initializer9$v, _initializer0$s, _initializer1$q, _initializer10$n, _initializer11$k, _initializer12$g, _initializer13$c, _initializer14$c, _initializer15$9, _initializer16$9, _initializer17$8, _initializer18$6, _initializer19$6, _initializer20$5, _initializer21$5, _Camera;
+var _dec$32, _dec2$2m, _dec3$1C, _dec4$1a, _dec5$11, _dec6$N, _dec7$C, _dec8$r, _dec9$n, _dec0$d, _class$33, _class2$2s, _initializer$2o, _initializer2$1Z, _initializer3$1r, _initializer4$1e, _initializer5$$, _initializer6$O, _initializer7$D, _initializer8$A, _initializer9$v, _initializer0$s, _initializer1$q, _initializer10$n, _initializer11$k, _initializer12$g, _initializer13$c, _initializer14$c, _initializer15$9, _initializer16$9, _initializer17$8, _initializer18$6, _initializer19$6, _initializer20$5, _initializer21$5, _Camera;
 const _temp_vec3_1$1 = new Vec3();
 const ProjectionType = Enum(CameraProjection);
 const FOVAxis = Enum(CameraFOVAxis);
@@ -44656,11 +44749,11 @@ let CameraEvent;
 (function (CameraEvent) {
   CameraEvent["TARGET_TEXTURE_CHANGE"] = "tex-change";
 })(CameraEvent || (CameraEvent = {}));
-let Camera = (_dec$31 = ccclass$x('cc.Camera'), _dec2$2m = type$b(Layers.BitMask), _dec3$1C = type$b(ClearFlag), _dec4$1a = type$b(ProjectionType), _dec5$11 = type$b(FOVAxis), _dec6$N = type$b(Aperture), _dec7$C = type$b(Shutter), _dec8$r = type$b(ISO), _dec9$n = type$b(RenderTexture), _dec0$d = type$b(PostProcess), _dec$31(_class$32 = (_class2$2r = (_Camera = class Camera extends Component {
+let Camera = (_dec$32 = ccclass$x('cc.Camera'), _dec2$2m = type$b(Layers.BitMask), _dec3$1C = type$b(ClearFlag), _dec4$1a = type$b(ProjectionType), _dec5$11 = type$b(FOVAxis), _dec6$N = type$b(Aperture), _dec7$C = type$b(Shutter), _dec8$r = type$b(ISO), _dec9$n = type$b(RenderTexture), _dec0$d = type$b(PostProcess), _dec$32(_class$33 = (_class2$2s = (_Camera = class Camera extends Component {
   constructor() {
     super();
-    this._projection = _initializer$2n && _initializer$2n();
-    this._priority = _initializer2$1Y && _initializer2$1Y();
+    this._projection = _initializer$2o && _initializer$2o();
+    this._priority = _initializer2$1Z && _initializer2$1Z();
     this._fov = _initializer3$1r && _initializer3$1r();
     this._fovAxis = _initializer4$1e && _initializer4$1e();
     this._orthoHeight = _initializer5$$ && _initializer5$$();
@@ -45073,56 +45166,56 @@ let Camera = (_dec$31 = ccclass$x('cc.Camera'), _dec2$2m = type$b(Layers.BitMask
       this._camera.setFixedSize(window.width, window.height);
     }
   }
-}, _Camera.ProjectionType = ProjectionType, _Camera.FOVAxis = FOVAxis, _Camera.ClearFlag = ClearFlag, _Camera.Aperture = Aperture, _Camera.Shutter = Shutter, _Camera.ISO = ISO, _Camera.TARGET_TEXTURE_CHANGE = CameraEvent.TARGET_TEXTURE_CHANGE, _Camera), _initializer$2n = applyDecoratedInitializer(_class2$2r.prototype, "_projection", [serializable$c], function () {
+}, _Camera.ProjectionType = ProjectionType, _Camera.FOVAxis = FOVAxis, _Camera.ClearFlag = ClearFlag, _Camera.Aperture = Aperture, _Camera.Shutter = Shutter, _Camera.ISO = ISO, _Camera.TARGET_TEXTURE_CHANGE = CameraEvent.TARGET_TEXTURE_CHANGE, _Camera), _initializer$2o = applyDecoratedInitializer(_class2$2s.prototype, "_projection", [serializable$c], function () {
   return ProjectionType.PERSPECTIVE;
-}), _initializer2$1Y = applyDecoratedInitializer(_class2$2r.prototype, "_priority", [serializable$c], function () {
+}), _initializer2$1Z = applyDecoratedInitializer(_class2$2s.prototype, "_priority", [serializable$c], function () {
   return 0;
-}), _initializer3$1r = applyDecoratedInitializer(_class2$2r.prototype, "_fov", [serializable$c], function () {
+}), _initializer3$1r = applyDecoratedInitializer(_class2$2s.prototype, "_fov", [serializable$c], function () {
   return 45;
-}), _initializer4$1e = applyDecoratedInitializer(_class2$2r.prototype, "_fovAxis", [serializable$c], function () {
+}), _initializer4$1e = applyDecoratedInitializer(_class2$2s.prototype, "_fovAxis", [serializable$c], function () {
   return FOVAxis.VERTICAL;
-}), _initializer5$$ = applyDecoratedInitializer(_class2$2r.prototype, "_orthoHeight", [serializable$c], function () {
+}), _initializer5$$ = applyDecoratedInitializer(_class2$2s.prototype, "_orthoHeight", [serializable$c], function () {
   return 10;
-}), _initializer6$O = applyDecoratedInitializer(_class2$2r.prototype, "_orthoWidth", [serializable$c], function () {
+}), _initializer6$O = applyDecoratedInitializer(_class2$2s.prototype, "_orthoWidth", [serializable$c], function () {
   return 0;
-}), _initializer7$D = applyDecoratedInitializer(_class2$2r.prototype, "_near", [serializable$c], function () {
+}), _initializer7$D = applyDecoratedInitializer(_class2$2s.prototype, "_near", [serializable$c], function () {
   return 1;
-}), _initializer8$A = applyDecoratedInitializer(_class2$2r.prototype, "_far", [serializable$c], function () {
+}), _initializer8$A = applyDecoratedInitializer(_class2$2s.prototype, "_far", [serializable$c], function () {
   return 1000;
-}), _initializer9$v = applyDecoratedInitializer(_class2$2r.prototype, "_color", [serializable$c], function () {
+}), _initializer9$v = applyDecoratedInitializer(_class2$2s.prototype, "_color", [serializable$c], function () {
   return new Color('#333333');
-}), _initializer0$s = applyDecoratedInitializer(_class2$2r.prototype, "_depth", [serializable$c], function () {
+}), _initializer0$s = applyDecoratedInitializer(_class2$2s.prototype, "_depth", [serializable$c], function () {
   return 1;
-}), _initializer1$q = applyDecoratedInitializer(_class2$2r.prototype, "_stencil", [serializable$c], function () {
+}), _initializer1$q = applyDecoratedInitializer(_class2$2s.prototype, "_stencil", [serializable$c], function () {
   return 0;
-}), _initializer10$n = applyDecoratedInitializer(_class2$2r.prototype, "_clearFlags", [serializable$c], function () {
+}), _initializer10$n = applyDecoratedInitializer(_class2$2s.prototype, "_clearFlags", [serializable$c], function () {
   return ClearFlag.SOLID_COLOR;
-}), _initializer11$k = applyDecoratedInitializer(_class2$2r.prototype, "_rect", [serializable$c], function () {
+}), _initializer11$k = applyDecoratedInitializer(_class2$2s.prototype, "_rect", [serializable$c], function () {
   return new Rect(0, 0, 1, 1);
-}), _initializer12$g = applyDecoratedInitializer(_class2$2r.prototype, "_aperture", [serializable$c], function () {
+}), _initializer12$g = applyDecoratedInitializer(_class2$2s.prototype, "_aperture", [serializable$c], function () {
   return Aperture.F16_0;
-}), _initializer13$c = applyDecoratedInitializer(_class2$2r.prototype, "_shutter", [serializable$c], function () {
+}), _initializer13$c = applyDecoratedInitializer(_class2$2s.prototype, "_shutter", [serializable$c], function () {
   return Shutter.D125;
-}), _initializer14$c = applyDecoratedInitializer(_class2$2r.prototype, "_iso", [serializable$c], function () {
+}), _initializer14$c = applyDecoratedInitializer(_class2$2s.prototype, "_iso", [serializable$c], function () {
   return ISO.ISO100;
-}), _initializer15$9 = applyDecoratedInitializer(_class2$2r.prototype, "_screenScale", [serializable$c], function () {
+}), _initializer15$9 = applyDecoratedInitializer(_class2$2s.prototype, "_screenScale", [serializable$c], function () {
   return 1;
-}), _initializer16$9 = applyDecoratedInitializer(_class2$2r.prototype, "_visibility", [serializable$c], function () {
+}), _initializer16$9 = applyDecoratedInitializer(_class2$2s.prototype, "_visibility", [serializable$c], function () {
   return CAMERA_DEFAULT_MASK;
-}), _initializer17$8 = applyDecoratedInitializer(_class2$2r.prototype, "_targetTexture", [serializable$c], function () {
+}), _initializer17$8 = applyDecoratedInitializer(_class2$2s.prototype, "_targetTexture", [serializable$c], function () {
   return null;
-}), _initializer18$6 = applyDecoratedInitializer(_class2$2r.prototype, "_postProcess", [serializable$c], function () {
+}), _initializer18$6 = applyDecoratedInitializer(_class2$2s.prototype, "_postProcess", [serializable$c], function () {
   return null;
-}), _initializer19$6 = applyDecoratedInitializer(_class2$2r.prototype, "_usePostProcess", [serializable$c], function () {
+}), _initializer19$6 = applyDecoratedInitializer(_class2$2s.prototype, "_usePostProcess", [serializable$c], function () {
   return false;
-}), _initializer20$5 = applyDecoratedInitializer(_class2$2r.prototype, "_cameraType", [serializable$c], function () {
+}), _initializer20$5 = applyDecoratedInitializer(_class2$2s.prototype, "_cameraType", [serializable$c], function () {
   return CameraType.DEFAULT;
-}), _initializer21$5 = applyDecoratedInitializer(_class2$2r.prototype, "_trackingType", [serializable$c], function () {
+}), _initializer21$5 = applyDecoratedInitializer(_class2$2s.prototype, "_trackingType", [serializable$c], function () {
   return TrackingType.NO_TRACKING;
-}), _applyDecoratedDescriptor(_class2$2r.prototype, "visibility", [_dec2$2m], Object.getOwnPropertyDescriptor(_class2$2r.prototype, "visibility"), _class2$2r.prototype), _applyDecoratedDescriptor(_class2$2r.prototype, "clearFlags", [_dec3$1C], Object.getOwnPropertyDescriptor(_class2$2r.prototype, "clearFlags"), _class2$2r.prototype), _applyDecoratedDescriptor(_class2$2r.prototype, "projection", [_dec4$1a], Object.getOwnPropertyDescriptor(_class2$2r.prototype, "projection"), _class2$2r.prototype), _applyDecoratedDescriptor(_class2$2r.prototype, "fovAxis", [_dec5$11], Object.getOwnPropertyDescriptor(_class2$2r.prototype, "fovAxis"), _class2$2r.prototype), _applyDecoratedDescriptor(_class2$2r.prototype, "aperture", [_dec6$N], Object.getOwnPropertyDescriptor(_class2$2r.prototype, "aperture"), _class2$2r.prototype), _applyDecoratedDescriptor(_class2$2r.prototype, "shutter", [_dec7$C], Object.getOwnPropertyDescriptor(_class2$2r.prototype, "shutter"), _class2$2r.prototype), _applyDecoratedDescriptor(_class2$2r.prototype, "iso", [_dec8$r], Object.getOwnPropertyDescriptor(_class2$2r.prototype, "iso"), _class2$2r.prototype), _applyDecoratedDescriptor(_class2$2r.prototype, "targetTexture", [_dec9$n], Object.getOwnPropertyDescriptor(_class2$2r.prototype, "targetTexture"), _class2$2r.prototype), _applyDecoratedDescriptor(_class2$2r.prototype, "usePostProcess", [property$3], Object.getOwnPropertyDescriptor(_class2$2r.prototype, "usePostProcess"), _class2$2r.prototype), _applyDecoratedDescriptor(_class2$2r.prototype, "postProcess", [_dec0$d], Object.getOwnPropertyDescriptor(_class2$2r.prototype, "postProcess"), _class2$2r.prototype), _class2$2r)) || _class$32);
+}), _applyDecoratedDescriptor(_class2$2s.prototype, "visibility", [_dec2$2m], Object.getOwnPropertyDescriptor(_class2$2s.prototype, "visibility"), _class2$2s.prototype), _applyDecoratedDescriptor(_class2$2s.prototype, "clearFlags", [_dec3$1C], Object.getOwnPropertyDescriptor(_class2$2s.prototype, "clearFlags"), _class2$2s.prototype), _applyDecoratedDescriptor(_class2$2s.prototype, "projection", [_dec4$1a], Object.getOwnPropertyDescriptor(_class2$2s.prototype, "projection"), _class2$2s.prototype), _applyDecoratedDescriptor(_class2$2s.prototype, "fovAxis", [_dec5$11], Object.getOwnPropertyDescriptor(_class2$2s.prototype, "fovAxis"), _class2$2s.prototype), _applyDecoratedDescriptor(_class2$2s.prototype, "aperture", [_dec6$N], Object.getOwnPropertyDescriptor(_class2$2s.prototype, "aperture"), _class2$2s.prototype), _applyDecoratedDescriptor(_class2$2s.prototype, "shutter", [_dec7$C], Object.getOwnPropertyDescriptor(_class2$2s.prototype, "shutter"), _class2$2s.prototype), _applyDecoratedDescriptor(_class2$2s.prototype, "iso", [_dec8$r], Object.getOwnPropertyDescriptor(_class2$2s.prototype, "iso"), _class2$2s.prototype), _applyDecoratedDescriptor(_class2$2s.prototype, "targetTexture", [_dec9$n], Object.getOwnPropertyDescriptor(_class2$2s.prototype, "targetTexture"), _class2$2s.prototype), _applyDecoratedDescriptor(_class2$2s.prototype, "usePostProcess", [property$3], Object.getOwnPropertyDescriptor(_class2$2s.prototype, "usePostProcess"), _class2$2s.prototype), _applyDecoratedDescriptor(_class2$2s.prototype, "postProcess", [_dec0$d], Object.getOwnPropertyDescriptor(_class2$2s.prototype, "postProcess"), _class2$2s.prototype), _class2$2s)) || _class$33);
 cclegacy.Camera = Camera;
 
-var _dec$30, _dec2$2l, _dec3$1B, _class$31, _class2$2q, _initializer$2m;
+var _dec$31, _dec2$2l, _dec3$1B, _class$32, _class2$2r, _initializer$2n;
 const _matInsInfo$2 = {
   parent: null,
   owner: null,
@@ -45132,10 +45225,10 @@ const {
   ccclass: ccclass$v,
   disallowMultiple,
   type: type$a} = _decorator;
-let Renderer = (_dec$30 = ccclass$v('cc.Renderer'), _dec2$2l = type$a(Material), _dec3$1B = type$a([Material]), _dec$30(_class$31 = disallowMultiple(_class$31 = (_class2$2q = class Renderer extends Component {
+let Renderer = (_dec$31 = ccclass$v('cc.Renderer'), _dec2$2l = type$a(Material), _dec3$1B = type$a([Material]), _dec$31(_class$32 = disallowMultiple(_class$32 = (_class2$2r = class Renderer extends Component {
   constructor() {
     super();
-    this._materials = _initializer$2m && _initializer$2m();
+    this._materials = _initializer$2n && _initializer$2n();
     this._materialInstances = [];
   }
   get sharedMaterial() {
@@ -45253,16 +45346,16 @@ let Renderer = (_dec$30 = ccclass$v('cc.Renderer'), _dec2$2l = type$a(Material),
   _onMaterialModified(index, material) {}
   _onRebuildPSO(index, material) {}
   _clearMaterials() {}
-}, _applyDecoratedDescriptor(_class2$2q.prototype, "sharedMaterials", [_dec2$2l], Object.getOwnPropertyDescriptor(_class2$2q.prototype, "sharedMaterials"), _class2$2q.prototype), _initializer$2m = applyDecoratedInitializer(_class2$2q.prototype, "_materials", [_dec3$1B], function () {
+}, _applyDecoratedDescriptor(_class2$2r.prototype, "sharedMaterials", [_dec2$2l], Object.getOwnPropertyDescriptor(_class2$2r.prototype, "sharedMaterials"), _class2$2r.prototype), _initializer$2n = applyDecoratedInitializer(_class2$2r.prototype, "_materials", [_dec3$1B], function () {
   return [];
-}), _class2$2q)) || _class$31) || _class$31);
+}), _class2$2r)) || _class$32) || _class$32);
 
-var _dec$2$, _class$30, _class2$2p, _initializer$2l;
+var _dec$30, _class$31, _class2$2q, _initializer$2m;
 getPhaseID$1('specular-pass');
-let ModelRenderer = (_dec$2$ = ccclass$x('cc.ModelRenderer'), _dec$2$(_class$30 = (_class2$2p = class ModelRenderer extends Renderer {
+let ModelRenderer = (_dec$30 = ccclass$x('cc.ModelRenderer'), _dec$30(_class$31 = (_class2$2q = class ModelRenderer extends Renderer {
   constructor() {
     super();
-    this._visFlags = _initializer$2l && _initializer$2l();
+    this._visFlags = _initializer$2m && _initializer$2m();
     this._models = [];
     this._priority = 0;
   }
@@ -45297,30 +45390,30 @@ let ModelRenderer = (_dec$2$ = ccclass$x('cc.ModelRenderer'), _dec$2$(_class$30 
       }
     }
   }
-}, _initializer$2l = applyDecoratedInitializer(_class2$2p.prototype, "_visFlags", [serializable$c], function () {
+}, _initializer$2m = applyDecoratedInitializer(_class2$2q.prototype, "_visFlags", [serializable$c], function () {
   return Layers.Enum.NONE;
-}), _class2$2p)) || _class$30);
+}), _class2$2q)) || _class$31);
 
-var _dec$2_, _dec2$2k, _class$2$, _class2$2o, _initializer$2k;
+var _dec$2$, _dec2$2k, _class$30, _class2$2p, _initializer$2l;
 const {
   ccclass: ccclass$u,
   serializable: serializable$a,
   type: type$9} = _decorator;
-let PrefabLink = (_dec$2_ = ccclass$u('cc.PrefabLink'), _dec2$2k = type$9(Prefab), _dec$2_(_class$2$ = (_class2$2o = class PrefabLink extends Component {
+let PrefabLink = (_dec$2$ = ccclass$u('cc.PrefabLink'), _dec2$2k = type$9(Prefab), _dec$2$(_class$30 = (_class2$2p = class PrefabLink extends Component {
   constructor() {
     super();
-    this.prefab = _initializer$2k && _initializer$2k();
+    this.prefab = _initializer$2l && _initializer$2l();
   }
-}, _initializer$2k = applyDecoratedInitializer(_class2$2o.prototype, "prefab", [_dec2$2k, serializable$a], function () {
+}, _initializer$2l = applyDecoratedInitializer(_class2$2p.prototype, "prefab", [_dec2$2k, serializable$a], function () {
   return null;
-}), _class2$2o)) || _class$2$);
+}), _class2$2p)) || _class$30);
 
-var _dec$2Z, _dec2$2j, _class$2_;
+var _dec$2_, _dec2$2j, _class$2$;
 const {
   ccclass: ccclass$t,
   executionOrder: executionOrder$1
 } = _decorator;
-let FeedStatusController = (_dec$2Z = ccclass$t('FeedStatusController'), _dec2$2j = executionOrder$1(90), _dec$2Z(_class$2_ = _dec2$2j(_class$2_ = class FeedStatusController extends Component {
+let FeedStatusController = (_dec$2_ = ccclass$t('FeedStatusController'), _dec2$2j = executionOrder$1(90), _dec$2_(_class$2$ = _dec2$2j(_class$2$ = class FeedStatusController extends Component {
   constructor() {
     super();
   }
@@ -45335,7 +45428,7 @@ let FeedStatusController = (_dec$2Z = ccclass$t('FeedStatusController'), _dec2$2
       minigame.offFeedStatusChange(this.feedStatusChangeCallBack);
     }
   }
-}) || _class$2_) || _class$2_);
+}) || _class$2$) || _class$2$);
 
 replaceProperty(Camera, 'Camera', [{
   name: 'CameraClearFlag',
@@ -49772,6 +49865,35 @@ function bestSizeToHavePixels(nPixels) {
   };
 }
 
+function instantiateWasm(wasmUrl, importObject) {
+  return fetchBuffer(wasmUrl).then(arrayBuffer => WebAssembly.instantiate(arrayBuffer, importObject));
+}
+function fetchBuffer(binaryUrl) {
+  return new Promise((resolve, reject) => {
+    try {
+      if (EDITOR) ; else if (PREVIEW) ;
+      binaryUrl = new URL(binaryUrl, import.meta.url).href;
+      fetch(binaryUrl).then(response => response.arrayBuffer().then(resolve)).catch(e => {});
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+function fetchUrl(binaryUrl) {
+  return new Promise((resolve, reject) => {
+    try {
+      if (EDITOR) ; else if (PREVIEW) ;
+      binaryUrl = new URL(binaryUrl, import.meta.url).href;
+      resolve(binaryUrl);
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+function ensureWasmModuleReady() {
+  return Promise.resolve();
+}
+
 const MeshoptDecoder = {};
 
 var ns = {};
@@ -50166,7 +50288,7 @@ _p.Inflate = _p["Inflate"];
 _p.Inflate.BufferType = _p.Inflate["BufferType"];
 _p.Inflate.prototype.decompress = _p.Inflate.prototype["decompress"];
 
-var _dec$2Y, _class$2Z, _class2$2n, _initializer$2j, _initializer2$1X, _initializer3$1q, _Mesh;
+var _dec$2Z, _class$2_, _class2$2o, _initializer$2k, _initializer2$1Y, _initializer3$1q, _Mesh;
 const vec3Add = Vec3.add;
 const vec3MultiplyScalar = Vec3.multiplyScalar;
 const vec3Subtract = Vec3.subtract;
@@ -50191,7 +50313,7 @@ function getIndexStrideCtor(stride) {
 const v3_1$5 = new Vec3();
 const v3_2$1 = new Vec3();
 const globalEmptyMeshBuffer = new Uint8Array();
-let Mesh = (_dec$2Y = ccclass$x('cc.Mesh'), _dec$2Y(_class$2Z = (_class2$2n = (_Mesh = class Mesh extends Asset {
+let Mesh = (_dec$2Z = ccclass$x('cc.Mesh'), _dec$2Z(_class$2_ = (_class2$2o = (_Mesh = class Mesh extends Asset {
   get _nativeAsset() {
     return this._data.buffer;
   }
@@ -50233,8 +50355,8 @@ let Mesh = (_dec$2Y = ccclass$x('cc.Mesh'), _dec$2Y(_class$2Z = (_class2$2n = (_
   constructor(name) {
     super(name);
     this.morphRendering = null;
-    this._struct = _initializer$2j && _initializer$2j();
-    this._hash = _initializer2$1X && _initializer2$1X();
+    this._struct = _initializer$2k && _initializer$2k();
+    this._hash = _initializer2$1Y && _initializer2$1Y();
     this._data = globalEmptyMeshBuffer;
     this._initialized = false;
     this._allowDataAccess = _initializer3$1q && _initializer3$1q();
@@ -51051,16 +51173,16 @@ let Mesh = (_dec$2Y = ccclass$x('cc.Mesh'), _dec$2Y(_class$2Z = (_class2$2n = (_
   releaseData() {
     this._data = globalEmptyMeshBuffer;
   }
-}, _Mesh.EVENT_GEOMETRY_CHANGED = 'air-geometry-changed', _Mesh), _initializer$2j = applyDecoratedInitializer(_class2$2n.prototype, "_struct", [serializable$c], function () {
+}, _Mesh.EVENT_GEOMETRY_CHANGED = 'air-geometry-changed', _Mesh), _initializer$2k = applyDecoratedInitializer(_class2$2o.prototype, "_struct", [serializable$c], function () {
   return {
     vertexBundles: [],
     primitives: []
   };
-}), _initializer2$1X = applyDecoratedInitializer(_class2$2n.prototype, "_hash", [serializable$c], function () {
+}), _initializer2$1Y = applyDecoratedInitializer(_class2$2o.prototype, "_hash", [serializable$c], function () {
   return 0;
-}), _initializer3$1q = applyDecoratedInitializer(_class2$2n.prototype, "_allowDataAccess", [serializable$c], function () {
+}), _initializer3$1q = applyDecoratedInitializer(_class2$2o.prototype, "_allowDataAccess", [serializable$c], function () {
   return true;
-}), _class2$2n)) || _class$2Z);
+}), _class2$2o)) || _class$2_);
 cclegacy.Mesh = Mesh;
 function getOffset(attributes, attributeIndex) {
   let result = 0;
@@ -51755,7 +51877,7 @@ class MorphModel extends Model {
   }
 }
 
-var _dec$2X, _dec2$2i, _dec3$1A, _dec4$19, _dec5$10, _dec6$M, _dec7$B, _class$2Y, _class2$2m, _initializer$2i, _initializer2$1W, _initializer3$1p, _initializer4$1d, _initializer5$_, _initializer6$N, _initializer7$C, _initializer8$z, _initializer9$u, _initializer0$r, _ModelBakeSettings, _dec8$q, _dec9$m, _dec0$c, _dec1$8, _dec10$8, _dec11$7, _dec12$6, _dec13$5, _class3$i, _class4$i, _initializer1$p, _initializer10$m, _initializer11$j, _initializer12$f, _initializer13$b, _initializer14$b, _initializer15$8, _initializer16$8, _initializer17$7, _initializer18$5, _initializer19$5, _MeshRenderer;
+var _dec$2Y, _dec2$2i, _dec3$1A, _dec4$19, _dec5$10, _dec6$M, _dec7$B, _class$2Z, _class2$2n, _initializer$2j, _initializer2$1X, _initializer3$1p, _initializer4$1d, _initializer5$_, _initializer6$N, _initializer7$C, _initializer8$z, _initializer9$u, _initializer0$r, _ModelBakeSettings, _dec8$q, _dec9$m, _dec0$c, _dec1$8, _dec10$8, _dec11$7, _dec12$6, _dec13$5, _class3$i, _class4$i, _initializer1$p, _initializer10$m, _initializer11$j, _initializer12$f, _initializer13$b, _initializer14$b, _initializer15$8, _initializer16$8, _initializer17$7, _initializer18$5, _initializer19$5, _MeshRenderer;
 const {
   ccclass: ccclass$s,
   executionOrder,
@@ -51788,11 +51910,11 @@ var ModelBakeSettingsEvent;
   ModelBakeSettingsEvent["REFLECTION_PROBE_CHANGED"] = "reflection_probe_changed";
   ModelBakeSettingsEvent["BAKE_TO_REFLECTION_PROBE_CHANGED"] = "bake_to_reflection_probe_changed";
 })(ModelBakeSettingsEvent || (ModelBakeSettingsEvent = {}));
-let ModelBakeSettings = (_dec$2X = ccclass$s('cc.ModelBakeSettings'), _dec2$2i = formerlySerializedAs$2('_recieveShadow'), _dec3$1A = type$8(CCInteger), _dec4$19 = type$8(CCBoolean), _dec5$10 = type$8(CCBoolean), _dec6$M = type$8(Enum(ReflectionProbeType)), _dec7$B = type$8(CCBoolean), _dec$2X(_class$2Y = (_class2$2m = (_ModelBakeSettings = class ModelBakeSettings extends EventTarget {
+let ModelBakeSettings = (_dec$2Y = ccclass$s('cc.ModelBakeSettings'), _dec2$2i = formerlySerializedAs$2('_recieveShadow'), _dec3$1A = type$8(CCInteger), _dec4$19 = type$8(CCBoolean), _dec5$10 = type$8(CCBoolean), _dec6$M = type$8(Enum(ReflectionProbeType)), _dec7$B = type$8(CCBoolean), _dec$2Y(_class$2Z = (_class2$2n = (_ModelBakeSettings = class ModelBakeSettings extends EventTarget {
   constructor() {
     super();
-    this.texture = _initializer$2i && _initializer$2i();
-    this.uvParam = _initializer2$1W && _initializer2$1W();
+    this.texture = _initializer$2j && _initializer$2j();
+    this.uvParam = _initializer2$1X && _initializer2$1X();
     this._bakeable = _initializer3$1p && _initializer3$1p();
     this._castShadow = _initializer4$1d && _initializer4$1d();
     this._receiveShadow = _initializer5$_ && _initializer5$_();
@@ -51856,27 +51978,27 @@ let ModelBakeSettings = (_dec$2X = ccclass$s('cc.ModelBakeSettings'), _dec2$2i =
     this._bakeToReflectionProbe = val;
     this.emit(ModelBakeSettingsEvent.BAKE_TO_REFLECTION_PROBE_CHANGED);
   }
-}, _ModelBakeSettings.USE_LIGHT_PROBE_CHANGED = ModelBakeSettingsEvent.USE_LIGHT_PROBE_CHANGED, _ModelBakeSettings.REFLECTION_PROBE_CHANGED = ModelBakeSettingsEvent.REFLECTION_PROBE_CHANGED, _ModelBakeSettings.BAKE_TO_REFLECTION_PROBE_CHANGED = ModelBakeSettingsEvent.BAKE_TO_REFLECTION_PROBE_CHANGED, _ModelBakeSettings), _initializer$2i = applyDecoratedInitializer(_class2$2m.prototype, "texture", [serializable$9], function () {
+}, _ModelBakeSettings.USE_LIGHT_PROBE_CHANGED = ModelBakeSettingsEvent.USE_LIGHT_PROBE_CHANGED, _ModelBakeSettings.REFLECTION_PROBE_CHANGED = ModelBakeSettingsEvent.REFLECTION_PROBE_CHANGED, _ModelBakeSettings.BAKE_TO_REFLECTION_PROBE_CHANGED = ModelBakeSettingsEvent.BAKE_TO_REFLECTION_PROBE_CHANGED, _ModelBakeSettings), _initializer$2j = applyDecoratedInitializer(_class2$2n.prototype, "texture", [serializable$9], function () {
   return null;
-}), _initializer2$1W = applyDecoratedInitializer(_class2$2m.prototype, "uvParam", [serializable$9], function () {
+}), _initializer2$1X = applyDecoratedInitializer(_class2$2n.prototype, "uvParam", [serializable$9], function () {
   return new Vec4();
-}), _initializer3$1p = applyDecoratedInitializer(_class2$2m.prototype, "_bakeable", [serializable$9], function () {
+}), _initializer3$1p = applyDecoratedInitializer(_class2$2n.prototype, "_bakeable", [serializable$9], function () {
   return false;
-}), _initializer4$1d = applyDecoratedInitializer(_class2$2m.prototype, "_castShadow", [serializable$9], function () {
+}), _initializer4$1d = applyDecoratedInitializer(_class2$2n.prototype, "_castShadow", [serializable$9], function () {
   return false;
-}), _initializer5$_ = applyDecoratedInitializer(_class2$2m.prototype, "_receiveShadow", [_dec2$2i], function () {
+}), _initializer5$_ = applyDecoratedInitializer(_class2$2n.prototype, "_receiveShadow", [_dec2$2i], function () {
   return false;
-}), _initializer6$N = applyDecoratedInitializer(_class2$2m.prototype, "_lightmapSize", [serializable$9], function () {
+}), _initializer6$N = applyDecoratedInitializer(_class2$2n.prototype, "_lightmapSize", [serializable$9], function () {
   return 64;
-}), _initializer7$C = applyDecoratedInitializer(_class2$2m.prototype, "_useLightProbe", [serializable$9], function () {
+}), _initializer7$C = applyDecoratedInitializer(_class2$2n.prototype, "_useLightProbe", [serializable$9], function () {
   return false;
-}), _initializer8$z = applyDecoratedInitializer(_class2$2m.prototype, "_bakeToLightProbe", [serializable$9], function () {
+}), _initializer8$z = applyDecoratedInitializer(_class2$2n.prototype, "_bakeToLightProbe", [serializable$9], function () {
   return true;
-}), _initializer9$u = applyDecoratedInitializer(_class2$2m.prototype, "_reflectionProbeType", [serializable$9], function () {
+}), _initializer9$u = applyDecoratedInitializer(_class2$2n.prototype, "_reflectionProbeType", [serializable$9], function () {
   return ReflectionProbeType.NONE;
-}), _initializer0$r = applyDecoratedInitializer(_class2$2m.prototype, "_bakeToReflectionProbe", [serializable$9], function () {
+}), _initializer0$r = applyDecoratedInitializer(_class2$2n.prototype, "_bakeToReflectionProbe", [serializable$9], function () {
   return true;
-}), _applyDecoratedDescriptor(_class2$2m.prototype, "lightmapSize", [_dec3$1A], Object.getOwnPropertyDescriptor(_class2$2m.prototype, "lightmapSize"), _class2$2m.prototype), _applyDecoratedDescriptor(_class2$2m.prototype, "useLightProbe", [_dec4$19], Object.getOwnPropertyDescriptor(_class2$2m.prototype, "useLightProbe"), _class2$2m.prototype), _applyDecoratedDescriptor(_class2$2m.prototype, "bakeToLightProbe", [_dec5$10], Object.getOwnPropertyDescriptor(_class2$2m.prototype, "bakeToLightProbe"), _class2$2m.prototype), _applyDecoratedDescriptor(_class2$2m.prototype, "reflectionProbe", [_dec6$M], Object.getOwnPropertyDescriptor(_class2$2m.prototype, "reflectionProbe"), _class2$2m.prototype), _applyDecoratedDescriptor(_class2$2m.prototype, "bakeToReflectionProbe", [_dec7$B], Object.getOwnPropertyDescriptor(_class2$2m.prototype, "bakeToReflectionProbe"), _class2$2m.prototype), _class2$2m)) || _class$2Y);
+}), _applyDecoratedDescriptor(_class2$2n.prototype, "lightmapSize", [_dec3$1A], Object.getOwnPropertyDescriptor(_class2$2n.prototype, "lightmapSize"), _class2$2n.prototype), _applyDecoratedDescriptor(_class2$2n.prototype, "useLightProbe", [_dec4$19], Object.getOwnPropertyDescriptor(_class2$2n.prototype, "useLightProbe"), _class2$2n.prototype), _applyDecoratedDescriptor(_class2$2n.prototype, "bakeToLightProbe", [_dec5$10], Object.getOwnPropertyDescriptor(_class2$2n.prototype, "bakeToLightProbe"), _class2$2n.prototype), _applyDecoratedDescriptor(_class2$2n.prototype, "reflectionProbe", [_dec6$M], Object.getOwnPropertyDescriptor(_class2$2n.prototype, "reflectionProbe"), _class2$2n.prototype), _applyDecoratedDescriptor(_class2$2n.prototype, "bakeToReflectionProbe", [_dec7$B], Object.getOwnPropertyDescriptor(_class2$2n.prototype, "bakeToReflectionProbe"), _class2$2n.prototype), _class2$2n)) || _class$2Z);
 let MeshRenderer = (_dec8$q = ccclass$s('cc.MeshRenderer'), _dec9$m = executionOrder(100), _dec0$c = type$8(CCFloat), _dec1$8 = type$8(CCFloat), _dec10$8 = type$8(ModelShadowCastingMode), _dec11$7 = type$8(ModelShadowReceivingMode), _dec12$6 = type$8(Mesh), _dec13$5 = type$8(CCBoolean), _dec8$q(_class3$i = _dec9$m(_class3$i = (_class4$i = (_MeshRenderer = class MeshRenderer extends ModelRenderer {
   get shadowBias() {
     return this._shadowBias;
@@ -52730,12 +52852,12 @@ removeProperty(Mesh.prototype, 'Mesh.prototype', [{
   name: 'destroyFlatBuffers'
 }]);
 
-var _dec$2W, _dec2$2h, _dec3$1z, _class$2X, _class2$2l, _initializer$2h, _initializer2$1V, _initializer3$1o;
-let Skeleton$1 = (_dec$2W = ccclass$x('cc.Skeleton'), _dec2$2h = type$b([CCString]), _dec3$1z = type$b([Mat4]), _dec$2W(_class$2X = (_class2$2l = class Skeleton extends Asset {
+var _dec$2X, _dec2$2h, _dec3$1z, _class$2Y, _class2$2m, _initializer$2i, _initializer2$1W, _initializer3$1o;
+let Skeleton$1 = (_dec$2X = ccclass$x('cc.Skeleton'), _dec2$2h = type$b([CCString]), _dec3$1z = type$b([Mat4]), _dec$2X(_class$2Y = (_class2$2m = class Skeleton extends Asset {
   constructor(name) {
     super(name);
-    this._joints = _initializer$2h && _initializer$2h();
-    this._bindposes = _initializer2$1V && _initializer2$1V();
+    this._joints = _initializer$2i && _initializer$2i();
+    this._bindposes = _initializer2$1W && _initializer2$1W();
     this._hash = _initializer3$1o && _initializer3$1o();
     this._invBindposes = null;
   }
@@ -52781,13 +52903,13 @@ let Skeleton$1 = (_dec$2W = ccclass$x('cc.Skeleton'), _dec2$2h = type$b([CCStrin
   validate() {
     return this.joints.length > 0 && this.bindposes.length > 0;
   }
-}, _initializer$2h = applyDecoratedInitializer(_class2$2l.prototype, "_joints", [_dec2$2h], function () {
+}, _initializer$2i = applyDecoratedInitializer(_class2$2m.prototype, "_joints", [_dec2$2h], function () {
   return [];
-}), _initializer2$1V = applyDecoratedInitializer(_class2$2l.prototype, "_bindposes", [_dec3$1z], function () {
+}), _initializer2$1W = applyDecoratedInitializer(_class2$2m.prototype, "_bindposes", [_dec3$1z], function () {
   return [];
-}), _initializer3$1o = applyDecoratedInitializer(_class2$2l.prototype, "_hash", [serializable$c], function () {
+}), _initializer3$1o = applyDecoratedInitializer(_class2$2m.prototype, "_hash", [serializable$c], function () {
   return 0;
-}), _class2$2l)) || _class$2X);
+}), _class2$2m)) || _class$2Y);
 cclegacy.Skeleton = Skeleton$1;
 
 removeProperty(MeshRenderer.prototype, 'MeshRenderer.prototype', [{
@@ -52798,16 +52920,16 @@ removeProperty(MeshRenderer.prototype, 'MeshRenderer.prototype', [{
 cclegacy.ModelComponent = MeshRenderer;
 setClassAlias(MeshRenderer, 'cc.ModelComponent');
 
-var _dec$2V, _class$2W, _class2$2k, _initializer$2g, _initializer2$1U, _initializer3$1n, _dec2$2g, _dec3$1y, _dec4$18, _class3$h, _class4$h, _initializer4$1c, _initializer5$Z, _initializer6$M, _initializer7$B, _initializer8$y, _Light;
+var _dec$2W, _class$2X, _class2$2l, _initializer$2h, _initializer2$1V, _initializer3$1n, _dec2$2g, _dec3$1y, _dec4$18, _class3$h, _class4$h, _initializer4$1c, _initializer5$Z, _initializer6$M, _initializer7$B, _initializer8$y, _Light;
 const _color_tmp = new Vec3();
 const PhotometricTerm = Enum({
   LUMINOUS_FLUX: 0,
   LUMINANCE: 1
 });
-let StaticLightSettings = (_dec$2V = ccclass$x('cc.StaticLightSettings'), _dec$2V(_class$2W = (_class2$2k = class StaticLightSettings {
+let StaticLightSettings = (_dec$2W = ccclass$x('cc.StaticLightSettings'), _dec$2W(_class$2X = (_class2$2l = class StaticLightSettings {
   constructor() {
-    this._baked = _initializer$2g && _initializer$2g();
-    this._editorOnly = _initializer2$1U && _initializer2$1U();
+    this._baked = _initializer$2h && _initializer$2h();
+    this._editorOnly = _initializer2$1V && _initializer2$1V();
     this._castShadow = _initializer3$1n && _initializer3$1n();
   }
   get editorOnly() {
@@ -52828,13 +52950,13 @@ let StaticLightSettings = (_dec$2V = ccclass$x('cc.StaticLightSettings'), _dec$2
   set castShadow(val) {
     this._castShadow = val;
   }
-}, _initializer$2g = applyDecoratedInitializer(_class2$2k.prototype, "_baked", [serializable$c], function () {
+}, _initializer$2h = applyDecoratedInitializer(_class2$2l.prototype, "_baked", [serializable$c], function () {
   return false;
-}), _initializer2$1U = applyDecoratedInitializer(_class2$2k.prototype, "_editorOnly", [serializable$c], function () {
+}), _initializer2$1V = applyDecoratedInitializer(_class2$2l.prototype, "_editorOnly", [serializable$c], function () {
   return false;
-}), _initializer3$1n = applyDecoratedInitializer(_class2$2k.prototype, "_castShadow", [serializable$c], function () {
+}), _initializer3$1n = applyDecoratedInitializer(_class2$2l.prototype, "_castShadow", [serializable$c], function () {
   return false;
-}), _class2$2k)) || _class$2W);
+}), _class2$2l)) || _class$2X);
 let Light = (_dec2$2g = ccclass$x('cc.Light'), _dec3$1y = type$b(StaticLightSettings), _dec4$18 = type$b(Layers.BitMask), _dec2$2g(_class3$h = (_class4$h = (_Light = class Light extends Component {
   get color() {
     return this._color;
@@ -52999,14 +53121,14 @@ let Light = (_dec2$2g = ccclass$x('cc.Light'), _dec3$1y = type$b(StaticLightSett
   return CAMERA_DEFAULT_MASK;
 }), _applyDecoratedDescriptor(_class4$h.prototype, "staticSettings", [_dec3$1y], Object.getOwnPropertyDescriptor(_class4$h.prototype, "staticSettings"), _class4$h.prototype), _applyDecoratedDescriptor(_class4$h.prototype, "visibility", [_dec4$18], Object.getOwnPropertyDescriptor(_class4$h.prototype, "visibility"), _class4$h.prototype), _class4$h)) || _class3$h);
 
-var _dec$2U, _dec2$2f, _dec3$1x, _dec4$17, _dec5$$, _dec6$L, _dec7$A, _dec8$p, _dec9$l, _dec0$b, _dec1$7, _dec10$7, _dec11$6, _dec12$5, _dec13$4, _dec14$4, _dec15$4, _dec16$4, _dec17$4, _dec18$4, _dec19$4, _dec20$4, _dec21$4, _dec22$4, _dec23$4, _dec24$4, _dec25$4, _dec26$4, _dec27$4, _dec28$3, _dec29$3, _dec30$2, _dec31$2, _dec32$2, _dec33$2, _dec34$2, _dec35$2, _dec36$2, _dec37$2, _class$2V, _class2$2j, _initializer$2f, _initializer2$1T, _initializer3$1m, _initializer4$1b, _initializer5$Y, _initializer6$L, _initializer7$A, _initializer8$x, _initializer9$t, _initializer0$q, _initializer1$o, _initializer10$l, _initializer11$i, _initializer12$e, _initializer13$a, _initializer14$a, _initializer15$7, _initializer16$7, _initializer17$6;
+var _dec$2V, _dec2$2f, _dec3$1x, _dec4$17, _dec5$$, _dec6$L, _dec7$A, _dec8$p, _dec9$l, _dec0$b, _dec1$7, _dec10$7, _dec11$6, _dec12$5, _dec13$4, _dec14$4, _dec15$4, _dec16$4, _dec17$4, _dec18$4, _dec19$4, _dec20$4, _dec21$4, _dec22$4, _dec23$4, _dec24$4, _dec25$4, _dec26$4, _dec27$4, _dec28$3, _dec29$3, _dec30$2, _dec31$2, _dec32$2, _dec33$2, _dec34$2, _dec35$2, _dec36$2, _dec37$2, _class$2W, _class2$2k, _initializer$2g, _initializer2$1U, _initializer3$1m, _initializer4$1b, _initializer5$Y, _initializer6$L, _initializer7$A, _initializer8$x, _initializer9$t, _initializer0$q, _initializer1$o, _initializer10$l, _initializer11$i, _initializer12$e, _initializer13$a, _initializer14$a, _initializer15$7, _initializer16$7, _initializer17$6;
 const {
   ccclass: ccclass$r,
   property: property$1,
   serializable: serializable$8,
   formerlySerializedAs: formerlySerializedAs$1,
   type: type$7} = _decorator;
-let DirectionalLight = (_dec$2U = ccclass$r('cc.DirectionalLight'), _dec2$2f = formerlySerializedAs$1('_illuminance'), _dec3$1x = type$7(CCInteger), _dec4$17 = property$1({
+let DirectionalLight = (_dec$2V = ccclass$r('cc.DirectionalLight'), _dec2$2f = formerlySerializedAs$1('_illuminance'), _dec3$1x = type$7(CCInteger), _dec4$17 = property$1({
   group: {
     name: 'DynamicShadowSettings',
     displayOrder: 1
@@ -53096,7 +53218,7 @@ let DirectionalLight = (_dec$2U = ccclass$r('cc.DirectionalLight'), _dec2$2f = f
     name: 'DynamicShadowSettings',
     displayOrder: 21
   }
-}), _dec37$2 = type$7(CCFloat), _dec$2U(_class$2V = (_class2$2j = class DirectionalLight extends Light {
+}), _dec37$2 = type$7(CCFloat), _dec$2V(_class$2W = (_class2$2k = class DirectionalLight extends Light {
   get illuminance() {
     const isHDR = getPipelineSceneData().isHDR;
     if (isHDR) {
@@ -53283,8 +53405,8 @@ let DirectionalLight = (_dec$2U = ccclass$r('cc.DirectionalLight'), _dec2$2f = f
   }
   constructor() {
     super();
-    this._illuminanceHDR = _initializer$2f && _initializer$2f();
-    this._illuminanceLDR = _initializer2$1T && _initializer2$1T();
+    this._illuminanceHDR = _initializer$2g && _initializer$2g();
+    this._illuminanceLDR = _initializer2$1U && _initializer2$1U();
     this._shadowEnabled = _initializer3$1m && _initializer3$1m();
     this._shadowPcf = _initializer4$1b && _initializer4$1b();
     this._shadowBias = _initializer5$Y && _initializer5$Y();
@@ -53357,48 +53479,48 @@ let DirectionalLight = (_dec$2U = ccclass$r('cc.DirectionalLight'), _dec2$2f = f
       meshRender.onUpdateReceiveDirLight(this._visibility);
     }
   }
-}, _initializer$2f = applyDecoratedInitializer(_class2$2j.prototype, "_illuminanceHDR", [property$1, _dec2$2f], function () {
+}, _initializer$2g = applyDecoratedInitializer(_class2$2k.prototype, "_illuminanceHDR", [property$1, _dec2$2f], function () {
   return 65000;
-}), _initializer2$1T = applyDecoratedInitializer(_class2$2j.prototype, "_illuminanceLDR", [serializable$8], function () {
+}), _initializer2$1U = applyDecoratedInitializer(_class2$2k.prototype, "_illuminanceLDR", [serializable$8], function () {
   return 65000 * Camera$1.standardExposureValue;
-}), _initializer3$1m = applyDecoratedInitializer(_class2$2j.prototype, "_shadowEnabled", [serializable$8], function () {
+}), _initializer3$1m = applyDecoratedInitializer(_class2$2k.prototype, "_shadowEnabled", [serializable$8], function () {
   return false;
-}), _initializer4$1b = applyDecoratedInitializer(_class2$2j.prototype, "_shadowPcf", [serializable$8], function () {
+}), _initializer4$1b = applyDecoratedInitializer(_class2$2k.prototype, "_shadowPcf", [serializable$8], function () {
   return PCFType.HARD;
-}), _initializer5$Y = applyDecoratedInitializer(_class2$2j.prototype, "_shadowBias", [serializable$8], function () {
+}), _initializer5$Y = applyDecoratedInitializer(_class2$2k.prototype, "_shadowBias", [serializable$8], function () {
   return 0.00001;
-}), _initializer6$L = applyDecoratedInitializer(_class2$2j.prototype, "_shadowNormalBias", [serializable$8], function () {
+}), _initializer6$L = applyDecoratedInitializer(_class2$2k.prototype, "_shadowNormalBias", [serializable$8], function () {
   return 0.0;
-}), _initializer7$A = applyDecoratedInitializer(_class2$2j.prototype, "_shadowSaturation", [serializable$8], function () {
+}), _initializer7$A = applyDecoratedInitializer(_class2$2k.prototype, "_shadowSaturation", [serializable$8], function () {
   return 1.0;
-}), _initializer8$x = applyDecoratedInitializer(_class2$2j.prototype, "_shadowDistance", [serializable$8], function () {
+}), _initializer8$x = applyDecoratedInitializer(_class2$2k.prototype, "_shadowDistance", [serializable$8], function () {
   return 50;
-}), _initializer9$t = applyDecoratedInitializer(_class2$2j.prototype, "_shadowInvisibleOcclusionRange", [serializable$8], function () {
+}), _initializer9$t = applyDecoratedInitializer(_class2$2k.prototype, "_shadowInvisibleOcclusionRange", [serializable$8], function () {
   return 200;
-}), _initializer0$q = applyDecoratedInitializer(_class2$2j.prototype, "_csmLevel", [serializable$8], function () {
+}), _initializer0$q = applyDecoratedInitializer(_class2$2k.prototype, "_csmLevel", [serializable$8], function () {
   return CSMLevel.LEVEL_4;
-}), _initializer1$o = applyDecoratedInitializer(_class2$2j.prototype, "_csmLayerLambda", [serializable$8], function () {
+}), _initializer1$o = applyDecoratedInitializer(_class2$2k.prototype, "_csmLayerLambda", [serializable$8], function () {
   return 0.75;
-}), _initializer10$l = applyDecoratedInitializer(_class2$2j.prototype, "_csmOptimizationMode", [serializable$8], function () {
+}), _initializer10$l = applyDecoratedInitializer(_class2$2k.prototype, "_csmOptimizationMode", [serializable$8], function () {
   return CSMOptimizationMode.RemoveDuplicates;
-}), _initializer11$i = applyDecoratedInitializer(_class2$2j.prototype, "_csmAdvancedOptions", [serializable$8], function () {
+}), _initializer11$i = applyDecoratedInitializer(_class2$2k.prototype, "_csmAdvancedOptions", [serializable$8], function () {
   return false;
-}), _initializer12$e = applyDecoratedInitializer(_class2$2j.prototype, "_csmLayersTransition", [serializable$8], function () {
+}), _initializer12$e = applyDecoratedInitializer(_class2$2k.prototype, "_csmLayersTransition", [serializable$8], function () {
   return false;
-}), _initializer13$a = applyDecoratedInitializer(_class2$2j.prototype, "_csmTransitionRange", [serializable$8], function () {
+}), _initializer13$a = applyDecoratedInitializer(_class2$2k.prototype, "_csmTransitionRange", [serializable$8], function () {
   return 0.05;
-}), _initializer14$a = applyDecoratedInitializer(_class2$2j.prototype, "_shadowFixedArea", [serializable$8], function () {
+}), _initializer14$a = applyDecoratedInitializer(_class2$2k.prototype, "_shadowFixedArea", [serializable$8], function () {
   return false;
-}), _initializer15$7 = applyDecoratedInitializer(_class2$2j.prototype, "_shadowNear", [serializable$8], function () {
+}), _initializer15$7 = applyDecoratedInitializer(_class2$2k.prototype, "_shadowNear", [serializable$8], function () {
   return 0.1;
-}), _initializer16$7 = applyDecoratedInitializer(_class2$2j.prototype, "_shadowFar", [serializable$8], function () {
+}), _initializer16$7 = applyDecoratedInitializer(_class2$2k.prototype, "_shadowFar", [serializable$8], function () {
   return 10.0;
-}), _initializer17$6 = applyDecoratedInitializer(_class2$2j.prototype, "_shadowOrthoSize", [serializable$8], function () {
+}), _initializer17$6 = applyDecoratedInitializer(_class2$2k.prototype, "_shadowOrthoSize", [serializable$8], function () {
   return 5;
-}), _applyDecoratedDescriptor(_class2$2j.prototype, "illuminance", [_dec3$1x], Object.getOwnPropertyDescriptor(_class2$2j.prototype, "illuminance"), _class2$2j.prototype), _applyDecoratedDescriptor(_class2$2j.prototype, "shadowEnabled", [_dec4$17, _dec5$$], Object.getOwnPropertyDescriptor(_class2$2j.prototype, "shadowEnabled"), _class2$2j.prototype), _applyDecoratedDescriptor(_class2$2j.prototype, "shadowPcf", [_dec6$L, _dec7$A], Object.getOwnPropertyDescriptor(_class2$2j.prototype, "shadowPcf"), _class2$2j.prototype), _applyDecoratedDescriptor(_class2$2j.prototype, "shadowBias", [_dec8$p, _dec9$l], Object.getOwnPropertyDescriptor(_class2$2j.prototype, "shadowBias"), _class2$2j.prototype), _applyDecoratedDescriptor(_class2$2j.prototype, "shadowNormalBias", [_dec0$b, _dec1$7], Object.getOwnPropertyDescriptor(_class2$2j.prototype, "shadowNormalBias"), _class2$2j.prototype), _applyDecoratedDescriptor(_class2$2j.prototype, "shadowSaturation", [_dec10$7, _dec11$6], Object.getOwnPropertyDescriptor(_class2$2j.prototype, "shadowSaturation"), _class2$2j.prototype), _applyDecoratedDescriptor(_class2$2j.prototype, "shadowDistance", [_dec12$5, _dec13$4], Object.getOwnPropertyDescriptor(_class2$2j.prototype, "shadowDistance"), _class2$2j.prototype), _applyDecoratedDescriptor(_class2$2j.prototype, "shadowInvisibleOcclusionRange", [_dec14$4, _dec15$4], Object.getOwnPropertyDescriptor(_class2$2j.prototype, "shadowInvisibleOcclusionRange"), _class2$2j.prototype), _applyDecoratedDescriptor(_class2$2j.prototype, "csmLevel", [_dec16$4, _dec17$4], Object.getOwnPropertyDescriptor(_class2$2j.prototype, "csmLevel"), _class2$2j.prototype), _applyDecoratedDescriptor(_class2$2j.prototype, "enableCSM", [_dec18$4, _dec19$4], Object.getOwnPropertyDescriptor(_class2$2j.prototype, "enableCSM"), _class2$2j.prototype), _applyDecoratedDescriptor(_class2$2j.prototype, "csmLayerLambda", [_dec20$4, _dec21$4], Object.getOwnPropertyDescriptor(_class2$2j.prototype, "csmLayerLambda"), _class2$2j.prototype), _applyDecoratedDescriptor(_class2$2j.prototype, "csmOptimizationMode", [_dec22$4, _dec23$4], Object.getOwnPropertyDescriptor(_class2$2j.prototype, "csmOptimizationMode"), _class2$2j.prototype), _applyDecoratedDescriptor(_class2$2j.prototype, "shadowFixedArea", [_dec24$4, _dec25$4], Object.getOwnPropertyDescriptor(_class2$2j.prototype, "shadowFixedArea"), _class2$2j.prototype), _applyDecoratedDescriptor(_class2$2j.prototype, "shadowNear", [_dec26$4, _dec27$4], Object.getOwnPropertyDescriptor(_class2$2j.prototype, "shadowNear"), _class2$2j.prototype), _applyDecoratedDescriptor(_class2$2j.prototype, "shadowFar", [_dec28$3, _dec29$3], Object.getOwnPropertyDescriptor(_class2$2j.prototype, "shadowFar"), _class2$2j.prototype), _applyDecoratedDescriptor(_class2$2j.prototype, "shadowOrthoSize", [_dec30$2, _dec31$2], Object.getOwnPropertyDescriptor(_class2$2j.prototype, "shadowOrthoSize"), _class2$2j.prototype), _applyDecoratedDescriptor(_class2$2j.prototype, "csmAdvancedOptions", [_dec32$2, _dec33$2], Object.getOwnPropertyDescriptor(_class2$2j.prototype, "csmAdvancedOptions"), _class2$2j.prototype), _applyDecoratedDescriptor(_class2$2j.prototype, "csmLayersTransition", [_dec34$2, _dec35$2], Object.getOwnPropertyDescriptor(_class2$2j.prototype, "csmLayersTransition"), _class2$2j.prototype), _applyDecoratedDescriptor(_class2$2j.prototype, "csmTransitionRange", [_dec36$2, _dec37$2], Object.getOwnPropertyDescriptor(_class2$2j.prototype, "csmTransitionRange"), _class2$2j.prototype), _class2$2j)) || _class$2V);
+}), _applyDecoratedDescriptor(_class2$2k.prototype, "illuminance", [_dec3$1x], Object.getOwnPropertyDescriptor(_class2$2k.prototype, "illuminance"), _class2$2k.prototype), _applyDecoratedDescriptor(_class2$2k.prototype, "shadowEnabled", [_dec4$17, _dec5$$], Object.getOwnPropertyDescriptor(_class2$2k.prototype, "shadowEnabled"), _class2$2k.prototype), _applyDecoratedDescriptor(_class2$2k.prototype, "shadowPcf", [_dec6$L, _dec7$A], Object.getOwnPropertyDescriptor(_class2$2k.prototype, "shadowPcf"), _class2$2k.prototype), _applyDecoratedDescriptor(_class2$2k.prototype, "shadowBias", [_dec8$p, _dec9$l], Object.getOwnPropertyDescriptor(_class2$2k.prototype, "shadowBias"), _class2$2k.prototype), _applyDecoratedDescriptor(_class2$2k.prototype, "shadowNormalBias", [_dec0$b, _dec1$7], Object.getOwnPropertyDescriptor(_class2$2k.prototype, "shadowNormalBias"), _class2$2k.prototype), _applyDecoratedDescriptor(_class2$2k.prototype, "shadowSaturation", [_dec10$7, _dec11$6], Object.getOwnPropertyDescriptor(_class2$2k.prototype, "shadowSaturation"), _class2$2k.prototype), _applyDecoratedDescriptor(_class2$2k.prototype, "shadowDistance", [_dec12$5, _dec13$4], Object.getOwnPropertyDescriptor(_class2$2k.prototype, "shadowDistance"), _class2$2k.prototype), _applyDecoratedDescriptor(_class2$2k.prototype, "shadowInvisibleOcclusionRange", [_dec14$4, _dec15$4], Object.getOwnPropertyDescriptor(_class2$2k.prototype, "shadowInvisibleOcclusionRange"), _class2$2k.prototype), _applyDecoratedDescriptor(_class2$2k.prototype, "csmLevel", [_dec16$4, _dec17$4], Object.getOwnPropertyDescriptor(_class2$2k.prototype, "csmLevel"), _class2$2k.prototype), _applyDecoratedDescriptor(_class2$2k.prototype, "enableCSM", [_dec18$4, _dec19$4], Object.getOwnPropertyDescriptor(_class2$2k.prototype, "enableCSM"), _class2$2k.prototype), _applyDecoratedDescriptor(_class2$2k.prototype, "csmLayerLambda", [_dec20$4, _dec21$4], Object.getOwnPropertyDescriptor(_class2$2k.prototype, "csmLayerLambda"), _class2$2k.prototype), _applyDecoratedDescriptor(_class2$2k.prototype, "csmOptimizationMode", [_dec22$4, _dec23$4], Object.getOwnPropertyDescriptor(_class2$2k.prototype, "csmOptimizationMode"), _class2$2k.prototype), _applyDecoratedDescriptor(_class2$2k.prototype, "shadowFixedArea", [_dec24$4, _dec25$4], Object.getOwnPropertyDescriptor(_class2$2k.prototype, "shadowFixedArea"), _class2$2k.prototype), _applyDecoratedDescriptor(_class2$2k.prototype, "shadowNear", [_dec26$4, _dec27$4], Object.getOwnPropertyDescriptor(_class2$2k.prototype, "shadowNear"), _class2$2k.prototype), _applyDecoratedDescriptor(_class2$2k.prototype, "shadowFar", [_dec28$3, _dec29$3], Object.getOwnPropertyDescriptor(_class2$2k.prototype, "shadowFar"), _class2$2k.prototype), _applyDecoratedDescriptor(_class2$2k.prototype, "shadowOrthoSize", [_dec30$2, _dec31$2], Object.getOwnPropertyDescriptor(_class2$2k.prototype, "shadowOrthoSize"), _class2$2k.prototype), _applyDecoratedDescriptor(_class2$2k.prototype, "csmAdvancedOptions", [_dec32$2, _dec33$2], Object.getOwnPropertyDescriptor(_class2$2k.prototype, "csmAdvancedOptions"), _class2$2k.prototype), _applyDecoratedDescriptor(_class2$2k.prototype, "csmLayersTransition", [_dec34$2, _dec35$2], Object.getOwnPropertyDescriptor(_class2$2k.prototype, "csmLayersTransition"), _class2$2k.prototype), _applyDecoratedDescriptor(_class2$2k.prototype, "csmTransitionRange", [_dec36$2, _dec37$2], Object.getOwnPropertyDescriptor(_class2$2k.prototype, "csmTransitionRange"), _class2$2k.prototype), _class2$2k)) || _class$2W);
 
-var _dec$2T, _dec2$2e, _dec3$1w, _dec4$16, _dec5$_, _dec6$K, _dec7$z, _class$2U, _class2$2i, _initializer$2e, _initializer2$1S, _initializer3$1l, _initializer4$1a, _initializer5$X;
-let SphereLight = (_dec$2T = ccclass$x('cc.SphereLight'), _dec2$2e = formerlySerializedAs$3('_luminance'), _dec3$1w = type$b(CCInteger), _dec4$16 = type$b(CCInteger), _dec5$_ = type$b(PhotometricTerm), _dec6$K = type$b(CCFloat), _dec7$z = type$b(CCFloat), _dec$2T(_class$2U = (_class2$2i = class SphereLight extends Light {
+var _dec$2U, _dec2$2e, _dec3$1w, _dec4$16, _dec5$_, _dec6$K, _dec7$z, _class$2V, _class2$2j, _initializer$2f, _initializer2$1T, _initializer3$1l, _initializer4$1a, _initializer5$X;
+let SphereLight = (_dec$2U = ccclass$x('cc.SphereLight'), _dec2$2e = formerlySerializedAs$3('_luminance'), _dec3$1w = type$b(CCInteger), _dec4$16 = type$b(CCInteger), _dec5$_ = type$b(PhotometricTerm), _dec6$K = type$b(CCFloat), _dec7$z = type$b(CCFloat), _dec$2U(_class$2V = (_class2$2j = class SphereLight extends Light {
   get luminousFlux() {
     const isHDR = getPipelineSceneData().isHDR;
     if (isHDR) {
@@ -53463,8 +53585,8 @@ let SphereLight = (_dec$2T = ccclass$x('cc.SphereLight'), _dec2$2e = formerlySer
   }
   constructor() {
     super();
-    this._size = _initializer$2e && _initializer$2e();
-    this._luminanceHDR = _initializer2$1S && _initializer2$1S();
+    this._size = _initializer$2f && _initializer$2f();
+    this._luminanceHDR = _initializer2$1T && _initializer2$1T();
     this._luminanceLDR = _initializer3$1l && _initializer3$1l();
     this._term = _initializer4$1a && _initializer4$1a();
     this._range = _initializer5$X && _initializer5$X();
@@ -53480,19 +53602,19 @@ let SphereLight = (_dec$2T = ccclass$x('cc.SphereLight'), _dec2$2e = formerlySer
       this._light.luminanceLDR = this._luminanceLDR;
     }
   }
-}, _initializer$2e = applyDecoratedInitializer(_class2$2i.prototype, "_size", [serializable$c], function () {
+}, _initializer$2f = applyDecoratedInitializer(_class2$2j.prototype, "_size", [serializable$c], function () {
   return 0.15;
-}), _initializer2$1S = applyDecoratedInitializer(_class2$2i.prototype, "_luminanceHDR", [serializable$c, _dec2$2e], function () {
+}), _initializer2$1T = applyDecoratedInitializer(_class2$2j.prototype, "_luminanceHDR", [serializable$c, _dec2$2e], function () {
   return 1700 / nt2lm(0.15);
-}), _initializer3$1l = applyDecoratedInitializer(_class2$2i.prototype, "_luminanceLDR", [serializable$c], function () {
+}), _initializer3$1l = applyDecoratedInitializer(_class2$2j.prototype, "_luminanceLDR", [serializable$c], function () {
   return 1700 / nt2lm(0.15) * Camera$1.standardExposureValue * Camera$1.standardLightMeterScale;
-}), _initializer4$1a = applyDecoratedInitializer(_class2$2i.prototype, "_term", [serializable$c], function () {
+}), _initializer4$1a = applyDecoratedInitializer(_class2$2j.prototype, "_term", [serializable$c], function () {
   return PhotometricTerm.LUMINOUS_FLUX;
-}), _initializer5$X = applyDecoratedInitializer(_class2$2i.prototype, "_range", [serializable$c], function () {
+}), _initializer5$X = applyDecoratedInitializer(_class2$2j.prototype, "_range", [serializable$c], function () {
   return 1;
-}), _applyDecoratedDescriptor(_class2$2i.prototype, "luminousFlux", [_dec3$1w], Object.getOwnPropertyDescriptor(_class2$2i.prototype, "luminousFlux"), _class2$2i.prototype), _applyDecoratedDescriptor(_class2$2i.prototype, "luminance", [_dec4$16], Object.getOwnPropertyDescriptor(_class2$2i.prototype, "luminance"), _class2$2i.prototype), _applyDecoratedDescriptor(_class2$2i.prototype, "term", [_dec5$_], Object.getOwnPropertyDescriptor(_class2$2i.prototype, "term"), _class2$2i.prototype), _applyDecoratedDescriptor(_class2$2i.prototype, "size", [_dec6$K], Object.getOwnPropertyDescriptor(_class2$2i.prototype, "size"), _class2$2i.prototype), _applyDecoratedDescriptor(_class2$2i.prototype, "range", [_dec7$z], Object.getOwnPropertyDescriptor(_class2$2i.prototype, "range"), _class2$2i.prototype), _class2$2i)) || _class$2U);
+}), _applyDecoratedDescriptor(_class2$2j.prototype, "luminousFlux", [_dec3$1w], Object.getOwnPropertyDescriptor(_class2$2j.prototype, "luminousFlux"), _class2$2j.prototype), _applyDecoratedDescriptor(_class2$2j.prototype, "luminance", [_dec4$16], Object.getOwnPropertyDescriptor(_class2$2j.prototype, "luminance"), _class2$2j.prototype), _applyDecoratedDescriptor(_class2$2j.prototype, "term", [_dec5$_], Object.getOwnPropertyDescriptor(_class2$2j.prototype, "term"), _class2$2j.prototype), _applyDecoratedDescriptor(_class2$2j.prototype, "size", [_dec6$K], Object.getOwnPropertyDescriptor(_class2$2j.prototype, "size"), _class2$2j.prototype), _applyDecoratedDescriptor(_class2$2j.prototype, "range", [_dec7$z], Object.getOwnPropertyDescriptor(_class2$2j.prototype, "range"), _class2$2j.prototype), _class2$2j)) || _class$2V);
 
-var _dec$2S, _dec2$2d, _dec3$1v, _dec4$15, _dec5$Z, _dec6$J, _dec7$y, _dec8$o, _dec9$k, _dec0$a, _dec1$6, _dec10$6, _class$2T, _class2$2h, _initializer$2d, _initializer2$1R, _initializer3$1k, _initializer4$19, _initializer5$W, _initializer6$K, _initializer7$z, _initializer8$w, _initializer9$s, _initializer0$p, _initializer1$n;
+var _dec$2T, _dec2$2d, _dec3$1v, _dec4$15, _dec5$Z, _dec6$J, _dec7$y, _dec8$o, _dec9$k, _dec0$a, _dec1$6, _dec10$6, _class$2U, _class2$2i, _initializer$2e, _initializer2$1S, _initializer3$1k, _initializer4$19, _initializer5$W, _initializer6$K, _initializer7$z, _initializer8$w, _initializer9$s, _initializer0$p, _initializer1$n;
 const {
   ccclass: ccclass$q,
   type: type$6,
@@ -53500,7 +53622,7 @@ const {
   formerlySerializedAs,
   property
 } = _decorator;
-let SpotLight = (_dec$2S = ccclass$q('cc.SpotLight'), _dec2$2d = formerlySerializedAs('_luminance'), _dec3$1v = type$6(PhotometricTerm), _dec4$15 = type$6(CCFloat), _dec5$Z = property({
+let SpotLight = (_dec$2T = ccclass$q('cc.SpotLight'), _dec2$2d = formerlySerializedAs('_luminance'), _dec3$1v = type$6(PhotometricTerm), _dec4$15 = type$6(CCFloat), _dec5$Z = property({
   group: {
     name: 'DynamicShadowSettings',
     displayOrder: 1
@@ -53520,7 +53642,7 @@ let SpotLight = (_dec$2S = ccclass$q('cc.SpotLight'), _dec2$2d = formerlySeriali
     name: 'DynamicShadowSettings',
     displayOrder: 4
   }
-}), _dec10$6 = type$6(CCFloat), _dec$2S(_class$2T = (_class2$2h = class SpotLight extends Light {
+}), _dec10$6 = type$6(CCFloat), _dec$2T(_class$2U = (_class2$2i = class SpotLight extends Light {
   get luminousFlux() {
     const isHDR = getPipelineSceneData().isHDR;
     if (isHDR) {
@@ -53639,8 +53761,8 @@ let SpotLight = (_dec$2S = ccclass$q('cc.SpotLight'), _dec2$2d = formerlySeriali
   }
   constructor() {
     super();
-    this._size = _initializer$2d && _initializer$2d();
-    this._luminanceHDR = _initializer2$1R && _initializer2$1R();
+    this._size = _initializer$2e && _initializer$2e();
+    this._luminanceHDR = _initializer2$1S && _initializer2$1S();
     this._luminanceLDR = _initializer3$1k && _initializer3$1k();
     this._term = _initializer4$19 && _initializer4$19();
     this._range = _initializer5$W && _initializer5$W();
@@ -53669,32 +53791,32 @@ let SpotLight = (_dec$2S = ccclass$q('cc.SpotLight'), _dec2$2d = formerlySeriali
       spotLight.shadowNormalBias = this._shadowNormalBias;
     }
   }
-}, _initializer$2d = applyDecoratedInitializer(_class2$2h.prototype, "_size", [serializable$7], function () {
+}, _initializer$2e = applyDecoratedInitializer(_class2$2i.prototype, "_size", [serializable$7], function () {
   return 0.15;
-}), _initializer2$1R = applyDecoratedInitializer(_class2$2h.prototype, "_luminanceHDR", [serializable$7, _dec2$2d], function () {
+}), _initializer2$1S = applyDecoratedInitializer(_class2$2i.prototype, "_luminanceHDR", [serializable$7, _dec2$2d], function () {
   return 1700 / nt2lm(0.15);
-}), _initializer3$1k = applyDecoratedInitializer(_class2$2h.prototype, "_luminanceLDR", [serializable$7], function () {
+}), _initializer3$1k = applyDecoratedInitializer(_class2$2i.prototype, "_luminanceLDR", [serializable$7], function () {
   return 1700 / nt2lm(0.15) * Camera$1.standardExposureValue * Camera$1.standardLightMeterScale;
-}), _initializer4$19 = applyDecoratedInitializer(_class2$2h.prototype, "_term", [serializable$7], function () {
+}), _initializer4$19 = applyDecoratedInitializer(_class2$2i.prototype, "_term", [serializable$7], function () {
   return PhotometricTerm.LUMINOUS_FLUX;
-}), _initializer5$W = applyDecoratedInitializer(_class2$2h.prototype, "_range", [serializable$7], function () {
+}), _initializer5$W = applyDecoratedInitializer(_class2$2i.prototype, "_range", [serializable$7], function () {
   return 1;
-}), _initializer6$K = applyDecoratedInitializer(_class2$2h.prototype, "_spotAngle", [serializable$7], function () {
+}), _initializer6$K = applyDecoratedInitializer(_class2$2i.prototype, "_spotAngle", [serializable$7], function () {
   return 60;
-}), _initializer7$z = applyDecoratedInitializer(_class2$2h.prototype, "_angleAttenuationStrength", [serializable$7], function () {
+}), _initializer7$z = applyDecoratedInitializer(_class2$2i.prototype, "_angleAttenuationStrength", [serializable$7], function () {
   return 0;
-}), _initializer8$w = applyDecoratedInitializer(_class2$2h.prototype, "_shadowEnabled", [serializable$7], function () {
+}), _initializer8$w = applyDecoratedInitializer(_class2$2i.prototype, "_shadowEnabled", [serializable$7], function () {
   return false;
-}), _initializer9$s = applyDecoratedInitializer(_class2$2h.prototype, "_shadowPcf", [serializable$7], function () {
+}), _initializer9$s = applyDecoratedInitializer(_class2$2i.prototype, "_shadowPcf", [serializable$7], function () {
   return PCFType.HARD;
-}), _initializer0$p = applyDecoratedInitializer(_class2$2h.prototype, "_shadowBias", [serializable$7], function () {
+}), _initializer0$p = applyDecoratedInitializer(_class2$2i.prototype, "_shadowBias", [serializable$7], function () {
   return 0.00001;
-}), _initializer1$n = applyDecoratedInitializer(_class2$2h.prototype, "_shadowNormalBias", [serializable$7], function () {
+}), _initializer1$n = applyDecoratedInitializer(_class2$2i.prototype, "_shadowNormalBias", [serializable$7], function () {
   return 0.0;
-}), _applyDecoratedDescriptor(_class2$2h.prototype, "term", [_dec3$1v], Object.getOwnPropertyDescriptor(_class2$2h.prototype, "term"), _class2$2h.prototype), _applyDecoratedDescriptor(_class2$2h.prototype, "size", [_dec4$15], Object.getOwnPropertyDescriptor(_class2$2h.prototype, "size"), _class2$2h.prototype), _applyDecoratedDescriptor(_class2$2h.prototype, "shadowEnabled", [_dec5$Z, _dec6$J], Object.getOwnPropertyDescriptor(_class2$2h.prototype, "shadowEnabled"), _class2$2h.prototype), _applyDecoratedDescriptor(_class2$2h.prototype, "shadowPcf", [_dec7$y, _dec8$o], Object.getOwnPropertyDescriptor(_class2$2h.prototype, "shadowPcf"), _class2$2h.prototype), _applyDecoratedDescriptor(_class2$2h.prototype, "shadowBias", [_dec9$k, _dec0$a], Object.getOwnPropertyDescriptor(_class2$2h.prototype, "shadowBias"), _class2$2h.prototype), _applyDecoratedDescriptor(_class2$2h.prototype, "shadowNormalBias", [_dec1$6, _dec10$6], Object.getOwnPropertyDescriptor(_class2$2h.prototype, "shadowNormalBias"), _class2$2h.prototype), _class2$2h)) || _class$2T);
+}), _applyDecoratedDescriptor(_class2$2i.prototype, "term", [_dec3$1v], Object.getOwnPropertyDescriptor(_class2$2i.prototype, "term"), _class2$2i.prototype), _applyDecoratedDescriptor(_class2$2i.prototype, "size", [_dec4$15], Object.getOwnPropertyDescriptor(_class2$2i.prototype, "size"), _class2$2i.prototype), _applyDecoratedDescriptor(_class2$2i.prototype, "shadowEnabled", [_dec5$Z, _dec6$J], Object.getOwnPropertyDescriptor(_class2$2i.prototype, "shadowEnabled"), _class2$2i.prototype), _applyDecoratedDescriptor(_class2$2i.prototype, "shadowPcf", [_dec7$y, _dec8$o], Object.getOwnPropertyDescriptor(_class2$2i.prototype, "shadowPcf"), _class2$2i.prototype), _applyDecoratedDescriptor(_class2$2i.prototype, "shadowBias", [_dec9$k, _dec0$a], Object.getOwnPropertyDescriptor(_class2$2i.prototype, "shadowBias"), _class2$2i.prototype), _applyDecoratedDescriptor(_class2$2i.prototype, "shadowNormalBias", [_dec1$6, _dec10$6], Object.getOwnPropertyDescriptor(_class2$2i.prototype, "shadowNormalBias"), _class2$2i.prototype), _class2$2i)) || _class$2U);
 
-var _dec$2R, _dec2$2c, _dec3$1u, _dec4$14, _dec5$Y, _dec6$I, _class$2S, _class2$2g, _initializer$2c, _initializer2$1Q, _initializer3$1j, _initializer4$18;
-let PointLight = (_dec$2R = ccclass$x('cc.PointLight'), _dec2$2c = formerlySerializedAs$3('_luminance'), _dec3$1u = type$b(CCInteger), _dec4$14 = type$b(CCInteger), _dec5$Y = type$b(PhotometricTerm), _dec6$I = type$b(CCFloat), _dec$2R(_class$2S = (_class2$2g = class PointLight extends Light {
+var _dec$2S, _dec2$2c, _dec3$1u, _dec4$14, _dec5$Y, _dec6$I, _class$2T, _class2$2h, _initializer$2d, _initializer2$1R, _initializer3$1j, _initializer4$18;
+let PointLight = (_dec$2S = ccclass$x('cc.PointLight'), _dec2$2c = formerlySerializedAs$3('_luminance'), _dec3$1u = type$b(CCInteger), _dec4$14 = type$b(CCInteger), _dec5$Y = type$b(PhotometricTerm), _dec6$I = type$b(CCFloat), _dec$2S(_class$2T = (_class2$2h = class PointLight extends Light {
   get luminousFlux() {
     const isHDR = getPipelineSceneData().isHDR;
     if (isHDR) {
@@ -53750,8 +53872,8 @@ let PointLight = (_dec$2R = ccclass$x('cc.PointLight'), _dec2$2c = formerlySeria
   }
   constructor() {
     super();
-    this._luminanceHDR = _initializer$2c && _initializer$2c();
-    this._luminanceLDR = _initializer2$1Q && _initializer2$1Q();
+    this._luminanceHDR = _initializer$2d && _initializer$2d();
+    this._luminanceLDR = _initializer2$1R && _initializer2$1R();
     this._term = _initializer3$1j && _initializer3$1j();
     this._range = _initializer4$18 && _initializer4$18();
     this._lightType = PointLight$1;
@@ -53765,18 +53887,18 @@ let PointLight = (_dec$2R = ccclass$x('cc.PointLight'), _dec2$2c = formerlySeria
       this._light.luminanceLDR = this._luminanceLDR;
     }
   }
-}, _initializer$2c = applyDecoratedInitializer(_class2$2g.prototype, "_luminanceHDR", [serializable$c, _dec2$2c], function () {
+}, _initializer$2d = applyDecoratedInitializer(_class2$2h.prototype, "_luminanceHDR", [serializable$c, _dec2$2c], function () {
   return 1700 / nt2lm(0.15);
-}), _initializer2$1Q = applyDecoratedInitializer(_class2$2g.prototype, "_luminanceLDR", [serializable$c], function () {
+}), _initializer2$1R = applyDecoratedInitializer(_class2$2h.prototype, "_luminanceLDR", [serializable$c], function () {
   return 1700 / nt2lm(0.15) * Camera$1.standardExposureValue * Camera$1.standardLightMeterScale;
-}), _initializer3$1j = applyDecoratedInitializer(_class2$2g.prototype, "_term", [serializable$c], function () {
+}), _initializer3$1j = applyDecoratedInitializer(_class2$2h.prototype, "_term", [serializable$c], function () {
   return PhotometricTerm.LUMINOUS_FLUX;
-}), _initializer4$18 = applyDecoratedInitializer(_class2$2g.prototype, "_range", [serializable$c], function () {
+}), _initializer4$18 = applyDecoratedInitializer(_class2$2h.prototype, "_range", [serializable$c], function () {
   return 1;
-}), _applyDecoratedDescriptor(_class2$2g.prototype, "luminousFlux", [_dec3$1u], Object.getOwnPropertyDescriptor(_class2$2g.prototype, "luminousFlux"), _class2$2g.prototype), _applyDecoratedDescriptor(_class2$2g.prototype, "luminance", [_dec4$14], Object.getOwnPropertyDescriptor(_class2$2g.prototype, "luminance"), _class2$2g.prototype), _applyDecoratedDescriptor(_class2$2g.prototype, "term", [_dec5$Y], Object.getOwnPropertyDescriptor(_class2$2g.prototype, "term"), _class2$2g.prototype), _applyDecoratedDescriptor(_class2$2g.prototype, "range", [_dec6$I], Object.getOwnPropertyDescriptor(_class2$2g.prototype, "range"), _class2$2g.prototype), _class2$2g)) || _class$2S);
+}), _applyDecoratedDescriptor(_class2$2h.prototype, "luminousFlux", [_dec3$1u], Object.getOwnPropertyDescriptor(_class2$2h.prototype, "luminousFlux"), _class2$2h.prototype), _applyDecoratedDescriptor(_class2$2h.prototype, "luminance", [_dec4$14], Object.getOwnPropertyDescriptor(_class2$2h.prototype, "luminance"), _class2$2h.prototype), _applyDecoratedDescriptor(_class2$2h.prototype, "term", [_dec5$Y], Object.getOwnPropertyDescriptor(_class2$2h.prototype, "term"), _class2$2h.prototype), _applyDecoratedDescriptor(_class2$2h.prototype, "range", [_dec6$I], Object.getOwnPropertyDescriptor(_class2$2h.prototype, "range"), _class2$2h.prototype), _class2$2h)) || _class$2T);
 
-var _dec$2Q, _dec2$2b, _dec3$1t, _class$2R, _class2$2f, _initializer$2b, _initializer2$1P;
-let RangedDirectionalLight = (_dec$2Q = ccclass$x('cc.RangedDirectionalLight'), _dec2$2b = formerlySerializedAs$3('_illuminance'), _dec3$1t = type$b(CCInteger), _dec$2Q(_class$2R = (_class2$2f = class RangedDirectionalLight extends Light {
+var _dec$2R, _dec2$2b, _dec3$1t, _class$2S, _class2$2g, _initializer$2c, _initializer2$1Q;
+let RangedDirectionalLight = (_dec$2R = ccclass$x('cc.RangedDirectionalLight'), _dec2$2b = formerlySerializedAs$3('_illuminance'), _dec3$1t = type$b(CCInteger), _dec$2R(_class$2S = (_class2$2g = class RangedDirectionalLight extends Light {
   get illuminance() {
     const isHDR = getPipelineSceneData().isHDR;
     if (isHDR) {
@@ -53797,8 +53919,8 @@ let RangedDirectionalLight = (_dec$2Q = ccclass$x('cc.RangedDirectionalLight'), 
   }
   constructor() {
     super();
-    this._illuminanceHDR = _initializer$2b && _initializer$2b();
-    this._illuminanceLDR = _initializer2$1P && _initializer2$1P();
+    this._illuminanceHDR = _initializer$2c && _initializer$2c();
+    this._illuminanceLDR = _initializer2$1Q && _initializer2$1Q();
     this._lightType = RangedDirectionalLight$1;
   }
   _createLight() {
@@ -53809,11 +53931,11 @@ let RangedDirectionalLight = (_dec$2Q = ccclass$x('cc.RangedDirectionalLight'), 
       this._light.illuminanceLDR = this._illuminanceLDR;
     }
   }
-}, _initializer$2b = applyDecoratedInitializer(_class2$2f.prototype, "_illuminanceHDR", [property$3, _dec2$2b], function () {
+}, _initializer$2c = applyDecoratedInitializer(_class2$2g.prototype, "_illuminanceHDR", [property$3, _dec2$2b], function () {
   return 65000;
-}), _initializer2$1P = applyDecoratedInitializer(_class2$2f.prototype, "_illuminanceLDR", [serializable$c], function () {
+}), _initializer2$1Q = applyDecoratedInitializer(_class2$2g.prototype, "_illuminanceLDR", [serializable$c], function () {
   return 65000 * Camera$1.standardExposureValue;
-}), _applyDecoratedDescriptor(_class2$2f.prototype, "illuminance", [_dec3$1t], Object.getOwnPropertyDescriptor(_class2$2f.prototype, "illuminance"), _class2$2f.prototype), _class2$2f)) || _class$2R);
+}), _applyDecoratedDescriptor(_class2$2g.prototype, "illuminance", [_dec3$1t], Object.getOwnPropertyDescriptor(_class2$2g.prototype, "illuminance"), _class2$2g.prototype), _class2$2g)) || _class$2S);
 
 cclegacy.LightComponent = Light;
 setClassAlias(Light, 'cc.LightComponent');
@@ -54505,6 +54627,7 @@ class SkinningModel extends MorphModel {
     if (!skeleton || !skinningRoot || !mesh) {
       return;
     }
+    const prevRealTimeTextureMode = this._realTimeTextureMode;
     this._realTimeTextureMode = false;
     if (UBOSkinning.JOINT_UNIFORM_CAPACITY < skeleton.joints.length) {
       this._realTimeTextureMode = true;
@@ -54539,6 +54662,13 @@ class SkinningModel extends MorphModel {
         bindpose,
         transform
       });
+    }
+    const subModelCount = Math.min(this._subModels.length, this._bufferIndices.length);
+    if (subModelCount && prevRealTimeTextureMode !== this._realTimeTextureMode) {
+      this.onMacroPatchesStateChanged();
+    }
+    for (let i = 0; i < subModelCount; i++) {
+      this._updateLocalDescriptors(i, this._subModels[i].descriptorSet);
     }
   }
   updateTransform(stamp) {
@@ -54813,6 +54943,10 @@ class BakedSkinningModel extends MorphModel {
     if (!this._jointsMedium.buffer) {
       this._jointsMedium.buffer = this._device.createBuffer(new BufferInfo(BufferUsageBit.UNIFORM | BufferUsageBit.TRANSFER_DST, MemoryUsageBit.DEVICE, UBOSkinningTexture.SIZE, UBOSkinningTexture.SIZE));
     }
+    for (let i = 0; i < this._subModels.length; i++) {
+      this._updateLocalDescriptors(i, this._subModels[i].descriptorSet);
+    }
+    this.updateInstancedJointTextureInfo();
   }
   updateTransform(stamp) {
     super.updateTransform(stamp);
@@ -54938,8 +55072,8 @@ class BakedSkinningModel extends MorphModel {
   }
 }
 
-var _dec$2P, _dec2$2a, _dec3$1s, _dec4$13, _dec5$X, _dec6$H, _class$2Q, _class2$2e, _initializer$2a, _initializer2$1O;
-let SkinnedMeshRenderer = (_dec$2P = ccclass$x('cc.SkinnedMeshRenderer'), _dec2$2a = executionOrder$2(100), _dec3$1s = type$b(Skeleton$1), _dec4$13 = type$b(Node$1), _dec5$X = type$b(Skeleton$1), _dec6$H = type$b(Node$1), _dec$2P(_class$2Q = _dec2$2a(_class$2Q = (_class2$2e = class SkinnedMeshRenderer extends MeshRenderer {
+var _dec$2Q, _dec2$2a, _dec3$1s, _dec4$13, _dec5$X, _dec6$H, _class$2R, _class2$2f, _initializer$2b, _initializer2$1P;
+let SkinnedMeshRenderer = (_dec$2Q = ccclass$x('cc.SkinnedMeshRenderer'), _dec2$2a = executionOrder$2(100), _dec3$1s = type$b(Skeleton$1), _dec4$13 = type$b(Node$1), _dec5$X = type$b(Skeleton$1), _dec6$H = type$b(Node$1), _dec$2Q(_class$2R = _dec2$2a(_class$2R = (_class2$2f = class SkinnedMeshRenderer extends MeshRenderer {
   get skeleton() {
     return this._skeleton;
   }
@@ -54966,8 +55100,8 @@ let SkinnedMeshRenderer = (_dec$2P = ccclass$x('cc.SkinnedMeshRenderer'), _dec2$
   }
   constructor() {
     super();
-    this._skeleton = _initializer$2a && _initializer$2a();
-    this._skinningRoot = _initializer2$1O && _initializer2$1O();
+    this._skeleton = _initializer$2b && _initializer$2b();
+    this._skinningRoot = _initializer2$1P && _initializer2$1P();
     this._clip = null;
     this.associatedAnimation = null;
     this._modelType = BakedSkinningModel;
@@ -55069,21 +55203,21 @@ let SkinnedMeshRenderer = (_dec$2P = ccclass$x('cc.SkinnedMeshRenderer'), _dec2$
       }
     }
   }
-}, _initializer$2a = applyDecoratedInitializer(_class2$2e.prototype, "_skeleton", [_dec3$1s], function () {
+}, _initializer$2b = applyDecoratedInitializer(_class2$2f.prototype, "_skeleton", [_dec3$1s], function () {
   return null;
-}), _initializer2$1O = applyDecoratedInitializer(_class2$2e.prototype, "_skinningRoot", [_dec4$13], function () {
+}), _initializer2$1P = applyDecoratedInitializer(_class2$2f.prototype, "_skinningRoot", [_dec4$13], function () {
   return null;
-}), _applyDecoratedDescriptor(_class2$2e.prototype, "skeleton", [_dec5$X], Object.getOwnPropertyDescriptor(_class2$2e.prototype, "skeleton"), _class2$2e.prototype), _applyDecoratedDescriptor(_class2$2e.prototype, "skinningRoot", [_dec6$H], Object.getOwnPropertyDescriptor(_class2$2e.prototype, "skinningRoot"), _class2$2e.prototype), _class2$2e)) || _class$2Q) || _class$2Q);
+}), _applyDecoratedDescriptor(_class2$2f.prototype, "skeleton", [_dec5$X], Object.getOwnPropertyDescriptor(_class2$2f.prototype, "skeleton"), _class2$2f.prototype), _applyDecoratedDescriptor(_class2$2f.prototype, "skinningRoot", [_dec6$H], Object.getOwnPropertyDescriptor(_class2$2f.prototype, "skinningRoot"), _class2$2f.prototype), _class2$2f)) || _class$2R) || _class$2R);
 
-var _dec$2O, _dec2$29, _dec3$1r, _dec4$12, _dec5$W, _class$2P, _class2$2d, _initializer$29, _initializer2$1N, _initializer3$1i, _initializer4$17, _initializer5$V, _initializer6$J, _dec6$G, _dec7$x, _dec8$n, _dec9$j, _class3$g, _class4$g, _initializer7$y, _initializer8$v, _initializer9$r;
+var _dec$2P, _dec2$29, _dec3$1r, _dec4$12, _dec5$W, _class$2Q, _class2$2e, _initializer$2a, _initializer2$1O, _initializer3$1i, _initializer4$17, _initializer5$V, _initializer6$J, _dec6$G, _dec7$x, _dec8$n, _dec9$j, _class3$g, _class4$g, _initializer7$y, _initializer8$v, _initializer9$r;
 const repeat$1 = n => n - Math.floor(n);
 const batch_id = new Attribute(AttributeName.ATTR_BATCH_ID, Format.R32F);
 const batch_uv = new Attribute(AttributeName.ATTR_BATCH_UV, Format.RG32F);
 const batch_extras_size = FormatInfos[batch_id.format].size + FormatInfos[batch_uv.format].size;
-let SkinnedMeshUnit = (_dec$2O = ccclass$x('cc.SkinnedMeshUnit'), _dec2$29 = type$b(Mesh), _dec3$1r = type$b(Skeleton$1), _dec4$12 = type$b(Material), _dec5$W = type$b(SkinnedMeshRenderer), _dec$2O(_class$2P = (_class2$2d = class SkinnedMeshUnit {
+let SkinnedMeshUnit = (_dec$2P = ccclass$x('cc.SkinnedMeshUnit'), _dec2$29 = type$b(Mesh), _dec3$1r = type$b(Skeleton$1), _dec4$12 = type$b(Material), _dec5$W = type$b(SkinnedMeshRenderer), _dec$2P(_class$2Q = (_class2$2e = class SkinnedMeshUnit {
   constructor() {
-    this.mesh = _initializer$29 && _initializer$29();
-    this.skeleton = _initializer2$1N && _initializer2$1N();
+    this.mesh = _initializer$2a && _initializer$2a();
+    this.skeleton = _initializer2$1O && _initializer2$1O();
     this.material = _initializer3$1i && _initializer3$1i();
     this._localTransform = _initializer4$17 && _initializer4$17();
     this._offset = _initializer5$V && _initializer5$V();
@@ -55115,19 +55249,19 @@ let SkinnedMeshUnit = (_dec$2O = ccclass$x('cc.SkinnedMeshUnit'), _dec2$29 = typ
   get copyFrom() {
     return null;
   }
-}, _initializer$29 = applyDecoratedInitializer(_class2$2d.prototype, "mesh", [_dec2$29], function () {
+}, _initializer$2a = applyDecoratedInitializer(_class2$2e.prototype, "mesh", [_dec2$29], function () {
   return null;
-}), _initializer2$1N = applyDecoratedInitializer(_class2$2d.prototype, "skeleton", [_dec3$1r], function () {
+}), _initializer2$1O = applyDecoratedInitializer(_class2$2e.prototype, "skeleton", [_dec3$1r], function () {
   return null;
-}), _initializer3$1i = applyDecoratedInitializer(_class2$2d.prototype, "material", [_dec4$12], function () {
+}), _initializer3$1i = applyDecoratedInitializer(_class2$2e.prototype, "material", [_dec4$12], function () {
   return null;
-}), _initializer4$17 = applyDecoratedInitializer(_class2$2d.prototype, "_localTransform", [serializable$c], function () {
+}), _initializer4$17 = applyDecoratedInitializer(_class2$2e.prototype, "_localTransform", [serializable$c], function () {
   return new Mat4();
-}), _initializer5$V = applyDecoratedInitializer(_class2$2d.prototype, "_offset", [serializable$c], function () {
+}), _initializer5$V = applyDecoratedInitializer(_class2$2e.prototype, "_offset", [serializable$c], function () {
   return new Vec2(0, 0);
-}), _initializer6$J = applyDecoratedInitializer(_class2$2d.prototype, "_size", [serializable$c], function () {
+}), _initializer6$J = applyDecoratedInitializer(_class2$2e.prototype, "_size", [serializable$c], function () {
   return new Vec2(1, 1);
-}), _applyDecoratedDescriptor(_class2$2d.prototype, "copyFrom", [_dec5$W], Object.getOwnPropertyDescriptor(_class2$2d.prototype, "copyFrom"), _class2$2d.prototype), _class2$2d)) || _class$2P);
+}), _applyDecoratedDescriptor(_class2$2e.prototype, "copyFrom", [_dec5$W], Object.getOwnPropertyDescriptor(_class2$2e.prototype, "copyFrom"), _class2$2e.prototype), _class2$2e)) || _class$2Q);
 const m4_local$1 = new Mat4();
 new Mat4();
 const v3_1$2 = new Vec3();
@@ -55141,16 +55275,16 @@ let SkinnedMeshBatchRenderer = (_dec6$G = ccclass$x('cc.SkinnedMeshBatchRenderer
     this._batchMaterial = null;
   }
   get mesh() {
-    return super.mesh;
+    return Reflect.get(SkinnedMeshRenderer.prototype, 'mesh', this);
   }
   set mesh(val) {
-    super.mesh = val;
+    Reflect.set(SkinnedMeshRenderer.prototype, 'mesh', val, this);
   }
   get skeleton() {
-    return super.skeleton;
+    return Reflect.get(SkinnedMeshRenderer.prototype, 'skeleton', this);
   }
   set skeleton(val) {
-    super.skeleton = val;
+    Reflect.set(SkinnedMeshRenderer.prototype, 'skeleton', val, this);
   }
   onLoad() {
     super.onLoad();
@@ -55587,12 +55721,12 @@ setClassAlias(SkinnedMeshUnit, 'cc.SkinningModelUnit');
 cclegacy.BatchedSkinningModelComponent = SkinnedMeshBatchRenderer;
 setClassAlias(SkinnedMeshBatchRenderer, 'cc.BatchedSkinningModelComponent');
 
-var _dec$2N, _dec2$28, _dec3$1q, _dec4$11, _dec5$V, _class$2O, _class2$2c, _initializer$28, _initializer2$1M, _dec6$F, _dec7$w, _dec8$m, _class3$f, _class4$f, _initializer3$1h, _initializer4$16, _initializer5$U;
+var _dec$2O, _dec2$28, _dec3$1q, _dec4$11, _dec5$V, _class$2P, _class2$2d, _initializer$29, _initializer2$1N, _dec6$F, _dec7$w, _dec8$m, _class3$f, _class4$f, _initializer3$1h, _initializer4$16, _initializer5$U;
 const DEFAULT_SCREEN_OCCUPATION = [0.25, 0.125, 0.01];
-let LOD = (_dec$2N = ccclass$x('cc.LOD'), _dec2$28 = type$b([MeshRenderer]), _dec3$1q = type$b(CCFloat), _dec4$11 = type$b([MeshRenderer]), _dec5$V = type$b([CCInteger]), _dec$2N(_class$2O = (_class2$2c = class LOD {
+let LOD = (_dec$2O = ccclass$x('cc.LOD'), _dec2$28 = type$b([MeshRenderer]), _dec3$1q = type$b(CCFloat), _dec4$11 = type$b([MeshRenderer]), _dec5$V = type$b([CCInteger]), _dec$2O(_class$2P = (_class2$2d = class LOD {
   constructor() {
-    this._screenUsagePercentage = _initializer$28 && _initializer$28();
-    this._renderers = _initializer2$1M && _initializer2$1M();
+    this._screenUsagePercentage = _initializer$29 && _initializer$29();
+    this._renderers = _initializer2$1N && _initializer2$1N();
     this._LODData = new LODData();
     this._modelAddedCallback = void 0;
     this._LODData.screenUsagePercentage = this._screenUsagePercentage;
@@ -55686,11 +55820,11 @@ let LOD = (_dec$2N = ccclass$x('cc.LOD'), _dec2$28 = type$b([MeshRenderer]), _de
     this.deleteRenderer(index);
     this.insertRenderer(index, renderer);
   }
-}, _initializer$28 = applyDecoratedInitializer(_class2$2c.prototype, "_screenUsagePercentage", [serializable$c], function () {
+}, _initializer$29 = applyDecoratedInitializer(_class2$2d.prototype, "_screenUsagePercentage", [serializable$c], function () {
   return 1.0;
-}), _initializer2$1M = applyDecoratedInitializer(_class2$2c.prototype, "_renderers", [_dec2$28, serializable$c], function () {
+}), _initializer2$1N = applyDecoratedInitializer(_class2$2d.prototype, "_renderers", [_dec2$28, serializable$c], function () {
   return [];
-}), _applyDecoratedDescriptor(_class2$2c.prototype, "screenUsagePercentage", [_dec3$1q], Object.getOwnPropertyDescriptor(_class2$2c.prototype, "screenUsagePercentage"), _class2$2c.prototype), _applyDecoratedDescriptor(_class2$2c.prototype, "renderers", [_dec4$11], Object.getOwnPropertyDescriptor(_class2$2c.prototype, "renderers"), _class2$2c.prototype), _applyDecoratedDescriptor(_class2$2c.prototype, "triangleCount", [_dec5$V], Object.getOwnPropertyDescriptor(_class2$2c.prototype, "triangleCount"), _class2$2c.prototype), _class2$2c)) || _class$2O);
+}), _applyDecoratedDescriptor(_class2$2d.prototype, "screenUsagePercentage", [_dec3$1q], Object.getOwnPropertyDescriptor(_class2$2d.prototype, "screenUsagePercentage"), _class2$2d.prototype), _applyDecoratedDescriptor(_class2$2d.prototype, "renderers", [_dec4$11], Object.getOwnPropertyDescriptor(_class2$2d.prototype, "renderers"), _class2$2d.prototype), _applyDecoratedDescriptor(_class2$2d.prototype, "triangleCount", [_dec5$V], Object.getOwnPropertyDescriptor(_class2$2d.prototype, "triangleCount"), _class2$2d.prototype), _class2$2d)) || _class$2P);
 let LODGroup = (_dec6$F = ccclass$x('cc.LODGroup'), _dec7$w = type$b(CCFloat), _dec8$m = type$b([LOD]), _dec6$F(_class3$f = (_class4$f = class LODGroup extends Component {
   constructor() {
     super();
@@ -57411,7 +57545,7 @@ var util = /*#__PURE__*/Object.freeze({
     shrinkPositions: shrinkPositions
 });
 
-var _dec$2M, _dec2$27, _dec3$1p, _dec4$10, _dec5$U, _dec6$E, _dec7$v, _dec8$l, _dec9$i, _dec0$9, _class$2N, _class2$2b, _initializer$27, _initializer2$1L, _initializer3$1g, _initializer4$15, _initializer5$T, _initializer6$I, _initializer7$x, _initializer8$u, _initializer9$q, _initializer0$o, _ReflectionProbe;
+var _dec$2N, _dec2$27, _dec3$1p, _dec4$10, _dec5$U, _dec6$E, _dec7$v, _dec8$l, _dec9$i, _dec0$9, _class$2O, _class2$2c, _initializer$28, _initializer2$1M, _initializer3$1g, _initializer4$15, _initializer5$T, _initializer6$I, _initializer7$x, _initializer8$u, _initializer9$q, _initializer0$o, _ReflectionProbe;
 const tmpVec3 = v3();
 let ProbeResolution;
 (function (ProbeResolution) {
@@ -57419,12 +57553,12 @@ let ProbeResolution;
   ProbeResolution[ProbeResolution["Medium_512x512"] = 512] = "Medium_512x512";
   ProbeResolution[ProbeResolution["High_768x768"] = 768] = "High_768x768";
 })(ProbeResolution || (ProbeResolution = {}));
-let ReflectionProbe = (_dec$2M = ccclass$x('cc.ReflectionProbe'), _dec2$27 = type$b(Vec3), _dec3$1p = type$b(Enum(ProbeType)), _dec4$10 = type$b(Enum(ProbeResolution)), _dec5$U = type$b(Enum(ProbeClearFlag)), _dec6$E = type$b(Color), _dec7$v = type$b(Layers.BitMask), _dec8$l = type$b(Camera), _dec9$i = type$b(CCBoolean), _dec0$9 = type$b(TextureCube), _dec$2M(_class$2N = (_class2$2b = (_ReflectionProbe = class ReflectionProbe extends Component {
+let ReflectionProbe = (_dec$2N = ccclass$x('cc.ReflectionProbe'), _dec2$27 = type$b(Vec3), _dec3$1p = type$b(Enum(ProbeType)), _dec4$10 = type$b(Enum(ProbeResolution)), _dec5$U = type$b(Enum(ProbeClearFlag)), _dec6$E = type$b(Color), _dec7$v = type$b(Layers.BitMask), _dec8$l = type$b(Camera), _dec9$i = type$b(CCBoolean), _dec0$9 = type$b(TextureCube), _dec$2N(_class$2O = (_class2$2c = (_ReflectionProbe = class ReflectionProbe extends Component {
   constructor(...args) {
     super(...args);
     this._lastSize = v3();
-    this._resolution = _initializer$27 && _initializer$27();
-    this._clearFlag = _initializer2$1L && _initializer2$1L();
+    this._resolution = _initializer$28 && _initializer$28();
+    this._clearFlag = _initializer2$1M && _initializer2$1M();
     this._backgroundColor = _initializer3$1g && _initializer3$1g();
     this._visibility = _initializer4$15 && _initializer4$15();
     this._probeType = _initializer5$T && _initializer5$T();
@@ -57661,51 +57795,51 @@ let ReflectionProbe = (_dec$2M = ccclass$x('cc.ReflectionProbe'), _dec2$27 = typ
       this._probe.cubemap = this._cubemap;
     }
   }
-}, _ReflectionProbe.DEFAULT_CUBE_SIZE = v3(1, 1, 1), _ReflectionProbe.DEFAULT_PLANER_SIZE = v3(5, 0.5, 5), _ReflectionProbe), _initializer$27 = applyDecoratedInitializer(_class2$2b.prototype, "_resolution", [serializable$c], function () {
+}, _ReflectionProbe.DEFAULT_CUBE_SIZE = v3(1, 1, 1), _ReflectionProbe.DEFAULT_PLANER_SIZE = v3(5, 0.5, 5), _ReflectionProbe), _initializer$28 = applyDecoratedInitializer(_class2$2c.prototype, "_resolution", [serializable$c], function () {
   return 256;
-}), _initializer2$1L = applyDecoratedInitializer(_class2$2b.prototype, "_clearFlag", [serializable$c], function () {
+}), _initializer2$1M = applyDecoratedInitializer(_class2$2c.prototype, "_clearFlag", [serializable$c], function () {
   return ProbeClearFlag.SKYBOX;
-}), _initializer3$1g = applyDecoratedInitializer(_class2$2b.prototype, "_backgroundColor", [serializable$c], function () {
+}), _initializer3$1g = applyDecoratedInitializer(_class2$2c.prototype, "_backgroundColor", [serializable$c], function () {
   return new Color(0, 0, 0, 255);
-}), _initializer4$15 = applyDecoratedInitializer(_class2$2b.prototype, "_visibility", [serializable$c], function () {
+}), _initializer4$15 = applyDecoratedInitializer(_class2$2c.prototype, "_visibility", [serializable$c], function () {
   return CAMERA_DEFAULT_MASK;
-}), _initializer5$T = applyDecoratedInitializer(_class2$2b.prototype, "_probeType", [serializable$c], function () {
+}), _initializer5$T = applyDecoratedInitializer(_class2$2c.prototype, "_probeType", [serializable$c], function () {
   return ProbeType.CUBE;
-}), _initializer6$I = applyDecoratedInitializer(_class2$2b.prototype, "_cubemap", [serializable$c], function () {
+}), _initializer6$I = applyDecoratedInitializer(_class2$2c.prototype, "_cubemap", [serializable$c], function () {
   return null;
-}), _initializer7$x = applyDecoratedInitializer(_class2$2b.prototype, "_size", [serializable$c], function () {
+}), _initializer7$x = applyDecoratedInitializer(_class2$2c.prototype, "_size", [serializable$c], function () {
   return v3(1, 1, 1);
-}), _initializer8$u = applyDecoratedInitializer(_class2$2b.prototype, "_sourceCamera", [serializable$c], function () {
+}), _initializer8$u = applyDecoratedInitializer(_class2$2c.prototype, "_sourceCamera", [serializable$c], function () {
   return null;
-}), _initializer9$q = applyDecoratedInitializer(_class2$2b.prototype, "_probeId", [serializable$c], function () {
+}), _initializer9$q = applyDecoratedInitializer(_class2$2c.prototype, "_probeId", [serializable$c], function () {
   return -1;
-}), _initializer0$o = applyDecoratedInitializer(_class2$2b.prototype, "_fastBake", [serializable$c], function () {
+}), _initializer0$o = applyDecoratedInitializer(_class2$2c.prototype, "_fastBake", [serializable$c], function () {
   return false;
-}), _applyDecoratedDescriptor(_class2$2b.prototype, "size", [_dec2$27], Object.getOwnPropertyDescriptor(_class2$2b.prototype, "size"), _class2$2b.prototype), _applyDecoratedDescriptor(_class2$2b.prototype, "probeType", [_dec3$1p], Object.getOwnPropertyDescriptor(_class2$2b.prototype, "probeType"), _class2$2b.prototype), _applyDecoratedDescriptor(_class2$2b.prototype, "resolution", [_dec4$10], Object.getOwnPropertyDescriptor(_class2$2b.prototype, "resolution"), _class2$2b.prototype), _applyDecoratedDescriptor(_class2$2b.prototype, "clearFlag", [_dec5$U], Object.getOwnPropertyDescriptor(_class2$2b.prototype, "clearFlag"), _class2$2b.prototype), _applyDecoratedDescriptor(_class2$2b.prototype, "backgroundColor", [_dec6$E], Object.getOwnPropertyDescriptor(_class2$2b.prototype, "backgroundColor"), _class2$2b.prototype), _applyDecoratedDescriptor(_class2$2b.prototype, "visibility", [_dec7$v], Object.getOwnPropertyDescriptor(_class2$2b.prototype, "visibility"), _class2$2b.prototype), _applyDecoratedDescriptor(_class2$2b.prototype, "sourceCamera", [_dec8$l], Object.getOwnPropertyDescriptor(_class2$2b.prototype, "sourceCamera"), _class2$2b.prototype), _applyDecoratedDescriptor(_class2$2b.prototype, "fastBake", [_dec9$i], Object.getOwnPropertyDescriptor(_class2$2b.prototype, "fastBake"), _class2$2b.prototype), _applyDecoratedDescriptor(_class2$2b.prototype, "cubemap", [_dec0$9], Object.getOwnPropertyDescriptor(_class2$2b.prototype, "cubemap"), _class2$2b.prototype), _class2$2b)) || _class$2N);
+}), _applyDecoratedDescriptor(_class2$2c.prototype, "size", [_dec2$27], Object.getOwnPropertyDescriptor(_class2$2c.prototype, "size"), _class2$2c.prototype), _applyDecoratedDescriptor(_class2$2c.prototype, "probeType", [_dec3$1p], Object.getOwnPropertyDescriptor(_class2$2c.prototype, "probeType"), _class2$2c.prototype), _applyDecoratedDescriptor(_class2$2c.prototype, "resolution", [_dec4$10], Object.getOwnPropertyDescriptor(_class2$2c.prototype, "resolution"), _class2$2c.prototype), _applyDecoratedDescriptor(_class2$2c.prototype, "clearFlag", [_dec5$U], Object.getOwnPropertyDescriptor(_class2$2c.prototype, "clearFlag"), _class2$2c.prototype), _applyDecoratedDescriptor(_class2$2c.prototype, "backgroundColor", [_dec6$E], Object.getOwnPropertyDescriptor(_class2$2c.prototype, "backgroundColor"), _class2$2c.prototype), _applyDecoratedDescriptor(_class2$2c.prototype, "visibility", [_dec7$v], Object.getOwnPropertyDescriptor(_class2$2c.prototype, "visibility"), _class2$2c.prototype), _applyDecoratedDescriptor(_class2$2c.prototype, "sourceCamera", [_dec8$l], Object.getOwnPropertyDescriptor(_class2$2c.prototype, "sourceCamera"), _class2$2c.prototype), _applyDecoratedDescriptor(_class2$2c.prototype, "fastBake", [_dec9$i], Object.getOwnPropertyDescriptor(_class2$2c.prototype, "fastBake"), _class2$2c.prototype), _applyDecoratedDescriptor(_class2$2c.prototype, "cubemap", [_dec0$9], Object.getOwnPropertyDescriptor(_class2$2c.prototype, "cubemap"), _class2$2c.prototype), _class2$2c)) || _class$2O);
 
 legacyCC.utils = utils;
 
 const CLASS_NAME_PREFIX_ANIM = 'cc.animation.';
 const createEvalSymbol = Symbol('CreateEval');
 
-var _dec$2L, _class$2M, _class2$2a, _initializer$26, _initializer2$1K, _initializer3$1f, _initializer4$14;
-(_dec$2L = ccclass$x(`${CLASS_NAME_PREFIX_ANIM}EmbeddedPlayer`), _dec$2L(_class$2M = (_class2$2a = class EmbeddedPlayer extends EditorExtendable {
+var _dec$2M, _class$2N, _class2$2b, _initializer$27, _initializer2$1L, _initializer3$1f, _initializer4$14;
+(_dec$2M = ccclass$x(`${CLASS_NAME_PREFIX_ANIM}EmbeddedPlayer`), _dec$2M(_class$2N = (_class2$2b = class EmbeddedPlayer extends EditorExtendable {
   constructor(...args) {
     super(...args);
-    this.begin = _initializer$26 && _initializer$26();
-    this.end = _initializer2$1K && _initializer2$1K();
+    this.begin = _initializer$27 && _initializer$27();
+    this.end = _initializer2$1L && _initializer2$1L();
     this.reconciledSpeed = _initializer3$1f && _initializer3$1f();
     this.playable = _initializer4$14 && _initializer4$14();
   }
-}, _initializer$26 = applyDecoratedInitializer(_class2$2a.prototype, "begin", [serializable$c], function () {
+}, _initializer$27 = applyDecoratedInitializer(_class2$2b.prototype, "begin", [serializable$c], function () {
   return 0.0;
-}), _initializer2$1K = applyDecoratedInitializer(_class2$2a.prototype, "end", [serializable$c], function () {
+}), _initializer2$1L = applyDecoratedInitializer(_class2$2b.prototype, "end", [serializable$c], function () {
   return 0.0;
-}), _initializer3$1f = applyDecoratedInitializer(_class2$2a.prototype, "reconciledSpeed", [serializable$c], function () {
+}), _initializer3$1f = applyDecoratedInitializer(_class2$2b.prototype, "reconciledSpeed", [serializable$c], function () {
   return false;
-}), _initializer4$14 = applyDecoratedInitializer(_class2$2a.prototype, "playable", [serializable$c], function () {
+}), _initializer4$14 = applyDecoratedInitializer(_class2$2b.prototype, "playable", [serializable$c], function () {
   return null;
-}), _class2$2a)) || _class$2M);
+}), _class2$2b)) || _class$2N);
 class EmbeddedPlayable {}
 class EmbeddedPlayableState {
   constructor(randomAccess) {
@@ -58295,12 +58429,12 @@ let AnimationState$1 = class AnimationState extends Playable {
 };
 cclegacy.AnimationState = AnimationState$1;
 
-var _dec$2K, _class$2L, _class2$29, _initializer$25, _initializer2$1J;
-(_dec$2K = ccclass$x(`${CLASS_NAME_PREFIX_ANIM}EmbeddedAnimationClipPlayable`), _dec$2K(_class$2L = (_class2$29 = class EmbeddedAnimationClipPlayable extends EmbeddedPlayable {
+var _dec$2L, _class$2M, _class2$2a, _initializer$26, _initializer2$1K;
+(_dec$2L = ccclass$x(`${CLASS_NAME_PREFIX_ANIM}EmbeddedAnimationClipPlayable`), _dec$2L(_class$2M = (_class2$2a = class EmbeddedAnimationClipPlayable extends EmbeddedPlayable {
   constructor(...args) {
     super(...args);
-    this.path = _initializer$25 && _initializer$25();
-    this.clip = _initializer2$1J && _initializer2$1J();
+    this.path = _initializer$26 && _initializer$26();
+    this.clip = _initializer2$1K && _initializer2$1K();
   }
   instantiate(root) {
     const {
@@ -58319,11 +58453,11 @@ var _dec$2K, _class$2L, _class2$29, _initializer$25, _initializer2$1J;
     state.initialize(clipRoot);
     return new EmbeddedAnimationClipPlayableState(state);
   }
-}, _initializer$25 = applyDecoratedInitializer(_class2$29.prototype, "path", [serializable$c], function () {
+}, _initializer$26 = applyDecoratedInitializer(_class2$2a.prototype, "path", [serializable$c], function () {
   return '';
-}), _initializer2$1J = applyDecoratedInitializer(_class2$29.prototype, "clip", [serializable$c], function () {
+}), _initializer2$1K = applyDecoratedInitializer(_class2$2a.prototype, "clip", [serializable$c], function () {
   return null;
-}), _class2$29)) || _class$2L);
+}), _class2$2a)) || _class$2M);
 class EmbeddedAnimationClipPlayableState extends EmbeddedPlayableState {
   constructor(animationState) {
     super(true);
@@ -58350,11 +58484,11 @@ class EmbeddedAnimationClipPlayableState extends EmbeddedPlayableState {
   }
 }
 
-var _dec$2J, _class$2K, _class2$28, _initializer$24;
-(_dec$2J = ccclass$x(`${CLASS_NAME_PREFIX_ANIM}EmbeddedParticleSystemPlayable`), _dec$2J(_class$2K = (_class2$28 = class EmbeddedParticleSystemPlayable extends EmbeddedPlayable {
+var _dec$2K, _class$2L, _class2$29, _initializer$25;
+(_dec$2K = ccclass$x(`${CLASS_NAME_PREFIX_ANIM}EmbeddedParticleSystemPlayable`), _dec$2K(_class$2L = (_class2$29 = class EmbeddedParticleSystemPlayable extends EmbeddedPlayable {
   constructor(...args) {
     super(...args);
-    this.path = _initializer$24 && _initializer$24();
+    this.path = _initializer$25 && _initializer$25();
   }
   instantiate(root) {
     const node = root.getChildByPath(this.path);
@@ -58374,9 +58508,9 @@ var _dec$2J, _class$2K, _class2$28, _initializer$24;
     }
     return new EmbeddedParticleSystemPlayableState(particleSystem);
   }
-}, _initializer$24 = applyDecoratedInitializer(_class2$28.prototype, "path", [serializable$c], function () {
+}, _initializer$25 = applyDecoratedInitializer(_class2$29.prototype, "path", [serializable$c], function () {
   return '';
-}), _class2$28)) || _class$2K);
+}), _class2$29)) || _class$2L);
 class EmbeddedParticleSystemPlayableState extends EmbeddedPlayableState {
   constructor(particleSystem) {
     super(false);
@@ -58398,16 +58532,16 @@ class EmbeddedParticleSystemPlayableState extends EmbeddedPlayableState {
   }
 }
 
-var _dec$2I, _class$2J, _class2$27, _initializer$23, _dec2$26, _class3$e, _class4$e, _initializer2$1I;
+var _dec$2J, _class$2K, _class2$28, _initializer$24, _dec2$26, _class3$e, _class4$e, _initializer2$1J;
 function isPropertyPath(path) {
   return typeof path === 'string' || typeof path === 'number';
 }
 function isCustomPath(path, constructor) {
   return path instanceof constructor;
 }
-let HierarchyPath = (_dec$2I = ccclass$x('cc.animation.HierarchyPath'), _dec$2I(_class$2J = (_class2$27 = class HierarchyPath {
+let HierarchyPath = (_dec$2J = ccclass$x('cc.animation.HierarchyPath'), _dec$2J(_class$2K = (_class2$28 = class HierarchyPath {
   constructor(path) {
-    this.path = _initializer$23 && _initializer$23();
+    this.path = _initializer$24 && _initializer$24();
     this.path = path || '';
   }
   get(target) {
@@ -58422,12 +58556,12 @@ let HierarchyPath = (_dec$2I = ccclass$x('cc.animation.HierarchyPath'), _dec$2I(
     }
     return result;
   }
-}, _initializer$23 = applyDecoratedInitializer(_class2$27.prototype, "path", [serializable$c], function () {
+}, _initializer$24 = applyDecoratedInitializer(_class2$28.prototype, "path", [serializable$c], function () {
   return '';
-}), _class2$27)) || _class$2J);
+}), _class2$28)) || _class$2K);
 let ComponentPath = (_dec2$26 = ccclass$x('cc.animation.ComponentPath'), _dec2$26(_class3$e = (_class4$e = class ComponentPath {
   constructor(component) {
-    this.component = _initializer2$1I && _initializer2$1I();
+    this.component = _initializer2$1J && _initializer2$1J();
     this.component = component || '';
   }
   get(target) {
@@ -58442,17 +58576,17 @@ let ComponentPath = (_dec2$26 = ccclass$x('cc.animation.ComponentPath'), _dec2$2
     }
     return result;
   }
-}, _initializer2$1I = applyDecoratedInitializer(_class4$e.prototype, "component", [serializable$c], function () {
+}, _initializer2$1J = applyDecoratedInitializer(_class4$e.prototype, "component", [serializable$c], function () {
   return '';
 }), _class4$e)) || _class3$e);
 
-var _dec$2H, _class$2I, _class2$26, _initializer$22, _dec2$25, _class3$d, _class4$d, _initializer2$1H, _initializer3$1e, _TrackBinding, _dec3$1o, _class5$6, _class6$4, _initializer4$13, _dec4$$, _class7$3, _class8$3, _initializer5$S, _dec5$T, _class9$3, _class0$3, _initializer6$H;
+var _dec$2I, _class$2J, _class2$27, _initializer$23, _dec2$25, _class3$d, _class4$d, _initializer2$1I, _initializer3$1e, _TrackBinding, _dec3$1o, _class5$6, _class6$4, _initializer4$13, _dec4$$, _class7$3, _class8$3, _initializer5$S, _dec5$T, _class9$3, _class0$3, _initializer6$H;
 const normalizedFollowTag = Symbol('NormalizedFollow');
 const parseTrsPathTag = Symbol('ConvertAsTrsPath');
 const trackBindingTag = Symbol('TrackBinding');
-let TrackPath = (_dec$2H = ccclass$x(`${CLASS_NAME_PREFIX_ANIM}TrackPath`), _dec$2H(_class$2I = (_class2$26 = class TrackPath {
+let TrackPath = (_dec$2I = ccclass$x(`${CLASS_NAME_PREFIX_ANIM}TrackPath`), _dec$2I(_class$2J = (_class2$27 = class TrackPath {
   constructor() {
-    this._paths = _initializer$22 && _initializer$22();
+    this._paths = _initializer$23 && _initializer$23();
   }
   get length() {
     return this._paths.length;
@@ -58584,12 +58718,12 @@ let TrackPath = (_dec$2H = ccclass$x(`${CLASS_NAME_PREFIX_ANIM}TrackPath`), _dec
     }
     return result;
   }
-}, _initializer$22 = applyDecoratedInitializer(_class2$26.prototype, "_paths", [serializable$c], function () {
+}, _initializer$23 = applyDecoratedInitializer(_class2$27.prototype, "_paths", [serializable$c], function () {
   return [];
-}), _class2$26)) || _class$2I);
+}), _class2$27)) || _class$2J);
 let TrackBinding = (_dec2$25 = ccclass$x(`${CLASS_NAME_PREFIX_ANIM}TrackBinding`), _dec2$25(_class3$d = uniquelyReferenced(_class3$d = (_class4$d = (_TrackBinding = class TrackBinding {
   constructor() {
-    this.path = _initializer2$1H && _initializer2$1H();
+    this.path = _initializer2$1I && _initializer2$1I();
     this.proxy = _initializer3$1e && _initializer3$1e();
   }
   parseTrsPath() {
@@ -58670,7 +58804,7 @@ let TrackBinding = (_dec2$25 = ccclass$x(`${CLASS_NAME_PREFIX_ANIM}TrackBinding`
     }
     return false;
   }
-}, _TrackBinding._animationFunctions = new WeakMap(), _TrackBinding), _initializer2$1H = applyDecoratedInitializer(_class4$d.prototype, "path", [serializable$c], function () {
+}, _TrackBinding._animationFunctions = new WeakMap(), _TrackBinding), _initializer2$1I = applyDecoratedInitializer(_class4$d.prototype, "path", [serializable$c], function () {
   return new TrackPath();
 }), _initializer3$1e = applyDecoratedInitializer(_class4$d.prototype, "proxy", [serializable$c], null), _class4$d)) || _class3$d) || _class3$d);
 function isTrsPropertyName(name) {
@@ -58756,15 +58890,15 @@ class SingleChannelTrackEval {
   }
 }
 
-var _dec$2G, _class$2H, _class2$25, _initializer$21;
+var _dec$2H, _class$2I, _class2$26, _initializer$22;
 const {
   ccclass: ccclass$p,
   serializable: serializable$6
 } = _decorator;
-(_dec$2G = ccclass$p(`${CLASS_NAME_PREFIX_ANIM}RealArrayTrack`), _dec$2G(_class$2H = (_class2$25 = class RealArrayTrack extends Track {
+(_dec$2H = ccclass$p(`${CLASS_NAME_PREFIX_ANIM}RealArrayTrack`), _dec$2H(_class$2I = (_class2$26 = class RealArrayTrack extends Track {
   constructor(...args) {
     super(...args);
-    this._channels = _initializer$21 && _initializer$21();
+    this._channels = _initializer$22 && _initializer$22();
   }
   get elementCount() {
     return this._channels.length;
@@ -58790,9 +58924,9 @@ const {
       curve
     }) => curve));
   }
-}, _initializer$21 = applyDecoratedInitializer(_class2$25.prototype, "_channels", [serializable$6], function () {
+}, _initializer$22 = applyDecoratedInitializer(_class2$26.prototype, "_channels", [serializable$6], function () {
   return [];
-}), _class2$25)) || _class$2H);
+}), _class2$26)) || _class$2I);
 class RealArrayTrackEval {
   constructor(_curves) {
     this._curves = _curves;
@@ -58813,11 +58947,11 @@ class RealArrayTrackEval {
   }
 }
 
-var _dec$2F, _class$2G, _class2$24, _initializer$20, _initializer2$1G, _descriptor;
-let UniformProxyFactory = (_dec$2F = ccclass$x('cc.animation.UniformProxyFactory'), _dec$2F(_class$2G = (_class2$24 = class UniformProxyFactory {
+var _dec$2G, _class$2H, _class2$25, _initializer$21, _initializer2$1H, _descriptor;
+let UniformProxyFactory = (_dec$2G = ccclass$x('cc.animation.UniformProxyFactory'), _dec$2G(_class$2H = (_class2$25 = class UniformProxyFactory {
   constructor(uniformName, passIndex) {
-    this.passIndex = _initializer$20 && _initializer$20();
-    this.uniformName = _initializer2$1G && _initializer2$1G();
+    this.passIndex = _initializer$21 && _initializer$21();
+    this.uniformName = _initializer2$1H && _initializer2$1H();
     _initializerDefineProperty(this, "channelIndex", _descriptor, this);
     this.passIndex = passIndex || 0;
     this.uniformName = uniformName || '';
@@ -58887,18 +59021,18 @@ let UniformProxyFactory = (_dec$2F = ccclass$x('cc.animation.UniformProxyFactory
       };
     }
   }
-}, _initializer$20 = applyDecoratedInitializer(_class2$24.prototype, "passIndex", [serializable$c], function () {
+}, _initializer$21 = applyDecoratedInitializer(_class2$25.prototype, "passIndex", [serializable$c], function () {
   return 0;
-}), _initializer2$1G = applyDecoratedInitializer(_class2$24.prototype, "uniformName", [serializable$c], function () {
+}), _initializer2$1H = applyDecoratedInitializer(_class2$25.prototype, "uniformName", [serializable$c], function () {
   return '';
-}), _descriptor = _applyDecoratedDescriptor(_class2$24.prototype, "channelIndex", [float], {
+}), _descriptor = _applyDecoratedDescriptor(_class2$25.prototype, "channelIndex", [float], {
   configurable: true,
   enumerable: true,
   writable: true,
   initializer: function () {
     return undefined;
   }
-}), _class2$24)) || _class$2G);
+}), _class2$25)) || _class$2H);
 function isUniformArray(pass, name) {
   for (const block of pass.shaderInfo.blocks) {
     for (const uniform of block.members) {
@@ -58910,11 +59044,11 @@ function isUniformArray(pass, name) {
   return false;
 }
 
-var _dec$2E, _class$2F, _class2$23, _initializer$1$, _initializer2$1F, _dec2$24, _class3$c, _class4$c, _initializer3$1d, _dec3$1n, _class5$5;
-let MorphWeightValueProxy = (_dec$2E = ccclass$x('cc.animation.MorphWeightValueProxy'), _dec$2E(_class$2F = (_class2$23 = class MorphWeightValueProxy {
+var _dec$2F, _class$2G, _class2$24, _initializer$20, _initializer2$1G, _dec2$24, _class3$c, _class4$c, _initializer3$1d, _dec3$1n, _class5$5;
+let MorphWeightValueProxy = (_dec$2F = ccclass$x('cc.animation.MorphWeightValueProxy'), _dec$2F(_class$2G = (_class2$24 = class MorphWeightValueProxy {
   constructor() {
-    this.subMeshIndex = _initializer$1$ && _initializer$1$();
-    this.shapeIndex = _initializer2$1F && _initializer2$1F();
+    this.subMeshIndex = _initializer$20 && _initializer$20();
+    this.shapeIndex = _initializer2$1G && _initializer2$1G();
   }
   forTarget(target) {
     return {
@@ -58923,11 +59057,11 @@ let MorphWeightValueProxy = (_dec$2E = ccclass$x('cc.animation.MorphWeightValueP
       }
     };
   }
-}, _initializer$1$ = applyDecoratedInitializer(_class2$23.prototype, "subMeshIndex", [serializable$c], function () {
+}, _initializer$20 = applyDecoratedInitializer(_class2$24.prototype, "subMeshIndex", [serializable$c], function () {
   return 0;
-}), _initializer2$1F = applyDecoratedInitializer(_class2$23.prototype, "shapeIndex", [serializable$c], function () {
+}), _initializer2$1G = applyDecoratedInitializer(_class2$24.prototype, "shapeIndex", [serializable$c], function () {
   return 0;
-}), _class2$23)) || _class$2F);
+}), _class2$24)) || _class$2G);
 let MorphWeightsValueProxy = (_dec2$24 = ccclass$x('cc.animation.MorphWeightsValueProxy'), _dec2$24(_class3$c = (_class4$c = class MorphWeightsValueProxy {
   constructor() {
     this.subMeshIndex = _initializer3$1d && _initializer3$1d();
@@ -59045,24 +59179,24 @@ let CubicSplineNumberValue = (_dec2$23 = ccclass$x('cc.CubicSplineNumberValue'),
   return 0;
 }), _class4$b)) || _class3$b);
 
-var _dec$2D, _class$2E;
-let RealTrack = (_dec$2D = ccclass$x(`${CLASS_NAME_PREFIX_ANIM}RealTrack`), _dec$2D(_class$2E = class RealTrack extends SingleChannelTrack {
+var _dec$2E, _class$2F;
+let RealTrack = (_dec$2E = ccclass$x(`${CLASS_NAME_PREFIX_ANIM}RealTrack`), _dec$2E(_class$2F = class RealTrack extends SingleChannelTrack {
   createCurve() {
     return new RealCurve();
   }
-}) || _class$2E);
+}) || _class$2F);
 
 function maskIfEmpty(curve) {
   return curve.keyFramesCount === 0 ? undefined : curve;
 }
 
-var _dec$2C, _class$2D, _class2$22, _initializer$1_, _initializer2$1E;
+var _dec$2D, _class$2E, _class2$23, _initializer$1$, _initializer2$1F;
 const CHANNEL_NAMES$2 = ['X', 'Y', 'Z', 'W'];
-let VectorTrack = (_dec$2C = ccclass$x(`${CLASS_NAME_PREFIX_ANIM}VectorTrack`), _dec$2C(_class$2D = (_class2$22 = class VectorTrack extends Track {
+let VectorTrack = (_dec$2D = ccclass$x(`${CLASS_NAME_PREFIX_ANIM}VectorTrack`), _dec$2D(_class$2E = (_class2$23 = class VectorTrack extends Track {
   constructor() {
     super();
-    this._channels = _initializer$1_ && _initializer$1_();
-    this._nComponents = _initializer2$1E && _initializer2$1E();
+    this._channels = _initializer$1$ && _initializer$1$();
+    this._nComponents = _initializer2$1F && _initializer2$1F();
     this._channels = new Array(4);
     for (let i = 0; i < this._channels.length; ++i) {
       const channel = new Channel(new RealCurve());
@@ -59090,9 +59224,9 @@ let VectorTrack = (_dec$2C = ccclass$x(`${CLASS_NAME_PREFIX_ANIM}VectorTrack`), 
         return new Vec4TrackEval(maskIfEmpty(this._channels[0].curve), maskIfEmpty(this._channels[1].curve), maskIfEmpty(this._channels[2].curve), maskIfEmpty(this._channels[3].curve));
     }
   }
-}, _initializer$1_ = applyDecoratedInitializer(_class2$22.prototype, "_channels", [serializable$c], null), _initializer2$1E = applyDecoratedInitializer(_class2$22.prototype, "_nComponents", [serializable$c], function () {
+}, _initializer$1$ = applyDecoratedInitializer(_class2$23.prototype, "_channels", [serializable$c], null), _initializer2$1F = applyDecoratedInitializer(_class2$23.prototype, "_nComponents", [serializable$c], function () {
   return 4;
-}), _class2$22)) || _class$2D);
+}), _class2$23)) || _class$2E);
 class Vec2TrackEval {
   constructor(_x, _y) {
     this._result = new Vec2();
@@ -59178,15 +59312,15 @@ class Vec4TrackEval {
   }
 }
 
-var _dec$2B, _class$2C;
-let QuatTrack = (_dec$2B = ccclass$x(`${CLASS_NAME_PREFIX_ANIM}QuatTrack`), _dec$2B(_class$2C = class QuatTrack extends SingleChannelTrack {
+var _dec$2C, _class$2D;
+let QuatTrack = (_dec$2C = ccclass$x(`${CLASS_NAME_PREFIX_ANIM}QuatTrack`), _dec$2C(_class$2D = class QuatTrack extends SingleChannelTrack {
   createCurve() {
     return new QuatCurve();
   }
   [createEvalSymbol]() {
     return new QuatTrackEval(this.channels()[0].curve);
   }
-}) || _class$2C);
+}) || _class$2D);
 class QuatTrackEval {
   constructor(_curve) {
     this._result = new Quat();
@@ -59201,12 +59335,12 @@ class QuatTrackEval {
   }
 }
 
-var _dec$2A, _class$2B, _class2$21, _initializer$1Z;
+var _dec$2B, _class$2C, _class2$22, _initializer$1_;
 const CHANNEL_NAMES$1 = ['Red', 'Green', 'Blue', 'Alpha'];
-let ColorTrack = (_dec$2A = ccclass$x(`${CLASS_NAME_PREFIX_ANIM}ColorTrack`), _dec$2A(_class$2B = (_class2$21 = class ColorTrack extends Track {
+let ColorTrack = (_dec$2B = ccclass$x(`${CLASS_NAME_PREFIX_ANIM}ColorTrack`), _dec$2B(_class$2C = (_class2$22 = class ColorTrack extends Track {
   constructor() {
     super();
-    this._channels = _initializer$1Z && _initializer$1Z();
+    this._channels = _initializer$1_ && _initializer$1_();
     this._channels = new Array(4);
     for (let i = 0; i < this._channels.length; ++i) {
       const channel = new Channel(new RealCurve());
@@ -59220,7 +59354,7 @@ let ColorTrack = (_dec$2A = ccclass$x(`${CLASS_NAME_PREFIX_ANIM}ColorTrack`), _d
   [createEvalSymbol]() {
     return new ColorTrackEval(maskIfEmpty(this._channels[0].curve), maskIfEmpty(this._channels[1].curve), maskIfEmpty(this._channels[2].curve), maskIfEmpty(this._channels[3].curve));
   }
-}, _initializer$1Z = applyDecoratedInitializer(_class2$21.prototype, "_channels", [serializable$c], null), _class2$21)) || _class$2B);
+}, _initializer$1_ = applyDecoratedInitializer(_class2$22.prototype, "_channels", [serializable$c], null), _class2$22)) || _class$2C);
 class ColorTrackEval {
   constructor(_x, _y, _z, _w) {
     this._result = new Color();
@@ -59252,12 +59386,12 @@ class ColorTrackEval {
   }
 }
 
-var _dec$2z, _class$2A, _class2$20, _initializer$1Y;
+var _dec$2A, _class$2B, _class2$21, _initializer$1Z;
 const CHANNEL_NAMES = ['Width', 'Height'];
-let SizeTrack = (_dec$2z = ccclass$x(`${CLASS_NAME_PREFIX_ANIM}SizeTrack`), _dec$2z(_class$2A = (_class2$20 = class SizeTrack extends Track {
+let SizeTrack = (_dec$2A = ccclass$x(`${CLASS_NAME_PREFIX_ANIM}SizeTrack`), _dec$2A(_class$2B = (_class2$21 = class SizeTrack extends Track {
   constructor() {
     super();
-    this._channels = _initializer$1Y && _initializer$1Y();
+    this._channels = _initializer$1Z && _initializer$1Z();
     this._channels = new Array(2);
     for (let i = 0; i < this._channels.length; ++i) {
       const channel = new Channel(new RealCurve());
@@ -59271,7 +59405,7 @@ let SizeTrack = (_dec$2z = ccclass$x(`${CLASS_NAME_PREFIX_ANIM}SizeTrack`), _dec
   [createEvalSymbol]() {
     return new SizeTrackEval(maskIfEmpty(this._channels[0].curve), maskIfEmpty(this._channels[1].curve));
   }
-}, _initializer$1Y = applyDecoratedInitializer(_class2$20.prototype, "_channels", [serializable$c], null), _class2$20)) || _class$2A);
+}, _initializer$1Z = applyDecoratedInitializer(_class2$21.prototype, "_channels", [serializable$c], null), _class2$21)) || _class$2B);
 class SizeTrackEval {
   constructor(_width, _height) {
     this._result = new Size();
@@ -59296,12 +59430,12 @@ class SizeTrackEval {
   }
 }
 
-var _dec$2y, _class$2z;
-let ObjectTrack = (_dec$2y = ccclass$x(`${CLASS_NAME_PREFIX_ANIM}ObjectTrack`), _dec$2y(_class$2z = class ObjectTrack extends SingleChannelTrack {
+var _dec$2z, _class$2A;
+let ObjectTrack = (_dec$2z = ccclass$x(`${CLASS_NAME_PREFIX_ANIM}ObjectTrack`), _dec$2z(_class$2A = class ObjectTrack extends SingleChannelTrack {
   createCurve() {
     return new ObjectCurve();
   }
-}) || _class$2z);
+}) || _class$2A);
 
 var animation = /*#__PURE__*/Object.freeze({
     __proto__: null,
@@ -59557,19 +59691,19 @@ const selectLerpFx = (() => {
   };
 })();
 
-var _dec$2x, _class$2y, _class2$1$, _initializer$1X, _dec2$22, _class3$a, _class4$a, _initializer2$1D;
-let UntypedTrackChannel = (_dec$2x = ccclass$x(`${CLASS_NAME_PREFIX_ANIM}UntypedTrackChannel`), _dec$2x(_class$2y = (_class2$1$ = class UntypedTrackChannel extends Channel {
+var _dec$2y, _class$2z, _class2$20, _initializer$1Y, _dec2$22, _class3$a, _class4$a, _initializer2$1E;
+let UntypedTrackChannel = (_dec$2y = ccclass$x(`${CLASS_NAME_PREFIX_ANIM}UntypedTrackChannel`), _dec$2y(_class$2z = (_class2$20 = class UntypedTrackChannel extends Channel {
   constructor() {
     super(new RealCurve());
-    this.property = _initializer$1X && _initializer$1X();
+    this.property = _initializer$1Y && _initializer$1Y();
   }
-}, _initializer$1X = applyDecoratedInitializer(_class2$1$.prototype, "property", [serializable$c], function () {
+}, _initializer$1Y = applyDecoratedInitializer(_class2$20.prototype, "property", [serializable$c], function () {
   return '';
-}), _class2$1$)) || _class$2y);
+}), _class2$20)) || _class$2z);
 let UntypedTrack = (_dec2$22 = ccclass$x(`${CLASS_NAME_PREFIX_ANIM}UntypedTrack`), _dec2$22(_class3$a = (_class4$a = class UntypedTrack extends Track {
   constructor(...args) {
     super(...args);
-    this._channels = _initializer2$1D && _initializer2$1D();
+    this._channels = _initializer2$1E && _initializer2$1E();
   }
   channels() {
     return this._channels;
@@ -59655,7 +59789,7 @@ let UntypedTrack = (_dec2$22 = ccclass$x(`${CLASS_NAME_PREFIX_ANIM}UntypedTrack`
     }
     return null;
   }
-}, _initializer2$1D = applyDecoratedInitializer(_class4$a.prototype, "_channels", [serializable$c], function () {
+}, _initializer2$1E = applyDecoratedInitializer(_class4$a.prototype, "_channels", [serializable$c], function () {
   return [];
 }), _class4$a)) || _class3$a);
 
@@ -60159,7 +60293,7 @@ function ensureRightTangentWeightMode(tangentWeightMode) {
   }
 }
 
-var _dec$2w, _class$2x, _class2$1_, _initializer$1W, _dec2$21, _class3$9, _class4$9, _initializer2$1C, _initializer3$1c, _initializer4$11, _initializer5$Q, _dec3$1m, _class5$4, _class6$3, _initializer6$F, _initializer7$w, _dec4$_, _class7$2, _dec5$S, _class8$2, _dec6$D, _class9$2, _class0$2, _initializer8$t, _initializer9$p, _dec7$u, _class1$1, _class10$1, _initializer0$n, _initializer1$m, _initializer10$k, _initializer11$h;
+var _dec$2x, _class$2y, _class2$1$, _initializer$1X, _dec2$21, _class3$9, _class4$9, _initializer2$1D, _initializer3$1c, _initializer4$11, _initializer5$Q, _dec3$1m, _class5$4, _class6$3, _initializer6$F, _initializer7$w, _dec4$_, _class7$2, _dec5$S, _class8$2, _dec6$D, _class9$2, _class0$2, _initializer8$t, _initializer9$p, _dec7$u, _class1$1, _class10$1, _initializer0$n, _initializer1$m, _initializer10$k, _initializer11$h;
 const {
   ccclass: ccclass$o,
   serializable: serializable$5
@@ -60167,9 +60301,9 @@ const {
 function throwIfSplitMethodIsNotValid() {
   throw new Error(`split() only valid in Editor.`);
 }
-(_dec$2w = ccclass$o(`${CLASS_NAME_PREFIX_ANIM}ExoticAnimation`), _dec$2w(_class$2x = (_class2$1_ = class ExoticAnimation {
+(_dec$2x = ccclass$o(`${CLASS_NAME_PREFIX_ANIM}ExoticAnimation`), _dec$2x(_class$2y = (_class2$1$ = class ExoticAnimation {
   constructor() {
-    this._nodeAnimations = _initializer$1W && _initializer$1W();
+    this._nodeAnimations = _initializer$1X && _initializer$1X();
   }
   createEvaluator(binder) {
     return new ExoticTrsAnimationEvaluator(this._nodeAnimations, binder);
@@ -60195,12 +60329,12 @@ function throwIfSplitMethodIsNotValid() {
   toHashString() {
     return this._nodeAnimations.map(nodeAnimation => nodeAnimation.toHashString()).join('\n');
   }
-}, _initializer$1W = applyDecoratedInitializer(_class2$1_.prototype, "_nodeAnimations", [serializable$5], function () {
+}, _initializer$1X = applyDecoratedInitializer(_class2$1$.prototype, "_nodeAnimations", [serializable$5], function () {
   return [];
-}), _class2$1_)) || _class$2x);
+}), _class2$1$)) || _class$2y);
 let ExoticNodeAnimation = (_dec2$21 = ccclass$o(`${CLASS_NAME_PREFIX_ANIM}ExoticNodeAnimation`), _dec2$21(_class3$9 = (_class4$9 = class ExoticNodeAnimation {
   constructor(path) {
-    this._path = _initializer2$1C && _initializer2$1C();
+    this._path = _initializer2$1D && _initializer2$1D();
     this._position = _initializer3$1c && _initializer3$1c();
     this._rotation = _initializer4$11 && _initializer4$11();
     this._scale = _initializer5$Q && _initializer5$Q();
@@ -60237,7 +60371,7 @@ let ExoticNodeAnimation = (_dec2$21 = ccclass$o(`${CLASS_NAME_PREFIX_ANIM}Exotic
     var _this$_position$toHas, _this$_position, _this$_scale$toHashSt, _this$_scale, _this$_rotation$toHas, _this$_rotation;
     return `${this._path}\n${(_this$_position$toHas = (_this$_position = this._position) == null ? void 0 : _this$_position.toHashString()) !== null && _this$_position$toHas !== void 0 ? _this$_position$toHas : ''}${(_this$_scale$toHashSt = (_this$_scale = this._scale) == null ? void 0 : _this$_scale.toHashString()) !== null && _this$_scale$toHashSt !== void 0 ? _this$_scale$toHashSt : ''}${(_this$_rotation$toHas = (_this$_rotation = this._rotation) == null ? void 0 : _this$_rotation.toHashString()) !== null && _this$_rotation$toHas !== void 0 ? _this$_rotation$toHas : ''}`;
   }
-}, _initializer2$1C = applyDecoratedInitializer(_class4$9.prototype, "_path", [serializable$5], function () {
+}, _initializer2$1D = applyDecoratedInitializer(_class4$9.prototype, "_path", [serializable$5], function () {
   return '';
 }), _initializer3$1c = applyDecoratedInitializer(_class4$9.prototype, "_position", [serializable$5], function () {
   return null;
@@ -60626,17 +60760,17 @@ function loadQuatFromQuantized(values, index, out) {
   Quat.set(out, indexQuantized(values, 4 * index + 0), indexQuantized(values, 4 * index + 1), indexQuantized(values, 4 * index + 2), indexQuantized(values, 4 * index + 3));
 }
 
-var _dec$2v, _class$2w, _class2$1Z, _initializer$1V, _initializer2$1B;
-let AuxiliaryCurveEntry = (_dec$2v = ccclass$x(`${CLASS_NAME_PREFIX_ANIM}AuxiliaryCurveEntry`), _dec$2v(_class$2w = (_class2$1Z = class AuxiliaryCurveEntry {
+var _dec$2w, _class$2x, _class2$1_, _initializer$1W, _initializer2$1C;
+let AuxiliaryCurveEntry = (_dec$2w = ccclass$x(`${CLASS_NAME_PREFIX_ANIM}AuxiliaryCurveEntry`), _dec$2w(_class$2x = (_class2$1_ = class AuxiliaryCurveEntry {
   constructor() {
-    this.name = _initializer$1V && _initializer$1V();
-    this.curve = _initializer2$1B && _initializer2$1B();
+    this.name = _initializer$1W && _initializer$1W();
+    this.curve = _initializer2$1C && _initializer2$1C();
   }
-}, _initializer$1V = applyDecoratedInitializer(_class2$1Z.prototype, "name", [serializable$c], function () {
+}, _initializer$1W = applyDecoratedInitializer(_class2$1_.prototype, "name", [serializable$c], function () {
   return '';
-}), _initializer2$1B = applyDecoratedInitializer(_class2$1Z.prototype, "curve", [serializable$c], function () {
+}), _initializer2$1C = applyDecoratedInitializer(_class2$1_.prototype, "curve", [serializable$c], function () {
   return new RealCurve();
-}), _class2$1Z)) || _class$2w);
+}), _class2$1_)) || _class$2x);
 
 function invokeComponentMethodsEngagedInAnimationEvent(node, methodName, args) {
   const components = node.components;
@@ -60650,7 +60784,7 @@ function invokeComponentMethodsEngagedInAnimationEvent(node, methodName, args) {
   }
 }
 
-var _dec$2u, _class$2v, _class2$1Y, _initializer$1U, _initializer2$1A, _initializer3$1b, _initializer4$10, _initializer5$P, _initializer6$E, _initializer7$v, _initializer8$s, _initializer9$o, _initializer0$m, _initializer1$l, _initializer10$j, _AnimationClip, _dec2$20, _class3$8, _class4$8, _initializer11$g, _initializer12$d;
+var _dec$2v, _class$2w, _class2$1Z, _initializer$1V, _initializer2$1B, _initializer3$1b, _initializer4$10, _initializer5$P, _initializer6$E, _initializer7$v, _initializer8$s, _initializer9$o, _initializer0$m, _initializer1$l, _initializer10$j, _AnimationClip, _dec2$20, _class3$8, _class4$8, _initializer11$g, _initializer12$d;
 const searchForRootBonePathSymbol = Symbol('SearchForRootBonePath');
 const exoticAnimationTag = Symbol('ExoticAnimation');
 const embeddedPlayerCountTag = Symbol('[[EmbeddedPlayerCount]]');
@@ -60659,7 +60793,7 @@ const addEmbeddedPlayerTag = Symbol('[[AddEmbeddedPlayer]]');
 const removeEmbeddedPlayerTag = Symbol('[[RemoveEmbeddedPlayer]]');
 const clearEmbeddedPlayersTag = Symbol('[[ClearEmbeddedPlayers]]');
 const additiveSettingsTag = Symbol('[[Additive Settings]]');
-let AnimationClip = (_dec$2u = ccclass$x('cc.AnimationClip'), _dec$2u(_class$2v = (_class2$1Y = (_AnimationClip = class AnimationClip extends Asset {
+let AnimationClip = (_dec$2v = ccclass$x('cc.AnimationClip'), _dec$2v(_class$2w = (_class2$1Z = (_AnimationClip = class AnimationClip extends Asset {
   static createWithSpriteFrames(spriteFrames, sample) {
     const clip = new AnimationClip();
     clip.sample = sample || clip.sample;
@@ -60674,8 +60808,8 @@ let AnimationClip = (_dec$2u = ccclass$x('cc.AnimationClip'), _dec$2u(_class$2v 
   }
   constructor(name) {
     super(name);
-    this.sample = _initializer$1U && _initializer$1U();
-    this.speed = _initializer2$1A && _initializer2$1A();
+    this.sample = _initializer$1V && _initializer$1V();
+    this.speed = _initializer2$1B && _initializer2$1B();
     this.wrapMode = _initializer3$1b && _initializer3$1b();
     this.enableTrsBlending = _initializer4$10 && _initializer4$10();
     this._duration = _initializer5$P && _initializer5$P();
@@ -61190,31 +61324,31 @@ let AnimationClip = (_dec$2u = ccclass$x('cc.AnimationClip'), _dec$2u(_class$2v 
   _findAuxiliaryCurveEntry(name) {
     return this._auxiliaryCurveEntries.find(entry => entry.name === name);
   }
-}, _AnimationClip.WrapMode = WrapMode, _AnimationClip), _initializer$1U = applyDecoratedInitializer(_class2$1Y.prototype, "sample", [serializable$c], function () {
+}, _AnimationClip.WrapMode = WrapMode, _AnimationClip), _initializer$1V = applyDecoratedInitializer(_class2$1Z.prototype, "sample", [serializable$c], function () {
   return 60;
-}), _initializer2$1A = applyDecoratedInitializer(_class2$1Y.prototype, "speed", [serializable$c], function () {
+}), _initializer2$1B = applyDecoratedInitializer(_class2$1Z.prototype, "speed", [serializable$c], function () {
   return 1;
-}), _initializer3$1b = applyDecoratedInitializer(_class2$1Y.prototype, "wrapMode", [serializable$c], function () {
+}), _initializer3$1b = applyDecoratedInitializer(_class2$1Z.prototype, "wrapMode", [serializable$c], function () {
   return WrapMode.Normal;
-}), _initializer4$10 = applyDecoratedInitializer(_class2$1Y.prototype, "enableTrsBlending", [serializable$c], function () {
+}), _initializer4$10 = applyDecoratedInitializer(_class2$1Z.prototype, "enableTrsBlending", [serializable$c], function () {
   return false;
-}), _initializer5$P = applyDecoratedInitializer(_class2$1Y.prototype, "_duration", [serializable$c], function () {
+}), _initializer5$P = applyDecoratedInitializer(_class2$1Z.prototype, "_duration", [serializable$c], function () {
   return 0;
-}), _initializer6$E = applyDecoratedInitializer(_class2$1Y.prototype, "_hash", [serializable$c], function () {
+}), _initializer6$E = applyDecoratedInitializer(_class2$1Z.prototype, "_hash", [serializable$c], function () {
   return 0;
-}), _initializer7$v = applyDecoratedInitializer(_class2$1Y.prototype, "_tracks", [serializable$c], function () {
+}), _initializer7$v = applyDecoratedInitializer(_class2$1Z.prototype, "_tracks", [serializable$c], function () {
   return [];
-}), _initializer8$s = applyDecoratedInitializer(_class2$1Y.prototype, "_exoticAnimation", [serializable$c], function () {
+}), _initializer8$s = applyDecoratedInitializer(_class2$1Z.prototype, "_exoticAnimation", [serializable$c], function () {
   return null;
-}), _initializer9$o = applyDecoratedInitializer(_class2$1Y.prototype, "_events", [serializable$c], function () {
+}), _initializer9$o = applyDecoratedInitializer(_class2$1Z.prototype, "_events", [serializable$c], function () {
   return [];
-}), _initializer0$m = applyDecoratedInitializer(_class2$1Y.prototype, "_embeddedPlayers", [serializable$c], function () {
+}), _initializer0$m = applyDecoratedInitializer(_class2$1Z.prototype, "_embeddedPlayers", [serializable$c], function () {
   return [];
-}), _initializer1$l = applyDecoratedInitializer(_class2$1Y.prototype, "_additiveSettings", [serializable$c], function () {
+}), _initializer1$l = applyDecoratedInitializer(_class2$1Z.prototype, "_additiveSettings", [serializable$c], function () {
   return new AdditiveSettings();
-}), _initializer10$j = applyDecoratedInitializer(_class2$1Y.prototype, "_auxiliaryCurveEntries", [serializable$c], function () {
+}), _initializer10$j = applyDecoratedInitializer(_class2$1Z.prototype, "_auxiliaryCurveEntries", [serializable$c], function () {
   return [];
-}), _class2$1Y)) || _class$2v);
+}), _class2$1Z)) || _class$2w);
 let AdditiveSettings = (_dec2$20 = ccclass$x('cc.AnimationClipAdditiveSettings'), _dec2$20(_class3$8 = (_class4$8 = class AdditiveSettings {
   constructor() {
     this.enabled = _initializer11$g && _initializer11$g();
@@ -61978,8 +62112,8 @@ function mixAveragedQuat(result, previous, accumulatedWeight, input, weight) {
   return newSum;
 }
 
-var _class$2u, _AnimationManager;
-let AnimationManager = ccclass$x(_class$2u = (_AnimationManager = class AnimationManager extends System {
+var _class$2v, _AnimationManager;
+let AnimationManager = ccclass$x(_class$2v = (_AnimationManager = class AnimationManager extends System {
   constructor(...args) {
     super(...args);
     this._anims = new MutableForwardIterator([]);
@@ -62096,7 +62230,7 @@ let AnimationManager = ccclass$x(_class$2u = (_AnimationManager = class Animatio
       }
     }
   }
-}, _AnimationManager.ID = 'animation', _AnimationManager)) || _class$2u;
+}, _AnimationManager.ID = 'animation', _AnimationManager)) || _class$2v;
 director.on(DirectorEvent.INIT, () => {
   const animationManager = new AnimationManager();
   director.registerSystem(AnimationManager.ID, animationManager, SystemPriority.HIGH);
@@ -62252,14 +62386,14 @@ class CrossFade extends Playable {
   }
 }
 
-var _dec$2t, _dec2$1$, _dec3$1l, _dec4$Z, _dec5$R, _class$2t, _class2$1X, _initializer$1T, _initializer2$1z, _initializer3$1a, _Animation;
-let Animation$2 = (_dec$2t = ccclass$x('cc.Animation'), _dec2$1$ = executionOrder$2(99), _dec3$1l = type$b([AnimationClip]), _dec4$Z = type$b(AnimationClip), _dec5$R = type$b([AnimationClip]), _dec$2t(_class$2t = _dec2$1$(_class$2t = (_class2$1X = (_Animation = class Animation extends Eventify(Component) {
+var _dec$2u, _dec2$1$, _dec3$1l, _dec4$Z, _dec5$R, _class$2u, _class2$1Y, _initializer$1U, _initializer2$1A, _initializer3$1a, _Animation;
+let Animation$2 = (_dec$2u = ccclass$x('cc.Animation'), _dec2$1$ = executionOrder$2(99), _dec3$1l = type$b([AnimationClip]), _dec4$Z = type$b(AnimationClip), _dec5$R = type$b([AnimationClip]), _dec$2u(_class$2u = _dec2$1$(_class$2u = (_class2$1Y = (_Animation = class Animation extends Eventify(Component) {
   constructor(...args) {
     super(...args);
-    this.playOnLoad = _initializer$1T && _initializer$1T();
+    this.playOnLoad = _initializer$1U && _initializer$1U();
     this._crossFade = new CrossFade();
     this._nameToState = createMap(true);
-    this._clips = _initializer2$1z && _initializer2$1z();
+    this._clips = _initializer2$1A && _initializer2$1A();
     this._defaultClip = _initializer3$1a && _initializer3$1a();
     this._hasBeenPlayed = false;
     this._reportedControllerConflict = false;
@@ -62484,13 +62618,13 @@ let Animation$2 = (_dec$2t = ccclass$x('cc.Animation'), _dec2$1$ = executionOrde
       }
     }
   }
-}, _Animation.EventType = AnimationStateEventType, _Animation), _applyDecoratedDescriptor(_class2$1X.prototype, "clips", [_dec3$1l], Object.getOwnPropertyDescriptor(_class2$1X.prototype, "clips"), _class2$1X.prototype), _applyDecoratedDescriptor(_class2$1X.prototype, "defaultClip", [_dec4$Z], Object.getOwnPropertyDescriptor(_class2$1X.prototype, "defaultClip"), _class2$1X.prototype), _initializer$1T = applyDecoratedInitializer(_class2$1X.prototype, "playOnLoad", [serializable$c], function () {
+}, _Animation.EventType = AnimationStateEventType, _Animation), _applyDecoratedDescriptor(_class2$1Y.prototype, "clips", [_dec3$1l], Object.getOwnPropertyDescriptor(_class2$1Y.prototype, "clips"), _class2$1Y.prototype), _applyDecoratedDescriptor(_class2$1Y.prototype, "defaultClip", [_dec4$Z], Object.getOwnPropertyDescriptor(_class2$1Y.prototype, "defaultClip"), _class2$1Y.prototype), _initializer$1U = applyDecoratedInitializer(_class2$1Y.prototype, "playOnLoad", [serializable$c], function () {
   return false;
-}), _initializer2$1z = applyDecoratedInitializer(_class2$1X.prototype, "_clips", [_dec5$R], function () {
+}), _initializer2$1A = applyDecoratedInitializer(_class2$1Y.prototype, "_clips", [_dec5$R], function () {
   return [];
-}), _initializer3$1a = applyDecoratedInitializer(_class2$1X.prototype, "_defaultClip", [serializable$c], function () {
+}), _initializer3$1a = applyDecoratedInitializer(_class2$1Y.prototype, "_defaultClip", [serializable$c], function () {
   return null;
-}), _class2$1X)) || _class$2t) || _class$2t);
+}), _class2$1Y)) || _class$2u) || _class$2u);
 function equalClips(clip1, clip2) {
   if (clip1 === clip2) {
     return true;
@@ -62675,19 +62809,19 @@ class SkeletalAnimationState extends AnimationState$1 {
   }
 }
 
-var _dec$2s, _dec2$1_, _class$2s, _class2$1W, _initializer$1S, _initializer2$1y, _dec3$1k, _dec4$Y, _dec5$Q, _dec6$C, _class3$7, _class4$7, _initializer3$19, _initializer4$$, _SkeletalAnimation;
-let Socket = (_dec$2s = ccclass$x('cc.SkeletalAnimation.Socket'), _dec2$1_ = type$b(Node$1), _dec$2s(_class$2s = (_class2$1W = class Socket {
+var _dec$2t, _dec2$1_, _class$2t, _class2$1X, _initializer$1T, _initializer2$1z, _dec3$1k, _dec4$Y, _dec5$Q, _dec6$C, _class3$7, _class4$7, _initializer3$19, _initializer4$$, _SkeletalAnimation;
+let Socket = (_dec$2t = ccclass$x('cc.SkeletalAnimation.Socket'), _dec2$1_ = type$b(Node$1), _dec$2t(_class$2t = (_class2$1X = class Socket {
   constructor(path = '', target = null) {
-    this.path = _initializer$1S && _initializer$1S();
-    this.target = _initializer2$1y && _initializer2$1y();
+    this.path = _initializer$1T && _initializer$1T();
+    this.target = _initializer2$1z && _initializer2$1z();
     this.path = path;
     this.target = target;
   }
-}, _initializer$1S = applyDecoratedInitializer(_class2$1W.prototype, "path", [serializable$c], function () {
+}, _initializer$1T = applyDecoratedInitializer(_class2$1X.prototype, "path", [serializable$c], function () {
   return '';
-}), _initializer2$1y = applyDecoratedInitializer(_class2$1W.prototype, "target", [_dec2$1_], function () {
+}), _initializer2$1z = applyDecoratedInitializer(_class2$1X.prototype, "target", [_dec2$1_], function () {
   return null;
-}), _class2$1W)) || _class$2s);
+}), _class2$1X)) || _class$2t);
 setClassAlias(Socket, 'cc.SkeletalAnimationComponent.Socket');
 const m4_1$1 = new Mat4();
 const m4_2 = new Mat4();
@@ -62931,7 +63065,7 @@ let SkeletalAnimation = (_dec3$1k = ccclass$x('cc.SkeletalAnimation'), _dec4$Y =
 cclegacy.SkeletalAnimationComponent = SkeletalAnimation;
 setClassAlias(SkeletalAnimation, 'cc.SkeletalAnimationComponent');
 
-var _dec$2r, _dec2$1Z, _class$2r, _class2$1V, _initializer$1R, _initializer2$1x, _Primitive;
+var _dec$2s, _dec2$1Z, _class$2s, _class2$1W, _initializer$1S, _initializer2$1y, _Primitive;
 var PrimitiveType;
 (function (PrimitiveType) {
   PrimitiveType[PrimitiveType["BOX"] = 0] = "BOX";
@@ -62944,22 +63078,22 @@ var PrimitiveType;
   PrimitiveType[PrimitiveType["QUAD"] = 7] = "QUAD";
 })(PrimitiveType || (PrimitiveType = {}));
 Enum(PrimitiveType);
-let Primitive = (_dec$2r = ccclass$x('cc.Primitive'), _dec2$1Z = type$b(PrimitiveType), _dec$2r(_class$2r = (_class2$1V = (_Primitive = class Primitive extends Mesh {
+let Primitive = (_dec$2s = ccclass$x('cc.Primitive'), _dec2$1Z = type$b(PrimitiveType), _dec$2s(_class$2s = (_class2$1W = (_Primitive = class Primitive extends Mesh {
   constructor(type = PrimitiveType.BOX) {
     super();
-    this.type = _initializer$1R && _initializer$1R();
-    this.info = _initializer2$1x && _initializer2$1x();
+    this.type = _initializer$1S && _initializer$1S();
+    this.info = _initializer2$1y && _initializer2$1y();
     this.type = type;
   }
   onLoaded() {
     const factory = primitives[PrimitiveType[this.type].toLowerCase()];
     createMesh(factory(this.info), this);
   }
-}, _Primitive.PrimitiveType = PrimitiveType, _Primitive), _initializer$1R = applyDecoratedInitializer(_class2$1V.prototype, "type", [_dec2$1Z], function () {
+}, _Primitive.PrimitiveType = PrimitiveType, _Primitive), _initializer$1S = applyDecoratedInitializer(_class2$1W.prototype, "type", [_dec2$1Z], function () {
   return PrimitiveType.BOX;
-}), _initializer2$1x = applyDecoratedInitializer(_class2$1V.prototype, "info", [serializable$c], function () {
+}), _initializer2$1y = applyDecoratedInitializer(_class2$1W.prototype, "info", [serializable$c], function () {
   return {};
-}), _class2$1V)) || _class$2r);
+}), _class2$1W)) || _class$2s);
 cclegacy.Primitive = Primitive;
 
 legacyCC.primitives = primitives;
@@ -65139,8 +65273,8 @@ class Counter {
   }
 }
 
-var _dec$2q, _class$2q;
-let PerfCounter = (_dec$2q = ccclass$x('cc.PerfCounter'), _dec$2q(_class$2q = class PerfCounter extends Counter {
+var _dec$2r, _class$2r;
+let PerfCounter = (_dec$2r = ccclass$x('cc.PerfCounter'), _dec$2r(_class$2r = class PerfCounter extends Counter {
   constructor(id, opts, now) {
     super(id, opts, now);
     this._time = now;
@@ -65168,7 +65302,7 @@ let PerfCounter = (_dec$2q = ccclass$x('cc.PerfCounter'), _dec$2q(_class$2q = cl
       this._average(this._value);
     }
   }
-}) || _class$2q);
+}) || _class$2r);
 
 const _characters = '0123456789. ';
 const _average = 500;
@@ -65640,11 +65774,11 @@ const profiler = new Profiler();
 director.registerSystem('profiler', profiler, 0);
 cclegacy.profiler = profiler;
 
-var _dec$2p, _class$2p, _class2$1U, _initializer$1Q;
-let VideoClip = (_dec$2p = ccclass$x('cc.VideoClip'), _dec$2p(_class$2p = (_class2$1U = class VideoClip extends Asset {
+var _dec$2q, _class$2q, _class2$1V, _initializer$1R;
+let VideoClip = (_dec$2q = ccclass$x('cc.VideoClip'), _dec$2q(_class$2q = (_class2$1V = class VideoClip extends Asset {
   constructor() {
     super();
-    this._duration = _initializer$1Q && _initializer$1Q();
+    this._duration = _initializer$1R && _initializer$1R();
     this._video = null;
   }
   set _nativeAsset(clip) {
@@ -65658,9 +65792,9 @@ let VideoClip = (_dec$2p = ccclass$x('cc.VideoClip'), _dec$2p(_class$2p = (_clas
   get _nativeAsset() {
     return this._video;
   }
-}, _initializer$1Q = applyDecoratedInitializer(_class2$1U.prototype, "_duration", [serializable$c], function () {
+}, _initializer$1R = applyDecoratedInitializer(_class2$1V.prototype, "_duration", [serializable$c], function () {
   return 0;
-}), _class2$1U)) || _class$2p);
+}), _class2$1V)) || _class$2q);
 
 const ccdocument$4 = ccwindow.document;
 function downloadVideo(url, options, onComplete) {
@@ -65744,7 +65878,7 @@ deprecateModuleExportedName({
   }
 });
 
-var _dec$2o, _dec2$1Y, _class$2o, _class2$1T, _initializer$1P, _initializer2$1w, _UITransform;
+var _dec$2p, _dec2$1Y, _class$2p, _class2$1U, _initializer$1Q, _initializer2$1x, _UITransform;
 const _vec2a = new Vec2();
 const _vec2b = new Vec2();
 const _vec3a = new Vec3();
@@ -65753,12 +65887,12 @@ const _matrix$1 = new Mat4();
 const _worldMatrix$1 = new Mat4();
 const _zeroMatrix = new Mat4(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 const _rect = new Rect();
-let UITransform = (_dec$2o = ccclass$x('cc.UITransform'), _dec2$1Y = executionOrder$2(110), _dec$2o(_class$2o = _dec2$1Y(_class$2o = disallowMultiple$1(_class$2o = (_class2$1T = (_UITransform = class UITransform extends Component {
+let UITransform = (_dec$2p = ccclass$x('cc.UITransform'), _dec2$1Y = executionOrder$2(110), _dec$2p(_class$2p = _dec2$1Y(_class$2p = disallowMultiple$1(_class$2p = (_class2$1U = (_UITransform = class UITransform extends Component {
   constructor() {
     super();
     this._priority = 0;
-    this._contentSize = _initializer$1P && _initializer$1P();
-    this._anchorPoint = _initializer2$1w && _initializer2$1w();
+    this._contentSize = _initializer$1Q && _initializer$1Q();
+    this._anchorPoint = _initializer2$1x && _initializer2$1x();
   }
   get contentSize() {
     return this._contentSize;
@@ -66169,16 +66303,16 @@ let UITransform = (_dec$2o = ccclass$x('cc.UITransform'), _dec2$1Y = executionOr
   static _cleanChangeMap() {
     UITransform.priorityChangeNodeMap.clear();
   }
-}, _UITransform.EventType = NodeEventType, _UITransform.priorityChangeNodeMap = new Map(), _UITransform), _initializer$1P = applyDecoratedInitializer(_class2$1T.prototype, "_contentSize", [serializable$c], function () {
+}, _UITransform.EventType = NodeEventType, _UITransform.priorityChangeNodeMap = new Map(), _UITransform), _initializer$1Q = applyDecoratedInitializer(_class2$1U.prototype, "_contentSize", [serializable$c], function () {
   return new Size(100, 100);
-}), _initializer2$1w = applyDecoratedInitializer(_class2$1T.prototype, "_anchorPoint", [serializable$c], function () {
+}), _initializer2$1x = applyDecoratedInitializer(_class2$1U.prototype, "_anchorPoint", [serializable$c], function () {
   return new Vec2(0.5, 0.5);
-}), _class2$1T)) || _class$2o) || _class$2o) || _class$2o);
+}), _class2$1U)) || _class$2p) || _class$2p) || _class$2p);
 director.on(DirectorEvent.AFTER_UPDATE, UITransform._sortSiblings);
 director.on(DirectorEvent.BEFORE_SCENE_LAUNCH, UITransform._cleanChangeMap);
 
-var _dec$2n, _dec2$1X, _dec3$1j, _class$2n;
-let RenderRoot2D = (_dec$2n = ccclass$x('cc.RenderRoot2D'), _dec2$1X = executionOrder$2(100), _dec3$1j = requireComponent(UITransform), _dec$2n(_class$2n = _dec2$1X(_class$2n = _dec3$1j(_class$2n = disallowMultiple$1(_class$2n = class RenderRoot2D extends Component {
+var _dec$2o, _dec2$1X, _dec3$1j, _class$2o;
+let RenderRoot2D = (_dec$2o = ccclass$x('cc.RenderRoot2D'), _dec2$1X = executionOrder$2(100), _dec3$1j = requireComponent(UITransform), _dec$2o(_class$2o = _dec2$1X(_class$2o = _dec3$1j(_class$2o = disallowMultiple$1(_class$2o = class RenderRoot2D extends Component {
   onEnable() {
     cclegacy.director.root.batcher2D.addScreen(this);
   }
@@ -66188,16 +66322,16 @@ let RenderRoot2D = (_dec$2n = ccclass$x('cc.RenderRoot2D'), _dec2$1X = execution
   onDestroy() {
     cclegacy.director.root.batcher2D.removeScreen(this);
   }
-}) || _class$2n) || _class$2n) || _class$2n) || _class$2n);
+}) || _class$2o) || _class$2o) || _class$2o) || _class$2o);
 
-var _dec$2m, _dec2$1W, _dec3$1i, _dec4$X, _class$2m, _class2$1S, _initializer$1O, _initializer2$1v;
+var _dec$2n, _dec2$1W, _dec3$1i, _dec4$X, _class$2n, _class2$1T, _initializer$1P, _initializer2$1w;
 const _worldPos = new Vec3();
 var CanvasRenderMode;
 (function (CanvasRenderMode) {
   CanvasRenderMode[CanvasRenderMode["OVERLAY"] = 0] = "OVERLAY";
   CanvasRenderMode[CanvasRenderMode["INTERSPERSE"] = 1] = "INTERSPERSE";
 })(CanvasRenderMode || (CanvasRenderMode = {}));
-let Canvas = (_dec$2m = ccclass$x('cc.Canvas'), _dec2$1W = executionOrder$2(100), _dec3$1i = type$b(Camera), _dec4$X = type$b(Camera), _dec$2m(_class$2m = _dec2$1W(_class$2m = disallowMultiple$1(_class$2m = (_class2$1S = class Canvas extends RenderRoot2D {
+let Canvas = (_dec$2n = ccclass$x('cc.Canvas'), _dec2$1W = executionOrder$2(100), _dec3$1i = type$b(Camera), _dec4$X = type$b(Camera), _dec$2n(_class$2n = _dec2$1W(_class$2n = disallowMultiple$1(_class$2n = (_class2$1T = class Canvas extends RenderRoot2D {
   get renderMode() {
     return this._renderMode;
   }
@@ -66226,8 +66360,8 @@ let Canvas = (_dec$2m = ccclass$x('cc.Canvas'), _dec2$1W = executionOrder$2(100)
   }
   constructor() {
     super();
-    this._cameraComponent = _initializer$1O && _initializer$1O();
-    this._alignCanvasWithScreen = _initializer2$1v && _initializer2$1v();
+    this._cameraComponent = _initializer$1P && _initializer$1P();
+    this._alignCanvasWithScreen = _initializer2$1w && _initializer2$1w();
     this._pos = new Vec3();
     this._renderMode = CanvasRenderMode.OVERLAY;
     this._thisOnCameraResized = this._onResizeCamera.bind(this);
@@ -66289,11 +66423,11 @@ let Canvas = (_dec$2m = ccclass$x('cc.Canvas'), _dec2$1W = executionOrder$2(100)
     }
     return 0;
   }
-}, _applyDecoratedDescriptor(_class2$1S.prototype, "cameraComponent", [_dec3$1i], Object.getOwnPropertyDescriptor(_class2$1S.prototype, "cameraComponent"), _class2$1S.prototype), _initializer$1O = applyDecoratedInitializer(_class2$1S.prototype, "_cameraComponent", [_dec4$X], function () {
+}, _applyDecoratedDescriptor(_class2$1T.prototype, "cameraComponent", [_dec3$1i], Object.getOwnPropertyDescriptor(_class2$1T.prototype, "cameraComponent"), _class2$1T.prototype), _initializer$1P = applyDecoratedInitializer(_class2$1T.prototype, "_cameraComponent", [_dec4$X], function () {
   return null;
-}), _initializer2$1v = applyDecoratedInitializer(_class2$1S.prototype, "_alignCanvasWithScreen", [serializable$c], function () {
+}), _initializer2$1w = applyDecoratedInitializer(_class2$1T.prototype, "_alignCanvasWithScreen", [serializable$c], function () {
   return true;
-}), _class2$1S)) || _class$2m) || _class$2m) || _class$2m);
+}), _class2$1T)) || _class$2n) || _class$2n) || _class$2n);
 cclegacy.Canvas = Canvas;
 
 let Stage;
@@ -66462,8 +66596,8 @@ class StencilManager {
 StencilManager.sharedManager = null;
 StencilManager.sharedManager = new StencilManager();
 
-var _dec$2l, _dec2$1V, _dec3$1h, _class$2l;
-let UIComponent = (_dec$2l = ccclass$x('cc.UIComponent'), _dec2$1V = requireComponent(UITransform), _dec3$1h = executionOrder$2(110), _dec$2l(_class$2l = _dec2$1V(_class$2l = _dec3$1h(_class$2l = disallowMultiple$1(_class$2l = class UIComponent extends Component {
+var _dec$2m, _dec2$1V, _dec3$1h, _class$2m;
+let UIComponent = (_dec$2m = ccclass$x('cc.UIComponent'), _dec2$1V = requireComponent(UITransform), _dec3$1h = executionOrder$2(110), _dec$2m(_class$2m = _dec2$1V(_class$2m = _dec3$1h(_class$2m = disallowMultiple$1(_class$2m = class UIComponent extends Component {
   constructor() {
     super();
     this._lastParent = null;
@@ -66484,7 +66618,7 @@ let UIComponent = (_dec$2l = ccclass$x('cc.UIComponent'), _dec2$1V = requireComp
   markForUpdateRenderData(enable = true) {}
   setNodeDirty() {}
   setTextureDirty() {}
-}) || _class$2l) || _class$2l) || _class$2l) || _class$2l);
+}) || _class$2m) || _class$2m) || _class$2m) || _class$2m);
 
 const ATTR_POSITION$1 = AttributeName.ATTR_POSITION;
 const ATTR_COLOR$1 = AttributeName.ATTR_COLOR;
@@ -66708,21 +66842,54 @@ class MeshBuffer {
     }
     const byteCount = this.byteOffset;
     const indexCount = this.indexOffset;
+    const indexBytes = indexCount * 2;
+    let allUploaded = true;
     for (let i = 0; i < submitCount; ++i) {
       const iaRef = this._iaPool[i];
-      const verticesData = new Float32Array(this.vData.buffer, 0, byteCount >> 2);
+      let verticesData = new Float32Array(this.vData.buffer, 0, byteCount >> 2);
       const indicesData = new Uint16Array(this.iData.buffer, 0, indexCount);
+      let requiredVertexBytes = byteCount;
       const vertexBuffer = iaRef.vertexBuffers[0];
       if (byteCount > vertexBuffer.size) {
         vertexBuffer.resize(byteCount);
+        if (byteCount > vertexBuffer.size && indexCount > 0) {
+          let maxVertex = 0;
+          for (let j = 0; j < indexCount; ++j) {
+            if (indicesData[j] > maxVertex) {
+              maxVertex = indicesData[j];
+            }
+          }
+          const actualByteCount = (maxVertex + 1) * this._vertexFormatBytes;
+          if (actualByteCount < byteCount) {
+            requiredVertexBytes = actualByteCount;
+            if (actualByteCount > vertexBuffer.size) {
+              vertexBuffer.resize(actualByteCount);
+            }
+            verticesData = new Float32Array(this.vData.buffer, 0, actualByteCount >> 2);
+          }
+        }
+      }
+      const indexBuffer = iaRef.indexBuffer;
+      if (indexBytes > indexBuffer.size) {
+        indexBuffer.resize(indexBytes);
+      }
+      if (vertexBuffer.size < requiredVertexBytes || indexBuffer.size < indexBytes) {
+        allUploaded = false;
+        if (iOS14) {
+          iaRef.ia.indexCount = 0;
+        } else {
+          for (let k = 0; k < this._nextFreeIAHandle; ++k) {
+            this._iaPool[k].ia.indexCount = 0;
+          }
+        }
+        continue;
       }
       vertexBuffer.update(verticesData);
-      if (indexCount * 2 > iaRef.indexBuffer.size) {
-        iaRef.indexBuffer.resize(indexCount * 2);
-      }
-      iaRef.indexBuffer.update(indicesData);
+      indexBuffer.update(indicesData);
     }
-    this.dirty = false;
+    if (allUploaded) {
+      this.dirty = false;
+    }
   }
   createNewIA(device) {
     let ia;
@@ -66799,6 +66966,12 @@ class StaticVBChunk {
 class StaticVBAccessor extends BufferAccessor {
   get id() {
     return this._id;
+  }
+  get maxVertexCount() {
+    return this._vCount;
+  }
+  get maxIndexCount() {
+    return this._iCount;
   }
   constructor(device, attributes, vCount, iCount) {
     super(device, attributes);
@@ -67652,6 +67825,10 @@ class MeshRenderData extends BaseRenderData {
       this._vertexBuffers[0].destroy();
       this._vertexBuffers = [];
     }
+    if (this._indexBuffer) {
+      this._indexBuffer.destroy();
+      this._indexBuffer = null;
+    }
     this._iaInfo = null;
     this.vData = new Float32Array(256 * this.stride);
     this.iData = new Uint16Array(256 * 6);
@@ -67784,7 +67961,7 @@ SortingLayers.nameMap = new Map();
 SortingLayers.indexMap = new Map();
 SortingLayers.Enum = Enum(SortingLayer);
 
-var _dec$2k, _dec2$1U, _dec3$1g, _dec4$W, _class$2k, _class2$1R, _initializer$1N, _initializer2$1u, _initializer3$18, _initializer4$_, _initializer5$O, _UIRenderer;
+var _dec$2l, _dec2$1U, _dec3$1g, _dec4$W, _class$2l, _class2$1S, _initializer$1O, _initializer2$1v, _initializer3$18, _initializer4$_, _initializer5$O, _UIRenderer;
 ccenum(BlendFactor);
 ccenum(BlendOp);
 ccenum(ColorMask);
@@ -67796,12 +67973,12 @@ let InstanceMaterialType;
   InstanceMaterialType[InstanceMaterialType["USE_ALPHA_SEPARATED"] = 3] = "USE_ALPHA_SEPARATED";
   InstanceMaterialType[InstanceMaterialType["USE_ALPHA_SEPARATED_AND_GRAY"] = 4] = "USE_ALPHA_SEPARATED_AND_GRAY";
 })(InstanceMaterialType || (InstanceMaterialType = {}));
-let UIRenderer = (_dec$2k = ccclass$x('cc.UIRenderer'), _dec2$1U = requireComponent(UITransform), _dec3$1g = type$b(Material), _dec4$W = type$b(Material), _dec$2k(_class$2k = _dec2$1U(_class$2k = (_class2$1R = (_UIRenderer = class UIRenderer extends Renderer {
+let UIRenderer = (_dec$2l = ccclass$x('cc.UIRenderer'), _dec2$1U = requireComponent(UITransform), _dec3$1g = type$b(Material), _dec4$W = type$b(Material), _dec$2l(_class$2l = _dec2$1U(_class$2l = (_class2$1S = (_UIRenderer = class UIRenderer extends Renderer {
   constructor() {
     super();
     this._renderData = null;
-    this._materials = _initializer$1N && _initializer$1N();
-    this._customMaterial = _initializer2$1u && _initializer2$1u();
+    this._materials = _initializer$1O && _initializer$1O();
+    this._customMaterial = _initializer2$1v && _initializer2$1v();
     this._srcBlendFactor = _initializer3$18 && _initializer3$18();
     this._dstBlendFactor = _initializer4$_ && _initializer4$_();
     this._color = _initializer5$O && _initializer5$O();
@@ -68135,17 +68312,17 @@ let UIRenderer = (_dec$2k = ccclass$x('cc.UIRenderer'), _dec2$1U = requireCompon
   createRenderEntity() {
     return new RenderEntity(RenderEntityType.STATIC);
   }
-}, _UIRenderer.BlendState = BlendFactor, _UIRenderer.Assembler = null, _UIRenderer.PostAssembler = null, _UIRenderer), _applyDecoratedDescriptor(_class2$1R.prototype, "sharedMaterials", [override$1], Object.getOwnPropertyDescriptor(_class2$1R.prototype, "sharedMaterials"), _class2$1R.prototype), _applyDecoratedDescriptor(_class2$1R.prototype, "customMaterial", [_dec3$1g], Object.getOwnPropertyDescriptor(_class2$1R.prototype, "customMaterial"), _class2$1R.prototype), _initializer$1N = applyDecoratedInitializer(_class2$1R.prototype, "_materials", [override$1], function () {
+}, _UIRenderer.BlendState = BlendFactor, _UIRenderer.Assembler = null, _UIRenderer.PostAssembler = null, _UIRenderer), _applyDecoratedDescriptor(_class2$1S.prototype, "sharedMaterials", [override$1], Object.getOwnPropertyDescriptor(_class2$1S.prototype, "sharedMaterials"), _class2$1S.prototype), _applyDecoratedDescriptor(_class2$1S.prototype, "customMaterial", [_dec3$1g], Object.getOwnPropertyDescriptor(_class2$1S.prototype, "customMaterial"), _class2$1S.prototype), _initializer$1O = applyDecoratedInitializer(_class2$1S.prototype, "_materials", [override$1], function () {
   return [];
-}), _initializer2$1u = applyDecoratedInitializer(_class2$1R.prototype, "_customMaterial", [_dec4$W], function () {
+}), _initializer2$1v = applyDecoratedInitializer(_class2$1S.prototype, "_customMaterial", [_dec4$W], function () {
   return null;
-}), _initializer3$18 = applyDecoratedInitializer(_class2$1R.prototype, "_srcBlendFactor", [serializable$c], function () {
+}), _initializer3$18 = applyDecoratedInitializer(_class2$1S.prototype, "_srcBlendFactor", [serializable$c], function () {
   return BlendFactor.SRC_ALPHA;
-}), _initializer4$_ = applyDecoratedInitializer(_class2$1R.prototype, "_dstBlendFactor", [serializable$c], function () {
+}), _initializer4$_ = applyDecoratedInitializer(_class2$1S.prototype, "_dstBlendFactor", [serializable$c], function () {
   return BlendFactor.ONE_MINUS_SRC_ALPHA;
-}), _initializer5$O = applyDecoratedInitializer(_class2$1R.prototype, "_color", [serializable$c], function () {
+}), _initializer5$O = applyDecoratedInitializer(_class2$1S.prototype, "_color", [serializable$c], function () {
   return Color.WHITE.clone();
-}), _class2$1R)) || _class$2k) || _class$2k);
+}), _class2$1S)) || _class$2l) || _class$2l);
 cclegacy.internal.UIRenderer = UIRenderer;
 
 removeProperty(UIComponent.prototype, 'UIComponent', [{
@@ -68475,7 +68652,7 @@ const dynamicAtlasManager = DynamicAtlasManager.instance = new DynamicAtlasManag
 director.registerSystem('dynamicAtlasManager', dynamicAtlasManager, 0);
 cclegacy.internal.dynamicAtlasManager = dynamicAtlasManager;
 
-var _dec$2j, _class$2j, _SpriteFrame;
+var _dec$2k, _class$2k, _SpriteFrame;
 const INSET_LEFT = 0;
 const INSET_TOP = 1;
 const INSET_RIGHT = 2;
@@ -68506,7 +68683,7 @@ let SpriteFrameEvent;
 (function (SpriteFrameEvent) {
   SpriteFrameEvent["UV_UPDATED"] = "uv_updated";
 })(SpriteFrameEvent || (SpriteFrameEvent = {}));
-let SpriteFrame = (_dec$2j = ccclass$x('cc.SpriteFrame'), _dec$2j(_class$2j = (_SpriteFrame = class SpriteFrame extends Asset {
+let SpriteFrame = (_dec$2k = ccclass$x('cc.SpriteFrame'), _dec$2k(_class$2k = (_SpriteFrame = class SpriteFrame extends Asset {
   static createWithImage(imageSourceOrImageAsset) {
     const img = imageSourceOrImageAsset instanceof ImageAsset ? imageSourceOrImageAsset : new ImageAsset(imageSourceOrImageAsset);
     const tex = new Texture2D();
@@ -69257,21 +69434,21 @@ let SpriteFrame = (_dec$2j = ccclass$x('cc.SpriteFrame'), _dec$2j(_class$2j = (_
     this._initVertices();
     this._createMesh();
   }
-}, _SpriteFrame.EVENT_UV_UPDATED = SpriteFrameEvent.UV_UPDATED, _SpriteFrame.MeshType = MeshType, _SpriteFrame)) || _class$2j);
+}, _SpriteFrame.EVENT_UV_UPDATED = SpriteFrameEvent.UV_UPDATED, _SpriteFrame.MeshType = MeshType, _SpriteFrame)) || _class$2k);
 cclegacy.SpriteFrame = SpriteFrame;
 
-var _dec$2i, _dec2$1T, _dec3$1f, _class$2i, _class2$1Q, _initializer$1M, _initializer2$1t, _initializer3$17, _initializer4$Z, _initializer5$N, _initializer6$D;
+var _dec$2j, _dec2$1T, _dec3$1f, _class$2j, _class2$1R, _initializer$1N, _initializer2$1u, _initializer3$17, _initializer4$Z, _initializer5$N, _initializer6$D;
 var SpriteMode;
 (function (SpriteMode) {
   SpriteMode[SpriteMode["SIMPLE"] = 0] = "SIMPLE";
   SpriteMode[SpriteMode["SLICED"] = 1] = "SLICED";
   SpriteMode[SpriteMode["TILED"] = 2] = "TILED";
 })(SpriteMode || (SpriteMode = {}));
-let SpriteRenderer = (_dec$2i = ccclass$x('cc.SpriteRenderer'), _dec2$1T = executionOrder$2(100), _dec3$1f = type$b(SpriteFrame), _dec$2i(_class$2i = _dec2$1T(_class$2i = (_class2$1Q = class SpriteRenderer extends ModelRenderer {
+let SpriteRenderer = (_dec$2j = ccclass$x('cc.SpriteRenderer'), _dec2$1T = executionOrder$2(100), _dec3$1f = type$b(SpriteFrame), _dec$2j(_class$2j = _dec2$1T(_class$2j = (_class2$1R = class SpriteRenderer extends ModelRenderer {
   constructor() {
     super();
-    this._spriteFrame = _initializer$1M && _initializer$1M();
-    this._mode = _initializer2$1t && _initializer2$1t();
+    this._spriteFrame = _initializer$1N && _initializer$1N();
+    this._mode = _initializer2$1u && _initializer2$1u();
     this._color = _initializer3$17 && _initializer3$17();
     this._flipX = _initializer4$Z && _initializer4$Z();
     this._flipY = _initializer5$N && _initializer5$N();
@@ -69433,19 +69610,19 @@ let SpriteRenderer = (_dec$2i = ccclass$x('cc.SpriteRenderer'), _dec2$1T = execu
       this._model.scene.removeModel(this._model);
     }
   }
-}, _applyDecoratedDescriptor(_class2$1Q.prototype, "spriteFrame", [_dec3$1f], Object.getOwnPropertyDescriptor(_class2$1Q.prototype, "spriteFrame"), _class2$1Q.prototype), _initializer$1M = applyDecoratedInitializer(_class2$1Q.prototype, "_spriteFrame", [serializable$c], function () {
+}, _applyDecoratedDescriptor(_class2$1R.prototype, "spriteFrame", [_dec3$1f], Object.getOwnPropertyDescriptor(_class2$1R.prototype, "spriteFrame"), _class2$1R.prototype), _initializer$1N = applyDecoratedInitializer(_class2$1R.prototype, "_spriteFrame", [serializable$c], function () {
   return null;
-}), _initializer2$1t = applyDecoratedInitializer(_class2$1Q.prototype, "_mode", [serializable$c], function () {
+}), _initializer2$1u = applyDecoratedInitializer(_class2$1R.prototype, "_mode", [serializable$c], function () {
   return SpriteMode.SIMPLE;
-}), _initializer3$17 = applyDecoratedInitializer(_class2$1Q.prototype, "_color", [serializable$c], function () {
+}), _initializer3$17 = applyDecoratedInitializer(_class2$1R.prototype, "_color", [serializable$c], function () {
   return Color.WHITE.clone();
-}), _initializer4$Z = applyDecoratedInitializer(_class2$1Q.prototype, "_flipX", [serializable$c], function () {
+}), _initializer4$Z = applyDecoratedInitializer(_class2$1R.prototype, "_flipX", [serializable$c], function () {
   return false;
-}), _initializer5$N = applyDecoratedInitializer(_class2$1Q.prototype, "_flipY", [serializable$c], function () {
+}), _initializer5$N = applyDecoratedInitializer(_class2$1R.prototype, "_flipY", [serializable$c], function () {
   return false;
-}), _initializer6$D = applyDecoratedInitializer(_class2$1Q.prototype, "_size", [serializable$c], function () {
+}), _initializer6$D = applyDecoratedInitializer(_class2$1R.prototype, "_size", [serializable$c], function () {
   return new Vec2();
-}), _class2$1Q)) || _class$2i) || _class$2i);
+}), _class2$1R)) || _class$2j) || _class$2j);
 
 const ResourceType = Enum({
   REMOTE: 0,
@@ -70039,12 +70216,12 @@ class VideoPlayerImplManager {
 }
 legacyCC.internal.VideoPlayerImplManager = VideoPlayerImplManager;
 
-var _dec$2h, _dec2$1S, _dec3$1e, _dec4$V, _dec5$P, _dec6$B, _class$2h, _class2$1P, _initializer$1L, _initializer2$1s, _initializer3$16, _initializer4$Y, _initializer5$M, _initializer6$C, _initializer7$u, _initializer8$r, _initializer9$n, _initializer0$l, _initializer1$k, _initializer10$i, _VideoPlayer;
-let VideoPlayer = (_dec$2h = ccclass$x('cc.VideoPlayer'), _dec2$1S = requireComponent(UITransform), _dec3$1e = type$b(VideoClip), _dec4$V = type$b(ResourceType), _dec5$P = type$b(VideoClip), _dec6$B = type$b([EventHandler]), _dec$2h(_class$2h = _dec2$1S(_class$2h = (_class2$1P = (_VideoPlayer = class VideoPlayer extends Component {
+var _dec$2i, _dec2$1S, _dec3$1e, _dec4$V, _dec5$P, _dec6$B, _class$2i, _class2$1Q, _initializer$1M, _initializer2$1t, _initializer3$16, _initializer4$Y, _initializer5$M, _initializer6$C, _initializer7$u, _initializer8$r, _initializer9$n, _initializer0$l, _initializer1$k, _initializer10$i, _VideoPlayer;
+let VideoPlayer = (_dec$2i = ccclass$x('cc.VideoPlayer'), _dec2$1S = requireComponent(UITransform), _dec3$1e = type$b(VideoClip), _dec4$V = type$b(ResourceType), _dec5$P = type$b(VideoClip), _dec6$B = type$b([EventHandler]), _dec$2i(_class$2i = _dec2$1S(_class$2i = (_class2$1Q = (_VideoPlayer = class VideoPlayer extends Component {
   constructor() {
     super();
-    this._resourceType = _initializer$1L && _initializer$1L();
-    this._remoteURL = _initializer2$1s && _initializer2$1s();
+    this._resourceType = _initializer$1M && _initializer$1M();
+    this._remoteURL = _initializer2$1t && _initializer2$1t();
     this._clip = _initializer3$16 && _initializer3$16();
     this._playOnAwake = _initializer4$Y && _initializer4$Y();
     this._volume = _initializer5$M && _initializer5$M();
@@ -70318,31 +70495,31 @@ let VideoPlayer = (_dec$2h = ccclass$x('cc.VideoPlayer'), _dec2$1S = requireComp
       this._impl.stop();
     }
   }
-}, _VideoPlayer.EventType = VideoPlayerEventType, _VideoPlayer.ResourceType = ResourceType, _VideoPlayer), _initializer$1L = applyDecoratedInitializer(_class2$1P.prototype, "_resourceType", [serializable$c], function () {
+}, _VideoPlayer.EventType = VideoPlayerEventType, _VideoPlayer.ResourceType = ResourceType, _VideoPlayer), _initializer$1M = applyDecoratedInitializer(_class2$1Q.prototype, "_resourceType", [serializable$c], function () {
   return ResourceType.LOCAL;
-}), _initializer2$1s = applyDecoratedInitializer(_class2$1P.prototype, "_remoteURL", [serializable$c], function () {
+}), _initializer2$1t = applyDecoratedInitializer(_class2$1Q.prototype, "_remoteURL", [serializable$c], function () {
   return '';
-}), _initializer3$16 = applyDecoratedInitializer(_class2$1P.prototype, "_clip", [_dec3$1e, serializable$c], function () {
+}), _initializer3$16 = applyDecoratedInitializer(_class2$1Q.prototype, "_clip", [_dec3$1e, serializable$c], function () {
   return null;
-}), _initializer4$Y = applyDecoratedInitializer(_class2$1P.prototype, "_playOnAwake", [serializable$c], function () {
+}), _initializer4$Y = applyDecoratedInitializer(_class2$1Q.prototype, "_playOnAwake", [serializable$c], function () {
   return true;
-}), _initializer5$M = applyDecoratedInitializer(_class2$1P.prototype, "_volume", [serializable$c], function () {
+}), _initializer5$M = applyDecoratedInitializer(_class2$1Q.prototype, "_volume", [serializable$c], function () {
   return 1.0;
-}), _initializer6$C = applyDecoratedInitializer(_class2$1P.prototype, "_mute", [serializable$c], function () {
+}), _initializer6$C = applyDecoratedInitializer(_class2$1Q.prototype, "_mute", [serializable$c], function () {
   return false;
-}), _initializer7$u = applyDecoratedInitializer(_class2$1P.prototype, "_playbackRate", [serializable$c], function () {
+}), _initializer7$u = applyDecoratedInitializer(_class2$1Q.prototype, "_playbackRate", [serializable$c], function () {
   return 1;
-}), _initializer8$r = applyDecoratedInitializer(_class2$1P.prototype, "_loop", [serializable$c], function () {
+}), _initializer8$r = applyDecoratedInitializer(_class2$1Q.prototype, "_loop", [serializable$c], function () {
   return false;
-}), _initializer9$n = applyDecoratedInitializer(_class2$1P.prototype, "_fullScreenOnAwake", [serializable$c], function () {
+}), _initializer9$n = applyDecoratedInitializer(_class2$1Q.prototype, "_fullScreenOnAwake", [serializable$c], function () {
   return false;
-}), _initializer0$l = applyDecoratedInitializer(_class2$1P.prototype, "_stayOnBottom", [serializable$c], function () {
+}), _initializer0$l = applyDecoratedInitializer(_class2$1Q.prototype, "_stayOnBottom", [serializable$c], function () {
   return false;
-}), _initializer1$k = applyDecoratedInitializer(_class2$1P.prototype, "_keepAspectRatio", [serializable$c], function () {
+}), _initializer1$k = applyDecoratedInitializer(_class2$1Q.prototype, "_keepAspectRatio", [serializable$c], function () {
   return true;
-}), _applyDecoratedDescriptor(_class2$1P.prototype, "resourceType", [_dec4$V], Object.getOwnPropertyDescriptor(_class2$1P.prototype, "resourceType"), _class2$1P.prototype), _applyDecoratedDescriptor(_class2$1P.prototype, "clip", [_dec5$P], Object.getOwnPropertyDescriptor(_class2$1P.prototype, "clip"), _class2$1P.prototype), _initializer10$i = applyDecoratedInitializer(_class2$1P.prototype, "videoPlayerEvent", [serializable$c, _dec6$B], function () {
+}), _applyDecoratedDescriptor(_class2$1Q.prototype, "resourceType", [_dec4$V], Object.getOwnPropertyDescriptor(_class2$1Q.prototype, "resourceType"), _class2$1Q.prototype), _applyDecoratedDescriptor(_class2$1Q.prototype, "clip", [_dec5$P], Object.getOwnPropertyDescriptor(_class2$1Q.prototype, "clip"), _class2$1Q.prototype), _initializer10$i = applyDecoratedInitializer(_class2$1Q.prototype, "videoPlayerEvent", [serializable$c, _dec6$B], function () {
   return [];
-}), _class2$1P)) || _class$2h) || _class$2h);
+}), _class2$1Q)) || _class$2i) || _class$2i);
 legacyCC.internal.VideoPlayer = VideoPlayer;
 
 replaceProperty(VideoPlayer.prototype, 'VideoPlayer.prototype', [{
@@ -70575,13 +70752,13 @@ class WebViewImplManager {
 }
 legacyCC.internal.WebViewImplManager = WebViewImplManager;
 
-var _dec$2g, _dec2$1R, _dec3$1d, _class$2g, _class2$1O, _initializer$1K, _initializer2$1r, _WebView;
-let WebView = (_dec$2g = ccclass$x('cc.WebView'), _dec2$1R = requireComponent(UITransform), _dec3$1d = type$b([EventHandler]), _dec$2g(_class$2g = _dec2$1R(_class$2g = (_class2$1O = (_WebView = class WebView extends Component {
+var _dec$2h, _dec2$1R, _dec3$1d, _class$2h, _class2$1P, _initializer$1L, _initializer2$1s, _WebView;
+let WebView = (_dec$2h = ccclass$x('cc.WebView'), _dec2$1R = requireComponent(UITransform), _dec3$1d = type$b([EventHandler]), _dec$2h(_class$2h = _dec2$1R(_class$2h = (_class2$1P = (_WebView = class WebView extends Component {
   constructor() {
     super();
-    this._url = _initializer$1K && _initializer$1K();
+    this._url = _initializer$1L && _initializer$1L();
     this._impl = null;
-    this.webviewEvents = _initializer2$1r && _initializer2$1r();
+    this.webviewEvents = _initializer2$1s && _initializer2$1s();
   }
   get url() {
     return this._url;
@@ -70659,11 +70836,11 @@ let WebView = (_dec$2g = ccclass$x('cc.WebView'), _dec2$1R = requireComponent(UI
       this._impl.syncMatrix();
     }
   }
-}, _WebView.EventType = WebViewEventType, _WebView), _initializer$1K = applyDecoratedInitializer(_class2$1O.prototype, "_url", [serializable$c], function () {
+}, _WebView.EventType = WebViewEventType, _WebView), _initializer$1L = applyDecoratedInitializer(_class2$1P.prototype, "_url", [serializable$c], function () {
   return 'https://cocos.com';
-}), _initializer2$1r = applyDecoratedInitializer(_class2$1O.prototype, "webviewEvents", [serializable$c, _dec3$1d], function () {
+}), _initializer2$1s = applyDecoratedInitializer(_class2$1P.prototype, "webviewEvents", [serializable$c, _dec3$1d], function () {
   return [];
-}), _class2$1O)) || _class$2g) || _class$2g);
+}), _class2$1P)) || _class$2h) || _class$2h);
 legacyCC.internal.WebView = WebView;
 
 const _col$1 = new Vec4();
@@ -70751,11 +70928,11 @@ function updateOpacity(renderData, opacity) {
   }
 }
 
-var _dec$2f, _class$2f, _class2$1N, _initializer$1J;
-let SpriteAtlas = (_dec$2f = ccclass$x('cc.SpriteAtlas'), _dec$2f(_class$2f = (_class2$1N = class SpriteAtlas extends Asset {
+var _dec$2g, _class$2g, _class2$1O, _initializer$1K;
+let SpriteAtlas = (_dec$2g = ccclass$x('cc.SpriteAtlas'), _dec$2g(_class$2g = (_class2$1O = class SpriteAtlas extends Asset {
   constructor(name) {
     super(name);
-    this.spriteFrames = _initializer$1J && _initializer$1J();
+    this.spriteFrames = _initializer$1K && _initializer$1K();
   }
   getTexture() {
     const keys = Object.keys(this.spriteFrames);
@@ -70796,24 +70973,24 @@ let SpriteAtlas = (_dec$2f = ccclass$x('cc.SpriteAtlas'), _dec$2f(_class$2f = (_
       handle.result.push(this.spriteFrames, frames[i], frames[i + 1], getClassId(SpriteFrame));
     }
   }
-}, _initializer$1J = applyDecoratedInitializer(_class2$1N.prototype, "spriteFrames", [serializable$c], function () {
+}, _initializer$1K = applyDecoratedInitializer(_class2$1O.prototype, "spriteFrames", [serializable$c], function () {
   return createMap();
-}), _class2$1N)) || _class$2f);
+}), _class2$1O)) || _class$2g);
 cclegacy.SpriteAtlas = SpriteAtlas;
 
-var _dec$2e, _class$2e;
-let Font = (_dec$2e = ccclass$x('cc.Font'), _dec$2e(_class$2e = class Font extends Asset {
+var _dec$2f, _class$2f;
+let Font = (_dec$2f = ccclass$x('cc.Font'), _dec$2f(_class$2f = class Font extends Asset {
   constructor(name) {
     super(name);
   }
-}) || _class$2e);
+}) || _class$2f);
 cclegacy.Font = Font;
 
-var _dec$2d, _class$2d, _class2$1M, _initializer$1I;
-let TTFFont = (_dec$2d = ccclass$x('cc.TTFFont'), _dec$2d(_class$2d = (_class2$1M = class TTFFont extends Font {
+var _dec$2e, _class$2e, _class2$1N, _initializer$1J;
+let TTFFont = (_dec$2e = ccclass$x('cc.TTFFont'), _dec$2e(_class$2e = (_class2$1N = class TTFFont extends Font {
   constructor() {
     super();
-    this._fontFamily = _initializer$1I && _initializer$1I();
+    this._fontFamily = _initializer$1J && _initializer$1J();
   }
   get _nativeAsset() {
     return this._fontFamily;
@@ -70833,10 +71010,538 @@ let TTFFont = (_dec$2d = ccclass$x('cc.TTFFont'), _dec$2d(_class$2d = (_class2$1
     this._fontFamily = 'Arial';
     super.initDefault(uuid);
   }
-}, _initializer$1I = applyDecoratedInitializer(_class2$1M.prototype, "_fontFamily", [serializable$c], function () {
+}, _initializer$1J = applyDecoratedInitializer(_class2$1N.prototype, "_fontFamily", [serializable$c], function () {
   return null;
-}), _applyDecoratedDescriptor(_class2$1M.prototype, "_nativeAsset", [override$1, string], Object.getOwnPropertyDescriptor(_class2$1M.prototype, "_nativeAsset"), _class2$1M.prototype), _applyDecoratedDescriptor(_class2$1M.prototype, "_nativeDep", [override$1], Object.getOwnPropertyDescriptor(_class2$1M.prototype, "_nativeDep"), _class2$1M.prototype), _class2$1M)) || _class$2d);
+}), _applyDecoratedDescriptor(_class2$1N.prototype, "_nativeAsset", [override$1, string], Object.getOwnPropertyDescriptor(_class2$1N.prototype, "_nativeAsset"), _class2$1N.prototype), _applyDecoratedDescriptor(_class2$1N.prototype, "_nativeDep", [override$1], Object.getOwnPropertyDescriptor(_class2$1N.prototype, "_nativeDep"), _class2$1N.prototype), _class2$1N)) || _class$2e);
 cclegacy.TTFFont = TTFFont;
+
+const DEFAULT_FONT_FAMILY = 'Arial';
+function quoteFontFamily(name) {
+  let result = '"';
+  for (const character of name) {
+    const code = character.codePointAt(0);
+    if (code === 0 || code >= 0xD800 && code <= 0xDFFF) {
+      result += '\uFFFD';
+    } else if (code <= 0x1F || code === 0x7F) {
+      result += `\\${code.toString(16)} `;
+    } else if (character === '"' || character === '\\') {
+      result += `\\${character}`;
+    } else {
+      result += character;
+    }
+  }
+  return `${result}"`;
+}
+function getCanvasFontFamily(source) {
+  var _source$font;
+  const system = source.useSystemFont;
+  const value = system ? source.fontFamily : (_source$font = source.font) == null ? void 0 : _source$font._nativeAsset;
+  const name = typeof value === 'string' && value ? value : DEFAULT_FONT_FAMILY;
+  return system ? name : quoteFontFamily(name);
+}
+function buildFontDesc(size, family, bold = false, italic = false) {
+  return `${italic ? 'italic ' : ''}${bold ? 'bold ' : ''}${size}px ${family}`;
+}
+
+const ccdocument$1 = ccwindow.document;
+let _canvasContext = null;
+let _intervalId = -1;
+const _testString = 'BES bswy:->@123\u4E01\u3041\u1101';
+const _fontFaces = Object.create(null);
+const _loadingFonts = [];
+const _timeout = 3000;
+const useNativeCheck = (() => {
+  let nativeCheck;
+  return () => {
+    if (nativeCheck === undefined) {
+      if ('FontFace' in ccwindow) {
+        const match = /Gecko.*Firefox\/(\d+)/.exec(ccwindow.navigator.userAgent);
+        const safari10Match = /OS X.*Version\/10\..*Safari/.exec(ccwindow.navigator.userAgent) && /Apple/.exec(ccwindow.navigator.vendor);
+        if (match) {
+          nativeCheck = parseInt(match[1], 10) > 42;
+        } else if (safari10Match) {
+          nativeCheck = false;
+        } else {
+          nativeCheck = true;
+        }
+      } else {
+        nativeCheck = false;
+      }
+    }
+    return nativeCheck;
+  };
+})();
+function checkFontLoaded() {
+  let allFontsLoaded = true;
+  const now = Date.now();
+  for (let i = _loadingFonts.length - 1; i >= 0; i--) {
+    const fontLoadHandle = _loadingFonts[i];
+    const fontFamily = fontLoadHandle.fontFamilyName;
+    if (now - fontLoadHandle.startTime > _timeout) {
+      warnID(4933, fontFamily);
+      fontLoadHandle.onComplete(null, fontFamily);
+      _loadingFonts.splice(i, 1);
+      continue;
+    }
+    const oldWidth = fontLoadHandle.refWidth;
+    _canvasContext.font = fontLoadHandle.fontDesc;
+    const newWidth = _canvasContext.measureText(_testString).width;
+    if (oldWidth !== newWidth) {
+      _loadingFonts.splice(i, 1);
+      fontLoadHandle.onComplete(null, fontFamily);
+    } else {
+      allFontsLoaded = false;
+    }
+  }
+  if (allFontsLoaded) {
+    clearInterval(_intervalId);
+    _intervalId = -1;
+  }
+}
+function nativeCheckFontLoaded(start, font, fontDesc, callback) {
+  const loader = new Promise((resolve, reject) => {
+    const check = () => {
+      const now = Date.now();
+      if (now - start >= _timeout) {
+        reject();
+      } else {
+        ccdocument$1.fonts.load(fontDesc).then(fonts => {
+          if (fonts.length >= 1) {
+            resolve();
+          } else {
+            setTimeout(check, 100);
+          }
+        }, () => {
+          reject();
+        });
+      }
+    };
+    check();
+  });
+  let timeoutId = null;
+  const timer = new Promise((resolve, reject) => {
+    timeoutId = setTimeout(reject, _timeout);
+  });
+  Promise.race([timer, loader]).then(() => {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+      timeoutId = null;
+    }
+    callback(null, font);
+  }, () => {
+    warnID(4933, font);
+    callback(null, font);
+  });
+}
+function loadFont(url, options, onComplete) {
+  const fontFamilyName = getFontFamily(url);
+  if (_fontFaces[fontFamilyName]) {
+    onComplete(null, fontFamilyName);
+    return;
+  }
+  if (!_canvasContext) {
+    const labelCanvas = ccdocument$1.createElement('canvas');
+    labelCanvas.width = 100;
+    labelCanvas.height = 100;
+    _canvasContext = labelCanvas.getContext('2d');
+  }
+  const familyCss = quoteFontFamily(fontFamilyName);
+  const fontDesc = buildFontDesc(40, familyCss);
+  const fontStyle = ccdocument$1.createElement('style');
+  fontStyle.type = 'text/css';
+  let fontStr = `@font-face { font-family:${familyCss}; src:`;
+  fontStr += `url("${url}");`;
+  fontStyle.textContent = `${fontStr}}`;
+  ccdocument$1.body.appendChild(fontStyle);
+  const preloadDiv = ccdocument$1.createElement('div');
+  const divStyle = preloadDiv.style;
+  divStyle.fontFamily = familyCss;
+  preloadDiv.innerHTML = '.';
+  divStyle.position = 'absolute';
+  divStyle.left = '-100px';
+  divStyle.top = '-100px';
+  ccdocument$1.body.appendChild(preloadDiv);
+  if (useNativeCheck()) {
+    nativeCheckFontLoaded(Date.now(), fontFamilyName, fontDesc, onComplete);
+  } else {
+    _canvasContext.font = fontDesc;
+    const refWidth = _canvasContext.measureText(_testString).width;
+    const fontLoadHandle = {
+      fontFamilyName,
+      fontDesc,
+      refWidth,
+      onComplete,
+      startTime: Date.now()
+    };
+    _loadingFonts.push(fontLoadHandle);
+    if (_intervalId === -1) {
+      _intervalId = setInterval(checkFontLoaded, 100);
+    }
+  }
+  _fontFaces[fontFamilyName] = fontStyle;
+}
+function getFontFamily(fontHandle) {
+  const ttfIndex = fontHandle.lastIndexOf('.ttf');
+  if (ttfIndex === -1) {
+    return fontHandle;
+  }
+  const slashPos = fontHandle.lastIndexOf('/');
+  let fontFamilyName;
+  if (slashPos === -1) {
+    fontFamilyName = `${fontHandle.substring(0, ttfIndex)}_LABEL`;
+  } else {
+    fontFamilyName = `${fontHandle.substring(slashPos + 1, ttfIndex)}_LABEL`;
+  }
+  return fontFamilyName;
+}
+function createFont(id, data, options, onComplete) {
+  const out = new TTFFont();
+  out._nativeUrl = id;
+  out._nativeAsset = data;
+  onComplete(null, out);
+}
+downloader$1.register({
+  '.font': loadFont,
+  '.eot': loadFont,
+  '.ttf': loadFont,
+  '.woff': loadFont,
+  '.svg': loadFont,
+  '.ttc': loadFont
+});
+factory.register({
+  '.font': createFont,
+  '.eot': createFont,
+  '.ttf': createFont,
+  '.woff': createFont,
+  '.svg': createFont,
+  '.ttc': createFont
+});
+
+const eventRegx = /^(click)(\s)*=|(param)(\s)*=/;
+const imageAttrReg = /(\s)*src(\s)*=|(\s)*height(\s)*=|(\s)*width(\s)*=|(\s)*align(\s)*=|(\s)*offset(\s)*=|(\s)*click(\s)*=|(\s)*param(\s)*=/;
+class HtmlTextParser {
+  constructor() {
+    this._specialSymbolArray = [];
+    this._stack = [];
+    this._resultObjectArray = [];
+    this._specialSymbolArray.push([/&lt;/g, '<']);
+    this._specialSymbolArray.push([/&gt;/g, '>']);
+    this._specialSymbolArray.push([/&amp;/g, '&']);
+    this._specialSymbolArray.push([/&quot;/g, '"']);
+    this._specialSymbolArray.push([/&apos;/g, '\'']);
+  }
+  parse(htmlString) {
+    this._resultObjectArray.length = 0;
+    this._stack.length = 0;
+    let startIndex = 0;
+    const length = htmlString.length;
+    while (startIndex < length) {
+      let tagEndIndex = htmlString.indexOf('>', startIndex);
+      let tagBeginIndex = -1;
+      if (tagEndIndex >= 0) {
+        tagBeginIndex = htmlString.lastIndexOf('<', tagEndIndex);
+        const noTagBegin = tagBeginIndex < startIndex - 1;
+        if (noTagBegin) {
+          tagBeginIndex = htmlString.indexOf('<', tagEndIndex + 1);
+          tagEndIndex = htmlString.indexOf('>', tagBeginIndex + 1);
+        }
+      }
+      if (tagBeginIndex < 0) {
+        this._stack.pop();
+        this._processResult(htmlString.substring(startIndex));
+        startIndex = length;
+      } else {
+        let newStr = htmlString.substring(startIndex, tagBeginIndex);
+        const tagStr = htmlString.substring(tagBeginIndex + 1, tagEndIndex);
+        if (tagStr === '') newStr = htmlString.substring(startIndex, tagEndIndex + 1);
+        this._processResult(newStr);
+        if (tagEndIndex === -1) {
+          tagEndIndex = tagBeginIndex;
+        } else if (htmlString.charAt(tagBeginIndex + 1) === '/') {
+          this._stack.pop();
+        } else {
+          this._addToStack(tagStr);
+        }
+        startIndex = tagEndIndex + 1;
+      }
+    }
+    return this._resultObjectArray;
+  }
+  _attributeToObject(attribute) {
+    attribute = attribute.trim();
+    const obj = {};
+    let header = /^(color|size)(\s)*=/.exec(attribute);
+    let tagName = '';
+    let nextSpace = 0;
+    let eventHandlerString = '';
+    if (header) {
+      tagName = header[0];
+      attribute = attribute.substring(tagName.length).trim();
+      if (attribute === '') {
+        return obj;
+      }
+      nextSpace = attribute.indexOf(' ');
+      switch (tagName[0]) {
+        case 'c':
+          if (nextSpace > -1) {
+            obj.color = attribute.substring(0, nextSpace).trim();
+          } else {
+            obj.color = attribute;
+          }
+          break;
+        case 's':
+          obj.size = parseInt(attribute);
+          break;
+      }
+      if (nextSpace > -1) {
+        eventHandlerString = attribute.substring(nextSpace + 1).trim();
+        obj.event = this._processEventHandler(eventHandlerString);
+      }
+      return obj;
+    }
+    header = /^(br(\s)*\/)/.exec(attribute);
+    if (header && header[0].length > 0) {
+      tagName = header[0].trim();
+      if (tagName.startsWith('br') && tagName[tagName.length - 1] === '/') {
+        obj.isNewLine = true;
+        this._resultObjectArray.push({
+          text: '',
+          style: {
+            isNewLine: true
+          }
+        });
+        return obj;
+      }
+    }
+    header = /^(img(\s)*src(\s)*=[^>]+\/)/.exec(attribute);
+    let remainingArgument = '';
+    let rightQuot = -1;
+    if (header && header[0].length > 0) {
+      tagName = header[0].trim();
+      if (tagName.startsWith('img') && tagName[tagName.length - 1] === '/') {
+        header = imageAttrReg.exec(attribute);
+        let tagValue;
+        let isValidImageTag = false;
+        while (header) {
+          attribute = attribute.substring(attribute.indexOf(header[0]));
+          tagName = attribute.substring(0, header[0].length);
+          const originTagNameLength = tagName.length;
+          tagName = tagName.replace(/[^a-zA-Z]/g, '').trim();
+          tagName = tagName.toLowerCase();
+          remainingArgument = attribute.substring(originTagNameLength).trim();
+          if (tagName === 'src') {
+            rightQuot = this.getRightQuotationIndex(remainingArgument);
+          } else {
+            rightQuot = -1;
+          }
+          nextSpace = remainingArgument.indexOf(' ', rightQuot + 1 >= remainingArgument.length ? -1 : rightQuot + 1);
+          tagValue = nextSpace > -1 ? remainingArgument.substring(0, nextSpace) : remainingArgument;
+          attribute = remainingArgument.substring(nextSpace).trim();
+          if (tagValue.endsWith('/')) {
+            tagValue = tagValue.slice(0, -1);
+          }
+          if (tagName === 'src') {
+            switch (tagValue.charCodeAt(0)) {
+              case 34:
+              case 39:
+                isValidImageTag = true;
+                tagValue = tagValue.slice(1, -1);
+                break;
+            }
+            obj.isImage = true;
+            obj.src = tagValue;
+          } else if (tagName === 'height') {
+            obj.imageHeight = parseInt(tagValue);
+          } else if (tagName === 'width') {
+            obj.imageWidth = parseInt(tagValue);
+          } else if (tagName === 'align') {
+            switch (tagValue.charCodeAt(0)) {
+              case 34:
+              case 39:
+                tagValue = tagValue.slice(1, -1);
+                break;
+            }
+            obj.imageAlign = tagValue.toLowerCase();
+          } else if (tagName === 'offset') {
+            obj.imageOffset = tagValue;
+          } else if (tagName === 'click') {
+            obj.event = this._processEventHandler(`${tagName}=${tagValue}`);
+          }
+          if (obj.event && tagName === 'param') {
+            obj.event[tagName] = tagValue.replace(/^"|"$/g, '');
+          }
+          header = imageAttrReg.exec(attribute);
+        }
+        if (isValidImageTag && obj.isImage) {
+          this._resultObjectArray.push({
+            text: '',
+            style: obj
+          });
+        }
+        return {};
+      }
+    }
+    header = /^(outline(\s)*[^>]*)/.exec(attribute);
+    if (header) {
+      attribute = header[0].substring('outline'.length).trim();
+      const defaultOutlineObject = {
+        color: '#ffffff',
+        width: 1
+      };
+      if (attribute) {
+        const outlineAttrReg = /(\s)*color(\s)*=|(\s)*width(\s)*=|(\s)*click(\s)*=|(\s)*param(\s)*=/;
+        header = outlineAttrReg.exec(attribute);
+        let tagValue;
+        while (header) {
+          attribute = attribute.substring(attribute.indexOf(header[0]));
+          tagName = attribute.substring(0, header[0].length);
+          remainingArgument = attribute.substring(tagName.length).trim();
+          nextSpace = remainingArgument.indexOf(' ');
+          if (nextSpace > -1) {
+            tagValue = remainingArgument.substring(0, nextSpace);
+          } else {
+            tagValue = remainingArgument;
+          }
+          tagName = tagName.replace(/[^a-zA-Z]/g, '').trim();
+          tagName = tagName.toLowerCase();
+          attribute = remainingArgument.substring(nextSpace).trim();
+          if (tagName === 'click') {
+            obj.event = this._processEventHandler(`${tagName}=${tagValue}`);
+          } else if (tagName === 'color') {
+            defaultOutlineObject.color = tagValue;
+          } else if (tagName === 'width') {
+            defaultOutlineObject.width = parseInt(tagValue);
+          }
+          if (obj.event && tagName === 'param') {
+            obj.event[tagName] = tagValue.replace(/^"|"$/g, '');
+          }
+          header = outlineAttrReg.exec(attribute);
+        }
+      }
+      obj.outline = defaultOutlineObject;
+    }
+    header = /^(on|u|b|i)(\s)*/.exec(attribute);
+    if (header && header[0].length > 0) {
+      tagName = header[0];
+      attribute = attribute.substring(tagName.length).trim();
+      switch (tagName[0]) {
+        case 'u':
+          obj.underline = true;
+          break;
+        case 'i':
+          obj.italic = true;
+          break;
+        case 'b':
+          obj.bold = true;
+          break;
+      }
+      if (attribute === '') {
+        return obj;
+      }
+      obj.event = this._processEventHandler(attribute);
+    }
+    return obj;
+  }
+  getRightQuotationIndex(remainingArgument) {
+    let leftQuot = -1;
+    let rightQuot = -1;
+    const leftSingleQuot = remainingArgument.indexOf('\'');
+    const leftDoubleQuot = remainingArgument.indexOf('"');
+    const useSingleQuot = leftSingleQuot > -1 && (leftSingleQuot < leftDoubleQuot || leftDoubleQuot === -1);
+    const useDoubleQuot = leftDoubleQuot > -1 && (leftDoubleQuot < leftSingleQuot || leftSingleQuot === -1);
+    if (useSingleQuot) {
+      leftQuot = leftSingleQuot;
+      rightQuot = remainingArgument.indexOf('\'', leftQuot + 1 >= remainingArgument.length ? -1 : leftQuot + 1);
+    } else if (useDoubleQuot) {
+      leftQuot = leftDoubleQuot;
+      rightQuot = remainingArgument.indexOf('"', leftQuot + 1 >= remainingArgument.length ? -1 : leftQuot + 1);
+    }
+    return rightQuot;
+  }
+  _processEventHandler(eventString) {
+    const obj = {};
+    let index = 0;
+    let isValidTag = false;
+    let eventNames = eventRegx.exec(eventString);
+    while (eventNames) {
+      let eventName = eventNames[0];
+      let eventValue = '';
+      isValidTag = false;
+      eventString = eventString.substring(eventName.length).trim();
+      if (eventString.charAt(0) === '"') {
+        index = eventString.indexOf('"', 1);
+        if (index > -1) {
+          eventValue = eventString.substring(1, index).trim();
+          isValidTag = true;
+        }
+        index++;
+      } else if (eventString.charAt(0) === '\'') {
+        index = eventString.indexOf('\'', 1);
+        if (index > -1) {
+          eventValue = eventString.substring(1, index).trim();
+          isValidTag = true;
+        }
+        index++;
+      } else {
+        const match = /(\S)+/.exec(eventString);
+        if (match) {
+          eventValue = match[0];
+        } else {
+          eventValue = '';
+        }
+        index = eventValue.length;
+      }
+      if (isValidTag) {
+        eventName = eventName.substring(0, eventName.length - 1).trim();
+        obj[eventName] = eventValue;
+      }
+      eventString = eventString.substring(index).trim();
+      eventNames = eventRegx.exec(eventString);
+    }
+    return obj;
+  }
+  _addToStack(attribute) {
+    const obj = this._attributeToObject(attribute);
+    if (this._stack.length === 0) {
+      this._stack.push(obj);
+    } else {
+      if (obj.isNewLine || obj.isImage) {
+        return;
+      }
+      const previousTagObj = this._stack[this._stack.length - 1];
+      for (const key in previousTagObj) {
+        if (!obj[key]) {
+          obj[key] = previousTagObj[key];
+        }
+      }
+      this._stack.push(obj);
+    }
+  }
+  _processResult(value) {
+    if (value.length === 0) {
+      return;
+    }
+    value = this._escapeSpecialSymbol(value);
+    if (this._stack.length > 0) {
+      this._resultObjectArray.push({
+        text: value,
+        style: this._stack[this._stack.length - 1]
+      });
+    } else {
+      this._resultObjectArray.push({
+        text: value
+      });
+    }
+  }
+  _escapeSpecialSymbol(str) {
+    for (const symbolArr of this._specialSymbolArray) {
+      const key = symbolArr[0];
+      const value = symbolArr[1];
+      str = str.replace(key, value);
+    }
+    return str;
+  }
+}
 
 const minigame$1 = {};
 
@@ -71205,513 +71910,7 @@ function fragmentText(stringToken, allWidth, maxWidth, measureText) {
   return wrappedWords;
 }
 
-const ccdocument$1 = ccwindow.document;
-let _canvasContext = null;
-let _intervalId = -1;
-const _testString = 'BES bswy:->@123\u4E01\u3041\u1101';
-const _fontFaces = Object.create(null);
-const _loadingFonts = [];
-const _timeout = 3000;
-const useNativeCheck = (() => {
-  let nativeCheck;
-  return () => {
-    if (nativeCheck === undefined) {
-      if ('FontFace' in ccwindow) {
-        const match = /Gecko.*Firefox\/(\d+)/.exec(ccwindow.navigator.userAgent);
-        const safari10Match = /OS X.*Version\/10\..*Safari/.exec(ccwindow.navigator.userAgent) && /Apple/.exec(ccwindow.navigator.vendor);
-        if (match) {
-          nativeCheck = parseInt(match[1], 10) > 42;
-        } else if (safari10Match) {
-          nativeCheck = false;
-        } else {
-          nativeCheck = true;
-        }
-      } else {
-        nativeCheck = false;
-      }
-    }
-    return nativeCheck;
-  };
-})();
-function checkFontLoaded() {
-  let allFontsLoaded = true;
-  const now = Date.now();
-  for (let i = _loadingFonts.length - 1; i >= 0; i--) {
-    const fontLoadHandle = _loadingFonts[i];
-    const fontFamily = fontLoadHandle.fontFamilyName;
-    if (now - fontLoadHandle.startTime > _timeout) {
-      warnID(4933, fontFamily);
-      fontLoadHandle.onComplete(null, fontFamily);
-      _loadingFonts.splice(i, 1);
-      continue;
-    }
-    const oldWidth = fontLoadHandle.refWidth;
-    const fontDesc = `40px ${fontFamily}`;
-    _canvasContext.font = fontDesc;
-    const newWidth = safeMeasureText(_canvasContext, _testString, fontDesc);
-    if (oldWidth !== newWidth) {
-      _loadingFonts.splice(i, 1);
-      fontLoadHandle.onComplete(null, fontFamily);
-    } else {
-      allFontsLoaded = false;
-    }
-  }
-  if (allFontsLoaded) {
-    clearInterval(_intervalId);
-    _intervalId = -1;
-  }
-}
-function nativeCheckFontLoaded(start, font, callback) {
-  const loader = new Promise((resolve, reject) => {
-    const check = () => {
-      const now = Date.now();
-      if (now - start >= _timeout) {
-        reject();
-      } else {
-        ccdocument$1.fonts.load(`40px ${font}`).then(fonts => {
-          if (fonts.length >= 1) {
-            resolve();
-          } else {
-            setTimeout(check, 100);
-          }
-        }, () => {
-          reject();
-        });
-      }
-    };
-    check();
-  });
-  let timeoutId = null;
-  const timer = new Promise((resolve, reject) => {
-    timeoutId = setTimeout(reject, _timeout);
-  });
-  Promise.race([timer, loader]).then(() => {
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-      timeoutId = null;
-    }
-    callback(null, font);
-  }, () => {
-    warnID(4933, font);
-    callback(null, font);
-  });
-}
-function loadFont(url, options, onComplete) {
-  const fontFamilyName = getFontFamily(url);
-  if (_fontFaces[fontFamilyName]) {
-    onComplete(null, fontFamilyName);
-    return;
-  }
-  if (!_canvasContext) {
-    const labelCanvas = ccdocument$1.createElement('canvas');
-    labelCanvas.width = 100;
-    labelCanvas.height = 100;
-    _canvasContext = labelCanvas.getContext('2d');
-  }
-  const fontDesc = `40px ${fontFamilyName}`;
-  const fontStyle = ccdocument$1.createElement('style');
-  fontStyle.type = 'text/css';
-  let fontStr = '';
-  if (Number.isNaN(fontFamilyName)) {
-    fontStr += `@font-face { font-family:${fontFamilyName}; src:`;
-  } else {
-    fontStr += `@font-face { font-family:"${fontFamilyName}"; src:`;
-  }
-  fontStr += `url("${url}");`;
-  fontStyle.textContent = `${fontStr}}`;
-  ccdocument$1.body.appendChild(fontStyle);
-  const preloadDiv = ccdocument$1.createElement('div');
-  const divStyle = preloadDiv.style;
-  divStyle.fontFamily = fontFamilyName;
-  preloadDiv.innerHTML = '.';
-  divStyle.position = 'absolute';
-  divStyle.left = '-100px';
-  divStyle.top = '-100px';
-  ccdocument$1.body.appendChild(preloadDiv);
-  if (useNativeCheck()) {
-    nativeCheckFontLoaded(Date.now(), fontFamilyName, onComplete);
-  } else {
-    const refWidth = safeMeasureText(_canvasContext, _testString, fontDesc);
-    const fontLoadHandle = {
-      fontFamilyName,
-      refWidth,
-      onComplete,
-      startTime: Date.now()
-    };
-    _loadingFonts.push(fontLoadHandle);
-    if (_intervalId === -1) {
-      _intervalId = setInterval(checkFontLoaded, 100);
-    }
-  }
-  _fontFaces[fontFamilyName] = fontStyle;
-}
-function getFontFamily(fontHandle) {
-  const ttfIndex = fontHandle.lastIndexOf('.ttf');
-  if (ttfIndex === -1) {
-    return fontHandle;
-  }
-  const slashPos = fontHandle.lastIndexOf('/');
-  let fontFamilyName;
-  if (slashPos === -1) {
-    fontFamilyName = `${fontHandle.substring(0, ttfIndex)}_LABEL`;
-  } else {
-    fontFamilyName = `${fontHandle.substring(slashPos + 1, ttfIndex)}_LABEL`;
-  }
-  if (fontFamilyName.indexOf(' ') !== -1) {
-    fontFamilyName = `"${fontFamilyName}"`;
-  }
-  return fontFamilyName;
-}
-function createFont(id, data, options, onComplete) {
-  const out = new TTFFont();
-  out._nativeUrl = id;
-  out._nativeAsset = data;
-  onComplete(null, out);
-}
-downloader$1.register({
-  '.font': loadFont,
-  '.eot': loadFont,
-  '.ttf': loadFont,
-  '.woff': loadFont,
-  '.svg': loadFont,
-  '.ttc': loadFont
-});
-factory.register({
-  '.font': createFont,
-  '.eot': createFont,
-  '.ttf': createFont,
-  '.woff': createFont,
-  '.svg': createFont,
-  '.ttc': createFont
-});
-
-const eventRegx = /^(click)(\s)*=|(param)(\s)*=/;
-const imageAttrReg = /(\s)*src(\s)*=|(\s)*height(\s)*=|(\s)*width(\s)*=|(\s)*align(\s)*=|(\s)*offset(\s)*=|(\s)*click(\s)*=|(\s)*param(\s)*=/;
-class HtmlTextParser {
-  constructor() {
-    this._specialSymbolArray = [];
-    this._stack = [];
-    this._resultObjectArray = [];
-    this._specialSymbolArray.push([/&lt;/g, '<']);
-    this._specialSymbolArray.push([/&gt;/g, '>']);
-    this._specialSymbolArray.push([/&amp;/g, '&']);
-    this._specialSymbolArray.push([/&quot;/g, '"']);
-    this._specialSymbolArray.push([/&apos;/g, '\'']);
-  }
-  parse(htmlString) {
-    this._resultObjectArray.length = 0;
-    this._stack.length = 0;
-    let startIndex = 0;
-    const length = htmlString.length;
-    while (startIndex < length) {
-      let tagEndIndex = htmlString.indexOf('>', startIndex);
-      let tagBeginIndex = -1;
-      if (tagEndIndex >= 0) {
-        tagBeginIndex = htmlString.lastIndexOf('<', tagEndIndex);
-        const noTagBegin = tagBeginIndex < startIndex - 1;
-        if (noTagBegin) {
-          tagBeginIndex = htmlString.indexOf('<', tagEndIndex + 1);
-          tagEndIndex = htmlString.indexOf('>', tagBeginIndex + 1);
-        }
-      }
-      if (tagBeginIndex < 0) {
-        this._stack.pop();
-        this._processResult(htmlString.substring(startIndex));
-        startIndex = length;
-      } else {
-        let newStr = htmlString.substring(startIndex, tagBeginIndex);
-        const tagStr = htmlString.substring(tagBeginIndex + 1, tagEndIndex);
-        if (tagStr === '') newStr = htmlString.substring(startIndex, tagEndIndex + 1);
-        this._processResult(newStr);
-        if (tagEndIndex === -1) {
-          tagEndIndex = tagBeginIndex;
-        } else if (htmlString.charAt(tagBeginIndex + 1) === '/') {
-          this._stack.pop();
-        } else {
-          this._addToStack(tagStr);
-        }
-        startIndex = tagEndIndex + 1;
-      }
-    }
-    return this._resultObjectArray;
-  }
-  _attributeToObject(attribute) {
-    attribute = attribute.trim();
-    const obj = {};
-    let header = /^(color|size)(\s)*=/.exec(attribute);
-    let tagName = '';
-    let nextSpace = 0;
-    let eventHandlerString = '';
-    if (header) {
-      tagName = header[0];
-      attribute = attribute.substring(tagName.length).trim();
-      if (attribute === '') {
-        return obj;
-      }
-      nextSpace = attribute.indexOf(' ');
-      switch (tagName[0]) {
-        case 'c':
-          if (nextSpace > -1) {
-            obj.color = attribute.substring(0, nextSpace).trim();
-          } else {
-            obj.color = attribute;
-          }
-          break;
-        case 's':
-          obj.size = parseInt(attribute);
-          break;
-      }
-      if (nextSpace > -1) {
-        eventHandlerString = attribute.substring(nextSpace + 1).trim();
-        obj.event = this._processEventHandler(eventHandlerString);
-      }
-      return obj;
-    }
-    header = /^(br(\s)*\/)/.exec(attribute);
-    if (header && header[0].length > 0) {
-      tagName = header[0].trim();
-      if (tagName.startsWith('br') && tagName[tagName.length - 1] === '/') {
-        obj.isNewLine = true;
-        this._resultObjectArray.push({
-          text: '',
-          style: {
-            isNewLine: true
-          }
-        });
-        return obj;
-      }
-    }
-    header = /^(img(\s)*src(\s)*=[^>]+\/)/.exec(attribute);
-    let remainingArgument = '';
-    let rightQuot = -1;
-    if (header && header[0].length > 0) {
-      tagName = header[0].trim();
-      if (tagName.startsWith('img') && tagName[tagName.length - 1] === '/') {
-        header = imageAttrReg.exec(attribute);
-        let tagValue;
-        let isValidImageTag = false;
-        while (header) {
-          attribute = attribute.substring(attribute.indexOf(header[0]));
-          tagName = attribute.substring(0, header[0].length);
-          const originTagNameLength = tagName.length;
-          tagName = tagName.replace(/[^a-zA-Z]/g, '').trim();
-          tagName = tagName.toLowerCase();
-          remainingArgument = attribute.substring(originTagNameLength).trim();
-          if (tagName === 'src') {
-            rightQuot = this.getRightQuotationIndex(remainingArgument);
-          } else {
-            rightQuot = -1;
-          }
-          nextSpace = remainingArgument.indexOf(' ', rightQuot + 1 >= remainingArgument.length ? -1 : rightQuot + 1);
-          tagValue = nextSpace > -1 ? remainingArgument.substring(0, nextSpace) : remainingArgument;
-          attribute = remainingArgument.substring(nextSpace).trim();
-          if (tagValue.endsWith('/')) {
-            tagValue = tagValue.slice(0, -1);
-          }
-          if (tagName === 'src') {
-            switch (tagValue.charCodeAt(0)) {
-              case 34:
-              case 39:
-                isValidImageTag = true;
-                tagValue = tagValue.slice(1, -1);
-                break;
-            }
-            obj.isImage = true;
-            obj.src = tagValue;
-          } else if (tagName === 'height') {
-            obj.imageHeight = parseInt(tagValue);
-          } else if (tagName === 'width') {
-            obj.imageWidth = parseInt(tagValue);
-          } else if (tagName === 'align') {
-            switch (tagValue.charCodeAt(0)) {
-              case 34:
-              case 39:
-                tagValue = tagValue.slice(1, -1);
-                break;
-            }
-            obj.imageAlign = tagValue.toLowerCase();
-          } else if (tagName === 'offset') {
-            obj.imageOffset = tagValue;
-          } else if (tagName === 'click') {
-            obj.event = this._processEventHandler(`${tagName}=${tagValue}`);
-          }
-          if (obj.event && tagName === 'param') {
-            obj.event[tagName] = tagValue.replace(/^"|"$/g, '');
-          }
-          header = imageAttrReg.exec(attribute);
-        }
-        if (isValidImageTag && obj.isImage) {
-          this._resultObjectArray.push({
-            text: '',
-            style: obj
-          });
-        }
-        return {};
-      }
-    }
-    header = /^(outline(\s)*[^>]*)/.exec(attribute);
-    if (header) {
-      attribute = header[0].substring('outline'.length).trim();
-      const defaultOutlineObject = {
-        color: '#ffffff',
-        width: 1
-      };
-      if (attribute) {
-        const outlineAttrReg = /(\s)*color(\s)*=|(\s)*width(\s)*=|(\s)*click(\s)*=|(\s)*param(\s)*=/;
-        header = outlineAttrReg.exec(attribute);
-        let tagValue;
-        while (header) {
-          attribute = attribute.substring(attribute.indexOf(header[0]));
-          tagName = attribute.substring(0, header[0].length);
-          remainingArgument = attribute.substring(tagName.length).trim();
-          nextSpace = remainingArgument.indexOf(' ');
-          if (nextSpace > -1) {
-            tagValue = remainingArgument.substring(0, nextSpace);
-          } else {
-            tagValue = remainingArgument;
-          }
-          tagName = tagName.replace(/[^a-zA-Z]/g, '').trim();
-          tagName = tagName.toLowerCase();
-          attribute = remainingArgument.substring(nextSpace).trim();
-          if (tagName === 'click') {
-            obj.event = this._processEventHandler(`${tagName}=${tagValue}`);
-          } else if (tagName === 'color') {
-            defaultOutlineObject.color = tagValue;
-          } else if (tagName === 'width') {
-            defaultOutlineObject.width = parseInt(tagValue);
-          }
-          if (obj.event && tagName === 'param') {
-            obj.event[tagName] = tagValue.replace(/^"|"$/g, '');
-          }
-          header = outlineAttrReg.exec(attribute);
-        }
-      }
-      obj.outline = defaultOutlineObject;
-    }
-    header = /^(on|u|b|i)(\s)*/.exec(attribute);
-    if (header && header[0].length > 0) {
-      tagName = header[0];
-      attribute = attribute.substring(tagName.length).trim();
-      switch (tagName[0]) {
-        case 'u':
-          obj.underline = true;
-          break;
-        case 'i':
-          obj.italic = true;
-          break;
-        case 'b':
-          obj.bold = true;
-          break;
-      }
-      if (attribute === '') {
-        return obj;
-      }
-      obj.event = this._processEventHandler(attribute);
-    }
-    return obj;
-  }
-  getRightQuotationIndex(remainingArgument) {
-    let leftQuot = -1;
-    let rightQuot = -1;
-    const leftSingleQuot = remainingArgument.indexOf('\'');
-    const leftDoubleQuot = remainingArgument.indexOf('"');
-    const useSingleQuot = leftSingleQuot > -1 && (leftSingleQuot < leftDoubleQuot || leftDoubleQuot === -1);
-    const useDoubleQuot = leftDoubleQuot > -1 && (leftDoubleQuot < leftSingleQuot || leftSingleQuot === -1);
-    if (useSingleQuot) {
-      leftQuot = leftSingleQuot;
-      rightQuot = remainingArgument.indexOf('\'', leftQuot + 1 >= remainingArgument.length ? -1 : leftQuot + 1);
-    } else if (useDoubleQuot) {
-      leftQuot = leftDoubleQuot;
-      rightQuot = remainingArgument.indexOf('"', leftQuot + 1 >= remainingArgument.length ? -1 : leftQuot + 1);
-    }
-    return rightQuot;
-  }
-  _processEventHandler(eventString) {
-    const obj = {};
-    let index = 0;
-    let isValidTag = false;
-    let eventNames = eventRegx.exec(eventString);
-    while (eventNames) {
-      let eventName = eventNames[0];
-      let eventValue = '';
-      isValidTag = false;
-      eventString = eventString.substring(eventName.length).trim();
-      if (eventString.charAt(0) === '"') {
-        index = eventString.indexOf('"', 1);
-        if (index > -1) {
-          eventValue = eventString.substring(1, index).trim();
-          isValidTag = true;
-        }
-        index++;
-      } else if (eventString.charAt(0) === '\'') {
-        index = eventString.indexOf('\'', 1);
-        if (index > -1) {
-          eventValue = eventString.substring(1, index).trim();
-          isValidTag = true;
-        }
-        index++;
-      } else {
-        const match = /(\S)+/.exec(eventString);
-        if (match) {
-          eventValue = match[0];
-        } else {
-          eventValue = '';
-        }
-        index = eventValue.length;
-      }
-      if (isValidTag) {
-        eventName = eventName.substring(0, eventName.length - 1).trim();
-        obj[eventName] = eventValue;
-      }
-      eventString = eventString.substring(index).trim();
-      eventNames = eventRegx.exec(eventString);
-    }
-    return obj;
-  }
-  _addToStack(attribute) {
-    const obj = this._attributeToObject(attribute);
-    if (this._stack.length === 0) {
-      this._stack.push(obj);
-    } else {
-      if (obj.isNewLine || obj.isImage) {
-        return;
-      }
-      const previousTagObj = this._stack[this._stack.length - 1];
-      for (const key in previousTagObj) {
-        if (!obj[key]) {
-          obj[key] = previousTagObj[key];
-        }
-      }
-      this._stack.push(obj);
-    }
-  }
-  _processResult(value) {
-    if (value.length === 0) {
-      return;
-    }
-    value = this._escapeSpecialSymbol(value);
-    if (this._stack.length > 0) {
-      this._resultObjectArray.push({
-        text: value,
-        style: this._stack[this._stack.length - 1]
-      });
-    } else {
-      this._resultObjectArray.push({
-        text: value
-      });
-    }
-  }
-  _escapeSpecialSymbol(str) {
-    for (const symbolArr of this._specialSymbolArray) {
-      const key = symbolArr[0];
-      const value = symbolArr[1];
-      str = str.replace(key, value);
-    }
-    return str;
-  }
-}
-
-var _dec$2c, _dec2$1Q, _class$2c, _class2$1L, _initializer$1H, _initializer2$1q, _initializer3$15, _initializer4$X;
+var _dec$2d, _dec2$1Q, _class$2d, _class2$1M, _initializer$1I, _initializer2$1r, _initializer3$15, _initializer4$X;
 class FontLetterDefinition {
   constructor() {
     this.u = 0;
@@ -71778,11 +71977,11 @@ class FontAtlas {
     this.letterDefinitions = {};
   }
 }
-let BitmapFont = (_dec$2c = ccclass$x('cc.BitmapFont'), _dec2$1Q = type$b(SpriteFrame), _dec$2c(_class$2c = (_class2$1L = class BitmapFont extends Font {
+let BitmapFont = (_dec$2d = ccclass$x('cc.BitmapFont'), _dec2$1Q = type$b(SpriteFrame), _dec$2d(_class$2d = (_class2$1M = class BitmapFont extends Font {
   constructor() {
     super();
-    this.fntDataStr = _initializer$1H && _initializer$1H();
-    this.spriteFrame = _initializer2$1q && _initializer2$1q();
+    this.fntDataStr = _initializer$1I && _initializer$1I();
+    this.spriteFrame = _initializer2$1r && _initializer2$1r();
     this.fontSize = _initializer3$15 && _initializer3$15();
     this.fntConfig = _initializer4$X && _initializer4$X();
   }
@@ -71812,19 +72011,19 @@ let BitmapFont = (_dec$2c = ccclass$x('cc.BitmapFont'), _dec2$1Q = type$b(Sprite
       this.fontDefDictionary.addLetterDefinitions(fontDef, letter);
     }
   }
-}, _initializer$1H = applyDecoratedInitializer(_class2$1L.prototype, "fntDataStr", [serializable$c], function () {
+}, _initializer$1I = applyDecoratedInitializer(_class2$1M.prototype, "fntDataStr", [serializable$c], function () {
   return '';
-}), _initializer2$1q = applyDecoratedInitializer(_class2$1L.prototype, "spriteFrame", [_dec2$1Q], function () {
+}), _initializer2$1r = applyDecoratedInitializer(_class2$1M.prototype, "spriteFrame", [_dec2$1Q], function () {
   return null;
-}), _initializer3$15 = applyDecoratedInitializer(_class2$1L.prototype, "fontSize", [serializable$c], function () {
+}), _initializer3$15 = applyDecoratedInitializer(_class2$1M.prototype, "fontSize", [serializable$c], function () {
   return -1;
-}), _initializer4$X = applyDecoratedInitializer(_class2$1L.prototype, "fntConfig", [serializable$c], function () {
+}), _initializer4$X = applyDecoratedInitializer(_class2$1M.prototype, "fntConfig", [serializable$c], function () {
   return null;
-}), _class2$1L)) || _class$2c);
+}), _class2$1M)) || _class$2d);
 cclegacy.BitmapFont = BitmapFont;
 
-var _dec$2b, _class$2b;
-let LabelAtlas = (_dec$2b = ccclass$x('cc.LabelAtlas'), _dec$2b(_class$2b = class LabelAtlas extends BitmapFont {}) || _class$2b);
+var _dec$2c, _class$2c;
+let LabelAtlas = (_dec$2c = ccclass$x('cc.LabelAtlas'), _dec$2c(_class$2c = class LabelAtlas extends BitmapFont {}) || _class$2c);
 cclegacy.LabelAtlas = LabelAtlas;
 
 let _canvasPool;
@@ -71922,7 +72121,7 @@ class LetterTexture {
     context.clearRect(0, 0, width, height);
     context.fillStyle = _backgroundStyle;
     context.fillRect(0, 0, width, height);
-    context.font = labelInfo.fontDesc.replace(/(\d+)(\.\d+)?(px|em|rem|pt)/g, (w, m, n, u) => (+m * fontScale + (+n || 0) * fontScale).toString() + u);
+    context.font = buildFontDesc(labelInfo.fontSize * fontScale, labelInfo.fontFamily, labelInfo.fontDesc.startsWith('bold '));
     const fontSize = labelInfo.fontSize * fontScale;
     const startX = width / 2;
     const startY = height / 2 + fontSize * MIDDLE_RATIO + fontSize * BASELINE_OFFSET;
@@ -72077,7 +72276,7 @@ const shareLabelInfo = {
   hAlign: 0,
   vAlign: 0,
   hash: '',
-  fontFamily: '',
+  fontFamily: DEFAULT_FONT_FAMILY,
   fontDesc: 'Arial',
   color: Color.WHITE.clone(),
   isOutlined: false,
@@ -72115,7 +72314,7 @@ class TextStyle {
     this.isSystemFontUsed = false;
     this.originFontSize = 0;
     this.bmfontScale = 1.0;
-    this.fontFamily = 'Arial';
+    this.fontFamily = DEFAULT_FONT_FAMILY;
     this.fontDesc = '';
     this.fntConfig = null;
     this.spriteFrame = null;
@@ -72219,7 +72418,7 @@ class TextOutputRenderData {
   }
 }
 
-var _dec$2a, _dec2$1P, _dec3$1c, _dec4$U, _dec5$O, _dec6$A, _dec7$t, _class$2a, _class2$1K, _initializer$1G, _initializer2$1p, _initializer3$14, _initializer4$W, _initializer5$L, _initializer6$B, _initializer7$t, _initializer8$q, _initializer9$m, _initializer0$k, _initializer1$j, _initializer10$h, _initializer11$f, _initializer12$c, _initializer13$9, _initializer14$9, _initializer15$6, _initializer16$6, _initializer17$5, _initializer18$4, _initializer19$4, _initializer20$4, _initializer21$4, _initializer22$4, _Label;
+var _dec$2b, _dec2$1P, _dec3$1c, _dec4$U, _dec5$O, _dec6$A, _dec7$t, _class$2b, _class2$1L, _initializer$1H, _initializer2$1q, _initializer3$14, _initializer4$W, _initializer5$L, _initializer6$B, _initializer7$t, _initializer8$q, _initializer9$m, _initializer0$k, _initializer1$j, _initializer10$h, _initializer11$f, _initializer12$c, _initializer13$9, _initializer14$9, _initializer15$6, _initializer16$6, _initializer17$5, _initializer18$4, _initializer19$4, _initializer20$4, _initializer21$4, _initializer22$4, _Label;
 Color.WHITE.clone();
 let HorizontalTextAlignment;
 (function (HorizontalTextAlignment) {
@@ -72250,7 +72449,7 @@ let CacheMode;
   CacheMode[CacheMode["CHAR"] = 2] = "CHAR";
 })(CacheMode || (CacheMode = {}));
 ccenum(CacheMode);
-let Label = (_dec$2a = ccclass$x('cc.Label'), _dec2$1P = executionOrder$2(110), _dec3$1c = type$b(HorizontalTextAlignment), _dec4$U = type$b(VerticalTextAlignment), _dec5$O = type$b(Overflow$1), _dec6$A = type$b(Font), _dec7$t = type$b(CacheMode), _dec$2a(_class$2a = _dec2$1P(_class$2a = (_class2$1K = (_Label = class Label extends UIRenderer {
+let Label = (_dec$2b = ccclass$x('cc.Label'), _dec2$1P = executionOrder$2(110), _dec3$1c = type$b(HorizontalTextAlignment), _dec4$U = type$b(VerticalTextAlignment), _dec5$O = type$b(Overflow$1), _dec6$A = type$b(Font), _dec7$t = type$b(CacheMode), _dec$2b(_class$2b = _dec2$1P(_class$2b = (_class2$1L = (_Label = class Label extends UIRenderer {
   get string() {
     return this._string;
   }
@@ -72534,8 +72733,8 @@ let Label = (_dec$2a = ccclass$x('cc.Label'), _dec2$1P = executionOrder$2(110), 
   }
   constructor() {
     super();
-    this._string = _initializer$1G && _initializer$1G();
-    this._horizontalAlign = _initializer2$1p && _initializer2$1p();
+    this._string = _initializer$1H && _initializer$1H();
+    this._horizontalAlign = _initializer2$1q && _initializer2$1q();
     this._verticalAlign = _initializer3$14 && _initializer3$14();
     this._actualFontSize = _initializer4$W && _initializer4$W();
     this._fontSize = _initializer5$L && _initializer5$L();
@@ -72740,58 +72939,58 @@ let Label = (_dec$2a = ccclass$x('cc.Label'), _dec2$1P = executionOrder$2(110), 
   _updateBlendFunc() {
     super._updateBlendFunc();
   }
-}, _Label.HorizontalAlign = HorizontalTextAlignment, _Label.VerticalAlign = VerticalTextAlignment, _Label.Overflow = Overflow$1, _Label.CacheMode = CacheMode, _Label._canvasPool = CanvasPool.getInstance(), _Label), _applyDecoratedDescriptor(_class2$1K.prototype, "horizontalAlign", [_dec3$1c], Object.getOwnPropertyDescriptor(_class2$1K.prototype, "horizontalAlign"), _class2$1K.prototype), _applyDecoratedDescriptor(_class2$1K.prototype, "verticalAlign", [_dec4$U], Object.getOwnPropertyDescriptor(_class2$1K.prototype, "verticalAlign"), _class2$1K.prototype), _applyDecoratedDescriptor(_class2$1K.prototype, "overflow", [_dec5$O], Object.getOwnPropertyDescriptor(_class2$1K.prototype, "overflow"), _class2$1K.prototype), _applyDecoratedDescriptor(_class2$1K.prototype, "font", [_dec6$A], Object.getOwnPropertyDescriptor(_class2$1K.prototype, "font"), _class2$1K.prototype), _applyDecoratedDescriptor(_class2$1K.prototype, "cacheMode", [_dec7$t], Object.getOwnPropertyDescriptor(_class2$1K.prototype, "cacheMode"), _class2$1K.prototype), _initializer$1G = applyDecoratedInitializer(_class2$1K.prototype, "_string", [serializable$c], function () {
+}, _Label.HorizontalAlign = HorizontalTextAlignment, _Label.VerticalAlign = VerticalTextAlignment, _Label.Overflow = Overflow$1, _Label.CacheMode = CacheMode, _Label._canvasPool = CanvasPool.getInstance(), _Label), _applyDecoratedDescriptor(_class2$1L.prototype, "horizontalAlign", [_dec3$1c], Object.getOwnPropertyDescriptor(_class2$1L.prototype, "horizontalAlign"), _class2$1L.prototype), _applyDecoratedDescriptor(_class2$1L.prototype, "verticalAlign", [_dec4$U], Object.getOwnPropertyDescriptor(_class2$1L.prototype, "verticalAlign"), _class2$1L.prototype), _applyDecoratedDescriptor(_class2$1L.prototype, "overflow", [_dec5$O], Object.getOwnPropertyDescriptor(_class2$1L.prototype, "overflow"), _class2$1L.prototype), _applyDecoratedDescriptor(_class2$1L.prototype, "font", [_dec6$A], Object.getOwnPropertyDescriptor(_class2$1L.prototype, "font"), _class2$1L.prototype), _applyDecoratedDescriptor(_class2$1L.prototype, "cacheMode", [_dec7$t], Object.getOwnPropertyDescriptor(_class2$1L.prototype, "cacheMode"), _class2$1L.prototype), _initializer$1H = applyDecoratedInitializer(_class2$1L.prototype, "_string", [serializable$c], function () {
   return 'label';
-}), _initializer2$1p = applyDecoratedInitializer(_class2$1K.prototype, "_horizontalAlign", [serializable$c], function () {
+}), _initializer2$1q = applyDecoratedInitializer(_class2$1L.prototype, "_horizontalAlign", [serializable$c], function () {
   return HorizontalTextAlignment.CENTER;
-}), _initializer3$14 = applyDecoratedInitializer(_class2$1K.prototype, "_verticalAlign", [serializable$c], function () {
+}), _initializer3$14 = applyDecoratedInitializer(_class2$1L.prototype, "_verticalAlign", [serializable$c], function () {
   return VerticalTextAlignment.CENTER;
-}), _initializer4$W = applyDecoratedInitializer(_class2$1K.prototype, "_actualFontSize", [serializable$c], function () {
+}), _initializer4$W = applyDecoratedInitializer(_class2$1L.prototype, "_actualFontSize", [serializable$c], function () {
   return 0;
-}), _initializer5$L = applyDecoratedInitializer(_class2$1K.prototype, "_fontSize", [serializable$c], function () {
+}), _initializer5$L = applyDecoratedInitializer(_class2$1L.prototype, "_fontSize", [serializable$c], function () {
   return 40;
-}), _initializer6$B = applyDecoratedInitializer(_class2$1K.prototype, "_fontFamily", [serializable$c], function () {
+}), _initializer6$B = applyDecoratedInitializer(_class2$1L.prototype, "_fontFamily", [serializable$c], function () {
   return 'Arial';
-}), _initializer7$t = applyDecoratedInitializer(_class2$1K.prototype, "_lineHeight", [serializable$c], function () {
+}), _initializer7$t = applyDecoratedInitializer(_class2$1L.prototype, "_lineHeight", [serializable$c], function () {
   return 40;
-}), _initializer8$q = applyDecoratedInitializer(_class2$1K.prototype, "_overflow", [serializable$c], function () {
+}), _initializer8$q = applyDecoratedInitializer(_class2$1L.prototype, "_overflow", [serializable$c], function () {
   return Overflow$1.NONE;
-}), _initializer9$m = applyDecoratedInitializer(_class2$1K.prototype, "_enableWrapText", [serializable$c], function () {
+}), _initializer9$m = applyDecoratedInitializer(_class2$1L.prototype, "_enableWrapText", [serializable$c], function () {
   return true;
-}), _initializer0$k = applyDecoratedInitializer(_class2$1K.prototype, "_font", [serializable$c], function () {
+}), _initializer0$k = applyDecoratedInitializer(_class2$1L.prototype, "_font", [serializable$c], function () {
   return null;
-}), _initializer1$j = applyDecoratedInitializer(_class2$1K.prototype, "_isSystemFontUsed", [serializable$c], function () {
+}), _initializer1$j = applyDecoratedInitializer(_class2$1L.prototype, "_isSystemFontUsed", [serializable$c], function () {
   return true;
-}), _initializer10$h = applyDecoratedInitializer(_class2$1K.prototype, "_spacingX", [serializable$c], function () {
+}), _initializer10$h = applyDecoratedInitializer(_class2$1L.prototype, "_spacingX", [serializable$c], function () {
   return 0;
-}), _initializer11$f = applyDecoratedInitializer(_class2$1K.prototype, "_isItalic", [serializable$c], function () {
+}), _initializer11$f = applyDecoratedInitializer(_class2$1L.prototype, "_isItalic", [serializable$c], function () {
   return false;
-}), _initializer12$c = applyDecoratedInitializer(_class2$1K.prototype, "_isBold", [serializable$c], function () {
+}), _initializer12$c = applyDecoratedInitializer(_class2$1L.prototype, "_isBold", [serializable$c], function () {
   return false;
-}), _initializer13$9 = applyDecoratedInitializer(_class2$1K.prototype, "_isUnderline", [serializable$c], function () {
+}), _initializer13$9 = applyDecoratedInitializer(_class2$1L.prototype, "_isUnderline", [serializable$c], function () {
   return false;
-}), _initializer14$9 = applyDecoratedInitializer(_class2$1K.prototype, "_underlineHeight", [serializable$c], function () {
+}), _initializer14$9 = applyDecoratedInitializer(_class2$1L.prototype, "_underlineHeight", [serializable$c], function () {
   return 2;
-}), _initializer15$6 = applyDecoratedInitializer(_class2$1K.prototype, "_cacheMode", [serializable$c], function () {
+}), _initializer15$6 = applyDecoratedInitializer(_class2$1L.prototype, "_cacheMode", [serializable$c], function () {
   return CacheMode.NONE;
-}), _initializer16$6 = applyDecoratedInitializer(_class2$1K.prototype, "_enableOutline", [serializable$c], function () {
+}), _initializer16$6 = applyDecoratedInitializer(_class2$1L.prototype, "_enableOutline", [serializable$c], function () {
   return false;
-}), _initializer17$5 = applyDecoratedInitializer(_class2$1K.prototype, "_outlineColor", [serializable$c], function () {
+}), _initializer17$5 = applyDecoratedInitializer(_class2$1L.prototype, "_outlineColor", [serializable$c], function () {
   return new Color(0, 0, 0, 255);
-}), _initializer18$4 = applyDecoratedInitializer(_class2$1K.prototype, "_outlineWidth", [serializable$c], function () {
+}), _initializer18$4 = applyDecoratedInitializer(_class2$1L.prototype, "_outlineWidth", [serializable$c], function () {
   return 2;
-}), _initializer19$4 = applyDecoratedInitializer(_class2$1K.prototype, "_enableShadow", [serializable$c], function () {
+}), _initializer19$4 = applyDecoratedInitializer(_class2$1L.prototype, "_enableShadow", [serializable$c], function () {
   return false;
-}), _initializer20$4 = applyDecoratedInitializer(_class2$1K.prototype, "_shadowColor", [serializable$c], function () {
+}), _initializer20$4 = applyDecoratedInitializer(_class2$1L.prototype, "_shadowColor", [serializable$c], function () {
   return new Color(0, 0, 0, 255);
-}), _initializer21$4 = applyDecoratedInitializer(_class2$1K.prototype, "_shadowOffset", [serializable$c], function () {
+}), _initializer21$4 = applyDecoratedInitializer(_class2$1L.prototype, "_shadowOffset", [serializable$c], function () {
   return new Vec2(2, 2);
-}), _initializer22$4 = applyDecoratedInitializer(_class2$1K.prototype, "_shadowBlur", [serializable$c], function () {
+}), _initializer22$4 = applyDecoratedInitializer(_class2$1L.prototype, "_shadowBlur", [serializable$c], function () {
   return 2;
-}), _class2$1K)) || _class$2a) || _class$2a);
+}), _class2$1L)) || _class$2b) || _class$2b);
 cclegacy.Label = Label;
 
-var _dec$29, _dec2$1O, _dec3$1b, _dec4$T, _dec5$N, _dec6$z, _dec7$s, _class$29, _class2$1J, _initializer$1F, _initializer2$1o, _initializer3$13, _initializer4$V, _initializer5$K, _initializer6$A, _initializer7$s, _initializer8$p, _initializer9$l, _initializer0$j, _Sprite;
+var _dec$2a, _dec2$1O, _dec3$1b, _dec4$T, _dec5$N, _dec6$z, _dec7$s, _class$2a, _class2$1K, _initializer$1G, _initializer2$1p, _initializer3$13, _initializer4$V, _initializer5$K, _initializer6$A, _initializer7$s, _initializer8$p, _initializer9$l, _initializer0$j, _Sprite;
 let SpriteType$1;
 (function (SpriteType) {
   SpriteType[SpriteType["SIMPLE"] = 0] = "SIMPLE";
@@ -72818,11 +73017,11 @@ let SpriteEventType;
 (function (SpriteEventType) {
   SpriteEventType["SPRITE_FRAME_CHANGED"] = "spriteframe-changed";
 })(SpriteEventType || (SpriteEventType = {}));
-let Sprite = (_dec$29 = ccclass$x('cc.Sprite'), _dec2$1O = executionOrder$2(110), _dec3$1b = type$b(SpriteAtlas), _dec4$T = type$b(SpriteFrame), _dec5$N = type$b(SpriteType$1), _dec6$z = type$b(FillType$2), _dec7$s = type$b(SizeMode$1), _dec$29(_class$29 = _dec2$1O(_class$29 = (_class2$1J = (_Sprite = class Sprite extends UIRenderer {
+let Sprite = (_dec$2a = ccclass$x('cc.Sprite'), _dec2$1O = executionOrder$2(110), _dec3$1b = type$b(SpriteAtlas), _dec4$T = type$b(SpriteFrame), _dec5$N = type$b(SpriteType$1), _dec6$z = type$b(FillType$2), _dec7$s = type$b(SizeMode$1), _dec$2a(_class$2a = _dec2$1O(_class$2a = (_class2$1K = (_Sprite = class Sprite extends UIRenderer {
   constructor() {
     super();
-    this._spriteFrame = _initializer$1F && _initializer$1F();
-    this._type = _initializer2$1o && _initializer2$1o();
+    this._spriteFrame = _initializer$1G && _initializer$1G();
+    this._type = _initializer2$1p && _initializer2$1p();
     this._fillType = _initializer3$13 && _initializer3$13();
     this._sizeMode = _initializer4$V && _initializer4$V();
     this._fillCenter = _initializer5$K && _initializer5$K();
@@ -73119,31 +73318,31 @@ let Sprite = (_dec$29 = ccclass$x('cc.Sprite'), _dec2$1O = executionOrder$2(110)
       }
     }
   }
-}, _Sprite.FillType = FillType$2, _Sprite.Type = SpriteType$1, _Sprite.SizeMode = SizeMode$1, _Sprite.EventType = SpriteEventType, _Sprite), _applyDecoratedDescriptor(_class2$1J.prototype, "spriteAtlas", [_dec3$1b], Object.getOwnPropertyDescriptor(_class2$1J.prototype, "spriteAtlas"), _class2$1J.prototype), _applyDecoratedDescriptor(_class2$1J.prototype, "spriteFrame", [_dec4$T], Object.getOwnPropertyDescriptor(_class2$1J.prototype, "spriteFrame"), _class2$1J.prototype), _applyDecoratedDescriptor(_class2$1J.prototype, "type", [_dec5$N], Object.getOwnPropertyDescriptor(_class2$1J.prototype, "type"), _class2$1J.prototype), _applyDecoratedDescriptor(_class2$1J.prototype, "fillType", [_dec6$z], Object.getOwnPropertyDescriptor(_class2$1J.prototype, "fillType"), _class2$1J.prototype), _applyDecoratedDescriptor(_class2$1J.prototype, "sizeMode", [_dec7$s], Object.getOwnPropertyDescriptor(_class2$1J.prototype, "sizeMode"), _class2$1J.prototype), _initializer$1F = applyDecoratedInitializer(_class2$1J.prototype, "_spriteFrame", [serializable$c], function () {
+}, _Sprite.FillType = FillType$2, _Sprite.Type = SpriteType$1, _Sprite.SizeMode = SizeMode$1, _Sprite.EventType = SpriteEventType, _Sprite), _applyDecoratedDescriptor(_class2$1K.prototype, "spriteAtlas", [_dec3$1b], Object.getOwnPropertyDescriptor(_class2$1K.prototype, "spriteAtlas"), _class2$1K.prototype), _applyDecoratedDescriptor(_class2$1K.prototype, "spriteFrame", [_dec4$T], Object.getOwnPropertyDescriptor(_class2$1K.prototype, "spriteFrame"), _class2$1K.prototype), _applyDecoratedDescriptor(_class2$1K.prototype, "type", [_dec5$N], Object.getOwnPropertyDescriptor(_class2$1K.prototype, "type"), _class2$1K.prototype), _applyDecoratedDescriptor(_class2$1K.prototype, "fillType", [_dec6$z], Object.getOwnPropertyDescriptor(_class2$1K.prototype, "fillType"), _class2$1K.prototype), _applyDecoratedDescriptor(_class2$1K.prototype, "sizeMode", [_dec7$s], Object.getOwnPropertyDescriptor(_class2$1K.prototype, "sizeMode"), _class2$1K.prototype), _initializer$1G = applyDecoratedInitializer(_class2$1K.prototype, "_spriteFrame", [serializable$c], function () {
   return null;
-}), _initializer2$1o = applyDecoratedInitializer(_class2$1J.prototype, "_type", [serializable$c], function () {
+}), _initializer2$1p = applyDecoratedInitializer(_class2$1K.prototype, "_type", [serializable$c], function () {
   return SpriteType$1.SIMPLE;
-}), _initializer3$13 = applyDecoratedInitializer(_class2$1J.prototype, "_fillType", [serializable$c], function () {
+}), _initializer3$13 = applyDecoratedInitializer(_class2$1K.prototype, "_fillType", [serializable$c], function () {
   return FillType$2.HORIZONTAL;
-}), _initializer4$V = applyDecoratedInitializer(_class2$1J.prototype, "_sizeMode", [serializable$c], function () {
+}), _initializer4$V = applyDecoratedInitializer(_class2$1K.prototype, "_sizeMode", [serializable$c], function () {
   return SizeMode$1.TRIMMED;
-}), _initializer5$K = applyDecoratedInitializer(_class2$1J.prototype, "_fillCenter", [serializable$c], function () {
+}), _initializer5$K = applyDecoratedInitializer(_class2$1K.prototype, "_fillCenter", [serializable$c], function () {
   return new Vec2(0, 0);
-}), _initializer6$A = applyDecoratedInitializer(_class2$1J.prototype, "_fillStart", [serializable$c], function () {
+}), _initializer6$A = applyDecoratedInitializer(_class2$1K.prototype, "_fillStart", [serializable$c], function () {
   return 0;
-}), _initializer7$s = applyDecoratedInitializer(_class2$1J.prototype, "_fillRange", [serializable$c], function () {
+}), _initializer7$s = applyDecoratedInitializer(_class2$1K.prototype, "_fillRange", [serializable$c], function () {
   return 0;
-}), _initializer8$p = applyDecoratedInitializer(_class2$1J.prototype, "_isTrimmedMode", [serializable$c], function () {
+}), _initializer8$p = applyDecoratedInitializer(_class2$1K.prototype, "_isTrimmedMode", [serializable$c], function () {
   return true;
-}), _initializer9$l = applyDecoratedInitializer(_class2$1J.prototype, "_useGrayscale", [serializable$c], function () {
+}), _initializer9$l = applyDecoratedInitializer(_class2$1K.prototype, "_useGrayscale", [serializable$c], function () {
   return false;
-}), _initializer0$j = applyDecoratedInitializer(_class2$1J.prototype, "_atlas", [serializable$c], function () {
+}), _initializer0$j = applyDecoratedInitializer(_class2$1K.prototype, "_atlas", [serializable$c], function () {
   return null;
-}), _class2$1J)) || _class$29) || _class$29);
+}), _class2$1K)) || _class$2a) || _class$2a);
 cclegacy.Sprite = Sprite;
 
-var _dec$28, _dec2$1N, _class$28;
-let UIMeshRenderer = (_dec$28 = ccclass$x('cc.UIMeshRenderer'), _dec2$1N = executionOrder$2(110), _dec$28(_class$28 = _dec2$1N(_class$28 = class UIMeshRenderer extends Component {
+var _dec$29, _dec2$1N, _class$29;
+let UIMeshRenderer = (_dec$29 = ccclass$x('cc.UIMeshRenderer'), _dec2$1N = executionOrder$2(110), _dec$29(_class$29 = _dec2$1N(_class$29 = class UIMeshRenderer extends Component {
   constructor() {
     super();
     this._modelComponent = null;
@@ -73256,8 +73455,362 @@ let UIMeshRenderer = (_dec$28 = ccclass$x('cc.UIMeshRenderer'), _dec2$1N = execu
   get renderData() {
     return this._renderData;
   }
-}) || _class$28) || _class$28);
+}) || _class$29) || _class$29);
 cclegacy.UIMeshRenderer = UIMeshRenderer;
+
+var _dec$28, _class$28, _class2$1J, _initializer$1F, _initializer2$1o;
+let _accessorBatcher = null;
+let _sharedAccessor = null;
+let _sharedTintAccessor = null;
+const UIMESH_ACCESSOR_KEY = Number.parseInt('UIMESH', 36);
+const UIMESH_TINT_ACCESSOR_KEY = Number.parseInt('UIMESHTINT', 36);
+const MESH_STRIDE_BYTES = getAttributeStride(vfmtPosUvColor4B);
+const MESH_STRIDE_TINT_BYTES = getAttributeStride(vfmtPosUvTwoColor4B);
+let UIMesh = (_dec$28 = ccclass$x('cc.UIMesh'), _dec$28(_class$28 = (_class2$1J = class UIMesh extends UIRenderer {
+  constructor() {
+    super();
+    this._enableBatch = _initializer$1F && _initializer$1F();
+    this._premultipliedAlpha = _initializer2$1o && _initializer2$1o();
+    this._meshData = null;
+    this._useTint = false;
+    this._drawInfoList = [];
+    this._pollOpacity = 1;
+    this._pollWorldMatrix = new Mat4();
+    this._vertexDirty = true;
+    this._useVertexOpacity = true;
+  }
+  setMeshData(data) {
+    if (!this._validateMeshData(data)) return;
+    const useTint = data.vertexStride === MESH_STRIDE_TINT_BYTES;
+    if (useTint !== this._useTint) {
+      this.destroyRenderData();
+      this._useTint = useTint;
+      this._flushAssembler();
+      this.updateMaterial();
+    }
+    this._meshData = data;
+    this._vertexDirty = true;
+  }
+  _validateMeshData(data) {
+    const vc = data.vertexCount;
+    const ic = data.indexCount;
+    if (data.vertexStride !== MESH_STRIDE_BYTES && data.vertexStride !== MESH_STRIDE_TINT_BYTES) {
+      errorID(9010, data.vertexStride, MESH_STRIDE_BYTES, MESH_STRIDE_TINT_BYTES);
+      return false;
+    }
+    if (!Number.isInteger(vc) || !Number.isInteger(ic) || vc < 0 || ic < 0) {
+      errorID(9011, vc, ic);
+      return false;
+    }
+    const accessor = this.ensureAccessor(data.vertexStride === MESH_STRIDE_TINT_BYTES);
+    if (vc > accessor.maxVertexCount || ic > accessor.maxIndexCount) {
+      errorID(9016, vc, ic, accessor.maxVertexCount, accessor.maxIndexCount);
+      return false;
+    }
+    if (!data.vertexData || data.vertexData.byteLength < vc * data.vertexStride) {
+      errorID(9012, data.vertexData ? data.vertexData.byteLength : 0, vc, data.vertexStride);
+      return false;
+    }
+    if (!data.indexData || data.indexData.byteOffset % 2 !== 0 || data.indexData.byteLength < ic * 2) {
+      errorID(9013, data.indexData ? data.indexData.byteLength : 0, data.indexData ? data.indexData.byteOffset : 0, ic, ic * 2);
+      return false;
+    }
+    const indices = new Uint16Array(data.indexData.buffer, data.indexData.byteOffset, ic);
+    for (let i = 0; i < ic; ++i) {
+      if (indices[i] >= vc) {
+        errorID(9014, i, indices[i], vc);
+        return false;
+      }
+    }
+    for (let i = 0; i < data.segments.length; ++i) {
+      const seg = data.segments[i];
+      if (!Number.isInteger(seg.indexOffset) || !Number.isInteger(seg.indexCount) || seg.indexOffset < 0 || seg.indexCount < 0 || seg.indexOffset + seg.indexCount > ic) {
+        errorID(9015, i, seg.indexOffset, seg.indexOffset + seg.indexCount, ic);
+        return false;
+      }
+    }
+    return true;
+  }
+  get enableBatch() {
+    return this._enableBatch;
+  }
+  set enableBatch(value) {
+    this._enableBatch = value;
+    this._syncTransformMode();
+    this.updateMaterial();
+  }
+  get premultipliedAlpha() {
+    return this._premultipliedAlpha;
+  }
+  set premultipliedAlpha(value) {
+    this._premultipliedAlpha = value;
+    this.updateMaterial();
+    this._vertexDirty = true;
+    this.onPremultipliedAlphaChanged();
+  }
+  onPremultipliedAlphaChanged() {}
+  onLoad() {
+    super.onLoad();
+    this._syncTransformMode();
+  }
+  _syncTransformMode() {
+    this._renderEntity.setUseLocal(!this._enableBatch);
+    this._vertexDirty = true;
+  }
+  _updateColor() {
+    super._updateColor();
+    this._vertexDirty = true;
+  }
+  _onMaterialModified(idx, material) {
+    super._onMaterialModified(idx, material);
+    this._vertexDirty = true;
+  }
+  onEnable() {
+    super.onEnable();
+  }
+  onDisable() {
+    super.onDisable();
+  }
+  onDestroy() {
+    super.onDestroy();
+    this._meshData = null;
+    this._drawInfoList.length = 0;
+  }
+  _onBeforeDraw() {
+    return;
+  }
+  _flushAssembler() {
+    if (this._renderData === null) {
+      const accessor = this.ensureAccessor(this._useTint);
+      this._renderData = RenderData$1.add(this._useTint ? vfmtPosUvTwoColor4B : vfmtPosUvColor4B, accessor);
+    }
+  }
+  _render(batcher) {
+    const prepared = this._prepareBuffers();
+    if (!prepared || !this._meshData) return;
+    const {
+      meshBuffer,
+      startIndex
+    } = prepared;
+    const data = this._meshData;
+    for (const seg of data.segments) {
+      const mat = seg.material || this.getRenderMaterial(0);
+      if (seg.texture && mat) {
+        batcher.commitMiddleware(this, meshBuffer, startIndex + seg.indexOffset, seg.indexCount, seg.texture, mat, this._enableBatch);
+      }
+    }
+  }
+  _prepareBuffers() {
+    if (!this.updateVertexBuffer()) return null;
+    return this.appendIndexBuffer();
+  }
+  updateVertexBuffer() {
+    if (!this._renderData || !this._meshData) return false;
+    const data = this._meshData;
+    const rd = this._renderData;
+    const vc = data.vertexCount;
+    const ic = data.indexCount;
+    if (vc < 1 || ic < 1) return false;
+    const vLength = vc * data.vertexStride;
+    if (!rd.chunk || rd.chunk.vb.byteLength < vLength || rd.chunk.indexCount < ic) {
+      rd.resize(Math.min(Math.ceil(vc * 1.1), rd.accessor.maxVertexCount), Math.min(Math.ceil(ic * 1.1), rd.accessor.maxIndexCount));
+      if (!rd.chunk) {
+        errorID(9017, vc, ic, rd.accessor.maxVertexCount, rd.accessor.maxIndexCount);
+        return false;
+      }
+      rd.updateSize(vc, ic);
+    } else if (rd.vertexCount !== vc || rd.indexCount !== ic) {
+      rd.updateSize(vc, ic);
+    }
+    if (!rd.chunk) return false;
+    const vbuf = rd.chunk.vb;
+    const vU8 = new Uint8Array(vbuf.buffer, vbuf.byteOffset, vLength);
+    vU8.set(data.vertexData.subarray(0, vLength));
+    if (this._enableBatch) {
+      this._bakeWorldTransform(vbuf, vLength, data.vertexStride);
+    }
+    const opacity = this._computeCascadedOpacity();
+    if (opacity < 0.9999) {
+      this._applyOpacity(vU8, vc, data.vertexStride, opacity);
+    }
+    this._pollOpacity = opacity;
+    if (this._enableBatch) {
+      this._pollWorldMatrix.set(this.node.worldMatrix);
+    }
+    return true;
+  }
+  appendIndexBuffer() {
+    const data = this._meshData;
+    const rd = this._renderData;
+    if (!rd || !rd.chunk || !data || data.vertexCount < 1 || data.indexCount < 1) {
+      return null;
+    }
+    const meshBuffer = rd.getMeshBuffer();
+    const startIndex = meshBuffer.indexOffset;
+    const ic = data.indexCount;
+    const chunkOffset = rd.chunk.vertexOffset;
+    const offsetIndices = new Uint16Array(ic);
+    new Uint8Array(offsetIndices.buffer).set(data.indexData.subarray(0, ic * 2));
+    for (let i = 0; i < ic; i++) offsetIndices[i] += chunkOffset;
+    rd.chunk.vertexAccessor.appendIndices(rd.chunk.bufferId, offsetIndices);
+    rd.chunk.vertexAccessor.getMeshBuffer(rd.chunk.bufferId).setDirty();
+    this._refreshDrawInfoOffsets(startIndex);
+    return {
+      meshBuffer,
+      startIndex
+    };
+  }
+  _refreshDrawInfoOffsets(startIndex) {
+    const data = this._meshData;
+    if (!data || this._drawInfoList.length === 0) return;
+    let drawIndex = 0;
+    for (const seg of data.segments) {
+      const mat = seg.material || this.getRenderMaterial(0);
+      if (!seg.texture || !mat) continue;
+      const drawInfo = this._drawInfoList[drawIndex++];
+      if (drawInfo) drawInfo.setIndexOffset(startIndex + seg.indexOffset);
+    }
+  }
+  _bakeWorldTransform(vbuf, byteLength, stride) {
+    const m = this.node.worldMatrix;
+    const m00 = m.m00;
+    const m01 = m.m01;
+    const m02 = m.m02;
+    const m04 = m.m04;
+    const m05 = m.m05;
+    const m06 = m.m06;
+    const m08 = m.m08;
+    const m09 = m.m09;
+    const m10 = m.m10;
+    const m12 = m.m12;
+    const m13 = m.m13;
+    const m14 = m.m14;
+    if (m00 === 1 && m01 === 0 && m02 === 0 && m04 === 0 && m05 === 1 && m06 === 0 && m08 === 0 && m09 === 0 && m10 === 1 && m12 === 0 && m13 === 0 && m14 === 0) return;
+    const floats = new Float32Array(vbuf.buffer, vbuf.byteOffset, byteLength >> 2);
+    const strideF = stride >> 2;
+    const vertexCount = byteLength / stride;
+    for (let i = 0; i < vertexCount; i++) {
+      const o = i * strideF;
+      const x = floats[o];
+      const y = floats[o + 1];
+      const z = floats[o + 2];
+      floats[o] = m00 * x + m04 * y + m08 * z + m12;
+      floats[o + 1] = m01 * x + m05 * y + m09 * z + m13;
+      floats[o + 2] = m02 * x + m06 * y + m10 * z + m14;
+    }
+  }
+  _computeCascadedOpacity() {
+    let opacity = this._color.a / 255;
+    for (let node = this.node; node; node = node.parent) {
+      opacity *= node._uiProps.localOpacity;
+      if (node !== this.node) {
+        const ancestor = node._uiProps.uiComp;
+        if (ancestor && ancestor.color) opacity *= ancestor.color.a / 255;
+      }
+    }
+    return opacity;
+  }
+  _applyOpacity(vU8, vc, stride, opacity) {
+    const pma = this._premultipliedAlpha;
+    const darkRGB = pma && stride === MESH_STRIDE_TINT_BYTES ? 3 : 0;
+    for (let i = 0; i < vc; i++) {
+      const o = i * stride + 20;
+      if (pma) {
+        vU8[o] = vU8[o] * opacity + 0.5 | 0;
+        vU8[o + 1] = vU8[o + 1] * opacity + 0.5 | 0;
+        vU8[o + 2] = vU8[o + 2] * opacity + 0.5 | 0;
+      }
+      vU8[o + 3] = vU8[o + 3] * opacity + 0.5 | 0;
+      for (let j = 0; j < darkRGB; j++) {
+        vU8[o + 4 + j] = vU8[o + 4 + j] * opacity + 0.5 | 0;
+      }
+    }
+  }
+  _prepareNativeDrawInfos() {
+    this._renderEntity.clearDynamicRenderDrawInfos();
+    const prepared = this._prepareBuffers();
+    const data = this._meshData;
+    const rd = this._renderData;
+    if (!prepared || !data || !(rd != null && rd.chunk)) return;
+    const {
+      startIndex
+    } = prepared;
+    let drawIndex = 0;
+    for (const seg of data.segments) {
+      const mat = seg.material || this.getRenderMaterial(0);
+      if (!seg.texture || !mat) continue;
+      let drawInfo = this._drawInfoList[drawIndex];
+      if (!drawInfo) {
+        drawInfo = new RenderDrawInfo();
+        drawInfo.setDrawInfoType(RenderDrawInfoType.MIDDLEWARE);
+        this._drawInfoList[drawIndex] = drawInfo;
+      }
+      drawInfo.setAccAndBuffer(rd.accessor.id, rd.chunk.bufferId);
+      drawInfo.setIndexOffset(startIndex + seg.indexOffset);
+      drawInfo.setIBCount(seg.indexCount);
+      drawInfo.setTexture(seg.texture.getGFXTexture());
+      drawInfo.setSampler(seg.texture.getGFXSampler());
+      drawInfo.setMaterial(mat);
+      this._renderEntity.setDynamicRenderDrawInfo(drawInfo, drawIndex);
+      drawIndex++;
+    }
+  }
+  _updateBuiltinMaterial() {
+    return builtinResMgr.get('default-spine-material');
+  }
+  updateMaterial() {
+    this._srcBlendFactor = this._premultipliedAlpha ? BlendFactor.ONE : BlendFactor.SRC_ALPHA;
+    this._dstBlendFactor = BlendFactor.ONE_MINUS_SRC_ALPHA;
+    super.updateMaterial();
+    if (this._customMaterial) return;
+    const inst = this.getMaterialInstance(0);
+    if (!inst) return;
+    inst.recompileShaders({
+      USE_LOCAL: !this._enableBatch,
+      TWO_COLORED: this._useTint
+    });
+    const src = this._premultipliedAlpha ? BlendFactor.ONE : BlendFactor.SRC_ALPHA;
+    const pass = inst.passes[0];
+    const target = pass.blendState.targets[0];
+    target.blend = true;
+    target.blendSrc = src;
+    target.blendSrcAlpha = src;
+    target.blendDst = BlendFactor.ONE_MINUS_SRC_ALPHA;
+    target.blendDstAlpha = BlendFactor.ONE_MINUS_SRC_ALPHA;
+    pass.blendState.setTarget(0, target);
+    pass._updatePassHash();
+  }
+  createRenderEntity() {
+    const entity = new RenderEntity(RenderEntityType.DYNAMIC);
+    entity.setUseLocal(!this._enableBatch);
+    return entity;
+  }
+  ensureAccessor(useTint) {
+    const batcher = director.root.batcher2D;
+    if (_accessorBatcher !== batcher) {
+      _accessorBatcher = batcher;
+      _sharedAccessor = null;
+      _sharedTintAccessor = null;
+    }
+    let accessor = useTint ? _sharedTintAccessor : _sharedAccessor;
+    if (!accessor) {
+      const device = director.root.device;
+      const attributes = (useTint ? vfmtPosUvTwoColor4B : vfmtPosUvColor4B).slice();
+      accessor = new StaticVBAccessor(device, attributes, 32767);
+      batcher.registerBufferAccessor(useTint ? UIMESH_TINT_ACCESSOR_KEY : UIMESH_ACCESSOR_KEY, accessor);
+      if (useTint) {
+        _sharedTintAccessor = accessor;
+      } else {
+        _sharedAccessor = accessor;
+      }
+    }
+    return accessor;
+  }
+}, _initializer$1F = applyDecoratedInitializer(_class2$1J.prototype, "_enableBatch", [serializable$c], function () {
+  return false;
+}), _initializer2$1o = applyDecoratedInitializer(_class2$1J.prototype, "_premultipliedAlpha", [serializable$c], function () {
+  return false;
+}), _class2$1J)) || _class$28);
 
 var _dec$27, _dec2$1M, _dec3$1a, _class$27;
 let LabelOutline = (_dec$27 = ccclass$x('cc.LabelOutline'), _dec2$1M = executionOrder$2(110), _dec3$1a = requireComponent(Label), _dec$27(_class$27 = _dec2$1M(_class$27 = _dec3$1a(_class$27 = class LabelOutline extends Component {
@@ -73502,6 +74055,10 @@ let PointFlags;
   PointFlags[PointFlags["PT_INNERBEVEL"] = 8] = "PT_INNERBEVEL";
 })(PointFlags || (PointFlags = {}));
 ccenum(PointFlags);
+
+const MAX_VERTEX_COUNT = 65536;
+const INDICES_PER_VERTEX = 3;
+const MAX_INDEX_COUNT = MAX_VERTEX_COUNT * INDICES_PER_VERTEX;
 
 const PI$1 = Math.PI;
 const min$1 = Math.min;
@@ -73822,6 +74379,13 @@ var _dec$23, _dec2$1I, _dec3$18, _dec4$S, _class$23, _class2$1G, _initializer$1D
 const attributes = vfmtPosColor.concat([new Attribute('a_dist', Format.R32F)]);
 const componentPerVertex = getComponentPerVertex(attributes);
 const stride = getAttributeStride(attributes);
+function growCapacity(needed, current, max) {
+  let cap = Math.max(current, 1);
+  while (cap < needed) {
+    cap *= 2;
+  }
+  return Math.min(cap, max);
+}
 let Graphics = (_dec$23 = ccclass$x('cc.Graphics'), _dec2$1I = executionOrder$2(110), _dec3$18 = type$b(LineJoin), _dec4$S = type$b(LineCap), _dec$23(_class$23 = _dec2$1I(_class$23 = (_class2$1G = (_Graphics = class Graphics extends UIRenderer {
   get lineWidth() {
     return this._lineWidth;
@@ -74058,15 +74622,15 @@ let Graphics = (_dec$23 = ccclass$x('cc.Graphics'), _dec2$1I = executionOrder$2(
       });
     }
   }
-  activeSubModel(idx) {
+  activeSubModel(idx, vertexCount = 1, indexCount = 1) {
     if (!this.model) {
       warnID(4500, this.node.name);
       return;
     }
     if (this.model.subModels.length <= idx) {
       const gfxDevice = deviceManager.gfxDevice;
-      const vertexBuffer = gfxDevice.createBuffer(new BufferInfo(BufferUsageBit.VERTEX | BufferUsageBit.TRANSFER_DST, MemoryUsageBit.DEVICE, 65536 * stride, stride));
-      const indexBuffer = gfxDevice.createBuffer(new BufferInfo(BufferUsageBit.INDEX | BufferUsageBit.TRANSFER_DST, MemoryUsageBit.DEVICE, 65536 * Uint16Array.BYTES_PER_ELEMENT * 2, Uint16Array.BYTES_PER_ELEMENT));
+      const vertexBuffer = gfxDevice.createBuffer(new BufferInfo(BufferUsageBit.VERTEX | BufferUsageBit.TRANSFER_DST, MemoryUsageBit.DEVICE, growCapacity(vertexCount, 0, MAX_VERTEX_COUNT) * stride, stride));
+      const indexBuffer = gfxDevice.createBuffer(new BufferInfo(BufferUsageBit.INDEX | BufferUsageBit.TRANSFER_DST, MemoryUsageBit.DEVICE, growCapacity(indexCount, 0, MAX_INDEX_COUNT) * Uint16Array.BYTES_PER_ELEMENT, Uint16Array.BYTES_PER_ELEMENT));
       const renderMesh = new RenderingSubMesh([vertexBuffer], attributes, PrimitiveMode.TRIANGLE_LIST, indexBuffer);
       renderMesh.subMeshIdx = 0;
       this.model.initSubModel(idx, renderMesh, this.getMaterialInstance(0));
@@ -74089,6 +74653,7 @@ let Graphics = (_dec$23 = ccclass$x('cc.Graphics'), _dec2$1I = executionOrder$2(
       if (renderData.lastFilledVertex === renderData.vertexStart) {
         continue;
       }
+      this._ensureCapacity(renderData, ia);
       const vb = new Float32Array(renderData.vData.buffer, 0, renderData.vertexStart * componentPerVertex);
       ia.vertexBuffers[0].update(vb);
       ia.vertexCount = renderData.vertexStart;
@@ -74100,6 +74665,22 @@ let Graphics = (_dec$23 = ccclass$x('cc.Graphics'), _dec2$1I = executionOrder$2(
     }
     this._isNeedUploadData = false;
   }
+  _ensureCapacity(renderData, ia) {
+    const vb = ia.vertexBuffers[0];
+    const vbStride = vb.stride;
+    if (renderData.vertexStart * vbStride > vb.size) {
+      const count = growCapacity(renderData.vertexStart, vb.size / vbStride, MAX_VERTEX_COUNT);
+      vb.resize(count * vbStride);
+    }
+    const ib = ia.indexBuffer;
+    if (!ib) {
+      return;
+    }
+    if (renderData.indexStart * Uint16Array.BYTES_PER_ELEMENT > ib.size) {
+      const count = growCapacity(renderData.indexStart, ib.size / Uint16Array.BYTES_PER_ELEMENT, MAX_INDEX_COUNT);
+      ib.resize(count * Uint16Array.BYTES_PER_ELEMENT);
+    }
+  }
   _render(render) {
     if (this._isNeedUploadData) {
       if (this.impl) {
@@ -74107,7 +74688,8 @@ let Graphics = (_dec$23 = ccclass$x('cc.Graphics'), _dec2$1I = executionOrder$2(
         const len = this.model.subModels.length;
         if (renderDataList.length > len) {
           for (let i = len; i < renderDataList.length; i++) {
-            this.activeSubModel(i);
+            const renderData = renderDataList[i];
+            this.activeSubModel(i, renderData.vertexStart, renderData.indexStart);
           }
         }
       }
@@ -75631,7 +76213,7 @@ class TextProcessing {
           const maxValue = Math.max(outputLayoutData.canvasSize.width, outputLayoutData.canvasSize.height);
           const canvasScaleToMaxSizeRatio = MAX_SIZE / maxValue;
           this._fontScale *= canvasScaleToMaxSizeRatio;
-          this._fontScale = Math.max(1, this._fontScale);
+          this._fontScale = Math.max(0.1, this._fontScale);
         }
         this._updatePaddingRect(style, outputLayoutData);
         this._calculateLabelFont(style, layout, outputLayoutData, inputString);
@@ -75746,15 +76328,7 @@ class TextProcessing {
     }
   }
   _getFontDesc(fontSize, fontFamily, isBold, isItalic) {
-    let fontDesc = `${fontSize.toString()}px `;
-    fontDesc += fontFamily;
-    if (isBold) {
-      fontDesc = `bold ${fontDesc}`;
-    }
-    if (isItalic) {
-      fontDesc = `italic ${fontDesc}`;
-    }
-    return fontDesc;
+    return buildFontDesc(fontSize, fontFamily, isBold, isItalic);
   }
   _getLineHeight(lineHeight, fontSize, drawFontsize) {
     let nodeSpacingY = lineHeight;
@@ -76788,6 +77362,7 @@ const bmfont = new Bmfont();
 
 const _atlasWidth = 1024;
 const _atlasHeight = 1024;
+const _isBold = false;
 let _shareAtlas = null;
 class LetterFont extends BmfontUtils {
   getAssemblerData() {
@@ -76811,15 +77386,7 @@ class LetterFont extends BmfontUtils {
     }
   }
   _getFontFamily(comp) {
-    let fontFamily = 'Arial';
-    if (!comp.useSystemFont) {
-      if (comp.font) {
-        fontFamily = comp.font._nativeAsset || 'Arial';
-      }
-    } else {
-      fontFamily = comp.fontFamily || 'Arial';
-    }
-    return fontFamily;
+    return getCanvasFontFamily(comp);
   }
   _updateLabelInfo(comp) {
     shareLabelInfo.fontDesc = this._getFontDesc();
@@ -76827,9 +77394,7 @@ class LetterFont extends BmfontUtils {
     shareLabelInfo.hash = computeHash(shareLabelInfo);
   }
   _getFontDesc() {
-    let fontDesc = `${shareLabelInfo.fontSize.toString()}px `;
-    fontDesc += shareLabelInfo.fontFamily;
-    return fontDesc;
+    return buildFontDesc(shareLabelInfo.fontSize, shareLabelInfo.fontFamily, _isBold);
   }
 }
 
@@ -76970,17 +77535,7 @@ class TTFUtils {
   updateVertexData(comp) {}
   updateUVs(comp) {}
   _updateFontFamily(comp) {
-    let _fontFamily = '';
-    if (!comp.useSystemFont) {
-      if (comp.font) {
-        _fontFamily = comp.font._nativeAsset || 'Arial';
-      } else {
-        _fontFamily = 'Arial';
-      }
-    } else {
-      _fontFamily = comp.fontFamily || 'Arial';
-    }
-    return _fontFamily;
+    return getCanvasFontFamily(comp);
   }
   _calDynamicAtlas(comp, outputLayoutData) {
     if (comp.cacheMode !== CacheMode.BITMAP || outputLayoutData.canvasSize.width <= 0 || outputLayoutData.canvasSize.height <= 0) return;
@@ -79875,8 +80430,6 @@ function earcut(datas, holeIndices, dim) {
   return triangles;
 }
 
-const MAX_VERTEX = 65535;
-const MAX_INDICES = MAX_VERTEX * 2;
 const PI = Math.PI;
 const min = Math.min;
 const max$1 = Math.max;
@@ -79919,7 +80472,7 @@ class GraphicsAssembler {
     }
     let meshBuffer = renderData;
     const maxVertexCount = meshBuffer ? meshBuffer.vertexStart + vertexCount : 0;
-    if (maxVertexCount > MAX_VERTEX || maxVertexCount * 3 > MAX_INDICES) {
+    if (maxVertexCount > MAX_VERTEX_COUNT) {
       ++_impl.dataOffset;
       if (_impl.dataOffset < renderDataList.length) {
         renderData = renderDataList[_impl.dataOffset];
@@ -79930,7 +80483,7 @@ class GraphicsAssembler {
       meshBuffer = renderData;
     }
     if (meshBuffer && meshBuffer.vertexCount < maxVertexCount) {
-      meshBuffer.request(vertexCount, vertexCount * 3);
+      meshBuffer.request(vertexCount, vertexCount * INDICES_PER_VERTEX);
     }
     return renderData;
   }
@@ -86966,6 +87519,7 @@ let TiledLayer = (_dec2$1n = ccclass$x('cc.TiledLayer'), _dec2$1n(_class2$1k = c
       this.tiles[idx] = 0;
     }
     this._cullingDirty = true;
+    this._markForUpdateRenderData();
   }
   getTileGIDAt(x, y) {
     if (this.isInvalidPosition(x, y)) {
@@ -88856,6 +89410,15 @@ let Button = (_dec$1F = ccclass$x('cc.Button'), _dec2$1j = executionOrder$2(110)
     this._sprite = null;
     this._targetScale = v3();
   }
+  on(type, callback, target) {
+    this.node.on(type, callback, target);
+  }
+  off(type, callback, target) {
+    this.node.off(type, callback, target);
+  }
+  targetOff(target) {
+    this.node.targetOff(target);
+  }
   __preload() {
     if (!this.target) {
       this.target = this.node;
@@ -89079,7 +89642,7 @@ let Button = (_dec$1F = ccclass$x('cc.Button'), _dec2$1j = executionOrder$2(110)
     }
     if (this._pressed) {
       EventHandler.emitEvents(this.clickEvents, event);
-      this.node.emit(ButtonEventType.CLICK, this);
+      this.node.emit(ButtonEventType.CLICK, this, event);
     }
     this._pressed = false;
     this._updateState();
@@ -89705,7 +90268,7 @@ class EditBoxImpl extends EditBoxImplBase {
     }
     let font = textLabel.font;
     if (font && !(font instanceof BitmapFont)) {
-      font = font._fontFamily;
+      font = getCanvasFontFamily(textLabel);
     } else {
       font = textLabel.fontFamily;
     }
@@ -89742,7 +90305,7 @@ class EditBoxImpl extends EditBoxImplBase {
     }
     let font = placeholderLabel.font;
     if (font && !(font instanceof BitmapFont)) {
-      font = placeholderLabel.font._fontFamily;
+      font = getCanvasFontFamily(placeholderLabel);
     } else {
       font = placeholderLabel.fontFamily;
     }
@@ -89770,7 +90333,7 @@ class EditBoxImpl extends EditBoxImplBase {
         horizontalAlign = 'right';
         break;
     }
-    styleEl.innerHTML = `#${this._domId}::-webkit-input-placeholder{text-transform: initial;-family: ${font};font-size: ${fontSize}px;color: ${fontColor};line-height: ${lineHeight}px;text-align: ${horizontalAlign};}` + `#${this._domId}::-moz-placeholder{text-transform: initial;-family: ${font};font-size: ${fontSize}px;color: ${fontColor};line-height: ${lineHeight}px;text-align: ${horizontalAlign};}` + `#${this._domId}::-ms-input-placeholder{text-transform: initial;-family: ${font};font-size: ${fontSize}px;color: ${fontColor};line-height: ${lineHeight}px;text-align: ${horizontalAlign};}`;
+    styleEl.innerHTML = `#${this._domId}::-webkit-input-placeholder{text-transform: initial;font-family: ${font};` + `font-size: ${fontSize}px;color: ${fontColor};line-height: ${lineHeight}px;text-align: ${horizontalAlign};}` + `#${this._domId}::-moz-placeholder{text-transform: initial;font-family: ${font};` + `font-size: ${fontSize}px;color: ${fontColor};line-height: ${lineHeight}px;text-align: ${horizontalAlign};}` + `#${this._domId}::-ms-input-placeholder{text-transform: initial;font-family: ${font};` + `font-size: ${fontSize}px;color: ${fontColor};line-height: ${lineHeight}px;text-align: ${horizontalAlign};}`;
     if (sys.browserType === BrowserType.EDGE) {
       styleEl.innerHTML += `#${this._domId}::-ms-clear{display: none;}`;
     }
@@ -142090,8 +142653,8 @@ function createSessionScope() {
 
 const AIR_VERSION = '1.0.0';
 const AIR_REVISION = 100;
-const AIR_BUILD_DATE = "202611051219";
-const AIR_BUILD_NUMBER = 256;
+const AIR_BUILD_DATE = "202611212116";
+const AIR_BUILD_NUMBER = 283;
 class AirAppImpl {
   get session() {
     return this._scope;
@@ -144022,6 +144585,19 @@ async function prepareBox3D(options, preparation) {
   throw unavailable('AIR_E_PHYSICS_BACKEND_UNAVAILABLE', 'This runtime does not include the physics-box3d feature.');
 }
 
+const invalidatedContexts = new WeakSet();
+function invalidateWebGL2Context(context) {
+  invalidatedContexts.add(context);
+}
+function assertWebGL2ContextActive(context) {
+  if (context != null && context.isContextLost != null && context.isContextLost()) invalidateWebGL2Context(context);
+  if (!context || invalidatedContexts.has(context)) {
+    throw Object.assign(new Error('WebGL2 context is lost or closed.'), {
+      code: 'WEBGL2_CONTEXT_LOST'
+    });
+  }
+}
+
 const TIMELINE_LIMIT = 32;
 function attachContextHealth(canvas, options = {}) {
   const autoPause = options.autoPause !== false;
@@ -144034,6 +144610,7 @@ function attachContextHealth(canvas, options = {}) {
   let lastEventAt = null;
   let gl = null;
   let destroyed = false;
+  let watchedWebGPUDevice = null;
   const timeline = [];
   const listeners = new Set();
   if (typeof options.onEvent === 'function') {
@@ -144118,6 +144695,7 @@ function attachContextHealth(canvas, options = {}) {
       event.preventDefault();
     } catch {}
     acquireGl();
+    if (gl) invalidateWebGL2Context(gl);
     lostCount += 1;
     if (autoPause) {
       try {
@@ -144136,9 +144714,11 @@ function attachContextHealth(canvas, options = {}) {
   return {
     snapshot,
     watchWebGPUDevice(device) {
+      if (destroyed || watchedWebGPUDevice === device) return;
+      watchedWebGPUDevice = device;
       backend = 'webgpu';
       device.lost.then(info => {
-        if (destroyed) return;
+        if (destroyed || watchedWebGPUDevice !== device) return;
         lostCount += 1;
         game.pause();
         transition('lost', `webgpu-device-lost: ${info.reason}: ${info.message}`);
@@ -144166,6 +144746,7 @@ function attachContextHealth(canvas, options = {}) {
     },
     destroy() {
       destroyed = true;
+      watchedWebGPUDevice = null;
       canvas.removeEventListener('webglcontextlost', onLost, false);
       canvas.removeEventListener('webglcontextrestored', onRestored, false);
       listeners.clear();
@@ -144306,6 +144887,58 @@ let DescUpdateFrequency;
   DescUpdateFrequency[DescUpdateFrequency["LOW"] = 0] = "LOW";
   DescUpdateFrequency[DescUpdateFrequency["NORMAL"] = 1] = "NORMAL";
 })(DescUpdateFrequency || (DescUpdateFrequency = {}));
+
+const lifetimes = new WeakMap();
+function assertWebGPUDeviceActive(device) {
+  if (device.isLost || !device.nativeDevice) {
+    throw Object.assign(new Error('WebGPU device is lost or closed.'), {
+      code: 'WEBGPU_DEVICE_LOST'
+    });
+  }
+  return device.nativeDevice;
+}
+function lifetime(device) {
+  let state = lifetimes.get(device);
+  if (!state) {
+    state = {
+      active: new Set(),
+      pending: new Map(),
+      retired: new WeakSet(),
+      closed: false
+    };
+    lifetimes.set(device, state);
+  }
+  return state;
+}
+function beginWebGPUResourceUse(device) {
+  const state = lifetime(device);
+  if (state.closed) throw new Error('WEBGPU_DEVICE_LOST');
+  const token = Symbol();
+  state.active.add(token);
+  return () => {
+    if (!state.active.delete(token)) return;
+    for (const [resource, blockers] of state.pending) {
+      blockers.delete(token);
+      if (!blockers.size) {
+        state.pending.delete(resource);
+        resource.destroy();
+      }
+    }
+  };
+}
+function retireWebGPUResource(device, resource) {
+  const state = lifetime(device);
+  if (state.retired.has(resource)) return;
+  state.retired.add(resource);
+  if (!state.active.size || state.closed) resource.destroy();else state.pending.set(resource, new Set(state.active));
+}
+function closeWebGPUResourceUses(device) {
+  const state = lifetime(device);
+  state.closed = true;
+  state.active.clear();
+  for (const resource of state.pending.keys()) resource.destroy();
+  state.pending.clear();
+}
 
 const WebGPUAdressMode = ['repeat', 'mirror-repeat', 'clamp-to-edge', 'clamp-to-edge'];
 const WebGPUCompareFunc = ['never', 'less', 'equal', 'less-equal', 'greater', 'not-equal', 'greater-equal', 'always'];
@@ -144823,6 +145456,7 @@ function WebGPUCmdFuncUpdateBuffer(device, gpuBuffer, buffer, offset, size) {
   }
 }
 function WebGPUCmdFuncCreateTexture(device, gpuTexture) {
+  assertWebGPUDeviceActive(device);
   gpuTexture.gpuTarget = GFXTextureToWebGPUTexture(gpuTexture.type);
   gpuTexture.gpuInternalFmt = GFXFormatToWGPUTextureFormat(gpuTexture.format);
   gpuTexture.gpuFormat = GFXFormatToWGPUFormat(gpuTexture.format);
@@ -144855,6 +145489,14 @@ function WebGPUCmdFuncCreateTexture(device, gpuTexture) {
     if (gpuTexture.type !== TextureType.TEX2D || gpuTexture.mipLevel !== 1 || gpuTexture.arrayLayer !== 1) {
       throw new Error('WEBGPU_MULTISAMPLE_TEXTURE_UNSUPPORTED');
     }
+    const formatInfo = FormatInfos[gpuTexture.format];
+    if (!formatInfo.hasDepth && (formatInfo.type === FormatType.INT || formatInfo.type === FormatType.UINT || formatInfo.type === FormatType.FLOAT && formatInfo.size / formatInfo.count === 4)) {
+      throw Object.assign(new Error('This GFX MSAA path requires a resolve-capable color format.'), {
+        code: 'WEBGPU_MULTISAMPLE_FORMAT_UNSUPPORTED',
+        format: gpuTexture.format,
+        samples: gpuTexture.samples
+      });
+    }
     if (!FormatInfos[gpuTexture.format].hasDepth) {
       const resolved = device.nativeDevice.createTexture({
         ...texDescriptor,
@@ -144874,11 +145516,17 @@ function WebGPUCmdFuncCreateTexture(device, gpuTexture) {
   gpuTexture.gpuTexture = device.nativeDevice.createTexture(texDescriptor);
 }
 function WebGPUCmdFuncDestroyTexture(gpuTexture) {
-  var _gpuTexture$resolveTe, _gpuTexture$resolveTe2;
-  (_gpuTexture$resolveTe = gpuTexture.resolveTex) == null ? void 0 : (_gpuTexture$resolveTe2 = _gpuTexture$resolveTe.gpuTexture) == null ? void 0 : _gpuTexture$resolveTe2.destroy();
+  var _gpuTexture$resolveTe;
+  const resolved = (_gpuTexture$resolveTe = gpuTexture.resolveTex) == null ? void 0 : _gpuTexture$resolveTe.gpuTexture;
+  const texture = gpuTexture.gpuTexture;
   gpuTexture.resolveTex = null;
-  if (gpuTexture.gpuTexture) {
-    gpuTexture.gpuTexture.destroy();
+  gpuTexture.gpuTexture = undefined;
+  const nativeDevice = WebGPUDeviceManager.instance.nativeDevice;
+  if (resolved) {
+    if (nativeDevice) retireWebGPUResource(nativeDevice, resolved);else resolved.destroy();
+  }
+  if (texture) {
+    if (nativeDevice) retireWebGPUResource(nativeDevice, texture);else texture.destroy();
   }
 }
 function WebGPUCmdFuncResizeTexture(device, gpuTexture) {
@@ -144916,13 +145564,15 @@ function WebGPUCmdFuncDestroySampler(device, gpuSampler) {
     gpuSampler.gpuSampler = null;
   }
 }
-async function WebGPUCmdFuncCopyTextureToBuffer(device, texture, buffers, regions) {
+async function WebGPUCmdFuncCopyTextureToBuffer(device, texture, buffers, regions, sourceIsAlive) {
   const info = FormatInfos[texture.format];
   if (info.hasDepth || info.hasStencil || info.isCompressed || texture.samples !== 1) {
     throw new Error('WEBGPU_READBACK_UNSUPPORTED: requires a single-sample uncompressed color texture.');
   }
   if (buffers.length !== regions.length) throw new Error('WEBGPU_READBACK_BUFFERS');
-  const layouts = regions.map((region, index) => {
+  if (!regions.length) return;
+  const copies = regions.map(region => new BufferTextureCopy().copy(region));
+  const layouts = copies.map((region, index) => {
     const {
       width,
       height,
@@ -144940,21 +145590,29 @@ async function WebGPUCmdFuncCopyTextureToBuffer(device, texture, buffers, region
       layers,
       stride,
       imageHeight,
-      bytesPerRow
+      bytesPerRow,
+      required
     };
   });
-  const native = device.nativeDevice;
-  for (let index = 0; index < regions.length; index++) {
-    const region = regions[index];
-    const layout = layouts[index];
-    const staging = native.createBuffer({
-      size: layout.bytesPerRow * layout.height * layout.layers,
-      usage: GPUBufferUsage.MAP_READ | GPUBufferUsage.COPY_DST
-    });
-    try {
-      const encoder = native.createCommandEncoder();
+  const destinations = buffers.map(buffer => new Uint8Array(buffer.buffer, buffer.byteOffset, buffer.byteLength));
+  const native = assertWebGPUDeviceActive(device);
+  const sourceTexture = texture.gpuTexture;
+  if (!sourceTexture) throw Object.assign(new Error('Readback texture has been destroyed.'), {
+    code: 'WEBGPU_READBACK_TEXTURE_DESTROYED'
+  });
+  const staging = [];
+  try {
+    const encoder = native.createCommandEncoder();
+    for (let index = 0; index < copies.length; index++) {
+      const region = copies[index];
+      const layout = layouts[index];
+      const buffer = native.createBuffer({
+        size: layout.bytesPerRow * layout.height * layout.layers,
+        usage: GPUBufferUsage.MAP_READ | GPUBufferUsage.COPY_DST
+      });
+      staging.push(buffer);
       encoder.copyTextureToBuffer({
-        texture: texture.gpuTexture,
+        texture: sourceTexture,
         mipLevel: region.texSubres.mipLevel,
         origin: {
           x: region.texOffset.x,
@@ -144962,7 +145620,7 @@ async function WebGPUCmdFuncCopyTextureToBuffer(device, texture, buffers, region
           z: texture.type === TextureType.TEX3D ? region.texOffset.z : region.texSubres.baseArrayLayer
         }
       }, {
-        buffer: staging,
+        buffer,
         bytesPerRow: layout.bytesPerRow,
         rowsPerImage: layout.height
       }, {
@@ -144970,18 +145628,48 @@ async function WebGPUCmdFuncCopyTextureToBuffer(device, texture, buffers, region
         height: layout.height,
         depthOrArrayLayers: layout.layers
       });
-      native.queue.submit([encoder.finish()]);
-      await staging.mapAsync(GPUMapMode.READ);
-      const source = new Uint8Array(staging.getMappedRange());
-      const destination = new Uint8Array(buffers[index].buffer, buffers[index].byteOffset, buffers[index].byteLength);
+    }
+    native.queue.submit([encoder.finish()]);
+    await Promise.all(staging.map(buffer => buffer.mapAsync(GPUMapMode.READ)));
+    if (assertWebGPUDeviceActive(device) !== native) throw Object.assign(new Error('Readback device changed.'), {
+      code: 'WEBGPU_DEVICE_LOST'
+    });
+    if (!texture.gpuTexture || (sourceIsAlive == null ? void 0 : sourceIsAlive()) === false) {
+      throw Object.assign(new Error('Readback source texture or view was destroyed.'), {
+        code: 'WEBGPU_READBACK_TEXTURE_DESTROYED'
+      });
+    }
+    const sources = staging.map(buffer => new Uint8Array(buffer.getMappedRange()));
+    if (destinations.some((buffer, index) => buffer.byteLength < layouts[index].required)) throw new Error('WEBGPU_READBACK_BUFFERS');
+    for (let index = 0; index < copies.length; index++) {
+      const region = copies[index];
+      const layout = layouts[index];
+      const source = sources[index];
+      const destination = destinations[index];
       for (let layer = 0; layer < layout.layers; layer++) for (let row = 0; row < layout.height; row++) {
         const from = (layer * layout.height + row) * layout.bytesPerRow;
         const to = region.buffOffset + (layer * layout.imageHeight + row) * layout.stride * info.size;
         destination.set(source.subarray(from, from + layout.width * info.size), to);
       }
-    } finally {
-      staging.unmap();
-      staging.destroy();
+    }
+  } catch (cause) {
+    if (device.isLost || device.nativeDevice !== native) {
+      throw Object.assign(new Error('WebGPU device was lost or closed during readback.'), {
+        code: 'WEBGPU_DEVICE_LOST',
+        cause
+      });
+    }
+    if (cause && typeof cause === 'object' && cause.name === 'AbortError') {
+      throw Object.assign(new Error('WebGPU readback mapping was aborted.'), {
+        code: 'WEBGPU_READBACK_ABORTED',
+        cause
+      });
+    }
+    throw cause;
+  } finally {
+    for (const buffer of staging) {
+      buffer.unmap();
+      buffer.destroy();
     }
   }
 }
@@ -145191,30 +145879,19 @@ function WebGPUCmdFuncBlitTexture(device, src, dst, regions, filter) {
   }
 }
 function seperateCombinedSamplerTexture(shaderSource) {
-  const samplerReg = /layout\s*(\(set = \d+, binding = )(\d+)\) uniform[^;]+sampler(\w*) (\w+);/g;
-  let iter = samplerReg.exec(shaderSource);
+  const samplerReg = /layout\s*\(\s*set\s*=\s*(\d+)\s*,\s*binding\s*=\s*(\d+)\s*\)\s*uniform\s+(?:(?:highp|mediump|lowp)\s+)?([iu]?)sampler(\w+)\s+(\w+)\s*;/g;
   const referredMap = new Map();
-  while (iter) {
-    const samplerName = iter[4];
-    const samplerType = iter[3];
-    referredMap.set(samplerName, samplerType);
-    iter = samplerReg.exec(shaderSource);
-  }
-  let code = shaderSource;
-  const sampReg = /layout\s*(\(set = \d+, binding = )(\d+)\) uniform[^;]+sampler(\w*) (\w+);/g;
-  let it = sampReg.exec(code);
-  while (it) {
-    code = code.replace(sampReg, `layout$1 $2) uniform texture$3 $4;\n
-        layout$1 $2 + ${SEPARATE_SAMPLER_BINDING_OFFSET}) uniform sampler $4_sampler;\n`);
-    it = sampReg.exec(code);
-  }
+  let code = shaderSource.replace(samplerReg, (_declaration, set, binding, prefix, dimension, name) => {
+    referredMap.set(name, `${prefix}sampler${dimension}`);
+    return `layout(set = ${set}, binding = ${binding}) uniform ${prefix}texture${dimension} ${name};\n` + `layout(set = ${set}, binding = ${binding} + ${SEPARATE_SAMPLER_BINDING_OFFSET}) uniform sampler ${name}_sampler;\n`;
+  });
   const builtinSample = ['texture', 'textureSize', 'texelFetch', 'textureLod'];
   const replaceBultin = (samplerName, samplerType, target) => {
     builtinSample.forEach(sampleFunc => {
       const builtinSampleReg = new RegExp(`${sampleFunc}\\s*\\(\\s*${samplerName}\\s*,`);
       let builtinFuncIter = builtinSampleReg.exec(target);
       while (builtinFuncIter) {
-        target = target.replace(builtinFuncIter[0], `${sampleFunc}(sampler${samplerType}(${samplerName}, ${samplerName}_sampler),`);
+        target = target.replace(builtinFuncIter[0], `${sampleFunc}(${samplerType}(${samplerName}, ${samplerName}_sampler),`);
         builtinFuncIter = builtinSampleReg.exec(target);
       }
     });
@@ -145233,12 +145910,12 @@ function seperateCombinedSamplerTexture(shaderSource) {
       const paramArr = params.split(',');
       const paramSize = paramArr.length;
       for (let i = 0; i < paramSize; ++i) {
-        const paramDecl = paramArr[i].split(' ');
+        const paramDecl = paramArr[i].trim().split(/\s+/);
         const typeDecl = paramDecl[paramDecl.length - 2];
         if (typeDecl.includes('sampler') && typeDecl !== 'sampler') {
-          const samplerType = typeDecl.replace('sampler', '');
+          const samplerType = typeDecl;
           const paramName = paramDecl[paramDecl.length - 1];
-          paramsRes = paramsRes.replace(paramArr[i], ` texture${samplerType} ${paramName}, sampler ${paramName}_sampler`);
+          paramsRes = paramsRes.replace(paramArr[i], ` ${samplerType.replace('sampler', 'texture')} ${paramName}, sampler ${paramName}_sampler`);
           paramIndexSet.add(i);
           paramTypeMap.set(paramName, samplerType);
         }
@@ -146397,6 +147074,8 @@ class WebGPUCommandBuffer extends CommandBuffer {
     this._wgpuRenderPass = void 0;
     this._renderPassFuncQueue = [];
     this._computeFuncQueue = [];
+    this._releaseRenderResources = null;
+    this._releaseComputeResources = null;
     this._preparedDescriptorSets = [];
   }
   pipelineBarrier(barrier, bufferBarriers, buffers, textureBarriers, textures) {
@@ -146407,6 +147086,16 @@ class WebGPUCommandBuffer extends CommandBuffer {
     if (this._isInRenderPass) throw new Error('WEBGPU_COPY_IN_RENDER_PASS');
     this.submitComputePass();
     WebGPUCmdFuncBlitTexture(WebGPUDeviceManager.instance, srcTexture, dstTexture, regions, filter);
+  }
+  _discardPendingPasses() {
+    var _this$_releaseRenderR, _this$_releaseCompute;
+    this._renderPassFuncQueue.length = 0;
+    this._computeFuncQueue.length = 0;
+    this._isInRenderPass = false;
+    this._nativePassDesc = null;
+    (_this$_releaseRenderR = this._releaseRenderResources) == null ? void 0 : _this$_releaseRenderR.call(this);
+    (_this$_releaseCompute = this._releaseComputeResources) == null ? void 0 : _this$_releaseCompute.call(this);
+    this._releaseRenderResources = this._releaseComputeResources = null;
   }
   initialize(info) {
     this._type = info.type;
@@ -146422,12 +147111,14 @@ class WebGPUCommandBuffer extends CommandBuffer {
     return true;
   }
   destroy() {
+    this._discardPendingPasses();
     if (this._webGPUAllocator) {
       this._webGPUAllocator.clearCmds(this.cmdPackage);
       this._webGPUAllocator = null;
     }
   }
   begin(renderPass, subpass, frameBuffer) {
+    this._discardPendingPasses();
     if (WebGPUDeviceManager.instance.isLost) throw new Error('WEBGPU_DEVICE_LOST');
     this._webGPUAllocator.clearCmds(this.cmdPackage);
     renderAreas.length = 0;
@@ -146461,6 +147152,7 @@ class WebGPUCommandBuffer extends CommandBuffer {
   }
   beginRenderPass(renderPass, framebuffer, renderArea, clearColors, clearDepth, clearStencil) {
     var _this$_wgpuRenderPass;
+    if (this._isInRenderPass) throw new Error('WEBGPU_RENDER_PASS_NOT_ENDED');
     this.submitComputePass();
     const device = WebGPUDeviceManager.instance;
     if (device.isLost) throw new Error('WEBGPU_DEVICE_LOST');
@@ -146531,26 +147223,35 @@ class WebGPUCommandBuffer extends CommandBuffer {
         idx++;
       });
     }
+    this._releaseRenderResources = beginWebGPUResourceUse(device.nativeDevice);
     this._isInRenderPass = true;
   }
   endRenderPass() {
+    if (!this._isInRenderPass || !this._nativePassDesc) throw new Error('WEBGPU_RENDER_PASS_NOT_STARTED');
     const device = WebGPUDeviceManager.instance;
-    const nativeDevice = device.nativeDevice;
-    const cmdEncoder = nativeDevice.createCommandEncoder();
-    const passEncoder = cmdEncoder.beginRenderPass(this._nativePassDesc);
-    this._renderPassFuncQueue.forEach(cb => {
-      cb(passEncoder);
-    });
-    passEncoder.end();
-    nativeDevice == null ? void 0 : nativeDevice.queue.submit([cmdEncoder.finish()]);
-    let idx = 0;
-    for (const attachment of this._nativePassDesc.colorAttachments) {
-      attachment.loadOp = this._wgpuRenderPass.gpuRenderPass.originalRP.colorAttachments[idx].loadOp;
-      idx++;
+    try {
+      if (device.isLost) throw new Error('WEBGPU_DEVICE_LOST');
+      const nativeDevice = device.nativeDevice;
+      const cmdEncoder = nativeDevice.createCommandEncoder();
+      const passEncoder = cmdEncoder.beginRenderPass(this._nativePassDesc);
+      this._renderPassFuncQueue.forEach(cb => {
+        cb(passEncoder);
+      });
+      passEncoder.end();
+      nativeDevice.queue.submit([cmdEncoder.finish()]);
+    } finally {
+      var _this$_releaseRenderR2;
+      let idx = 0;
+      for (const attachment of this._nativePassDesc.colorAttachments) {
+        attachment.loadOp = this._wgpuRenderPass.gpuRenderPass.originalRP.colorAttachments[idx].loadOp;
+        idx++;
+      }
+      this._isInRenderPass = false;
+      this._isStateValid = false;
+      this._renderPassFuncQueue.length = 0;
+      (_this$_releaseRenderR2 = this._releaseRenderResources) == null ? void 0 : _this$_releaseRenderR2.call(this);
+      this._releaseRenderResources = null;
     }
-    this._isInRenderPass = false;
-    this._isStateValid = false;
-    this._renderPassFuncQueue.length = 0;
   }
   bindPipelineState(pipelineState) {
     const webgpuPipelineState = pipelineState;
@@ -146803,7 +147504,7 @@ class WebGPUCommandBuffer extends CommandBuffer {
     };
   }
   dispatch(info) {
-    var _info$indirectBuffer;
+    var _info$indirectBuffer, _this$_releaseCompute2;
     if (this._isInRenderPass) throw new Error('WEBGPU_COMPUTE_IN_RENDER_PASS');
     const indirect = (_info$indirectBuffer = info.indirectBuffer) == null ? void 0 : _info$indirectBuffer.gpuBuffer;
     if (info.indirectBuffer && !indirect) throw new Error('WEBGPU_INDIRECT_DISPATCH_RANGE');
@@ -146839,24 +147540,32 @@ class WebGPUCommandBuffer extends CommandBuffer {
       if (indirect) passEncoder.dispatchWorkgroupsIndirect(indirect.gpuBuffer, indirectOffset);else passEncoder.dispatchWorkgroups(groupCountX, groupCountY, groupCountZ);
     };
     this._computeFuncQueue.push(func);
+    (_this$_releaseCompute2 = this._releaseComputeResources) !== null && _this$_releaseCompute2 !== void 0 ? _this$_releaseCompute2 : this._releaseComputeResources = beginWebGPUResourceUse(WebGPUDeviceManager.instance.nativeDevice);
     ++this._numDispatches;
     this._isStateValid = false;
   }
   submitComputePass() {
-    if (WebGPUDeviceManager.instance.isLost) throw new Error('WEBGPU_DEVICE_LOST');
     if (this._computeFuncQueue.length === 0) {
+      if (WebGPUDeviceManager.instance.isLost) throw new Error('WEBGPU_DEVICE_LOST');
       return;
     }
     const device = WebGPUDeviceManager.instance;
-    const nativeDevice = device.nativeDevice;
-    const cmdEncoder = nativeDevice.createCommandEncoder();
-    const computePassEncoder = cmdEncoder.beginComputePass();
-    this._computeFuncQueue.forEach(cb => {
-      cb(computePassEncoder);
-    });
-    computePassEncoder.end();
-    nativeDevice.queue.submit([cmdEncoder.finish()]);
-    this._computeFuncQueue.length = 0;
+    try {
+      if (device.isLost) throw new Error('WEBGPU_DEVICE_LOST');
+      const nativeDevice = device.nativeDevice;
+      const cmdEncoder = nativeDevice.createCommandEncoder();
+      const computePassEncoder = cmdEncoder.beginComputePass();
+      this._computeFuncQueue.forEach(cb => {
+        cb(computePassEncoder);
+      });
+      computePassEncoder.end();
+      nativeDevice.queue.submit([cmdEncoder.finish()]);
+    } finally {
+      var _this$_releaseCompute3;
+      this._computeFuncQueue.length = 0;
+      (_this$_releaseCompute3 = this._releaseComputeResources) == null ? void 0 : _this$_releaseCompute3.call(this);
+      this._releaseComputeResources = null;
+    }
   }
   bindStates() {
     if (!this._curGPUPipelineState) {
@@ -147282,6 +147991,161 @@ class WebGPUPipelineLayout extends PipelineLayout {
   }
 }
 
+function reflectGLSLFragmentOutputNames(source) {
+  const unknown = reason => ({
+    status: 'unknown',
+    reason
+  });
+  if (source.length > 2000000) return unknown('Fragment reflection input budget exceeded.');
+  let clean = source.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/[^\n]*/g, '');
+  const macros = new Set();
+  let directive = '',
+    continued = false;
+  const lines = clean.split('\n');
+  for (let i = 0; i < lines.length; ++i) {
+    if (!continued && !/^\s*#/.test(lines[i])) continue;
+    directive += lines[i] + '\n';
+    continued = /\\\s*$/.test(lines[i]);
+    lines[i] = '';
+    if (continued) continue;
+    const define = /^\s*#\s*define\s+(\w+)([\s\S]*)/.exec(directive);
+    if (/^\s*#\s*include\b/.test(directive)) return unknown('Unexpanded shader include.');
+    if (define) {
+      macros.add(define[1]);
+      if (/\b(?:out|layout)\b|##/.test(define[2])) return unknown('A macro may declare fragment outputs.');
+    }
+    directive = '';
+  }
+  if (continued) return unknown('Unterminated preprocessor directive.');
+  clean = lines.join('\n');
+  const tokens = [];
+  const token = /[A-Za-z_]\w*|\d+|[^\s]/g;
+  let match;
+  while (match = token.exec(clean)) {
+    if (tokens.length === 200000) return unknown('Fragment reflection token budget exceeded.');
+    tokens.push(match[0]);
+  }
+  const outputs = [];
+  let braces = 0,
+    parens = 0;
+  for (let i = 0; i < tokens.length; ++i) {
+    const current = tokens[i];
+    if (current === '{') ++braces;else if (current === '}') --braces;else if (current === '(') ++parens;else if (current === ')') --parens;
+    if (current !== 'out' || braces || parens) continue;
+    let cursor = i + 1;
+    while (['lowp', 'mediump', 'highp', 'precise', 'invariant'].includes(tokens[cursor])) ++cursor;
+    if (!/^[A-Za-z_]\w*$/.test(tokens[cursor] || '')) return unknown('Unsupported fragment output type.');
+    ++cursor;
+    for (;;) {
+      const name = tokens[cursor++];
+      if (!/^[A-Za-z_]\w*$/.test(name || '') || macros.has(name)) return unknown('Output identity requires preprocessing.');
+      const array = tokens[cursor] === '[';
+      if (array) {
+        let depth = 1;
+        for (++cursor; cursor < tokens.length && depth; ++cursor) {
+          if (tokens[cursor] === '[') ++depth;
+          if (tokens[cursor] === ']') --depth;
+        }
+        if (depth) return unknown('Unbalanced fragment output array.');
+      }
+      outputs.push({
+        name,
+        array
+      });
+      if (tokens[cursor] === ';') {
+        i = cursor;
+        break;
+      }
+      if (tokens[cursor++] !== ',') return unknown('Unsupported fragment output declaration.');
+    }
+  }
+  if (braces || parens) return unknown('Unbalanced shader declarations.');
+  return {
+    status: 'known',
+    outputs
+  };
+}
+function locationsFrom(source) {
+  const attributes = [];
+  const pattern = /@location\s*\(\s*(0x[\da-fA-F]+|\d+)u?\s*\)/g;
+  let match;
+  while (match = pattern.exec(source)) attributes.push(match);
+  if (attributes.length !== (source.match(/@location\b/g) || []).length) return {
+    status: 'unknown',
+    reason: 'Non-literal output location requires compiler reflection.'
+  };
+  const locations = attributes.map(match => Number(match[1]));
+  if (locations.some(value => !Number.isSafeInteger(value)) || new Set(locations).size !== locations.length) return {
+    status: 'unknown',
+    reason: 'Invalid or duplicate fragment output locations.'
+  };
+  return {
+    status: 'known',
+    locations: locations.sort((a, b) => a - b)
+  };
+}
+function reflectWGSLFragmentOutputs(source, entryPoint) {
+  if (source.length > 2000000 || !/^[A-Za-z_]\w*$/.test(entryPoint)) return {
+    status: 'unknown',
+    reason: 'Unsupported entry point or reflection input budget exceeded.'
+  };
+  const clean = source.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/[^\n]*/g, '');
+  if (clean.includes('/*') || clean.includes('*/')) return {
+    status: 'unknown',
+    reason: 'Nested comments require compiler reflection.'
+  };
+  const entry = new RegExp(`\\bfn\\s+${entryPoint}\\s*\\(`).exec(clean);
+  if (!entry) return {
+    status: 'unknown',
+    reason: 'Fragment entry point was not found.'
+  };
+  let cursor = entry.index + entry[0].length,
+    depth = 1;
+  for (; cursor < clean.length && depth; ++cursor) {
+    if (clean[cursor] === '(') ++depth;else if (clean[cursor] === ')') --depth;
+  }
+  if (depth) return {
+    status: 'unknown',
+    reason: 'Unbalanced entry point parameters.'
+  };
+  let returned = clean.slice(cursor).replace(/^\s+/, '');
+  if (returned.startsWith('{')) return {
+    status: 'known',
+    locations: []
+  };
+  if (!returned.startsWith('->')) return {
+    status: 'unknown',
+    reason: 'Fragment return type was not found.'
+  };
+  returned = returned.slice(2).replace(/^\s+/, '');
+  let attributes = '';
+  while (returned.startsWith('@')) {
+    const attribute = /^@\s*\w+\s*(?:\([^)]*\))?\s*/.exec(returned);
+    if (!attribute) return {
+      status: 'unknown',
+      reason: 'Unsupported return attribute.'
+    };
+    attributes += attribute[0];
+    returned = returned.slice(attribute[0].length).replace(/^\s+/, '');
+  }
+  if (attributes.includes('@location')) return locationsFrom(attributes);
+  if (attributes.includes('@builtin')) return {
+    status: 'known',
+    locations: []
+  };
+  const type = /^([A-Za-z_]\w*)\b/.exec(returned);
+  if (!type) return {
+    status: 'unknown',
+    reason: 'Unsupported fragment return type.'
+  };
+  const structure = new RegExp(`\\bstruct\\s+${type[1]}\\s*\\{([^}]*)\\}`).exec(clean);
+  if (!structure) return {
+    status: 'unknown',
+    reason: 'Fragment return structure was not found.'
+  };
+  return locationsFrom(structure[1]);
+}
+
 const WebPUPrimitives = ['point-list', 'line-list', 'line-strip', 'line-strip', 'line-list', 'line-strip', 'line-list', 'triangle-list', 'triangle-strip', 'triangle-strip', 'triangle-list', 'triangle-strip', 'triangle-strip', 'triangle-strip'];
 class WebGPUPipelineState extends PipelineState {
   constructor(...args) {
@@ -147413,7 +148277,7 @@ class WebGPUPipelineState extends PipelineState {
         nativePipeline: undefined
       };
     } else {
-      var _this$_renderPass$dep;
+      var _fragment$gpuShader, _this$_renderPass$dep;
       const constantFactors = [];
       for (const target of this._bs.targets) {
         if (target.blend && target.blendEq !== BlendOp.MIN && target.blendEq !== BlendOp.MAX) {
@@ -147426,24 +148290,41 @@ class WebGPUPipelineState extends PipelineState {
       const colorAttachments = this._renderPass.colorAttachments;
       const colorDescs = [];
       const colAttachmentSize = colorAttachments.length;
+      const fragment = shaderStages.find(stage => stage.type === ShaderStageFlagBit.FRAGMENT);
+      const outputs = fragment ? reflectWGSLFragmentOutputs(fragment.source, ((_fragment$gpuShader = fragment.gpuShader) == null ? void 0 : _fragment$gpuShader.entryPoint) || 'main') : {
+        status: 'unknown',
+        reason: 'Fragment stage was not found.'
+      };
+      if (colAttachmentSize > 1 && outputs.status === 'unknown') {
+        throw Object.assign(new Error(`Cannot determine fragment outputs for MRT: ${outputs.reason}`), {
+          code: 'AIR_E_FRAGMENT_OUTPUTS_UNKNOWN',
+          shader: gpuShader.name,
+          stage: 'fragment'
+        });
+      }
       for (let i = 0; i < colAttachmentSize; i++) {
+        const target = this._bs.targets[this._bs.isIndepend ? i : 0];
+        if (!target) throw new Error(`WEBGPU_BLEND_TARGET_MISSING: ${i}`);
+        const writes = outputs.status === 'unknown' || outputs.locations.includes(i);
+        const formatType = FormatInfos[colorAttachments[i].format].type;
+        const integer = formatType === FormatType.INT || formatType === FormatType.UINT;
         const colDesc = {
           format: GFXFormatToWGPUFormat(colorAttachments[i].format),
-          writeMask: WebGPUBlendMask(this._bs.targets[i].blendColorMask)
+          writeMask: writes ? WebGPUBlendMask(target.blendColorMask) : 0
         };
-        if (this._bs.targets[i].blend) {
-          const colorMinMax = this._bs.targets[i].blendEq === BlendOp.MIN || this._bs.targets[i].blendEq === BlendOp.MAX;
-          const alphaMinMax = this._bs.targets[i].blendAlphaEq === BlendOp.MIN || this._bs.targets[i].blendAlphaEq === BlendOp.MAX;
+        if (writes && target.blend && !integer) {
+          const colorMinMax = target.blendEq === BlendOp.MIN || target.blendEq === BlendOp.MAX;
+          const alphaMinMax = target.blendAlphaEq === BlendOp.MIN || target.blendAlphaEq === BlendOp.MAX;
           colDesc.blend = {
             color: {
-              dstFactor: colorMinMax ? 'one' : WebGPUBlendFactors[this._bs.targets[i].blendDst],
-              operation: WebGPUBlendOps[this._bs.targets[i].blendEq],
-              srcFactor: colorMinMax ? 'one' : WebGPUBlendFactors[this._bs.targets[i].blendSrc]
+              dstFactor: colorMinMax ? 'one' : WebGPUBlendFactors[target.blendDst],
+              operation: WebGPUBlendOps[target.blendEq],
+              srcFactor: colorMinMax ? 'one' : WebGPUBlendFactors[target.blendSrc]
             },
             alpha: {
-              dstFactor: alphaMinMax ? 'one' : WebGPUBlendFactors[this._bs.targets[i].blendDstAlpha],
-              operation: WebGPUBlendOps[this._bs.targets[i].blendAlphaEq],
-              srcFactor: alphaMinMax ? 'one' : WebGPUBlendFactors[this._bs.targets[i].blendSrcAlpha]
+              dstFactor: alphaMinMax ? 'one' : WebGPUBlendFactors[target.blendDstAlpha],
+              operation: WebGPUBlendOps[target.blendAlphaEq],
+              srcFactor: alphaMinMax ? 'one' : WebGPUBlendFactors[target.blendSrcAlpha]
             }
           };
         }
@@ -148426,6 +149307,7 @@ class WebGPUDevice extends Device {
     });
   }
   async copyTextureToBuffersAsync(texture, buffers, regions) {
+    assertWebGPUDeviceActive(this);
     if (!(texture.usage & TextureUsageBit.TRANSFER_SRC)) throw new Error('WEBGPU_READBACK_REQUIRES_TRANSFER_SRC');
     const view = texture.viewInfo;
     const adjusted = regions.map(region => {
@@ -148438,7 +149320,11 @@ class WebGPUDevice extends Device {
       copy.texSubres.baseArrayLayer += view.baseLayer;
       return copy;
     });
-    await WebGPUCmdFuncCopyTextureToBuffer(this, texture.gpuTexture, buffers, adjusted);
+    const source = texture.gpuTexture;
+    if (!(source != null && source.gpuTexture)) throw Object.assign(new Error('Readback source texture or view was destroyed.'), {
+      code: 'WEBGPU_READBACK_TEXTURE_DESTROYED'
+    });
+    await WebGPUCmdFuncCopyTextureToBuffer(this, source, buffers, adjusted, () => !!texture.gpuTexture);
   }
   flushCommands(cmdBuffs) {}
   get isPremultipliedAlpha() {
@@ -148567,6 +149453,7 @@ class WebGPUDevice extends Device {
     return this._adapter.features.has('float32-filterable');
   }
   async initDevice(info) {
+    var _maxColorAttachments;
     const gpu = typeof navigator === 'undefined' ? undefined : navigator.gpu;
     if (!gpu) throw Object.assign(new Error('WebGPU requires a supported secure browser context.'), {
       code: 'WEBGPU_UNSUPPORTED'
@@ -148600,13 +149487,20 @@ class WebGPUDevice extends Device {
         cause
       });
     }
-    this._device.lost.then(() => {
-      this.isLost = true;
+    const initializedDevice = this._device;
+    initializedDevice.lost.then(() => {
+      if (this._device === initializedDevice) this.isLost = true;
+      closeWebGPUResourceUses(initializedDevice);
     });
     this._device.addEventListener('uncapturederror', event => {
       error('[WEBGPU_VALIDATION_ERROR]', event.error.message);
     });
     await loadWebGPUWasmModule();
+    if (this._device !== initializedDevice || this.isLost) {
+      throw Object.assign(new Error('WebGPU device was lost or closed during shader translator initialization.'), {
+        code: 'WEBGPU_DEVICE_LOST'
+      });
+    }
     this._glslang = webGPU.glslang;
     this._twgsl = webGPU.twgsl;
     this._gfxAPI = API.WEBGPU;
@@ -148652,6 +149546,7 @@ class WebGPUDevice extends Device {
     this._caps.maxFragmentUniformVectors = Math.floor(limits.maxUniformBufferBindingSize / 16);
     this._caps.maxVertexUniformVectors = Math.floor(limits.maxUniformBufferBindingSize / 16);
     this._caps.maxVertexAttributes = limits.maxVertexAttributes;
+    this._caps.maxColorRenderTargets = (_maxColorAttachments = limits.maxColorAttachments) !== null && _maxColorAttachments !== void 0 ? _maxColorAttachments : 8;
     this._caps.maxUniformBufferBindings = limits.maxUniformBuffersPerShaderStage;
     this._caps.maxTextureSize = limits.maxTextureDimension2D;
     this._caps.maxArrayTextureLayers = limits.maxTextureArrayLayers;
@@ -148732,6 +149627,7 @@ class WebGPUDevice extends Device {
     this.defaultResource.buffersDescLayout.clear();
     this.defaultResource.texturesDescLayout.clear();
     (_this$_context = this._context) == null ? void 0 : _this$_context.unconfigure();
+    if (this._device) closeWebGPUResourceUses(this._device);
     (_this$_device = this._device) == null ? void 0 : _this$_device.destroy();
     this._device = null;
     this._context = null;
@@ -148763,11 +149659,13 @@ class WebGPUDevice extends Device {
     return null;
   }
   createBuffer(info) {
+    assertWebGPUDeviceActive(this);
     const buffer = new WebGPUBuffer();
     buffer.initialize(info);
     return buffer;
   }
   createTexture(info) {
+    assertWebGPUDeviceActive(this);
     const texture = new WebGPUTexture();
     texture.initialize(info);
     return texture;
@@ -148778,6 +149676,7 @@ class WebGPUDevice extends Device {
     return descriptorSet;
   }
   createShader(info) {
+    assertWebGPUDeviceActive(this);
     const shader = new WebGPUShader();
     shader.initialize(info);
     return shader;
@@ -148822,9 +149721,11 @@ class WebGPUDevice extends Device {
     return null;
   }
   copyBuffersToTexture(buffers, texture, regions) {
+    assertWebGPUDeviceActive(this);
     WebGPUCmdFuncCopyBuffersToTexture(this, buffers, texture.gpuTexture, regions);
   }
   copyTexImagesToTexture(texImages, texture, regions) {
+    assertWebGPUDeviceActive(this);
     WebGPUCmdFuncCopyTexImagesToTexture(this, texImages, texture.gpuTexture, regions);
   }
   copyFramebufferToBuffer(srcFramebuffer, dstBuffer, regions) {}
@@ -148862,7 +149763,15 @@ function ensureCanvasDOM(canvas, options) {
   }
 }
 function createAirApp(options) {
-  return requestAirApp(options, () => initializeAirApp);
+  const maximum = settings.querySettings(SettingsCategory.SCREEN, 'maxDevicePixelRatio');
+  if (maximum != null && (typeof maximum !== 'number' || !Number.isFinite(maximum) || maximum < 1)) {
+    return Promise.reject(new RangeError('screen.maxDevicePixelRatio must be a finite number >= 1.'));
+  }
+  const resolved = options.pixelRatioCap == null && maximum != null ? {
+    ...options,
+    pixelRatioCap: maximum
+  } : options;
+  return requestAirApp(resolved, () => initializeAirApp);
 }
 async function initializeAirApp(options) {
   const canvas = options.canvas;
@@ -148955,20 +149864,33 @@ registerAirInitializer(initializeAirApp);
 
 const canvasLeases = new WeakMap();
 const elementLeases = new WeakSet();
-function getAirHTMLSourceSupport(canvas) {
+function getAirHTMLSourceSupport(canvas, mode = {}) {
   const surface = canvas;
-  if (typeof surface.requestPaint !== 'function' || typeof surface.captureElementImage !== 'function' || typeof surface.updateElementGeometry !== 'function' || typeof surface.clearElementGeometry !== 'function') return {
-    supported: false,
-    reason: 'HTML-in-Canvas APIs unavailable; experimental browser support is required'
+  const capabilities = {
+    snapshot: typeof surface.captureElementImage === 'function',
+    geometry: typeof surface.updateElementGeometry === 'function' && typeof surface.clearElementGeometry === 'function',
+    naturalSize: typeof surface.getElementImageDefaultSize === 'function'
   };
-  const gl = canvas.getContext('webgl2');
-  return gl && typeof gl.texElementSubImage2D === 'function' ? {
-    supported: true,
-    reason: null
-  } : {
+  const unavailable = reason => ({
     supported: false,
-    reason: 'WebGL2 texElementSubImage2D unavailable'
-  };
+    reason,
+    capabilities
+  });
+  if (typeof surface.requestPaint !== 'function') return unavailable('HTML-in-Canvas requestPaint unavailable');
+  if (mode.snapshot && !capabilities.snapshot) return unavailable('captureElementImage unavailable for snapshot mode');
+  try {
+    const gl = canvas.getContext('webgl2');
+    return gl && typeof gl.texElementSubImage2D === 'function' ? {
+      supported: true,
+      reason: null,
+      capabilities
+    } : unavailable('WebGL2 texElementSubImage2D unavailable');
+  } catch (error) {
+    return unavailable(`WebGL2 context unavailable: ${String(error)}`);
+  }
+}
+function ownedBy(element, canvas) {
+  return element !== canvas && element.closest('canvas') === canvas;
 }
 function createAirHTMLSource(options) {
   var _ref, _options$resolution, _canvas$ownerDocument, _canvasLeases$get;
@@ -148977,12 +149899,15 @@ function createAirHTMLSource(options) {
       element,
       texture
     } = options,
-    support = getAirHTMLSourceSupport(canvas);
+    snapshotMode = options.snapshot === true,
+    support = getAirHTMLSourceSupport(canvas, {
+      snapshot: snapshotMode
+    });
   if (!support.supported) throw Object.assign(new Error(`AIR_E_HTML_SOURCE_UNSUPPORTED: ${support.reason}`), {
     code: 'AIR_E_HTML_SOURCE_UNSUPPORTED'
   });
   const resolution = (_ref = (_options$resolution = options.resolution) !== null && _options$resolution !== void 0 ? _options$resolution : (_canvas$ownerDocument = canvas.ownerDocument.defaultView) == null ? void 0 : _canvas$ownerDocument.devicePixelRatio) !== null && _ref !== void 0 ? _ref : 1;
-  if (element.parentNode !== canvas || elementLeases.has(element) || !Number.isFinite(resolution) || resolution <= 0) throw new Error('AIR_E_HTML_SOURCE_OPTIONS: unique direct canvas child and positive resolution required');
+  if (!ownedBy(element, canvas) || elementLeases.has(element) || !Number.isFinite(resolution) || resolution <= 0) throw new Error('AIR_E_HTML_SOURCE_OPTIONS: unique descendant of the owning nearest canvas and positive resolution required');
   const surface = canvas,
     gl = canvas.getContext('webgl2');
   const lease = (_canvasLeases$get = canvasLeases.get(canvas)) !== null && _canvasLeases$get !== void 0 ? _canvasLeases$get : {
@@ -149002,15 +149927,16 @@ function createAirHTMLSource(options) {
     if (disposed) throw new Error('AIR_E_HTML_SOURCE_DISPOSED');
   };
   const paint = () => {
-    if (disposed || failed || !pending && (options.autoUpdate === false || options.snapshot)) return;
+    if (disposed || failed || !pending && (options.autoUpdate === false || snapshotMode)) return;
     pending = false;
     try {
-      var _snapshotSize$, _snapshotSize, _snapshotSize$2, _snapshotSize2;
+      var _snapshotSize$, _snapshotSize, _natural$width, _snapshotSize$2, _snapshotSize2, _natural$height;
       if (gl.isContextLost()) throw new Error('AIR_E_HTML_SOURCE_CONTEXT_LOST');
-      if (element.parentNode !== canvas) throw new Error('AIR_E_HTML_SOURCE_ELEMENT_MOVED');
-      const width = (_snapshotSize$ = (_snapshotSize = snapshotSize) == null ? void 0 : _snapshotSize[0]) !== null && _snapshotSize$ !== void 0 ? _snapshotSize$ : Math.ceil(element.offsetWidth * resolution),
-        height = (_snapshotSize$2 = (_snapshotSize2 = snapshotSize) == null ? void 0 : _snapshotSize2[1]) !== null && _snapshotSize$2 !== void 0 ? _snapshotSize$2 : Math.ceil(element.offsetHeight * resolution);
-      if (width <= 0 || height <= 0) throw new Error('AIR_E_HTML_SOURCE_SIZE');
+      if (!ownedBy(element, canvas)) throw new Error('AIR_E_HTML_SOURCE_ELEMENT_MOVED');
+      const natural = !snapshotSize && options.resolution === undefined && surface.getElementImageDefaultSize ? surface.getElementImageDefaultSize(element) : null;
+      const width = (_snapshotSize$ = (_snapshotSize = snapshotSize) == null ? void 0 : _snapshotSize[0]) !== null && _snapshotSize$ !== void 0 ? _snapshotSize$ : Math.ceil((_natural$width = natural == null ? void 0 : natural.width) !== null && _natural$width !== void 0 ? _natural$width : element.offsetWidth * resolution),
+        height = (_snapshotSize$2 = (_snapshotSize2 = snapshotSize) == null ? void 0 : _snapshotSize2[1]) !== null && _snapshotSize$2 !== void 0 ? _snapshotSize$2 : Math.ceil((_natural$height = natural == null ? void 0 : natural.height) !== null && _natural$height !== void 0 ? _natural$height : element.offsetHeight * resolution);
+      if (!Number.isSafeInteger(width) || !Number.isSafeInteger(height) || width <= 0 || height <= 0) throw new Error('AIR_E_HTML_SOURCE_SIZE');
       if (texture.width !== width || texture.height !== height) texture.reset({
         width,
         height,
@@ -149019,7 +149945,7 @@ function createAirHTMLSource(options) {
       const target = texture.getGFXTexture();
       const gpu = target == null ? void 0 : target.gpuTexture;
       if (!(gpu != null && gpu.glTexture) || !gl.isTexture(gpu.glTexture) || gpu.glTarget !== gl.TEXTURE_2D || gpu.mipLevel !== 1 || gpu.glFormat !== gl.RGBA || gpu.glType !== gl.UNSIGNED_BYTE) throw new Error('AIR_E_HTML_SOURCE_TEXTURE: native single-mip RGBA8 WebGL2 Texture2D required');
-      if (options.snapshot && !snapshot) {
+      if (snapshotMode && !snapshot) {
         snapshot = surface.captureElementImage(element);
         snapshotSize = [width, height];
       }
@@ -149054,7 +149980,7 @@ function createAirHTMLSource(options) {
     let cleanupError = null;
     try {
       var _snapshot2;
-      surface.clearElementGeometry((_snapshot2 = snapshot) !== null && _snapshot2 !== void 0 ? _snapshot2 : element);
+      surface.clearElementGeometry == null ? void 0 : surface.clearElementGeometry((_snapshot2 = snapshot) !== null && _snapshot2 !== void 0 ? _snapshot2 : element);
     } catch (error) {
       cleanupError = error;
     }
@@ -149110,11 +150036,21 @@ function createAirHTMLSource(options) {
       failed = false;
       pending = true;
       status = 'waiting';
-      surface.requestPaint();
+      try {
+        surface.requestPaint();
+      } catch (error) {
+        failed = true;
+        status = 'failed';
+        lastError = error;
+        throw error;
+      }
     },
     updateGeometry(geometry) {
       var _snapshot4;
       alive();
+      if (!support.capabilities.geometry) throw Object.assign(new Error('AIR_E_HTML_SOURCE_GEOMETRY_UNSUPPORTED: updateElementGeometry/clearElementGeometry unavailable'), {
+        code: 'AIR_E_HTML_SOURCE_GEOMETRY_UNSUPPORTED'
+      });
       surface.updateElementGeometry((_snapshot4 = snapshot) !== null && _snapshot4 !== void 0 ? _snapshot4 : element, geometry);
     },
     dispose
@@ -153374,13 +154310,17 @@ function textureTransform(language, sampler, uv, prefix) {
   return `${language === 'glsl1' ? 'texture2D' : 'texture'}(${sampler}, ${expr})`;
 }
 
-const TEXTURE_SLOTS = ['baseColor', 'metallicRoughness', 'normal', 'occlusion', 'emissive', 'specular', 'specularColor', 'clearcoat', 'clearcoatRoughness', 'clearcoatNormal', 'anisotropy', 'iridescence', 'iridescenceIor', 'iridescenceThickness', 'bump', 'transmission', 'volumeThickness'];
+const TEXTURE_SLOTS = ['baseColor', 'metallicRoughness', 'normal', 'occlusion', 'emissive', 'specular', 'specularColor', 'clearcoat', 'clearcoatRoughness', 'clearcoatNormal', 'anisotropy', 'iridescence', 'iridescenceIor', 'iridescenceThickness', 'bump', 'transmission', 'volumeThickness', 'sheenColor', 'sheenRoughness'];
 function physicalScalars(features) {
   return features.physical;
 }
 function slotTextureInfo(source, slot) {
-  var _source$pbrMetallicRo, _source$pbrMetallicRo2, _source$extensions, _source$extensions$KH, _source$extensions2, _source$extensions2$K, _source$extensions3, _source$extensions3$K, _source$extensions4, _source$extensions4$K, _source$extensions5, _source$extensions5$K, _source$extensions6, _source$extensions6$K, _source$extensions7, _source$extensions7$K, _source$extensions8, _source$extensions8$K, _source$extensions9, _source$extensions9$K, _source$extensions0, _source$extensions0$E, _source$extensions1, _source$extensions1$K, _source$extensions10, _source$extensions10$;
+  var _source$extensions, _source$extensions$KH, _source$extensions2, _source$extensions2$K, _source$pbrMetallicRo, _source$pbrMetallicRo2, _source$extensions3, _source$extensions3$K, _source$extensions4, _source$extensions4$K, _source$extensions5, _source$extensions5$K, _source$extensions6, _source$extensions6$K, _source$extensions7, _source$extensions7$K, _source$extensions8, _source$extensions8$K, _source$extensions9, _source$extensions9$K, _source$extensions0, _source$extensions0$K, _source$extensions1, _source$extensions1$K, _source$extensions10, _source$extensions10$, _source$extensions11, _source$extensions11$, _source$extensions12, _source$extensions12$;
   switch (slot) {
+    case 'sheenColor':
+      return (_source$extensions = source.extensions) == null ? void 0 : (_source$extensions$KH = _source$extensions.KHR_materials_sheen) == null ? void 0 : _source$extensions$KH.sheenColorTexture;
+    case 'sheenRoughness':
+      return (_source$extensions2 = source.extensions) == null ? void 0 : (_source$extensions2$K = _source$extensions2.KHR_materials_sheen) == null ? void 0 : _source$extensions2$K.sheenRoughnessTexture;
     case 'baseColor':
       return (_source$pbrMetallicRo = source.pbrMetallicRoughness) == null ? void 0 : _source$pbrMetallicRo.baseColorTexture;
     case 'metallicRoughness':
@@ -153392,29 +154332,29 @@ function slotTextureInfo(source, slot) {
     case 'emissive':
       return source.emissiveTexture;
     case 'specular':
-      return (_source$extensions = source.extensions) == null ? void 0 : (_source$extensions$KH = _source$extensions.KHR_materials_specular) == null ? void 0 : _source$extensions$KH.specularTexture;
+      return (_source$extensions3 = source.extensions) == null ? void 0 : (_source$extensions3$K = _source$extensions3.KHR_materials_specular) == null ? void 0 : _source$extensions3$K.specularTexture;
     case 'specularColor':
-      return (_source$extensions2 = source.extensions) == null ? void 0 : (_source$extensions2$K = _source$extensions2.KHR_materials_specular) == null ? void 0 : _source$extensions2$K.specularColorTexture;
+      return (_source$extensions4 = source.extensions) == null ? void 0 : (_source$extensions4$K = _source$extensions4.KHR_materials_specular) == null ? void 0 : _source$extensions4$K.specularColorTexture;
     case 'clearcoat':
-      return (_source$extensions3 = source.extensions) == null ? void 0 : (_source$extensions3$K = _source$extensions3.KHR_materials_clearcoat) == null ? void 0 : _source$extensions3$K.clearcoatTexture;
+      return (_source$extensions5 = source.extensions) == null ? void 0 : (_source$extensions5$K = _source$extensions5.KHR_materials_clearcoat) == null ? void 0 : _source$extensions5$K.clearcoatTexture;
     case 'clearcoatRoughness':
-      return (_source$extensions4 = source.extensions) == null ? void 0 : (_source$extensions4$K = _source$extensions4.KHR_materials_clearcoat) == null ? void 0 : _source$extensions4$K.clearcoatRoughnessTexture;
+      return (_source$extensions6 = source.extensions) == null ? void 0 : (_source$extensions6$K = _source$extensions6.KHR_materials_clearcoat) == null ? void 0 : _source$extensions6$K.clearcoatRoughnessTexture;
     case 'clearcoatNormal':
-      return (_source$extensions5 = source.extensions) == null ? void 0 : (_source$extensions5$K = _source$extensions5.KHR_materials_clearcoat) == null ? void 0 : _source$extensions5$K.clearcoatNormalTexture;
+      return (_source$extensions7 = source.extensions) == null ? void 0 : (_source$extensions7$K = _source$extensions7.KHR_materials_clearcoat) == null ? void 0 : _source$extensions7$K.clearcoatNormalTexture;
     case 'anisotropy':
-      return (_source$extensions6 = source.extensions) == null ? void 0 : (_source$extensions6$K = _source$extensions6.KHR_materials_anisotropy) == null ? void 0 : _source$extensions6$K.anisotropyTexture;
+      return (_source$extensions8 = source.extensions) == null ? void 0 : (_source$extensions8$K = _source$extensions8.KHR_materials_anisotropy) == null ? void 0 : _source$extensions8$K.anisotropyTexture;
     case 'iridescence':
-      return (_source$extensions7 = source.extensions) == null ? void 0 : (_source$extensions7$K = _source$extensions7.KHR_materials_iridescence) == null ? void 0 : _source$extensions7$K.iridescenceTexture;
+      return (_source$extensions9 = source.extensions) == null ? void 0 : (_source$extensions9$K = _source$extensions9.KHR_materials_iridescence) == null ? void 0 : _source$extensions9$K.iridescenceTexture;
     case 'iridescenceIor':
-      return (_source$extensions8 = source.extensions) == null ? void 0 : (_source$extensions8$K = _source$extensions8.KHR_materials_iridescence) == null ? void 0 : _source$extensions8$K.iridescenceIorTexture;
+      return (_source$extensions0 = source.extensions) == null ? void 0 : (_source$extensions0$K = _source$extensions0.KHR_materials_iridescence) == null ? void 0 : _source$extensions0$K.iridescenceIorTexture;
     case 'iridescenceThickness':
-      return (_source$extensions9 = source.extensions) == null ? void 0 : (_source$extensions9$K = _source$extensions9.KHR_materials_iridescence) == null ? void 0 : _source$extensions9$K.iridescenceThicknessTexture;
+      return (_source$extensions1 = source.extensions) == null ? void 0 : (_source$extensions1$K = _source$extensions1.KHR_materials_iridescence) == null ? void 0 : _source$extensions1$K.iridescenceThicknessTexture;
     case 'bump':
-      return (_source$extensions0 = source.extensions) == null ? void 0 : (_source$extensions0$E = _source$extensions0.EXT_materials_bump) == null ? void 0 : _source$extensions0$E.bumpTexture;
+      return (_source$extensions10 = source.extensions) == null ? void 0 : (_source$extensions10$ = _source$extensions10.EXT_materials_bump) == null ? void 0 : _source$extensions10$.bumpTexture;
     case 'transmission':
-      return (_source$extensions1 = source.extensions) == null ? void 0 : (_source$extensions1$K = _source$extensions1.KHR_materials_transmission) == null ? void 0 : _source$extensions1$K.transmissionTexture;
+      return (_source$extensions11 = source.extensions) == null ? void 0 : (_source$extensions11$ = _source$extensions11.KHR_materials_transmission) == null ? void 0 : _source$extensions11$.transmissionTexture;
     case 'volumeThickness':
-      return (_source$extensions10 = source.extensions) == null ? void 0 : (_source$extensions10$ = _source$extensions10.KHR_materials_volume) == null ? void 0 : _source$extensions10$.thicknessTexture;
+      return (_source$extensions12 = source.extensions) == null ? void 0 : (_source$extensions12$ = _source$extensions12.KHR_materials_volume) == null ? void 0 : _source$extensions12$.thicknessTexture;
   }
 }
 function createMaterialFeatures(index, source) {
@@ -153855,7 +154795,7 @@ function tangents(channels, indices, coordinates) {
   return out;
 }
 
-const UV_SLOTS = [['albedoMap', 'ALBEDO_UV', 'airAlbedo'], ['metallicRoughnessMap', 'PBR_UV', 'airMetallicRoughness'], ['normalMap', 'NORMAL_UV', 'airNormal'], ['occlusionMap', 'OCCLUSION_UV', 'airOcclusion'], ['emissiveMap', 'EMISSIVE_UV', 'airEmissive'], ['specularMap', 'SPECULAR_UV', 'airSpecular'], ['specularColorMap', 'SPECULARCOLOR_UV', 'airSpecularColor'], ['clearcoatMap', 'CLEARCOAT_UV', 'airClearcoat'], ['clearcoatRoughnessMap', 'CLEARCOATROUGHNESS_UV', 'airClearcoatRoughness'], ['clearcoatNormalMap', 'CLEARCOATNORMAL_UV', 'airClearcoatNormal'], ['anisotropyMap', 'ANISOTROPY_UV', 'airAnisotropy'], ['iridescenceMap', 'IRIDESCENCE_UV', 'airIridescence'], ['iridescenceIorMap', 'IRIDESCENCEIOR_UV', 'airIridescenceIor'], ['iridescenceThicknessMap', 'IRIDESCENCETHICKNESS_UV', 'airIridescenceThickness'], ['bumpMap', 'BUMP_UV', 'airBump'], ['transmissionMap', 'TRANSMISSION_UV', 'airTransmission'], ['volumeThicknessMap', 'VOLUMETHICKNESS_UV', 'airVolumeThickness']];
+const UV_SLOTS = [['albedoMap', 'ALBEDO_UV', 'airAlbedo'], ['metallicRoughnessMap', 'PBR_UV', 'airMetallicRoughness'], ['normalMap', 'NORMAL_UV', 'airNormal'], ['occlusionMap', 'OCCLUSION_UV', 'airOcclusion'], ['emissiveMap', 'EMISSIVE_UV', 'airEmissive'], ['specularMap', 'SPECULAR_UV', 'airSpecular'], ['specularColorMap', 'SPECULARCOLOR_UV', 'airSpecularColor'], ['clearcoatMap', 'CLEARCOAT_UV', 'airClearcoat'], ['clearcoatRoughnessMap', 'CLEARCOATROUGHNESS_UV', 'airClearcoatRoughness'], ['clearcoatNormalMap', 'CLEARCOATNORMAL_UV', 'airClearcoatNormal'], ['anisotropyMap', 'ANISOTROPY_UV', 'airAnisotropy'], ['iridescenceMap', 'IRIDESCENCE_UV', 'airIridescence'], ['iridescenceIorMap', 'IRIDESCENCEIOR_UV', 'airIridescenceIor'], ['iridescenceThicknessMap', 'IRIDESCENCETHICKNESS_UV', 'airIridescenceThickness'], ['bumpMap', 'BUMP_UV', 'airBump'], ['transmissionMap', 'TRANSMISSION_UV', 'airTransmission'], ['volumeThicknessMap', 'VOLUMETHICKNESS_UV', 'airVolumeThickness'], ['sheenColorMap', 'SHEENCOLOR_UV', 'airSheenColor'], ['sheenRoughnessMap', 'SHEENROUGHNESS_UV', 'airSheenRoughness']];
 const UV_UNIFORMS = UV_SLOTS.map(([,, prefix]) => `${prefix}UV0`).concat(UV_SLOTS.map(([,, prefix]) => `${prefix}UV1`));
 function gltfEffect() {
   const name = 'air-gltf-standard';
@@ -153956,6 +154896,7 @@ function gltfEffect() {
   return effect;
 }
 
+const SHEEN_CONSTANT = 'airSheen';
 const PHYSICAL_CONSTANT = 'airPhysicalParams';
 const PHYSICAL_COLOR_CONSTANT = 'airSpecularColorFactor';
 const CLEARCOAT_CONSTANT = 'airClearcoat';
@@ -154017,6 +154958,14 @@ const PHYSICAL_SAMPLERS = [{
   name: 'cc_sceneColorTex',
   binding: 27,
   macro: 'USE_AIR_TRANSMISSION'
+}, {
+  name: 'sheenColorMap',
+  binding: 28,
+  macro: 'USE_AIR_SHEEN_COLOR_MAP'
+}, {
+  name: 'sheenRoughnessMap',
+  binding: 29,
+  macro: 'USE_AIR_SHEEN_ROUGHNESS_MAP'
 }];
 function physicalParams(ior, specularFactor0, emissiveStrength) {
   check(ior >= 1 && Number.isFinite(ior), 'KHR_materials_ior.ior must be finite and >= 1');
@@ -154043,7 +154992,24 @@ function gltfPhysicalEffect() {
     const oldName = shader.name;
     shader.name = `${name}|${oldName.split('|').slice(1).join('|')}`;
     shader.hash = (shader.hash ^ 0x2f6a19d4) >>> 0;
-    shader.defines = [...(shader.defines || []), {
+    shader.defines = [{
+      name: 'USE_AIR_SHEEN',
+      type: 'boolean'
+    }, {
+      name: 'USE_AIR_SHEEN_COLOR_MAP',
+      type: 'boolean'
+    }, {
+      name: 'USE_AIR_SHEEN_ROUGHNESS_MAP',
+      type: 'boolean'
+    }, {
+      name: 'SHEENCOLOR_UV',
+      type: 'string',
+      options: ['v_uv', 'v_uv1']
+    }, {
+      name: 'SHEENROUGHNESS_UV',
+      type: 'string',
+      options: ['v_uv', 'v_uv1']
+    }, ...(shader.defines || []), {
       name: 'USE_AIR_SPECULAR_COLOR',
       type: 'boolean'
     }, {
@@ -154162,6 +155128,7 @@ function gltfPhysicalEffect() {
       }
       if (!block.members.some(m => m.name === PHYSICAL_CONSTANT)) {
         block.members.push(new Uniform(PHYSICAL_CONSTANT, Type.FLOAT4, 1));
+        block.members.push(new Uniform(SHEEN_CONSTANT, Type.FLOAT4, 1));
       }
       if (!block.members.some(m => m.name === PHYSICAL_COLOR_CONSTANT)) {
         block.members.push(new Uniform(PHYSICAL_COLOR_CONSTANT, Type.FLOAT4, 1));
@@ -154206,17 +155173,17 @@ function gltfPhysicalEffect() {
       let frag = stage.frag;
       const nl = String.fromCharCode(10);
       const samplerDecls = PHYSICAL_SAMPLERS.map(s => `#if ${s.macro}\n${language === 'glsl4' ? `layout(set = 1, binding = ${s.binding}) ` : ''}uniform lowp sampler2D ${s.name};\n#endif`).join(nl);
-      const texVar = `#if USE_AIR_SPECULAR_MAP\nfloat airSpecScale = 1.0;\n#endif\n` + `#if USE_AIR_SPECULAR_COLOR_MAP\nvec3 airSpecColor = vec3(1.0);\n#endif\n` + `#if USE_AIR_CLEARCOAT\nfloat airCCFactorTex = 1.0;\nfloat airCCRoughTex = 0.0;\nvec3 airCCNormal = vec3(0.0, 0.0, 1.0);\n#endif\n` + `#if USE_AIR_ANISOTROPY\nvec3 airAnisoT = vec3(1.0, 0.0, 0.0);\nvec3 airAnisoB = vec3(0.0, 1.0, 0.0);\nfloat airAnisoStrength = 0.0;\n#endif\n` + `#if USE_AIR_IRIDESCENCE\nfloat airIriFactorTex = 1.0;\nfloat airIriIorTex = 1.3;\nfloat airIriThickTex = 400.0;\n#endif\n` + `#if USE_AIR_TRANSMISSION\nfloat airTrFactorTex = 0.0;\nfloat airThickTex = 0.0;\n#endif\n`;
+      const texVar = `#if USE_AIR_SHEEN\nvec3 airSheenColorTex = vec3(0.0);\nfloat airSheenRoughTex = 0.0;\n#endif\n` + `#if USE_AIR_SPECULAR_MAP\nfloat airSpecScale = 1.0;\n#endif\n` + `#if USE_AIR_SPECULAR_COLOR_MAP\nvec3 airSpecColor = vec3(1.0);\n#endif\n` + `#if USE_AIR_CLEARCOAT\nfloat airCCFactorTex = 1.0;\nfloat airCCRoughTex = 0.0;\nvec3 airCCNormal = vec3(0.0, 0.0, 1.0);\n#endif\n` + `#if USE_AIR_ANISOTROPY\nvec3 airAnisoT = vec3(1.0, 0.0, 0.0);\nvec3 airAnisoB = vec3(0.0, 1.0, 0.0);\nfloat airAnisoStrength = 0.0;\n#endif\n` + `#if USE_AIR_IRIDESCENCE\nfloat airIriFactorTex = 1.0;\nfloat airIriIorTex = 1.3;\nfloat airIriThickTex = 400.0;\n#endif\n` + `#if USE_AIR_TRANSMISSION\nfloat airTrFactorTex = 0.0;\nfloat airThickTex = 0.0;\n#endif\n`;
       const prependAfterPrecision = source => {
         const insert = samplerDecls + nl + texVar;
         const m = /^(\s*precision\s+\w+\s+\w+;)/.exec(source);
         return m ? source.slice(0, m[1].length) + nl + insert + source.slice(m[1].length) : insert + nl + source;
       };
       if (language === 'glsl1') {
-        frag = prependAfterPrecision(`uniform highp vec4 ${PHYSICAL_CONSTANT};` + nl + `uniform highp vec4 ${PHYSICAL_COLOR_CONSTANT};` + nl + `uniform highp vec4 ${CLEARCOAT_CONSTANT};` + nl + `uniform highp vec4 ${ANISO_CONSTANT};` + nl + `uniform highp vec4 ${IRIDESCENCE_CONSTANT};` + nl + `uniform highp vec4 ${BUMP_CONSTANT};` + nl + `uniform highp vec4 ${TRANSMISSION_CONSTANT};` + nl + `uniform highp vec4 ${ATTENUATION_CONSTANT};` + nl + `uniform highp vec4 ${SCENE_INFO_CONSTANT};` + nl + frag);
+        frag = prependAfterPrecision(`uniform highp vec4 ${PHYSICAL_CONSTANT};` + nl + `uniform highp vec4 ${SHEEN_CONSTANT};` + nl + `uniform highp vec4 ${PHYSICAL_COLOR_CONSTANT};` + nl + `uniform highp vec4 ${CLEARCOAT_CONSTANT};` + nl + `uniform highp vec4 ${ANISO_CONSTANT};` + nl + `uniform highp vec4 ${IRIDESCENCE_CONSTANT};` + nl + `uniform highp vec4 ${BUMP_CONSTANT};` + nl + `uniform highp vec4 ${TRANSMISSION_CONSTANT};` + nl + `uniform highp vec4 ${ATTENUATION_CONSTANT};` + nl + `uniform highp vec4 ${SCENE_INFO_CONSTANT};` + nl + frag);
       } else {
         const blockAppendRe = /(uniform\s+\w*\s*Constants\s*\{[^}]*)(\})/;
-        const grow = source => source.replace(blockAppendRe, (_m, head, tail) => head + nl + `vec4 ${PHYSICAL_CONSTANT};` + nl + `vec4 ${PHYSICAL_COLOR_CONSTANT};` + nl + `vec4 ${CLEARCOAT_CONSTANT};` + nl + `vec4 ${ANISO_CONSTANT};` + nl + `vec4 ${IRIDESCENCE_CONSTANT};` + nl + `vec4 ${BUMP_CONSTANT};` + nl + `vec4 ${TRANSMISSION_CONSTANT};` + nl + `vec4 ${ATTENUATION_CONSTANT};` + nl + `vec4 ${SCENE_INFO_CONSTANT};` + nl + tail);
+        const grow = source => source.replace(blockAppendRe, (_m, head, tail) => head + nl + `vec4 ${PHYSICAL_CONSTANT};` + nl + `vec4 ${SHEEN_CONSTANT};` + nl + `vec4 ${PHYSICAL_COLOR_CONSTANT};` + nl + `vec4 ${CLEARCOAT_CONSTANT};` + nl + `vec4 ${ANISO_CONSTANT};` + nl + `vec4 ${IRIDESCENCE_CONSTANT};` + nl + `vec4 ${BUMP_CONSTANT};` + nl + `vec4 ${TRANSMISSION_CONSTANT};` + nl + `vec4 ${ATTENUATION_CONSTANT};` + nl + `vec4 ${SCENE_INFO_CONSTANT};` + nl + tail);
         stage.vert = grow(stage.vert);
         frag = prependAfterPrecision(grow(frag));
       }
@@ -154234,12 +155201,13 @@ function gltfPhysicalEffect() {
       const airSpec = [`float airSpecularWeight = clamp(${PHYSICAL_CONSTANT}.z, 0.0, 1.0);`, '#if USE_AIR_SPECULAR_MAP', 'airSpecularWeight *= airSpecScale;', '#endif', `vec3 airDielectric = vec3(0.08 * s.specularIntensity);`, '#if USE_AIR_SPECULAR_COLOR', `airDielectric *= ${PHYSICAL_COLOR_CONSTANT}.rgb;`, '#endif', '#if USE_AIR_SPECULAR_COLOR_MAP', 'airDielectric *= airSpecColor;', '#endif', '#if USE_AIR_IRIDESCENCE', `{`, `float iriF = clamp(airIriFactorTex, 0.0, 1.0);`, `if (iriF > 0.0) { airDielectric = mix(airDielectric, airIridescenceF0(max(dot(s.normal, normalize(cc_cameraPos.xyz - s.position)), 0.0)), iriF); }`, `}`, `#endif`, `airDielectric = clamp(airDielectric, vec3(0.0), vec3(1.0));`, `airDielectric *= airSpecularWeight;`, `vec3 diffuse = s.albedo.rgb * (1.0 - s.metallic);`, `vec3 specular = mix(airDielectric, s.albedo.rgb, s.metallic);`].join('\n');
       frag = frag.replace(specularMix, airSpec);
       frag = frag.replace('specular = BRDFApprox(specular, s.roughness, NV);', 'specular = BRDFApprox(specular, s.roughness, NV);\n' + '#if USE_AIR_SPECULAR\n' + 'vec3 airFresnel = airDielectric + (vec3(airSpecularWeight) - airDielectric) * pow(1.0 - NV, 5.0);\n' + 'float airFresnelMax = max(airFresnel.r, max(airFresnel.g, airFresnel.b));\n' + 'diffuse *= 1.0 - airFresnelMax;\n' + '#endif');
+      const sheenDirect = ['#if USE_AIR_SHEEN', '{', 'float shNL = max(dot(N, L), 0.0);', 'float shNV = max(dot(N, V), 0.0);', 'float shNH = clamp(dot(N, H), 0.0, 1.0);', 'float shInv = 1.0 / max(airSheenRoughTex * airSheenRoughTex, 0.0001);', 'float shD = (2.0 + shInv) * pow(max(1.0 - shNH * shNH, 0.0), shInv * 0.5) / (2.0 * PI);', 'float shVis = 1.0 / max(4.0 * (shNL + shNV - shNL * shNV), 0.0001);', 'dirlightContrib *= 1.0 - max(airSheenColorTex.r, max(airSheenColorTex.g, airSheenColorTex.b));', '#if CC_RECEIVE_SHADOW', 'finalColor += airSheenColorTex * shD * shVis * shNL * cc_mainLitColor.rgb * cc_mainLitColor.w * shadow;', '#else', 'finalColor += airSheenColorTex * shD * shVis * shNL * cc_mainLitColor.rgb * cc_mainLitColor.w;', '#endif', '}', '#endif'].join(nl);
       const ccDirect = ['{', 'float ccF = clamp(airCCFactorTex, 0.0, 1.0);', 'float ccRough = clamp(airCCRoughTex, 0.002, 1.0);', 'float ccNL = max(dot(airCCNormal, L), 0.0);', 'float ccNH = max(dot(airCCNormal, H), 0.0);', 'float ccNV = max(dot(airCCNormal, V), 0.0);', 'vec3 ccSpec = vec3(0.04) * CalcSpecular(ccRough, ccNH, H, airCCNormal);', '#if CC_RECEIVE_SHADOW', 'finalColor += cc_mainLitColor.rgb * cc_mainLitColor.w * shadow * ccNL * ccF * ccSpec;', '#else', 'finalColor += cc_mainLitColor.rgb * cc_mainLitColor.w * ccNL * ccF * ccSpec;', '#endif', '}'].join(nl);
       const ccAnchor = frag.includes('finalColor *= dirlightContrib;') ? 'finalColor *= dirlightContrib;' : 'finalColor += lightingColor * dirlightContrib;';
       if (!frag.includes(ccAnchor)) {
         throw new Error(`physical effect: '${ccAnchor}' missing in ${shader.name} [${language}]`);
       }
-      frag = frag.replace(ccAnchor, `#if USE_AIR_CLEARCOAT\n${ccDirect}\n#endif\n${ccAnchor}`);
+      frag = frag.replace(ccAnchor, `${sheenDirect}\n#if USE_AIR_CLEARCOAT\n${ccDirect}\n#endif\n${ccAnchor}`);
       const ccIBL = ['#if USE_AIR_CLEARCOAT && CC_USE_IBL', '{', 'float ccF = clamp(airCCFactorTex, 0.0, 1.0);', 'float ccRough = clamp(airCCRoughTex, 0.002, 1.0);', 'float ccNV = max(dot(airCCNormal, V), 0.0);', 'vec3 ccR = normalize(reflect(-V, airCCNormal));', 'vec4 ccEnv4 = fragTextureLod(cc_environment, ccR, ccRough * cc_ambientGround.w);', '#if CC_USE_IBL == 2', 'vec3 ccEnv = unpackRGBE(ccEnv4);', '#else', 'vec3 ccEnv = SRGBToLinear(ccEnv4.rgb);', '#endif', 'float ccFres = 0.04 + 0.96 * pow(1.0 - ccNV, 5.0);', 'finalColor += ccEnv * cc_ambientSky.w * ccF * ccFres;', '}', '#endif'].join(nl);
       const anisoFn = ['#if USE_AIR_ANISOTROPY', 'float airAnisoVisibility (float roughness, vec3 N, vec3 H, vec3 V, vec3 L) {', 'float anS = clamp(airAnisoStrength, 0.0, 1.0);', 'float alpha = max(roughness * roughness, 0.002);', 'float at = max(alpha * (1.0 + anS), 0.002);', 'float ab = max(alpha / (1.0 + anS), 0.002);', 'vec3 aT = normalize(airAnisoT); vec3 aB = normalize(airAnisoB);', 'float tNH = dot(aT, H); float bNH = dot(aB, H); float nNH = max(dot(N, H), 0.0);', 'float tNV = dot(aT, V); float bNV = dot(aB, V); float nNV = max(dot(N, V), 1e-4);', 'float tNL = dot(aT, L); float bNL = dot(aB, L); float nNL = max(dot(N, L), 0.0);', 'float d2 = (bNH * bNH) / (at * at) + (tNH * tNH) / (ab * ab) + nNH * nNH;', 'float D = 1.0 / (PI * at * ab * d2 * d2);', 'float v2 = nNV * nNV * ((tNV * tNV) / (at * at) + (bNV * bNV) / (ab * ab) + 1.0);', 'float vl = nNL * nNL * ((tNL * tNL) / (at * at) + (bNL * bNL) / (ab * ab) + 1.0);', 'float G = 0.5 / (nNV * sqrt(vl) + nNL * sqrt(v2) + 1e-6);', 'return D * G * PI * 0.25;', '}', '#endif'].join(nl);
       const specLine = 'vec3 specularContrib = specular * CalcSpecular(s.roughness, NH, H, N);';
@@ -154263,7 +155231,7 @@ function gltfPhysicalEffect() {
         throw new Error(`physical effect: return missing in ${shader.name} [${language}]`);
       }
       frag = frag.replace(returnAnchor, transmission);
-      const modulate = ['#if USE_AIR_TRANSMISSION', `airTrFactorTex = ${TRANSMISSION_CONSTANT}.x;`, `airThickTex = ${TRANSMISSION_CONSTANT}.z;`, '#if USE_AIR_TRANSMISSION_MAP', `airTrFactorTex *= ${tex('transmissionMap', 'TRANSMISSION_UV', 'airTransmission')}.r;`, '#endif', '#if USE_AIR_VOLUME_THICKNESS_MAP', `airThickTex *= ${tex('volumeThicknessMap', 'VOLUMETHICKNESS_UV', 'airVolumeThickness')}.g;`, '#endif', '#endif', '#if USE_AIR_SPECULAR_MAP', `airSpecScale = ${tex('specularMap', 'SPECULAR_UV', 'airSpecular')}.a;`, '#endif', '#if USE_AIR_SPECULAR_COLOR_MAP', `airSpecColor = SRGBToLinear(${tex('specularColorMap', 'SPECULARCOLOR_UV', 'airSpecularColor')}.rgb);`, '#endif', '#if USE_AIR_CLEARCOAT', `airCCFactorTex = ${CLEARCOAT_CONSTANT}.x;`, `airCCRoughTex = ${CLEARCOAT_CONSTANT}.y;`, '#endif', '#if USE_AIR_CLEARCOAT && USE_AIR_CLEARCOAT_MAP', `airCCFactorTex *= ${tex('clearcoatMap', 'CLEARCOAT_UV', 'airClearcoat')}.r;`, '#endif', '#if USE_AIR_CLEARCOAT && USE_AIR_CLEARCOAT_ROUGHNESS_MAP', `airCCRoughTex *= ${tex('clearcoatRoughnessMap', 'CLEARCOATROUGHNESS_UV', 'airClearcoatRoughness')}.g;`, '#endif', '#if USE_AIR_CLEARCOAT && USE_AIR_CLEARCOAT_NORMAL_MAP', '{', `vec3 ccT = ${tex('clearcoatNormalMap', 'CLEARCOATNORMAL_UV', 'airClearcoatNormal')}.xyz * 2.0 - 1.0;`, `ccT.xy *= ${CLEARCOAT_CONSTANT}.z;`, '#if USE_NORMAL_MAP', 'vec3 ccN0 = normalize(v_normal);', 'vec3 ccB0 = normalize(cross(v_tangent.xyz, ccN0)) * v_tangent.w;', 'airCCNormal = normalize(ccT.x * normalize(v_tangent.xyz) + ccT.y * ccB0 + ccT.z * ccN0);', '#else', 'vec3 ccN0 = normalize(v_normal);', 'vec3 ccUp = abs(ccN0.z) < 0.9 ? vec3(0.0, 0.0, 1.0) : vec3(1.0, 0.0, 0.0);', 'vec3 ccTg = normalize(cross(ccUp, ccN0));', 'airCCNormal = normalize(ccT.x * ccTg + ccT.y * cross(ccN0, ccTg) + ccT.z * ccN0);', '#endif', '}', '#endif', '#if USE_AIR_ANISOTROPY', '{', `airAnisoStrength = ${ANISO_CONSTANT}.x;`, 'vec3 aN0 = normalize(v_normal);', '#if USE_NORMAL_MAP', 'vec3 aT = normalize(v_tangent.xyz);', 'vec3 aB = normalize(cross(aT, aN0)) * v_tangent.w;', '#else', 'vec3 aUp = abs(aN0.z) < 0.9 ? vec3(0.0, 0.0, 1.0) : vec3(1.0, 0.0, 0.0);', 'vec3 aT = normalize(cross(aUp, aN0));', 'vec3 aB = cross(aN0, aT);', '#endif', `#if USE_AIR_ANISOTROPY_MAP`, `vec3 aTex = ${tex('anisotropyMap', 'ANISOTROPY_UV', 'airAnisotropy')}.xyz;`, 'vec2 aDir = vec2(aTex.x, aTex.y) * 2.0 - 1.0;', 'vec3 aNewT = aDir.x * aT + aDir.y * aB;', 'if (dot(aNewT, aNewT) > 1e-8) { aT = normalize(aNewT); aB = cross(aN0, aT); }', 'airAnisoStrength *= aTex.z;', '#endif', `float aRotC = ${ANISO_CONSTANT}.y; float aRotS = ${ANISO_CONSTANT}.z;`, 'airAnisoT = aT * aRotC + aB * aRotS;', 'airAnisoB = aB * aRotC - aT * aRotS;', '}', '#endif', '#if USE_AIR_IRIDESCENCE', `airIriFactorTex = ${IRIDESCENCE_CONSTANT}.x;`, `airIriIorTex = ${IRIDESCENCE_CONSTANT}.y;`, `airIriThickTex = ${IRIDESCENCE_CONSTANT}.w;`, '#endif', '#if USE_AIR_IRIDESCENCE && USE_AIR_IRIDESCENCE_MAP', `airIriFactorTex *= ${tex('iridescenceMap', 'IRIDESCENCE_UV', 'airIridescence')}.r;`, '#endif', '#if USE_AIR_IRIDESCENCE && USE_AIR_IRIDESCENCE_IOR_MAP', `airIriIorTex = mix(${IRIDESCENCE_CONSTANT}.y, 2.33334, ${tex('iridescenceIorMap', 'IRIDESCENCEIOR_UV', 'airIridescenceIor')}.g);`, '#endif', '#if USE_AIR_IRIDESCENCE && USE_AIR_IRIDESCENCE_THICKNESS_MAP', `airIriThickTex = mix(${IRIDESCENCE_CONSTANT}.z, ${IRIDESCENCE_CONSTANT}.w, ${tex('iridescenceThicknessMap', 'IRIDESCENCETHICKNESS_UV', 'airIridescenceThickness')}.g);`, '#endif', '#if USE_AIR_BUMP', '{', `float bh = ${tex('bumpMap', 'BUMP_UV', 'airBump')}.r * ${BUMP_CONSTANT}.x;`, `vec2 buv = ${textureUVExpression('BUMP_UV', 'airBump')};`, 'vec2 dbh = vec2(dFdx(bh), dFdy(bh));', 'vec2 duvdx = vec2(dFdx(buv.x), dFdy(buv.x));', 'vec2 duvdy = vec2(dFdx(buv.y), dFdy(buv.y));', 'vec3 dPdx = dFdx(s.position);', 'vec3 dPdy = dFdy(s.position);', 'float bdet = duvdx.x * duvdy.y - duvdx.y * duvdy.x;', 'if (abs(bdet) > 1e-8) {', 'float ga = ( dbh.x * duvdy.y - dbh.y * duvdy.x) / bdet;', 'float gb = (-dbh.x * duvdx.y + dbh.y * duvdx.x) / bdet;', 's.normal = normalize(s.normal - (ga * dPdx + gb * dPdy));', '}', '}', '#endif'].join(nl);
+      const modulate = ['#if USE_AIR_SHEEN', `airSheenColorTex = ${SHEEN_CONSTANT}.rgb;`, `airSheenRoughTex = ${SHEEN_CONSTANT}.a;`, '#if USE_AIR_SHEEN_COLOR_MAP', `airSheenColorTex *= SRGBToLinear(${tex('sheenColorMap', 'SHEENCOLOR_UV', 'airSheenColor')}.rgb);`, '#endif', '#if USE_AIR_SHEEN_ROUGHNESS_MAP', `airSheenRoughTex *= ${tex('sheenRoughnessMap', 'SHEENROUGHNESS_UV', 'airSheenRoughness')}.a;`, '#endif', '#endif', '#if USE_AIR_TRANSMISSION', `airTrFactorTex = ${TRANSMISSION_CONSTANT}.x;`, `airThickTex = ${TRANSMISSION_CONSTANT}.z;`, '#if USE_AIR_TRANSMISSION_MAP', `airTrFactorTex *= ${tex('transmissionMap', 'TRANSMISSION_UV', 'airTransmission')}.r;`, '#endif', '#if USE_AIR_VOLUME_THICKNESS_MAP', `airThickTex *= ${tex('volumeThicknessMap', 'VOLUMETHICKNESS_UV', 'airVolumeThickness')}.g;`, '#endif', '#endif', '#if USE_AIR_SPECULAR_MAP', `airSpecScale = ${tex('specularMap', 'SPECULAR_UV', 'airSpecular')}.a;`, '#endif', '#if USE_AIR_SPECULAR_COLOR_MAP', `airSpecColor = SRGBToLinear(${tex('specularColorMap', 'SPECULARCOLOR_UV', 'airSpecularColor')}.rgb);`, '#endif', '#if USE_AIR_CLEARCOAT', `airCCFactorTex = ${CLEARCOAT_CONSTANT}.x;`, `airCCRoughTex = ${CLEARCOAT_CONSTANT}.y;`, '#endif', '#if USE_AIR_CLEARCOAT && USE_AIR_CLEARCOAT_MAP', `airCCFactorTex *= ${tex('clearcoatMap', 'CLEARCOAT_UV', 'airClearcoat')}.r;`, '#endif', '#if USE_AIR_CLEARCOAT && USE_AIR_CLEARCOAT_ROUGHNESS_MAP', `airCCRoughTex *= ${tex('clearcoatRoughnessMap', 'CLEARCOATROUGHNESS_UV', 'airClearcoatRoughness')}.g;`, '#endif', '#if USE_AIR_CLEARCOAT && USE_AIR_CLEARCOAT_NORMAL_MAP', '{', `vec3 ccT = ${tex('clearcoatNormalMap', 'CLEARCOATNORMAL_UV', 'airClearcoatNormal')}.xyz * 2.0 - 1.0;`, `ccT.xy *= ${CLEARCOAT_CONSTANT}.z;`, '#if USE_NORMAL_MAP', 'vec3 ccN0 = normalize(v_normal);', 'vec3 ccB0 = normalize(cross(v_tangent.xyz, ccN0)) * v_tangent.w;', 'airCCNormal = normalize(ccT.x * normalize(v_tangent.xyz) + ccT.y * ccB0 + ccT.z * ccN0);', '#else', 'vec3 ccN0 = normalize(v_normal);', 'vec3 ccUp = abs(ccN0.z) < 0.9 ? vec3(0.0, 0.0, 1.0) : vec3(1.0, 0.0, 0.0);', 'vec3 ccTg = normalize(cross(ccUp, ccN0));', 'airCCNormal = normalize(ccT.x * ccTg + ccT.y * cross(ccN0, ccTg) + ccT.z * ccN0);', '#endif', '}', '#endif', '#if USE_AIR_ANISOTROPY', '{', `airAnisoStrength = ${ANISO_CONSTANT}.x;`, 'vec3 aN0 = normalize(v_normal);', '#if USE_NORMAL_MAP', 'vec3 aT = normalize(v_tangent.xyz);', 'vec3 aB = normalize(cross(aT, aN0)) * v_tangent.w;', '#else', 'vec3 aUp = abs(aN0.z) < 0.9 ? vec3(0.0, 0.0, 1.0) : vec3(1.0, 0.0, 0.0);', 'vec3 aT = normalize(cross(aUp, aN0));', 'vec3 aB = cross(aN0, aT);', '#endif', `#if USE_AIR_ANISOTROPY_MAP`, `vec3 aTex = ${tex('anisotropyMap', 'ANISOTROPY_UV', 'airAnisotropy')}.xyz;`, 'vec2 aDir = vec2(aTex.x, aTex.y) * 2.0 - 1.0;', 'vec3 aNewT = aDir.x * aT + aDir.y * aB;', 'if (dot(aNewT, aNewT) > 1e-8) { aT = normalize(aNewT); aB = cross(aN0, aT); }', 'airAnisoStrength *= aTex.z;', '#endif', `float aRotC = ${ANISO_CONSTANT}.y; float aRotS = ${ANISO_CONSTANT}.z;`, 'airAnisoT = aT * aRotC + aB * aRotS;', 'airAnisoB = aB * aRotC - aT * aRotS;', '}', '#endif', '#if USE_AIR_IRIDESCENCE', `airIriFactorTex = ${IRIDESCENCE_CONSTANT}.x;`, `airIriIorTex = ${IRIDESCENCE_CONSTANT}.y;`, `airIriThickTex = ${IRIDESCENCE_CONSTANT}.w;`, '#endif', '#if USE_AIR_IRIDESCENCE && USE_AIR_IRIDESCENCE_MAP', `airIriFactorTex *= ${tex('iridescenceMap', 'IRIDESCENCE_UV', 'airIridescence')}.r;`, '#endif', '#if USE_AIR_IRIDESCENCE && USE_AIR_IRIDESCENCE_IOR_MAP', `airIriIorTex = mix(${IRIDESCENCE_CONSTANT}.y, 2.33334, ${tex('iridescenceIorMap', 'IRIDESCENCEIOR_UV', 'airIridescenceIor')}.g);`, '#endif', '#if USE_AIR_IRIDESCENCE && USE_AIR_IRIDESCENCE_THICKNESS_MAP', `airIriThickTex = mix(${IRIDESCENCE_CONSTANT}.z, ${IRIDESCENCE_CONSTANT}.w, ${tex('iridescenceThicknessMap', 'IRIDESCENCETHICKNESS_UV', 'airIridescenceThickness')}.g);`, '#endif', '#if USE_AIR_BUMP', '{', `float bh = ${tex('bumpMap', 'BUMP_UV', 'airBump')}.r * ${BUMP_CONSTANT}.x;`, `vec2 buv = ${textureUVExpression('BUMP_UV', 'airBump')};`, 'vec2 dbh = vec2(dFdx(bh), dFdy(bh));', 'vec2 duvdx = vec2(dFdx(buv.x), dFdy(buv.x));', 'vec2 duvdy = vec2(dFdx(buv.y), dFdy(buv.y));', 'vec3 dPdx = dFdx(s.position);', 'vec3 dPdy = dFdy(s.position);', 'float bdet = duvdx.x * duvdy.y - duvdx.y * duvdy.x;', 'if (abs(bdet) > 1e-8) {', 'float ga = ( dbh.x * duvdy.y - dbh.y * duvdy.x) / bdet;', 'float gb = (-dbh.x * duvdx.y + dbh.y * duvdx.x) / bdet;', 's.normal = normalize(s.normal - (ga * dPdx + gb * dPdy));', '}', '}', '#endif'].join(nl);
       const mainAnchor = 'StandardSurface s; surf(s);';
       if (!frag.includes(mainAnchor)) {
         throw new Error(`physical effect: '${mainAnchor}' missing in ${shader.name} [${language}]`);
@@ -154284,6 +155252,18 @@ function gltfPhysicalEffect() {
       if (!pass.properties) {
         continue;
       }
+      pass.properties[SHEEN_CONSTANT] = {
+        type: Type.FLOAT4,
+        value: [0, 0, 0, 0]
+      };
+      pass.properties.sheenColorMap = {
+        value: 'white',
+        type: Type.SAMPLER2D
+      };
+      pass.properties.sheenRoughnessMap = {
+        value: 'white',
+        type: Type.SAMPLER2D
+      };
       pass.properties[PHYSICAL_CONSTANT] = {
         type: Type.FLOAT4,
         value: [1, 1, 1, 1]
@@ -154654,7 +155634,7 @@ async function loadGLTFTextures(context, textures, images) {
   }
 }
 function createGLTFMaterial(features, textures, vertexColor) {
-  var _source$extensions, _source$extensions2, _source$extensions3, _source$extensions4, _source$extensions5, _source$extensions6, _source$extensions7, _physical$ior, _physical$specular$fa, _physical$specular, _physical$emissiveStr, _physical$specular2;
+  var _source$extensions, _source$extensions2, _source$extensions3, _source$extensions4, _source$extensions5, _source$extensions6, _source$extensions7, _source$extensions8, _physical$ior, _physical$specular$fa, _physical$specular, _physical$emissiveStr, _physical$specular2;
   const source = features.source;
   const pbr = source.pbrMetallicRoughness || {};
   const unlit = features.unlit;
@@ -154685,7 +155665,8 @@ function createGLTFMaterial(features, textures, vertexColor) {
   const bumpExt = (_source$extensions5 = source.extensions) == null ? void 0 : _source$extensions5.EXT_materials_bump;
   const transmissionExt = (_source$extensions6 = source.extensions) == null ? void 0 : _source$extensions6.KHR_materials_transmission;
   const volumeExt = (_source$extensions7 = source.extensions) == null ? void 0 : _source$extensions7.KHR_materials_volume;
-  const maps = [[pbr.baseColorTexture, 'mainTexture', 'USE_ALBEDO_MAP', 'ALBEDO_UV'], [pbr.metallicRoughnessTexture, 'metallicRoughnessMap', 'USE_METALLIC_ROUGHNESS_MAP', 'PBR_UV'], [source.normalTexture, 'normalMap', 'USE_NORMAL_MAP', 'NORMAL_UV'], [source.occlusionTexture, 'occlusionMap', 'USE_OCCLUSION_MAP', 'OCCLUSION_UV'], [source.emissiveTexture, 'emissiveMap', 'USE_EMISSIVE_MAP', 'EMISSIVE_UV'], [specExt == null ? void 0 : specExt.specularTexture, 'specularMap', 'USE_AIR_SPECULAR_MAP', 'SPECULAR_UV'], [specExt == null ? void 0 : specExt.specularColorTexture, 'specularColorMap', 'USE_AIR_SPECULAR_COLOR_MAP', 'SPECULARCOLOR_UV'], [ccExt == null ? void 0 : ccExt.clearcoatTexture, 'clearcoatMap', 'USE_AIR_CLEARCOAT_MAP', 'CLEARCOAT_UV'], [ccExt == null ? void 0 : ccExt.clearcoatRoughnessTexture, 'clearcoatRoughnessMap', 'USE_AIR_CLEARCOAT_ROUGHNESS_MAP', 'CLEARCOATROUGHNESS_UV'], [ccExt == null ? void 0 : ccExt.clearcoatNormalTexture, 'clearcoatNormalMap', 'USE_AIR_CLEARCOAT_NORMAL_MAP', 'CLEARCOATNORMAL_UV'], [anisoExt == null ? void 0 : anisoExt.anisotropyTexture, 'anisotropyMap', 'USE_AIR_ANISOTROPY_MAP', 'ANISOTROPY_UV'], [iriExt == null ? void 0 : iriExt.iridescenceTexture, 'iridescenceMap', 'USE_AIR_IRIDESCENCE_MAP', 'IRIDESCENCE_UV'], [iriExt == null ? void 0 : iriExt.iridescenceIorTexture, 'iridescenceIorMap', 'USE_AIR_IRIDESCENCE_IOR_MAP', 'IRIDESCENCEIOR_UV'], [iriExt == null ? void 0 : iriExt.iridescenceThicknessTexture, 'iridescenceThicknessMap', 'USE_AIR_IRIDESCENCE_THICKNESS_MAP', 'IRIDESCENCETHICKNESS_UV'], [bumpExt == null ? void 0 : bumpExt.bumpTexture, 'bumpMap', 'USE_AIR_BUMP', 'BUMP_UV'], [transmissionExt == null ? void 0 : transmissionExt.transmissionTexture, 'transmissionMap', 'USE_AIR_TRANSMISSION_MAP', 'TRANSMISSION_UV'], [volumeExt == null ? void 0 : volumeExt.thicknessTexture, 'volumeThicknessMap', 'USE_AIR_VOLUME_THICKNESS_MAP', 'VOLUMETHICKNESS_UV']];
+  const sheenExt = (_source$extensions8 = source.extensions) == null ? void 0 : _source$extensions8.KHR_materials_sheen;
+  const maps = [[pbr.baseColorTexture, 'mainTexture', 'USE_ALBEDO_MAP', 'ALBEDO_UV'], [pbr.metallicRoughnessTexture, 'metallicRoughnessMap', 'USE_METALLIC_ROUGHNESS_MAP', 'PBR_UV'], [source.normalTexture, 'normalMap', 'USE_NORMAL_MAP', 'NORMAL_UV'], [source.occlusionTexture, 'occlusionMap', 'USE_OCCLUSION_MAP', 'OCCLUSION_UV'], [source.emissiveTexture, 'emissiveMap', 'USE_EMISSIVE_MAP', 'EMISSIVE_UV'], [specExt == null ? void 0 : specExt.specularTexture, 'specularMap', 'USE_AIR_SPECULAR_MAP', 'SPECULAR_UV'], [specExt == null ? void 0 : specExt.specularColorTexture, 'specularColorMap', 'USE_AIR_SPECULAR_COLOR_MAP', 'SPECULARCOLOR_UV'], [ccExt == null ? void 0 : ccExt.clearcoatTexture, 'clearcoatMap', 'USE_AIR_CLEARCOAT_MAP', 'CLEARCOAT_UV'], [ccExt == null ? void 0 : ccExt.clearcoatRoughnessTexture, 'clearcoatRoughnessMap', 'USE_AIR_CLEARCOAT_ROUGHNESS_MAP', 'CLEARCOATROUGHNESS_UV'], [ccExt == null ? void 0 : ccExt.clearcoatNormalTexture, 'clearcoatNormalMap', 'USE_AIR_CLEARCOAT_NORMAL_MAP', 'CLEARCOATNORMAL_UV'], [anisoExt == null ? void 0 : anisoExt.anisotropyTexture, 'anisotropyMap', 'USE_AIR_ANISOTROPY_MAP', 'ANISOTROPY_UV'], [iriExt == null ? void 0 : iriExt.iridescenceTexture, 'iridescenceMap', 'USE_AIR_IRIDESCENCE_MAP', 'IRIDESCENCE_UV'], [iriExt == null ? void 0 : iriExt.iridescenceIorTexture, 'iridescenceIorMap', 'USE_AIR_IRIDESCENCE_IOR_MAP', 'IRIDESCENCEIOR_UV'], [iriExt == null ? void 0 : iriExt.iridescenceThicknessTexture, 'iridescenceThicknessMap', 'USE_AIR_IRIDESCENCE_THICKNESS_MAP', 'IRIDESCENCETHICKNESS_UV'], [bumpExt == null ? void 0 : bumpExt.bumpTexture, 'bumpMap', 'USE_AIR_BUMP', 'BUMP_UV'], [transmissionExt == null ? void 0 : transmissionExt.transmissionTexture, 'transmissionMap', 'USE_AIR_TRANSMISSION_MAP', 'TRANSMISSION_UV'], [volumeExt == null ? void 0 : volumeExt.thicknessTexture, 'volumeThicknessMap', 'USE_AIR_VOLUME_THICKNESS_MAP', 'VOLUMETHICKNESS_UV'], [sheenExt == null ? void 0 : sheenExt.sheenColorTexture, 'sheenColorMap', 'USE_AIR_SHEEN_COLOR_MAP', 'SHEENCOLOR_UV'], [sheenExt == null ? void 0 : sheenExt.sheenRoughnessTexture, 'sheenRoughnessMap', 'USE_AIR_SHEEN_ROUGHNESS_MAP', 'SHEENROUGHNESS_UV']];
   for (const [index, [info,, macro, uv]] of maps.entries()) {
     defines[macro] = !!info;
     if (info) {
@@ -154705,6 +155686,8 @@ function createGLTFMaterial(features, textures, vertexColor) {
   const specularColor = (_physical$specular2 = physical.specular) == null ? void 0 : _physical$specular2.color;
   const colorActive = !!specularColor && specularColor.some(v => Math.abs(v - 1) > 1e-6);
   const physicalScalar = !unlit && (needsPhysicalEffect(ior, specularFactor0, emissiveStrength) || colorActive);
+  const sheen = physical.sheen;
+  const sheenActive = !unlit && !!sheen && sheen.color.some(v => v > 0);
   const clearcoat = physical.clearcoat;
   const clearcoatScalar = !unlit && !!clearcoat && clearcoat.factor > 0;
   const anisotropy = physical.anisotropy;
@@ -154719,8 +155702,10 @@ function createGLTFMaterial(features, textures, vertexColor) {
   const transmissionArmed = !unlit && transmissionPipelineAvailable().available;
   const transmissionScalar = transmissionArmed && !!transmission && transmission.factor > 0;
   const physicalMaps = !!(specExt != null && specExt.specularTexture) || !!(specExt != null && specExt.specularColorTexture) || !!(ccExt != null && ccExt.clearcoatTexture) || !!(ccExt != null && ccExt.clearcoatRoughnessTexture) || !!(ccExt != null && ccExt.clearcoatNormalTexture) || !!(anisoExt != null && anisoExt.anisotropyTexture) || !!(bumpExt != null && bumpExt.bumpTexture) || transmissionArmed && (!!(transmissionExt != null && transmissionExt.transmissionTexture) || !!(volumeExt != null && volumeExt.thicknessTexture));
-  const usePhysical = physicalScalar || clearcoatScalar || anisotropyScalar || iridescenceScalar || transmissionScalar || !unlit && physicalMaps;
-  const definesForPhysical = {};
+  const usePhysical = sheenActive || physicalScalar || clearcoatScalar || anisotropyScalar || iridescenceScalar || transmissionScalar || !unlit && physicalMaps;
+  const definesForPhysical = {
+    USE_AIR_SHEEN: sheenActive
+  };
   if (physicalScalar) {
     definesForPhysical.USE_AIR_SPECULAR_COLOR = colorActive;
   }
@@ -154791,6 +155776,9 @@ function createGLTFMaterial(features, textures, vertexColor) {
     material.setProperty('emissive', new Vec4(emissive[0], emissive[1], emissive[2], 1));
     check(Number.isFinite((_source$normalTexture = (_source$normalTexture2 = source.normalTexture) == null ? void 0 : _source$normalTexture2.scale) !== null && _source$normalTexture !== void 0 ? _source$normalTexture : 1), 'invalid normal scale');
     if (usePhysical) {
+      if (sheen) {
+        material.setProperty(SHEEN_CONSTANT, new Vec4(sheen.color[0], sheen.color[1], sheen.color[2], sheen.roughness));
+      }
       material.setProperty(PHYSICAL_CONSTANT, physicalParams(ior, specularFactor0, emissiveStrength));
       if (clearcoat) {
         material.setProperty(CLEARCOAT_CONSTANT, new Vec4(clearcoat.factor, clearcoat.roughness, clearcoat.normalScale, 1));
@@ -155131,6 +156119,43 @@ function specularFactory(context) {
           factor0: factor[0],
           factor1: factor[1],
           color: [factor[1], factor[2], factor[3]]
+        };
+      }
+    }
+  };
+}
+
+function sheenFactory(_context) {
+  const name = 'KHR_materials_sheen';
+  return {
+    name,
+    support: () => ({
+      name,
+      status: 'supported',
+      reason: 'Charlie direct-light lobe with Ashikhmin visibility; conservative base attenuation; no dedicated sheen IBL convolution'
+    }),
+    validate(ctx) {
+      for (const [index, material] of (ctx.json.materials || []).entries()) {
+        var _material$extensions, _ext$sheenColorFactor, _ext$sheenRoughnessFa, _material$extensions2, _material$extensions3;
+        const ext = (_material$extensions = material.extensions) == null ? void 0 : _material$extensions[name];
+        if (!ext) {
+          continue;
+        }
+        const unit = v => typeof v === 'number' && Number.isFinite(v) && v >= 0 && v <= 1;
+        const color = (_ext$sheenColorFactor = ext.sheenColorFactor) !== null && _ext$sheenColorFactor !== void 0 ? _ext$sheenColorFactor : [0, 0, 0];
+        if (!Array.isArray(color) || color.length !== 3 || !color.every(unit) || !unit((_ext$sheenRoughnessFa = ext.sheenRoughnessFactor) !== null && _ext$sheenRoughnessFa !== void 0 ? _ext$sheenRoughnessFa : 0) || ((_material$extensions2 = material.extensions) == null ? void 0 : _material$extensions2.KHR_materials_unlit) !== undefined || ((_material$extensions3 = material.extensions) == null ? void 0 : _material$extensions3.KHR_materials_pbrSpecularGlossiness) !== undefined) {
+          throw new GLTFError('GLTF_EXTENSION_INVALID', `material ${index}: invalid sheen factors or incompatible material`, name);
+        }
+      }
+    },
+    extendMaterial(_index, features) {
+      var _features$source$exte;
+      const ext = (_features$source$exte = features.source.extensions) == null ? void 0 : _features$source$exte[name];
+      if (ext) {
+        var _ext$sheenColorFactor2, _ext$sheenRoughnessFa2;
+        physicalScalars(features).sheen = {
+          color: [...((_ext$sheenColorFactor2 = ext.sheenColorFactor) !== null && _ext$sheenColorFactor2 !== void 0 ? _ext$sheenColorFactor2 : [0, 0, 0])],
+          roughness: (_ext$sheenRoughnessFa2 = ext.sheenRoughnessFactor) !== null && _ext$sheenRoughnessFa2 !== void 0 ? _ext$sheenRoughnessFa2 : 0
         };
       }
     }
@@ -155973,7 +156998,7 @@ function resolveOptions(options) {
 const KNOWN_UNIMPLEMENTED = [];
 class GLTFLoader {
   constructor(options) {
-    this.registry = new GLTFExtensionRegistry().register(unlitFactory).register(textureTransformFactory).register(meshQuantizationFactory).register(meshoptCompressionFactory(EXT_MESHOPT_COMPRESSION)).register(meshoptCompressionFactory(KHR_MESHOPT_COMPRESSION)).register(dracoCompressionFactory).register(emissiveStrengthFactory).register(iorFactory).register(specularFactory).register(clearcoatFactory).register(anisotropyFactory).register(iridescenceFactory).register(bumpFactory).register(transmissionFactory).register(volumeFactory).register(dispersionFactory).register(basisuFactory).register(imageExtensionFactory('EXT_texture_webp')).register(imageExtensionFactory('EXT_texture_avif')).register(punctualLightsFactory).register(meshGPUInstancingFactory);
+    this.registry = new GLTFExtensionRegistry().register(unlitFactory).register(textureTransformFactory).register(meshQuantizationFactory).register(meshoptCompressionFactory(EXT_MESHOPT_COMPRESSION)).register(meshoptCompressionFactory(KHR_MESHOPT_COMPRESSION)).register(dracoCompressionFactory).register(emissiveStrengthFactory).register(iorFactory).register(specularFactory).register(clearcoatFactory).register(sheenFactory).register(anisotropyFactory).register(iridescenceFactory).register(bumpFactory).register(transmissionFactory).register(volumeFactory).register(dispersionFactory).register(basisuFactory).register(imageExtensionFactory('EXT_texture_webp')).register(imageExtensionFactory('EXT_texture_avif')).register(punctualLightsFactory).register(meshGPUInstancingFactory);
     this.options = void 0;
     this.customRegistry = false;
     this.options = {
@@ -156358,7 +157383,7 @@ function collectWorldBounds(target) {
   return result;
 }
 
-const fields = {
+const fields$1 = {
   box: ['width', 'height', 'length', 'widthSegments', 'heightSegments', 'lengthSegments'],
   sphere: ['radius', 'segments'],
   cylinder: ['radiusTop', 'radiusBottom', 'height', 'radialSegments', 'heightSegments', 'capped', 'arc'],
@@ -156386,12 +157411,12 @@ function segments(value, field, minimum) {
 }
 function createPrimitiveGeometry(descriptor) {
   var _descriptor$radialSeg, _descriptor$heightSeg, _descriptor$radiusTop, _descriptor$radiusBot;
-  if (!descriptor || typeof descriptor !== 'object' || Array.isArray(descriptor) || !Object.prototype.hasOwnProperty.call(fields, descriptor.type)) invalid('type', 'must be box, sphere, cylinder or cone');
+  if (!descriptor || typeof descriptor !== 'object' || Array.isArray(descriptor) || !Object.prototype.hasOwnProperty.call(fields$1, descriptor.type)) invalid('type', 'must be box, sphere, cylinder or cone');
   const {
     type,
     ...options
   } = descriptor;
-  const allowed = fields[type];
+  const allowed = fields$1[type];
   for (const field of Object.keys(options)) {
     if (!allowed.includes(field) && field !== 'includeNormal' && field !== 'includeUV') invalid(field, `is not a ${type} parameter`);
   }
@@ -158882,11 +159907,19 @@ class ParticleSystemRendererCPU extends ParticleSystemRendererBase {
     }
   }
   doUpdateRotation(pass) {
+    var _ps$_shapeModule;
     const mode = this._renderInfo.renderMode;
     if (mode !== ParticleRenderMode.Mesh && this._alignSpace === ParticleAlignmentSpace.View) {
       return;
     }
-    if (this._alignSpace === ParticleAlignmentSpace.Local) {
+    const ps = this._particleSystem;
+    if (mode === ParticleRenderMode.Mesh && ps != null && (_ps$_shapeModule = ps._shapeModule) != null && _ps$_shapeModule.enable && ps._shapeModule.alignToDirection) {
+      if (ps.simulationSpace === ParticleSpace.Local) {
+        ps.node.getWorldRotation(_node_rot$1);
+      } else {
+        _node_rot$1.set(0, 0, 0, 1);
+      }
+    } else if (this._alignSpace === ParticleAlignmentSpace.Local) {
       var _this$_particleSystem;
       (_this$_particleSystem = this._particleSystem) == null ? void 0 : _this$_particleSystem.node.getRotation(_node_rot$1);
     } else if (this._alignSpace === ParticleAlignmentSpace.World) {
@@ -159464,11 +160497,19 @@ class ParticleSystemRendererGPU extends ParticleSystemRendererBase {
     }
   }
   doUpdateRotation(pass) {
+    var _ps$_shapeModule;
     const mode = this._renderInfo.renderMode;
     if (mode !== ParticleRenderMode.Mesh && this._alignSpace === ParticleAlignmentSpace.View) {
       return;
     }
-    if (this._alignSpace === ParticleAlignmentSpace.Local) {
+    const ps = this._particleSystem;
+    if (mode === ParticleRenderMode.Mesh && ps != null && (_ps$_shapeModule = ps._shapeModule) != null && _ps$_shapeModule.enable && ps._shapeModule.alignToDirection) {
+      if (ps.simulationSpace === ParticleSpace.Local) {
+        ps.node.getWorldRotation(_node_rot);
+      } else {
+        _node_rot.set(0, 0, 0, 1);
+      }
+    } else if (this._alignSpace === ParticleAlignmentSpace.Local) {
       var _this$_particleSystem3;
       (_this$_particleSystem3 = this._particleSystem) == null ? void 0 : _this$_particleSystem3.node.getRotation(_node_rot);
     } else if (this._alignSpace === ParticleAlignmentSpace.World) {
@@ -160950,6 +161991,9 @@ let NoiseModule = (_dec$o = ccclass('cc.NoiseModule'), _dec2$g = type(CCFloat), 
 var _dec$n, _dec2$f, _dec3$5, _dec4$2, _dec5$2, _dec6$2, _dec7$2, _dec8$2, _dec9$2, _dec0$2, _dec1$1, _dec10$1, _dec11$1, _dec12$1, _dec13$1, _dec14$1, _dec15$1, _dec16$1, _dec17$1, _dec18$1, _dec19$1, _dec20$1, _dec21$1, _dec22$1, _dec23$1, _dec24$1, _dec25$1, _dec26$1, _dec27$1, _dec28$1, _dec29$1, _dec30, _dec31, _dec32, _dec33, _dec34, _dec35, _dec36, _dec37, _dec38, _dec39, _dec40, _dec41, _dec42, _dec43, _dec44, _dec45, _class$n, _class2$d, _initializer$d, _initializer2$8, _initializer3$5, _initializer4$4, _initializer5$3, _initializer6$2, _initializer7$2, _initializer8$2, _initializer9$1, _initializer0$1, _initializer1$1, _initializer10$1, _initializer11$1, _initializer12$1, _initializer13$1, _initializer14$1, _initializer15$1, _initializer16$1, _initializer17$1, _initializer18$1, _initializer19$1, _initializer20$1, _initializer21$1, _initializer22$1, _initializer23$1, _initializer24$1, _initializer25$1, _initializer26$1, _initializer27$1, _initializer28$1, _initializer29$1, _initializer30$1, _initializer31$1, _initializer32$1, _initializer33$1, _initializer34, _initializer35, _initializer36, _initializer37, _initializer38, _initializer39, _ParticleSystem;
 const _world_mat = new Mat4();
 const _world_rol = new Quat();
+const _emitDirection = new Vec3();
+const _alignRotation = new Quat();
+const _startRotation = new Quat();
 const superMaterials = Object.getOwnPropertyDescriptor(Renderer.prototype, 'sharedMaterials');
 let ParticleSystem = (_dec$n = ccclass$x('cc.ParticleSystem'), _dec2$f = executionOrder$2(99), _dec3$5 = type$b(GradientRange), _dec4$2 = type$b(ParticleSpace), _dec5$2 = formerlySerializedAs$3('startSize'), _dec6$2 = type$b(CurveRange), _dec7$2 = type$b(CurveRange), _dec8$2 = type$b(CurveRange), _dec9$2 = type$b(CurveRange), _dec0$2 = type$b(CurveRange), _dec1$1 = type$b(CurveRange), _dec10$1 = type$b(CurveRange), _dec11$1 = formerlySerializedAs$3('startRotation'), _dec12$1 = type$b(CurveRange), _dec13$1 = type$b(CurveRange), _dec14$1 = type$b(ParticleSpace), _dec15$1 = type$b(CurveRange), _dec16$1 = type$b(CurveRange), _dec17$1 = type$b(CurveRange), _dec18$1 = type$b([Burst]), _dec19$1 = type$b(CCBoolean), _dec20$1 = type$b(ParticleCullingMode), _dec21$1 = type$b(CCFloat), _dec22$1 = type$b(CCFloat), _dec23$1 = type$b(CCFloat), _dec24$1 = formerlySerializedAs$3('enableCulling'), _dec25$1 = type$b(ColorOvertimeModule), _dec26$1 = type$b(ColorOvertimeModule), _dec27$1 = type$b(ShapeModule), _dec28$1 = type$b(ShapeModule), _dec29$1 = type$b(SizeOvertimeModule), _dec30 = type$b(SizeOvertimeModule), _dec31 = type$b(VelocityOvertimeModule), _dec32 = type$b(VelocityOvertimeModule), _dec33 = type$b(ForceOvertimeModule), _dec34 = type$b(ForceOvertimeModule), _dec35 = type$b(LimitVelocityOvertimeModule), _dec36 = type$b(LimitVelocityOvertimeModule), _dec37 = type$b(RotationOvertimeModule), _dec38 = type$b(RotationOvertimeModule), _dec39 = type$b(TextureAnimationModule), _dec40 = type$b(TextureAnimationModule), _dec41 = type$b(NoiseModule), _dec42 = type$b(NoiseModule), _dec43 = type$b(TrailModule), _dec44 = type$b(TrailModule), _dec45 = type$b(ParticleSystemRenderer), _dec$n(_class$n = _dec2$f(_class$n = (_class2$d = (_ParticleSystem = class ParticleSystem extends ModelRenderer {
   get capacity() {
@@ -161568,6 +162612,7 @@ let ParticleSystem = (_dec$n = ccclass$x('cc.ParticleSystem'), _dec2$f = executi
       node.getWorldRotation(_world_rol);
     }
     for (let i = 0; i < count; ++i) {
+      var _self$_shapeModule;
       const particle = self.processor.getFreeParticle();
       if (particle === null) {
         return;
@@ -161584,6 +162629,13 @@ let ParticleSystem = (_dec$n = ccclass$x('cc.ParticleSystem'), _dec2$f = executi
       if (self._textureAnimationModule && self._textureAnimationModule.enable) {
         self._textureAnimationModule.init(particle);
       }
+      const alignToDirection = ((_self$_shapeModule = self._shapeModule) == null ? void 0 : _self$_shapeModule.enable) && self._shapeModule.alignToDirection;
+      if (alignToDirection) {
+        Vec3.copy(_emitDirection, particle.velocity);
+        if (self._simulationSpace === ParticleSpace.World) {
+          Vec3.transformQuat(_emitDirection, _emitDirection, _world_rol);
+        }
+      }
       const curveStartSpeed = self.startSpeed.evaluate(loopDelta, rand);
       Vec3.multiplyScalar(particle.velocity, particle.velocity, curveStartSpeed);
       if (self._simulationSpace === ParticleSpace.World) {
@@ -161595,6 +162647,15 @@ let ParticleSystem = (_dec$n = ccclass$x('cc.ParticleSystem'), _dec2$f = executi
         particle.startEuler.set(self.startRotationX.evaluate(loopDelta, rand), self.startRotationY.evaluate(loopDelta, rand), self.startRotationZ.evaluate(loopDelta, rand));
       } else {
         particle.startEuler.set(0, 0, self.startRotationZ.evaluate(loopDelta, rand));
+      }
+      if (alignToDirection && _emitDirection.lengthSqr() > 0) {
+        Vec3.normalize(_emitDirection, _emitDirection);
+        Quat.rotationTo(_alignRotation, particleEmitZAxis, _emitDirection);
+        const r2d = 180 / Math.PI;
+        Quat.fromEuler(_startRotation, particle.startEuler.x * r2d, particle.startEuler.y * r2d, particle.startEuler.z * r2d);
+        Quat.multiply(_startRotation, _alignRotation, _startRotation);
+        Quat.toEuler(particle.startEuler, _startRotation);
+        particle.startEuler.multiplyScalar(1 / r2d);
       }
       particle.rotation.set(particle.startEuler);
       if (self.startSize3D) {
@@ -161635,13 +162696,15 @@ let ParticleSystem = (_dec$n = ccclass$x('cc.ParticleSystem'), _dec2$f = executi
         }
       }
       if (!self._isEmitting) return;
-      self._emitRateTimeCounter += self.rateOverTime.evaluate(self._time / self.duration, 1) * dt;
+      const randTime = isCurveTwoValues(self.rateOverTime) ? pseudoRandom(randomRangeInt(0, INT_MAX)) : 1;
+      self._emitRateTimeCounter += self.rateOverTime.evaluate(self._time / self.duration, randTime) * dt;
       if (self._emitRateTimeCounter > 1) {
         const emitNum = Math.floor(self._emitRateTimeCounter);
         self._emitRateTimeCounter -= emitNum;
         self.emit(emitNum, dt);
       }
-      const rateOverDistance = self.rateOverDistance.evaluate(self._time / self.duration, 1);
+      const randDist = isCurveTwoValues(self.rateOverDistance) ? pseudoRandom(randomRangeInt(0, INT_MAX)) : 1;
+      const rateOverDistance = self.rateOverDistance.evaluate(self._time / self.duration, randDist);
       if (rateOverDistance > 0) {
         Vec3.copy(self._oldWPos, self._curWPos);
         self.node.getWorldPosition(self._curWPos);
@@ -163080,6 +164143,247 @@ async function loadBitmapFont(url, options) {
   }
 }
 
+const IMAGE_EXT = /\.(png|jpe?g|webp)$/i;
+const MAX_DEPENDENCIES = 256;
+function urlFor(path, base) {
+  const url = new URL(path.replace(/\\/g, '/'), base);
+  if (url.protocol !== 'http:' && url.protocol !== 'https:' || url.username || url.password) {
+    throw new Error('[Tiled] expected a credential-free HTTP(S) URL');
+  }
+  url.hash = '';
+  return url;
+}
+function dependencyURL(path, parent, origin) {
+  if (!path.trim()) throw new Error('[Tiled] missing external resource path');
+  const url = urlFor(path, parent.href);
+  if (url.origin !== origin) throw new Error('[Tiled] dependencies must share the map origin');
+  return url;
+}
+function parseXML(source, expected) {
+  const doc = new DOMParser().parseFromString(source, 'application/xml');
+  if (doc.doctype || doc.documentElement.tagName !== expected || doc.querySelector('parsererror')) {
+    throw new Error(`[Tiled] expected valid <${expected}> XML without a DOCTYPE`);
+  }
+  return doc;
+}
+async function loadTiledMap(url, options) {
+  var _options$baseURL;
+  const {
+    bank,
+    signal
+  } = options;
+  const base = (_options$baseURL = options.baseURL) !== null && _options$baseURL !== void 0 ? _options$baseURL : typeof document !== 'undefined' ? document.baseURI : undefined;
+  const mapURL = urlFor(url, base);
+  const subscriptions = [];
+  const owned = [];
+  const tsx = new Map();
+  const images = new Map();
+  const serializer = new XMLSerializer();
+  let disposed = false;
+  const assertNotAborted = () => {
+    if (signal != null && signal.aborted) throw new Error('[Tiled] map subscription aborted');
+  };
+  const dispose = () => {
+    if (disposed) return;
+    disposed = true;
+    for (const asset of owned.reverse()) asset.destroy();
+    for (const item of subscriptions.reverse()) bank.release(item.url, item.ext);
+    owned.length = 0;
+    subscriptions.length = 0;
+  };
+  const checkLimit = () => {
+    if (tsx.size + images.size >= MAX_DEPENDENCIES) throw new Error('[Tiled] dependency limit exceeded');
+  };
+  const readXML = async (file, ext, root) => {
+    const asset = await bank.load(file.href, {
+      ext,
+      signal
+    });
+    try {
+      if (!(asset instanceof TextAsset)) throw new Error(`[Tiled] expected TextAsset: ${file.href}`);
+      return parseXML(asset.text, root);
+    } finally {
+      bank.release(file.href, ext);
+    }
+  };
+  const rewriteImage = (element, parent, kind) => {
+    var _element$getAttribute, _img$pathname$match;
+    const img = dependencyURL((_element$getAttribute = element.getAttribute('source')) !== null && _element$getAttribute !== void 0 ? _element$getAttribute : '', parent, mapURL.origin);
+    const ext = (_img$pathname$match = img.pathname.match(IMAGE_EXT)) == null ? void 0 : _img$pathname$match[1].toLowerCase();
+    if (!ext) throw new Error('[Tiled] supported image formats are PNG, JPEG and WebP');
+    let entry = images.get(img.href);
+    if (!entry) {
+      checkLimit();
+      entry = {
+        key: `air-tiled-image-${images.size}.${ext}`,
+        ext,
+        tileset: false,
+        layer: false
+      };
+      images.set(img.href, entry);
+    }
+    entry[kind] = true;
+    element.setAttribute('source', entry.key);
+  };
+  const rewriteTileset = (element, parent) => {
+    const entries = element.querySelectorAll('image');
+    if (!entries.length) throw new Error('[Tiled] a tileset must have an external image');
+    for (const image of Array.from(entries)) rewriteImage(image, parent, 'tileset');
+  };
+  try {
+    const map = await readXML(mapURL, 'tmx', 'map');
+    if (map.documentElement.getAttribute('infinite') === '1') throw new Error('[Tiled] infinite maps are not supported');
+    for (const tileset of Array.from(map.querySelectorAll('tileset'))) {
+      const source = tileset.getAttribute('source');
+      if (source === null) {
+        rewriteTileset(tileset, mapURL);
+        continue;
+      }
+      const target = dependencyURL(source, mapURL, mapURL.origin);
+      let external = tsx.get(target.href);
+      if (!external) {
+        checkLimit();
+        const text = await readXML(target, 'tsx', 'tileset');
+        if (text.documentElement.hasAttribute('source')) throw new Error('[Tiled] nested external tilesets are not supported');
+        external = {
+          key: `air-tiled-tileset-${tsx.size}.tsx`,
+          text
+        };
+        tsx.set(target.href, external);
+        rewriteTileset(text.documentElement, target);
+      }
+      tileset.setAttribute('source', external.key);
+    }
+    for (const image of Array.from(map.querySelectorAll('imagelayer > image'))) rewriteImage(image, mapURL, 'layer');
+    const asset = new TiledMapAsset();
+    owned.push(asset);
+    asset.tmxXmlStr = serializer.serializeToString(map);
+    for (const {
+      key,
+      text
+    } of tsx.values()) {
+      const tsxAsset = new TextAsset();
+      owned.push(tsxAsset);
+      tsxAsset.text = serializer.serializeToString(text);
+      asset.tsxFileNames.push(key);
+      asset.tsxFiles.push(tsxAsset);
+    }
+    for (const [imageURL, image] of images) {
+      const bitmap = await bank.load(imageURL, {
+        ext: image.ext,
+        signal
+      });
+      subscriptions.push({
+        url: imageURL,
+        ext: image.ext
+      });
+      if (!(bitmap instanceof ImageAsset) || !bitmap.width || !bitmap.height) {
+        throw new Error(`[Tiled] invalid image asset: ${imageURL}`);
+      }
+      const texture = new Texture2D();
+      owned.push(texture);
+      texture.image = bitmap;
+      const frame = new SpriteFrame();
+      owned.push(frame);
+      frame.packable = false;
+      frame.texture = texture;
+      if (image.tileset) {
+        asset.spriteFrameNames.push(image.key);
+        asset.spriteFrames.push(frame);
+        asset.spriteFrameSizes.push(new Size(bitmap.width, bitmap.height));
+      }
+      if (image.layer) {
+        asset.imageLayerSpriteFrameNames.push(image.key);
+        asset.imageLayerSpriteFrame.push(frame);
+      }
+    }
+    assertNotAborted();
+    return Object.freeze({
+      asset,
+      get disposed() {
+        return disposed;
+      },
+      dispose
+    });
+  } catch (error) {
+    dispose();
+    throw error;
+  }
+}
+
+const activeMaps = new WeakSet();
+function instantiateTiledObjects(map, factories) {
+  const asset = map.tmxAsset;
+  if (!isValid(map, true) || !asset) throw new Error('Attach a TiledMapAsset first');
+  if (activeMaps.has(map)) throw new Error('Dispose the existing Tiled object factory handle first');
+  const registered = new Map(factories);
+  const nodes = [];
+  let disposed = false;
+  activeMaps.add(map);
+  const dispose = () => {
+    if (disposed) return;
+    disposed = true;
+    try {
+      for (let index = nodes.length - 1; index >= 0; --index) {
+        const node = nodes[index];
+        if (isValid(node, true)) {
+          node.removeFromParent();
+          node.destroy();
+        }
+      }
+    } finally {
+      activeMaps.delete(map);
+    }
+  };
+  try {
+    for (const group of map.getObjectGroups().slice()) {
+      const objects = group.getObjects();
+      const sources = group.getRawObjects();
+      const transform = group.node.getComponent(UITransform);
+      for (const [index, source] of sources.entries()) {
+        if (!source.visible || !source.className || source.type === TMXObjectType.IMAGE || source.type === TMXObjectType.TEXT) continue;
+        const factory = registered.get(source.className);
+        if (!factory) continue;
+        const object = objects[index];
+        if (!object || object.id !== source.id) throw new Error('Tiled object list changed since parsing');
+        const x = object.x - transform.width * transform.anchorX;
+        const y = object.y - transform.height * (1 - transform.anchorY);
+        const node = factory({
+          source,
+          properties: Object.freeze({
+            ...object.properties
+          }),
+          group
+        });
+        if (node === undefined) continue;
+        let ancestor = group.node;
+        while (ancestor && ancestor !== node) ancestor = ancestor.parent;
+        if (!(node instanceof Node$1) || !isValid(node, true) || node.parent || ancestor) {
+          throw new Error('Tiled object factory must return a fresh detached Node');
+        }
+        nodes.push(node);
+        if (!isValid(map, true) || map.tmxAsset !== asset || group.node.parent !== map.node || group.getRawObjects() !== sources) {
+          throw new Error('TiledMap changed during object instantiation');
+        }
+        node.layer = group.node.layer;
+        node.setPosition(x, y, 0);
+        node.setRotationFromEuler(0, 0, -source.rotation);
+        group.node.addChild(node);
+      }
+    }
+    return {
+      nodes: Object.freeze(nodes),
+      get disposed() {
+        return disposed;
+      },
+      dispose
+    };
+  } catch (error) {
+    dispose();
+    throw error;
+  }
+}
+
 function fail$a(code, message) {
   const error = new Error(`${code}: ${message}`);
   Object.assign(error, {
@@ -163871,6 +165175,87 @@ function createAirUnlitFogEffect() {
   return effect;
 }
 
+class AttachmentView extends TextureBase {
+  constructor(read, format, filter) {
+    super();
+    this.read = read;
+    this._format = format;
+    this.setWrapMode(WrapMode$1.CLAMP_TO_EDGE, WrapMode$1.CLAMP_TO_EDGE);
+    this.setFilters(filter === 'linear' ? TextureFilter.LINEAR : TextureFilter.NEAREST, filter === 'linear' ? TextureFilter.LINEAR : TextureFilter.NEAREST);
+    this.setMipFilter(TextureFilter.NONE);
+  }
+  getGFXTexture() {
+    return this.read();
+  }
+  updateSize(width, height) {
+    this._width = width;
+    this._height = height;
+  }
+}
+
+function bindAttachmentTexture(material, property, view, code, passIdx) {
+  const invalid = message => Object.assign(new Error(`[${code}] ${message}`), {
+    code
+  });
+  if (!material.isValid || passIdx !== undefined && (!Number.isSafeInteger(passIdx) || passIdx < 0 || passIdx >= material.passes.length)) throw invalid('Use a live material and a valid pass index');
+  const indices = passIdx === undefined ? material.passes.map((_, index) => index).filter(index => material.passes[index].getHandle(property)) : [passIdx];
+  if (!indices.length || indices.some(index => {
+    const handle = material.passes[index].getHandle(property);
+    return !handle || getTypeFromHandle(handle) !== Type.SAMPLER2D || getCountFromHandle(handle) !== 1;
+  })) throw invalid('Use a scalar sampler2D property; incompatible declared properties require an explicit pass index');
+  const previous = indices.map(index => material.getProperty(property, index));
+  let applied = 0;
+  try {
+    for (const index of indices) {
+      material.setProperty(property, view, index);
+      ++applied;
+    }
+  } catch (cause) {
+    const cleanup = [];
+    for (let i = 0; i < applied; ++i) {
+      try {
+        var _previous$i;
+        material.setProperty(property, (_previous$i = previous[i]) !== null && _previous$i !== void 0 ? _previous$i : null, indices[i]);
+      } catch (error) {
+        cleanup.push(error);
+      }
+    }
+    throw Object.assign(invalid('Binding failed; prior applicable pass values were restored where possible'), {
+      cause,
+      cleanup
+    });
+  }
+  let bound = true;
+  return {
+    rebind() {
+      if (!bound || !material.isValid) return;
+      const selected = indices.filter(index => material.getProperty(property, index) === view);
+      for (const index of selected) material.setProperty(property, view, index);
+    },
+    unbind() {
+      if (!bound) return;
+      bound = false;
+      if (!material.isValid) return;
+      const selected = indices.map((index, offset) => ({
+        index,
+        offset
+      })).filter(entry => material.getProperty(property, entry.index) === view);
+      const failures = [];
+      for (const entry of selected) {
+        try {
+          var _previous$entry$offse;
+          material.setProperty(property, (_previous$entry$offse = previous[entry.offset]) !== null && _previous$entry$offse !== void 0 ? _previous$entry$offse : null, entry.index);
+        } catch (error) {
+          failures.push(error);
+        }
+      }
+      if (failures.length) throw Object.assign(invalid('Some attachment pass values could not be restored'), {
+        failures
+      });
+    }
+  };
+}
+
 function shaderDiagnostic(code, shader, stage, source, driverLog) {
   const skillDoc = 'skills/cocosair-materials-effects/references/custom-glsl.md';
   const clean = source.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/[^\n]*/g, '');
@@ -163886,6 +165271,160 @@ function shaderDiagnostic(code, shader, stage, source, driverLog) {
     hint,
     skillDoc
   });
+}
+
+function validateIntegerAttachmentClear(format, values, code) {
+  const info = FormatInfos[format];
+  if (info.type !== FormatType.INT && info.type !== FormatType.UINT) return;
+  for (let channel = 0; channel < info.count; ++channel) {
+    const bits = format === Format.RGB10A2UI ? channel === 3 ? 2 : 10 : info.size * 8 / info.count;
+    const lower = info.type === FormatType.INT ? -(2 ** (bits - 1)) : 0;
+    const upper = info.type === FormatType.INT ? 2 ** (bits - 1) - 1 : 2 ** bits - 1;
+    if (!Number.isInteger(values[channel]) || values[channel] < lower || values[channel] > upper) throw Object.assign(new RangeError(`${code}: ${info.name} channel ${channel}`), {
+      code,
+      format,
+      channel
+    });
+  }
+}
+
+const framebuffers = new WeakMap();
+const programs = new WeakMap();
+const indexed = new WeakMap();
+function registerWebGL2Attachments(framebuffer, buffers, formats) {
+  framebuffers.set(framebuffer, {
+    buffers: buffers.slice(),
+    active: buffers.slice(),
+    formats: formats.slice()
+  });
+}
+function forgetWebGL2Attachments(framebuffer) {
+  framebuffers.delete(framebuffer);
+}
+function invalidateWebGL2IndexedBlend(gl) {
+  const state = indexed.get(gl);
+  if (state) state.signatures.length = 0;
+}
+function beginWebGL2AttachmentPass(gl, framebuffer, target, ops, factors) {
+  const state = indexed.get(gl);
+  if (state != null && state.touched) {
+    if (target.blend) gl.enable(gl.BLEND);else gl.disable(gl.BLEND);
+    gl.blendEquationSeparate(ops[target.blendEq], ops[target.blendAlphaEq]);
+    gl.blendFuncSeparate(factors[target.blendSrc], factors[target.blendDst], factors[target.blendSrcAlpha], factors[target.blendDstAlpha]);
+    const mask = target.blendColorMask;
+    gl.colorMask(!!(mask & ColorMask.R), !!(mask & ColorMask.G), !!(mask & ColorMask.B), !!(mask & ColorMask.A));
+    state.touched = false;
+    state.signatures.length = 0;
+  }
+  const attachments = framebuffer && framebuffers.get(framebuffer);
+  if (!attachments || attachments.buffers.length < 2) return;
+  let changed = false;
+  for (let i = 0; i < attachments.buffers.length; ++i) {
+    if (attachments.active[i] !== attachments.buffers[i]) changed = true;
+    attachments.active[i] = attachments.buffers[i];
+  }
+  if (changed) gl.drawBuffers(attachments.active);
+}
+function linkedLocations(gl, shader, limit) {
+  var _shader$gpuStages$fin;
+  const cached = programs.get(shader);
+  if ((cached == null ? void 0 : cached.program) === shader.glProgram) return cached.locations;
+  const source = (_shader$gpuStages$fin = shader.gpuStages.find(stage => stage.type === ShaderStageFlagBit.FRAGMENT)) == null ? void 0 : _shader$gpuStages$fin.source;
+  const reflected = source === undefined ? {
+    status: 'unknown',
+    reason: 'No fragment stage.'
+  } : reflectGLSLFragmentOutputNames(source);
+  if (reflected.status === 'unknown' || !shader.glProgram) {
+    throw Object.assign(new Error(`Cannot determine MRT fragment outputs: ${reflected.status === 'unknown' ? reflected.reason : 'No linked program.'}`), {
+      code: 'AIR_E_FRAGMENT_OUTPUTS_UNKNOWN',
+      shader: shader.name,
+      stage: 'fragment'
+    });
+  }
+  const locations = new Set();
+  for (const output of reflected.outputs) {
+    for (let i = 0; i < (output.array ? limit : 1); ++i) {
+      const location = gl.getFragDataLocation(shader.glProgram, output.array ? `${output.name}[${i}]` : output.name);
+      if (location >= 0) locations.add(location);
+    }
+  }
+  programs.set(shader, {
+    program: shader.glProgram,
+    locations
+  });
+  return locations;
+}
+function applyWebGL2AttachmentOutputs(gl, framebuffer, shader, blend, limit, ops, factors) {
+  var _state;
+  const attachments = framebuffer && framebuffers.get(framebuffer);
+  if (!attachments || attachments.buffers.length < 2 || !shader || !blend) return;
+  const locations = linkedLocations(gl, shader, limit);
+  let constantColor = false,
+    constantAlpha = false;
+  for (let i = 0; i < attachments.buffers.length; ++i) {
+    const target = blend.targets[blend.isIndepend ? i : 0];
+    if (!target) throw Object.assign(new Error(`WEBGL2_BLEND_TARGET_MISSING: ${i}`), {
+      code: 'WEBGL2_BLEND_TARGET_MISSING',
+      index: i
+    });
+    const type = FormatInfos[attachments.formats[i]].type;
+    if (!locations.has(i) || !target.blend || type === FormatType.INT || type === FormatType.UINT || target.blendEq === BlendOp.MIN || target.blendEq === BlendOp.MAX) continue;
+    const src = target.blendSrc,
+      dst = target.blendDst;
+    if (src === BlendFactor.CONSTANT_COLOR || src === BlendFactor.ONE_MINUS_CONSTANT_COLOR || dst === BlendFactor.CONSTANT_COLOR || dst === BlendFactor.ONE_MINUS_CONSTANT_COLOR) constantColor = true;
+    if (src === BlendFactor.CONSTANT_ALPHA || src === BlendFactor.ONE_MINUS_CONSTANT_ALPHA || dst === BlendFactor.CONSTANT_ALPHA || dst === BlendFactor.ONE_MINUS_CONSTANT_ALPHA) constantAlpha = true;
+  }
+  if (constantColor && constantAlpha) throw Object.assign(new Error('WebGL2 cannot mix RGB constant-color and constant-alpha factors across active targets.'), {
+    code: 'WEBGL2_MIXED_BLEND_CONSTANT_UNSUPPORTED'
+  });
+  let changed = false,
+    integerBlend = false;
+  for (let i = 0; i < attachments.buffers.length; ++i) {
+    const buffer = locations.has(i) ? attachments.buffers[i] : gl.NONE;
+    if (attachments.active[i] !== buffer) changed = true;
+    attachments.active[i] = buffer;
+    const type = FormatInfos[attachments.formats[i]].type;
+    if (buffer !== gl.NONE && blend.targets[0].blend && (type === FormatType.INT || type === FormatType.UINT)) integerBlend = true;
+  }
+  if (changed) gl.drawBuffers(attachments.active);
+  let state = indexed.get(gl);
+  if (!blend.isIndepend && !integerBlend && !((_state = state) != null && _state.touched)) return;
+  if (!state) {
+    state = {
+      extension: gl.getExtension('OES_draw_buffers_indexed'),
+      touched: false,
+      signatures: []
+    };
+    indexed.set(gl, state);
+  }
+  const ext = state.extension;
+  if (!ext) throw Object.assign(new Error('This MRT blend combination requires OES_draw_buffers_indexed.'), {
+    code: 'WEBGL2_INDEPENDENT_BLEND_UNSUPPORTED'
+  });
+  state.touched = true;
+  for (let i = 0; i < attachments.buffers.length; ++i) {
+    const target = blend.targets[blend.isIndepend ? i : 0];
+    if (!target) throw new Error(`WEBGL2_BLEND_TARGET_MISSING: ${i}`);
+    const type = FormatInfos[attachments.formats[i]].type;
+    const integer = type === FormatType.INT || type === FormatType.UINT;
+    const enabled = target.blend && !integer && locations.has(i) ? 1 : 0;
+    const mask = locations.has(i) ? target.blendColorMask : ColorMask.NONE;
+    const signature = state.signatures[i] || (state.signatures[i] = []);
+    if (signature[0] !== enabled) {
+      if (enabled) ext.enableiOES(gl.BLEND, i);else ext.disableiOES(gl.BLEND, i);
+    }
+    if (signature[1] !== target.blendEq || signature[2] !== target.blendAlphaEq) ext.blendEquationSeparateiOES(i, ops[target.blendEq], ops[target.blendAlphaEq]);
+    if (signature[3] !== target.blendSrc || signature[4] !== target.blendDst || signature[5] !== target.blendSrcAlpha || signature[6] !== target.blendDstAlpha) ext.blendFuncSeparateiOES(i, factors[target.blendSrc], factors[target.blendDst], factors[target.blendSrcAlpha], factors[target.blendDstAlpha]);
+    if (signature[7] !== mask) ext.colorMaskiOES(i, !!(mask & ColorMask.R), !!(mask & ColorMask.G), !!(mask & ColorMask.B), !!(mask & ColorMask.A));
+    signature[0] = enabled;
+    signature[1] = target.blendEq;
+    signature[2] = target.blendAlphaEq;
+    signature[3] = target.blendSrc;
+    signature[4] = target.blendDst;
+    signature[5] = target.blendSrcAlpha;
+    signature[6] = target.blendDstAlpha;
+    signature[7] = mask;
+  }
 }
 
 let WebGL2EXT;
@@ -164521,17 +166060,9 @@ const _i32v4 = new Int32Array(4);
 const _u32v4 = new Uint32Array(4);
 const max = Math.max;
 function validateIntegerClear(format, color) {
-  const info = FormatInfos[format];
-  if (info.type !== FormatType.INT && info.type !== FormatType.UINT) return;
-  const values = [color.x, color.y, color.z, color.w];
-  for (let c = 0; c < info.count; ++c) {
-    const bits = format === Format.RGB10A2UI ? c === 3 ? 2 : 10 : info.size * 8 / info.count;
-    const lower = info.type === FormatType.INT ? -(2 ** (bits - 1)) : 0;
-    const upper = info.type === FormatType.INT ? 2 ** (bits - 1) - 1 : 2 ** bits - 1;
-    if (!Number.isInteger(values[c]) || values[c] < lower || values[c] > upper) {
-      throw new RangeError(`WEBGL2_INTEGER_CLEAR_RANGE: ${info.name} channel ${c}`);
-    }
-  }
+  const type = FormatInfos[format].type;
+  if (type !== FormatType.INT && type !== FormatType.UINT) return;
+  validateIntegerAttachmentClear(format, [color.x, color.y, color.z, color.w], 'WEBGL2_INTEGER_CLEAR_RANGE');
 }
 function bindVertexAttribute(gl, input, attrib, location, offset) {
   const signed = input.type >= Type.INT && input.type <= Type.INT4;
@@ -165422,6 +166953,7 @@ const WebGLStencilOps = [WebGLConstants.ZERO, WebGLConstants.KEEP, WebGLConstant
 const WebGLBlendOps = [WebGLConstants.FUNC_ADD, WebGLConstants.FUNC_SUBTRACT, WebGLConstants.FUNC_REVERSE_SUBTRACT, WebGLConstants.MIN, WebGLConstants.MAX];
 const WebGLBlendFactors = [WebGLConstants.ZERO, WebGLConstants.ONE, WebGLConstants.SRC_ALPHA, WebGLConstants.DST_ALPHA, WebGLConstants.ONE_MINUS_SRC_ALPHA, WebGLConstants.ONE_MINUS_DST_ALPHA, WebGLConstants.SRC_COLOR, WebGLConstants.DST_COLOR, WebGLConstants.ONE_MINUS_SRC_COLOR, WebGLConstants.ONE_MINUS_DST_COLOR, WebGLConstants.SRC_ALPHA_SATURATE, WebGLConstants.CONSTANT_COLOR, WebGLConstants.ONE_MINUS_CONSTANT_COLOR, WebGLConstants.CONSTANT_ALPHA, WebGLConstants.ONE_MINUS_CONSTANT_ALPHA];
 function WebGL2CmdFuncCreateBuffer(device, gpuBuffer) {
+  assertWebGL2ContextActive(device.gl);
   const {
     gl
   } = device;
@@ -165563,6 +167095,7 @@ function WebGL2CmdFuncResizeBuffer(device, gpuBuffer) {
     } else {
       gl.bufferData(WebGLConstants.ARRAY_BUFFER, gpuBuffer.size, glUsage);
     }
+    gpuBuffer.size = gl.getBufferParameter(WebGLConstants.ARRAY_BUFFER, WebGLConstants.BUFFER_SIZE);
     gl.bindBuffer(WebGLConstants.ARRAY_BUFFER, null);
     cache.glArrayBuffer = null;
   } else if (gpuBuffer.usage & BufferUsageBit.INDEX) {
@@ -165581,6 +167114,7 @@ function WebGL2CmdFuncResizeBuffer(device, gpuBuffer) {
     } else {
       gl.bufferData(WebGLConstants.ELEMENT_ARRAY_BUFFER, gpuBuffer.size, glUsage);
     }
+    gpuBuffer.size = gl.getBufferParameter(WebGLConstants.ELEMENT_ARRAY_BUFFER, WebGLConstants.BUFFER_SIZE);
     gl.bindBuffer(WebGLConstants.ELEMENT_ARRAY_BUFFER, null);
     cache.glElementArrayBuffer = null;
   } else if (gpuBuffer.usage & BufferUsageBit.UNIFORM) {
@@ -165588,6 +167122,7 @@ function WebGL2CmdFuncResizeBuffer(device, gpuBuffer) {
       gl.bindBuffer(WebGLConstants.UNIFORM_BUFFER, gpuBuffer.glBuffer);
     }
     gl.bufferData(WebGLConstants.UNIFORM_BUFFER, gpuBuffer.size, glUsage);
+    gpuBuffer.size = gl.getBufferParameter(WebGLConstants.UNIFORM_BUFFER, WebGLConstants.BUFFER_SIZE);
     gl.bindBuffer(WebGLConstants.UNIFORM_BUFFER, null);
     cache.glUniformBuffer = null;
   } else if (gpuBuffer.usage & BufferUsageBit.INDIRECT || gpuBuffer.usage & BufferUsageBit.TRANSFER_DST || gpuBuffer.usage & BufferUsageBit.TRANSFER_SRC) {
@@ -165677,6 +167212,7 @@ function WebGL2CmdFuncUpdateBuffer(device, gpuBuffer, buffer, offset, size) {
   }
 }
 function WebGL2CmdFuncCreateTexture(device, gpuTexture) {
+  assertWebGL2ContextActive(device.gl);
   const {
     gl
   } = device;
@@ -165685,6 +167221,17 @@ function WebGL2CmdFuncCreateTexture(device, gpuTexture) {
   gpuTexture.glInternalFmt = GFXFormatToWebGLInternalFormat(gpuTexture.format);
   gpuTexture.glFormat = GFXFormatToWebGLFormat(gpuTexture.format);
   gpuTexture.glType = GFXFormatToWebGLType(gpuTexture.format);
+  if (gpuTexture.samples !== SampleCount.X1) {
+    const renderable = device.getFormatFeatures(gpuTexture.format) & FormatFeatureBit.RENDER_TARGET;
+    const supported = renderable && gpuTexture.type === TextureType.TEX2D && gpuTexture.mipLevel === 1 && gpuTexture.arrayLayer === 1 ? Array.from(gl.getInternalformatParameter(gl.RENDERBUFFER, gpuTexture.glInternalFmt, gl.SAMPLES)) : [];
+    if (!supported.includes(gpuTexture.samples)) {
+      throw Object.assign(new Error(`${Format[gpuTexture.format]} cannot use ${gpuTexture.samples} samples; supported=${supported.join(',')}`), {
+        code: 'WEBGL2_TEXTURE_SAMPLES_UNSUPPORTED',
+        format: gpuTexture.format,
+        samples: gpuTexture.samples
+      });
+    }
+  }
   let w = gpuTexture.width;
   let h = gpuTexture.height;
   const d = gpuTexture.depth;
@@ -165859,6 +167406,7 @@ function WebGL2CmdFuncDestroyTexture(device, gpuTexture) {
   }
 }
 function WebGL2CmdFuncResizeTexture(device, gpuTexture) {
+  assertWebGL2ContextActive(device.gl);
   if (!gpuTexture.size) return;
   if ((gpuTexture.type === TextureType.TEX2D_ARRAY || gpuTexture.type === TextureType.TEX3D) && !FormatInfos[gpuTexture.format].isCompressed) {
     WebGL2CmdFuncDestroyTexture(device, gpuTexture);
@@ -166087,6 +167635,7 @@ function WebGL2CmdFuncCreateFramebuffer(device, gpuFramebuffer) {
       throw new Error('WEBGL2_FRAMEBUFFER_INCOMPLETE');
     }
     gpuFramebuffer.glFramebuffer = framebuffer;
+    registerWebGL2Attachments(framebuffer, attachments, views.map(view => view.format));
     gpuFramebuffer.glAttachments = [...views, ...(depthView ? [depthView] : [])].map(view => view.gpuTexture.glTexture || view.gpuTexture.glRenderbuffer);
   } catch (cause) {
     gl.deleteFramebuffer(framebuffer);
@@ -166105,6 +167654,7 @@ function WebGL2CmdFuncDestroyFramebuffer(device, gpuFramebuffer) {
   } = device;
   const cache = device.getStateCache();
   if (gpuFramebuffer.glFramebuffer) {
+    forgetWebGL2Attachments(gpuFramebuffer.glFramebuffer);
     gl.deleteFramebuffer(gpuFramebuffer.glFramebuffer);
     if (cache.glFramebuffer === gpuFramebuffer.glFramebuffer) {
       gl.bindFramebuffer(WebGLConstants.DRAW_FRAMEBUFFER, null);
@@ -166118,6 +167668,7 @@ function WebGL2CmdFuncDestroyFramebuffer(device, gpuFramebuffer) {
   }
 }
 function WebGL2CmdFuncCreateShader(device, gpuShader) {
+  assertWebGL2ContextActive(device.gl);
   const {
     gl
   } = device;
@@ -166475,6 +168026,7 @@ function WebGL2CmdFuncBeginRenderPass(device, gpuRenderPass, gpuFramebuffer, ren
       gl.bindFramebuffer(WebGLConstants.DRAW_FRAMEBUFFER, gpuFramebuffer.glFramebuffer);
       cache.glFramebuffer = gpuFramebuffer.glFramebuffer;
     }
+    beginWebGL2AttachmentPass(gl, cache.glFramebuffer, cache.bs.targets[0], WebGLBlendOps, WebGLBlendFactors);
     if (cache.viewport.left !== renderArea.x || cache.viewport.top !== renderArea.y || cache.viewport.width !== renderArea.width || cache.viewport.height !== renderArea.height) {
       gl.viewport(renderArea.x, renderArea.y, renderArea.width, renderArea.height);
       cache.viewport.left = renderArea.x;
@@ -166612,6 +168164,10 @@ function WebGL2CmdFuncBeginRenderPass(device, gpuRenderPass, gpuFramebuffer, ren
   }
 }
 function WebGL2CmdFuncBindStates(device, gpuPipelineState, gpuInputAssembler, gpuDescriptorSets, dynamicOffsets, dynamicStates) {
+  if (gpuPipelineState != null && gpuPipelineState.bs && !gpuPipelineState.bs.targets[0]) throw Object.assign(new Error('WEBGL2_BLEND_TARGET_MISSING: 0'), {
+    code: 'WEBGL2_BLEND_TARGET_MISSING',
+    index: 0
+  });
   const {
     gl
   } = device;
@@ -166634,6 +168190,7 @@ function WebGL2CmdFuncBindStates(device, gpuPipelineState, gpuInputAssembler, gp
     }
   }
   if (gpuPipelineState && gfxStateCache.gpuPipelineState !== gpuPipelineState) {
+    invalidateWebGL2IndexedBlend(gl);
     gfxStateCache.gpuPipelineState = gpuPipelineState;
     gfxStateCache.glPrimitive = gpuPipelineState.glPrimitive;
     const {
@@ -167055,6 +168612,8 @@ function WebGL2CmdFuncDraw(device, drawInfo) {
   } = gfxStateCache;
   const md = device.extensions.WEBGL_multi_draw;
   if (gpuInputAssembler) {
+    const pipeline = gfxStateCache.gpuPipelineState;
+    applyWebGL2AttachmentOutputs(gl, device.getStateCache().glFramebuffer, (pipeline == null ? void 0 : pipeline.gpuShader) || null, (pipeline == null ? void 0 : pipeline.bs) || null, device.capabilities.maxColorRenderTargets, WebGLBlendOps, WebGLBlendFactors);
     const indexBuffer = gpuInputAssembler.gpuIndexBuffer;
     if (gpuInputAssembler.gpuIndirectBuffer) {
       const {
@@ -167671,23 +169230,6 @@ function positive(value, name) {
   if (!Number.isFinite(value) || value <= 0) failure('AIR_E_RENDER_TARGET_SIZE', `${name} must be finite and positive`);
   return value;
 }
-class AttachmentView extends TextureBase {
-  constructor(read, format, filter) {
-    super();
-    this.read = read;
-    this._format = format;
-    this.setWrapMode(WrapMode$1.CLAMP_TO_EDGE, WrapMode$1.CLAMP_TO_EDGE);
-    this.setFilters(filter === 'linear' ? TextureFilter.LINEAR : TextureFilter.NEAREST, filter === 'linear' ? TextureFilter.LINEAR : TextureFilter.NEAREST);
-    this.setMipFilter(TextureFilter.NONE);
-  }
-  getGFXTexture() {
-    return this.read();
-  }
-  updateSize(width, height) {
-    this._width = width;
-    this._height = height;
-  }
-}
 class AirRenderTarget {
   get renderTexture() {
     return this.rendering;
@@ -167872,7 +169414,7 @@ class AirRenderTarget {
       if (native === camera.camera) beforeRender == null ? void 0 : beforeRender();
     };
     const end = native => {
-      if (native === camera.camera) this.resolve();
+      if (native === camera.camera) this.resolveInternal(false);
     };
     camera.targetTexture = this.renderTexture;
     events.on(PipelineEventType.RENDER_CAMERA_BEGIN, begin);
@@ -167890,6 +169432,9 @@ class AirRenderTarget {
     return detach;
   }
   resolve() {
+    this.resolveInternal(true);
+  }
+  resolveInternal(checkError) {
     this.alive();
     if (this.output === this.renderTexture) return;
     const gl = this.device.gl;
@@ -167900,8 +169445,10 @@ class AirRenderTarget {
     cache.glReadFramebuffer = oldRead;
     try {
       WebGL2CmdFuncBlitFramebuffer(this.device, this.renderTexture.window.framebuffer.getGpuFramebuffer(), this.output.window.framebuffer.getGpuFramebuffer(), new Rect$1(0, 0, this.width, this.height), new Rect$1(0, 0, this.width, this.height), Filter.POINT);
-      const error = gl.getError();
-      if (error !== gl.NO_ERROR) failure('AIR_E_RENDER_TARGET_RESOLVE', `resolve failed with GL error ${error}`);
+      if (checkError) {
+        const error = gl.getError();
+        if (error !== gl.NO_ERROR) failure('AIR_E_RENDER_TARGET_RESOLVE', `resolve failed with GL error ${error}`);
+      }
     } finally {
       gl.bindFramebuffer(gl.DRAW_FRAMEBUFFER, oldDraw);
       gl.bindFramebuffer(gl.READ_FRAMEBUFFER, oldRead);
@@ -167911,18 +169458,13 @@ class AirRenderTarget {
   }
   bind(material, property, view, passIdx) {
     this.alive();
-    const passes = passIdx === undefined ? material.passes : [material.passes[passIdx]];
-    if (!passes.length || passes.some(pass => !pass || !pass.getHandle(property) || getTypeFromHandle(pass.getHandle(property)) !== Type.SAMPLER2D || getCountFromHandle(pass.getHandle(property)) !== 1)) failure('AIR_E_RENDER_TARGET_BINDING', `${material.name}.${property} must be an active sampler2D in the requested pass`);
-    const previous = material.getProperty(property, passIdx);
-    const rebind = () => {
-      if (material.isValid && material.passes.length) material.setProperty(property, view, passIdx);
-    };
-    rebind();
+    const binding = bindAttachmentTexture(material, property, view, 'AIR_E_RENDER_TARGET_BINDING', passIdx);
+    const rebind = binding.rebind;
     this.rebind.add(rebind);
     const unbind = () => {
       if (!this.bindings.delete(unbind)) return;
       this.rebind.delete(rebind);
-      if (material.isValid && material.passes.length && material.getProperty(property, passIdx) === view) material.setProperty(property, previous !== null && previous !== void 0 ? previous : null, passIdx);
+      binding.unbind();
     };
     this.bindings.add(unbind);
     return unbind;
@@ -167974,33 +169516,348 @@ function createAirRenderTarget(options) {
   return new AirRenderTarget(options);
 }
 
-const CCCAMERA = `layout(set = 0, binding = 1) uniform CCCamera {
-  highp mat4 cc_matView;
-  highp mat4 cc_matViewInv;
-  highp mat4 cc_matProj;
-  highp mat4 cc_matProjInv;
-  highp mat4 cc_matViewProj;
-  highp mat4 cc_matViewProjInv;
-  highp vec4 cc_cameraPos;
-  mediump vec4 cc_surfaceTransform;
-  mediump vec4 cc_screenScale;
-  mediump vec4 cc_exposure;
-  mediump vec4 cc_mainLitDir;
-  mediump vec4 cc_mainLitColor;
-  mediump vec4 cc_ambientSky;
-  mediump vec4 cc_ambientGround;
-  mediump vec4 cc_fogColor;
-  mediump vec4 cc_fogBase;
-  mediump vec4 cc_fogAdd;
-  mediump vec4 cc_nearFar;
-  mediump vec4 cc_viewPort;
-};`;
-const CCLOCAL = `layout(set = 2, binding = 0) uniform CCLocal {
-  highp mat4 cc_matWorld;
-  highp mat4 cc_matWorldIT;
-  highp vec4 cc_lightingMapUVParam;
-  highp vec4 cc_localShadowBias;
-};`;
+const colorFormats = [Format.RGBA8, Format.SRGB8_A8, Format.RGBA16F, Format.RGBA32F, Format.RG16F, Format.R32UI, Format.R32I];
+function mrtError(code, message, cause) {
+  return Object.assign(new Error(`[${code}] ${message}`), {
+    code,
+    cause
+  });
+}
+function mrtDimension(value, name) {
+  if (!Number.isSafeInteger(value) || value < 1) throw mrtError('AIR_E_MRT_SIZE', `${name} must be a positive integer`);
+  return value;
+}
+function mrtClear(format, values) {
+  if (!Array.isArray(values) || values.length !== 4 || !values.every(Number.isFinite)) throw mrtError('AIR_E_MRT_CLEAR_VALUE', 'clearValue must contain four finite native values');
+  validateIntegerAttachmentClear(format, values, 'AIR_E_MRT_CLEAR_VALUE');
+  return Object.freeze([values[0], values[1], values[2], values[3]]);
+}
+function fields(value, allowed) {
+  for (const name of Object.keys(value)) {
+    if (!allowed.includes(name) || value[name] === undefined) throw mrtError('AIR_E_MRT_OPTION', `Unknown or explicitly undefined option '${name}'`);
+  }
+}
+function normalizeMRTOptions(options) {
+  var _options$scale, _options$samples, _options$sampleFallba, _options$depthFormat, _options$name;
+  if (!options || typeof options !== 'object' || Array.isArray(options)) throw mrtError('AIR_E_MRT_OPTIONS', 'Provide MRT options');
+  fields(options, ['name', 'width', 'height', 'scale', 'samples', 'sampleFallback', 'colorAttachments', 'depthFormat']);
+  const width = mrtDimension(options.width, 'width'),
+    height = mrtDimension(options.height, 'height');
+  const scale = (_options$scale = options.scale) !== null && _options$scale !== void 0 ? _options$scale : 1,
+    samples = (_options$samples = options.samples) !== null && _options$samples !== void 0 ? _options$samples : 1;
+  const sampleFallback = (_options$sampleFallba = options.sampleFallback) !== null && _options$sampleFallba !== void 0 ? _options$sampleFallba : 'error',
+    depthFormat = (_options$depthFormat = options.depthFormat) !== null && _options$depthFormat !== void 0 ? _options$depthFormat : Format.UNKNOWN;
+  if (!Number.isFinite(scale) || scale <= 0) throw mrtError('AIR_E_MRT_SIZE', 'scale must be finite and positive');
+  if (![1, 2, 4, 8].includes(samples) || !['error', 'lower'].includes(sampleFallback)) throw mrtError('AIR_E_MRT_SAMPLES', 'Invalid sample count or fallback');
+  if (![Format.UNKNOWN, Format.DEPTH, Format.DEPTH_STENCIL].includes(depthFormat)) throw mrtError('AIR_E_MRT_DEPTH', 'Unsupported depth format');
+  if (options.name !== undefined && typeof options.name !== 'string') throw mrtError('AIR_E_MRT_OPTION', 'name must be a string');
+  if (!Array.isArray(options.colorAttachments) || !options.colorAttachments.length) throw mrtError('AIR_E_MRT_ATTACHMENTS', 'Provide at least one color attachment');
+  const colors = options.colorAttachments.map((attachment, index) => {
+    var _attachment$filter, _attachment$loadOp, _attachment$storeOp, _attachment$clearValu;
+    if (!attachment || typeof attachment !== 'object' || Array.isArray(attachment)) throw mrtError('AIR_E_MRT_ATTACHMENT', `Invalid attachment ${index}`);
+    fields(attachment, ['format', 'filter', 'loadOp', 'storeOp', 'clearValue']);
+    if (!colorFormats.includes(attachment.format)) throw mrtError('AIR_E_MRT_FORMAT', `Unsupported color format at attachment ${index}`);
+    const filter = (_attachment$filter = attachment.filter) !== null && _attachment$filter !== void 0 ? _attachment$filter : 'nearest',
+      loadOp = (_attachment$loadOp = attachment.loadOp) !== null && _attachment$loadOp !== void 0 ? _attachment$loadOp : LoadOp.CLEAR,
+      storeOp = (_attachment$storeOp = attachment.storeOp) !== null && _attachment$storeOp !== void 0 ? _attachment$storeOp : StoreOp.STORE;
+    if (!['nearest', 'linear'].includes(filter) || ![LoadOp.LOAD, LoadOp.CLEAR, LoadOp.DISCARD].includes(loadOp) || ![StoreOp.STORE, StoreOp.DISCARD].includes(storeOp)) throw mrtError('AIR_E_MRT_ATTACHMENT', `Invalid state at attachment ${index}`);
+    return Object.freeze({
+      format: attachment.format,
+      filter,
+      loadOp,
+      storeOp,
+      clearValue: mrtClear(attachment.format, (_attachment$clearValu = attachment.clearValue) !== null && _attachment$clearValu !== void 0 ? _attachment$clearValu : [0, 0, 0, 0])
+    });
+  });
+  return Object.freeze({
+    name: (_options$name = options.name) !== null && _options$name !== void 0 ? _options$name : 'AirMRT',
+    width,
+    height,
+    scale,
+    samples,
+    sampleFallback,
+    depthFormat,
+    colors: Object.freeze(colors)
+  });
+}
+
+const activeCommands = new WeakMap();
+function release(owned) {
+  const failures = [];
+  for (const resource of owned.splice(0).reverse()) {
+    try {
+      resource.destroy();
+    } catch (error) {
+      failures.push(error);
+    }
+  }
+  return failures;
+}
+class AirMRTTarget {
+  constructor(options) {
+    var _director$root;
+    this.device = void 0;
+    this.configuration = void 0;
+    this.clearColors = void 0;
+    this.renderArea = new Rect$1();
+    this.allocation = null;
+    this.views = [];
+    this.bindings = new Set();
+    this.active = null;
+    this.disposed = false;
+    this.width = 0;
+    this.height = 0;
+    this.samples = 1;
+    this.generation = 0;
+    this.configuration = normalizeMRTOptions(options);
+    this.clearColors = this.configuration.colors.map(attachment => {
+      const value = attachment.clearValue;
+      return new Color$1(value[0], value[1], value[2], value[3]);
+    });
+    const device = (_director$root = director.root) == null ? void 0 : _director$root.device;
+    if (!device || ![API.WEBGL2, API.WEBGPU].includes(device.gfxAPI)) throw mrtError('AIR_E_MRT_DEVICE', 'Await createAirApp() with WebGL2 or WebGPU first');
+    this.device = device;
+    const colors = this.configuration.colors;
+    if (colors.length > device.capabilities.maxColorRenderTargets) throw mrtError('AIR_E_MRT_LIMIT', 'Attachment count exceeds the device limit');
+    for (const [index, attachment] of colors.entries()) {
+      const features = device.getFormatFeatures(attachment.format);
+      if (!(features & FormatFeatureBit.RENDER_TARGET) || !(features & FormatFeatureBit.SAMPLED_TEXTURE)) throw mrtError('AIR_E_MRT_FORMAT', `Attachment ${index} is not renderable and sampled on this device`);
+      if (attachment.filter === 'linear' && !(features & FormatFeatureBit.LINEAR_FILTER)) throw mrtError('AIR_E_MRT_FILTER', `Attachment ${index} does not support linear filtering`);
+    }
+    if (device.gfxAPI === API.WEBGPU) {
+      var _nativeDevice, _limits$maxColorAttac;
+      const limits = (_nativeDevice = device.nativeDevice) == null ? void 0 : _nativeDevice.limits;
+      const budget = (_limits$maxColorAttac = limits == null ? void 0 : limits.maxColorAttachmentBytesPerSample) !== null && _limits$maxColorAttac !== void 0 ? _limits$maxColorAttac : 32;
+      const cost = colors.reduce((sum, attachment) => sum + ([Format.RGBA8, Format.SRGB8_A8].includes(attachment.format) ? 8 : FormatInfos[attachment.format].size), 0);
+      if (cost > budget) throw mrtError('AIR_E_MRT_COLOR_BUDGET', 'Attachment formats exceed the native per-sample color budget');
+    }
+    if (this.configuration.depthFormat !== Format.UNKNOWN && !(device.getFormatFeatures(this.configuration.depthFormat) & FormatFeatureBit.RENDER_TARGET)) throw mrtError('AIR_E_MRT_DEPTH', 'Depth format is not renderable on this device');
+    this.resize(options.width, options.height);
+    try {
+      colors.forEach((attachment, index) => {
+        const view = new AttachmentView(() => this.current().readable[index], attachment.format, attachment.filter);
+        view.updateSize(this.width, this.height);
+        this.views.push(view);
+      });
+    } catch (cause) {
+      try {
+        this.dispose();
+      } catch (cleanup) {
+        throw Object.assign(mrtError('AIR_E_MRT_ALLOCATION_CLEANUP', 'View creation and cleanup failed', cause), {
+          cleanup
+        });
+      }
+      throw cause;
+    }
+  }
+  current() {
+    if (this.disposed || !this.allocation) throw mrtError('AIR_E_MRT_DISPOSED', 'The MRT target is disposed');
+    return this.allocation;
+  }
+  get info() {
+    return Object.freeze({
+      name: this.configuration.name,
+      backend: this.device.gfxAPI === API.WEBGPU ? 'webgpu' : 'webgl2',
+      width: this.width,
+      height: this.height,
+      requestedSamples: this.configuration.samples,
+      samples: this.samples,
+      scale: this.configuration.scale,
+      generation: this.generation,
+      disposed: this.disposed,
+      colorAttachments: this.configuration.colors,
+      depthFormat: this.configuration.depthFormat
+    });
+  }
+  get textures() {
+    return this.current().readable;
+  }
+  get renderTextures() {
+    return this.current().draw;
+  }
+  get textureViews() {
+    this.current();
+    return this.views.slice();
+  }
+  get depthTexture() {
+    return this.current().depth;
+  }
+  get framebuffer() {
+    return this.current().framebuffer;
+  }
+  get renderPass() {
+    return this.current().pass;
+  }
+  allocate(width, height, samples) {
+    const owned = [];
+    const own = resource => {
+      owned.push(resource);
+      return resource;
+    };
+    try {
+      const draw = this.configuration.colors.map(attachment => {
+        const info = new TextureInfo(TextureType.TEX2D, TextureUsageBit.COLOR_ATTACHMENT | TextureUsageBit.SAMPLED | TextureUsageBit.TRANSFER_SRC | TextureUsageBit.TRANSFER_DST, attachment.format, width, height);
+        info.samples = samples;
+        return own(this.device.createTexture(info));
+      });
+      const readable = samples === 1 ? draw : this.configuration.colors.map(attachment => own(this.device.createTexture(new TextureInfo(TextureType.TEX2D, TextureUsageBit.COLOR_ATTACHMENT | TextureUsageBit.SAMPLED | TextureUsageBit.TRANSFER_SRC | TextureUsageBit.TRANSFER_DST, attachment.format, width, height))));
+      let depth = null;
+      if (this.configuration.depthFormat !== Format.UNKNOWN) {
+        const info = new TextureInfo(TextureType.TEX2D, TextureUsageBit.DEPTH_STENCIL_ATTACHMENT | TextureUsageBit.SAMPLED, this.configuration.depthFormat, width, height);
+        info.samples = samples;
+        depth = own(this.device.createTexture(info));
+      }
+      const createPass = forceLoad => own(this.device.createRenderPass(new RenderPassInfo(this.configuration.colors.map(attachment => new ColorAttachment(attachment.format, samples, forceLoad ? LoadOp.LOAD : attachment.loadOp, attachment.storeOp)), new DepthStencilAttachment(this.configuration.depthFormat, samples, forceLoad ? LoadOp.LOAD : LoadOp.CLEAR, StoreOp.STORE, forceLoad ? LoadOp.LOAD : LoadOp.CLEAR, StoreOp.STORE))));
+      const pass = createPass(false),
+        loadPass = createPass(true);
+      const framebuffer = own(this.device.createFramebuffer(new FramebufferInfo(pass, draw, depth)));
+      return {
+        width,
+        height,
+        samples,
+        draw: Object.freeze(draw.slice()),
+        readable: Object.freeze(readable.slice()),
+        depth,
+        pass,
+        loadPass,
+        framebuffer,
+        owned
+      };
+    } catch (cause) {
+      const failures = release(owned);
+      if (failures.length) throw Object.assign(mrtError('AIR_E_MRT_ALLOCATION_CLEANUP', 'Allocation failed and cleanup was incomplete', cause), {
+        failures
+      });
+      throw cause;
+    }
+  }
+  resize(referenceWidth, referenceHeight) {
+    if (this.disposed) throw mrtError('AIR_E_MRT_DISPOSED', 'The MRT target is disposed');
+    if (this.active) throw mrtError('AIR_E_MRT_ACTIVE_PASS', 'End the borrowed command pass before resizing');
+    const width = Math.max(1, Math.floor(mrtDimension(referenceWidth, 'width') * this.configuration.scale));
+    const height = Math.max(1, Math.floor(mrtDimension(referenceHeight, 'height') * this.configuration.scale));
+    if (width > this.device.capabilities.maxTextureSize || height > this.device.capabilities.maxTextureSize) throw mrtError('AIR_E_MRT_SIZE', 'Scaled target exceeds the device texture limit');
+    if (width === this.width && height === this.height) return;
+    const requested = this.configuration.samples;
+    const attempts = this.configuration.sampleFallback === 'lower' ? [8, 4, 2, 1].filter(n => n <= requested) : [requested];
+    let next, last;
+    for (const count of attempts) {
+      if (this.device.gfxAPI === API.WEBGPU && count !== 1 && count !== 4) {
+        last = mrtError('AIR_E_MRT_SAMPLES', `WebGPU cannot use ${count} samples`);
+        continue;
+      }
+      try {
+        next = this.allocate(width, height, count);
+        break;
+      } catch (cause) {
+        last = cause;
+        const code = cause == null ? void 0 : cause.code;
+        if (this.configuration.sampleFallback !== 'lower' || !['WEBGL2_TEXTURE_SAMPLES_UNSUPPORTED', 'WEBGPU_MULTISAMPLE_FORMAT_UNSUPPORTED'].includes(code || '')) throw cause;
+      }
+    }
+    if (!next) throw last;
+    const previous = this.allocation;
+    this.allocation = next;
+    this.width = width;
+    this.height = height;
+    this.renderArea = new Rect$1(0, 0, width, height);
+    this.samples = next.samples;
+    ++this.generation;
+    this.views.forEach(view => view.updateSize(width, height));
+    const failures = [];
+    for (const binding of this.bindings) {
+      try {
+        binding.rebind();
+      } catch (error) {
+        failures.push(error);
+      }
+    }
+    if (previous) failures.push(...release(previous.owned));
+    if (failures.length) throw Object.assign(mrtError('AIR_E_MRT_RESIZE_CLEANUP', 'New target committed but rebinding/old resource cleanup failed'), {
+      failures
+    });
+  }
+  beginPass(command, options = {}) {
+    var _options$clearDepth, _options$clearStencil;
+    const allocation = this.current();
+    if (!command || command.type !== CommandBufferType.PRIMARY) throw mrtError('AIR_E_MRT_COMMAND', 'Use an initialized primary GFX command buffer');
+    if (this.active || activeCommands.has(command)) throw mrtError('AIR_E_MRT_ACTIVE_PASS', 'An MRT pass is already open');
+    for (const key of Object.keys(options)) if (!['clear', 'clearValues', 'clearDepth', 'clearStencil'].includes(key)) throw mrtError('AIR_E_MRT_OPTION', `Unknown pass option ${key}`);
+    if (options.clear !== undefined && typeof options.clear !== 'boolean') throw mrtError('AIR_E_MRT_OPTION', 'clear must be boolean');
+    const values = options.clearValues;
+    if (values !== undefined && (!Array.isArray(values) || values.length !== this.configuration.colors.length)) throw mrtError('AIR_E_MRT_CLEAR_VALUE', 'Provide one clear value per attachment');
+    const clears = values ? values.map((value, index) => {
+      const color = mrtClear(this.configuration.colors[index].format, value);
+      return new Color$1(color[0], color[1], color[2], color[3]);
+    }) : this.clearColors;
+    const depth = (_options$clearDepth = options.clearDepth) !== null && _options$clearDepth !== void 0 ? _options$clearDepth : 1,
+      stencil = (_options$clearStencil = options.clearStencil) !== null && _options$clearStencil !== void 0 ? _options$clearStencil : 0;
+    if (!Number.isFinite(depth) || depth < 0 || depth > 1 || !Number.isInteger(stencil) || stencil < 0 || stencil > 255) throw mrtError('AIR_E_MRT_CLEAR_VALUE', 'Invalid depth/stencil clear');
+    command.beginRenderPass(options.clear === false ? allocation.loadPass : allocation.pass, allocation.framebuffer, this.renderArea, clears, depth, stencil);
+    this.active = command;
+    activeCommands.set(command, this);
+  }
+  endPass(command) {
+    const allocation = this.current();
+    if (this.active !== command || activeCommands.get(command) !== this) throw mrtError('AIR_E_MRT_ACTIVE_PASS', 'End the matching command pass');
+    try {
+      command.endRenderPass();
+      if (allocation.samples > 1) {
+        const blit = new TextureBlit();
+        blit.srcExtent.width = blit.dstExtent.width = allocation.width;
+        blit.srcExtent.height = blit.dstExtent.height = allocation.height;
+        for (let i = 0; i < allocation.draw.length; ++i) if (this.configuration.colors[i].storeOp === StoreOp.STORE) command.blitTexture(allocation.draw[i], allocation.readable[i], [blit], Filter.POINT);
+      }
+    } finally {
+      this.active = null;
+      activeCommands.delete(command);
+    }
+  }
+  bindTexture(material, property, index = 0, passIdx) {
+    this.current();
+    if (!Number.isSafeInteger(index) || !this.views[index]) throw mrtError('AIR_E_MRT_ATTACHMENT', 'Invalid attachment index');
+    if ([Format.R32UI, Format.R32I].includes(this.configuration.colors[index].format)) throw mrtError('AIR_E_MRT_BINDING', 'Integer attachments require native integer sampler descriptors, not sampler2D');
+    const value = bindAttachmentTexture(material, property, this.views[index], 'AIR_E_MRT_BINDING', passIdx);
+    const binding = {
+      rebind: value.rebind,
+      unbind: () => {
+        if (!this.bindings.delete(binding)) return;
+        value.unbind();
+      }
+    };
+    this.bindings.add(binding);
+    return binding.unbind;
+  }
+  dispose() {
+    if (this.disposed) return;
+    if (this.active) throw mrtError('AIR_E_MRT_ACTIVE_PASS', 'End the borrowed command pass before disposal');
+    this.disposed = true;
+    const failures = [];
+    for (const binding of [...this.bindings]) {
+      try {
+        binding.unbind();
+      } catch (error) {
+        failures.push(error);
+      }
+    }
+    for (const view of this.views) {
+      try {
+        view.destroy();
+      } catch (error) {
+        failures.push(error);
+      }
+    }
+    if (this.allocation) failures.push(...release(this.allocation.owned));
+    this.allocation = null;
+    if (failures.length) throw Object.assign(mrtError('AIR_E_MRT_DISPOSE', 'Resource cleanup was incomplete'), {
+      failures
+    });
+  }
+}
+function createAirMRTTarget(options) {
+  return new AirMRTTarget(options);
+}
+
 const VERT_BODY = `in vec3 a_position;
 in vec2 a_texCoord;
 out highp vec2 v_uv;
@@ -168057,7 +169914,7 @@ ${samplers.map((sampler, index) => `layout(set = 1, binding = ${index + 1}) unif
 out vec4 cc_FragColor;
 ${body}
 `;
-  const vert4 = `precision highp float;\n${CCCAMERA}\n${CCLOCAL}\n${VERT_BODY}`;
+  const vert4 = `precision highp float;\n${VERT_BODY}`;
   const sources = {
     glsl3: {
       vert: toGlsl3(vert4),
@@ -168100,32 +169957,17 @@ ${body}
       hash,
       builtins: {
         statistics: {
-          CC_EFFECT_USED_VERTEX_UNIFORM_VECTORS: 47,
+          CC_EFFECT_USED_VERTEX_UNIFORM_VECTORS: 0,
           CC_EFFECT_USED_FRAGMENT_UNIFORM_VECTORS: constants.length + samplers.length * 4
         },
         globals: {
-          blocks: [{
-            name: 'CCGlobal',
-            defines: [],
-            set: 0,
-            binding: 0
-          }, {
-            name: 'CCCamera',
-            defines: [],
-            set: 0,
-            binding: 1
-          }],
+          blocks: [],
           samplerTextures: [],
           buffers: [],
           images: []
         },
         locals: {
-          blocks: [{
-            name: 'CCLocal',
-            defines: [],
-            set: 2,
-            binding: 0
-          }],
+          blocks: [],
           samplerTextures: [],
           buffers: [],
           images: []
@@ -175182,6 +177024,675 @@ function createBox3DKinematicTarget(body) {
   return source().target(body);
 }
 
+function wrapWorker(worker, release) {
+  let stopped = false;
+  return {
+    postMessage(message, transfer = []) {
+      if (stopped) throw new Error('Worker has been terminated');
+      worker.postMessage(message, transfer);
+    },
+    onMessage(listener) {
+      if (!stopped) worker.onmessage = event => listener(event.data);
+    },
+    onError(listener) {
+      if (!stopped) {
+        worker.onerror = listener;
+        worker.onmessageerror = () => listener(new Error('Worker message could not be deserialized'));
+      }
+    },
+    terminate() {
+      if (stopped) return;
+      stopped = true;
+      worker.onmessage = worker.onerror = worker.onmessageerror = null;
+      try {
+        worker.terminate();
+      } finally {
+        if (release) release();
+      }
+    }
+  };
+}
+function bootstrap(task) {
+  const scope = self;
+  function collect(value) {
+    try {
+      const buffers = new Set();
+      const seen = new Set();
+      const stack = [{
+        value,
+        depth: 0
+      }];
+      while (stack.length) {
+        const item = stack.pop();
+        const current = item.value;
+        if (!current || typeof current !== 'object' || seen.has(current)) continue;
+        seen.add(current);
+        if (current instanceof ArrayBuffer) {
+          buffers.add(current);
+        } else if (ArrayBuffer.isView(current)) {
+          if (current.buffer instanceof ArrayBuffer) buffers.add(current.buffer);
+        } else if (item.depth < 64) {
+          for (const key of Object.keys(current)) {
+            stack.push({
+              value: current[key],
+              depth: item.depth + 1
+            });
+          }
+        }
+      }
+      return Array.from(buffers);
+    } catch {
+      return undefined;
+    }
+  }
+  function failure(id, error) {
+    let message = 'Worker task failed';
+    try {
+      message = String(error && error.message ? error.message : error);
+    } catch {}
+    scope.postMessage({
+      id,
+      ok: false,
+      error: message
+    });
+  }
+  scope.onmessage = event => {
+    const {
+      id,
+      args
+    } = event.data;
+    const success = value => {
+      try {
+        scope.postMessage({
+          id,
+          ok: true,
+          value
+        }, collect(value));
+      } catch (error) {
+        failure(id, error);
+      }
+    };
+    try {
+      const result = task(...(Array.isArray(args) ? args : []));
+      if (result && typeof result.then === 'function') {
+        Promise.resolve(result).then(success, error => failure(id, error));
+      } else {
+        success(result);
+      }
+    } catch (error) {
+      failure(id, error);
+    }
+  };
+}
+function createWorkerBackend() {
+  const available = typeof Worker === 'function';
+  const functions = available && typeof Blob === 'function' && typeof URL !== 'undefined' && typeof URL.createObjectURL === 'function' && typeof URL.revokeObjectURL === 'function';
+  const reason = available ? '' : 'no worker backend on this platform: browser Worker is unavailable';
+  const diagnose = path => ({
+    ready: available && typeof path === 'string' && path.length > 0,
+    version: available && typeof path === 'string' && path.length > 0 ? 1 : 0,
+    reason: reason || (typeof path === 'string' && path.length > 0 ? '' : 'Worker script path is empty')
+  });
+  const backend = {
+    concurrencyLimit: available ? Infinity : 0,
+    supportsTransfer: available,
+    supportsSharedArrayBuffer: available && typeof SharedArrayBuffer !== 'undefined' && globalThis.crossOriginIsolated === true,
+    supportsFunctionWorker: functions,
+    supportsStandardWorker: false,
+    capabilityReason: reason,
+    hardwareConcurrency: typeof navigator !== 'undefined' && Number.isFinite(navigator.hardwareConcurrency) && navigator.hardwareConcurrency > 0 ? navigator.hardwareConcurrency : 1,
+    scriptFallback: null,
+    scriptFailureHint: 'Use a same-origin browser worker URL, allow it in CSP, and implement the WorkerPool protocol.',
+    diagnose,
+    resolveScriptWorker(path) {
+      const diagnosis = diagnose(path);
+      return {
+        backend: diagnosis.ready ? backend : null,
+        diagnosis,
+        warnOnFailure: !diagnosis.ready
+      };
+    },
+    createScriptWorker(path) {
+      const diagnosis = diagnose(path);
+      if (!diagnosis.ready) throw new Error(diagnosis.reason);
+      return wrapWorker(new Worker(path));
+    },
+    createFunctionWorker(fn) {
+      if (!functions) return null;
+      const source = Function.prototype.toString.call(fn);
+      const url = URL.createObjectURL(new Blob(['(' + bootstrap.toString() + ')((' + source + '));'], {
+        type: 'text/javascript'
+      }));
+      try {
+        return wrapWorker(new Worker(url), () => URL.revokeObjectURL(url));
+      } catch (error) {
+        URL.revokeObjectURL(url);
+        throw error;
+      }
+    }
+  };
+  return backend;
+}
+
+let backend;
+function getWorkerBackend() {
+  return backend || (backend = createWorkerBackend());
+}
+function resetWorkerBackendCache() {
+  backend = undefined;
+}
+function getWorkerCapabilities() {
+  const current = getWorkerBackend();
+  return {
+    supportsStandardWorker: current.supportsStandardWorker,
+    available: current.concurrencyLimit > 0,
+    parallel: current.concurrencyLimit > 1,
+    concurrencyLimit: current.concurrencyLimit,
+    supportsTransfer: current.supportsTransfer,
+    supportsSharedArrayBuffer: current.supportsSharedArrayBuffer,
+    supportsFunctionWorker: current.supportsFunctionWorker,
+    reason: current.capabilityReason
+  };
+}
+function isWorkerSupported() {
+  return getWorkerBackend().supportsFunctionWorker;
+}
+function getOptimalWorkerCount() {
+  const limit = getWorkerBackend().concurrencyLimit;
+  if (limit === 0) {
+    return 1;
+  }
+  if (limit !== Infinity) {
+    return limit;
+  }
+  const hc = getWorkerBackend().hardwareConcurrency;
+  return Math.max(1, Math.floor(hc) - 1);
+}
+function isSupportStandardWorker() {
+  return getWorkerBackend().supportsStandardWorker;
+}
+function checkWorkerScript(path) {
+  return getWorkerBackend().diagnose(path);
+}
+function getWorkerConcurrencyLimit() {
+  return getWorkerBackend().concurrencyLimit;
+}
+function createWorkerFromPath(path) {
+  if (typeof path !== 'string' || !path) {
+    throw new TypeError(getError(16515));
+  }
+  return getWorkerBackend().createScriptWorker(path);
+}
+function createWorker(pathOrFn) {
+  if (typeof pathOrFn === 'function') {
+    const w = getWorkerBackend().createFunctionWorker(pathOrFn);
+    if (!w) {
+      throw new Error(getError(16516));
+    }
+    return w;
+  }
+  return createWorkerFromPath(pathOrFn);
+}
+
+const DEGRADE_AFTER_FAILURES = 1;
+class WorkerPool {
+  constructor(fnOrScript, options) {
+    this._fn = void 0;
+    this._script = void 0;
+    this._fallback = void 0;
+    this._idleReleaseAfter = void 0;
+    this._timeout = void 0;
+    this._explicitMax = void 0;
+    this._maxWorkers = void 0;
+    this._executionMode = void 0;
+    this._activeBackend = null;
+    this._backendGeneration = 0;
+    this._scriptFailureHint = '';
+    this._backendReason = void 0;
+    this._workers = [];
+    this._queue = [];
+    this._released = false;
+    this._draining = false;
+    this._taskId = 0;
+    this._infraFailures = 0;
+    this._degraded = false;
+    this._degradeWarned = false;
+    this._constructionWarned = false;
+    const isScriptMode = typeof fnOrScript === 'string';
+    if (isScriptMode) {
+      if (!fnOrScript) {
+        throw new TypeError(getError(16500));
+      }
+      this._script = fnOrScript;
+      this._fn = null;
+    } else {
+      if (typeof fnOrScript !== 'function') {
+        throw new TypeError(getError(16501));
+      }
+      this._fn = fnOrScript;
+      this._script = null;
+    }
+    const rawFallback = options ? options.fallback : undefined;
+    this._fallback = typeof rawFallback === 'function' ? rawFallback : null;
+    const rawMax = options ? options.maxWorkers : undefined;
+    this._explicitMax = typeof rawMax === 'number' && Number.isFinite(rawMax) && rawMax >= 1 ? Math.floor(rawMax) : 0;
+    const rawTimeout = options ? options.timeout : undefined;
+    this._timeout = typeof rawTimeout === 'number' && Number.isFinite(rawTimeout) && rawTimeout > 0 ? rawTimeout : 0;
+    this._idleReleaseAfter = options && options.idleReleaseAfter !== undefined ? options.idleReleaseAfter : 1000;
+    this._executionMode = 'none';
+    this._backendReason = '';
+    this._maxWorkers = 0;
+    this._resolveBackend();
+  }
+  _resolveBackend() {
+    const platform = getWorkerBackend();
+    const explicitMax = this._explicitMax;
+    const desired = explicitMax > 0 ? explicitMax : getOptimalWorkerCount();
+    this._activeBackend = null;
+    this._scriptFailureHint = platform.scriptFailureHint;
+    this._backendReason = '';
+    if (this._script) {
+      const resolved = platform.resolveScriptWorker(this._script);
+      if (resolved.backend) {
+        this._executionMode = 'worker';
+        this._activeBackend = resolved.backend;
+        this._scriptFailureHint = resolved.backend.scriptFailureHint;
+        this._maxWorkers = Math.min(desired, resolved.backend.concurrencyLimit);
+      } else if (this._fallback) {
+        this._executionMode = 'sync';
+        this._maxWorkers = 1;
+        this._warnConstructionDegrade(resolved.warnOnFailure, resolved.diagnosis.reason);
+      } else {
+        this._executionMode = 'none';
+        this._maxWorkers = 0;
+        this._backendReason = getError(16504, this._script, resolved.diagnosis.reason);
+        this._warnConstructionDegrade(resolved.warnOnFailure, resolved.diagnosis.reason);
+      }
+    } else if (platform.supportsFunctionWorker) {
+      this._executionMode = 'worker';
+      this._activeBackend = platform;
+      this._maxWorkers = Math.min(explicitMax > 0 ? explicitMax : 1, platform.concurrencyLimit);
+    } else {
+      this._executionMode = 'sync';
+      this._maxWorkers = 1;
+    }
+  }
+  recheck() {
+    if (this._released) {
+      return this.backend;
+    }
+    this._infraFailures = 0;
+    this._degraded = false;
+    resetWorkerBackendCache();
+    this._resolveBackend();
+    this._backendGeneration++;
+    this._retireWorkers();
+    this._drain();
+    return this.backend;
+  }
+  _retireWorkers() {
+    for (let i = this._workers.length - 1; i >= 0; i--) {
+      const worker = this._workers[i];
+      worker.retired = true;
+      if (!worker.busy) {
+        this._workers.splice(i, 1);
+        worker.dispose();
+      }
+    }
+  }
+  get backend() {
+    return this._executionMode;
+  }
+  get concurrency() {
+    return this._maxWorkers;
+  }
+  run(args, transfer) {
+    return new Promise((resolve, reject) => {
+      if (this._released) {
+        reject(new Error(getError(16502)));
+        return;
+      }
+      if (this._executionMode === 'none') {
+        reject(new Error(this._backendReason || getError(16503)));
+        return;
+      }
+      this._queue.push({
+        args: args || [],
+        transfer: transfer || [],
+        resolve: value => resolve(value),
+        reject
+      });
+      this._drain();
+    });
+  }
+  terminate() {
+    if (this._released) {
+      return;
+    }
+    this._released = true;
+    const error = new Error(getError(16502));
+    for (const task of this._queue) {
+      task.reject(error);
+    }
+    this._queue.length = 0;
+    for (const w of this._workers) {
+      w.dispose();
+    }
+    this._workers.length = 0;
+  }
+  _drain() {
+    if (this._released || this._draining) return;
+    this._draining = true;
+    try {
+      if (this._executionMode === 'none') {
+        const pending = this._queue.splice(0);
+        for (const task of pending) task.reject(new Error(this._backendReason));
+        return;
+      }
+      while (this._queue.length > 0) {
+        let worker = this._findIdleWorker();
+        if (!worker && this._workers.length < this._maxWorkers) {
+          try {
+            worker = this._spawnWorker();
+          } catch (err) {
+            const failed = this._queue.shift();
+            this._onInfraFailure(failed || null, err);
+            continue;
+          }
+          if (worker) {
+            this._workers.push(worker);
+          }
+        }
+        if (!worker) {
+          return;
+        }
+        const task = this._queue.shift();
+        if (task) {
+          this._dispatch(worker, task);
+        }
+      }
+    } finally {
+      this._draining = false;
+    }
+  }
+  _findIdleWorker() {
+    for (const w of this._workers) {
+      if (!w.busy && !w.retired) {
+        return w;
+      }
+    }
+    return null;
+  }
+  _spawnWorker() {
+    const generation = this._backendGeneration;
+    let worker = null;
+    let fn = this._fn;
+    if (this._script) {
+      if (this._executionMode === 'worker') {
+        worker = this._activeBackend.createScriptWorker(this._script);
+      } else {
+        fn = this._fallback;
+      }
+    } else if (this._executionMode === 'worker') {
+      worker = this._activeBackend.createFunctionWorker(this._fn);
+      if (!worker) {
+        this._executionMode = 'sync';
+        this._maxWorkers = 1;
+        this._retireWorkers();
+      }
+    }
+    const pooled = new PooledWorker(worker, fn, this._idleReleaseAfter, this._onWorkerIdle.bind(this), this._timeout);
+    pooled.onInfraFailure = (t, err) => {
+      if (generation !== this._backendGeneration) t.reject(err);else this._onInfraFailure(t, err);
+    };
+    return pooled;
+  }
+  _dispatch(worker, task) {
+    var _this$_activeBackend;
+    worker.busy = true;
+    worker.cancelIdleTimer();
+    const id = ++this._taskId;
+    worker.onComplete = () => {
+      worker.busy = false;
+      if (worker.retired) this._onWorkerIdle(worker);else this._drain();
+    };
+    task.transferred = !worker.isInline && !!((_this$_activeBackend = this._activeBackend) != null && _this$_activeBackend.supportsTransfer) && task.transfer.length > 0;
+    worker.execute(id, task);
+  }
+  _onWorkerIdle(worker) {
+    if (this._released) {
+      return;
+    }
+    if (worker.busy) {
+      return;
+    }
+    const idx = this._workers.indexOf(worker);
+    if (idx < 0) {
+      return;
+    }
+    this._workers.splice(idx, 1);
+    worker.dispose();
+    this._drain();
+  }
+  _onInfraFailure(task, error) {
+    if (!this._script) {
+      if (task) {
+        task.reject(error);
+      }
+      return;
+    }
+    this._infraFailures++;
+    if (!this._degraded && this._infraFailures >= DEGRADE_AFTER_FAILURES) {
+      this._degraded = true;
+      if (this._fallback) {
+        this._executionMode = 'sync';
+        this._backendReason = '';
+        this._maxWorkers = 1;
+        this._retireWorkers();
+      }
+      this._warnDegrade(error);
+    }
+    if (!task) {
+      return;
+    }
+    if (this._executionMode === 'sync' && this._fallback && !task.transferred) {
+      this._queue.unshift(task);
+    } else {
+      task.reject(error);
+    }
+  }
+  _warnDegrade(error) {
+    if (this._degradeWarned) {
+      return;
+    }
+    this._degradeWarned = true;
+    const script = this._script || '(function)';
+    warnID(this._fallback ? 16505 : 16506, script, error.message, this._scriptFailureHint);
+  }
+  _warnConstructionDegrade(warnOnFailure, reason) {
+    if (!warnOnFailure || this._constructionWarned) {
+      return;
+    }
+    this._constructionWarned = true;
+    warnID(this._fallback ? 16507 : 16508, this._script || '(function)', reason, this._scriptFailureHint);
+  }
+}
+class PooledWorker {
+  get isInline() {
+    return this._worker === null;
+  }
+  constructor(worker, fn, idleReleaseAfter, onIdle, timeout = 0) {
+    this.busy = false;
+    this.retired = false;
+    this.onComplete = null;
+    this.onInfraFailure = null;
+    this._worker = void 0;
+    this._fn = void 0;
+    this._idleReleaseAfter = void 0;
+    this._timeout = void 0;
+    this._onIdle = void 0;
+    this._current = null;
+    this._currentId = -1;
+    this._idleTimer = null;
+    this._timeoutTimer = null;
+    this._disposed = false;
+    this._failed = false;
+    this._worker = worker;
+    this._fn = fn;
+    this._idleReleaseAfter = idleReleaseAfter;
+    this._onIdle = onIdle;
+    this._timeout = timeout > 0 ? timeout : 0;
+    if (worker) {
+      worker.onMessage(reply => {
+        this._onMessage(reply);
+      });
+      worker.onError(e => {
+        this._failed = true;
+        if (this._current) {
+          this._settle(null, new Error(e && e.message ? String(e.message) : getError(16509)));
+        } else {
+          this._evict();
+        }
+      });
+    }
+  }
+  execute(id, task) {
+    this._current = task;
+    this._currentId = id;
+    if (!this._worker) {
+      if (!this._fn) {
+        this._settle(null, new Error(getError(16510)));
+        return;
+      }
+      try {
+        const value = this._fn(...task.args);
+        this._settle(value, null);
+      } catch (err) {
+        this._settle(null, err);
+      }
+      return;
+    }
+    this.armTimeout();
+    try {
+      this._worker.postMessage({
+        id,
+        args: task.args
+      }, task.transfer);
+    } catch (err) {
+      this._failed = true;
+      this._settle(null, err instanceof Error ? err : new Error(String(err)));
+    }
+  }
+  armTimeout() {
+    if (this._timeout <= 0) {
+      return;
+    }
+    this.cancelTimeoutTimer();
+    const id = this._currentId;
+    this._timeoutTimer = setTimeout(() => {
+      this._timeoutTimer = null;
+      if (!this._current || this._currentId !== id) {
+        return;
+      }
+      this._failed = true;
+      this._settle(null, new Error(getError(16511, this._timeout)));
+    }, this._timeout);
+  }
+  cancelTimeoutTimer() {
+    if (this._timeoutTimer !== null) {
+      clearTimeout(this._timeoutTimer);
+      this._timeoutTimer = null;
+    }
+  }
+  cancelIdleTimer() {
+    if (this._idleTimer !== null) {
+      clearTimeout(this._idleTimer);
+      this._idleTimer = null;
+    }
+  }
+  dispose() {
+    if (this._disposed) {
+      return;
+    }
+    this._disposed = true;
+    this.cancelIdleTimer();
+    this.cancelTimeoutTimer();
+    if (this._worker) {
+      this._worker.terminate();
+    }
+    if (this._current) {
+      this._current.reject(new Error(getError(16512)));
+      this._current = null;
+      this._currentId = -1;
+    }
+    this.onComplete = null;
+  }
+  _onMessage(reply) {
+    if (!this._current) {
+      return;
+    }
+    if (!reply || typeof reply !== 'object' || typeof reply.id !== 'number' || typeof reply.ok !== 'boolean') {
+      this._failed = true;
+      this._settle(null, new Error(getError(16513)));
+      return;
+    }
+    if (reply.id !== this._currentId) {
+      return;
+    }
+    if (reply.ok) {
+      this._settle(reply.value, null);
+    } else {
+      this._settle(null, new Error(reply.error || getError(16514)));
+    }
+  }
+  _settle(value, error) {
+    const task = this._current;
+    if (!task) {
+      return;
+    }
+    this._current = null;
+    this._currentId = -1;
+    this.cancelTimeoutTimer();
+    if (error) {
+      if (this._failed && this.onInfraFailure) {
+        this.onInfraFailure(task, error);
+      } else {
+        task.reject(error);
+      }
+    } else {
+      task.resolve(value);
+    }
+    if (this._failed) {
+      this._evict();
+      return;
+    }
+    if (this._idleReleaseAfter > 0 && !this._disposed) {
+      this.cancelIdleTimer();
+      this._idleTimer = setTimeout(() => {
+        this._idleTimer = null;
+        this._onIdle(this);
+      }, this._idleReleaseAfter);
+    }
+    if (this.onComplete) {
+      const cb = this.onComplete;
+      this.onComplete = null;
+      cb();
+    }
+  }
+  _evict() {
+    this.onComplete = null;
+    this.busy = false;
+    this._onIdle(this);
+  }
+}
+
+const wasm = {
+  instantiateWasm,
+  fetchBuffer,
+  fetchUrl,
+  ensureWasmModuleReady
+};
+
 class WebGL2DescriptorSet extends DescriptorSet {
   constructor() {
     super();
@@ -175325,6 +177836,7 @@ class WebGL2Buffer extends Buffer {
   constructor() {
     super();
     this._gpuBuffer = null;
+    this._lastFailedSize = 0;
   }
   getGpuBuffer() {
     return this._gpuBuffer;
@@ -175389,14 +177901,20 @@ class WebGL2Buffer extends Buffer {
     if (oldSize === size) {
       return;
     }
-    this._size = size;
-    this._count = this._size / this._stride;
     if (this._gpuBuffer) {
       this._gpuBuffer.size = size;
-      if (size > 0) {
-        WebGL2CmdFuncResizeBuffer(WebGL2DeviceManager.instance, this._gpuBuffer);
-        WebGL2DeviceManager.instance.memoryStatus.bufferSize -= oldSize;
-        WebGL2DeviceManager.instance.memoryStatus.bufferSize += size;
+      WebGL2CmdFuncResizeBuffer(WebGL2DeviceManager.instance, this._gpuBuffer);
+      this._size = this._gpuBuffer.size;
+      this._count = this._size / this._stride;
+      WebGL2DeviceManager.instance.memoryStatus.bufferSize -= oldSize;
+      WebGL2DeviceManager.instance.memoryStatus.bufferSize += this._size;
+      if (this._size !== size) {
+        if (this._lastFailedSize !== size) {
+          this._lastFailedSize = size;
+          warn(`WebGL2Buffer[${this.objectID}] (usage: ${this._usage}) resize failed to reach requested size: requested ${size} bytes, actual ${this._size} bytes.`);
+        }
+      } else {
+        this._lastFailedSize = 0;
       }
     }
   }
@@ -175956,7 +178474,7 @@ class WebGL2PrimaryCommandBuffer extends WebGL2CommandBuffer {
           textureBlit.srcExtent.height = currGPUFBO.height;
           textureBlit.dstExtent.width = currGPUFBO.width;
           textureBlit.dstExtent.height = currGPUFBO.height;
-          WebGL2CmdFuncBlitTexture(WebGL2DeviceManager.instance, colorView.gpuTexture, colorView.gpuTexture.resolveTex, [textureBlit], Filter.LINEAR);
+          WebGL2CmdFuncBlitTexture(WebGL2DeviceManager.instance, colorView.gpuTexture, colorView.gpuTexture.resolveTex, [textureBlit], Filter.POINT);
         }
       }
     }
@@ -176746,6 +179264,7 @@ class WebGL2Device extends Device {
     const glGetParameter = gl.getParameter.bind(gl);
     const caps = this._caps;
     caps.maxVertexAttributes = glGetParameter(WebGLConstants.MAX_VERTEX_ATTRIBS);
+    caps.maxColorRenderTargets = Math.min(glGetParameter(WebGLConstants.MAX_COLOR_ATTACHMENTS), glGetParameter(WebGLConstants.MAX_DRAW_BUFFERS));
     caps.maxVertexUniformVectors = glGetParameter(WebGLConstants.MAX_VERTEX_UNIFORM_VECTORS);
     if (systemInfo.os === OS.IOS) {
       const maxVertexUniformVectors = caps.maxVertexUniformVectors;
@@ -176904,11 +179423,13 @@ class WebGL2Device extends Device {
     return swapchain;
   }
   createBuffer(info) {
+    assertWebGL2ContextActive(this.gl);
     const buffer = new WebGL2Buffer();
     buffer.initialize(info);
     return buffer;
   }
   createTexture(info) {
+    assertWebGL2ContextActive(this.gl);
     const texture = new WebGL2Texture();
     texture.initialize(info);
     return texture;
@@ -176919,6 +179440,7 @@ class WebGL2Device extends Device {
     return descriptorSet;
   }
   createShader(info) {
+    assertWebGL2ContextActive(this.gl);
     const shader = new WebGL2Shader();
     shader.initialize(info);
     return shader;
@@ -177003,12 +179525,15 @@ class WebGL2Device extends Device {
     return this._bufferBarriers.get(hash);
   }
   copyBuffersToTexture(buffers, texture, regions) {
+    assertWebGL2ContextActive(this.gl);
     WebGL2CmdFuncCopyBuffersToTexture(this, buffers, texture.gpuTexture, regions);
   }
   copyTextureToBuffers(texture, buffers, regions) {
+    assertWebGL2ContextActive(this.gl);
     WebGL2CmdFuncCopyTextureToBuffers(this, texture.gpuTextureView, buffers, regions);
   }
   copyTexImagesToTexture(texImages, texture, regions) {
+    assertWebGL2ContextActive(this.gl);
     WebGL2CmdFuncCopyTexImagesToTexture(this, texImages, texture.gpuTexture, regions);
   }
 }
@@ -177043,7 +179568,10 @@ class EmptyBuffer extends Buffer {
     }
   }
   destroy() {}
-  resize(size) {}
+  resize(size) {
+    this._size = size;
+    this._count = this._size / this._stride;
+  }
   update(buffer, size) {}
 }
 
@@ -178441,5 +180969,5 @@ var legacy_rendering = /*#__PURE__*/Object.freeze({
 
 legacyCC.legacy_rendering = legacy_rendering;
 
-export { AIR_BUILD_DATE, AIR_BUILD_NUMBER, AIR_ICON_PLACEHOLDER, AIR_INSTANCE_ATTRIBUTES, AIR_REVISION, AIR_SCREEN_PASS_LAYER, AIR_VERSION, Acceleration, AirActionError, AirAppImpl, AirColorContractError, AirContentSizeFitter, AirGlyphIconLayer, AirGlyphText, AirPixelGrid, AirPixelPerfect, AirRenderTarget, AirTransmissionCapture, AirTypewriter, AirUIMesh, AlphaKey, AmbientInfo, AnimCurve, Animation$2 as Animation, AnimationClip, Animation$2 as AnimationComponent, AnimationManager, AnimationState$1 as AnimationState, Asset, AssetBank, AssetLibrary, AssetManager, AsyncDelegate, Atlas, AudioClip, AudioPCMDataView, AudioService, AudioSource, AudioSource as AudioSourceComponent, BASELINE_RATIO, BITMASK_TAG, Node$1 as BaseNode, BaseRenderData, SkinnedMeshBatchRenderer as BatchedSkinningModelComponent, BatchingUtility, Billboard, BitMask, BitmapFont, BlockInputEvents, BlockInputEvents as BlockInputEventsComponent, BloomStage, BoxCharacterController, BoxCollider, BoxCollider2D, BoxCollider as BoxColliderComponent, BufferAsset, BuiltinResMgr, Burst, Button, Button as ButtonComponent, CCBoolean, CCClass, CCFloat, CCInteger, CCLoader, CCObject, CCObjectFlags, CCString, CacheMode, CachedArray, CallbacksInvoker, Camera, Camera as CameraComponent, Canvas, Canvas as CanvasComponent, CapsuleCharacterController, CapsuleCollider, CapsuleCollider as CapsuleColliderComponent, CharacterController, CharacterControllerContact, CircleCollider2D, Collider, Collider2D, Collider as ColliderComponent, Color, ColorKey, ColorOvertimeModule, CompactValueTypeArray, Component, ConeCollider, ConfigurableConstraint, ConstantForce, Constraint, Contact2DType, CurveRange, CylinderCollider, CylinderCollider as CylinderColliderComponent, DEFAULT_OCTREE_DEPTH, DEFAULT_WORLD_MAX_POS, DEFAULT_WORLD_MIN_POS, DebugMode, DebugView, DeferredPipeline, Details, DirectionalLight, DirectionalLight as DirectionalLightComponent, Director, DirectorEvent, DistanceJoint2D, DynamicAtlasManager, EAxisDirection, ECollider2DType, EColliderType, EJoint2DType, ENUM_TAG, EPSILON$3 as EPSILON, EPhysics2DDrawFlags, EPhysicsDrawFlags, ERaycast2DType, ERigidBody2DType, ERigidBodyType, EXT_MESHOPT_COMPRESSION, EasingMethod, EditBox, EditBox as EditBoxComponent, EditorExtendable, EffectAsset, EmptyDevice, Enum, Event, EventAcceleration, EventGamepad, EventHMD, EventHandheld, EventHandle, EventHandler, EventInfo, EventKeyboard, EventMouse, EventTarget, EventTouch, Eventify, ExtrapolationMode, FeedStatusController, FixedConstraint, FixedJoint2D, FogInfo, Font, ForceOvertimeModule, ForwardFlow, ForwardPipeline, ForwardStage, GCObject, GLTFAsset, GLTFError, GLTFExtensionRegistry, GLTFLoader, Game, GbufferStage, GeometryRenderer, Gradient, GradientRange, Graphics, Graphics as GraphicsComponent, HALF_PI, HingeConstraint, HingeJoint2D, HorizontalTextAlignment, HtmlTextParser, ImageAsset, Input, InstanceMaterialType, InstancedBuffer, Intersection2D, JavaScript, Joint2D, JsonAsset, KHR_DRACO_MESH_COMPRESSION, KHR_MESHOPT_COMPRESSION, KHR_MESH_QUANTIZATION, KTX2_RAW_MIME, KeyCode, LOD, LODGroup, LRUCache, Label, LabelAtlas, Label as LabelComponent, LabelOutline, LabelOutline as LabelOutlineComponent, LabelShadow, Layers, Layout$1 as Layout, Layout$1 as LayoutComponent, Light, Light as LightComponent, LightProbeInfo, LightingStage, LimitVelocityOvertimeModule, MATH_FLOAT_ARRAY, MIDDLE_RATIO, MainFlow, Mask, Mask as MaskComponent, MaskType, Mat3, Mat4, Material, MathBase, Mesh, MeshBuffer, MeshCollider, MeshCollider as MeshColliderComponent, MeshRenderData, MeshRenderer, MissingScript, MobilityMode, MeshRenderer as ModelComponent, ModelRenderer, MotionStreak, MotionStreakAssemblerManager, MouseJoint2D, Node$1 as Node, NodeActivator, NodeEventType, NodePool, NodeSpace, NoiseModule, ObjectCurve, OctreeInfo, Overflow$1 as Overflow, PHYSICS_2D_PTM_RATIO, PageView, PageView as PageViewComponent, PageViewIndicator, PageViewIndicator as PageViewIndicatorComponent, ParticleAlignmentSpace, ParticleArcMode, ParticleAsset, ParticleCullingMode, Mode$1 as ParticleCurveMode, ParticleEmitLocation, ParticleModuleRandSeed, ParticleRenderMode, ParticleShapeType, ParticleSpace, ParticleSystem, ParticleSystem2D, ParticleSystem2DAssembler, ParticleTextureMode, ParticleTrailMode, ParticleUtils, PhysicsMaterial as PhysicMaterial, Physics2DManifoldType, Physics2DUtils, PhysicsGroup$1 as PhysicsGroup, PhysicsGroup2D, PhysicsLineStripCastResult, PhysicsMaterial, PhysicsRayResult, PhysicsSystem, PhysicsSystem2D, PipelineEventProcessor, PipelineEventType, PipelineInputAssemblerData, PipelineSceneData, PipelineStateManager, PlaneCollider, PointLight, PointToPointConstraint, PolygonCollider2D, Pool$1 as Pool, PostProcessStage, PostSettingsInfo, Prefab, PrefabLink, Primitive, PrivateNode, Profiler, ProgressBar, ProgressBar as ProgressBarComponent, QuadRenderData, Quat, QuatCurve, QuatInterpolationMode, RangedDirectionalLight, RatioSampler, RealCurve, RealInterpolationMode, Rect, RecyclePool, ReflectionProbe, ReflectionProbeFlow, ReflectionProbeManager, ReflectionProbeStage, ReflectionProbeType, RelativeJoint2D, UIRenderer as RenderComponent, RenderData$1 as RenderData, RenderFlow, RenderPipeline, RenderRoot2D, RenderStage, RenderTexture, UIRenderer as Renderable2D, ModelRenderer as RenderableComponent, Renderer, RenderingSubMesh, ResolutionPolicy, RichText as RichTextComponent, RigidBody, RigidBody2D, RigidBody as RigidBodyComponent, Root, RotationOvertimeModule, SUPPORTED_IMAGE_MIMES, SafeArea, SafeArea as SafeAreaComponent, Scene, SceneAsset, SceneGlobals, SceneStack, Scheduler, Script, ScrollBar, ScrollBar as ScrollBarComponent, ScrollView, ScrollView as ScrollViewComponent, Settings, SettingsCategory, ShadowFlow, ShadowStage, ShadowsInfo, ShapeModule, SimplexCollider, Size, SizeOvertimeModule, SkelAnimDataHub, SkeletalAnimation, SkeletalAnimation as SkeletalAnimationComponent, SkeletalAnimationState, Skeleton$1 as Skeleton, SkinInfo, SkinnedMeshBatchRenderer, SkinnedMeshRenderer, SkinnedMeshUnit, SkinnedMeshRenderer as SkinningModelComponent, SkinnedMeshUnit as SkinningModelUnit, SkyboxInfo, Slider, Slider as SliderComponent, SliderJoint2D, Socket, Sorting, Sorting2D, SortingLayers, SphereCollider, SphereCollider as SphereColliderComponent, SphereLight, SphereLight as SphereLightComponent, SpotLight, SpotLight as SpotLightComponent, SpringJoint2D, Sprite, SpriteAtlas, Sprite as SpriteComponent, SpriteFrame, SpriteFrameEvent, SpriteRenderer, StencilManager, SubContextView, System, SystemEvent, SystemEventType, SystemPriority, TRANSMISSION_LAYER, TTFFont, TWO_PI, TangentWeightMode, TerrainCollider, TextAsset, Texture2D, TextureAnimationModule, TextureCube, TiledLayer, TiledMap, TiledMapAsset, TiledObjectGroup, TiledTile, TiledUserNodeData, Toggle, Toggle as ToggleComponent, ToggleContainer, ToggleContainer as ToggleContainerComponent, Touch, TrailModule, TransformBit, Tween, TweenAction, TweenSystem, TypeScript, Batcher2D as UI, UIComponent, UICoordinateTracker, UICoordinateTracker as UICoordinateTrackerComponent, UIDrawBatch, UIMeshRenderer, UIMeshRenderer as UIModelComponent, UIOpacity, UIOpacity as UIOpacityComponent, UIRenderer as UIRenderable, UIRenderer, UIReorderComponent, UIStaticBatch, UIStaticBatch as UIStaticBatchComponent, UITransform, UITransform as UITransformComponent, vertexFormat as UIVertexFormat, engineVersion as VERSION, ValueType, Vec2, Vec3, Vec4, VelocityOvertimeModule, VerticalTextAlignment, VideoClip, VideoPlayer, View, ViewGroup, WebGL2Device, WebView, WheelJoint2D, Widget, Widget as WidgetComponent, WorldNode3DToLocalNodeUI, WorldNode3DToWorldNodeUI, __checkObsoleteInNamespace__, __checkObsolete__, _decorator, _resetDebugSetting, absMax, absMaxComponent, airActionSourceKey, airGraphicsCommandsToSvg, airPixelOrtho, animation, applyMixins, approx, approxGE, approxGT, approxLE, approxLT, assert, assertID, assertIsNonNullable, assertIsTrue, assertValidSource, assertsArrayIndex, assetManager, attachAirBloom, attachAirSpriteMask, attachAirVignette, attachContextHealth, bezier$1 as bezier, bezierByTime, binarySearch, binarySearchBy, binarySearchEpsilon, bindAirPrefilteredEnvironment, bits, buildSkeletonTree, builtinResMgr, ccenum, cclegacy, clamp$1 as clamp, clamp01, color, computeRatioByType, configureGLTFLoaderDefaults, convertUtils, createActionInput, createActionState, createAirApp, createAirDOMOverlay, createAirGradientEffect, createAirHTMLSource, createAirInstanceBatch, createAirInstanceMaterial, createAirMorphField, createAirParticleSystem, createAirPostProcess, createAirRenderTarget, createAirScreenEffect, createAirScreenPass, createAirTextureSprite, createAirUIBlendScope, createAirUnlitFogEffect, createAtlasHandle, createAtlasSpriteFrame, createBitmapFont, createBox3DKinematicTarget, createDefaultPipeline, createDracoDecoder, createKTX2Transcoder, createMeshoptDecoder, createPrimitiveGeometry, createSessionGate, createSessionScope, createStepClock, createUICanvas, debug, debugID, defaultTransmissionVisibility, deprecateModuleExportedName, describeAirTextureFormat, deserialize, deserializeTag, detectImageMime, director, disallowAnimation, displayName, displayOrder, dracoCompressionFactory, index$1 as dragonBones, drawAirGraphics, dynamicAtlasManager, easing, editable, editorExtrasTag, enumerableProps, equals$2 as equals, error, errorID, find, flattenCodeArray, floatToHalf, formerlySerializedAs$3 as formerlySerializedAs, fragmentText, frameObject, game, garbageCollectionManager, geometry, getAirHTMLSourceSupport, getBaselineOffset, getBox2D3Stats, getEnglishWordPartAtFirst, getEnglishWordPartAtLast, getError, getPathFromRoot, getPhaseID$1 as getPhaseID, getSerializationMetadata, getSymbolAt, getSymbolCodeAt, getSymbolLength, getWorldTransformUntilRoot, index$4 as gfx, graphicsAssemblerManager as graphicsAssembler, halfToFloat, input, inspectAirAnimationControllers, inspectAirDirectionalLights, inspectAirGeometry, inspectAirMaterial, inspectAirMeshMaterial, instantiate, inverseLerp, isAirDepthFormat, isAirSRGBFormat, isCCClassOrFastDefined, isCCObject, isDisplayStats, isEnglishWordPartAtFirst, isEnglishWordPartAtLast, isKTX2, isKTX2Available, isMeshoptAvailable, isTransmissionMaterial, isUnicodeCJK, isUnicodeSpace, isValid, js$1 as js, labelAssembler, labelNode, layoutAirGlyphs, lerp, loadAssetAsync, loadAtlas, loadBitmapFont, loadBox2D3, loadWasmModuleSpine, loader, log, logID, macro, markAsWarning, mat4, math, measureAirGlyphFallback, index$5 as memop, meshQuantizationFactory, meshoptCompressionFactory, misc, murmurhash2_32_gc, native$1 as native, nextPow2, override$1 as override, parseAirGlyphTags, parseAtlasText, parseFnt, path, physics, pingPong, define$1 as pipeline, index as postProcess, preTransforms, primitives, profiler, pseudoRandom, pseudoRandomRange, pseudoRandomRangeInt, quat$1 as quat, queryBox3DCommittedColliders, queryBox3DCommittedRay, random$1 as random, randomRange, randomRangeInt, range, rangeStep, rasterizeAirGraphics, readBox3DBodyMotion, readConstraintState as readBox3DConstraintState, rect, registerBox3DBeforeStep, registerGLTFLoader, removeProperty, renderer, rendering, repeat$2 as repeat, replaceProperty, resolveAirPixelRatio, resolveAirTextureFormat, resources, restoreBindPose, safeMeasureText, sampleAirImageShape, sampleAirTextShape, sampleAirTriangleShape, sampleAnimationCurve, screen$1 as screen, selectPhysics2DBackend, selectPhysicsBackend, selector$1 as selector, serializable$c as serializable, serializeTag, setDefaultLogTimes, setDisplayStats, setPropertyEnumType, setPropertyEnumTypeOnAttrs, setRandGenerator, setTextureSupportForTesting, settings, shift, size, slide, index$2 as sp, spriteAssembler, spriteNode, sys, systemEvent, tiledLayerAssembler, toDegree, toRadian, tooltip, tween, tweenProgress, tweenUtil, url, utils, v2$1 as v2, v3, v4, validateAirGraphicsCommands, validateAirPrefilteredEnvironment, validateAirTextureColorContract, view, visible, visibleRect, warn, warnID, widgetManager };
+export { AIR_BUILD_DATE, AIR_BUILD_NUMBER, AIR_ICON_PLACEHOLDER, AIR_INSTANCE_ATTRIBUTES, AIR_REVISION, AIR_SCREEN_PASS_LAYER, AIR_VERSION, Acceleration, AirActionError, AirAppImpl, AirColorContractError, AirContentSizeFitter, AirGlyphIconLayer, AirGlyphText, AirMRTTarget, AirPixelGrid, AirPixelPerfect, AirRenderTarget, AirTransmissionCapture, AirTypewriter, AirUIMesh, AlphaKey, AmbientInfo, AnimCurve, Animation$2 as Animation, AnimationClip, Animation$2 as AnimationComponent, AnimationManager, AnimationState$1 as AnimationState, Asset, AssetBank, AssetLibrary, AssetManager, AsyncDelegate, Atlas, AudioClip, AudioPCMDataView, AudioService, AudioSource, AudioSource as AudioSourceComponent, BASELINE_RATIO, BITMASK_TAG, Node$1 as BaseNode, BaseRenderData, SkinnedMeshBatchRenderer as BatchedSkinningModelComponent, BatchingUtility, Billboard, BitMask, BitmapFont, BlockInputEvents, BlockInputEvents as BlockInputEventsComponent, BloomStage, BoxCharacterController, BoxCollider, BoxCollider2D, BoxCollider as BoxColliderComponent, BufferAsset, BuiltinResMgr, Burst, Button, Button as ButtonComponent, CCBoolean, CCClass, CCFloat, CCInteger, CCLoader, CCObject, CCObjectFlags, CCString, CacheMode, CachedArray, CallbacksInvoker, Camera, Camera as CameraComponent, Canvas, Canvas as CanvasComponent, CapsuleCharacterController, CapsuleCollider, CapsuleCollider as CapsuleColliderComponent, CharacterController, CharacterControllerContact, CircleCollider2D, Collider, Collider2D, Collider as ColliderComponent, Color, ColorKey, ColorOvertimeModule, CompactValueTypeArray, Component, ConeCollider, ConfigurableConstraint, ConstantForce, Constraint, Contact2DType, CurveRange, CylinderCollider, CylinderCollider as CylinderColliderComponent, DEFAULT_OCTREE_DEPTH, DEFAULT_WORLD_MAX_POS, DEFAULT_WORLD_MIN_POS, DebugMode, DebugView, DeferredPipeline, Details, DirectionalLight, DirectionalLight as DirectionalLightComponent, Director, DirectorEvent, DistanceJoint2D, DynamicAtlasManager, EAxisDirection, ECollider2DType, EColliderType, EJoint2DType, ENUM_TAG, EPSILON$3 as EPSILON, EPhysics2DDrawFlags, EPhysicsDrawFlags, ERaycast2DType, ERigidBody2DType, ERigidBodyType, EXT_MESHOPT_COMPRESSION, EasingMethod, EditBox, EditBox as EditBoxComponent, EditorExtendable, EffectAsset, EmptyDevice, Enum, Event, EventAcceleration, EventGamepad, EventHMD, EventHandheld, EventHandle, EventHandler, EventInfo, EventKeyboard, EventMouse, EventTarget, EventTouch, Eventify, ExtrapolationMode, FeedStatusController, FixedConstraint, FixedJoint2D, FogInfo, Font, ForceOvertimeModule, ForwardFlow, ForwardPipeline, ForwardStage, GCObject, GLTFAsset, GLTFError, GLTFExtensionRegistry, GLTFLoader, Game, GbufferStage, GeometryRenderer, Gradient, GradientRange, Graphics, Graphics as GraphicsComponent, HALF_PI, HingeConstraint, HingeJoint2D, HorizontalTextAlignment, HtmlTextParser, ImageAsset, Input, InstanceMaterialType, InstancedBuffer, Intersection2D, JavaScript, Joint2D, JsonAsset, KHR_DRACO_MESH_COMPRESSION, KHR_MESHOPT_COMPRESSION, KHR_MESH_QUANTIZATION, KTX2_RAW_MIME, KeyCode, LOD, LODGroup, LRUCache, Label, LabelAtlas, Label as LabelComponent, LabelOutline, LabelOutline as LabelOutlineComponent, LabelShadow, Layers, Layout$1 as Layout, Layout$1 as LayoutComponent, Light, Light as LightComponent, LightProbeInfo, LightingStage, LimitVelocityOvertimeModule, MATH_FLOAT_ARRAY, MIDDLE_RATIO, MainFlow, Mask, Mask as MaskComponent, MaskType, Mat3, Mat4, Material, MathBase, MaxDPR, Mesh, MeshBuffer, MeshCollider, MeshCollider as MeshColliderComponent, MeshRenderData, MeshRenderer, MissingScript, MobilityMode, MeshRenderer as ModelComponent, ModelRenderer, MotionStreak, MotionStreakAssemblerManager, MouseJoint2D, Node$1 as Node, NodeActivator, NodeEventType, NodePool, NodeSpace, NoiseModule, ObjectCurve, OctreeInfo, Overflow$1 as Overflow, PHYSICS_2D_PTM_RATIO, PageView, PageView as PageViewComponent, PageViewIndicator, PageViewIndicator as PageViewIndicatorComponent, ParticleAlignmentSpace, ParticleArcMode, ParticleAsset, ParticleCullingMode, Mode$1 as ParticleCurveMode, ParticleEmitLocation, ParticleModuleRandSeed, ParticleRenderMode, ParticleShapeType, ParticleSpace, ParticleSystem, ParticleSystem2D, ParticleSystem2DAssembler, ParticleTextureMode, ParticleTrailMode, ParticleUtils, PhysicsMaterial as PhysicMaterial, Physics2DManifoldType, Physics2DUtils, PhysicsGroup$1 as PhysicsGroup, PhysicsGroup2D, PhysicsLineStripCastResult, PhysicsMaterial, PhysicsRayResult, PhysicsSystem, PhysicsSystem2D, PipelineEventProcessor, PipelineEventType, PipelineInputAssemblerData, PipelineSceneData, PipelineStateManager, PlaneCollider, PointLight, PointToPointConstraint, PolygonCollider2D, Pool$1 as Pool, PostProcessStage, PostSettingsInfo, Prefab, PrefabLink, Primitive, PrivateNode, Profiler, ProgressBar, ProgressBar as ProgressBarComponent, QuadRenderData, Quat, QuatCurve, QuatInterpolationMode, RangedDirectionalLight, RatioSampler, RealCurve, RealInterpolationMode, Rect, RecyclePool, ReflectionProbe, ReflectionProbeFlow, ReflectionProbeManager, ReflectionProbeStage, ReflectionProbeType, RelativeJoint2D, UIRenderer as RenderComponent, RenderData$1 as RenderData, RenderFlow, RenderPipeline, RenderRoot2D, RenderStage, RenderTexture, UIRenderer as Renderable2D, ModelRenderer as RenderableComponent, Renderer, RenderingSubMesh, ResolutionPolicy, RichText as RichTextComponent, RigidBody, RigidBody2D, RigidBody as RigidBodyComponent, Root, RotationOvertimeModule, SUPPORTED_IMAGE_MIMES, SafeArea, SafeArea as SafeAreaComponent, Scene, SceneAsset, SceneGlobals, SceneStack, Scheduler, Script, ScrollBar, ScrollBar as ScrollBarComponent, ScrollView, ScrollView as ScrollViewComponent, Settings, SettingsCategory, ShadowFlow, ShadowStage, ShadowsInfo, ShapeModule, SimplexCollider, Size, SizeOvertimeModule, SkelAnimDataHub, SkeletalAnimation, SkeletalAnimation as SkeletalAnimationComponent, SkeletalAnimationState, Skeleton$1 as Skeleton, SkinInfo, SkinnedMeshBatchRenderer, SkinnedMeshRenderer, SkinnedMeshUnit, SkinnedMeshRenderer as SkinningModelComponent, SkinnedMeshUnit as SkinningModelUnit, SkyboxInfo, Slider, Slider as SliderComponent, SliderJoint2D, Socket, Sorting, Sorting2D, SortingLayers, SphereCollider, SphereCollider as SphereColliderComponent, SphereLight, SphereLight as SphereLightComponent, SpotLight, SpotLight as SpotLightComponent, SpringJoint2D, Sprite, SpriteAtlas, Sprite as SpriteComponent, SpriteFrame, SpriteFrameEvent, SpriteRenderer, StencilManager, SubContextView, System, SystemEvent, SystemEventType, SystemPriority, TRANSMISSION_LAYER, TTFFont, TWO_PI, TangentWeightMode, TerrainCollider, TextAsset, Texture2D, TextureAnimationModule, TextureCube, TiledLayer, TiledMap, TiledMapAsset, TiledObjectGroup, TiledTile, TiledUserNodeData, Toggle, Toggle as ToggleComponent, ToggleContainer, ToggleContainer as ToggleContainerComponent, Touch, TrailModule, TransformBit, Tween, TweenAction, TweenSystem, TypeScript, Batcher2D as UI, UIComponent, UICoordinateTracker, UICoordinateTracker as UICoordinateTrackerComponent, UIDrawBatch, UIMesh, UIMeshRenderer, UIMeshRenderer as UIModelComponent, UIOpacity, UIOpacity as UIOpacityComponent, UIRenderer as UIRenderable, UIRenderer, UIReorderComponent, UIStaticBatch, UIStaticBatch as UIStaticBatchComponent, UITransform, UITransform as UITransformComponent, vertexFormat as UIVertexFormat, engineVersion as VERSION, ValueType, Vec2, Vec3, Vec4, VelocityOvertimeModule, VerticalTextAlignment, VideoClip, VideoPlayer, View, ViewGroup, WebGL2Device, WebView, WheelJoint2D, Widget, Widget as WidgetComponent, WorkerPool, WorldNode3DToLocalNodeUI, WorldNode3DToWorldNodeUI, __checkObsoleteInNamespace__, __checkObsolete__, _decorator, _resetDebugSetting, absMax, absMaxComponent, airActionSourceKey, airGraphicsCommandsToSvg, airPixelOrtho, animation, applyMixins, approx, approxGE, approxGT, approxLE, approxLT, assert, assertID, assertIsNonNullable, assertIsTrue, assertValidSource, assertsArrayIndex, assetManager, attachAirBloom, attachAirSpriteMask, attachAirVignette, attachContextHealth, bezier$1 as bezier, bezierByTime, binarySearch, binarySearchBy, binarySearchEpsilon, bindAirPrefilteredEnvironment, bits, buildSkeletonTree, builtinResMgr, ccenum, cclegacy, checkWorkerScript, clamp$1 as clamp, clamp01, color, computeRatioByType, configureGLTFLoaderDefaults, convertUtils, createActionInput, createActionState, createAirApp, createAirDOMOverlay, createAirGradientEffect, createAirHTMLSource, createAirInstanceBatch, createAirInstanceMaterial, createAirMRTTarget, createAirMorphField, createAirParticleSystem, createAirPostProcess, createAirRenderTarget, createAirScreenEffect, createAirScreenPass, createAirTextureSprite, createAirUIBlendScope, createAirUnlitFogEffect, createAtlasHandle, createAtlasSpriteFrame, createBitmapFont, createBox3DKinematicTarget, createDefaultPipeline, createDracoDecoder, createKTX2Transcoder, createMeshoptDecoder, createPrimitiveGeometry, createSessionGate, createSessionScope, createStepClock, createUICanvas, createWorker, debug, debugID, defaultTransmissionVisibility, deprecateModuleExportedName, describeAirTextureFormat, deserialize, deserializeTag, detectImageMime, director, disallowAnimation, displayName, displayOrder, dracoCompressionFactory, index$1 as dragonBones, drawAirGraphics, dynamicAtlasManager, easing, editable, editorExtrasTag, enumerableProps, equals$2 as equals, error, errorID, find, flattenCodeArray, floatToHalf, formerlySerializedAs$3 as formerlySerializedAs, fragmentText, frameObject, game, garbageCollectionManager, geometry, getAirHTMLSourceSupport, getBaselineOffset, getBox2D3Stats, getEnglishWordPartAtFirst, getEnglishWordPartAtLast, getError, getOptimalWorkerCount, getPathFromRoot, getPhaseID$1 as getPhaseID, getSerializationMetadata, getSymbolAt, getSymbolCodeAt, getSymbolLength, getWorkerCapabilities, getWorkerConcurrencyLimit, getWorldTransformUntilRoot, index$4 as gfx, graphicsAssemblerManager as graphicsAssembler, halfToFloat, input, inspectAirAnimationControllers, inspectAirDirectionalLights, inspectAirGeometry, inspectAirMaterial, inspectAirMeshMaterial, instantiate, instantiateTiledObjects, inverseLerp, isAirDepthFormat, isAirSRGBFormat, isCCClassOrFastDefined, isCCObject, isDisplayStats, isEnglishWordPartAtFirst, isEnglishWordPartAtLast, isKTX2, isKTX2Available, isMeshoptAvailable, isSupportStandardWorker, isTransmissionMaterial, isUnicodeCJK, isUnicodeSpace, isValid, isWorkerSupported, js$1 as js, labelAssembler, labelNode, layoutAirGlyphs, lerp, loadAssetAsync, loadAtlas, loadBitmapFont, loadBox2D3, loadTiledMap, loadWasmModuleSpine, loader, log, logID, macro, markAsWarning, mat4, math, measureAirGlyphFallback, index$5 as memop, meshQuantizationFactory, meshoptCompressionFactory, misc, murmurhash2_32_gc, native$1 as native, nextPow2, override$1 as override, parseAirGlyphTags, parseAtlasText, parseFnt, path, physics, pingPong, define$1 as pipeline, index as postProcess, preTransforms, primitives, profiler, pseudoRandom, pseudoRandomRange, pseudoRandomRangeInt, quat$1 as quat, queryBox3DCommittedColliders, queryBox3DCommittedRay, random$1 as random, randomRange, randomRangeInt, range, rangeStep, rasterizeAirGraphics, readBox3DBodyMotion, readConstraintState as readBox3DConstraintState, rect, registerBox3DBeforeStep, registerGLTFLoader, removeProperty, renderer, rendering, repeat$2 as repeat, replaceProperty, resolveAirPixelRatio, resolveAirTextureFormat, resources, restoreBindPose, safeMeasureText, sampleAirImageShape, sampleAirTextShape, sampleAirTriangleShape, sampleAnimationCurve, screen$1 as screen, selectPhysics2DBackend, selectPhysicsBackend, selector$1 as selector, serializable$c as serializable, serializeTag, setDefaultLogTimes, setDisplayStats, setPropertyEnumType, setPropertyEnumTypeOnAttrs, setRandGenerator, setTextureSupportForTesting, settings, shift, size, slide, index$2 as sp, spriteAssembler, spriteNode, sys, systemEvent, tiledLayerAssembler, toDegree, toRadian, tooltip, tween, tweenProgress, tweenUtil, url, utils, v2$1 as v2, v3, v4, validateAirGraphicsCommands, validateAirPrefilteredEnvironment, validateAirTextureColorContract, view, visible, visibleRect, warn, warnID, wasm, widgetManager };
 //# sourceMappingURL=cocosair.module.js.map
