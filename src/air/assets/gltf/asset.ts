@@ -85,6 +85,7 @@ export class GLTFAsset extends Asset {
     public get materials(): readonly Material[] {
         return this.owned.materials;
     }
+    /** Indexed by glTF texture index; equivalent entries may share one asset. */
     public get textures(): readonly Texture2D[] {
         return this.owned.textures;
     }

@@ -1150,24 +1150,25 @@ function reflect (wgsl: string[]): number[][] {
 }
 
 interface ClearPassData {
-    vertShader: GPUShaderModule | null;
-    fragShader: GPUShaderModule | null;
-    bindGroupLayout: GPUBindGroupLayout | null;
-    pipelineLayout: GPUPipelineLayout | null;
-    pipeline: GPURenderPipeline | null;
+    bindGroupLayout: GPUBindGroupLayout;
+    pipeline: GPURenderPipeline;
 }
-const clearPassData: ClearPassData = {
-    vertShader: null,
-    fragShader: null,
-    bindGroupLayout: null,
-    pipelineLayout: null,
-    pipeline: null,
-};
-export function clearRect (device: WebGPUDevice, texture: IWebGPUTexture, renderArea: Rect, color: Color): void {
-    const format = texture.gpuTexture!.format;
-    const dimension = texture.gpuTarget;
+
+const clearPasses = new WeakMap<GPUDevice, Map<string, ClearPassData>>();
+
+export function clearRect (
+    device: WebGPUDevice, view: GPUTextureView, format: GPUTextureFormat, samples: number, renderArea: Rect, color: Color,
+): void {
     const nativeDevice = device.nativeDevice!;
-    if (!clearPassData.vertShader) {
+    let passes = clearPasses.get(nativeDevice);
+    if (!passes) {
+        passes = new Map();
+        clearPasses.set(nativeDevice, passes);
+    }
+    const key = `${format}:${samples}`;
+    const scalar = format.endsWith('uint') ? 'u32' : format.endsWith('sint') ? 'i32' : 'f32';
+    let clearPassData = passes.get(key);
+    if (!clearPassData) {
         const clearQuadVert = `
         struct VertexOutput {
             @builtin(position) Position: vec4<f32>,
@@ -1192,20 +1193,18 @@ export function clearRect (device: WebGPUDevice, texture: IWebGPUTexture, render
 
         const clearQuadFrag = `
         struct ClearColor {
-            color: vec4<f32>,
+            color: vec4<${scalar}>,
         }
 
         @group(0) @binding(0) var<uniform> uClearColor: ClearColor;
 
         @fragment
-        fn main() -> @location(0) vec4<f32> {
+        fn main() -> @location(0) vec4<${scalar}> {
             return uClearColor.color;
         }
         `;
         const vertShaderModule = nativeDevice.createShaderModule({ code: clearQuadVert });
         const fragShaderModule = nativeDevice.createShaderModule({ code: clearQuadFrag });
-        clearPassData.vertShader = vertShaderModule;
-        clearPassData.fragShader = fragShaderModule;
 
         const bufferEntry: GPUBindGroupLayoutEntry = {
             binding: 0,
@@ -1222,18 +1221,16 @@ export function clearRect (device: WebGPUDevice, texture: IWebGPUTexture, render
         };
 
         const bindGroupLayout = nativeDevice.createBindGroupLayout(bgLayoutDesc);
-        clearPassData.bindGroupLayout = bindGroupLayout;
 
         const pipelineLayoutDesc: GPUPipelineLayoutDescriptor = {
             label: 'clearPassPipelineLayout',
-            bindGroupLayouts: [clearPassData.bindGroupLayout],
+            bindGroupLayouts: [bindGroupLayout],
         };
 
         const pipelineLayout = nativeDevice.createPipelineLayout(pipelineLayoutDesc);
-        clearPassData.pipelineLayout = pipelineLayout;
 
         const vertexState: GPUVertexState = {
-            module: clearPassData.vertShader,
+            module: vertShaderModule,
             entryPoint: 'main',
         };
 
@@ -1248,38 +1245,29 @@ export function clearRect (device: WebGPUDevice, texture: IWebGPUTexture, render
         };
 
         const fragState: GPUFragmentState = {
-            module: clearPassData.fragShader,
+            module: fragShaderModule,
             entryPoint: 'main',
             targets: [colorState],
         };
         const multisample: GPUMultisampleState = {
-            count: 1,
+            count: samples,
             alphaToCoverageEnabled: false,
             mask: 0xFFFFFFFF,
         };
 
         const pipelineDesc: GPURenderPipelineDescriptor = {
             label: 'clearPassPipeline',
-            layout: clearPassData.pipelineLayout,
+            layout: pipelineLayout,
             vertex: vertexState,
             primitive: primitiveState,
             fragment: fragState,
             multisample,
         };
         const pipeline = nativeDevice.createRenderPipeline(pipelineDesc);
-        clearPassData.pipeline = pipeline;
+        clearPassData = { bindGroupLayout, pipeline };
+        passes.set(key, clearPassData);
     }
-    const commandEncoder: GPUCommandEncoder = nativeDevice.createCommandEncoder();
-    const desc: GPUTextureViewDescriptor = {
-        format,
-        dimension: '2d',
-        baseMipLevel: 0,
-        mipLevelCount: 1,
-        baseArrayLayer: 0,
-        arrayLayerCount: 1,
-        aspect: 'all',
-    };
-    const dstView = texture.gpuTexture?.createView(desc);
+    const commandEncoder = nativeDevice.createCommandEncoder();
     const bufferDesc: GPUBufferDescriptor = {
         usage: GPUBufferUsage.UNIFORM,
         size: 16,
@@ -1287,50 +1275,54 @@ export function clearRect (device: WebGPUDevice, texture: IWebGPUTexture, render
     };
 
     const uniformBuffer = nativeDevice.createBuffer(bufferDesc);
-    const colorArr: number[] = [color.x, color.y, color.z, color.w];
+    try {
+        const colorArr: number[] = [color.x, color.y, color.z, color.w];
 
-    const mappedBuffer = uniformBuffer.getMappedRange(0, 16);
-    const f32 = new Float32Array(mappedBuffer);
-    f32.set(colorArr);
-    uniformBuffer.unmap();
+        const mappedBuffer = uniformBuffer.getMappedRange(0, 16);
+        const clearValues = scalar === 'u32' ? new Uint32Array(mappedBuffer)
+            : scalar === 'i32' ? new Int32Array(mappedBuffer) : new Float32Array(mappedBuffer);
+        clearValues.set(colorArr);
+        uniformBuffer.unmap();
 
-    const entry: GPUBindGroupEntry = {
-        binding: 0,
-        resource: {
-            buffer: uniformBuffer,
-            offset: 0,
-            size: 16,
-        },
-    };
+        const entry: GPUBindGroupEntry = {
+            binding: 0,
+            resource: {
+                buffer: uniformBuffer,
+                offset: 0,
+                size: 16,
+            },
+        };
 
-    const bindgroupDesc: GPUBindGroupDescriptor = {
-        layout: clearPassData.bindGroupLayout!,
-        entries: [entry],
-    };
-    const bindGroup = nativeDevice.createBindGroup(bindgroupDesc);
-    const colorAttachment: GPURenderPassColorAttachment = {
-        view: dstView!,
-        loadOp: 'load',
-        storeOp: 'store',
-        clearValue: [0.88, 0.88, 0.88, 1.0],
-    };
+        const bindgroupDesc: GPUBindGroupDescriptor = {
+            layout: clearPassData.bindGroupLayout!,
+            entries: [entry],
+        };
+        const bindGroup = nativeDevice.createBindGroup(bindgroupDesc);
+        const colorAttachment: GPURenderPassColorAttachment = {
+            view,
+            loadOp: 'load',
+            storeOp: 'store',
+            clearValue: [0.88, 0.88, 0.88, 1.0],
+        };
 
-    const rpDesc: GPURenderPassDescriptor = {
-        colorAttachments: [colorAttachment],
-    };
+        const rpDesc: GPURenderPassDescriptor = {
+            colorAttachments: [colorAttachment],
+        };
 
-    const renderPassEncoder = commandEncoder.beginRenderPass(rpDesc);
-    renderPassEncoder.setPipeline(clearPassData.pipeline!);
+        const renderPassEncoder = commandEncoder.beginRenderPass(rpDesc);
+        renderPassEncoder.setPipeline(clearPassData.pipeline!);
 
-    renderPassEncoder.setBindGroup(0, bindGroup);
-    renderPassEncoder.setViewport(renderArea.x, renderArea.y, renderArea.width, renderArea.height, 0.0, 1.0);
-    renderPassEncoder.setScissorRect(renderArea.x, renderArea.y, renderArea.width, renderArea.height);
-    renderPassEncoder.draw(6, 1, 0, 0);
+        renderPassEncoder.setBindGroup(0, bindGroup);
+        renderPassEncoder.setViewport(renderArea.x, renderArea.y, renderArea.width, renderArea.height, 0.0, 1.0);
+        renderPassEncoder.setScissorRect(renderArea.x, renderArea.y, renderArea.width, renderArea.height);
+        renderPassEncoder.draw(6, 1, 0, 0);
 
-    renderPassEncoder.end();
-    const commandBuffer = commandEncoder.finish();
-    nativeDevice.queue.submit([commandBuffer]);
-    uniformBuffer.destroy();
+        renderPassEncoder.end();
+        const commandBuffer = commandEncoder.finish();
+        nativeDevice.queue.submit([commandBuffer]);
+    } finally {
+        uniformBuffer.destroy();
+    }
 }
 
 function findEmployAttr (stage: IWebGPUGPUShaderStage): void {
