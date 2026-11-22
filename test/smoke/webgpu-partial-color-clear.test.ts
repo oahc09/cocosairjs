@@ -63,6 +63,7 @@ function run(
     area = subRect,
     formats = [Format.RGBA8, Format.RGBA16F],
     cmd = new WebGPUCommandBuffer(),
+    colors = [first, second],
 ) {
     WebGPUDeviceManager.setInstance(f.device);
     const views = formats.map(() => ({ label: '' }));
@@ -86,7 +87,7 @@ function run(
             })),
         },
     };
-    cmd.beginRenderPass(pass as any, framebuffer as any, area, [first, second], 1, 0);
+    cmd.beginRenderPass(pass as any, framebuffer as any, area, colors, 1, 0);
     cmd.endRenderPass();
     return { views, template };
 }
@@ -162,10 +163,15 @@ describe('WebGPU offscreen partial color clear encoding (CPU descriptor doubles 
         const a = fixture();
         const b = fixture();
         run(a, [LoadOp.CLEAR, LoadOp.LOAD]);
-        run(b, [LoadOp.CLEAR, LoadOp.CLEAR], subRect, [Format.RGBA8, Format.R32UI]);
+        // 2^24 + 1 is the first positive integer that would lose precision in float32 staging.
+        const exactUnsigned = 16777217;
+        run(b, [LoadOp.CLEAR, LoadOp.CLEAR], subRect, [Format.RGBA8, Format.R32UI], undefined, [
+            first,
+            new Color(exactUnsigned, 1, 0, 1),
+        ]);
         expect(a.formats).toEqual(['rgba8unorm:1']);
         expect(b.formats).toEqual(['rgba8unorm:1', 'r32uint:1']);
         expect(b.shaderModules.some((src) => src.includes('-> @location(0) vec4<u32>'))).toBe(true);
-        expect([...new Uint32Array(b.buffers[1].data)]).toEqual([0, 1, 0, 1]);
+        expect([...new Uint32Array(b.buffers[1].data)]).toEqual([exactUnsigned, 1, 0, 1]);
     });
 });

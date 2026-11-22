@@ -88,18 +88,19 @@ async function rendererProbe(sdk) {
                 await dev.copyTextureToBuffersAsync(textures[1], [f], [region]);
                 return [Array.from(u), Array.from(f)];
             };
-            const expected = (isHalf, inside, outside) => {
+            const expected = (isHalf, inside, outside, encoded) => {
                 const max = isHalf ? 0x3c00 : 255;
                 return Array.from({ length: 16 }, (_, ix) => {
                     const x = ix % 4,
                         y = Math.floor(ix / 4);
-                    return (x >= 1 && x <= 2 && y >= 1 && y <= 2 ? inside : outside).map((value) => value * max);
+                    const pixel = x >= 1 && x <= 2 && y >= 1 && y <= 2 ? inside : outside;
+                    return encoded ? pixel : pixel.map((value) => value * max);
                 }).flat();
             };
-            const check = async (name, paths, colors) => {
+            const check = async (name, paths, colors, encoded = false) => {
                 const observed = await read(paths);
                 observed.forEach((row, index) => {
-                    const want = expected(index === 1, ...colors[index]);
+                    const want = expected(index === 1, ...colors[index], encoded);
                     const offset = row.findIndex((value, i) => value !== want[i]);
                     if (offset !== -1) {
                         const x = Math.floor(offset / 4) % 4;
@@ -167,6 +168,38 @@ async function rendererProbe(sdk) {
                 [G, G],
                 [B, B],
             ]);
+
+            // Check identical signed/HDR inputs under the native full clear and scissored draw paths.
+            // Compare raw component values against independently specified UNORM8 / binary16 encodings.
+            const hdr = new g.Color(-0.5, 1.5, 2, 1);
+            const hdr8 = [0, 255, 255, 255];
+            const hdr16 = [0xb800, 0x3e00, 0x4000, 0x3c00];
+            const red8 = [255, 0, 0, 255];
+            const blue16 = [0, 0, 0x3c00, 0x3c00];
+            clear(b, [true, true], whole, [hdr, hdr]);
+            await check(
+                'HDR full CLEAR/CLEAR native reference',
+                b,
+                [
+                    [hdr8, hdr8],
+                    [hdr16, hdr16],
+                ],
+                true,
+            );
+            clear(a, [true, true], whole, [red, blue]);
+            cmd.begin();
+            encodePass(cmd, a, [true, false], partial, [hdr, hdr]);
+            encodePass(cmd, a, [false, true], partial, [hdr, hdr]);
+            cmd.end();
+            await check(
+                'HDR partial CLEAR/LOAD and LOAD/CLEAR preserve signed half range',
+                a,
+                [
+                    [hdr8, red8],
+                    [hdr16, blue16],
+                ],
+                true,
+            );
         } finally {
             const error = await native.popErrorScope();
             if (error) throw new Error('WebGPU validation: ' + error.message);
@@ -253,7 +286,7 @@ async function main() {
                 bundleSha256,
                 sourceBinding: binding,
                 browser: browser.version(),
-                scope: 'native WebGPU; focused offscreen MRT sample-1 only',
+                scope: 'native WebGPU; focused offscreen RGBA8 UNORM/RGBA16F MRT sample-1; no integer pixel coverage',
             }),
         );
     } finally {
