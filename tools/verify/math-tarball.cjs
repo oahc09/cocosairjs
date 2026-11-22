@@ -7,6 +7,7 @@ const fs = require('node:fs'),
     crypto = require('node:crypto');
 const assert = require('node:assert/strict'),
     { spawnSync } = require('node:child_process');
+const { verifySourceBinding } = require('../build/source-binding.cjs');
 const root = path.resolve(__dirname, '../..'),
     out = path.resolve(
         process.argv.find((x) => x.startsWith('--out='))?.slice(6) || path.join(root, 'output/math-tarball'),
@@ -78,6 +79,14 @@ try {
         ],
         temp,
     );
+    report.nodeCpuFeasibility = JSON.parse(
+        run(
+            'node-cpu-feasibility',
+            process.execPath,
+            [path.join(root, 'tools/verify/node-cpu-feasibility.cjs'), '--consumer=' + temp],
+            temp,
+        ),
+    );
     const source =
         "import {Vec2,Vec3,Vec4,Mat3,Mat4,Quat,Color,Size,Rect,clamp01} from 'cocosair.js/math'; const matrix:Mat4=Mat4.fromRTS(new Mat4(),new Quat(),new Vec3(),new Vec3(1,1,1)); const v:Vec2=new Vec3().toVec2(); console.log(matrix,v,new Vec4(),new Mat3(),new Color(),new Size(),new Rect(),clamp01(2));\n";
     fs.writeFileSync(path.join(temp, 'consumer.ts'), source);
@@ -104,20 +113,20 @@ try {
             temp,
         );
     const receipt = JSON.parse(fs.readFileSync(path.join(root, 'build/metadata/math-build.json'), 'utf8'));
-    const map = JSON.parse(fs.readFileSync(path.join(root, 'build/cocosair.module.js.map'), 'utf8'));
-    const mapped = new Map(map.sources.map((name, i) => [path.resolve(root, 'build', name), map.sourcesContent[i]]));
+    const main = path.join(root, 'build/cocosair.module.js');
+    const map = JSON.parse(fs.readFileSync(main + '.map', 'utf8'));
+    const sourceBinding = verifySourceBinding(root, main);
+    assert.equal(sourceBinding.matches, true, 'Main bundle source binding failed: ' + JSON.stringify(sourceBinding));
+    const mapped = new Set(map.sources.map((name) => path.resolve(path.dirname(main), name)));
     const common = [];
     for (const [relative, expected] of Object.entries(receipt.inputs)) {
         assert.equal(hash(fs.readFileSync(path.join(root, relative))), expected, 'math source changed ' + relative);
-        const content = mapped.get(path.join(root, relative));
-        if (content != null) {
-            assert.equal(hash(content), expected, 'main-map math source differs ' + relative);
-            common.push(relative);
-        }
+        if (mapped.has(path.join(root, relative))) common.push(relative);
     }
     for (const name of ['vec2', 'vec3', 'vec4', 'quat', 'mat3', 'mat4'])
         assert.ok(common.includes('src/cocos/core/math/' + name + '.ts'), 'missing main-map math ' + name);
     report.canonicalMapInputs = common;
+    report.mainSourceBinding = sourceBinding;
     report.mathOutputs = receipt.outputs;
     report.passed = true;
 } catch (error) {

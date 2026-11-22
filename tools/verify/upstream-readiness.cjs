@@ -7,7 +7,18 @@ const { launchOptions } = require('./browser-engines.cjs');
 const browserName = process.argv.find((value) => value.startsWith('--browser='))?.slice(10) || 'chromium';
 if (!['chromium', 'firefox', 'webkit'].includes(browserName)) throw Error('Unsupported --browser');
 const { launchOwnedBrowser, bounded } = require('./upstream-browser-lifecycle.cjs');
+const { verifySourceBinding } = require('../build/source-binding.cjs');
+const { loopbackBrowserEnv } = require('./loopback-browser-env.cjs');
 const root = path.resolve(__dirname, '../..');
+const bundle = path.resolve(
+    root,
+    process.argv.find((value) => value.startsWith('--bundle='))?.slice(9) || 'build/cocosair.module.js',
+);
+if (!bundle.startsWith(root + path.sep)) throw new Error('candidate bundle must be inside checkout');
+const bundlePath = path.relative(root, bundle).split(path.sep).join('/');
+const bundleURL = '/' + bundlePath.split('/').map(encodeURIComponent).join('/');
+const sourceBinding = verifySourceBinding(root, bundle);
+if (!sourceBinding.matches) throw new Error('bundle must bind current source bytes');
 const request = process.argv.find((value) => value.startsWith('--out='))?.slice(6);
 if (!request) throw new Error('--out=<new directory> required');
 const out = path.resolve(request);
@@ -15,7 +26,9 @@ if (fs.existsSync(out)) throw new Error('output exists; preserve all previous at
 fs.mkdirSync(out, { recursive: true });
 const sha = (bytes) => crypto.createHash('sha256').update(bytes).digest('hex');
 const files = [
-    'build/cocosair.module.js',
+    bundlePath,
+    bundlePath + '.map',
+    bundlePath + '.sources.json',
     'tools/debug/readiness-observer.ts',
     'tools/verify/upstream-readiness.cjs',
     'tools/verify/upstream-browser-lifecycle.cjs',
@@ -28,7 +41,8 @@ const files = [
 const report = {
     status: 'NOT_RUN',
     startedAt: new Date().toISOString(),
-    scope: 'U07 explicit-browser fixture, not real mobile or complete scene coverage',
+    scope: 'Browser screenshot attribution in a controlled WebGL2 fixture; not hardware presentation or complete scene coverage',
+    sourceBinding,
     browserName,
     fingerprints: Object.fromEntries(files.map((file) => [file, sha(fs.readFileSync(path.join(root, file)))])),
     rows: [],
@@ -43,6 +57,7 @@ const report = {
                 {
                     headless: true,
                     ...launchOptions(browserName),
+                    env: loopbackBrowserEnv(),
                 },
                 report,
             );
@@ -52,7 +67,14 @@ const report = {
             throw error;
         }
         report.browserVersion = browser.version();
-        for (const mode of ['cold', 'delayed-resource', 'offscreen', 'shader-failure', 'context-lost']) {
+        for (const mode of [
+            'cold',
+            'delayed-resource',
+            'offscreen',
+            'shader-failure',
+            'context-lost',
+            'later-frame-control',
+        ]) {
             const context = await browser.newContext({ viewport: { width: 640, height: 320 }, deviceScaleFactor: 1 });
             const page = await context.newPage();
             const row = { mode, status: 'NOT_RUN', errors: [], console: [] };
@@ -60,15 +82,32 @@ const report = {
             page.on('pageerror', (error) => row.errors.push(String(error.stack || error)));
             page.on('console', (message) => row.console.push({ type: message.type(), text: message.text() }));
             try {
-                await page.goto(`${server.origin}/test/fixtures/upstream-readiness/?case=${mode}`);
+                const url = `${server.origin}/test/fixtures/upstream-readiness/?case=${mode}`;
+                const html = fs.readFileSync(path.join(root, 'test/fixtures/upstream-readiness/index.html'), 'utf8');
+                await page.route(url, (route) =>
+                    route.fulfill({
+                        contentType: 'text/html',
+                        body: html.replace('/build/cocosair.module.js', bundleURL),
+                    }),
+                );
+                const [sdkResponse] = await Promise.all([
+                    page.waitForResponse(server.origin + bundleURL, { timeout: 20000 }),
+                    page.goto(url),
+                ]);
+                if (!sdkResponse.ok() || sha(await sdkResponse.body()) !== report.fingerprints[bundlePath])
+                    throw Error('Browser did not load the selected candidate bytes');
                 await page.waitForFunction(
-                    () => window.__readiness?.submission || window.__readiness?.report,
+                    () =>
+                        (window.__readiness?.submission && window.__readiness.captureReady) ||
+                        window.__readiness?.report,
                     undefined,
                     { timeout: 20000 },
                 );
                 const snapshot = await page.evaluate(() => ({
                     submission: window.__readiness.submission,
                     readback: window.__readiness.readback,
+                    firstMarker: window.__readiness.firstMarker,
+                    drawOrdinal: window.__readiness.drawOrdinal,
                     report: window.__readiness.report,
                 }));
                 if (snapshot.submission && !snapshot.report) {
@@ -79,12 +118,43 @@ const report = {
                     const offset = (Math.floor(png.height / 2) * png.width + Math.floor(png.width / 2)) * 4;
                     const center = [...png.data.subarray(offset, offset + 4)];
                     const expected = snapshot.readback;
-                    const contentValidated =
+                    const centerMatches =
                         expected?.length === 4 &&
                         expected[0] > 100 &&
                         expected[3] > 250 &&
                         center.every((value, index) => Math.abs(value - expected[index]) <= 2);
-                    row.compositor = { center, readback: expected, toleranceRGBA8: 2, contentValidated };
+                    const marker = [...png.data.subarray((8 * png.width + 8) * 4, (8 * png.width + 9) * 4)];
+                    const markerColor = ([r, g, b, a] = []) =>
+                        a > 250 && r < 32
+                            ? g > 224 && b < 32
+                                ? 'first'
+                                : b > 224 && g < 32
+                                  ? 'later'
+                                  : 'unknown'
+                            : 'unknown';
+                    const firstMarker = markerColor(snapshot.firstMarker);
+                    const capturedMarker = markerColor(marker);
+                    const drawOrdinalAfter = await page.evaluate(() => window.__readiness.drawOrdinal);
+                    const captureStable = snapshot.drawOrdinal === drawOrdinalAfter;
+                    const contentValidated =
+                        centerMatches &&
+                        firstMarker === 'first' &&
+                        capturedMarker === 'first' &&
+                        snapshot.drawOrdinal === 1 &&
+                        captureStable;
+                    row.compositor = {
+                        center,
+                        readback: expected,
+                        toleranceRGBA8: 2,
+                        centerMatches,
+                        marker,
+                        firstMarker,
+                        capturedMarker,
+                        drawOrdinalBefore: snapshot.drawOrdinal,
+                        drawOrdinalAfter,
+                        captureStable,
+                        contentValidated,
+                    };
                     await page.evaluate((receipt) => window.__readiness.present(receipt), {
                         source: 'browser-compositor',
                         submissionId: snapshot.submission.id,
@@ -119,6 +189,22 @@ const report = {
                       : terminal.status === 'BLOCKED'
                         ? 'BLOCKED'
                         : 'FAIL';
+                if (mode === 'later-frame-control') {
+                    const evidence = row.compositor;
+                    row.status =
+                        terminal.status === 'FAILED' &&
+                        terminal.error?.code === 'READINESS_PRESENTATION_INVALID' &&
+                        terminal.businessUnchanged &&
+                        row.errors.length === 0 &&
+                        evidence?.centerMatches &&
+                        evidence.firstMarker === 'first' &&
+                        evidence.capturedMarker === 'later' &&
+                        evidence.drawOrdinalBefore === 2 &&
+                        evidence.captureStable &&
+                        !evidence.contentValidated
+                            ? 'EXPECTED_NEGATIVE_PASS'
+                            : 'FAIL';
+                }
                 if (
                     mode === 'shader-failure' &&
                     !(
@@ -149,7 +235,7 @@ const report = {
             if (sha(fs.readFileSync(path.join(root, file))) !== digest)
                 throw Error('Inputs changed during collection: ' + file);
         report.status =
-            report.rows.length === 5 &&
+            report.rows.length === 6 &&
             report.rows.every((row) => ['PASS', 'EXPECTED_NEGATIVE_PASS'].includes(row.status))
                 ? 'PASS'
                 : report.rows.some((row) => row.status === 'BLOCKED')

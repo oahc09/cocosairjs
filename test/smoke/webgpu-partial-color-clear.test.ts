@@ -1,0 +1,236 @@
+import {
+    BufferTextureCopy,
+    Color,
+    CommandBufferInfo,
+    Format,
+    LoadOp,
+    Rect,
+    TextureType,
+} from '../../src/cocos/gfx/base/define';
+import { WebGPUDeviceManager } from '../../src/cocos/gfx/webgpu/define';
+import { GFXFormatToWGPUFormat, WebGPUCmdFuncCopyTextureToBuffer } from '../../src/cocos/gfx/webgpu/webgpu-commands';
+import { WebGPUCommandBuffer } from '../../src/cocos/gfx/webgpu/webgpu-command-buffer';
+
+function fixture() {
+    const descriptors: any[] = [];
+    const formats: string[] = [];
+    const shaderModules: string[] = [];
+    const buffers: any[] = [];
+    const nativeDevice = {
+        createCommandEncoder: () => ({
+            beginRenderPass(descriptor: any) {
+                descriptors.push(descriptor);
+                return {
+                    setViewport: jest.fn(),
+                    setScissorRect: jest.fn(),
+                    setPipeline: jest.fn(),
+                    setBindGroup: jest.fn(),
+                    draw: jest.fn(),
+                    end: jest.fn(),
+                };
+            },
+            finish: jest.fn(),
+        }),
+        createShaderModule: ({ code }: { code: string }) => {
+            shaderModules.push(code);
+            return {};
+        },
+        createBindGroupLayout: () => ({}),
+        createPipelineLayout: () => ({}),
+        createRenderPipeline: ({ fragment, multisample }: any) => {
+            formats.push(fragment.targets[0].format + ':' + multisample.count);
+            return {};
+        },
+        createBuffer: () => {
+            const data = new ArrayBuffer(16);
+            const buffer = { data, getMappedRange: () => data, unmap: jest.fn(), destroy: jest.fn() };
+            buffers.push(buffer);
+            return buffer;
+        },
+        createBindGroup: () => ({}),
+        queue: { submit: jest.fn() },
+    };
+    const device = {
+        isLost: false,
+        nativeDevice,
+        getSwapchains: () => [],
+        cmdAllocator: { clearCmds: jest.fn() },
+        bindingMappings: { blockOffsets: [] },
+    } as any;
+    return { device, descriptors, formats, shaderModules, buffers };
+}
+
+const first = new Color(1, 0, 0, 1);
+const second = new Color(0, 1, 0, 1);
+const bounds = new Rect(0, 0, 4, 4);
+const subRect = new Rect(1, 1, 2, 2);
+
+function run(
+    f: ReturnType<typeof fixture>,
+    ops: LoadOp[],
+    area = subRect,
+    formats = [Format.RGBA8, Format.RGBA16F],
+    cmd = new WebGPUCommandBuffer(),
+    colors = [first, second],
+) {
+    WebGPUDeviceManager.setInstance(f.device);
+    const views = formats.map(() => ({ label: '' }));
+    const template = {
+        colorAttachments: formats.map((_, i) => ({ loadOp: ops[i] === LoadOp.LOAD ? 'load' : 'clear' })),
+    };
+    const pass = {
+        colorAttachments: formats.map((format, i) => ({ format, loadOp: ops[i] })),
+        depthStencilAttachment: { format: Format.UNKNOWN },
+        gpuRenderPass: { originalRP: template, nativeRenderPass: template },
+    };
+    const framebuffer = {
+        gpuFramebuffer: {
+            isOffscreen: true,
+            gpuColorTextures: views.map((view, i) => ({
+                width: 4,
+                height: 4,
+                samples: 1,
+                getTextureView: () => view,
+                gpuTexture: { format: GFXFormatToWGPUFormat(formats[i]), createView: () => view },
+            })),
+        },
+    };
+    cmd.beginRenderPass(pass as any, framebuffer as any, area, colors, 1, 0);
+    cmd.endRenderPass();
+    return { views, template };
+}
+
+describe('WebGPU offscreen partial color clear encoding (CPU descriptor doubles only)', () => {
+    const original = WebGPUDeviceManager.instance;
+    const globals = globalThis as any;
+    const originalStage = globals.GPUShaderStage;
+    const originalUsage = globals.GPUBufferUsage;
+    const originalMapMode = globals.GPUMapMode;
+    beforeEach(() => {
+        globals.GPUShaderStage = { FRAGMENT: 2 };
+        globals.GPUBufferUsage = { UNIFORM: 64, MAP_READ: 1, COPY_DST: 8 };
+        globals.GPUMapMode = { READ: 1 };
+    });
+    afterEach(() => {
+        WebGPUDeviceManager.setInstance(original);
+        globals.GPUShaderStage = originalStage;
+        globals.GPUBufferUsage = originalUsage;
+        globals.GPUMapMode = originalMapMode;
+    });
+
+    test('only CLEAR target is drawn, even in the first pass and after a LOAD sibling', () => {
+        const f = fixture();
+        const a = run(f, [LoadOp.CLEAR, LoadOp.LOAD]);
+        const b = run(f, [LoadOp.LOAD, LoadOp.CLEAR]);
+        const again = run(f, [LoadOp.CLEAR, LoadOp.LOAD]);
+        expect(f.descriptors).toHaveLength(6);
+        expect(
+            [f.descriptors[0], f.descriptors[2], f.descriptors[4]].map((desc) => desc.colorAttachments[0].view),
+        ).toEqual([a.views[0], b.views[1], again.views[0]]);
+        expect(f.descriptors[1].colorAttachments.map((t: any) => t.loadOp)).toEqual(['load', 'load']);
+        expect(f.descriptors[3].colorAttachments.map((t: any) => t.loadOp)).toEqual(['load', 'load']);
+        expect(a.template.colorAttachments.map((t) => t.loadOp)).toEqual(['clear', 'load']);
+        expect(f.formats).toEqual(['rgba8unorm:1', 'rgba16float:1']);
+        expect(f.buffers.every((v) => v.destroy.mock.calls.length === 1)).toBe(true);
+    });
+
+    test('full area uses native CLEAR and creates no auxiliary pass', () => {
+        const f = fixture();
+        run(f, [LoadOp.CLEAR, LoadOp.LOAD], bounds);
+        expect(f.formats).toEqual([]);
+        expect(f.descriptors).toHaveLength(1);
+        expect(f.descriptors[0].colorAttachments.map((t: any) => t.loadOp)).toEqual(['clear', 'load']);
+    });
+
+    test('later passes in one engine begin/end preserve LOAD targets and reuse the format-specific pipeline', () => {
+        const f = fixture();
+        WebGPUDeviceManager.setInstance(f.device);
+        const cmd = new WebGPUCommandBuffer();
+        cmd.initialize(new CommandBufferInfo({} as any));
+        cmd.begin();
+        try {
+            run(f, [LoadOp.CLEAR, LoadOp.CLEAR], bounds, undefined, cmd);
+            const a = run(f, [LoadOp.CLEAR, LoadOp.LOAD], subRect, undefined, cmd);
+            const b = run(f, [LoadOp.LOAD, LoadOp.CLEAR], subRect, undefined, cmd);
+            const again = run(f, [LoadOp.CLEAR, LoadOp.LOAD], subRect, undefined, cmd);
+            const load = run(f, [LoadOp.LOAD, LoadOp.LOAD], subRect, undefined, cmd);
+            cmd.end();
+
+            expect(f.descriptors).toHaveLength(8);
+            expect(f.formats).toEqual(['rgba8unorm:1', 'rgba16float:1']);
+            expect(
+                [f.descriptors[1], f.descriptors[3], f.descriptors[5]].map((desc) => desc.colorAttachments[0].view),
+            ).toEqual([a.views[0], b.views[1], again.views[0]]);
+            for (const index of [2, 4, 6, 7]) {
+                expect(f.descriptors[index].colorAttachments.map((t: any) => t.loadOp)).toEqual(['load', 'load']);
+            }
+            expect(f.descriptors[7].colorAttachments.map((t: any) => t.view)).toEqual(load.views);
+        } finally {
+            cmd.destroy();
+        }
+    });
+
+    test('native pipeline is not shared across devices; integer format uses a typed shader', () => {
+        const a = fixture();
+        const b = fixture();
+        run(a, [LoadOp.CLEAR, LoadOp.LOAD]);
+        // 2^24 + 1 is the first positive integer that would lose precision in float32 staging.
+        const exactUnsigned = 16777217;
+        run(b, [LoadOp.CLEAR, LoadOp.CLEAR], subRect, [Format.RGBA8, Format.R32UI], undefined, [
+            first,
+            new Color(exactUnsigned, 1, 0, 1),
+        ]);
+        expect(a.formats).toEqual(['rgba8unorm:1']);
+        expect(b.formats).toEqual(['rgba8unorm:1', 'r32uint:1']);
+        expect(b.shaderModules.some((src) => src.includes('-> @location(0) vec4<u32>'))).toBe(true);
+        expect([...new Uint32Array(b.buffers[1].data)]).toEqual([exactUnsigned, 1, 0, 1]);
+    });
+    test.each([
+        { format: Format.RGBA32UI, array: Uint32Array, first: [16777217, 2147483649, 4294967295, 1] },
+        { format: Format.RGBA32I, array: Int32Array, first: [-16777217, 16777219, -2147483647, 2147483647] },
+    ])('integer readback row packing preserves exact values (format $format)', async ({ format, array, first }) => {
+        const firstRow = [...first, 5, 7, 11, 13];
+        const secondRow = [31, 37, 41, 43, ...first];
+        const mapped = new ArrayBuffer(512);
+        new Uint8Array(mapped).fill(0xca);
+        new array(mapped, 0, 8).set(firstRow);
+        new array(mapped, 256, 8).set(secondRow);
+        const staging = {
+            mapAsync: jest.fn().mockResolvedValue(undefined),
+            getMappedRange: () => mapped,
+            unmap: jest.fn(),
+            destroy: jest.fn(),
+        };
+        const copyTextureToBuffer = jest.fn();
+        const native = {
+            queue: { submit: jest.fn() },
+            createBuffer: jest.fn(() => staging),
+            createCommandEncoder: () => ({ copyTextureToBuffer, finish: jest.fn() }),
+        };
+        const device = { nativeDevice: native, isLost: false } as any;
+        const texture = {
+            format,
+            type: TextureType.TEX2D,
+            samples: 1,
+            width: 2,
+            height: 2,
+            mipLevel: 1,
+            arrayLayer: 1,
+            gpuTexture: {},
+        } as any;
+        const region = new BufferTextureCopy();
+        region.texExtent.width = region.texExtent.height = 2;
+        const storage = new array(18).fill(99);
+        const view = storage.subarray(1, 17);
+        await WebGPUCmdFuncCopyTextureToBuffer(device, texture, [view], [region]);
+        expect(copyTextureToBuffer).toHaveBeenCalledWith(
+            expect.anything(),
+            { buffer: staging, bytesPerRow: 256, rowsPerImage: 2 },
+            { width: 2, height: 2, depthOrArrayLayers: 1 },
+        );
+        expect([...storage]).toEqual([99, ...firstRow, ...secondRow, 99]);
+        expect(staging.mapAsync).toHaveBeenCalledWith(1);
+        expect(staging.unmap).toHaveBeenCalledTimes(1);
+        expect(staging.destroy).toHaveBeenCalledTimes(1);
+    });
+});

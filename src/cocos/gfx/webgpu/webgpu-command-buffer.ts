@@ -42,6 +42,7 @@ import {
     TextureBlit,
     DescriptorSetInfo,
     Format,
+    LoadOp,
     DispatchInfo,
 } from '../base/define';
 import { Framebuffer } from '../base/framebuffer';
@@ -54,6 +55,7 @@ import { WebGPUBuffer } from './webgpu-buffer';
 import { WebGPUCommandAllocator } from './webgpu-command-allocator';
 import {
     clearRect,
+    GFXFormatToWGPUFormat,
     WebGPUCmdPackage,
 } from './webgpu-commands';
 import { WebGPUFramebuffer } from './webgpu-framebuffer';
@@ -105,7 +107,6 @@ interface CommandEncoder { commandEncoder: GPUCommandEncoder, renderPassEncoder:
 let currPipelineState: WebGPUPipelineState | null = null;
 const descriptorSets: WebGPUDescriptorSet[] = [];
 const groupSets: number[] = [0, 1, 2];
-const renderAreas: Rect[] = [];
 let samples: number = 1;
 export class WebGPUCommandBuffer extends CommandBuffer {
     public pipelineBarrier (
@@ -192,7 +193,6 @@ export class WebGPUCommandBuffer extends CommandBuffer {
         this._discardPendingPasses();
         if (WebGPUDeviceManager.instance.isLost) throw new Error('WEBGPU_DEVICE_LOST');
         this._webGPUAllocator!.clearCmds(this.cmdPackage);
-        renderAreas.length = 0;
         this._curGPUPipelineState = null;
         this._curGPUInputAssembler = null;
         this._curGPUDescriptorSets.length = 0;
@@ -237,42 +237,39 @@ export class WebGPUCommandBuffer extends CommandBuffer {
         if (device.isLost) throw new Error('WEBGPU_DEVICE_LOST');
         const gpuDevice = device;
         this._wgpuRenderPass = renderPass as WebGPURenderPass;
-        const nativePassDesc = this._nativePassDesc = this._wgpuRenderPass.gpuRenderPass.nativeRenderPass!;
-        const originalRP = this._wgpuRenderPass.gpuRenderPass.originalRP!;
+        const template = this._wgpuRenderPass.gpuRenderPass.originalRP!;
+        // Keep per-pass views, resolve targets and load ops out of the shared template.
+        const nativePassDesc = {
+            ...template,
+            colorAttachments: Array.from(template.colorAttachments, (attachment) => attachment && ({ ...attachment })),
+            depthStencilAttachment: template.depthStencilAttachment ? { ...template.depthStencilAttachment } : undefined,
+        };
         const gpuFramebuffer = (framebuffer as WebGPUFramebuffer).gpuFramebuffer;
-        renderAreas.push(renderArea);
-        let needPartialClear = false;
         samples = 1;
-        const renderingFullScreen = gpuFramebuffer.gpuColorTextures.every((val) => {
-            if (renderArea.x !== 0 || renderArea.y !== 0 || renderArea.width !== val.width || renderArea.height !== val.height) {
-                return false;
-            }
-            return true;
-        });
+        const area = new Rect(Math.floor(renderArea.x), Math.floor(renderArea.y),
+            Math.floor(renderArea.width), Math.floor(renderArea.height));
+        const partialColorArea = gpuFramebuffer.isOffscreen && gpuFramebuffer.gpuColorTextures.some((texture) =>
+            area.x !== 0 || area.y !== 0 || area.width !== texture.width || area.height !== texture.height);
         const swapchain = gpuDevice.getSwapchains()[0] as WebGPUSwapchain;
+        const partialClears: Array<{ view: GPUTextureView; format: GPUTextureFormat; samples: number; color: Color }> = [];
         const clearColorSize = clearColors.length;
         for (let i = 0; i < clearColorSize; i++) {
-            let colorTex: GPUTextureView;
-            let currGPUTex;
-            if (gpuFramebuffer.isOffscreen) {
-                currGPUTex = gpuFramebuffer.gpuColorTextures[i];
-                colorTex = currGPUTex.getTextureView()!;
-            } else {
-                colorTex = swapchain.colorGPUTextureView;
+            const attachment = nativePassDesc.colorAttachments[i]!;
+            const current = gpuFramebuffer.isOffscreen ? gpuFramebuffer.gpuColorTextures[i] : undefined;
+            const view = current ? current.getTextureView()! : swapchain.colorGPUTextureView;
+            view.label = current ? 'offscreen' : 'swapchain';
+            if (current?.resolveTex) {
+                samples = current.samples;
+                attachment.resolveTarget = current.resolveTex.gpuTexture!.createView();
             }
-            colorTex.label = gpuFramebuffer.isOffscreen ? 'offscreen' : 'swapchain';
-            if (!renderingFullScreen) {
-                needPartialClear = originalRP.colorAttachments[i].loadOp === 'clear';
-                if (renderAreas.length > 1) {
-                    nativePassDesc.colorAttachments[i].loadOp = 'load';
-                }
+            const color = clearColors[i];
+            attachment.view = view;
+            attachment.clearValue = [color.x, color.y, color.z, color.w];
+            const colorInfo = this._wgpuRenderPass.colorAttachments[i];
+            if (current && partialColorArea && colorInfo.loadOp === LoadOp.CLEAR) {
+                attachment.loadOp = 'load';
+                partialClears.push({ view, format: GFXFormatToWGPUFormat(colorInfo.format), samples: current.samples, color });
             }
-            nativePassDesc.colorAttachments[i].view = colorTex;
-            if (currGPUTex && currGPUTex.resolveTex) {
-                samples = currGPUTex.samples;
-                nativePassDesc.colorAttachments[i].resolveTarget = currGPUTex.resolveTex.gpuTexture.createView();
-            }
-            nativePassDesc.colorAttachments[i].clearValue = [clearColors[i].x, clearColors[i].y, clearColors[i].z, clearColors[i].w];
         }
 
         if (this._wgpuRenderPass.depthStencilAttachment?.format !== Format.UNKNOWN) {
@@ -284,28 +281,16 @@ export class WebGPUCommandBuffer extends CommandBuffer {
             if (depthStencilAttachment.stencilLoadOp !== undefined) depthStencilAttachment.stencilClearValue = clearStencil;
         }
 
-        renderArea.x = Math.floor(renderArea.x);
-        renderArea.y = Math.floor(renderArea.y);
-        renderArea.width = Math.floor(renderArea.width);
-        renderArea.height = Math.floor(renderArea.height);
-        const vpfunc = (passEncoder: GPURenderPassEncoder): void => {
-            passEncoder.setViewport(renderArea.x, renderArea.y, renderArea.width, renderArea.height, 0.0, 1.0);
-        };
-        const srfunc = (passEncoder: GPURenderPassEncoder): void => {
-            passEncoder.setScissorRect(renderArea.x, renderArea.y, renderArea.width, renderArea.height);
-        };
-
-        this._renderPassFuncQueue.push(vpfunc);
-        this._renderPassFuncQueue.push(srfunc);
-
-        if (!renderingFullScreen && needPartialClear) {
-            let idx = 0;
-            gpuFramebuffer.gpuColorTextures.forEach((tex) => {
-                clearRect(device, tex, renderArea, clearColors[idx]);
-                idx++;
-            });
+        if (area.width > 0 && area.height > 0) {
+            for (const pass of partialClears) {
+                clearRect(device, pass.view, pass.format, pass.samples, area, pass.color);
+            }
         }
-
+        this._nativePassDesc = nativePassDesc;
+        this._renderPassFuncQueue.push((encoder) => {
+            encoder.setViewport(area.x, area.y, area.width, area.height, 0.0, 1.0);
+            encoder.setScissorRect(area.x, area.y, area.width, area.height);
+        });
         this._releaseRenderResources = beginWebGPUResourceUse(device.nativeDevice!);
         this._isInRenderPass = true;
     }
@@ -322,11 +307,6 @@ export class WebGPUCommandBuffer extends CommandBuffer {
             passEncoder.end();
             nativeDevice.queue.submit([cmdEncoder.finish()]);
         } finally {
-            let idx = 0;
-            for (const attachment of this._nativePassDesc!.colorAttachments) {
-                attachment!.loadOp = this._wgpuRenderPass.gpuRenderPass.originalRP!.colorAttachments[idx].loadOp;
-                idx++;
-            }
             this._isInRenderPass = false;
             this._isStateValid = false;
             this._renderPassFuncQueue.length = 0;

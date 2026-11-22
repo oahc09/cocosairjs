@@ -65,8 +65,11 @@ function absoluteURL (url: string): string {
 
 let globalDefaults: GLTFLoaderOptions = {};
 /** Sets process-wide fallback options; instance options take precedence over these. */
-export function configureGLTFLoaderDefaults (options: GLTFLoaderOptions): void {
-    globalDefaults = { ...globalDefaults, ...options,
+export function configureGLTFLoaderDefaults (options: Omit<GLTFLoaderOptions, 'experimentalTextureDeduplication'>): void {
+    const defaults: GLTFLoaderOptions = { ...options };
+    // JavaScript callers can pass extra fields; never allow aliasing in the native URL-only cache.
+    delete defaults.experimentalTextureDeduplication;
+    globalDefaults = { ...globalDefaults, ...defaults,
         request: Object.prototype.hasOwnProperty.call(options, 'request') && options.request === undefined
             ? undefined : mergeRequestPolicy(globalDefaults.request, options.request) };
 }
@@ -264,7 +267,8 @@ export function registerGLTFLoader (): void {
             try { decodeContainer(data); done(null, data); } catch (error) { done(error as Error); }
         });
         factory.register(ext, (url, data, options, done) => {
-            const loaderOptions = (options as { gltf?: GLTFLoaderOptions } | undefined)?.gltf ?? globalDefaults;
+            const loaderOptions = { ...((options as { gltf?: GLTFLoaderOptions } | undefined)?.gltf ?? globalDefaults) };
+            delete loaderOptions.experimentalTextureDeduplication;
             new GLTFLoader(loaderOptions).parseAsync(data, /^(data|blob):/i.test(url) ? undefined : new URL('.', absoluteURL(url)).href).then(
                 (asset) => done(null, asset), (error) => {
                     // Native parsed/file caches must not turn a repaired URL into a permanent failure.

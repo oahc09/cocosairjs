@@ -42,8 +42,37 @@ import { SUPPORTED_IMAGE_MIMES, detectImageMime } from './extensions/texture/ima
 import { gltfEffect, UV_SLOTS } from './material/standard-effect';
 export { gltfEffect } from './material/standard-effect';
 
+// Color conversion is currently performed per material slot in the shader. Keep
+// distinct semantic roles isolated even though today's core uploads use the same format.
+function textureRoles (context: GLTFParserContext): Map<number, number> {
+    const roles = new Map<number, number>();
+    const mark = (info: TextureInfo | undefined, role: number): void => {
+        if (info) { roles.set(info.index, (roles.get(info.index) ?? 0) | role); }
+    };
+    for (const material of context.json.materials || []) {
+        mark(material.pbrMetallicRoughness?.baseColorTexture, 1);
+        mark(material.emissiveTexture, 1);
+        mark(material.pbrMetallicRoughness?.metallicRoughnessTexture, 2);
+        mark(material.normalTexture, 2);
+        mark(material.occlusionTexture, 2);
+        // Do not assume the transfer function or interpretation of extension slots.
+        for (const extension of Object.values(material.extensions || {})) {
+            if (!extension || typeof extension !== 'object') { continue; }
+            for (const [key, value] of Object.entries(extension)) {
+                if (/texture$/i.test(key) && value && typeof value === 'object') {
+                    mark(value as TextureInfo, 4);
+                }
+            }
+        }
+    }
+    return roles;
+}
+
 export async function loadGLTFTextures (context: GLTFParserContext, textures: Texture2D[], images: ImageAsset[]): Promise<void> {
     const imageCache = new Map<number, ImageAsset>();
+    const experimentalDeduplication = context.options.experimentalTextureDeduplication === true;
+    const textureCache = experimentalDeduplication ? new Map<ImageAsset, Map<string, Texture2D>>() : undefined;
+    const roles = experimentalDeduplication ? textureRoles(context) : undefined;
     const decodeImage = async (key: number, bytes: Uint8Array, mime: string): Promise<ImageAsset | null> => {
         context.throwIfAborted();
         const cached = imageCache.get(key);
@@ -140,25 +169,46 @@ export async function loadGLTFTextures (context: GLTFParserContext, textures: Te
         }
         context.throwIfAborted();
         const sampler = source.sampler === undefined ? {} : item(context.json.samplers, source.sampler, 'sampler');
-        const texture = new Texture2D(); textures.push(texture); texture.name = source.name || `texture_${index}`;
         const min = sampler.minFilter ?? 9987; const mag = sampler.magFilter ?? 9729;
         check([9728, 9729, 9984, 9985, 9986, 9987].includes(min) && [9728, 9729].includes(mag), 'invalid texture filter');
         const wrap = (value: number): number => {
             check([33071, 33648, 10497].includes(value), 'invalid texture wrap');
             return value === 33071 ? Texture2D.WrapMode.CLAMP_TO_EDGE : value === 33648 ? Texture2D.WrapMode.MIRRORED_REPEAT : Texture2D.WrapMode.REPEAT;
         };
-        texture.setFilters([9728, 9984, 9986].includes(min) ? Texture2D.Filter.NEAREST : Texture2D.Filter.LINEAR,
-            mag === 9728 ? Texture2D.Filter.NEAREST : Texture2D.Filter.LINEAR);
-        texture.setMipFilter(min < 9984 ? Texture2D.Filter.NONE : min <= 9985 ? Texture2D.Filter.NEAREST : Texture2D.Filter.LINEAR);
-        texture.setWrapMode(wrap(sampler.wrapS ?? 10497), wrap(sampler.wrapT ?? 10497));
+        const minFilter = [9728, 9984, 9986].includes(min) ? Texture2D.Filter.NEAREST : Texture2D.Filter.LINEAR;
+        const magFilter = mag === 9728 ? Texture2D.Filter.NEAREST : Texture2D.Filter.LINEAR;
+        let mipFilter = min < 9984 ? Texture2D.Filter.NONE : min <= 9985 ? Texture2D.Filter.NEAREST : Texture2D.Filter.LINEAR;
+        let wrapS = wrap(sampler.wrapS ?? 10497);
+        let wrapT = wrap(sampler.wrapT ?? 10497);
         const powerOfTwo = (n: number): boolean => n > 0 && (n & (n - 1)) === 0;
         if (deviceManager.gfxDevice.gfxAPI === API.WEBGL && (!powerOfTwo(image.width) || !powerOfTwo(image.height))) {
             context.warn(`texture ${index}: WebGL1 NPOT sampler changed to clamp/no mipmaps`);
-            texture.setWrapMode(Texture2D.WrapMode.CLAMP_TO_EDGE, Texture2D.WrapMode.CLAMP_TO_EDGE);
-            texture.setMipFilter(Texture2D.Filter.NONE);
+            wrapS = wrapT = Texture2D.WrapMode.CLAMP_TO_EDGE;
+            mipFilter = Texture2D.Filter.NONE;
         }
+
+        // Restrict reuse to the identical decoded core image. In particular, a
+        // matching core fallback index does not establish extension compatibility.
+        const role = roles?.get(index) ?? 0;
+        const share = textureCache && !decoded && !Object.keys(source.extensions || {}).length && !(role & 4);
+        const key = `${minFilter}:${magFilter}:${mipFilter}:${wrapS}:${wrapT}:${role}`;
+        let variants = share ? textureCache.get(image) : undefined;
+        const cachedTexture = variants?.get(key);
+        if (cachedTexture) { textures.push(cachedTexture); continue; }
+        const texture = new Texture2D();
+        // Register ownership before upload in case upload throws. GLTFAsset
+        // destroys its owned resources by identity, not by glTF array index.
+        textures.push(texture);
+        texture.name = source.name || `texture_${index}`;
+        texture.setFilters(minFilter, magFilter);
+        texture.setMipFilter(mipFilter);
+        texture.setWrapMode(wrapS, wrapT);
         // Upload without flipY: glTF UVs and HTML image rows both start at the top.
         texture.image = image;
+        if (share && textureCache) {
+            if (!variants) { variants = new Map(); textureCache.set(image, variants); }
+            variants.set(key, texture);
+        }
     }
 }
 

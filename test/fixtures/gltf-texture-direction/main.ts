@@ -83,4 +83,93 @@ async function release() {
         assetsValid: assets.map((asset) => asset.isValid), ownedValid: owned.map((asset) => asset.isValid), controlsValid: controls.map((asset) => asset.isValid),
         textureRefs: owned.filter((asset) => asset instanceof Texture2D).map((texture) => texture.refCount), gpuMemory: 'unavailable' };
 }
-(window as unknown as { __gltfTextureDirection: unknown }).__gltfTextureDirection = { ready: true, pngURL, run, release };
+// Separate scoped test so the original orientation probe and its assertions remain unchanged.
+async function dedup () {
+    const sampler = { minFilter: 9728, magFilter: 9728, wrapS: 33071, wrapT: 33071 };
+    const control = documentFor('embedded', sampler);
+    const source = documentFor('embedded', sampler);
+    source.samplers.push({ ...sampler }, { ...sampler, wrapS: 10497 });
+    source.textures = Array.from({ length: 100 }, (_, i) => ({ source: 0, sampler: i % 2 }));
+    source.textures.push({ source: 0, sampler: 2 });
+    source.materials[0].pbrMetallicRoughness.baseColorTexture.index = 99;
+    const material = source.materials[0];
+    for (let index = 0; index < 99; index++) {
+        source.materials.push({ ...material, pbrMetallicRoughness: { baseColorTexture: { index } } });
+    }
+    const gl = app.canvas.getContext('webgl2')!;
+    const originalImage = gl.texImage2D, originalSubImage = gl.texSubImage2D, originalDelete = gl.deleteTexture;
+    const deletes = new Map<WebGLTexture, number>();
+    let bitmapUploads = 0;
+    const recordUpload = (args: unknown[]) => {
+        if (args.some((arg) => arg instanceof HTMLImageElement && arg.width === 2 && arg.height === 2)) { bitmapUploads++; }
+    };
+    gl.texImage2D = function (...args: unknown[]) {
+        recordUpload(args); return Reflect.apply(originalImage, this, args);
+    } as typeof gl.texImage2D;
+    gl.texSubImage2D = function (...args: unknown[]) {
+        recordUpload(args); return Reflect.apply(originalSubImage, this, args);
+    } as typeof gl.texSubImage2D;
+    gl.deleteTexture = function (handle) {
+        if (handle) { deletes.set(handle, (deletes.get(handle) ?? 0) + 1); }
+        return originalDelete.call(this, handle);
+    };
+    const observe = async (doc: ReturnType<typeof documentFor>, experimentalTextureDeduplication = false) => {
+        bitmapUploads = 0;
+        const asset = await new GLTFLoader({ experimentalTextureDeduplication }).parseAsync(JSON.stringify(doc), location.href);
+        const uploads = bitmapUploads;
+        const instance = asset.instantiate();
+        assets.push(asset); instances.push(instance);
+        instances.forEach((other) => { other.root.active = other === instance; }); scene.addChild(instance.root);
+        const handles = asset.textures.map((texture) =>
+            (texture.getGFXTexture() as unknown as { gpuTexture: { glTexture: WebGLTexture } }).gpuTexture.glTexture);
+        return { uploads, pixels: render(), handles, unique: new Set(handles).size, allLive: handles.every((h) => gl.isTexture(h)),
+            aliases: new Set(handles.slice(0, 100)).size };
+    };
+    try {
+        const first = await observe(control); const independent = await observe(source); const shared = await observe(source, true);
+        const cleanup = await release();
+        return {
+            control: { uploads: first.uploads, pixels: first.pixels, unique: first.unique, allLive: first.allLive },
+            defaults: { uploads: independent.uploads, pixels: independent.pixels, unique: independent.unique,
+                allLive: independent.allLive, indices: independent.handles.length },
+            shared: { uploads: shared.uploads, pixels: shared.pixels, unique: shared.unique, allLive: shared.allLive,
+                aliases: shared.aliases, indices: shared.handles.length },
+            distinctFromControl: new Set([...first.handles, ...independent.handles, ...shared.handles]).size === 104,
+            deletedExactlyOnce: [...new Set([...first.handles, ...independent.handles, ...shared.handles])].every((handle) => deletes.get(handle) === 1),
+            handlesReleased: [...first.handles, ...independent.handles, ...shared.handles].every((handle) => !gl.isTexture(handle)),
+            lifecycleClean: cleanup.receipt.status === 'released' && cleanup.ownedValid.every((valid) => !valid),
+            glError: gl.getError(),
+            errors: app.diagnostics.snapshot().filter((event) => event.severity === 'error'),
+        };
+    } finally {
+        gl.texImage2D = originalImage; gl.texSubImage2D = originalSubImage; gl.deleteTexture = originalDelete;
+    }
+}
+
+async function publicTextureCompatibility () {
+    const source = documentFor('embedded', { minFilter: 9728, magFilter: 9728, wrapS: 33071, wrapT: 33071 });
+    const textures = [{ source: 0, sampler: 0, name: 'texture-one' }, { source: 0, sampler: 0, name: 'texture-two' }];
+    source.textures = textures;
+    const material = source.materials[0];
+    source.materials.push({ ...material, pbrMetallicRoughness: { baseColorTexture: { index: 1 } } });
+    const asset = await new GLTFLoader().parseAsync(JSON.stringify(source), location.href);
+    try {
+        const [one, two] = asset.textures;
+        const gl = app.canvas.getContext('webgl2')!;
+        const secondHandle = (two.getGFXTexture() as unknown as { gpuTexture: { glTexture: WebGLTexture } }).gpuTexture.glTexture;
+        const originalWrap = two.getSamplerInfo().addressU;
+        const initialNames = [one.name, two.name];
+        const sharedDecodedImage = one.image === two.image;
+        one.name = 'changed';
+        one.setWrapMode(Texture2D.WrapMode.REPEAT, Texture2D.WrapMode.CLAMP_TO_EDGE);
+        const secondNameAfterMutation = two.name;
+        const secondWrapUnchanged = two.getSamplerInfo().addressU === originalWrap;
+        const firstWrapChanged = one.getSamplerInfo().addressU !== originalWrap;
+        const firstDestroyed = one.destroy();
+        return { distinct: one !== two, initialNames, sharedDecodedImage, secondNameAfterMutation,
+            secondWrapUnchanged, firstWrapChanged, firstDestroyed, secondHandleLive: gl.isTexture(secondHandle) };
+    } finally {
+        asset.destroy();
+    }
+}
+(window as unknown as { __gltfTextureDirection: unknown }).__gltfTextureDirection = { ready: true, pngURL, run, release, dedup, publicTextureCompatibility };

@@ -10,6 +10,9 @@ const { verifySourceBinding } = require('../build/source-binding.cjs');
 const root = path.resolve(__dirname, '../..');
 const args = Object.fromEntries(process.argv.slice(2).map((value) => value.replace(/^--/, '').split('=')));
 assert(args.out, '--out=<new directory> required');
+const engine = args.browser || 'chromium';
+assert(['chromium', 'firefox', 'webkit'].includes(engine), '--browser=chromium|firefox|webkit');
+assert(args['compare-first-frame'] === undefined || args['compare-first-frame'] === '1', '--compare-first-frame=1');
 const out = path.resolve(root, args.out);
 assert(out.startsWith(root + path.sep) && !fs.existsSync(out), 'Use a new workspace output');
 fs.mkdirSync(out, { recursive: true });
@@ -22,10 +25,10 @@ const hash = (file) => crypto.createHash('sha256').update(fs.readFileSync(file))
 const report = {
     completed: false,
     subset: true,
-    scope: 'Chromium WebGL2 GFX output for struct value semantics, early return and MRT; not full GLSL validation',
+    scope: 'WebGL2 GFX output for struct value semantics, early return and MRT; not full GLSL validation',
     errors: [],
 };
-async function contracts({ sdk }) {
+async function contracts({ sdk, arm = 'standard' }) {
     const m = await import(sdk),
         g = m.gfx;
     const { preflightEffect } = await import('/build/shader-preflight.js');
@@ -81,7 +84,7 @@ void main(){Palette p;p.color=vec3(0,1,0);vec3 a=shade(p,false);vec3 b=shade(p,t
         pipeline.renderPass = target.renderPass;
         pipeline.depthStencilState.depthTest = pipeline.depthStencilState.depthWrite = false;
         pipeline.rasterizerState.cullMode = g.CullMode.NONE;
-        const state = own(device.createPipelineState(pipeline));
+
         const vertexBuffer = own(
             device.createBuffer(new g.BufferInfo(g.BufferUsageBit.VERTEX, g.MemoryUsageBit.DEVICE, 12, 4)),
         );
@@ -89,35 +92,81 @@ void main(){Palette p;p.color=vec3(0,1,0);vec3 a=shade(p,false);vec3 b=shade(p,t
         const assembler = own(device.createInputAssembler(new g.InputAssemblerInfo([], [vertexBuffer])));
         assembler.vertexCount = 3;
         const command = own(device.createCommandBuffer(new g.CommandBufferInfo(device.queue)));
-        command.begin();
-        target.beginPass(command);
-        try {
-            command.bindPipelineState(state);
-            command.bindDescriptorSet(0, descriptors);
-            command.bindInputAssembler(assembler);
-            command.draw(assembler);
-        } finally {
-            target.endPass(command);
-        }
-        command.end();
-        device.queue.submit([command]);
         const region = new g.BufferTextureCopy();
         region.texExtent.width = region.texExtent.height = 1;
-        const pixels = target.textures.map((texture) => {
-            const bytes = new Uint8Array(4);
-            device.copyTextureToBuffers(texture, [bytes], [region]);
-            return [...bytes];
-        });
-        if (pixels[0].join() !== '0,128,0,255' || pixels[1].join() !== '255,0,0,255')
+        const read = () =>
+            target.textures.map((texture) => {
+                const bytes = new Uint8Array(4);
+                device.copyTextureToBuffers(texture, [bytes], [region]);
+                return [...bytes];
+            });
+        const expected = [
+            [0, 128, 0, 255],
+            [255, 0, 0, 255],
+        ];
+        const reportStart = performance.now();
+        let state, compileWallMs;
+        function prepare() {
+            const before = performance.now();
+            state = own(device.createPipelineState(pipeline));
+            compileWallMs = performance.now() - before;
+        }
+        if (arm !== 'cold') prepare();
+        let pixels;
+        const frames = [];
+        for (let i = 0; i < (arm === 'standard' ? 1 : 3); i++) {
+            if (arm !== 'standard') await new Promise((resolve) => requestAnimationFrame(resolve));
+            const before = performance.now();
+            if (!state) prepare();
+            command.begin();
+            target.beginPass(command);
+            try {
+                command.bindPipelineState(state);
+                command.bindDescriptorSet(0, descriptors);
+                command.bindInputAssembler(assembler);
+                command.draw(assembler);
+            } finally {
+                target.endPass(command);
+            }
+            command.end();
+            device.queue.submit([command]);
+            const submitted = performance.now();
+            pixels = read();
+            if (device.gl.getError() !== device.gl.NO_ERROR) throw Error('Unexpected GL error');
+            const missing = expected.flatMap((marker, index) =>
+                marker.join() === pixels[index].join() ? [] : [index],
+            );
+            frames.push({
+                index: i + 1,
+                cpuEncodeAndSubmitMs: submitted - before,
+                untilReadbackMs: performance.now() - reportStart,
+                missingOutputMarkers: missing,
+                pixels,
+            });
+        }
+        if (arm === 'standard' && frames[0].missingOutputMarkers.length)
             throw Error('Struct/early-return/MRT output mismatch: ' + JSON.stringify(pixels));
-        if (device.gl.getError() !== device.gl.NO_ERROR) throw Error('Unexpected GL error');
+        const comparison =
+            arm === 'standard'
+                ? null
+                : {
+                      arm,
+                      scope: 'Two offscreen shader output markers, not presented frames, object counts, shadows or post-processing',
+                      pipelineCreateWallMs: compileWallMs,
+                      prewarmWallMs: arm === 'prewarm' ? compileWallMs : null,
+                      longestCpuEncodeAndSubmitMs: Math.max(...frames.map((frame) => frame.cpuEncodeAndSubmitMs)),
+                      firstCompleteReadbackMs:
+                          frames.find((frame) => frame.missingOutputMarkers.length === 0)?.untilReadbackMs ?? null,
+                      frames,
+                  };
         return {
             backend: device.gfxAPI,
             expectedBackend: g.API.WEBGL2,
             preflightStatus: preflight.status,
-            gpuValidatedByThisProbe: true,
+            gpuValidatedByThisProbe: frames.every((frame) => frame.missingOutputMarkers.length === 0),
             pixels,
             sources: normalized.glsl3,
+            ...(comparison ? { firstFrameProbe: comparison } : {}),
         };
     } finally {
         for (const value of owned.reverse()) value.destroy();
@@ -148,21 +197,47 @@ void main(){Palette p;p.color=vec3(0,1,0);vec3 a=shade(p,false);vec3 b=shade(p,t
         );
         report.preflightBuild = receipt;
         server = await startExampleServer(root);
-        browser = await require('playwright').chromium.launch({
-            ...launchOptions('chromium'),
-            env: loopbackBrowserEnv(),
+        browser = await require('playwright')[engine].launch({
             headless: true,
+            ...launchOptions(engine),
+            env: loopbackBrowserEnv(),
         });
         report.browser = browser.version();
-        const page = await browser.newPage();
-        page.on('console', (message) => {
-            if (message.type() === 'error') report.errors.push(message.text());
-        });
-        page.on('pageerror', (error) => report.errors.push(String(error)));
-        await page.goto(server.origin + '/' + path.relative(root, path.join(out, 'index.html')).replace(/\\/g, '/'));
-        report.result = await page.evaluate(contracts, { sdk: '/' + path.relative(root, bundle).replace(/\\/g, '/') });
+        report.browserEngine = engine;
+        const sdk = '/' + path.relative(root, bundle).replace(/\\/g, '/');
+        async function run(arm) {
+            // Each lane owns a fresh page and context; driver-wide shader caches
+            // are not cleared, so this is not a hardware cold-cache benchmark.
+            const page = await browser.newPage();
+            try {
+                page.on('console', (message) => {
+                    if (message.type() === 'error') report.errors.push(message.text());
+                });
+                page.on('pageerror', (error) => report.errors.push(String(error)));
+                await page.goto(
+                    server.origin + '/' + path.relative(root, path.join(out, 'index.html')).replace(/\\/g, '/'),
+                );
+                const result = await page.evaluate(contracts, { sdk, arm });
+                assert.equal(result.backend, result.expectedBackend);
+                return result;
+            } finally {
+                await page.context().close();
+            }
+        }
+        if (args['compare-first-frame'] === '1') {
+            report.firstFrameComparisons = [];
+            for (const arm of ['cold', 'prewarm']) {
+                const result = await run(arm);
+                report.firstFrameComparisons.push(result.firstFrameProbe);
+            }
+            for (const entry of report.firstFrameComparisons) {
+                assert.equal(entry.frames.length, 3);
+                for (const frame of entry.frames) assert.deepEqual(frame.missingOutputMarkers, []);
+            }
+        } else {
+            report.result = await run('standard');
+        }
         assert.deepEqual(report.errors, []);
-        assert.equal(report.result.backend, report.result.expectedBackend);
         for (const file of inputs)
             assert.equal(hash(file), report.fingerprints[path.relative(root, file).replace(/\\/g, '/')]);
         report.completed = true;

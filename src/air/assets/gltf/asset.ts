@@ -85,6 +85,7 @@ export class GLTFAsset extends Asset {
     public get materials(): readonly Material[] {
         return this.owned.materials;
     }
+    /** Indexed by glTF texture index. The direct loader deduplication experiment may alias entries. */
     public get textures(): readonly Texture2D[] {
         return this.owned.textures;
     }

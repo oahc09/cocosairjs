@@ -6,23 +6,50 @@ const crypto = require('node:crypto');
 const esbuild = require('esbuild');
 const { startExampleServer } = require('./competitive-example-server.cjs');
 const { launchOptions } = require('./browser-engines.cjs');
+const { verifySourceBinding } = require('../build/source-binding.cjs');
 const root = path.resolve(__dirname, '../..');
-const hash = (file) => crypto.createHash('sha256').update(fs.readFileSync(path.join(root, file))).digest('hex');
+const hash = (file) =>
+    crypto
+        .createHash('sha256')
+        .update(fs.readFileSync(path.join(root, file)))
+        .digest('hex');
 const snapshot = (page) => page.evaluate(() => window.__airInputProbe.snapshot());
 const reset = (page) => page.evaluate(() => window.__airInputProbe.resetCounts());
 
 async function main() {
     const startedAt = new Date().toISOString();
     const args = process.argv.slice(2);
-    if (args.some((arg) => !/^--(?:browser|out)=/.test(arg))) throw new Error('usage: node tools/verify/air-input-browser.cjs [--browser=chromium|firefox|webkit|all] [--out=<new.json>]');
+    if (args.some((arg) => !/^--(?:browser|out|bundle)=/.test(arg)))
+        throw new Error(
+            'usage: node tools/verify/air-input-browser.cjs [--browser=chromium|firefox|webkit|all] [--out=<new.json>] [--bundle=<workspace bundle>]',
+        );
     const selected = args.find((arg) => arg.startsWith('--browser='))?.split('=')[1] || 'all';
     const engines = selected === 'all' ? ['chromium', 'firefox', 'webkit'] : [selected];
-    if (engines.some((engine) => !['chromium', 'firefox', 'webkit'].includes(engine))) throw new Error('unknown browser');
+    if (engines.some((engine) => !['chromium', 'firefox', 'webkit'].includes(engine)))
+        throw new Error('unknown browser');
     const out = args.find((arg) => arg.startsWith('--out='))?.slice(6);
-    if (out && fs.existsSync(path.resolve(root, out))) throw new Error('report already exists; choose a new output path');
-    const files = ['build/cocosair.module.js', 'tools/verify/air-input-browser.cjs',
-        'test/fixtures/air-input/index.html', 'test/fixtures/air-input/main.ts',
-        'tools/debug/agent-session.ts', 'tools/debug/panel.ts'];
+    if (out && fs.existsSync(path.resolve(root, out)))
+        throw new Error('report already exists; choose a new output path');
+    const requestedBundle = args.find((arg) => arg.startsWith('--bundle='))?.slice(9);
+    const defaultBundle = 'build/cocosair.module.js';
+    const bundle = path
+        .relative(root, fs.realpathSync(path.resolve(root, requestedBundle || defaultBundle)))
+        .replace(/\\/g, '/');
+    assert(
+        /^(?:[a-zA-Z0-9_.-]+\/)*[a-zA-Z0-9_.-]+\.js$/.test(bundle) && !bundle.split('/').includes('..'),
+        'bundle must resolve inside the workspace',
+    );
+    const sourceBinding = requestedBundle ? verifySourceBinding(root, path.join(root, bundle)) : null;
+    if (sourceBinding) assert.equal(sourceBinding.matches, true, JSON.stringify(sourceBinding));
+    const files = [
+        bundle,
+        ...(sourceBinding ? [bundle + '.map', bundle + '.sources.json'] : []),
+        'tools/verify/air-input-browser.cjs',
+        'test/fixtures/air-input/index.html',
+        'test/fixtures/air-input/main.ts',
+        'tools/debug/agent-session.ts',
+        'tools/debug/panel.ts',
+    ];
     const fingerprints = Object.fromEntries(files.map((file) => [file, hash(file)]));
     const server = await startExampleServer(root);
     const results = [];
@@ -33,21 +60,51 @@ async function main() {
             let stage = 'infrastructure';
             try {
                 if (engine === 'webkit' && !fs.existsSync(playwright.webkit.executablePath())) {
-                    throw new Error(`matching WebKit binary missing: ${playwright.webkit.executablePath()}; install the revision required by this Playwright module`);
+                    throw new Error(
+                        `matching WebKit binary missing: ${playwright.webkit.executablePath()}; install the revision required by this Playwright module`,
+                    );
                 }
                 console.error(`[air-input] ${engine}: launch`);
-                browser = await playwright[engine].launch({ ...launchOptions(engine), headless: true });
-                for (const custom of [false, true]) {
-                    const context = await browser.newContext({ viewport: { width: 900, height: 650 }, hasTouch: true, deviceScaleFactor: 1 });
+                browser = await playwright[engine].launch({ headless: true, ...launchOptions(engine) });
+                for (const [custom, dpr] of [
+                    [false, 1],
+                    [true, 1],
+                    [false, 2],
+                    [true, 2],
+                ]) {
+                    const context = await browser.newContext({
+                        viewport: { width: 900, height: 650 },
+                        hasTouch: true,
+                        deviceScaleFactor: dpr,
+                    });
                     const page = await context.newPage();
                     const errors = [];
                     page.on('pageerror', (error) => errors.push(String(error.stack || error)));
                     for (const module of ['agent-session', 'panel']) {
-                        const built = esbuild.buildSync({ entryPoints: [path.join(root, `tools/debug/${module}.ts`)],
-                            bundle: true, write: false, format: 'esm', target: 'es2022', platform: 'browser', external: ['cocosair'] });
-                        await page.route(`**/tools/debug/${module}.js`, (route) => route.fulfill({ contentType: 'text/javascript', body: built.outputFiles[0].text }));
+                        const built = esbuild.buildSync({
+                            entryPoints: [path.join(root, `tools/debug/${module}.ts`)],
+                            bundle: true,
+                            write: false,
+                            format: 'esm',
+                            target: 'es2022',
+                            platform: 'browser',
+                            external: ['cocosair'],
+                        });
+                        await page.route(`**/tools/debug/${module}.js`, (route) =>
+                            route.fulfill({ contentType: 'text/javascript', body: built.outputFiles[0].text }),
+                        );
                     }
                     const url = `${server.origin}/test/fixtures/air-input/${custom ? '?custom' : ''}`;
+                    if (bundle !== defaultBundle) {
+                        const fixture = fs.readFileSync(path.join(root, 'test/fixtures/air-input/index.html'), 'utf8');
+                        assert(fixture.includes('"/build/cocosair.module.js"'));
+                        await page.route(url, (route) =>
+                            route.fulfill({
+                                contentType: 'text/html',
+                                body: fixture.replace('"/build/cocosair.module.js"', JSON.stringify('/' + bundle)),
+                            }),
+                        );
+                    }
                     await page.goto(url);
                     await page.waitForFunction(() => window.__airInputProbe?.state.ready, null, { timeout: 30000 });
                     stage = 'engine';
@@ -58,7 +115,10 @@ async function main() {
                     };
                     assert.equal(await page.locator('canvas').getAttribute('id'), custom ? 'PortCanvas' : 'GameCanvas');
                     assert.equal(await page.locator('canvas').evaluate((canvas) => canvas.tabIndex), 0);
-                    assert.equal(await page.evaluate(() => document.activeElement === document.querySelector('canvas')), false);
+                    assert.equal(
+                        await page.evaluate(() => document.activeElement === document.querySelector('canvas')),
+                        false,
+                    );
                     await page.keyboard.press('a');
                     assert.equal((await snapshot(page)).keyDown, 0);
                     record('first screen does not steal keyboard focus');
@@ -68,7 +128,10 @@ async function main() {
                     const region = await snapshot(page);
                     assert.equal(region.region.start, 1);
                     assert.equal(region.global.start, 0);
-                    assert.equal(await page.evaluate(() => document.activeElement === document.querySelector('canvas')), true);
+                    assert.equal(
+                        await page.evaluate(() => document.activeElement === document.querySelector('canvas')),
+                        true,
+                    );
                     assert.equal(await page.evaluate(() => window.__airInputProbe.region.components.length), 1);
                     record('non-rendering UITransform region receives single touch and consumes UI event', region);
                     await page.keyboard.press('a');
@@ -87,12 +150,20 @@ async function main() {
                     await reset(page);
                     await page.mouse.move(750, 500);
                     await page.mouse.down();
-                    await page.mouse.move(790, 550);
+                    await page.mouse.move(790, 550, { steps: 3 });
                     await page.mouse.up();
                     await page.waitForFunction(() => window.__airInputProbe.state.global.end === 1);
                     const drag = await snapshot(page);
                     assert.equal(drag.global.start, 1);
-                    assert(drag.global.move >= 1);
+                    const nativeDrag = drag.trusted.filter(
+                        (event) => event.type === 'mousemove' && event.trusted && event.buttons === 1,
+                    );
+                    assert.equal(nativeDrag.length, 3, 'browser protocol did not deliver the expected DOM input');
+                    assert.equal(
+                        drag.global.move,
+                        nativeDrag.length,
+                        'global drag dispatch must be exactly once per trusted move',
+                    );
                     assert.equal(drag.global.end, 1);
                     record('desktop mouse uses native single touch subscription', drag);
                     await reset(page);
@@ -103,6 +174,33 @@ async function main() {
                     assert.equal(touch.region.end, 1);
                     assert(touch.trusted.some((event) => event.type === 'touchstart' && event.trusted));
                     record('browser protocol touch uses the same region subscription', touch);
+                    await page.evaluate(() => window.__airInputProbe.enableNestedMoves());
+                    await page.mouse.move(450, 325);
+                    await reset(page);
+                    await page.mouse.down();
+                    await page.mouse.move(462, 332, { steps: 3 });
+                    await page.mouse.up();
+                    await page.waitForFunction(() => window.__airInputProbe.state.region.end === 1);
+                    const nested = await snapshot(page);
+                    const nativeNestedMoves = nested.trusted.filter(
+                        (event) => event.type === 'mousemove' && event.trusted && event.buttons === 1,
+                    );
+                    assert.equal(nativeNestedMoves.length, 3);
+                    assert.deepEqual(
+                        nested.nestedMoves,
+                        nativeNestedMoves.flatMap(() => [
+                            { scope: 'capture', target: 'NestedInputTarget', currentTarget: 'NonRenderingInputRegion' },
+                            { scope: 'target', target: 'NestedInputTarget', currentTarget: 'NestedInputTarget' },
+                            { scope: 'bubble', target: 'NestedInputTarget', currentTarget: 'NonRenderingInputRegion' },
+                        ]),
+                    );
+                    assert.equal(nested.region.move, nativeNestedMoves.length);
+                    assert.equal(
+                        nested.global.move,
+                        0,
+                        'node dispatch consumes the global stream; bubbling is not duplication',
+                    );
+                    record('trusted nested drag: once per capture, target and bubble; global consumed', nested);
                     const inspection = await page.evaluate(async () => {
                         const { createAgentSession } = await import('/tools/debug/agent-session.js');
                         const { createDebugPanel } = await import('/tools/debug/panel.js');
@@ -116,14 +214,29 @@ async function main() {
                         const limited = session.inspectScene();
                         const panel = createDebugPanel({ app: probe.app });
                         const panelPresent = document.body.textContent.includes('truncated');
-                        panel.close(); panel.close();
+                        panel.close();
+                        panel.close();
                         let panelClosed, sessionClosed;
-                        try { panel.session.inspectScene(); } catch (error) { panelClosed = error.code; }
-                        session.close(); session.close();
-                        try { session.inspectScene(); } catch (error) { sessionClosed = error.code; }
+                        try {
+                            panel.session.inspectScene();
+                        } catch (error) {
+                            panelClosed = error.code;
+                        }
+                        session.close();
+                        session.close();
+                        try {
+                            session.inspectScene();
+                        } catch (error) {
+                            sessionClosed = error.code;
+                        }
                         container.destroy();
-                        return { normal: { count: normal.nodes.length, names: normal.nodes.map((node) => node.name) },
-                            limited: { count: limited.nodes.length, truncated: limited.truncated }, panelPresent, panelClosed, sessionClosed };
+                        return {
+                            normal: { count: normal.nodes.length, names: normal.nodes.map((node) => node.name) },
+                            limited: { count: limited.nodes.length, truncated: limited.truncated },
+                            panelPresent,
+                            panelClosed,
+                            sessionClosed,
+                        };
                     });
                     assert(inspection.normal.names.includes('NonRenderingInputRegion'));
                     assert.equal(inspection.limited.count, 500);
@@ -131,30 +244,76 @@ async function main() {
                     assert.equal(inspection.panelPresent, true);
                     assert.equal(inspection.panelClosed, 'SESSION_CLOSED');
                     assert.equal(inspection.sessionClosed, 'SESSION_CLOSED');
-                    record('existing inspectScene/panel shows structure, reports truncation, closes idempotently', inspection);
+                    record(
+                        'existing inspectScene/panel shows structure, reports truncation, closes idempotently',
+                        inspection,
+                    );
                     assert.deepEqual(errors, []);
-                    const artifacts = path.resolve(root, out ? out.replace(/\.json$/, '') + '-artifacts' : `output/playwright/air-input-${Date.now()}`);
+                    const artifacts = path.resolve(
+                        root,
+                        out ? out.replace(/\.json$/, '') + '-artifacts' : `output/playwright/air-input-${Date.now()}`,
+                    );
                     fs.mkdirSync(artifacts, { recursive: true });
-                    const screenshot = path.join(artifacts, `${engine}-${custom ? 'custom' : 'default'}.png`);
+                    const screenshot = path.join(artifacts, `${engine}-${custom ? 'custom' : 'default'}-dpr${dpr}.png`);
                     await page.screenshot({ path: screenshot });
-                    results.push({ engine, browserVersion: browser.version(), canvas: custom ? 'custom' : 'default', url, status: 'PASS', checks,
+                    results.push({
+                        engine,
+                        browserVersion: browser.version(),
+                        canvas: custom ? 'custom' : 'default',
+                        dpr,
+                        url,
+                        status: 'PASS',
+                        checks,
                         screenshot: path.relative(root, screenshot).replace(/\\/g, '/'),
-                        inputMethod: 'Playwright browser protocol mouse/keyboard/touch (isTrusted checked for touch); no physical device attestation' });
+                        inputMethod:
+                            'Playwright browser protocol mouse/keyboard/touch (isTrusted checked for touch); no physical device attestation',
+                    });
                     await context.close();
                     stage = 'infrastructure';
                 }
             } catch (error) {
                 results.push({ engine, status: 'FAIL', stage, error: String(error.stack || error) });
-            } finally { if (browser) await browser.close(); }
+            } finally {
+                if (browser) await browser.close();
+            }
         }
-        for (const file of files) assert.equal(hash(file), fingerprints[file], `source or loaded bundle drift: ${file}`);
-        const report = { startedAt, endedAt: new Date().toISOString(), command: process.argv, cwd: root, fingerprints,
-            scope: ['PG-07 focus', 'PG-09 no-renderer UI region', 'PG-10 desktop and browser-protocol-touch', 'PG-14 existing tools'],
-            subset: true, completed: results.every((result) => result.status === 'PASS') && results.length === engines.length * 2,
-            unverified: ['physical touch devices', 'hybrid-device overlap/cancel/leave sequence', 'action reducer/session behavior (PG-28)'], results };
-        if (out) { const target = path.resolve(root, out); fs.mkdirSync(path.dirname(target), { recursive: true }); fs.writeFileSync(target, JSON.stringify(report, null, 2) + '\n', { flag: 'wx' }); }
+        for (const file of files)
+            assert.equal(hash(file), fingerprints[file], `source or loaded bundle drift: ${file}`);
+        const report = {
+            startedAt,
+            endedAt: new Date().toISOString(),
+            command: process.argv,
+            cwd: root,
+            fingerprints,
+            sourceBinding,
+            scope: [
+                'PG-07 focus',
+                'PG-09 no-renderer UI region',
+                'PG-10 desktop and browser-protocol-touch',
+                'PG-14 existing tools',
+                'exact trusted move cardinality at DPR 1/2',
+            ],
+            subset: true,
+            completed: results.every((result) => result.status === 'PASS') && results.length === engines.length * 4,
+            unverified: [
+                'physical touch devices',
+                'hybrid-device overlap/cancel/leave sequence',
+                'action reducer/session behavior (PG-28)',
+            ],
+            results,
+        };
+        if (out) {
+            const target = path.resolve(root, out);
+            fs.mkdirSync(path.dirname(target), { recursive: true });
+            fs.writeFileSync(target, JSON.stringify(report, null, 2) + '\n', { flag: 'wx' });
+        }
         console.log(JSON.stringify(report, null, 2));
         process.exitCode = report.completed ? 0 : 1;
-    } finally { await server.close(); }
+    } finally {
+        await server.close();
+    }
 }
-main().catch((error) => { console.error(String(error.stack || error)); process.exitCode = 1; });
+main().catch((error) => {
+    console.error(String(error.stack || error));
+    process.exitCode = 1;
+});

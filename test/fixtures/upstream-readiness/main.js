@@ -2,7 +2,7 @@ import * as cc from 'cocosair';
 import { observeAirFirstFrame } from '../../../tools/debug/readiness-observer.js';
 
 const mode = new URLSearchParams(location.search).get('case') || 'cold';
-if (!['cold', 'delayed-resource', 'offscreen', 'shader-failure', 'context-lost'].includes(mode))
+if (!['cold', 'delayed-resource', 'offscreen', 'shader-failure', 'context-lost', 'later-frame-control'].includes(mode))
     throw new Error('unknown readiness case');
 const canvas = document.querySelector('canvas');
 const nativeContext = canvas.getContext;
@@ -63,6 +63,8 @@ const passes = new Promise((resolve) => (passesResolve = resolve));
 const presentation = new Promise((resolve) => (presentResolve = resolve));
 let app,
     scene,
+    camera,
+    drawOrdinal = 0,
     resourceReady = false,
     submitted = false;
 const engine = cc.createAirApp({ canvas, pixelRatioCap: 1 }).then((value) => (app = value));
@@ -86,9 +88,10 @@ const resources = engine.then(async () => {
     let faultyEffect, target;
     // Register before native initialization: a rejected shader may throw while construction is partial.
     app.session.own(() => {
-        instance.dispose();
+        // releaseScene may already have destroyed the instance with its scene.
+        if (instance.root.isValid) instance.dispose();
         target?.dispose();
-        scene.destroy();
+        if (scene.isValid) scene.destroy();
         material.destroy();
         faultyEffect?.destroy();
         mesh.destroy();
@@ -110,9 +113,8 @@ const resources = engine.then(async () => {
     scene.addChild(cameraNode);
     cameraNode.setPosition(0, 0, 5);
     cameraNode.lookAt(new cc.Vec3());
-    const camera = cameraNode.addComponent(cc.Camera);
+    camera = cameraNode.addComponent(cc.Camera);
     camera.clearFlags = cc.Camera.ClearFlag.SOLID_COLOR;
-    camera.clearColor = new cc.Color(8, 16, 32, 255);
     if (mode === 'offscreen') {
         target = cc.createAirRenderTarget({ width: 64, height: 64, depthFormat: 'depth24-stencil8', samples: 1 });
         const offNode = new cc.Node('Offscreen');
@@ -131,18 +133,30 @@ const resources = engine.then(async () => {
             return;
         }
         extension.loseContext();
+        return; // The actual loss event, not a new draw on a lost device, settles this control.
     }
     app.run(scene);
     return { byteLength: bytes.byteLength, target: target?.info || null };
 });
+const active = () => resourceReady && app?.getScene() === scene;
 const beforeDraw = () => {
+    if (!active()) return;
+    // The camera's normal native clear encodes the draw ordinal in the background.
+    // The center geometry stays the same, so a later frame still fools a center-only check.
+    camera.clearColor = drawOrdinal === 0 ? new cc.Color(0, 255, 0, 255) : new cc.Color(0, 0, 255, 255);
     if (!submitted) {
         drawPrograms = new Set();
         drawCount = 0;
     }
 };
 const afterDraw = () => {
-    if (submitted || !resourceReady || app?.getScene() !== scene) return;
+    if (!active()) return;
+    drawOrdinal++;
+    if (drawOrdinal === (mode === 'later-frame-control' ? 2 : 1)) {
+        cc.game.pause();
+        window.__readiness.captureReady = true;
+    }
+    if (submitted) return;
     submitted = true;
     const programs = [...drawPrograms].map((program) => ({
         linked: gl.getProgramParameter(program, gl.LINK_STATUS),
@@ -158,6 +172,8 @@ const afterDraw = () => {
     const rgba = new Uint8Array(4);
     gl.readPixels(Math.floor(canvas.width / 2), Math.floor(canvas.height / 2), 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, rgba);
     window.__readiness.readback = Array.from(rgba);
+    gl.readPixels(8, canvas.height - 9, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, rgba);
+    window.__readiness.firstMarker = Array.from(rgba);
     const details = { programs, drawCount, glError: gl.getError() };
     passesResolve({
         status:
@@ -176,6 +192,11 @@ window.__readiness = {
     mode,
     submission: null,
     readback: null,
+    firstMarker: null,
+    captureReady: false,
+    get drawOrdinal() {
+        return drawOrdinal;
+    },
     report: null,
     present(receipt) {
         presentResolve(receipt);

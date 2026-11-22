@@ -1,0 +1,69 @@
+{
+  "schema": "three-experiment-contract/1",
+  "scope": "exploratory-only",
+  "measurementStatus": "not-run",
+  "updatesProtectedBaseline": false,
+  "contributesToAgentScore": false,
+  "protectedBaseline": {
+    "version": "0.186.1",
+    "lock": "tools/benchmark/upstream/reference-manifest.json",
+    "sha256": "4ae718efc49cc068e4f1e8127425e24038bb7078fc46e976df9e7c5f55b55ce1"
+  },
+  "experiments": [
+    {
+      "id": "webgpu-timestamp-batching",
+      "before": "57ffc61a36d3d1cea5f2064dd212ce162acf7087",
+      "after": "0d2bd4858657f02c7ef14e988ee585cf0574cafd",
+      "upstream": "https://github.com/mrdoob/three.js/pull/35519",
+      "backend": "webgpu",
+      "mustObserve": ["readback-latency", "query-count", "lost-or-disjoint-samples", "sampled-pass-identity"]
+    },
+    {
+      "id": "physical-indirect-specular",
+      "before": "3ee9e49e90941c2ed45303ab492d3eb48b5cc63c",
+      "introduced": "6efa5af0b8e6bbde573cf231a0e882d902d374f8",
+      "after": "282d7567de65c063a8657e20e88daad238b688e4",
+      "upstream": "https://github.com/mrdoob/three.js/pull/35580",
+      "followUp": "https://github.com/mrdoob/three.js/pull/35614",
+      "backend": "webgpu",
+      "mustObserve": [
+        "ambient-only",
+        "hemisphere-only",
+        "probe-only",
+        "environment-control",
+        "metallic-roughness-sweep"
+      ]
+    }
+  ],
+  "measurementAxes": [
+    {
+      "id": "cpu-frame",
+      "unit": "ms",
+      "source": "same-context-clock"
+    },
+    {
+      "id": "gpu-pass-sum",
+      "unit": "ms",
+      "source": "disjoint-pass-set-only"
+    },
+    {
+      "id": "gpu-elapsed-span",
+      "unit": "ms",
+      "source": "elapsed-interval-including-gaps"
+    },
+    {
+      "id": "display-present",
+      "unit": "ms",
+      "source": "external-present-trace-or-unavailable"
+    }
+  ],
+  "matchAcrossArms": [
+    "workload-bytes",
+    "renderer-backend",
+    "browser-and-driver",
+    "resolution-and-dpr",
+    "color-space-and-tone-mapping",
+    "warmup-and-frame-sample-count",
+    "fixed-clock-and-cameras"
+  ]
+}
