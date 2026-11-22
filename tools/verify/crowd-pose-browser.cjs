@@ -1,10 +1,12 @@
 // Opt-in single-browser experiment: native clip sampling and WebGL2 readback; no engine scheduling change.
 const assert = require('node:assert/strict');
 const { createHash } = require('node:crypto');
-const { readFileSync, writeFileSync } = require('node:fs');
+const { readFileSync, realpathSync, writeFileSync } = require('node:fs');
 const path = require('node:path');
 const { startExampleServer } = require('./competitive-example-server.cjs');
 const { launchOptions } = require('./browser-engines.cjs');
+const { loopbackBrowserEnv } = require('./loopback-browser-env.cjs');
+const { verifySourceBinding } = require('../build/source-binding.cjs');
 
 const root = path.resolve(__dirname, '../..');
 const readSha = (name) =>
@@ -12,11 +14,35 @@ const readSha = (name) =>
         .update(readFileSync(path.join(root, name)))
         .digest('hex');
 async function main() {
-    const [engine, out] = process.argv.slice(2);
-    assert(['chromium', 'firefox', 'webkit'].includes(engine) && out, 'usage: <chromium|firefox|webkit> <new.json>');
+    const [engine, out, option, ...extra] = process.argv.slice(2);
+    assert(
+        ['chromium', 'firefox', 'webkit'].includes(engine) &&
+            out &&
+            !extra.length &&
+            (option === undefined || /^--bundle=.+$/.test(option)),
+        'usage: <chromium|firefox|webkit> <new.json> [--bundle=<workspace ESM bundle>]',
+    );
+    const fixture = 'test/fixtures/crowd-pose/index.html';
+    const override = option !== undefined;
+    const bundle = override ? realpathSync(path.resolve(root, option.slice('--bundle='.length))) : null;
+    let binding;
+    let bundleName = 'build/cocosair.module.js';
+    if (override) {
+        assert(
+            bundle.startsWith(realpathSync(root) + path.sep) && bundle.endsWith('.js'),
+            'The candidate must be a workspace .js bundle',
+        );
+        bundleName = path.relative(realpathSync(root), bundle).split(path.sep).join('/');
+        binding = verifySourceBinding(root, bundle);
+        assert(
+            binding.matches && binding.origin === 'compiler-map',
+            'Candidate requires a matching compiler-map source binding: ' + JSON.stringify(binding),
+        );
+    }
     const files = [
-        'build/cocosair.module.js',
-        'test/fixtures/crowd-pose/index.html',
+        bundleName,
+        ...(override ? [bundleName + '.map', bundleName + '.sources.json', 'tools/build/source-binding.cjs'] : []),
+        fixture,
         'test/fixtures/crowd-pose/main.ts',
         'test/fixtures/upstream-skinning/rig.gltf',
         'tools/verify/crowd-pose-browser.cjs',
@@ -25,11 +51,41 @@ async function main() {
     const server = await startExampleServer(root);
     let browser;
     try {
-        browser = await require('playwright')[engine].launch({ headless: true, ...launchOptions(engine) });
+        browser = await require('playwright')[engine].launch({
+            headless: true,
+            ...launchOptions(engine),
+            env: loopbackBrowserEnv(),
+        });
         const page = await browser.newPage({ viewport: { width: 640, height: 480 } });
         const errors = [];
         page.on('pageerror', (error) => errors.push(String(error)));
-        await page.goto(server.origin + '/test/fixtures/crowd-pose/');
+        const fixtureUrl = server.origin + '/test/fixtures/crowd-pose/';
+        const sdkUrl = server.origin + '/' + bundleName.split('/').map(encodeURIComponent).join('/');
+        // Replace only this fixture's import map for the explicitly requested run. The HTML on disk
+        // and the default Playwright/direct-browser path still load the historical default bundle.
+        if (override) {
+            const html = readFileSync(path.join(root, fixture), 'utf8');
+            const mapEntry = '"cocosair": "/build/cocosair.module.js"';
+            assert.equal(html.split(mapEntry).length, 2, 'Expected one crowd fixture SDK mapping');
+            await page.route(fixtureUrl, (route) =>
+                route.fulfill({
+                    contentType: 'text/html',
+                    body: html.replace(mapEntry, '"cocosair": ' + JSON.stringify(sdkUrl)),
+                }),
+            );
+        }
+        const [sdkResponse] = await Promise.all([
+            page.waitForResponse(sdkUrl, { timeout: 30000 }),
+            page.goto(fixtureUrl),
+        ]);
+        assert(sdkResponse.ok(), 'Crowd fixture did not load the selected bundle');
+        assert.equal(
+            createHash('sha256')
+                .update(await sdkResponse.body())
+                .digest('hex'),
+            fingerprints[bundleName],
+            'Browser bundle bytes do not match the selected artifact',
+        );
         await page
             .waitForFunction(() => window.__crowdPoseExperiment || false, null, { timeout: 30000 })
             .catch((error) => {
@@ -67,6 +123,7 @@ async function main() {
             pixelsEqual: waves.every((r) => JSON.stringify(r.captures) === JSON.stringify(baseline.captures)),
         };
         for (const name of files) assert.equal(readSha(name), fingerprints[name], 'changed during capture: ' + name);
+        if (override) assert.deepEqual(verifySourceBinding(root, bundle), binding, 'Candidate source binding changed');
         const pass = Object.values(checks).every(Boolean);
         const report = {
             status: pass ? 'PASS' : 'FAIL',
@@ -75,6 +132,9 @@ async function main() {
             actors: 200,
             framesPerTrial: 60,
             fingerprints,
+            ...(override ? { candidate: { bundle: bundleName, sourceBinding: binding } } : {}),
+            timingConclusion:
+                'DIAGNOSTIC_ONLY: No CPU speedup is inferred from these timings, including clock-floor samples.',
             checks,
             errors,
             waves,

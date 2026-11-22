@@ -5,6 +5,7 @@ const { readFileSync } = require('node:fs');
 const { createHash } = require('node:crypto');
 const { startExampleServer } = require('./competitive-example-server.cjs');
 const { launchOptions } = require('./browser-engines.cjs');
+const { loopbackBrowserEnv } = require('./loopback-browser-env.cjs');
 const { verifySourceBinding } = require('../build/source-binding.cjs');
 const root = path.resolve(__dirname, '../..');
 
@@ -187,17 +188,33 @@ async function rendererProbe(sdk) {
 }
 
 async function main() {
-    const args = Object.fromEntries(process.argv.slice(2).map((arg) => arg.replace(/^--/, '').split('=')));
+    const raw = process.argv.slice(2);
+    assert(
+        raw.every((arg) => /^--(?:browser|bundle|headed)=.+$/.test(arg)),
+        'unknown probe argument',
+    );
+    const args = Object.fromEntries(
+        raw.map((arg) => [arg.slice(2, arg.indexOf('=')), arg.slice(arg.indexOf('=') + 1)]),
+    );
+    assert.equal(Object.keys(args).length, raw.length, 'duplicate probe argument');
+    assert(args.headed === undefined || args.headed === '1', '--headed=1');
     const engine = args.browser || 'chromium';
     assert(['chromium', 'firefox', 'webkit'].includes(engine), 'unknown browser');
     const bundle = path.resolve(root, args.bundle || 'build/cocosair.module.js');
     assert(bundle.startsWith(root + path.sep), 'candidate must be inside the checkout');
+    const binding = verifySourceBinding(root, bundle);
+    assert.equal(binding.matches, true, 'bundle must bind current sources');
+    const sha256 = (file) => createHash('sha256').update(readFileSync(file)).digest('hex');
+    const bundleSha256 = sha256(bundle);
     let browser, server;
     try {
         server = await startExampleServer(root);
+        // Reuse only executable resolution, not the shared WebGL software flags.
+        const { executablePath } = launchOptions(engine);
         browser = await require('playwright')[engine].launch({
-            headless: true,
-            ...launchOptions(engine),
+            headless: args.headed !== '1',
+            executablePath,
+            env: loopbackBrowserEnv(),
             timeout: 12000,
         });
         const page = await browser.newPage();
@@ -210,15 +227,17 @@ async function main() {
         await page.goto(server.origin + '/__mrt_partial.html');
         if (!(await page.evaluate(async () => !!(await navigator.gpu?.requestAdapter())))) {
             console.log(
-                JSON.stringify({ status: 'BLOCKED', browser: browser.version(), reason: 'WebGPU adapter unavailable' }),
+                JSON.stringify({
+                    status: 'BLOCKED',
+                    browser: browser.version(),
+                    reason: 'WebGPU adapter unavailable',
+                    bundleSha256,
+                    sourceBinding: binding,
+                }),
             );
             process.exitCode = 2;
             return;
         }
-        const binding = verifySourceBinding(root, bundle);
-        assert.equal(binding.matches, true, 'bundle must bind current sources');
-        const sha256 = (file) => createHash('sha256').update(readFileSync(file)).digest('hex');
-        const bundleSha256 = sha256(bundle);
         const errors = [];
         page.on('pageerror', (error) => errors.push(error.message));
         page.on('console', (message) => {
@@ -227,6 +246,7 @@ async function main() {
         const result = await page.evaluate(rendererProbe, '/' + path.relative(root, bundle).split(path.sep).join('/'));
         assert.deepEqual(errors, []);
         assert.equal(sha256(bundle), bundleSha256, 'bundle changed during probe');
+        assert.deepEqual(verifySourceBinding(root, bundle), binding, 'source binding changed during probe');
         console.log(
             JSON.stringify({
                 ...result,
