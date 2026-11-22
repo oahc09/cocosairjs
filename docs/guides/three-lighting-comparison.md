@@ -56,5 +56,6 @@ with these fixture settings, while the WebGL2 backend for WebGPURenderer produce
 Compare material pixels, not those two backgrounds.
 
 These are rendering correctness controls, not evidence of native WebGPU or Cocos
-semantics. No native adapter was available in this run. The timestamp comparison still needs its own evidence. GPU pass sum,
+semantics. No native adapter was available in this run. The [Dawn timestamp-pool control](three-timestamp-dawn.md) is separate and does
+not establish native browser or hardware performance. GPU pass sum,
 elapsed GPU span, CPU frame time, and physical presentation are not measured here.
