@@ -82,6 +82,24 @@ function validate(r) {
             [true, true],
         ],
     );
+    assert.deepEqual(
+        r.hemisphere.map((row) => row.lightOn),
+        [false, true],
+    );
+    const [dark, hemi] = r.hemisphere.map((row) => row.spheres);
+    for (const [i, [metal, roughness]] of [
+        [1, 0.1],
+        [0, 0.1],
+        [1, 0.7],
+        [0, 0.7],
+    ].entries()) {
+        for (const row of [dark[i], hemi[i]]) assert.deepEqual([row.metalness, row.roughness], [metal, roughness]);
+        rgb(dark[i], 0);
+        if (metal) {
+            if (before) rgb(hemi[i], 0);
+            else assert.ok(red(hemi[i]) > 100, 'Hemisphere-only metal response not visible');
+        } else assert.ok(red(hemi[i]) > 100, 'Hemisphere diffuse positive control absent');
+    }
     const [none, probe, env, both] = r.lightProbe.map((p) => p.spheres.map(red));
     for (const i of [0, 2]) {
         assert.equal(none[i], 0);
@@ -116,7 +134,7 @@ async function main() {
         contributesToAgentScore: false,
         updatesProtectedBaseline: false,
         status: 'FAIL',
-        notValidated: ['native-webgpu', 'hemisphere-only', 'timestamp-batching', 'gpu-timing', 'physical-display'],
+        notValidated: ['native-webgpu', 'timestamp-batching', 'gpu-timing', 'physical-display'],
         esbuild,
         playwright: require('playwright/package.json').version,
         fixtureSha256: digest(fixtureFile),

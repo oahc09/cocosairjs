@@ -38,12 +38,17 @@ Compare each revision against the other revisions on the **same** rendering path
 `WebGPURenderer(forceWebGL: true)` using its real WebGL2 backend, or classic
 `WebGLRenderer`. Both use a fixed camera, 640×320, DPR 1, sRGB output, Reinhard tone
 mapping at exposure 1, and no antialiasing. The isolated white AmbientLight furnace
-uses eleven roughness values for both a dielectric and a pure metal. The separate
+uses eleven roughness values for both a dielectric and a pure metal. The isolated
+HemisphereLight control toggles an equal white sky and ground with no environment
+at two roughness levels, and verifies both the no-light black pixels and the
+dielectric lighting response. The separate
 LightProbe control switches a constant diffuse SH probe and a fixed linear
 environment texture independently for two roughness values.
 
 In the WebKit WPE run, pure-metal furnace centers were 0 → 188 → 188 across
-both backends. With the environment off, LightProbe-only metal centers were
+both backends. The HemisphereLight-only pure-metal centers were also 0 → 188 → 188
+at both sampled roughness levels, and dielectric centers were 186 → 188 → 188.
+With the environment off, LightProbe-only metal centers were
 0 → 124 → 0; with the environment on, enabling the probe changed the transition arm
 from 124 to 156 and left the other two arms at 124. The dielectric probe response
 remained after the rollback. The classic WebGL clear path produced background 255
@@ -51,6 +56,5 @@ with these fixture settings, while the WebGL2 backend for WebGPURenderer produce
 Compare material pixels, not those two backgrounds.
 
 These are rendering correctness controls, not evidence of native WebGPU or Cocos
-semantics. No native adapter was available in this run. The standalone HemisphereLight
-control and the timestamp comparison still need their own evidence. GPU pass sum,
+semantics. No native adapter was available in this run. The timestamp comparison still needs its own evidence. GPU pass sum,
 elapsed GPU span, CPU frame time, and physical presentation are not measured here.

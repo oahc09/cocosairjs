@@ -89,6 +89,24 @@ for (const envOn of [false, true])
         probeResults.push({ envOn, probeOn, ...compute(scene, probes) });
         probes.forEach((m) => m.material.dispose());
     }
+const hemisphereResults = [];
+for (const lightOn of [false, true]) {
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0);
+    if (lightOn) {
+        const hemi = new THREE.HemisphereLight(0xffffff, 0xffffff, Math.PI);
+        hemi.position.set(0, 1, 0);
+        scene.add(hemi);
+    }
+    const meshes = [
+        sphere(scene, -1, 0.6, 1, 0.1),
+        sphere(scene, 1, 0.6, 0, 0.1),
+        sphere(scene, -1, -0.6, 1, 0.7),
+        sphere(scene, 1, -0.6, 0, 0.7),
+    ];
+    hemisphereResults.push({ lightOn, ...compute(scene, meshes) });
+    meshes.forEach((m) => m.material.dispose());
+}
 const furnaceScene = new THREE.Scene();
 furnaceScene.background = new THREE.Color(1, 1, 1);
 furnaceScene.add(new THREE.AmbientLight(0xffffff, Math.PI));
@@ -119,6 +137,7 @@ window.__report = {
     browser: navigator.userAgent,
     furnace,
     lightProbe: probeResults,
+    hemisphere: hemisphereResults,
     scoring: false,
     physicalDisplayValidated: false,
 };
