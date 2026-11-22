@@ -61733,6 +61733,8 @@ export interface AirPostProcessOptions extends AirPostProcessSettings {
 export interface AirPostProcessSettings {
     exposure?: number;
     toneMapping?: AirToneMapping;
+    /** Spatial edge antialiasing in the output pass; no temporal history. */
+    fxaa?: boolean;
     bloom?: {
         enabled?: boolean;
         intensity?: number;
@@ -61744,6 +61746,7 @@ export interface AirPostProcessSettings {
 export interface AirPostProcessState {
     exposure: number;
     toneMapping: AirToneMapping;
+    fxaa: boolean;
     bloom: {
         enabled: boolean;
         intensity: number;
