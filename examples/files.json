@@ -11615,7 +11615,10 @@
           "SceneGlobals.fog",
           "DirectionalLight",
           "director",
-          "Director.EVENT_AFTER_DRAW"
+          "Director.EVENT_AFTER_DRAW",
+          "Billboard",
+          "Texture2D",
+          "ImageAsset"
         ]
       },
       "capabilities": ["rendering", "custom-shader", "instancing"],
@@ -19047,7 +19050,8 @@
       "color-timeline-key",
       "colortimeline-ops",
       "gltf-animation-contract",
-      "animated-character-showcase"
+      "animated-character-showcase",
+      "skinned-instance-lifecycle"
     ],
     "gltf": [
       "gltf-viewer",
@@ -19059,7 +19063,8 @@
       "gltf-basic",
       "gltf-loader-registry",
       "gltf-asset-readonly",
-      "model-character-interaction"
+      "model-character-interaction",
+      "asset-request-policy"
     ],
     "camera": [
       "camera",
@@ -19082,9 +19087,16 @@
       "material-unlit",
       "texture-basic",
       "gltf-clearcoat",
-      "glass-refraction"
+      "glass-refraction",
+      "material-contract-lab"
     ],
-    "runtime-control": ["rc-inspect-scene", "rc-create-node", "rc-capture-frame", "rc-error-report"],
+    "runtime-control": [
+      "rc-inspect-scene",
+      "rc-create-node",
+      "rc-capture-frame",
+      "rc-error-report",
+      "first-frame-readiness"
+    ],
     "input": ["interaction-click", "input-queries"],
     "runtime": ["runtime-asset-release", "scene-switch-reentry"],
     "debug": ["profiler-overlay"],
@@ -19156,7 +19168,11 @@
     "utils": ["utils-family"],
     "texture": ["texture2d-ops", "texture2d-serialization"],
     "scene": ["scene-globals-read", "scene-runtime-ops", "scene-asset-meta"],
-    "light": ["directional-light-face", "light-attach-cycle"],
+    "light": [
+      "directional-light-face",
+      "light-attach-cycle",
+      "probe-sh-lab"
+    ],
     "rendering": [
       "render-composite",
       "campfire-night",
@@ -19190,11 +19206,16 @@
       "afterlight",
       "instance-batch",
       "particles-3d",
-      "morph-field"
+      "morph-field",
+      "depth-precision-lab",
+      "render-state-isolation"
     ],
     "shader": ["shader-custom-gradient", "shader-dissolve", "point-cloud-basics", "black-hole-accretion"],
     "game": ["tetris-classic", "match3-classic", "tank-battle", "contra-action", "collector-dodge"],
-    "application": ["product-viewer"],
+    "application": [
+      "product-viewer",
+      "material-inspection-showroom"
+    ],
     "performance": ["batching-shared", "batching-merged", "batching-dynamic"],
     "particles": ["starfield-galaxy"],
     "integration": ["interactive-container", "interactive-timeline"]

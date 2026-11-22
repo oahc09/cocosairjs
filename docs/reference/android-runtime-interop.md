@@ -12,20 +12,20 @@
 
 ## 入口与输出
 
-| 入口（`tools/` 下）                                                           | 用途与写入边界                                                                                                                             |
-| ----------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| `build/runtime-interop-android.cjs`                                           | `--out=<新目录> --bundle=<SDK>`；逐字节暂存 SDK、shader、探针和模型夹具，写 asset manifest；不执行 Gradle/安装                             |
-| `build/runtime-interop-android-host.ps1`                                      | 调用显式现有宿主构建工具，保存源码/SDK/APK 构建身份；先查看脚本参数与本地工具链                                                            |
-| `build/runtime-interop-android-finalize.py`                                   | 对显式构建产物生成来源/打包回执；不提供未执行的设备结论                                                                                    |
-| `verify/runtime-interop-android.cjs`                                          | `--serial --apk --assets --build-report --out` 必需；可选 `--case=probes\|air\|pbr\|skin\|ui\|compute` 或 `--matrix`；`--install` 显式安装 |
-| `verify/runtime-interop-android-lifecycle.cjs`                                | `--serial --apk --out`；模拟器生命周期及有界连续运行，默认实际页大小16384、900秒；0秒仅诊断                                                |
-| `verify/runtime-interop-android-memory.cjs`                                   | 生命周期入口加 `--baseline-report=<旧报告>`；真实引用计数/内存比较，旧报告必须独立保留                                                     |
-| `verify/runtime-interop-android-phone-memory.cjs`                             | 真机前台内存基线，默认4096页、900秒；拒绝 emulator serial                                                                                  |
-| `verify/runtime-interop-android-phone-lifecycle.cjs`                          | 真机同Activity短会话；默认4096页，手动解锁等待180秒（可选60..600秒），不代替长时测试                                                       |
-| `verify/runtime-interop-android-background-exit.cjs`                          | 定向检查 foreground/home/settings 下直接正常退出；显式 APK、匹配宿主源码、实际页大小和新输出目录，`--install` 才安装专用 debug 包          |
-| `verify/runtime-interop-android-{lifecycle,memory,phone-lifecycle}-audit.cjs` | `--report=<已关闭报告> --out=<新目录>`，离线独立核验并写新审计目录，不覆写原报告                                                           |
-| `verify/runtime-interop-android-phone-lifecycle-icc-replay.py`                | 对保留全屏图片与 ICC 数据独立重放，写独立报告；不替代设备采集                                                                              |
-| `verify/runtime-interop-archive.cjs`                                          | 按明确 inventory 复制精确原件到新 archive；`--check` 只读核验，不发布档案                                                                  |
+| 入口（`tools/` 下）                                                                | 用途与写入边界                                                                                                                             |
+| ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| [build/runtime-interop-android.cjs](../../tools/build/runtime-interop-android.cjs) | `--out=<新目录> --bundle=<SDK>`；逐字节暂存 SDK、shader、探针和模型夹具，写 asset manifest；不执行 Gradle/安装                             |
+| `build/runtime-interop-android-host.ps1`                                           | 调用显式现有宿主构建工具，保存源码/SDK/APK 构建身份；先查看脚本参数与本地工具链                                                            |
+| `build/runtime-interop-android-finalize.py`                                        | 对显式构建产物生成来源/打包回执；不提供未执行的设备结论                                                                                    |
+| `verify/runtime-interop-android.cjs`                                               | `--serial --apk --assets --build-report --out` 必需；可选 `--case=probes\|air\|pbr\|skin\|ui\|compute` 或 `--matrix`；`--install` 显式安装 |
+| `verify/runtime-interop-android-lifecycle.cjs`                                     | `--serial --apk --out`；模拟器生命周期及有界连续运行，默认实际页大小16384、900秒；0秒仅诊断                                                |
+| `verify/runtime-interop-android-memory.cjs`                                        | 生命周期入口加 `--baseline-report=<旧报告>`；真实引用计数/内存比较，旧报告必须独立保留                                                     |
+| `verify/runtime-interop-android-phone-memory.cjs`                                  | 真机前台内存基线，默认4096页、900秒；拒绝 emulator serial                                                                                  |
+| `verify/runtime-interop-android-phone-lifecycle.cjs`                               | 真机同Activity短会话；默认4096页，手动解锁等待180秒（可选60..600秒），不代替长时测试                                                       |
+| `verify/runtime-interop-android-background-exit.cjs`                               | 定向检查 foreground/home/settings 下直接正常退出；显式 APK、匹配宿主源码、实际页大小和新输出目录，`--install` 才安装专用 debug 包          |
+| `verify/runtime-interop-android-{lifecycle,memory,phone-lifecycle}-audit.cjs`      | `--report=<已关闭报告> --out=<新目录>`，离线独立核验并写新审计目录，不覆写原报告                                                           |
+| `verify/runtime-interop-android-phone-lifecycle-icc-replay.py`                     | 对保留全屏图片与 ICC 数据独立重放，写独立报告；不替代设备采集                                                                              |
+| `verify/runtime-interop-archive.cjs`                                               | 按明确 inventory 复制精确原件到新 archive；`--check` 只读核验，不发布档案                                                                  |
 
 所有参数用 `--name=value` 形式，布尔标志例外。每次采集/审计使用新的输出目录，保留失败尝试。
 本地 ICC/进程辅助工具位于 `verify/runtime-interop-android/lib/`，无需恢复历史 `verification-snapshots/output/` 才能加载采集器。
@@ -70,3 +70,24 @@ MystralNative 在本地后台退出修复 `746994a` 上继续实现真实 Activi
 模拟器及手机联合独立审计6会话、480输入/证据哈希通过，三张真机P3整屏使用原ICC重算，整个RGBA、alpha、原坐标裁图逐像素相符，六张图的bounds均在实际原图范围内。失败基线、修正前候选及首次物理输入超时原件保留；首次真机失败尚未进入recreate，新尝试采用相同预算、同APK和同源码，不放宽门槛或重标旧FAIL。
 
 本候选仍使用历史SDK `417509cb...` 检验新宿主，不是当前AIR main GPU验收。本批 Activity 源码、工具及验收说明按用户要求仅作本地提交，不 push；原始验收记录保留生成时状态。进程回收、device-loss/OOM、完整状态恢复、长期/性能、实际ARM64 16KB及Windows V8 13重采仍在范围外。
+
+## 后台进程终止与冷恢复专项（2026-11-14）
+
+`runtime-interop-android-process-recovery.py` 必填 `--serial`、`--apk`、`--host-source`、`--out`、`--expected-page-size`、`--termination=am-kill|uid-sigkill`；可选 `--cycles=1|2|3`（默认2）和显式 `--install`。两轮默认依次使用 HOME、Settings。确认目标 Activity 实际 STOPPED、唯一专用包 PID 和原 task ID 后，才执行所选终止操作；`uid-sigkill` 仅使用该 debug 包自己的 UID，对刚核对的 PID 执行 `/system/bin/kill -9`，不使用 root、不修改系统进程保护设置。
+
+采集器要求旧 PID 在原10秒内消失，原任务仍包含保存的 Activity 状态，然后只用 `am task focus <原taskId>` 恢复，不重发入口、run_id 或 case_id。新进程必须继承父会话、创建不同目录/token，重新加载原 demo，并完成真实绘制、可信中心触摸及系统截图。独立审计要求恢复后的完整场景在原30秒内就绪，UI采集/输入/呈现不超过原15秒。被终止的旧进程不应报告正常 native exit 或析构归零；仅最后一个存活会话通过 `/finish` 正常退出，并核验完整 native/SDL 拆卸，再执行专用包清理。
+
+初次 `am-kill` 在16KB模拟器通过；真机 Activity 已 STOPPED，但原10秒内进程未消失，保留 FAIL。独立诊断观察到 vivo 将其保持为 `LAST_ACTIVITY`、`cached=false`，并标注 `upgrade-workingStateProtect-audio`。这表明该时点的系统保护阻止了本次 `am kill`，不把它改写为宿主恢复失败或 PASS，也未据此修改音频实现。
+
+随后显式选择 `uid-sigkill`，先重新通过16KB模拟器及独立审计，再验收同源码 ARM64 真机，两边各两次终止/三会话通过：
+
+| 环境                | 实际页大小 | 三个 PID              | 保留 task ID | 三会话可信输入时的实际帧 |
+| ------------------- | ---------- | --------------------- | ------------ | ------------------------ |
+| 官方 x86_64 模拟器  | 16384      | 4530 → 4681 → 4842    | 39           | 135 / 138 / 135          |
+| vivo V2520A / ARM64 | 4096       | 29793 → 30168 → 30617 | 49           | 133 / 136 / 134          |
+
+联合独立审计6会话、790输入/证据哈希通过；真机三张P3整屏使用原ICC重算，全图RGBA、alpha和原坐标裁图一致。两次旧进程均无正常拆卸证明，旧 session/lifecycle/events/report 文件在恢复后逐字节不变；新进程原生和wrapper初始计数为0，最后会话正常拆卸的原生引用、Context/ANW与SDL已用子系统归零。日志进程及专用进程物理关闭。
+
+两ABI重新构建、签名、29资产、仅2SO、static闭包及16KB ELF/RELRO/ZIP通过；APK字节分别仍为 `f0e93635...` / `efe2b6fa...`，新源码映射绑定当前 CMake 的可选 Windows 测试配置。此次无需修改宿主运行时代码，复用已提交的 Activity 冷恢复机制。采集器、审计器及说明随工具源码交付。
+
+原始目录位于显式 `RuntimeBase` 下的 `android-process-recovery-*`；联合审计为 `android-process-recovery-combined-audit-attempt-1/report.json`。保留初次真机 FAIL、诊断、全部重试与审计尝试。这是**受控后台进程终止后的原任务冷恢复**，不认证真实低内存 LMK/OOM、任意JS状态持久化、当前AIR main SDK、长期资源/功耗或实际ARM64 16KB硬件。
