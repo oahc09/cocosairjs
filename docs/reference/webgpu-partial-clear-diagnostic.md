@@ -6,7 +6,10 @@ the committed clear helper and render-pass methods with the TypeScript parser,
 supplies minimal host-side framebuffer and resource-lifecycle doubles, and runs
 the resulting commands on a real Dawn Vulkan device. It checks every texel of
 two 4×4 color attachments across mixed CLEAR/LOAD, A→B→A framebuffer reuse,
-LOAD/LOAD, and a native full-area HDR reference. It neither loads the browser
+LOAD/LOAD, and a native full-area HDR reference. A separate RGBA32Uint /
+RGBA32Sint pair verifies both mixed directions and LOAD/LOAD with raw signed and
+unsigned readback, preserving the 12 outside texels and exercising values above
+float32's exact integer range and near both 32-bit limits. It neither loads the browser
 bundle nor verifies a physical GPU, canvas, swapchain, or full engine lifetime.
 
 Use a separate installation of the official `webgpu@0.6.2` npm package.

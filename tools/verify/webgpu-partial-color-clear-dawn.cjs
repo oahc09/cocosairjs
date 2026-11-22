@@ -108,11 +108,19 @@ async function main() {
     const { GPUTextureUsage, GPUBufferUsage, GPUMapMode } = globals;
     const uncaptured = [];
     device.addEventListener('uncapturederror', ({ error }) => uncaptured.push(error.message));
-    const formats = ['rgba8unorm', 'rgba16float'];
+    const normalizedFormats = ['rgba8unorm', 'rgba16float'];
+    const integerFormats = ['rgba32uint', 'rgba32sint'];
+    const uintClear = [16777217, 2147483649, 4294967295, 1];
+    const sintClear = [-16777217, 16777219, -2147483647, 2147483647];
+    const color = ([x, y, z, w]) => ({ x, y, z, w });
     const colors = {
         blue: { x: 0, y: 0, z: 1, w: 1 },
         red: { x: 1, y: 0, z: 0, w: 1 },
         hdr: { x: -0.5, y: 1.5, z: 2, w: 1 },
+        uintSeed: color([5, 7, 11, 13]),
+        sintSeed: color([-3, -7, 17, 19]),
+        uintClear: color(uintClear),
+        sintClear: color(sintClear),
     };
     const fixtures = {
         rgba8unorm: { blue: [0, 0, 255, 255], red: [255, 0, 0, 255], hdr: [0, 255, 255, 255] },
@@ -121,8 +129,16 @@ async function main() {
             red: [0x3c00, 0, 0, 0x3c00],
             hdr: [0xb800, 0x3e00, 0x4000, 0x3c00],
         },
+        rgba32uint: { uintSeed: [5, 7, 11, 13], uintClear },
+        rgba32sint: { sintSeed: [-3, -7, 17, 19], sintClear },
     };
-    const makeTextures = () =>
+    const readChannels = {
+        rgba8unorm: { stride: 1, read: (data, at) => data.getUint8(at) },
+        rgba16float: { stride: 2, read: (data, at) => data.getUint16(at, true) },
+        rgba32uint: { stride: 4, read: (data, at) => data.getUint32(at, true) },
+        rgba32sint: { stride: 4, read: (data, at) => data.getInt32(at, true) },
+    };
+    const makeTextures = (formats) =>
         formats.map((format) =>
             device.createTexture({
                 size: [4, 4],
@@ -130,12 +146,13 @@ async function main() {
                 usage: GPUTextureUsage.RENDER_ATTACHMENT | GPUTextureUsage.COPY_SRC,
             }),
         );
-    const a = makeTextures();
-    const b = makeTextures();
+    const a = makeTextures(normalizedFormats);
+    const b = makeTextures(normalizedFormats);
+    const integers = makeTextures(integerFormats);
     const pass = new NativePassBridge();
     const whole = { x: 0, y: 0, width: 4, height: 4 };
     const partial = { x: 1, y: 1, width: 2, height: 2 };
-    const run = (textures, loadOps, area, values) => {
+    const run = (textures, loadOps, area, values, formats = normalizedFormats) => {
         const views = textures.map((texture) => texture.createView());
         const colorAttachments = loadOps.map((loadOp) => ({ loadOp, storeOp: 'store' }));
         const renderPass = {
@@ -169,7 +186,7 @@ async function main() {
         );
     };
     const cases = [];
-    async function capture(name, textures, beforeOutside, afterInside) {
+    async function capture(name, textures, beforeOutside, afterInside, formats = normalizedFormats) {
         const pixels = [];
         for (let index = 0; index < textures.length; index++) {
             const buffer = device.createBuffer({
@@ -189,10 +206,9 @@ async function main() {
                 const values = [];
                 for (let y = 0; y < 4; y++) {
                     for (let x = 0; x < 4; x++) {
-                        const at = y * 256 + x * (index ? 8 : 4);
-                        const observed = Array.from({ length: 4 }, (_, i) =>
-                            index ? data.getUint16(at + i * 2, true) : data.getUint8(at + i),
-                        );
+                        const { stride, read } = readChannels[formats[index]];
+                        const at = y * 256 + x * stride * 4;
+                        const observed = Array.from({ length: 4 }, (_, i) => read(data, at + i * stride));
                         const inner = x >= 1 && x <= 2 && y >= 1 && y <= 2;
                         assert.deepEqual(
                             observed,
@@ -207,7 +223,7 @@ async function main() {
                 buffer.destroy();
             }
         }
-        cases.push({ name, pixels });
+        cases.push({ name, formats, pixels });
     }
 
     device.pushErrorScope('validation');
@@ -224,11 +240,31 @@ async function main() {
         await capture('A: LOAD/LOAD preserves both', a, ['blue', 'red'], ['hdr', 'hdr']);
         run(b, ['clear', 'clear'], whole, ['hdr', 'hdr']);
         await capture('B: independent whole-area native HDR clear', b, ['hdr', 'hdr'], ['hdr', 'hdr']);
+        // Both targets share a pass. Values straddling 2^24 and near the integer
+        // limits distinguish exact integer uploads from f32 rounding/saturation.
+        assert.notDeepEqual(uintClear.map(Math.fround), uintClear);
+        assert.notDeepEqual(sintClear.map(Math.fround), sintClear);
+        const seeds = ['uintSeed', 'sintSeed'];
+        const integerClears = ['uintClear', 'sintClear'];
+        run(integers, ['clear', 'clear'], whole, seeds, integerFormats);
+        await capture('Integer: native baseline', integers, seeds, seeds, integerFormats);
+        run(integers, ['clear', 'load'], partial, integerClears, integerFormats);
+        await capture(
+            'Integer: clear RGBA32U / keep RGBA32I',
+            integers,
+            seeds,
+            ['uintClear', 'sintSeed'],
+            integerFormats,
+        );
+        run(integers, ['load', 'clear'], partial, ['uintSeed', 'sintClear'], integerFormats);
+        await capture('Integer: keep RGBA32U / clear RGBA32I', integers, seeds, integerClears, integerFormats);
+        run(integers, ['load', 'load'], partial, seeds, integerFormats);
+        await capture('Integer: LOAD/LOAD preserves both', integers, seeds, integerClears, integerFormats);
         const validation = await device.popErrorScope();
         assert.equal(validation, null, validation?.message);
         assert.deepEqual(uncaptured, []);
     } finally {
-        for (const texture of [...a, ...b]) texture.destroy();
+        for (const texture of [...a, ...b, ...integers]) texture.destroy();
         device.destroy();
     }
     const info = adapter.info;
@@ -241,6 +277,7 @@ async function main() {
             adapter: { vendor: info.vendor, description: info.description, isFallbackAdapter: info.isFallbackAdapter },
             head: execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }).trim(),
             sources,
+            harnessSha256: digest(readFileSync(__filename)),
             scope: 'Exact committed clear helper and begin/end methods through test host objects; not the browser bundle or full engine.',
             cases,
         }),
