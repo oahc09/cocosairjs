@@ -1,6 +1,8 @@
 /* Focused, opt-in native WebGPU pixel probe. Prints a JSON result; does not publish evidence. */
 const assert = require('node:assert/strict');
 const path = require('node:path');
+const { readFileSync } = require('node:fs');
+const { createHash } = require('node:crypto');
 const { startExampleServer } = require('./competitive-example-server.cjs');
 const { launchOptions } = require('./browser-engines.cjs');
 const { verifySourceBinding } = require('../build/source-binding.cjs');
@@ -13,6 +15,13 @@ async function rendererProbe(sdk) {
     const dev = m.director.root.device;
     if (dev.gfxAPI !== g.API.WEBGPU) throw new Error('Native WebGPU backend required');
     const native = dev.nativeDevice;
+    const info = native.adapterInfo;
+    const adapter = {
+        vendor: info?.vendor || dev.vendor,
+        device: info?.device || dev.renderer,
+        description: info?.description || null,
+        isFallbackAdapter: info?.isFallbackAdapter ?? null,
+    };
     const own = [];
     const allocate = (item) => {
         own.push(item);
@@ -20,7 +29,10 @@ async function rendererProbe(sdk) {
     };
     const scope = m.createStepClock();
     await scope.begin();
-    const actual = [];
+    const observations = [];
+    const uncaptured = [];
+    const onError = (event) => uncaptured.push(event.error.message);
+    native.addEventListener('uncapturederror', onError);
     try {
         native.pushErrorScope('validation');
         try {
@@ -41,13 +53,15 @@ async function rendererProbe(sdk) {
                 );
             const a = createTextures(),
                 b = createTextures();
-            const cmd = allocate(dev.createCommandBuffer(new g.CommandBufferInfo(dev.queue)));
+            const makeCommandBuffer = () => allocate(dev.createCommandBuffer(new g.CommandBufferInfo(dev.queue)));
+            const seed = makeCommandBuffer();
+            const cmd = makeCommandBuffer();
             const blue = new g.Color(0, 0, 1, 1);
             const red = new g.Color(1, 0, 0, 1);
             const green = new g.Color(0, 1, 0, 1);
             const whole = new g.Rect(0, 0, 4, 4),
                 partial = new g.Rect(1, 1, 2, 2);
-            const clear = (textures, choices, rect, colors) => {
+            const encodePass = (buffer, textures, choices, rect, colors) => {
                 const attachments = formats.map((format, index) => {
                     const a = new g.ColorAttachment(format);
                     a.loadOp = choices[index] ? g.LoadOp.CLEAR : g.LoadOp.LOAD;
@@ -56,9 +70,12 @@ async function rendererProbe(sdk) {
                 });
                 const pass = allocate(dev.createRenderPass(new g.RenderPassInfo(attachments)));
                 const fb = allocate(dev.createFramebuffer(new g.FramebufferInfo(pass, textures)));
+                buffer.beginRenderPass(pass, fb, rect, colors, 1, 0);
+                buffer.endRenderPass();
+            };
+            const clear = (textures, choices, rect, colors) => {
                 cmd.begin();
-                cmd.beginRenderPass(pass, fb, rect, colors, 1, 0);
-                cmd.endRenderPass();
+                encodePass(cmd, textures, choices, rect, colors);
                 cmd.end();
             };
             const region = new g.BufferTextureCopy();
@@ -82,23 +99,31 @@ async function rendererProbe(sdk) {
                 const observed = await read(paths);
                 observed.forEach((row, index) => {
                     const want = expected(index === 1, ...colors[index]);
-                    if (row.some((value, i) => value !== want[i]))
-                        throw new Error(name + ': attachment ' + index + ' pixels differed');
+                    const offset = row.findIndex((value, i) => value !== want[i]);
+                    if (offset !== -1) {
+                        const x = Math.floor(offset / 4) % 4;
+                        const y = Math.floor(offset / 16);
+                        throw new Error(
+                            `${name}: attachment ${index} pixel (${x}, ${y}) channel ${offset % 4}: expected ${want[offset]}, got ${row[offset]}`,
+                        );
+                    }
                 });
-                actual.push(name);
+                observations.push({ name, rgba8: observed[0], rgba16fBits: observed[1] });
             };
             const B = [0, 0, 1, 1],
                 R = [1, 0, 0, 1],
                 G = [0, 1, 0, 1];
-            clear(a, [true, true], whole, [blue, blue]);
-            clear(b, [true, true], whole, [red, red]);
+            seed.begin();
+            encodePass(seed, a, [true, true], whole, [blue, blue]);
+            encodePass(seed, b, [true, true], whole, [red, red]);
+            seed.end();
             clear(a, [true, false], partial, [green, green]);
-            await check('A CLEAR/LOAD', a, [
+            await check('A first pass CLEAR/LOAD', a, [
                 [G, B],
                 [B, B],
             ]);
             clear(b, [false, true], partial, [blue, blue]);
-            await check('B LOAD/CLEAR', b, [
+            await check('B first pass LOAD/CLEAR', b, [
                 [R, R],
                 [B, R],
             ]);
@@ -107,20 +132,58 @@ async function rendererProbe(sdk) {
                 [B, B],
             ]);
             clear(a, [false, true], partial, [red, red]);
-            await check('A LOAD/CLEAR on return', a, [
+            await check('A first pass LOAD/CLEAR on return', a, [
                 [G, B],
                 [R, B],
+            ]);
+
+            cmd.begin();
+            encodePass(cmd, a, [false, false], partial, [red, green]);
+            cmd.end();
+            await check('A partial LOAD/LOAD preserves both attachments', a, [
+                [G, B],
+                [R, B],
+            ]);
+
+            // Keep three scoped clears in one engine command buffer: RGBA8 -> RGBA16F -> RGBA8.
+            // Two texture sets and different final colors preserve evidence of all three passes.
+            cmd.begin();
+            encodePass(cmd, a, [true, true], whole, [blue, blue]);
+            encodePass(cmd, a, [true, false], partial, [green, red]);
+            encodePass(cmd, a, [false, true], partial, [red, green]);
+            encodePass(cmd, b, [true, false], partial, [blue, green]);
+            cmd.end();
+            await check('A later passes CLEAR/LOAD and LOAD/CLEAR', a, [
+                [G, B],
+                [G, B],
+            ]);
+            await check('B later CLEAR/LOAD after RGBA8 -> RGBA16F -> RGBA8', b, [
+                [B, R],
+                [B, R],
+            ]);
+            clear(b, [true, true], whole, [green, blue]);
+            await check('B final whole-area CLEAR/CLEAR control', b, [
+                [G, G],
+                [B, B],
             ]);
         } finally {
             const error = await native.popErrorScope();
             if (error) throw new Error('WebGPU validation: ' + error.message);
         }
     } finally {
+        native.removeEventListener('uncapturederror', onError);
         for (const item of own.reverse()) item.destroy();
         scope.end();
-        app.dispose();
+        await app.close();
     }
-    return { status: 'PASS', checks: actual };
+    if (uncaptured.length) throw new Error('Uncaptured WebGPU error: ' + uncaptured.join('; '));
+    return {
+        status: 'PASS',
+        backend: g.API.WEBGPU,
+        adapter,
+        checks: observations.map(({ name }) => name),
+        observations,
+    };
 }
 
 async function main() {
@@ -154,13 +217,21 @@ async function main() {
         }
         const binding = verifySourceBinding(root, bundle);
         assert.equal(binding.matches, true, 'bundle must bind current sources');
+        const sha256 = (file) => createHash('sha256').update(readFileSync(file)).digest('hex');
+        const bundleSha256 = sha256(bundle);
         const errors = [];
         page.on('pageerror', (error) => errors.push(error.message));
+        page.on('console', (message) => {
+            if (message.type() === 'error') errors.push(message.text());
+        });
         const result = await page.evaluate(rendererProbe, '/' + path.relative(root, bundle).split(path.sep).join('/'));
         assert.deepEqual(errors, []);
+        assert.equal(sha256(bundle), bundleSha256, 'bundle changed during probe');
         console.log(
             JSON.stringify({
                 ...result,
+                bundleSha256,
+                sourceBinding: binding,
                 browser: browser.version(),
                 scope: 'native WebGPU; focused offscreen MRT sample-1 only',
             }),

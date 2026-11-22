@@ -1,4 +1,4 @@
-import { Color, Format, LoadOp, Rect } from '../../src/cocos/gfx/base/define';
+import { Color, CommandBufferInfo, Format, LoadOp, Rect } from '../../src/cocos/gfx/base/define';
 import { WebGPUDeviceManager } from '../../src/cocos/gfx/webgpu/define';
 import { GFXFormatToWGPUFormat } from '../../src/cocos/gfx/webgpu/webgpu-commands';
 import { WebGPUCommandBuffer } from '../../src/cocos/gfx/webgpu/webgpu-command-buffer';
@@ -42,7 +42,13 @@ function fixture() {
         createBindGroup: () => ({}),
         queue: { submit: jest.fn() },
     };
-    const device = { isLost: false, nativeDevice, getSwapchains: () => [] } as any;
+    const device = {
+        isLost: false,
+        nativeDevice,
+        getSwapchains: () => [],
+        cmdAllocator: { clearCmds: jest.fn() },
+        bindingMappings: { blockOffsets: [] },
+    } as any;
     return { device, descriptors, formats, shaderModules, buffers };
 }
 
@@ -51,7 +57,13 @@ const second = new Color(0, 1, 0, 1);
 const bounds = new Rect(0, 0, 4, 4);
 const subRect = new Rect(1, 1, 2, 2);
 
-function run(f: ReturnType<typeof fixture>, ops: LoadOp[], area = subRect, formats = [Format.RGBA8, Format.RGBA16F]) {
+function run(
+    f: ReturnType<typeof fixture>,
+    ops: LoadOp[],
+    area = subRect,
+    formats = [Format.RGBA8, Format.RGBA16F],
+    cmd = new WebGPUCommandBuffer(),
+) {
     WebGPUDeviceManager.setInstance(f.device);
     const views = formats.map(() => ({ label: '' }));
     const template = {
@@ -74,7 +86,6 @@ function run(f: ReturnType<typeof fixture>, ops: LoadOp[], area = subRect, forma
             })),
         },
     };
-    const cmd = new WebGPUCommandBuffer();
     cmd.beginRenderPass(pass as any, framebuffer as any, area, [first, second], 1, 0);
     cmd.endRenderPass();
     return { views, template };
@@ -117,6 +128,34 @@ describe('WebGPU offscreen partial color clear encoding (CPU descriptor doubles 
         expect(f.formats).toEqual([]);
         expect(f.descriptors).toHaveLength(1);
         expect(f.descriptors[0].colorAttachments.map((t: any) => t.loadOp)).toEqual(['clear', 'load']);
+    });
+
+    test('later passes in one engine begin/end preserve LOAD targets and reuse the format-specific pipeline', () => {
+        const f = fixture();
+        WebGPUDeviceManager.setInstance(f.device);
+        const cmd = new WebGPUCommandBuffer();
+        cmd.initialize(new CommandBufferInfo({} as any));
+        cmd.begin();
+        try {
+            run(f, [LoadOp.CLEAR, LoadOp.CLEAR], bounds, undefined, cmd);
+            const a = run(f, [LoadOp.CLEAR, LoadOp.LOAD], subRect, undefined, cmd);
+            const b = run(f, [LoadOp.LOAD, LoadOp.CLEAR], subRect, undefined, cmd);
+            const again = run(f, [LoadOp.CLEAR, LoadOp.LOAD], subRect, undefined, cmd);
+            const load = run(f, [LoadOp.LOAD, LoadOp.LOAD], subRect, undefined, cmd);
+            cmd.end();
+
+            expect(f.descriptors).toHaveLength(8);
+            expect(f.formats).toEqual(['rgba8unorm:1', 'rgba16float:1']);
+            expect(
+                [f.descriptors[1], f.descriptors[3], f.descriptors[5]].map((desc) => desc.colorAttachments[0].view),
+            ).toEqual([a.views[0], b.views[1], again.views[0]]);
+            for (const index of [2, 4, 6, 7]) {
+                expect(f.descriptors[index].colorAttachments.map((t: any) => t.loadOp)).toEqual(['load', 'load']);
+            }
+            expect(f.descriptors[7].colorAttachments.map((t: any) => t.view)).toEqual(load.views);
+        } finally {
+            cmd.destroy();
+        }
     });
 
     test('native pipeline is not shared across devices; integer format uses a typed shader', () => {
