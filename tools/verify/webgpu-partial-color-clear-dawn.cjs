@@ -12,6 +12,8 @@ const ts = require('typescript');
 const root = path.resolve(__dirname, '../..');
 const commandsPath = 'src/cocos/gfx/webgpu/webgpu-commands.ts';
 const commandBufferPath = 'src/cocos/gfx/webgpu/webgpu-command-buffer.ts';
+const definePath = 'src/cocos/gfx/base/define.ts';
+const lifetimePath = 'src/air/rendering/webgpu-resource-lifetime.ts';
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
 
 function sourceSnapshot(name) {
@@ -33,6 +35,9 @@ function getNamed(nodes, name) {
 function sourceBridge(nativeDevice, globals) {
     const commands = sourceSnapshot(commandsPath);
     const commandBuffer = sourceSnapshot(commandBufferPath);
+    const define = sourceSnapshot(definePath);
+    const lifetime = sourceSnapshot(lifetimePath);
+    const withoutExport = (code) => code.replace(/^export\s+/, '');
     const methods = commandBuffer.ast.statements.find(
         (node) => ts.isClassDeclaration(node) && node.name?.text === 'WebGPUCommandBuffer',
     )?.members;
@@ -45,35 +50,43 @@ function sourceBridge(nativeDevice, globals) {
     assert(clearPasses, 'clear pipeline cache was not found');
     const source = [
         clearPasses.getText(),
-        getNamed(commands.ast.statements, 'clearRect').replace(/^export\s+/, ''),
+        withoutExport(getNamed(commands.ast.statements, 'clearRect')),
+        ...['Offset', 'Rect', 'Extent', 'TextureSubresLayers', 'BufferTextureCopy'].map((name) =>
+            withoutExport(getNamed(define.ast.statements, name)),
+        ),
+        withoutExport(getNamed(lifetime.ast.statements, 'assertWebGPUDeviceActive')),
+        withoutExport(getNamed(commands.ast.statements, 'WebGPUCmdFuncCopyTextureToBuffer')),
         'let samples = 1;',
         'class NativePassBridge {',
         '_renderPassFuncQueue = []; submitComputePass() {}',
         getNamed(methods, 'beginRenderPass'),
         getNamed(methods, 'endRenderPass'),
         '}',
-        'NativePassBridge;',
+        '({ NativePassBridge, BufferTextureCopy, WebGPUCmdFuncCopyTextureToBuffer });',
     ].join('\n');
     const compiled = ts.transpileModule(source, {
         compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.None },
     }).outputText;
     const locals = {
         WebGPUDeviceManager: { instance: { nativeDevice, isLost: false, getSwapchains: () => [] } },
-        Rect: class {
-            constructor(x, y, width, height) {
-                Object.assign(this, { x, y, width, height });
-            }
-        },
+        TextureType: { TEX2D: '2d', TEX3D: '3d' },
+        FormatInfos: { rgba32uint: { size: 16 }, rgba32sint: { size: 16 } },
         Format: { UNKNOWN: 'unused-depth' },
         LoadOp: { CLEAR: 'clear' },
         GFXFormatToWGPUFormat: (format) => format,
         beginWebGPUResourceUse: () => () => {},
         GPUShaderStage: globals.GPUShaderStage,
         GPUBufferUsage: globals.GPUBufferUsage,
+        GPUMapMode: globals.GPUMapMode,
     };
     return {
-        NativePassBridge: vm.runInNewContext(compiled, locals),
-        sources: { [commandsPath]: commands.sha256, [commandBufferPath]: commandBuffer.sha256 },
+        ...vm.runInNewContext(compiled, locals),
+        sources: {
+            [commandsPath]: commands.sha256,
+            [commandBufferPath]: commandBuffer.sha256,
+            [definePath]: define.sha256,
+            [lifetimePath]: lifetime.sha256,
+        },
     };
 }
 
@@ -104,7 +117,10 @@ async function main() {
         return;
     }
     const device = await adapter.requestDevice();
-    const { NativePassBridge, sources } = sourceBridge(device, globals);
+    const { NativePassBridge, BufferTextureCopy, WebGPUCmdFuncCopyTextureToBuffer, sources } = sourceBridge(
+        device,
+        globals,
+    );
     const { GPUTextureUsage, GPUBufferUsage, GPUMapMode } = globals;
     const uncaptured = [];
     device.addEventListener('uncapturederror', ({ error }) => uncaptured.push(error.message));
@@ -186,6 +202,34 @@ async function main() {
         );
     };
     const cases = [];
+    async function verifyPackedIntegerReadback(texture, format, nativePixels) {
+        const ArrayType = format === 'rgba32uint' ? Uint32Array : Int32Array;
+        // Guards outside the typed view and inside it but outside the
+        // requested rows catches incorrect byteOffset, buffOffset and buffStride handling.
+        const sentinel = 0x13579bdf;
+        const width = 4,
+            height = 4,
+            stride = 5;
+        const full = new ArrayType(stride * height * 4 + 4).fill(sentinel);
+        const view = full.subarray(1, full.length - 1);
+        const region = new BufferTextureCopy();
+        region.buffOffset = ArrayType.BYTES_PER_ELEMENT;
+        region.buffStride = stride;
+        region.texExtent.width = width;
+        region.texExtent.height = height;
+        await WebGPUCmdFuncCopyTextureToBuffer(
+            { nativeDevice: device, isLost: false },
+            { gpuTexture: texture, width, height, samples: 1, mipLevel: 1, arrayLayer: 1, type: '2d', format },
+            [view],
+            [region],
+        );
+        const expected = new ArrayType(full.length).fill(sentinel);
+        for (let y = 0; y < height; y++) {
+            expected.set(nativePixels.slice(y * width, (y + 1) * width).flat(), 2 + y * stride * 4);
+        }
+        assert.deepEqual(full, expected, 'Cocos typed readback does not match native readback for ' + format);
+        return { typedArray: ArrayType.name, pixelCount: nativePixels.length, offsetStrideGuardsIntact: true };
+    }
     async function capture(name, textures, beforeOutside, afterInside, formats = normalizedFormats) {
         const pixels = [];
         for (let index = 0; index < textures.length; index++) {
@@ -223,7 +267,13 @@ async function main() {
                 buffer.destroy();
             }
         }
-        cases.push({ name, formats, pixels });
+        const cocosTypedReadback =
+            formats === integerFormats
+                ? await Promise.all(
+                      formats.map((format, i) => verifyPackedIntegerReadback(textures[i], format, pixels[i])),
+                  )
+                : undefined;
+        cases.push({ name, formats, pixels, cocosTypedReadback });
     }
 
     device.pushErrorScope('validation');
@@ -278,7 +328,7 @@ async function main() {
             head: execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }).trim(),
             sources,
             harnessSha256: digest(readFileSync(__filename)),
-            scope: 'Exact committed clear helper and begin/end methods through test host objects; not the browser bundle or full engine.',
+            scope: 'Exact committed clear helper, begin/end methods, and integer texture readback through test host objects; not the browser bundle or full engine.',
             cases,
         }),
     );

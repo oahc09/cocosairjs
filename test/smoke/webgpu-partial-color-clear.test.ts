@@ -1,6 +1,14 @@
-import { Color, CommandBufferInfo, Format, LoadOp, Rect } from '../../src/cocos/gfx/base/define';
+import {
+    BufferTextureCopy,
+    Color,
+    CommandBufferInfo,
+    Format,
+    LoadOp,
+    Rect,
+    TextureType,
+} from '../../src/cocos/gfx/base/define';
 import { WebGPUDeviceManager } from '../../src/cocos/gfx/webgpu/define';
-import { GFXFormatToWGPUFormat } from '../../src/cocos/gfx/webgpu/webgpu-commands';
+import { GFXFormatToWGPUFormat, WebGPUCmdFuncCopyTextureToBuffer } from '../../src/cocos/gfx/webgpu/webgpu-commands';
 import { WebGPUCommandBuffer } from '../../src/cocos/gfx/webgpu/webgpu-command-buffer';
 
 function fixture() {
@@ -97,14 +105,17 @@ describe('WebGPU offscreen partial color clear encoding (CPU descriptor doubles 
     const globals = globalThis as any;
     const originalStage = globals.GPUShaderStage;
     const originalUsage = globals.GPUBufferUsage;
+    const originalMapMode = globals.GPUMapMode;
     beforeEach(() => {
         globals.GPUShaderStage = { FRAGMENT: 2 };
-        globals.GPUBufferUsage = { UNIFORM: 64 };
+        globals.GPUBufferUsage = { UNIFORM: 64, MAP_READ: 1, COPY_DST: 8 };
+        globals.GPUMapMode = { READ: 1 };
     });
     afterEach(() => {
         WebGPUDeviceManager.setInstance(original);
         globals.GPUShaderStage = originalStage;
         globals.GPUBufferUsage = originalUsage;
+        globals.GPUMapMode = originalMapMode;
     });
 
     test('only CLEAR target is drawn, even in the first pass and after a LOAD sibling', () => {
@@ -173,5 +184,53 @@ describe('WebGPU offscreen partial color clear encoding (CPU descriptor doubles 
         expect(b.formats).toEqual(['rgba8unorm:1', 'r32uint:1']);
         expect(b.shaderModules.some((src) => src.includes('-> @location(0) vec4<u32>'))).toBe(true);
         expect([...new Uint32Array(b.buffers[1].data)]).toEqual([exactUnsigned, 1, 0, 1]);
+    });
+    test.each([
+        { format: Format.RGBA32UI, array: Uint32Array, first: [16777217, 2147483649, 4294967295, 1] },
+        { format: Format.RGBA32I, array: Int32Array, first: [-16777217, 16777219, -2147483647, 2147483647] },
+    ])('integer readback row packing preserves exact values (format $format)', async ({ format, array, first }) => {
+        const firstRow = [...first, 5, 7, 11, 13];
+        const secondRow = [31, 37, 41, 43, ...first];
+        const mapped = new ArrayBuffer(512);
+        new Uint8Array(mapped).fill(0xca);
+        new array(mapped, 0, 8).set(firstRow);
+        new array(mapped, 256, 8).set(secondRow);
+        const staging = {
+            mapAsync: jest.fn().mockResolvedValue(undefined),
+            getMappedRange: () => mapped,
+            unmap: jest.fn(),
+            destroy: jest.fn(),
+        };
+        const copyTextureToBuffer = jest.fn();
+        const native = {
+            queue: { submit: jest.fn() },
+            createBuffer: jest.fn(() => staging),
+            createCommandEncoder: () => ({ copyTextureToBuffer, finish: jest.fn() }),
+        };
+        const device = { nativeDevice: native, isLost: false } as any;
+        const texture = {
+            format,
+            type: TextureType.TEX2D,
+            samples: 1,
+            width: 2,
+            height: 2,
+            mipLevel: 1,
+            arrayLayer: 1,
+            gpuTexture: {},
+        } as any;
+        const region = new BufferTextureCopy();
+        region.texExtent.width = region.texExtent.height = 2;
+        const storage = new array(18).fill(99);
+        const view = storage.subarray(1, 17);
+        await WebGPUCmdFuncCopyTextureToBuffer(device, texture, [view], [region]);
+        expect(copyTextureToBuffer).toHaveBeenCalledWith(
+            expect.anything(),
+            { buffer: staging, bytesPerRow: 256, rowsPerImage: 2 },
+            { width: 2, height: 2, depthOrArrayLayers: 1 },
+        );
+        expect([...storage]).toEqual([99, ...firstRow, ...secondRow, 99]);
+        expect(staging.mapAsync).toHaveBeenCalledWith(1);
+        expect(staging.unmap).toHaveBeenCalledTimes(1);
+        expect(staging.destroy).toHaveBeenCalledTimes(1);
     });
 });
