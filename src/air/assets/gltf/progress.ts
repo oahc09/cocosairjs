@@ -43,6 +43,10 @@ export interface GLTFLoaderOptions {
     /** Defined fields override global defaults; undefined fields inherit them. */
     request?: AirRequestPolicy;
     signal?: AbortSignal;
+    /** Direct GLTFLoader instance experiment, off by default and unavailable through the native asset cache.
+     * Equivalent glTF indices may share one mutable Texture2D (including name, sampler and destruction).
+     */
+    experimentalTextureDeduplication?: boolean;
     dracoDecoder?: GLTFDracoDecoder;
     meshoptDecoder?: GLTFMeshoptDecoder;
     ktx2Transcoder?: GLTFKTX2Transcoder;

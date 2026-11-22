@@ -70,8 +70,9 @@ function textureRoles (context: GLTFParserContext): Map<number, number> {
 
 export async function loadGLTFTextures (context: GLTFParserContext, textures: Texture2D[], images: ImageAsset[]): Promise<void> {
     const imageCache = new Map<number, ImageAsset>();
-    const textureCache = new Map<ImageAsset, Map<string, Texture2D>>();
-    const roles = textureRoles(context);
+    const experimentalDeduplication = context.options.experimentalTextureDeduplication === true;
+    const textureCache = experimentalDeduplication ? new Map<ImageAsset, Map<string, Texture2D>>() : undefined;
+    const roles = experimentalDeduplication ? textureRoles(context) : undefined;
     const decodeImage = async (key: number, bytes: Uint8Array, mime: string): Promise<ImageAsset | null> => {
         context.throwIfAborted();
         const cached = imageCache.get(key);
@@ -188,8 +189,8 @@ export async function loadGLTFTextures (context: GLTFParserContext, textures: Te
 
         // Restrict reuse to the identical decoded core image. In particular, a
         // matching core fallback index does not establish extension compatibility.
-        const role = roles.get(index) ?? 0;
-        const share = !decoded && !Object.keys(source.extensions || {}).length && !(role & 4);
+        const role = roles?.get(index) ?? 0;
+        const share = textureCache && !decoded && !Object.keys(source.extensions || {}).length && !(role & 4);
         const key = `${minFilter}:${magFilter}:${mipFilter}:${wrapS}:${wrapT}:${role}`;
         let variants = share ? textureCache.get(image) : undefined;
         const cachedTexture = variants?.get(key);
@@ -204,7 +205,7 @@ export async function loadGLTFTextures (context: GLTFParserContext, textures: Te
         texture.setWrapMode(wrapS, wrapT);
         // Upload without flipY: glTF UVs and HTML image rows both start at the top.
         texture.image = image;
-        if (share) {
+        if (share && textureCache) {
             if (!variants) { variants = new Map(); textureCache.set(image, variants); }
             variants.set(key, texture);
         }

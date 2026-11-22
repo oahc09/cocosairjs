@@ -35,6 +35,8 @@ async function main() {
         __filename,
         path.join(root, 'src/air/assets/gltf/material.ts'),
         path.join(root, 'src/air/assets/gltf/asset.ts'),
+        path.join(root, 'src/air/assets/gltf/loader.ts'),
+        path.join(root, 'src/air/assets/gltf/progress.ts'),
     ];
     const fingerprints = Object.fromEntries(files.map((file) => [path.relative(root, file), hash(file)]));
     const built = await require('esbuild').build({
@@ -49,6 +51,7 @@ async function main() {
     const server = await startExampleServer(root);
     let browser;
     let result;
+    let compatibility;
     const errors = [];
     let failure;
     try {
@@ -79,20 +82,35 @@ async function main() {
             'browser bundle bytes do not match the selected artifact',
         );
         await page.waitForFunction(() => window.__gltfTextureDirection?.ready, null, { timeout: 30000 });
+        compatibility = await page.evaluate(() => window.__gltfTextureDirection.publicTextureCompatibility());
+        assert.deepEqual(compatibility, {
+            distinct: true,
+            initialNames: ['texture-one', 'texture-two'],
+            sharedDecodedImage: true,
+            secondNameAfterMutation: 'texture-two',
+            secondWrapUnchanged: true,
+            firstWrapChanged: true,
+            firstDestroyed: true,
+            secondHandleLive: true,
+        });
         result = await page.evaluate(() => window.__gltfTextureDirection.dedup());
         assert.equal(result.control.uploads, 1);
+        assert.equal(result.defaults.uploads, 101);
+        assert.equal(result.defaults.unique, 101);
+        assert.equal(result.defaults.indices, 101);
         assert.equal(result.shared.uploads, 2);
         assert.equal(result.control.unique, 1);
         assert.equal(result.shared.unique, 2);
         assert.equal(result.shared.aliases, 1);
         assert.equal(result.shared.indices, 101);
-        assert(result.control.allLive && result.shared.allLive && result.distinctFromControl);
+        assert(result.control.allLive && result.defaults.allLive && result.shared.allLive && result.distinctFromControl);
         assert(result.handlesReleased && result.lifecycleClean && result.deletedExactlyOnce);
         const colorBits = result.control.pixels.map(([r, g, b, a]) => {
             assert.equal(a, 255);
             return [r, g, b].map((value) => (value > 180 ? 1 : value < 30 ? 0 : -1)).join('');
         });
         assert.deepEqual(colorBits, ['100', '010', '001', '110']);
+        assert.deepEqual(result.defaults.pixels, result.control.pixels);
         assert.deepEqual(result.shared.pixels, result.control.pixels);
         assert.equal(result.glError, 0);
         assert.deepEqual([...result.errors, ...errors], []);
@@ -114,6 +132,7 @@ async function main() {
                 fingerprints,
                 sourceBinding,
                 result,
+                compatibility,
                 errors,
                 failure,
                 limitations: ['WebGL2 finite authored colors, not WebGPU or a GPU memory benchmark'],

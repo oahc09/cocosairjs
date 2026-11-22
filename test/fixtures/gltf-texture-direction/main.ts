@@ -113,9 +113,9 @@ async function dedup () {
         if (handle) { deletes.set(handle, (deletes.get(handle) ?? 0) + 1); }
         return originalDelete.call(this, handle);
     };
-    const observe = async (doc: ReturnType<typeof documentFor>) => {
+    const observe = async (doc: ReturnType<typeof documentFor>, experimentalTextureDeduplication = false) => {
         bitmapUploads = 0;
-        const asset = await new GLTFLoader().parseAsync(JSON.stringify(doc), location.href);
+        const asset = await new GLTFLoader({ experimentalTextureDeduplication }).parseAsync(JSON.stringify(doc), location.href);
         const uploads = bitmapUploads;
         const instance = asset.instantiate();
         assets.push(asset); instances.push(instance);
@@ -126,15 +126,17 @@ async function dedup () {
             aliases: new Set(handles.slice(0, 100)).size };
     };
     try {
-        const first = await observe(control); const shared = await observe(source);
+        const first = await observe(control); const independent = await observe(source); const shared = await observe(source, true);
         const cleanup = await release();
         return {
             control: { uploads: first.uploads, pixels: first.pixels, unique: first.unique, allLive: first.allLive },
+            defaults: { uploads: independent.uploads, pixels: independent.pixels, unique: independent.unique,
+                allLive: independent.allLive, indices: independent.handles.length },
             shared: { uploads: shared.uploads, pixels: shared.pixels, unique: shared.unique, allLive: shared.allLive,
                 aliases: shared.aliases, indices: shared.handles.length },
-            distinctFromControl: !shared.handles.includes(first.handles[0]),
-            deletedExactlyOnce: [...new Set([...first.handles, ...shared.handles])].every((handle) => deletes.get(handle) === 1),
-            handlesReleased: [...first.handles, ...shared.handles].every((handle) => !gl.isTexture(handle)),
+            distinctFromControl: new Set([...first.handles, ...independent.handles, ...shared.handles]).size === 104,
+            deletedExactlyOnce: [...new Set([...first.handles, ...independent.handles, ...shared.handles])].every((handle) => deletes.get(handle) === 1),
+            handlesReleased: [...first.handles, ...independent.handles, ...shared.handles].every((handle) => !gl.isTexture(handle)),
             lifecycleClean: cleanup.receipt.status === 'released' && cleanup.ownedValid.every((valid) => !valid),
             glError: gl.getError(),
             errors: app.diagnostics.snapshot().filter((event) => event.severity === 'error'),
@@ -143,4 +145,31 @@ async function dedup () {
         gl.texImage2D = originalImage; gl.texSubImage2D = originalSubImage; gl.deleteTexture = originalDelete;
     }
 }
-(window as unknown as { __gltfTextureDirection: unknown }).__gltfTextureDirection = { ready: true, pngURL, run, release, dedup };
+
+async function publicTextureCompatibility () {
+    const source = documentFor('embedded', { minFilter: 9728, magFilter: 9728, wrapS: 33071, wrapT: 33071 });
+    const textures = [{ source: 0, sampler: 0, name: 'texture-one' }, { source: 0, sampler: 0, name: 'texture-two' }];
+    source.textures = textures;
+    const material = source.materials[0];
+    source.materials.push({ ...material, pbrMetallicRoughness: { baseColorTexture: { index: 1 } } });
+    const asset = await new GLTFLoader().parseAsync(JSON.stringify(source), location.href);
+    try {
+        const [one, two] = asset.textures;
+        const gl = app.canvas.getContext('webgl2')!;
+        const secondHandle = (two.getGFXTexture() as unknown as { gpuTexture: { glTexture: WebGLTexture } }).gpuTexture.glTexture;
+        const originalWrap = two.getSamplerInfo().addressU;
+        const initialNames = [one.name, two.name];
+        const sharedDecodedImage = one.image === two.image;
+        one.name = 'changed';
+        one.setWrapMode(Texture2D.WrapMode.REPEAT, Texture2D.WrapMode.CLAMP_TO_EDGE);
+        const secondNameAfterMutation = two.name;
+        const secondWrapUnchanged = two.getSamplerInfo().addressU === originalWrap;
+        const firstWrapChanged = one.getSamplerInfo().addressU !== originalWrap;
+        const firstDestroyed = one.destroy();
+        return { distinct: one !== two, initialNames, sharedDecodedImage, secondNameAfterMutation,
+            secondWrapUnchanged, firstWrapChanged, firstDestroyed, secondHandleLive: gl.isTexture(secondHandle) };
+    } finally {
+        asset.destroy();
+    }
+}
+(window as unknown as { __gltfTextureDirection: unknown }).__gltfTextureDirection = { ready: true, pngURL, run, release, dedup, publicTextureCompatibility };
