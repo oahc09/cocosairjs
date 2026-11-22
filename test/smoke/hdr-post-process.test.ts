@@ -28,6 +28,7 @@ describe('HDR post-process contracts', () => {
             { exposure: -1 },
             { exposure: null },
             { toneMapping: 'invalid' },
+            { fxaa: 1 },
             { bloom: { scatter: 2 } },
             { bloom: { enabled: 1 } },
             { unknown: 1 },
@@ -38,6 +39,8 @@ describe('HDR post-process contracts', () => {
         const next = normalizePostSettings({ bloom: { intensity: 1 } }, before);
         expect(next.bloom.threshold).toBe(3);
         expect(next.exposure).toBe(2);
+        expect(next.fxaa).toBe(false);
+        expect(normalizePostSettings({ fxaa: true }, next).fxaa).toBe(true);
     });
 
     test('legacy and surface output bridges are opt-in, idempotent, and leave fog conditions intact', () => {

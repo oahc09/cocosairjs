@@ -85,7 +85,7 @@ function effectFor(kind: Kind): EffectAsset {
     effect = createAirScreenEffect({
         name: `air-post-hdr-${kind}-v1`,
         body: bodies[kind],
-        constants: kind === 'output' ? ['params', 'viewport'] : ['params'],
+        constants: kind === 'output' ? ['params', 'viewport', 'aaParams'] : ['params'],
         samplers:
             kind === 'output'
                 ? ['sourceTexture', 'bloomTexture']
@@ -270,6 +270,7 @@ export function createAirPostProcess(camera: Camera, options: AirPostProcessOpti
         outputHash = original.hash;
     };
     const params = new Vec4(),
+        aaParams = new Vec4(),
         viewport = new Vec4(),
         rect = new Rect(),
         clear = [new Color(0, 0, 0, 0)];
@@ -290,6 +291,8 @@ export function createAirPostProcess(camera: Camera, options: AirPostProcessOpti
                 const r = camera.rect;
                 viewport.set(r.x, r.y, r.width, r.height);
                 stage.material.setProperty('viewport', viewport);
+                aaParams.set(1 / stage.input.info.width, 1 / stage.input.info.height, settings.fxaa ? 1 : 0, 0);
+                stage.material.setProperty('aaParams', aaParams);
             } else {
                 params.set(
                     1 / stage.input.info.width,

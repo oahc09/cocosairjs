@@ -16,7 +16,13 @@ fs.writeFileSync(
     source,
     `
 import { createAirMRTTarget, AirMRTOptions, AirMRTInfo, Material, director, gfx } from 'cocosair.js';
+import { Camera, createAirPostProcess } from 'cocosair.js';
 declare const material: Material;
+declare const camera: Camera;
+const post = createAirPostProcess(camera, { fxaa: true });
+post.setOptions({ fxaa: false });
+// @ts-expect-error FXAA accepts booleans only
+post.setOptions({ fxaa: 1 });
 const options: AirMRTOptions = {
     width: 64, height: 32, samples: 4, sampleFallback: 'lower', depthFormat: gfx.Format.DEPTH_STENCIL,
     colorAttachments: [{ format: gfx.Format.RGBA16F, clearValue: [0, 0, 0, 1] }],

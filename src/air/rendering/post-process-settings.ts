@@ -23,6 +23,8 @@ export type AirToneMapping = 'aces' | 'reinhard' | 'none';
 export interface AirPostProcessSettings {
     exposure?: number;
     toneMapping?: AirToneMapping;
+    /** Spatial edge antialiasing in the output pass; no temporal history. */
+    fxaa?: boolean;
     bloom?: { enabled?: boolean; intensity?: number; threshold?: number; softKnee?: number; scatter?: number };
 }
 export interface AirPostProcessOptions extends AirPostProcessSettings {
@@ -33,6 +35,7 @@ export interface AirPostProcessOptions extends AirPostProcessSettings {
 export interface AirPostProcessState {
     exposure: number;
     toneMapping: AirToneMapping;
+    fxaa: boolean;
     bloom: { enabled: boolean; intensity: number; threshold: number; softKnee: number; scatter: number };
 }
 export function postProcessError(message: string): never {
@@ -49,7 +52,7 @@ export function normalizePostSettings(
 ): AirPostProcessState {
     if (!input || typeof input !== 'object' || Array.isArray(input)) postProcessError('settings must be an object');
     for (const key of Object.keys(input))
-        if (!['exposure', 'toneMapping', 'bloom'].includes(key)) postProcessError('unknown setting: ' + key);
+        if (!['exposure', 'toneMapping', 'fxaa', 'bloom'].includes(key)) postProcessError('unknown setting: ' + key);
     if (input.bloom !== undefined && (!input.bloom || typeof input.bloom !== 'object' || Array.isArray(input.bloom)))
         postProcessError('bloom must be an object');
     for (const key of Object.keys(input.bloom || {}))
@@ -58,6 +61,7 @@ export function normalizePostSettings(
     const state: AirPostProcessState = {
         exposure: input.exposure === undefined ? (previous?.exposure ?? 1) : input.exposure,
         toneMapping: input.toneMapping === undefined ? (previous?.toneMapping ?? 'aces') : input.toneMapping,
+        fxaa: input.fxaa === undefined ? (previous?.fxaa ?? false) : input.fxaa,
         bloom: {
             enabled: true,
             intensity: 0.6,
@@ -70,6 +74,7 @@ export function normalizePostSettings(
     };
     number(state.exposure, 'exposure', 0, 64);
     if (!['aces', 'reinhard', 'none'].includes(state.toneMapping)) postProcessError('unknown toneMapping');
+    if (typeof state.fxaa !== 'boolean') postProcessError('fxaa must be boolean');
     if (typeof state.bloom.enabled !== 'boolean') postProcessError('bloom.enabled must be boolean');
     number(state.bloom.intensity, 'bloom.intensity', 0, 32);
     number(state.bloom.threshold, 'bloom.threshold', 0, 65504);

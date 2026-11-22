@@ -49,8 +49,32 @@ void main(){vec2 d=params.xy;
  cc_FragColor=vec4(mix(texture(baseTexture,v_uv).rgb,c/16.0,params.z),1.0);}`;
 export const POST_OUTPUT = `
 vec3 encodeSRGB(vec3 c){return mix(1.055*pow(c,vec3(1.0/2.4))-0.055,c*12.92,lessThanEqual(c,vec3(0.0031308)));}
+// Spatial FXAA-style edge filter on the linear HDR capture. Limit the search
+// to two pixels; flat and low-contrast areas remain the unmodified source.
+float aaLuma(vec4 c){return dot(c.rgb,vec3(0.299,0.587,0.114))*c.a;}
+vec4 aaFetch(vec2 uv){
+ vec2 halfPixel=aaParams.xy*0.5;
+ return texture(sourceTexture,clamp(uv,viewport.xy+halfPixel,viewport.xy+viewport.zw-halfPixel));
+}
+vec4 edgeAA(vec2 uv,vec4 center){
+ vec2 d=aaParams.xy;
+ float nw=aaLuma(aaFetch(uv+vec2(-d.x,-d.y)));
+ float ne=aaLuma(aaFetch(uv+vec2(d.x,-d.y)));
+ float sw=aaLuma(aaFetch(uv+vec2(-d.x,d.y)));
+ float se=aaLuma(aaFetch(uv+d));
+ float m=aaLuma(center), lo=min(m,min(min(nw,ne),min(sw,se))), hi=max(m,max(max(nw,ne),max(sw,se)));
+ if(hi-lo<max(0.0312,hi*0.125)) return center;
+ vec2 dir=vec2(-((nw+ne)-(sw+se)),(nw+sw)-(ne+se));
+ float reduce=max((nw+ne+sw+se)*0.03125,0.0078125);
+ dir=clamp(dir/(min(abs(dir.x),abs(dir.y))+reduce),vec2(-2.0),vec2(2.0))*d;
+ vec4 a=0.5*(aaFetch(uv-dir/6.0)+aaFetch(uv+dir/6.0));
+ vec4 b=a*0.5+0.25*(aaFetch(uv-dir*0.5)+aaFetch(uv+dir*0.5));
+ float lb=aaLuma(b);
+ return lb<lo||lb>hi?a:b;
+}
 void main(){vec2 uv=viewport.xy+v_uv*viewport.zw;
  vec4 src=texture(sourceTexture,uv);
+ if(aaParams.z>0.5) src=edgeAA(uv,src);
  vec3 c=max(src.rgb+texture(bloomTexture,uv).rgb*params.y,vec3(0.0))*params.x;
  if(params.z<0.5)c=(c*(2.51*c+0.03))/(c*(2.43*c+0.59)+0.14);
  else if(params.z<1.5)c=c/(1.0+c);

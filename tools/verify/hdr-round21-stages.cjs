@@ -712,6 +712,28 @@ const timer = setTimeout(() => {
             if (neonOn.data[i] > neonOff.data[i] + 3 || neonOn.data[i + 1] > neonOff.data[i + 1] + 3) changed++;
         assert.ok(changed > 500, 'neon real control changes visible bloom');
         report.cases.push({ name: 'neon-real-control-pixels', changed });
+        await page.evaluate(async () => {
+            window.__airPostProcess.setOptions({ fxaa: true });
+            await neonClock.step(0);
+        });
+        const neonAA = await capture('neon-fxaa');
+        let aaChanged = 0;
+        for (let i = 0; i < neonAA.data.length; i += 4) {
+            if (
+                neonAA.data[i] !== neonOff.data[i] ||
+                neonAA.data[i + 1] !== neonOff.data[i + 1] ||
+                neonAA.data[i + 2] !== neonOff.data[i + 2]
+            )
+                aaChanged++;
+        }
+        assert.ok(aaChanged > 0 && aaChanged < neonAA.width * neonAA.height, 'FXAA changes only part of the frame');
+        await page.evaluate(async () => {
+            window.__airPostProcess.setOptions({ fxaa: false });
+            await neonClock.step(0);
+        });
+        const restoredAA = await capture('neon-fxaa-restored');
+        assert.ok(restoredAA.data.equals(neonOff.data), 'disabling FXAA restores the original pixels');
+        report.cases.push({ name: 'neon-fxaa-toggle-pixels', changed: aaChanged });
         await page.locator('#tone').selectOption('reinhard');
         await page.evaluate(async () => {
             await neonClock.step(0);
