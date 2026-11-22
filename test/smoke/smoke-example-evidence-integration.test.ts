@@ -33,6 +33,16 @@ function put(relative: string, value: string): string {
     fs.writeFileSync(file, value);
     return file;
 }
+function bashExecutable(): string {
+    if (nodeProcess.platform !== 'win32') return 'bash';
+    // The WindowsApps bash stub invokes WSL, not the Git for Windows shell.
+    const { stdout } = cp.spawnSync('where.exe', ['git.exe'], { encoding: 'utf8' });
+    for (const executable of (stdout || '').trim().split(/\r?\n/)) {
+        const candidate = path.resolve(path.dirname(executable), '../bin/bash.exe');
+        if (fs.existsSync(candidate)) return candidate;
+    }
+    throw new Error('Git for Windows Bash is required to verify workflow shell guards');
+}
 function sourceMapFixture() {
     const { createSourceBinding } = nodeRequire(path.join(root, 'tools/build/source-binding.cjs'));
     const { externalizeSources } = nodeRequire(path.join(root, 'tools/build/source-map-publication.cjs'));
@@ -108,11 +118,16 @@ function cleanSparkCheckout(name: string) {
     expect(cp.spawnSync('git', ['add', '.'], { cwd: repo }).status).toBe(0);
     const runnerTemp = path.join(repo, '.runner-temp');
     fs.mkdirSync(path.join(runnerTemp, 'committed-example-campaign'), { recursive: true });
-    const env = { ...nodeProcess.env, NODE_PATH: path.join(root, 'node_modules'), RUNNER_TEMP: runnerTemp };
+    const env = {
+        ...nodeProcess.env,
+        NODE_PATH: path.join(root, 'node_modules'),
+        RUNNER_TEMP: runnerTemp.replace(/\\/g, '/'),
+    };
     const options = { cwd: repo, encoding: 'utf8' as const, env, timeout: 30000 };
     const runGenerator = (...args: string[]) =>
         cp.spawnSync(nodeProcess.execPath, ['tools/build/spark-runtime-tree.cjs', ...args], options);
-    const runShell = (command: string) => cp.spawnSync('bash', ['-c', 'set -euo pipefail\n' + command], options);
+    const runShell = (command: string) =>
+        cp.spawnSync(bashExecutable(), ['-c', 'set -euo pipefail\n' + command], options);
     const generatedHashes = () =>
         Object.fromEntries(
             generatedFiles.map((file) => [
@@ -135,6 +150,12 @@ describe('Evidence collector integration safeguards', () => {
         for (const relative of [
             'tools/build/prepare-package.cjs',
             'tools/build/math-module.cjs',
+            'tools/build/shader-preflight.cjs',
+            'tools/shader-preflight/index.ts',
+            'tools/shader-preflight/cli.cjs',
+            'tools/debug/effect-layout.ts',
+            'src/air/rendering/effect-json-contract.ts',
+            'src/air/rendering/shader-output-interface.ts',
             'src/DebugInfos.json',
             'tools/build/runtime-layout.cjs',
             'tools/build/webgpu-assets.cjs',
@@ -326,7 +347,7 @@ describe('Evidence collector integration safeguards', () => {
         },
     );
     test.each(['bundle', 'receipt', 'source'])(
-        'external map %s symlinks cannot bypass regular in-tree input checks',
+        'external map %s links cannot bypass regular in-tree input checks',
         (target) => {
             sourceMapFixture();
             const relative = {
@@ -335,10 +356,20 @@ describe('Evidence collector integration safeguards', () => {
                 source: 'src/main.ts',
             }[target];
             const file = path.join(temp, relative);
-            const alias = put(relative + '.actual', fs.readFileSync(file, 'utf8'));
+            const contents = fs.readFileSync(file, 'utf8');
             fs.unlinkSync(file);
-            fs.symlinkSync(alias, file);
-            expect(() => preflight.checkSourceMaps(temp)).toThrow(/Nonregular|regular repository inputs/);
+            if (nodeProcess.platform === 'win32') {
+                // Junctions exercise the real reparse-point guard without a Windows symlink privilege.
+                const alias = path.dirname(put(relative + '.actual/input', contents));
+                fs.symlinkSync(alias, file, 'junction');
+            } else {
+                fs.symlinkSync(put(relative + '.actual', contents), file, 'file');
+            }
+            const expected =
+                target === 'source' && nodeProcess.platform === 'win32'
+                    ? /Build\/source drift: .*Invalid source binding input/
+                    : /Nonregular|regular repository inputs/;
+            expect(() => preflight.checkSourceMaps(temp)).toThrow(expected);
         },
     );
     test.each(['absent content', 'wrong worker'])(
@@ -751,7 +782,7 @@ describe('Committed example evidence workflow safeguards', () => {
         expect(manualSteps.indexOf(compatibility)).toBeLessThan(
             manualSteps.findIndex((step: any) => step.run?.includes('npm ci')),
         );
-        const compatibilityCheck = cp.spawnSync('bash', ['-c', compatibility.run], {
+        const compatibilityCheck = cp.spawnSync(bashExecutable(), ['-c', compatibility.run], {
             cwd: root,
             encoding: 'utf8',
             timeout: 5000,
@@ -831,7 +862,8 @@ test('collector sync compiler mode preserves real build/transform bytes without 
         const esbuild = require(path.join(repo, 'node_modules/esbuild'));
         const { BrowserRuntime } = require(path.join(repo, 'tools/benchmark/runner/browser-runtime.cjs'));
         const hash = (value) => crypto.createHash('sha256').update(value).digest('hex');
-        const namespace = fs.readlinkSync('/proc/self/ns/pid');
+        const linux = process.platform === 'linux';
+        const namespace = linux ? fs.readlinkSync('/proc/self/ns/pid') : null;
         function identity(pid) {
             try {
                 const stat = fs.readFileSync('/proc/' + pid + '/stat', 'utf8');
@@ -843,6 +875,7 @@ test('collector sync compiler mode preserves real build/transform bytes without 
             } catch (error) { if (error.code === 'ENOENT' || error.code === 'ESRCH') return null; throw error; }
         }
         function children() {
+            if (!linux) return null;
             return fs.readdirSync('/proc').filter(name => /^\\d+$/.test(name)).map(name => identity(+name))
                 .filter(row => row && row.ppid === process.pid && row.namespace === namespace);
         }
@@ -860,7 +893,7 @@ test('collector sync compiler mode preserves real build/transform bytes without 
             const afterCalls = children();
             // This is the explicit negative-control teardown, not a production success receipt.
             // Kill only this process's exact esbuild child while its Worker still owns waitpid.
-            for (const child of afterCalls) {
+            for (const child of afterCalls || []) {
                 if (!child.command.some(value => /^--service=/.test(value))) throw Error('Unexpected CPU child');
                 const current = identity(child.pid);
                 if (!current || current.startTicks !== child.startTicks || current.namespace !== child.namespace ||
@@ -868,10 +901,10 @@ test('collector sync compiler mode preserves real build/transform bytes without 
                 process.kill(child.pid, 'SIGTERM');
             }
             const deadline = Date.now() + 3000;
-            while (children().length && Date.now() < deadline) await pause(10);
+            while (children()?.length && Date.now() < deadline) await pause(10);
             const afterCleanup = children();
             await esbuild.stop();
-            if (afterCleanup.length) throw Error('Compiler child not physically collected');
+            if (afterCleanup?.length) throw Error('Compiler child not physically collected');
             console.log(JSON.stringify({ outputs, transformed: transformed.code, initial, afterCalls, afterCleanup }));
         })().catch(error => { console.error(error.stack); process.exitCode = 1; });
     `;
@@ -889,13 +922,18 @@ test('collector sync compiler mode preserves real build/transform bytes without 
     };
     const defaultMode = probe('1');
     const syncMode = probe('0');
-    expect(defaultMode.initial).toEqual([]);
-    expect(defaultMode.afterCalls).toHaveLength(1);
-    expect(defaultMode.afterCalls[0].command.join(' ')).toMatch(/esbuild.*--service=/);
-    expect(defaultMode.afterCleanup).toEqual([]);
-    expect(syncMode.initial).toEqual([]);
-    expect(syncMode.afterCalls).toEqual([]);
-    expect(syncMode.afterCleanup).toEqual([]);
+    if (nodeProcess.platform === 'linux') {
+        expect(defaultMode.initial).toEqual([]);
+        expect(defaultMode.afterCalls).toHaveLength(1);
+        expect(defaultMode.afterCalls[0].command.join(' ')).toMatch(/esbuild.*--service=/);
+        expect(defaultMode.afterCleanup).toEqual([]);
+        expect(syncMode.initial).toEqual([]);
+        expect(syncMode.afterCalls).toEqual([]);
+        expect(syncMode.afterCleanup).toEqual([]);
+    } else {
+        expect(defaultMode.afterCalls).toBeNull();
+        expect(syncMode.afterCalls).toBeNull();
+    }
     expect(syncMode.outputs).toEqual(defaultMode.outputs);
     expect(syncMode.transformed).toEqual(defaultMode.transformed);
 }, 60000);

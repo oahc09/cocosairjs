@@ -126,6 +126,8 @@ Before any canonical mutation, the publisher constructs and validates a complete
 
 Publication is a guarded multi-file transaction, not an assertion that many filesystem writes can be one rename. It retains and fsyncs the exact old bytes of every existing target in a separate staging backup, then writes and fsyncs `docs/evidence/.examples-publication-incomplete.json` with the backup location and before/after hashes. It installs immutable provenance, then atomically replaces individual allowed metadata files. `docs/evidence/examples-verified.json` is the last payload written. The guard is removed only after delivered hashes and normalized inputs verify. Strict consumers fail closed whenever the guard exists, even if an older canonical report remains readable.
 
+Windows publication uses a writable directory handle and Win32 `FlushFileBuffers` for directory flushes. The publisher compiles the repository-owned helper in a temporary directory using the local .NET Framework C# compiler. A missing compiler or a filesystem that rejects the flush stops publication. Linux continues to use directory `fsync`. The browser collector still requires the Linux custody protocol described above.
+
 If publication is interrupted, stop. Keep the guard, immutable package, and retained staging files. Inspect its listed before/after hashes and restore a consistent pre-publication state or complete a reviewed recovery; **never delete the guard merely to clear a gate**. The publisher refuses automatic retries over an incomplete transaction or an existing immutable package. Do not run the old canonical collector as a workaround.
 
 ## Routine PR checks and manual full evidence

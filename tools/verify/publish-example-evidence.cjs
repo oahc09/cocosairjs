@@ -16,6 +16,7 @@ const path = require('path');
 const crypto = require('crypto');
 const protocol = require('./example-evidence-campaign.cjs');
 const common = require('./example-spec-common.cjs');
+const directorySync = require('./publication-directory-sync.cjs');
 
 const REPO = path.resolve(__dirname, '..', '..');
 const CANONICAL = 'docs/evidence/examples-verified.json';
@@ -73,12 +74,7 @@ function maybeDigest(file) {
     return fs.existsSync(file) ? digest(file) : null;
 }
 function syncDirectory(directory) {
-    const descriptor = fs.openSync(directory, 'r');
-    try {
-        fs.fsyncSync(descriptor);
-    } finally {
-        fs.closeSync(descriptor);
-    }
+    directorySync.syncDirectory(directory);
 }
 function durableDirectory(directory) {
     plainPath(directory, true);
@@ -137,7 +133,7 @@ function syncTree(directory) {
         if (stat.isDirectory()) syncTree(file);
         else {
             invariant(stat.isFile(), `publication nonregular source: ${file}`);
-            const descriptor = fs.openSync(file, 'r');
+            const descriptor = fs.openSync(file, process.platform === 'win32' ? 'r+' : 'r');
             try {
                 fs.fsyncSync(descriptor);
             } finally {

@@ -9,6 +9,7 @@ import {
 import { WebGL2Texture } from '../../src/cocos/gfx/webgl2/webgl2-texture';
 import { WebGL2DeviceManager } from '../../src/cocos/gfx/webgl2/webgl2-define';
 import { WebGL2Framebuffer } from '../../src/cocos/gfx/webgl2/webgl2-framebuffer';
+import { BlendState } from '../../src/cocos/gfx/base/pipeline-state';
 import {
     WebGL2CmdFuncCreateTexture,
     WebGL2CmdFuncDestroyTexture,
@@ -224,6 +225,7 @@ describe('WebGL2 readback native output layout', () => {
         const readFramebuffer = {};
         const drawFramebuffer = {};
         const cache = {
+            bs: new BlendState(),
             glReadFramebuffer: readFramebuffer,
             glFramebuffer: drawFramebuffer,
             viewport: { left: 0, top: 0, width: 2, height: 2 },

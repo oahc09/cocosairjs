@@ -189,289 +189,289 @@
         "api": "createAirApp",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L97"
+        "sourceLocation": "L92"
       },
       {
         "api": "Scene",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L100"
+        "sourceLocation": "L95"
       },
       {
         "api": "Node",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L101"
+        "sourceLocation": "L96"
       },
       {
         "api": "Camera",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L111"
+        "sourceLocation": "L106"
       },
       {
         "api": "Canvas",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L105"
+        "sourceLocation": "L100"
       },
       {
         "api": "UITransform",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L103"
+        "sourceLocation": "L98"
       },
       {
         "api": "Layers",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L63"
+        "sourceLocation": "L58"
       },
       {
         "api": "Color",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L113"
+        "sourceLocation": "L108"
       },
       {
         "api": "Label",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L125"
+        "sourceLocation": "L120"
       },
       {
         "api": "Size",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L176"
+        "sourceLocation": "L171"
       },
       {
         "api": "SpriteFrame",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L162"
+        "sourceLocation": "L157"
       },
       {
         "api": "Texture2D",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L156"
+        "sourceLocation": "L151"
       },
       {
         "api": "TiledMap",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L137"
+        "sourceLocation": "L132"
       },
       {
         "api": "TiledMapAsset",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L172"
+        "sourceLocation": "L167"
       },
       {
         "api": "TiledLayer",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L320"
+        "sourceLocation": "L315"
       },
       {
         "api": "TiledObjectGroup",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L321"
+        "sourceLocation": "L316"
       },
       {
         "api": "TiledMap.getMapSize",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L326"
+        "sourceLocation": "L321"
       },
       {
         "api": "TiledMap.getTileSize",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L327"
+        "sourceLocation": "L322"
       },
       {
         "api": "TiledMap.getMapOrientation",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L325"
+        "sourceLocation": "L320"
       },
       {
         "api": "TiledMap.getLayers",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L328"
+        "sourceLocation": "L323"
       },
       {
         "api": "TiledMap.getLayer",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L194"
+        "sourceLocation": "L189"
       },
       {
         "api": "TiledMap.getObjectGroups",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L330"
+        "sourceLocation": "L325"
       },
       {
         "api": "TiledMap.getObjectGroup",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L261"
+        "sourceLocation": "L256"
       },
       {
         "api": "TiledMap.getProperties",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L223"
+        "sourceLocation": "L218"
       },
       {
         "api": "TiledMap.getProperty",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L332"
+        "sourceLocation": "L327"
       },
       {
         "api": "TiledMap.getPropertiesForGID",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L359"
+        "sourceLocation": "L354"
       },
       {
         "api": "TiledLayer.getTileGIDAt",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L203"
+        "sourceLocation": "L198"
       },
       {
         "api": "TiledLayer.getTileFlagsAt",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L204"
+        "sourceLocation": "L199"
       },
       {
         "api": "TiledLayer.setTileGIDAt",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L380"
+        "sourceLocation": "L375"
       },
       {
         "api": "TiledLayer.getLayerName",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L217"
+        "sourceLocation": "L212"
       },
       {
         "api": "TiledLayer.getLayerSize",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L198"
+        "sourceLocation": "L193"
       },
       {
         "api": "TiledLayer.getPositionAt",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L231"
+        "sourceLocation": "L226"
       },
       {
         "api": "TiledLayer.getTextures",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L238"
+        "sourceLocation": "L233"
       },
       {
         "api": "TiledLayer.getTileSet",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L240"
+        "sourceLocation": "L235"
       },
       {
         "api": "TiledLayer.isCullingDirty",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L412"
+        "sourceLocation": "L402"
       },
       {
         "api": "TiledLayer.getProperties",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L223"
+        "sourceLocation": "L218"
       },
       {
         "api": "TiledObjectGroup.getObjects",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L274"
+        "sourceLocation": "L269"
       },
       {
         "api": "TiledObjectGroup.getObject",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L289"
+        "sourceLocation": "L284"
       },
       {
         "api": "TiledObjectGroup.getGroupName",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L266"
+        "sourceLocation": "L261"
       },
       {
         "api": "TiledObjectGroup.getProperties",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L223"
+        "sourceLocation": "L218"
       },
       {
         "api": "TiledObjectGroup.getPositionOffset",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L268"
+        "sourceLocation": "L263"
       },
       {
         "api": "assetManager",
         "source": "main.js",
         "validator": "no-runtime-error",
-        "sourceLocation": "L85"
+        "sourceLocation": "L80"
       },
       {
         "api": "view",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L98"
+        "sourceLocation": "L93"
       },
       {
         "api": "ResolutionPolicy",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L98"
+        "sourceLocation": "L93"
       },
       {
         "api": "Node.addChild",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L116"
+        "sourceLocation": "L111"
       },
       {
         "api": "Node.addComponent",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L103"
+        "sourceLocation": "L98"
       },
       {
         "api": "Node.getChildByName",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L428"
+        "sourceLocation": "L418"
       },
       {
         "api": "Node.on",
         "source": "main.js",
         "validator": "frame-diff",
-        "sourceLocation": "L463"
+        "sourceLocation": "L453"
       }
     ]
   },

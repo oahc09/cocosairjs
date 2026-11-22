@@ -1,8 +1,8 @@
 {
   "schema": "air-bundle-source-binding-v1",
   "origin": "compiler-map",
-  "bundleSha256": "859d0a56617bb66eb8f66b9144ef33d2c4e5e7f1f01c7273741d49d084ba74d7",
-  "mapSha256": "80b3b6b2499de2f39dcac47f0fc4a90df99d96988c23a8c54b0a47468e6196a4",
+  "bundleSha256": "cc5bc567df0958dc6e601bff5f6c1b88779559067682abf2fcdf443919924e23",
+  "mapSha256": "5ff01b4d75896bfea06747d44d028ebc8526a47641322fbfe8a6c2a66c570c10",
   "sources": [
     {
       "path": "src/cocos/core/global-exports.ts",
@@ -3170,7 +3170,7 @@
     },
     {
       "path": "src/cocos/gfx/webgpu/webgpu-commands.ts",
-      "sha256": "8a7d649337c810a23fc82a546f39b079fec7a01b5eb97ad3066e5eb13e439dd2"
+      "sha256": "55ad9fed1be5c0731c87793b6ebaeaeca2f29a28c6ec1afe94aab025d91c571b"
     },
     {
       "path": "src/cocos/gfx/webgpu/webgpu-descriptor-set.ts",
@@ -3182,7 +3182,7 @@
     },
     {
       "path": "src/cocos/gfx/webgpu/webgpu-command-buffer.ts",
-      "sha256": "4b747cb801591c6a5297043cac5aa01d64f9cc5896af96bb40674ec4af93e95c"
+      "sha256": "bd752e52c7e1f66ae060502bb2e9131bf942a00db3e90470174d11f28fa0b8d0"
     },
     {
       "path": "src/cocos/gfx/webgpu/webgpu-framebuffer.ts",
@@ -3342,7 +3342,7 @@
     },
     {
       "path": "src/air/assets/gltf/asset.ts",
-      "sha256": "a196be63058cbd78c2f90d9a00662bf722c4ada37df59c7709886a3fa4cbb4a1"
+      "sha256": "1613d586ecebffaba059a4e1deecbb63e4b7529c11dd43ea3e974d7b24a614fe"
     },
     {
       "path": "src/air/assets/gltf/request-policy.ts",
@@ -3402,7 +3402,7 @@
     },
     {
       "path": "src/air/assets/gltf/material.ts",
-      "sha256": "ebe590240d7f6b0d0b6bcf8b0cfb7627b2be8ef035adcb92a924f805c76c2e99"
+      "sha256": "0233bf53bb8bdbd43991deaa8d875033be920fb4c90e44de3ff8caa7bde169bd"
     },
     {
       "path": "src/air/assets/gltf/animation.ts",
@@ -3486,7 +3486,7 @@
     },
     {
       "path": "src/air/assets/gltf/loader.ts",
-      "sha256": "53c388ee2d97612a0308ed2181c9b6fcf3f8dd79109b8cf3fa6778af04add0db"
+      "sha256": "83af7aada1aece09178a0115835ee955071a88df10188a268a6ea4a5eef9e3cc"
     },
     {
       "path": "src/air/utils/load-asset.ts",

@@ -7,6 +7,7 @@ const path = nodeRequire('path') as typeof import('path');
 const root = path.resolve('.');
 const protocol = nodeRequire(path.join(root, 'tools/verify/example-evidence-campaign.cjs'));
 const publication = nodeRequire(path.join(root, 'tools/verify/publish-example-evidence.cjs'));
+const directorySync = nodeRequire(path.join(root, 'tools/verify/publication-directory-sync.cjs'));
 const common = nodeRequire(path.join(root, 'tools/verify/example-spec-common.cjs'));
 const fixtures = nodeRequire(path.join(root, 'tools/verify/example-evidence-campaign.cpu-fixture.cjs'));
 const temporary: string[] = [];
@@ -366,19 +367,19 @@ describe('Constrained fixed-snapshot evidence publication', () => {
         const state = fixture();
         const plan = prepare(state);
         const unlink = fs.unlinkSync;
-        const sync = fs.fsyncSync;
+        const sync = directorySync.syncDirectory;
         let guardRemoved = false;
         let failedOnce = false;
         jest.spyOn(fs, 'unlinkSync').mockImplementation((file: any) => {
             unlink(file);
             if (String(file) === path.join(state.repo, publication.GUARD)) guardRemoved = true;
         });
-        jest.spyOn(fs, 'fsyncSync').mockImplementation((descriptor: number) => {
-            if (guardRemoved && !failedOnce) {
+        jest.spyOn(directorySync, 'syncDirectory').mockImplementation((directory: string) => {
+            if (guardRemoved && !failedOnce && directory === path.dirname(path.join(state.repo, publication.GUARD))) {
                 failedOnce = true;
                 throw Error('synthetic directory fsync failure');
             }
-            return sync(descriptor);
+            return sync(directory);
         });
         expect(() => publication.commitPublication(plan)).toThrow(/Publication incomplete; guard retained/);
         expect(guardRemoved && failedOnce).toBe(true);

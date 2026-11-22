@@ -14,6 +14,7 @@ const {
     BUILT_FROM_SAMPLE_SOURCES,
     buildBaseline,
     verifyBaseline,
+    compareBaselines,
     applyExecutionReport,
     executionIdentity,
     EXECUTION_SCHEMA_VERSION,
@@ -193,8 +194,17 @@ describe('builtFrom source-map provenance', () => {
 });
 
 describe('IER-00 baseline: file presence is not executed evidence', () => {
+    // Capture the real checkout once for the read-only/mutation assertions.
+    // Production verifyBaseline still re-reads disk; the matching case below exercises it.
+    let captured: ReturnType<typeof buildBaseline>;
+    beforeAll(() => {
+        captured = buildBaseline();
+    });
+    const baselineCopy = () => JSON.parse(JSON.stringify(captured));
+    const compareWithCapture = (report: unknown) => compareBaselines(report, captured);
+
     test('default buildBaseline never emits tested-passed', () => {
-        const baseline = buildBaseline();
+        const baseline = baselineCopy();
         expect(baseline.capabilities.filter((c: any) => c.status === 'tested-passed')).toEqual([]);
         for (const cap of baseline.capabilities) {
             expect(Object.values(CAPABILITY_STATUS)).toContain(cap.status);
@@ -204,13 +214,13 @@ describe('IER-00 baseline: file presence is not executed evidence', () => {
 
     test('exact 64-digit historical task-doc SHA recorded honestly', () => {
         expect(TASK_DOC_MODULE_SHA256).toHaveLength(64);
-        expect(buildBaseline().historicalDedup.taskDocModuleSha256).toBe(TASK_DOC_MODULE_SHA256);
+        expect(baselineCopy().historicalDedup.taskDocModuleSha256).toBe(TASK_DOC_MODULE_SHA256);
         // currentModuleDiffers 是事实陈述（布尔），不强制永远为 true
-        expect(typeof buildBaseline().historicalDedup.currentModuleDiffers).toBe('boolean');
+        expect(typeof baselineCopy().historicalDedup.currentModuleDiffers).toBe('boolean');
     });
 
     test('section 1.2 additions inventoried: prefilter, releaseScene, sessionScope', () => {
-        const names = buildBaseline().capabilities.map((c: any) => c.name);
+        const names = baselineCopy().capabilities.map((c: any) => c.name);
         for (const n of ['validateAirPrefilteredEnvironment', 'bindAirPrefilteredEnvironment', 'releaseScene']) {
             expect(names).toContain(n);
         }
@@ -222,13 +232,13 @@ describe('IER-00 baseline: file presence is not executed evidence', () => {
         expect(api.tests).toContain('test/smoke/port-gap-action-input-dom.test.ts');
         expect(api.tests).toContain('test/smoke/port-gap-action-input-native.test.ts');
         expect(api.tests).not.toContain('test/smoke/port-gap-scene-release.test.ts');
-        const cap = buildBaseline().capabilities.find((c: any) => c.name === 'createSessionGate');
+        const cap = baselineCopy().capabilities.find((c: any) => c.name === 'createSessionGate');
         expect(cap.testAvailable).toBe(true);
         expect(cap.testExecution).toBe('NOT_RUN');
     });
 
     test('export detection is export-statement based, not arbitrary bundle text', () => {
-        const baseline = buildBaseline();
+        const baseline = baselineCopy();
         // 未核对项如实：编造的名字不能凭 bundle 任意文本命中
         expect(baseline.capabilities.every((c: any) => c.status !== 'unchecked' || true)).toBe(true);
         // releaseScene 非顶层导出，必须是 member-declared 而非 exported
@@ -242,7 +252,7 @@ describe('IER-00 baseline: file presence is not executed evidence', () => {
     });
 
     test('identity reuses candidate snapshot: HEAD/branch/dirty/group digests', () => {
-        const baseline = buildBaseline();
+        const baseline = baselineCopy();
         expect(baseline.appCommit).toMatch(/^[0-9a-f]{40}$/);
         // GitHub PR checkouts are detached: the snapshot contract deliberately
         // records null rather than inventing a branch. Compare to actual Git state.
@@ -262,7 +272,7 @@ describe('IER-00 baseline: file presence is not executed evidence', () => {
     });
 
     test('min/map/npm artifact identities provided', () => {
-        const arts = buildBaseline().artifactIdentity;
+        const arts = baselineCopy().artifactIdentity;
         for (const rel of [
             'build/cocosair.module.min.js',
             'build/cocosair.module.min.js.map',
@@ -275,7 +285,7 @@ describe('IER-00 baseline: file presence is not executed evidence', () => {
     });
 
     test('builtFrom uses source-map provenance, not HEAD speculation', () => {
-        const baseline = buildBaseline();
+        const baseline = baselineCopy();
         expect(baseline.builtFrom).toHaveLength(2); // dev + min
         for (const r of baseline.builtFrom) {
             expect(['verified-sampled', 'verified-source-binding', 'stale', 'UNKNOWN']).toContain(r.status);
@@ -289,7 +299,7 @@ describe('IER-00 baseline: file presence is not executed evidence', () => {
     });
 
     test('dedup table: 12 IER rows mapped to the 10 recommendations with concrete reuse', () => {
-        const table = buildBaseline().dedupTable;
+        const table = baselineCopy().dedupTable;
         expect(table.map((r: any) => r.ier)).toEqual(
             Array.from({ length: 12 }, (_, i) => `IER-${String(i).padStart(2, '0')}`),
         );
@@ -306,20 +316,20 @@ describe('IER-00 baseline: file presence is not executed evidence', () => {
     });
 
     test('missing evidence stays explicit, never fabricated', () => {
-        for (const item of buildBaseline().missingEvidence) {
+        for (const item of baselineCopy().missingEvidence) {
             expect(['MISSING', 'NOT_RUN', 'UNKNOWN', 'TASK_DOC_REFERENCE']).toContain(item.status);
             expect(item.reason).toBeTruthy();
         }
     });
 
     test('verifyBaseline: current-matching report passes; any drift rejected', () => {
-        const baseline = buildBaseline();
+        const baseline = baselineCopy();
         expect(verifyBaseline(baseline).ok).toBe(true);
         // HEAD 漂移
-        expect(verifyBaseline({ ...baseline, appCommit: 'f'.repeat(40) }).ok).toBe(false);
+        expect(compareWithCapture({ ...baseline, appCommit: 'f'.repeat(40) }).ok).toBe(false);
         // 组摘要漂移
         const driftGroup = { ...baseline, groupDigests: { ...baseline.groupDigests, source: 'a'.repeat(64) } };
-        expect(verifyBaseline(driftGroup).ok).toBe(false);
+        expect(compareWithCapture(driftGroup).ok).toBe(false);
         // 产物 SHA 漂移
         const driftArt = {
             ...baseline,
@@ -328,12 +338,12 @@ describe('IER-00 baseline: file presence is not executed evidence', () => {
                 'build/cocosair.module.js': { present: true, bytes: 1, sha256: 'b'.repeat(64) },
             },
         };
-        expect(verifyBaseline(driftArt).ok).toBe(false);
+        expect(compareWithCapture(driftArt).ok).toBe(false);
         // 格式不全
-        expect(verifyBaseline({ schemaVersion: 'ier-baseline/2' }).ok).toBe(false);
+        expect(compareWithCapture({ schemaVersion: 'ier-baseline/2' }).ok).toBe(false);
         // 错误历史 SHA
         expect(
-            verifyBaseline({
+            compareWithCapture({
                 ...baseline,
                 historicalDedup: { ...baseline.historicalDedup, taskDocModuleSha256: 'f6836f60' + '0'.repeat(54) },
             }).ok,
@@ -341,7 +351,7 @@ describe('IER-00 baseline: file presence is not executed evidence', () => {
     });
 
     test('applyExecutionReport: only identity-bound passing suites upgrade to tested-passed', () => {
-        const baseline = buildBaseline();
+        const baseline = baselineCopy();
         const goodSuite = {
             file: 'test/smoke/port-gap-action-state.test.ts',
             exitCode: 0,
@@ -365,7 +375,7 @@ describe('IER-00 baseline: file presence is not executed evidence', () => {
         expect(cap.status).toBe(CAPABILITY_STATUS.TESTED);
         expect(cap.testExecution.status).toBe('PASS');
         // 失败套件不升级
-        const b2 = buildBaseline();
+        const b2 = baselineCopy();
         const failing = {
             file: 'test/smoke/port-gap-action-state.test.ts',
             exitCode: 1,
@@ -384,7 +394,7 @@ describe('IER-00 baseline: file presence is not executed evidence', () => {
     });
 
     test('same dev JS cannot attest wrong types, maps, runner, harness or application content', () => {
-        const baseline = buildBaseline();
+        const baseline = baselineCopy();
         const makeReport = () => ({
             schemaVersion: EXECUTION_SCHEMA_VERSION,
             identity: executionIdentity(baseline),
@@ -438,7 +448,7 @@ describe('IER-00 baseline: file presence is not executed evidence', () => {
             const collect = require('../../tools/verify/port-gap-candidate-snapshot.cjs').collectSnapshot;
             const snapshot = collect({ root: dir });
             expect(snapshot.git.available).toBe(false);
-            const baseline = buildBaseline();
+            const baseline = baselineCopy();
             // Contract fixture: actual non-Git source manifest, current SDK bytes; not an API rerun.
             baseline.appCommit = null;
             baseline.git = snapshot.git;
@@ -463,7 +473,7 @@ describe('IER-00 baseline: file presence is not executed evidence', () => {
     });
 
     test('duplicate, invalid, failed and empty suite results cannot preserve or create PASS', () => {
-        const baseline = buildBaseline();
+        const baseline = baselineCopy();
         const good = { file: 'test/smoke/port-gap-action-state.test.ts', exitCode: 0, testsTotal: 12, testsPassed: 12 };
         const report = {
             schemaVersion: EXECUTION_SCHEMA_VERSION,
@@ -491,15 +501,15 @@ describe('IER-00 baseline: file presence is not executed evidence', () => {
     });
 
     test('verifyBaseline rejects forged execution labels even when capability status is unchanged', () => {
-        const baseline = buildBaseline();
+        const baseline = baselineCopy();
         baseline.capabilities[0].testExecution = { status: 'PASS', suites: baseline.capabilities[0].testFiles };
-        expect(verifyBaseline(baseline).ok).toBe(false);
+        expect(compareWithCapture(baseline).ok).toBe(false);
     });
 
     test('currentIdentity reads disk for CLI verification', () => {
         const id = currentIdentity();
         expect(id.sdkModule.present).toBe(true);
-        expect(id.sdkModule.sha256).toBe(buildBaseline().sdkModuleSha256);
+        expect(id.sdkModule.sha256).toBe(baselineCopy().sdkModuleSha256);
         expect(id.minModule.present).toBe(true);
         expect(id.appCommit).toMatch(/^[0-9a-f]{40}$/);
     });

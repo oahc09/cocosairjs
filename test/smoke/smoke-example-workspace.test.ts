@@ -1,4 +1,4 @@
-import { nodeRequire } from '../shims';
+import { nodeProcess, nodeRequire } from '../shims';
 const fs = nodeRequire('fs') as typeof import('fs');
 const path = nodeRequire('path') as typeof import('path');
 const os = nodeRequire('os') as typeof import('os');
@@ -229,8 +229,59 @@ describe('Example browser workspace dependency and byte closure', () => {
         const manifest = JSON.parse(fs.readFileSync(path.join(REPO, 'examples/files.json'), 'utf8'));
         const entries = manifest.examples.filter((example: any) => !example.requiresDevTools);
         expect(entries.length).toBeGreaterThan(0);
-        for (const example of entries)
-            expect(() => workspaceTools.validateReferences(REPO, example, inputs)).not.toThrow();
+        for (const example of entries) {
+            if (example.dir !== 'box3d-compound-bowling') {
+                expect(() => workspaceTools.validateReferences(REPO, example, inputs)).not.toThrow();
+                continue;
+            }
+            const runtime = nodeProcess.env.BOX3D_RUNTIME;
+            if (!runtime)
+                throw Error('Set BOX3D_RUNTIME to a qualified EX02 runtime for workspace dependency validation');
+            const prefix = '/box3d-compound-bowling/';
+            const { createRuntimeRoute } = nodeRequire(
+                path.join(REPO, 'examples/box3d-compound-bowling/runtime-route.cjs'),
+            );
+            const serve = createRuntimeRoute({ runtime, prefix });
+            function resource(relative: string): Buffer {
+                let status = 0;
+                let body: Buffer | undefined;
+                expect(
+                    serve(prefix + relative, {
+                        writeHead: (code: number) => {
+                            status = code;
+                        },
+                        end: (bytes: Buffer) => {
+                            body = bytes;
+                        },
+                    }),
+                ).toBe(true);
+                expect(status).toBe(200);
+                expect(Buffer.isBuffer(body)).toBe(true);
+                return body!;
+            }
+            const identity = resource('identity.json');
+            const receipt = JSON.parse(identity.toString('utf8'));
+            const sdk = resource('runtime/cocosair.module.js');
+            const hash = (bytes: Buffer) => crypto.createHash('sha256').update(bytes).digest('hex');
+            expect(hash(sdk)).toBe(receipt.runtimeSha256);
+            const mounted = new Map<string, Buffer>([
+                [`examples${prefix}identity.json`, identity],
+                [`examples${prefix}runtime/cocosair.module.js`, sdk],
+            ]);
+            for (const [file, binding] of Object.entries(receipt.runtimeAssets) as [
+                string,
+                { bytes: number; sha256: string },
+            ][]) {
+                const relative = 'runtime/physics/box3d/st/' + file;
+                const bytes = resource(relative);
+                expect({ bytes: bytes.length, sha256: hash(bytes) }).toEqual(binding);
+                mounted.set(`examples${prefix}${relative}`, bytes);
+            }
+            const references = workspaceTools.validateReferences(REPO, example, inputs, mounted);
+            expect(
+                new Set(references.filter((r: any) => r.kind === 'mounted-runtime').map((r: any) => r.resolved)),
+            ).toEqual(new Set(mounted.keys()));
+        }
     });
     test.each(['shader-driver-pilot', 'html-texture-experimental', 'spark-splats'])(
         '%s compiles its preserved dependencies without launching a browser',

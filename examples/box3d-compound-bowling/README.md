@@ -73,6 +73,8 @@ BOX3D_RUNTIME=/absolute/path/to/qualified-runtime npm run dev -- --example box3d
 
 Unlike the isolated `serve.cjs`, the ordinary dev server retains its existing build/watch behavior. Use standalone serving when a frozen, read-only runtime test is required. For Gallery, EX02 URLs are `/box3d-compound-bowling/identity.json` and `/box3d-compound-bowling/runtime/`; standalone keeps `/identity.json` and `/runtime/`. Both entry points use the same `runtime-route.cjs`, identical selected runtime bytes and identity fields. Missing or invalid runtime returns HTTP 503 on the scoped Gallery routes; unrelated Gallery examples are unaffected. The importmap, identity fetch, and ST asset URL are relative to the example, not the Gallery root.
 
+Set the same `BOX3D_RUNTIME` before running the full Jest workspace dependency check. The check validates the served module, identity response and all files in the ST asset mount against their byte digests. This check covers dependency resolution and leaves native physics acceptance pending.
+
 ```sh
 node --test examples/box3d-compound-bowling/tests/*.test.mjs \
   examples/box3d-compound-bowling/tests/*.test.cjs \

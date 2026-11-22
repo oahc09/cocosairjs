@@ -100,8 +100,8 @@ function exampleDirectory(example) {
 function literal(node) {
     return node && (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) ? node.text : null;
 }
-/** Validate reachable static references; dynamic URLs remain bounded by the served roots. */
-function validateReferences(repo, example, inputs) {
+/** Validate static references and, when supplied, exact bytes returned by a scoped runtime mount. */
+function validateReferences(repo, example, inputs, mounted = new Map()) {
     const root = rootOf(repo);
     const dir = exampleDirectory(example);
     const documentPath = `examples/${dir}/index.html`;
@@ -143,6 +143,38 @@ function validateReferences(repo, example, inputs) {
             return;
         }
         if (!allowedRelative(relative)) throw Error(`WORKSPACE_REFERENCE_ESCAPE: ${source} -> ${raw}`);
+        const mountRoot = `examples/${dir}/`;
+        if (relative.startsWith(mountRoot)) {
+            const mountedPaths =
+                clean.endsWith('/') && kind === 'asset'
+                    ? [...mounted.keys()].filter((file) => file.startsWith(relative + '/')).sort()
+                    : mounted.has(relative)
+                      ? [relative]
+                      : [];
+            if (mountedPaths.length) {
+                for (const file of mountedPaths) {
+                    const bytes = mounted.get(file);
+                    if (
+                        !Buffer.isBuffer(bytes) ||
+                        !bytes.length ||
+                        files.has(file) ||
+                        path.posix.normalize(file) !== file ||
+                        file.includes('\\') ||
+                        !inside(root, path.resolve(root, file))
+                    )
+                        throw Error(`WORKSPACE_INVALID_MOUNTED_INPUT: ${file}`);
+                    references.push({
+                        source,
+                        requested: raw,
+                        resolved: file,
+                        kind: 'mounted-runtime',
+                        bytes: bytes.length,
+                        sha256: sha256(bytes),
+                    });
+                }
+                return;
+            }
+        }
         const candidates = [relative];
         if (kind === 'module') {
             if (relative.endsWith('.js')) candidates.push(relative.slice(0, -3) + '.ts');

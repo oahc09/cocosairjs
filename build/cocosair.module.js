@@ -142653,8 +142653,8 @@ function createSessionScope() {
 
 const AIR_VERSION = '1.0.0';
 const AIR_REVISION = 100;
-const AIR_BUILD_DATE = "202611221026";
-const AIR_BUILD_NUMBER = 285;
+const AIR_BUILD_DATE = "202611222133";
+const AIR_BUILD_NUMBER = 288;
 class AirAppImpl {
   get session() {
     return this._scope;
@@ -146026,19 +146026,18 @@ function reflect(wgsl) {
   }
   return bindingList;
 }
-const clearPassData = {
-  vertShader: null,
-  fragShader: null,
-  bindGroupLayout: null,
-  pipelineLayout: null,
-  pipeline: null
-};
-function clearRect(device, texture, renderArea, color) {
-  var _texture$gpuTexture;
-  const format = texture.gpuTexture.format;
-  texture.gpuTarget;
+const clearPasses = new WeakMap();
+function clearRect(device, view, format, samples, renderArea, color) {
   const nativeDevice = device.nativeDevice;
-  if (!clearPassData.vertShader) {
+  let passes = clearPasses.get(nativeDevice);
+  if (!passes) {
+    passes = new Map();
+    clearPasses.set(nativeDevice, passes);
+  }
+  const key = `${format}:${samples}`;
+  const scalar = format.endsWith('uint') ? 'u32' : format.endsWith('sint') ? 'i32' : 'f32';
+  let clearPassData = passes.get(key);
+  if (!clearPassData) {
     const clearQuadVert = `
         struct VertexOutput {
             @builtin(position) Position: vec4<f32>,
@@ -146062,13 +146061,13 @@ function clearRect(device, texture, renderArea, color) {
         `;
     const clearQuadFrag = `
         struct ClearColor {
-            color: vec4<f32>,
+            color: vec4<${scalar}>,
         }
 
         @group(0) @binding(0) var<uniform> uClearColor: ClearColor;
 
         @fragment
-        fn main() -> @location(0) vec4<f32> {
+        fn main() -> @location(0) vec4<${scalar}> {
             return uClearColor.color;
         }
         `;
@@ -146078,8 +146077,6 @@ function clearRect(device, texture, renderArea, color) {
     const fragShaderModule = nativeDevice.createShaderModule({
       code: clearQuadFrag
     });
-    clearPassData.vertShader = vertShaderModule;
-    clearPassData.fragShader = fragShaderModule;
     const bufferEntry = {
       binding: 0,
       visibility: GPUShaderStage.FRAGMENT,
@@ -146094,15 +146091,13 @@ function clearRect(device, texture, renderArea, color) {
       entries: [bufferEntry]
     };
     const bindGroupLayout = nativeDevice.createBindGroupLayout(bgLayoutDesc);
-    clearPassData.bindGroupLayout = bindGroupLayout;
     const pipelineLayoutDesc = {
       label: 'clearPassPipelineLayout',
-      bindGroupLayouts: [clearPassData.bindGroupLayout]
+      bindGroupLayouts: [bindGroupLayout]
     };
     const pipelineLayout = nativeDevice.createPipelineLayout(pipelineLayoutDesc);
-    clearPassData.pipelineLayout = pipelineLayout;
     const vertexState = {
-      module: clearPassData.vertShader,
+      module: vertShaderModule,
       entryPoint: 'main'
     };
     const primitiveState = {
@@ -146115,80 +146110,77 @@ function clearRect(device, texture, renderArea, color) {
       writeMask: 0xF
     };
     const fragState = {
-      module: clearPassData.fragShader,
+      module: fragShaderModule,
       entryPoint: 'main',
       targets: [colorState]
     };
     const multisample = {
-      count: 1,
+      count: samples,
       alphaToCoverageEnabled: false,
       mask: 0xFFFFFFFF
     };
     const pipelineDesc = {
       label: 'clearPassPipeline',
-      layout: clearPassData.pipelineLayout,
+      layout: pipelineLayout,
       vertex: vertexState,
       primitive: primitiveState,
       fragment: fragState,
       multisample
     };
     const pipeline = nativeDevice.createRenderPipeline(pipelineDesc);
-    clearPassData.pipeline = pipeline;
+    clearPassData = {
+      bindGroupLayout,
+      pipeline
+    };
+    passes.set(key, clearPassData);
   }
   const commandEncoder = nativeDevice.createCommandEncoder();
-  const desc = {
-    format,
-    dimension: '2d',
-    baseMipLevel: 0,
-    mipLevelCount: 1,
-    baseArrayLayer: 0,
-    arrayLayerCount: 1,
-    aspect: 'all'
-  };
-  const dstView = (_texture$gpuTexture = texture.gpuTexture) == null ? void 0 : _texture$gpuTexture.createView(desc);
   const bufferDesc = {
     usage: GPUBufferUsage.UNIFORM,
     size: 16,
     mappedAtCreation: true
   };
   const uniformBuffer = nativeDevice.createBuffer(bufferDesc);
-  const colorArr = [color.x, color.y, color.z, color.w];
-  const mappedBuffer = uniformBuffer.getMappedRange(0, 16);
-  const f32 = new Float32Array(mappedBuffer);
-  f32.set(colorArr);
-  uniformBuffer.unmap();
-  const entry = {
-    binding: 0,
-    resource: {
-      buffer: uniformBuffer,
-      offset: 0,
-      size: 16
-    }
-  };
-  const bindgroupDesc = {
-    layout: clearPassData.bindGroupLayout,
-    entries: [entry]
-  };
-  const bindGroup = nativeDevice.createBindGroup(bindgroupDesc);
-  const colorAttachment = {
-    view: dstView,
-    loadOp: 'load',
-    storeOp: 'store',
-    clearValue: [0.88, 0.88, 0.88, 1.0]
-  };
-  const rpDesc = {
-    colorAttachments: [colorAttachment]
-  };
-  const renderPassEncoder = commandEncoder.beginRenderPass(rpDesc);
-  renderPassEncoder.setPipeline(clearPassData.pipeline);
-  renderPassEncoder.setBindGroup(0, bindGroup);
-  renderPassEncoder.setViewport(renderArea.x, renderArea.y, renderArea.width, renderArea.height, 0.0, 1.0);
-  renderPassEncoder.setScissorRect(renderArea.x, renderArea.y, renderArea.width, renderArea.height);
-  renderPassEncoder.draw(6, 1, 0, 0);
-  renderPassEncoder.end();
-  const commandBuffer = commandEncoder.finish();
-  nativeDevice.queue.submit([commandBuffer]);
-  uniformBuffer.destroy();
+  try {
+    const colorArr = [color.x, color.y, color.z, color.w];
+    const mappedBuffer = uniformBuffer.getMappedRange(0, 16);
+    const clearValues = scalar === 'u32' ? new Uint32Array(mappedBuffer) : scalar === 'i32' ? new Int32Array(mappedBuffer) : new Float32Array(mappedBuffer);
+    clearValues.set(colorArr);
+    uniformBuffer.unmap();
+    const entry = {
+      binding: 0,
+      resource: {
+        buffer: uniformBuffer,
+        offset: 0,
+        size: 16
+      }
+    };
+    const bindgroupDesc = {
+      layout: clearPassData.bindGroupLayout,
+      entries: [entry]
+    };
+    const bindGroup = nativeDevice.createBindGroup(bindgroupDesc);
+    const colorAttachment = {
+      view,
+      loadOp: 'load',
+      storeOp: 'store',
+      clearValue: [0.88, 0.88, 0.88, 1.0]
+    };
+    const rpDesc = {
+      colorAttachments: [colorAttachment]
+    };
+    const renderPassEncoder = commandEncoder.beginRenderPass(rpDesc);
+    renderPassEncoder.setPipeline(clearPassData.pipeline);
+    renderPassEncoder.setBindGroup(0, bindGroup);
+    renderPassEncoder.setViewport(renderArea.x, renderArea.y, renderArea.width, renderArea.height, 0.0, 1.0);
+    renderPassEncoder.setScissorRect(renderArea.x, renderArea.y, renderArea.width, renderArea.height);
+    renderPassEncoder.draw(6, 1, 0, 0);
+    renderPassEncoder.end();
+    const commandBuffer = commandEncoder.finish();
+    nativeDevice.queue.submit([commandBuffer]);
+  } finally {
+    uniformBuffer.destroy();
+  }
 }
 function findEmployAttr(stage) {
   if (stage.type !== ShaderStageFlagBit.VERTEX) {
@@ -147044,7 +147036,6 @@ class WebGPUBuffer extends Buffer {
 
 const descriptorSets = [];
 const groupSets = [0, 1, 2];
-const renderAreas = [];
 let samples = 1;
 class WebGPUCommandBuffer extends CommandBuffer {
   constructor(...args) {
@@ -147121,7 +147112,6 @@ class WebGPUCommandBuffer extends CommandBuffer {
     this._discardPendingPasses();
     if (WebGPUDeviceManager.instance.isLost) throw new Error('WEBGPU_DEVICE_LOST');
     this._webGPUAllocator.clearCmds(this.cmdPackage);
-    renderAreas.length = 0;
     this._curGPUPipelineState = null;
     this._curGPUInputAssembler = null;
     this._curGPUDescriptorSets.length = 0;
@@ -147158,42 +147148,45 @@ class WebGPUCommandBuffer extends CommandBuffer {
     if (device.isLost) throw new Error('WEBGPU_DEVICE_LOST');
     const gpuDevice = device;
     this._wgpuRenderPass = renderPass;
-    const nativePassDesc = this._nativePassDesc = this._wgpuRenderPass.gpuRenderPass.nativeRenderPass;
-    const originalRP = this._wgpuRenderPass.gpuRenderPass.originalRP;
+    const template = this._wgpuRenderPass.gpuRenderPass.originalRP;
+    const nativePassDesc = {
+      ...template,
+      colorAttachments: Array.from(template.colorAttachments, attachment => attachment && {
+        ...attachment
+      }),
+      depthStencilAttachment: template.depthStencilAttachment ? {
+        ...template.depthStencilAttachment
+      } : undefined
+    };
     const gpuFramebuffer = framebuffer.gpuFramebuffer;
-    renderAreas.push(renderArea);
-    let needPartialClear = false;
     samples = 1;
-    const renderingFullScreen = gpuFramebuffer.gpuColorTextures.every(val => {
-      if (renderArea.x !== 0 || renderArea.y !== 0 || renderArea.width !== val.width || renderArea.height !== val.height) {
-        return false;
-      }
-      return true;
-    });
+    const area = new Rect$1(Math.floor(renderArea.x), Math.floor(renderArea.y), Math.floor(renderArea.width), Math.floor(renderArea.height));
+    const partialColorArea = gpuFramebuffer.isOffscreen && gpuFramebuffer.gpuColorTextures.some(texture => area.x !== 0 || area.y !== 0 || area.width !== texture.width || area.height !== texture.height);
     const swapchain = gpuDevice.getSwapchains()[0];
+    const partialClears = [];
     const clearColorSize = clearColors.length;
     for (let i = 0; i < clearColorSize; i++) {
-      let colorTex;
-      let currGPUTex;
-      if (gpuFramebuffer.isOffscreen) {
-        currGPUTex = gpuFramebuffer.gpuColorTextures[i];
-        colorTex = currGPUTex.getTextureView();
-      } else {
-        colorTex = swapchain.colorGPUTextureView;
+      const attachment = nativePassDesc.colorAttachments[i];
+      const current = gpuFramebuffer.isOffscreen ? gpuFramebuffer.gpuColorTextures[i] : undefined;
+      const view = current ? current.getTextureView() : swapchain.colorGPUTextureView;
+      view.label = current ? 'offscreen' : 'swapchain';
+      if (current != null && current.resolveTex) {
+        samples = current.samples;
+        attachment.resolveTarget = current.resolveTex.gpuTexture.createView();
       }
-      colorTex.label = gpuFramebuffer.isOffscreen ? 'offscreen' : 'swapchain';
-      if (!renderingFullScreen) {
-        needPartialClear = originalRP.colorAttachments[i].loadOp === 'clear';
-        if (renderAreas.length > 1) {
-          nativePassDesc.colorAttachments[i].loadOp = 'load';
-        }
+      const color = clearColors[i];
+      attachment.view = view;
+      attachment.clearValue = [color.x, color.y, color.z, color.w];
+      const colorInfo = this._wgpuRenderPass.colorAttachments[i];
+      if (current && partialColorArea && colorInfo.loadOp === LoadOp.CLEAR) {
+        attachment.loadOp = 'load';
+        partialClears.push({
+          view,
+          format: GFXFormatToWGPUFormat(colorInfo.format),
+          samples: current.samples,
+          color
+        });
       }
-      nativePassDesc.colorAttachments[i].view = colorTex;
-      if (currGPUTex && currGPUTex.resolveTex) {
-        samples = currGPUTex.samples;
-        nativePassDesc.colorAttachments[i].resolveTarget = currGPUTex.resolveTex.gpuTexture.createView();
-      }
-      nativePassDesc.colorAttachments[i].clearValue = [clearColors[i].x, clearColors[i].y, clearColors[i].z, clearColors[i].w];
     }
     if (((_this$_wgpuRenderPass = this._wgpuRenderPass.depthStencilAttachment) == null ? void 0 : _this$_wgpuRenderPass.format) !== Format.UNKNOWN) {
       var _gpuFramebuffer$gpuDe;
@@ -147204,25 +147197,16 @@ class WebGPUCommandBuffer extends CommandBuffer {
       depthStencilAttachment.depthClearValue = clearDepth;
       if (depthStencilAttachment.stencilLoadOp !== undefined) depthStencilAttachment.stencilClearValue = clearStencil;
     }
-    renderArea.x = Math.floor(renderArea.x);
-    renderArea.y = Math.floor(renderArea.y);
-    renderArea.width = Math.floor(renderArea.width);
-    renderArea.height = Math.floor(renderArea.height);
-    const vpfunc = passEncoder => {
-      passEncoder.setViewport(renderArea.x, renderArea.y, renderArea.width, renderArea.height, 0.0, 1.0);
-    };
-    const srfunc = passEncoder => {
-      passEncoder.setScissorRect(renderArea.x, renderArea.y, renderArea.width, renderArea.height);
-    };
-    this._renderPassFuncQueue.push(vpfunc);
-    this._renderPassFuncQueue.push(srfunc);
-    if (!renderingFullScreen && needPartialClear) {
-      let idx = 0;
-      gpuFramebuffer.gpuColorTextures.forEach(tex => {
-        clearRect(device, tex, renderArea, clearColors[idx]);
-        idx++;
-      });
+    if (area.width > 0 && area.height > 0) {
+      for (const pass of partialClears) {
+        clearRect(device, pass.view, pass.format, pass.samples, area, pass.color);
+      }
     }
+    this._nativePassDesc = nativePassDesc;
+    this._renderPassFuncQueue.push(encoder => {
+      encoder.setViewport(area.x, area.y, area.width, area.height, 0.0, 1.0);
+      encoder.setScissorRect(area.x, area.y, area.width, area.height);
+    });
     this._releaseRenderResources = beginWebGPUResourceUse(device.nativeDevice);
     this._isInRenderPass = true;
   }
@@ -147241,11 +147225,6 @@ class WebGPUCommandBuffer extends CommandBuffer {
       nativeDevice.queue.submit([cmdEncoder.finish()]);
     } finally {
       var _this$_releaseRenderR2;
-      let idx = 0;
-      for (const attachment of this._nativePassDesc.colorAttachments) {
-        attachment.loadOp = this._wgpuRenderPass.gpuRenderPass.originalRP.colorAttachments[idx].loadOp;
-        idx++;
-      }
       this._isInRenderPass = false;
       this._isStateValid = false;
       this._renderPassFuncQueue.length = 0;
@@ -155463,8 +155442,39 @@ function imageExtensionFactory(name) {
   });
 }
 
+function textureRoles(context) {
+  const roles = new Map();
+  const mark = (info, role) => {
+    if (info) {
+      var _roles$get;
+      roles.set(info.index, ((_roles$get = roles.get(info.index)) !== null && _roles$get !== void 0 ? _roles$get : 0) | role);
+    }
+  };
+  for (const material of context.json.materials || []) {
+    var _material$pbrMetallic, _material$pbrMetallic2;
+    mark((_material$pbrMetallic = material.pbrMetallicRoughness) == null ? void 0 : _material$pbrMetallic.baseColorTexture, 1);
+    mark(material.emissiveTexture, 1);
+    mark((_material$pbrMetallic2 = material.pbrMetallicRoughness) == null ? void 0 : _material$pbrMetallic2.metallicRoughnessTexture, 2);
+    mark(material.normalTexture, 2);
+    mark(material.occlusionTexture, 2);
+    for (const extension of Object.values(material.extensions || {})) {
+      if (!extension || typeof extension !== 'object') {
+        continue;
+      }
+      for (const [key, value] of Object.entries(extension)) {
+        if (/texture$/i.test(key) && value && typeof value === 'object') {
+          mark(value, 4);
+        }
+      }
+    }
+  }
+  return roles;
+}
 async function loadGLTFTextures(context, textures, images) {
   const imageCache = new Map();
+  const experimentalDeduplication = context.options.experimentalTextureDeduplication === true;
+  const textureCache = experimentalDeduplication ? new Map() : undefined;
+  const roles = experimentalDeduplication ? textureRoles(context) : undefined;
   const decodeImage = async (key, bytes, mime) => {
     context.throwIfAborted();
     const cached = imageCache.get(key);
@@ -155520,7 +155530,7 @@ async function loadGLTFTextures(context, textures, images) {
   };
   const brokenMimes = new Set();
   for (const [index, source] of (context.json.textures || []).entries()) {
-    var _sampler$minFilter, _sampler$magFilter, _sampler$wrapS, _sampler$wrapT;
+    var _sampler$minFilter, _sampler$magFilter, _sampler$wrapS, _sampler$wrapT, _roles$get2, _variants;
     context.throwIfAborted();
     let image;
     let decoded;
@@ -155611,9 +155621,6 @@ async function loadGLTFTextures(context, textures, images) {
     }
     context.throwIfAborted();
     const sampler = source.sampler === undefined ? {} : item(context.json.samplers, source.sampler, 'sampler');
-    const texture = new Texture2D();
-    textures.push(texture);
-    texture.name = source.name || `texture_${index}`;
     const min = (_sampler$minFilter = sampler.minFilter) !== null && _sampler$minFilter !== void 0 ? _sampler$minFilter : 9987;
     const mag = (_sampler$magFilter = sampler.magFilter) !== null && _sampler$magFilter !== void 0 ? _sampler$magFilter : 9729;
     check([9728, 9729, 9984, 9985, 9986, 9987].includes(min) && [9728, 9729].includes(mag), 'invalid texture filter');
@@ -155621,16 +155628,40 @@ async function loadGLTFTextures(context, textures, images) {
       check([33071, 33648, 10497].includes(value), 'invalid texture wrap');
       return value === 33071 ? Texture2D.WrapMode.CLAMP_TO_EDGE : value === 33648 ? Texture2D.WrapMode.MIRRORED_REPEAT : Texture2D.WrapMode.REPEAT;
     };
-    texture.setFilters([9728, 9984, 9986].includes(min) ? Texture2D.Filter.NEAREST : Texture2D.Filter.LINEAR, mag === 9728 ? Texture2D.Filter.NEAREST : Texture2D.Filter.LINEAR);
-    texture.setMipFilter(min < 9984 ? Texture2D.Filter.NONE : min <= 9985 ? Texture2D.Filter.NEAREST : Texture2D.Filter.LINEAR);
-    texture.setWrapMode(wrap((_sampler$wrapS = sampler.wrapS) !== null && _sampler$wrapS !== void 0 ? _sampler$wrapS : 10497), wrap((_sampler$wrapT = sampler.wrapT) !== null && _sampler$wrapT !== void 0 ? _sampler$wrapT : 10497));
+    const minFilter = [9728, 9984, 9986].includes(min) ? Texture2D.Filter.NEAREST : Texture2D.Filter.LINEAR;
+    const magFilter = mag === 9728 ? Texture2D.Filter.NEAREST : Texture2D.Filter.LINEAR;
+    let mipFilter = min < 9984 ? Texture2D.Filter.NONE : min <= 9985 ? Texture2D.Filter.NEAREST : Texture2D.Filter.LINEAR;
+    let wrapS = wrap((_sampler$wrapS = sampler.wrapS) !== null && _sampler$wrapS !== void 0 ? _sampler$wrapS : 10497);
+    let wrapT = wrap((_sampler$wrapT = sampler.wrapT) !== null && _sampler$wrapT !== void 0 ? _sampler$wrapT : 10497);
     const powerOfTwo = n => n > 0 && (n & n - 1) === 0;
     if (deviceManager.gfxDevice.gfxAPI === API.WEBGL && (!powerOfTwo(image.width) || !powerOfTwo(image.height))) {
       context.warn(`texture ${index}: WebGL1 NPOT sampler changed to clamp/no mipmaps`);
-      texture.setWrapMode(Texture2D.WrapMode.CLAMP_TO_EDGE, Texture2D.WrapMode.CLAMP_TO_EDGE);
-      texture.setMipFilter(Texture2D.Filter.NONE);
+      wrapS = wrapT = Texture2D.WrapMode.CLAMP_TO_EDGE;
+      mipFilter = Texture2D.Filter.NONE;
     }
+    const role = (_roles$get2 = roles == null ? void 0 : roles.get(index)) !== null && _roles$get2 !== void 0 ? _roles$get2 : 0;
+    const share = textureCache && !decoded && !Object.keys(source.extensions || {}).length && !(role & 4);
+    const key = `${minFilter}:${magFilter}:${mipFilter}:${wrapS}:${wrapT}:${role}`;
+    let variants = share ? textureCache.get(image) : undefined;
+    const cachedTexture = (_variants = variants) == null ? void 0 : _variants.get(key);
+    if (cachedTexture) {
+      textures.push(cachedTexture);
+      continue;
+    }
+    const texture = new Texture2D();
+    textures.push(texture);
+    texture.name = source.name || `texture_${index}`;
+    texture.setFilters(minFilter, magFilter);
+    texture.setMipFilter(mipFilter);
+    texture.setWrapMode(wrapS, wrapT);
     texture.image = image;
+    if (share && textureCache) {
+      if (!variants) {
+        variants = new Map();
+        textureCache.set(image, variants);
+      }
+      variants.set(key, texture);
+    }
   }
 }
 function createGLTFMaterial(features, textures, vertexColor) {
@@ -156982,9 +157013,13 @@ function absoluteURL(url) {
 }
 let globalDefaults = {};
 function configureGLTFLoaderDefaults(options) {
+  const defaults = {
+    ...options
+  };
+  delete defaults.experimentalTextureDeduplication;
   globalDefaults = {
     ...globalDefaults,
-    ...options,
+    ...defaults,
     request: Object.prototype.hasOwnProperty.call(options, 'request') && options.request === undefined ? undefined : mergeRequestPolicy(globalDefaults.request, options.request)
   };
 }
@@ -157205,7 +157240,10 @@ function registerGLTFLoader() {
     });
     factory.register(ext, (url, data, options, done) => {
       var _gltf;
-      const loaderOptions = (_gltf = options == null ? void 0 : options.gltf) !== null && _gltf !== void 0 ? _gltf : globalDefaults;
+      const loaderOptions = {
+        ...((_gltf = options == null ? void 0 : options.gltf) !== null && _gltf !== void 0 ? _gltf : globalDefaults)
+      };
+      delete loaderOptions.experimentalTextureDeduplication;
       new GLTFLoader(loaderOptions).parseAsync(data, /^(data|blob):/i.test(url) ? undefined : new URL('.', absoluteURL(url)).href).then(asset => done(null, asset), error => {
         files.remove(`${url}@native`);
         parsed.remove(`${url}@native`);

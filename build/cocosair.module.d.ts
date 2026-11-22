@@ -60992,6 +60992,7 @@ export class GLTFAsset extends Asset {
     };
     get meshes(): readonly Mesh[];
     get materials(): readonly Material[];
+    /** Indexed by glTF texture index. The direct loader deduplication experiment may alias entries. */
     get textures(): readonly Texture2D[];
     get skeletons(): readonly Skeleton[];
     get animations(): readonly AnimationClip[];
@@ -61029,7 +61030,7 @@ export class GLTFLoader {
 }
 export function registerGLTFLoader(): void;
 /** Sets process-wide fallback options; instance options take precedence over these. */
-export function configureGLTFLoaderDefaults(options: GLTFLoaderOptions): void;
+export function configureGLTFLoaderDefaults(options: Omit<GLTFLoaderOptions, "experimentalTextureDeduplication">): void;
 /** Network policy only: does not control native Asset or parser caches. */
 export interface AirRequestPolicy {
     /** Browser scheduling hint; unsupported browsers use their normal scheduling. */
@@ -61043,6 +61044,10 @@ export interface GLTFLoaderOptions {
     /** Defined fields override global defaults; undefined fields inherit them. */
     request?: AirRequestPolicy;
     signal?: AbortSignal;
+    /** Direct GLTFLoader instance experiment, off by default and unavailable through the native asset cache.
+     * Equivalent glTF indices may share one mutable Texture2D (including name, sampler and destruction).
+     */
+    experimentalTextureDeduplication?: boolean;
     dracoDecoder?: GLTFDracoDecoder;
     meshoptDecoder?: GLTFMeshoptDecoder;
     ktx2Transcoder?: GLTFKTX2Transcoder;

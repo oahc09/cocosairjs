@@ -3,15 +3,15 @@ const fs = require('node:fs');
 
 // Historical Windows reports used backslashes. Accept their equivalent relative
 // spelling while keeping the recorded path in the matrix namespace.
-function matrixPath(recorded) {
+function matrixPath(recorded, prefix = 'docs/evidence/browser-matrix') {
     if (typeof recorded !== 'string') throw new Error('Invalid matrix artifact path');
     const portable = recorded.replace(/\\/g, '/');
     const parts = portable.split('/');
+    const parent = parts.slice(0, -2).join('/');
     if (
-        parts.length !== 5 ||
-        parts.slice(0, 3).join('/') !== 'docs/evidence/browser-matrix' ||
-        !/^[\w-]+$/.test(parts[3]) ||
-        !/^matrix-(?:chromium|firefox|webkit)(?:-before)?\.png$/.test(parts[4])
+        parent !== prefix ||
+        !/^[\w-]+$/.test(parts.at(-2)) ||
+        !/^matrix-(?:chromium|firefox|webkit)(?:-before)?\.png$/.test(parts.at(-1))
     )
         throw new Error('Invalid matrix artifact path');
     return portable;
@@ -21,8 +21,12 @@ function screenshotPath(example, engine, before = false) {
     return matrixPath(`docs/evidence/browser-matrix/${example}/matrix-${engine}${before ? '-before' : ''}.png`);
 }
 
-function resolveScreenshot(repo, recorded) {
-    const portable = matrixPath(recorded);
+function resolveScreenshot(repo, recorded, outputPrefix) {
+    if (outputPrefix !== undefined && !/^output(?:\/[\w.-]+)+$/.test(outputPrefix))
+        throw new Error('Invalid matrix output directory');
+    if (outputPrefix?.split('/').some((part) => part === '.' || part === '..'))
+        throw new Error('Invalid matrix output directory');
+    const portable = matrixPath(recorded, outputPrefix);
     const root = path.resolve(repo);
     const resolved = path.resolve(root, portable);
     let realRoot;

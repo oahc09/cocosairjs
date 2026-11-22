@@ -10,7 +10,7 @@
 import { readFileSync, readdirSync, existsSync, statSync } from 'fs';
 import { createHash } from 'crypto';
 import { execFileSync } from 'child_process';
-import { join, relative } from 'path';
+import { dirname, join, relative, resolve } from 'path';
 import { createAirApp } from '../../src/air/bootstrap';
 import { screen as engineScreen } from '../../src/cocos/core/platform/screen';
 import { Node } from '../../src';
@@ -506,7 +506,11 @@ describe('smoke 30 — V1.2 回归组产物面与运行时', () => {
 
     describe('V1.2 三浏览器矩阵证据（tools/verify/browser-matrix.cjs）字节货币', () => {
         const EVIDENCE = join(ROOT, 'docs', 'evidence', 'browser-matrix', 'browser-matrix.json');
-        const CONTRACT = join(ROOT, 'tools', 'verify', 'browser-matrix-contract.json');
+        const CONTRACT = join(dirname(EVIDENCE), 'historical-contract.json');
+        const HISTORICAL_BUNDLE = join(
+            ROOT,
+            'docs/evidence/release-refresh-windows/history/gallery-attempt-1/artifact/cocosair.module.js',
+        );
         const sha16 = (path: string): string => digest(path).slice(0, 16);
 
         test('证据在案且已完成：completed=true（缺标记即 NOT_RUN）', () => {
@@ -517,16 +521,18 @@ describe('smoke 30 — V1.2 回归组产物面与运行时', () => {
             expect(json.runTotal).toBeGreaterThan(0);
         });
 
-        test('产物绑定：矩阵记录的 bundle 与 d.ts 哈希就是当期构建产物', () => {
+        test('历史产物绑定：矩阵记录的 bundle 哈希与原采证 SDK 字节相同', () => {
             const json = JSON.parse(readFileSync(EVIDENCE, 'utf8'));
             expect(json.bundle.path).toBe('build/cocosair.module.js');
-            expect(json.bundle.sha256_16).toBe(sha16(BUNDLE));
-            expect(json.bundle.bytes).toBe(statSync(BUNDLE).size);
+            expect(json.bundle.sha256_16).toBe(sha16(HISTORICAL_BUNDLE));
+            expect(json.bundle.bytes).toBe(statSync(HISTORICAL_BUNDLE).size);
+            expect(json.fingerprints[json.bundle.path]).toBe(digest(HISTORICAL_BUNDLE));
         });
 
         test('契约绑定：矩阵断言自采证后未被放松', () => {
             const json = JSON.parse(readFileSync(EVIDENCE, 'utf8'));
             expect(json.contractFingerprint).toBe(sha16(CONTRACT));
+            expect(json.fingerprints[json.contractFile]).toBe(digest(CONTRACT));
         });
 
         test('每张截图仍在盘且与记录逐字节一致；断言全部为真', () => {
@@ -590,5 +596,57 @@ describe('smoke 30 — V1.2 回归组产物面与运行时', () => {
             expect(Object.keys(ACCOUNTED).filter((d) => !dirs.includes(d))).toEqual([]);
             expect(referenced.size).toBe(Object.keys(JSON.parse(readFileSync(CONTRACT, 'utf8'))).length);
         });
+    });
+
+    test('当前 SDK 的独立三浏览器矩阵必须完整、逐项通过并绑定当前产物', () => {
+        const evidence = resolve(
+            ROOT,
+            process.env.AIR_CURRENT_BROWSER_MATRIX_REPORT || 'output/browser-matrix-current/browser-matrix.json',
+        );
+        const prefix = relative(ROOT, dirname(evidence)).replace(/\\/g, '/');
+        expect(prefix).toMatch(/^output(?:\/[\w.-]+)+$/);
+        if (!existsSync(evidence))
+            throw new Error(
+                'Current matrix NOT_RUN: capture with --artifact-dir and set AIR_CURRENT_BROWSER_MATRIX_REPORT',
+            );
+        const report = JSON.parse(readFileSync(evidence, 'utf8'));
+        const contractFile = 'tools/verify/browser-matrix-contract.json';
+        const contract = JSON.parse(readFileSync(join(ROOT, contractFile), 'utf8'));
+        const expected = Object.entries<any>(contract)
+            .flatMap(([id, entry]) => entry.engines.map((engine: string) => `${id}@${engine}`))
+            .sort();
+        expect(report).toMatchObject({
+            completed: true,
+            subset: false,
+            scopePassed: true,
+            method: 'REAL_BROWSER',
+            runPass: expected.length,
+            runTotal: expected.length,
+            contractFile,
+            contractFingerprint: digest(join(ROOT, contractFile)).slice(0, 16),
+            bundle: {
+                path: 'build/cocosair.module.js',
+                bytes: statSync(BUNDLE).size,
+                sha256_16: digest(BUNDLE).slice(0, 16),
+            },
+        });
+        for (const file of [
+            'build/cocosair.module.js',
+            'build/cocosair.module.d.ts',
+            contractFile,
+            'tools/verify/browser-matrix.cjs',
+            'tools/verify/browser-engines.cjs',
+            'tools/verify/browser-probe.cjs',
+            'tools/verify/browser-matrix-paths.cjs',
+        ])
+            expect(report.fingerprints[file]).toBe(digest(join(ROOT, file)));
+        expect(report.records.map((r: any) => `${r.example}@${r.engine}`).sort()).toEqual(expected);
+        for (const row of report.records) {
+            expect(row).toMatchObject({ result: 'PASS', failedAssertions: [], consoleErrors: [], failedRequests: [] });
+            expect(Object.values(row.checks).every(Boolean)).toBe(true);
+            const screenshot = resolveScreenshot(ROOT, row.png, prefix);
+            expect(statSync(screenshot).size).toBe(row.pngBytes);
+            expect(digest(screenshot).slice(0, 16)).toBe(row.pngSha256_16);
+        }
     });
 });

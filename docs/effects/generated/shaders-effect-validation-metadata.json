@@ -33,8 +33,8 @@
     },
     {
       "path": "tools/examples/spec-evidence.cjs",
-      "bytes": 12179,
-      "sha256": "ea41d909ead5f9397301cf0758f1894b7d35b8f8af6d84cdb94031ac1d0f846e"
+      "bytes": 15075,
+      "sha256": "045dbea51f2d4bec9aff68374ca154b63d11ba20a448c18078b679bfc932132a"
     },
     {
       "path": ".prettierrc.json",
@@ -53,13 +53,13 @@
     },
     {
       "path": "package.json",
-      "bytes": 5793,
-      "sha256": "d3772a83ab37cf7b0a0367debc3b32ce36ebff04d4f4e9a75c846832d87ce8de"
+      "bytes": 7727,
+      "sha256": "2b5fcd64defeceebf2290505e8480112861d967a1e079d64b8a0a19d0734df0c"
     },
     {
       "path": "build/cocosair.module.d.ts",
-      "bytes": 3303581,
-      "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+      "bytes": 3263461,
+      "sha256": "34f39b51f4160a1a72e0e6165a69f00b20f252e67ff0f1ac864915224418faad"
     }
   ],
   "gates": {
@@ -69,19 +69,19 @@
     "wave4": "docs/evidence/shaders-absorption/wave4-current-sdk-r2-gate.json"
   },
   "structureKeys": {
-    "E01": "f41c9c5f4a790eaf810f1f9edda2fec84c43b36463650b439ea51030d8c72047",
-    "E02": "b906b643ba847f96fe8aab2e84a19da44316edf8af97cfde16d3796de2e60dae",
-    "E03": "bd12b79c0dabd74a53aa87db966b2c996a3cf4f6583f552a40693bebf5a92e1c",
-    "E04": "52213de9e21148ce4df0f5656c6d2cf3c7f656c03503cf62be7617a034af7ca5",
-    "E05": "c74abc6528af781730004f86d64768db79a57e56d4bc742fce4a20886c51c537",
-    "E06": "d207d9b5b670829657e19ff1be9a4633fcf08037900e7e9579b70990424fe073",
-    "E07": "828944efecc0881c327d83eaaa2341df0ba10e277c72ac217169dcf1ffc06309",
-    "E08": "e9e121949eb5ae7744f4ea1e6b4121b9f936b4c9c570836d247d34e7f82b088e",
-    "E09": "ca21f94f34cf7cbbe8cbc3b921df6f6e382499c2500f98153b757d1855a4ffae",
-    "C01": "4efce27b23c700d37ce7028388fe5b544de08c17a2520076013778bdabbe5b99",
-    "C02": "281a5ecc3382a8ba46bb1e4a731e0ad82e71c3e87055b2bf8e628fe5188af9d5",
-    "C03": "0010a27c4826a065c3e123a6099d08e1c841ddccf2dcb40fe1945a6dc69d9cc4",
-    "C04": "9793a92bcc927e258e89b02476f2c82b2e7ad2d16e3d5753a3f22ab3875c0d3c"
+    "E01": "fee96423052219738a2178575c583dd457ecbcaa5f4bd036db0a99142752649c",
+    "E02": "2a1d6dec8313d9a7418b4d3f3b3162a168de56f7493a0f35d942bf9df9bcf27f",
+    "E03": "04a0d74f753ccc9cf118c33a47e44388e067fa3db71345ab343a6e3fd884ce16",
+    "E04": "d31ed11913be75f0a79376369d28bc40a8abf5d4e90a708de01a34bba69a76c0",
+    "E05": "71bb2f5cb55e18659f903b0e5966378417ba5321b065899b2b12f62b5b6979a3",
+    "E06": "26be54d6a0a4f735d1a4fcad2347e3c1923adb8b89baf29e14f80a9d04ef35b1",
+    "E07": "e1ffd2d08ab5294d9fe89a8e1690d9a9701acc6722212bfb303c87a6b1d103bd",
+    "E08": "35a36da3fe86d2ac7c244736c043547fe320c40469a1a1494ab6273d3242d91a",
+    "E09": "16e580cc780468edcf0f25736cf888c3a646cb52c7454a1e60a89dc6c3b6b5f0",
+    "C01": "3a298c229e558dc30ce18bda39364e7ebb801e47cf70833fec8ed896209a533d",
+    "C02": "7350c17267e16b7aff0787d980c3e5174890e127edb5d4fcc248cc642c5090d4",
+    "C03": "838c451ff429b1b9b20e11b2061d567f387c693625be8398b7d7c18005c6b35e",
+    "C04": "0277180b4a630c10bd829c35ba9adf9725b69f371931edf65f309c930f314873"
   },
   "effects": [
     {
@@ -103,18 +103,18 @@
         },
         {
           "path": "examples/shader-noise-dissolve/example.json",
-          "bytes": 5243,
-          "sha256": "b88307c68a0840be6192c4e8de5d4bbb6a22cdd30dbc904817de05fd6043bd25"
+          "bytes": 5115,
+          "sha256": "1f7d1c280ff22244f29b71b177d01e0630fd73134c622dc069fe63eec6a43c3c"
         },
         {
           "path": "build/cocosair.module.d.ts",
-          "bytes": 3303581,
-          "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+          "bytes": 3263461,
+          "sha256": "34f39b51f4160a1a72e0e6165a69f00b20f252e67ff0f1ac864915224418faad"
         },
         {
           "path": "docs/example-api-inventory.json",
-          "bytes": 2248439,
-          "sha256": "776aef3e24f4140193083523ab8569e01cdeacc6a7c9645cc3b1c4d2e6b47012"
+          "bytes": 1870128,
+          "sha256": "d29dd6a36979d6084a8be087bd28cd0b96967a4abeedc697814e0c75d9012c7d"
         }
       ],
       "adaptations": {
@@ -125,7 +125,7 @@
         "legacyRoutePolicy": null
       },
       "paramCount": 5,
-      "structureKey": "f41c9c5f4a790eaf810f1f9edda2fec84c43b36463650b439ea51030d8c72047",
+      "structureKey": "fee96423052219738a2178575c583dd457ecbcaa5f4bd036db0a99142752649c",
       "passes": 1
     },
     {
@@ -137,8 +137,8 @@
       "sourceIdentity": [
         {
           "path": "examples/shader-thin-film/parameters.json",
-          "bytes": 2140,
-          "sha256": "3dbdcec85142c858c599902d842a45fd2ff4b575749880b4b57a8ddcb7d29cb7"
+          "bytes": 2887,
+          "sha256": "4e25664edd22504de1733bcd51416bb1226a7935e1299bf44bc0e9fae22f5347"
         },
         {
           "path": "examples/shader-thin-film/src/parameters.ts",
@@ -152,18 +152,18 @@
         },
         {
           "path": "examples/shader-thin-film/example.json",
-          "bytes": 4133,
-          "sha256": "becab3e605a5f22c9e55bccad2e6a0df748d3798fa4c4c83cd68bb5fde7efad1"
+          "bytes": 3939,
+          "sha256": "e73522545d93a814f19610a6843fb83257c328313890dca189b966de6ac154bd"
         },
         {
           "path": "build/cocosair.module.d.ts",
-          "bytes": 3303581,
-          "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+          "bytes": 3263461,
+          "sha256": "34f39b51f4160a1a72e0e6165a69f00b20f252e67ff0f1ac864915224418faad"
         },
         {
           "path": "docs/example-api-inventory.json",
-          "bytes": 2248439,
-          "sha256": "776aef3e24f4140193083523ab8569e01cdeacc6a7c9645cc3b1c4d2e6b47012"
+          "bytes": 1870128,
+          "sha256": "d29dd6a36979d6084a8be087bd28cd0b96967a4abeedc697814e0c75d9012c7d"
         }
       ],
       "adaptations": {
@@ -174,7 +174,7 @@
         "legacyRoutePolicy": null
       },
       "paramCount": 10,
-      "structureKey": "b906b643ba847f96fe8aab2e84a19da44316edf8af97cfde16d3796de2e60dae",
+      "structureKey": "2a1d6dec8313d9a7418b4d3f3b3162a168de56f7493a0f35d942bf9df9bcf27f",
       "passes": 1
     },
     {
@@ -201,18 +201,18 @@
         },
         {
           "path": "examples/shader-holographic/example.json",
-          "bytes": 6456,
-          "sha256": "6ca8e0d996cc7678a6875df9b74b99f40a4ee2d400b4abe2976a66083979c3f8"
+          "bytes": 6274,
+          "sha256": "dca2c5b6d3b56f99ec399966eee9f3f05dbdc3f4a6432593415fbc57b1a159a2"
         },
         {
           "path": "build/cocosair.module.d.ts",
-          "bytes": 3303581,
-          "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+          "bytes": 3263461,
+          "sha256": "34f39b51f4160a1a72e0e6165a69f00b20f252e67ff0f1ac864915224418faad"
         },
         {
           "path": "docs/example-api-inventory.json",
-          "bytes": 2248439,
-          "sha256": "776aef3e24f4140193083523ab8569e01cdeacc6a7c9645cc3b1c4d2e6b47012"
+          "bytes": 1870128,
+          "sha256": "d29dd6a36979d6084a8be087bd28cd0b96967a4abeedc697814e0c75d9012c7d"
         }
       ],
       "adaptations": {
@@ -223,7 +223,7 @@
         "legacyRoutePolicy": null
       },
       "paramCount": 13,
-      "structureKey": "bd12b79c0dabd74a53aa87db966b2c996a3cf4f6583f552a40693bebf5a92e1c",
+      "structureKey": "04a0d74f753ccc9cf118c33a47e44388e067fa3db71345ab343a6e3fd884ce16",
       "passes": 1
     },
     {
@@ -250,18 +250,18 @@
         },
         {
           "path": "examples/shader-neon/example.json",
-          "bytes": 6228,
-          "sha256": "9c02dbfd77e1f6dae50b3670bb25164f955ed0a11192d0d625a2e30c5dc1b198"
+          "bytes": 6046,
+          "sha256": "e80e81fdb7058370a5be89f267874f279bf9b2146318feb235b1564525908c25"
         },
         {
           "path": "build/cocosair.module.d.ts",
-          "bytes": 3303581,
-          "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+          "bytes": 3263461,
+          "sha256": "34f39b51f4160a1a72e0e6165a69f00b20f252e67ff0f1ac864915224418faad"
         },
         {
           "path": "docs/example-api-inventory.json",
-          "bytes": 2248439,
-          "sha256": "776aef3e24f4140193083523ab8569e01cdeacc6a7c9645cc3b1c4d2e6b47012"
+          "bytes": 1870128,
+          "sha256": "d29dd6a36979d6084a8be087bd28cd0b96967a4abeedc697814e0c75d9012c7d"
         }
       ],
       "adaptations": {
@@ -272,7 +272,7 @@
         "legacyRoutePolicy": null
       },
       "paramCount": 20,
-      "structureKey": "52213de9e21148ce4df0f5656c6d2cf3c7f656c03503cf62be7617a034af7ca5",
+      "structureKey": "d31ed11913be75f0a79376369d28bc40a8abf5d4e90a708de01a34bba69a76c0",
       "passes": 1
     },
     {
@@ -299,18 +299,18 @@
         },
         {
           "path": "examples/shader-emboss/example.json",
-          "bytes": 6463,
-          "sha256": "e6c4c1e2579ea03338e1fc1f5f33ab95240338566b94863731baaffda799f56d"
+          "bytes": 6265,
+          "sha256": "0af601cfa2b86bffb25847376d3ff1f2476bd49c579f5444628bda24559ea22b"
         },
         {
           "path": "build/cocosair.module.d.ts",
-          "bytes": 3303581,
-          "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+          "bytes": 3263461,
+          "sha256": "34f39b51f4160a1a72e0e6165a69f00b20f252e67ff0f1ac864915224418faad"
         },
         {
           "path": "docs/example-api-inventory.json",
-          "bytes": 2248439,
-          "sha256": "776aef3e24f4140193083523ab8569e01cdeacc6a7c9645cc3b1c4d2e6b47012"
+          "bytes": 1870128,
+          "sha256": "d29dd6a36979d6084a8be087bd28cd0b96967a4abeedc697814e0c75d9012c7d"
         }
       ],
       "adaptations": {
@@ -321,7 +321,7 @@
         "legacyRoutePolicy": null
       },
       "paramCount": 8,
-      "structureKey": "c74abc6528af781730004f86d64768db79a57e56d4bc742fce4a20886c51c537",
+      "structureKey": "71bb2f5cb55e18659f903b0e5966378417ba5321b065899b2b12f62b5b6979a3",
       "passes": 2
     },
     {
@@ -333,8 +333,8 @@
       "sourceIdentity": [
         {
           "path": "examples/shader-sparkle/parameters.json",
-          "bytes": 2522,
-          "sha256": "0d2f874bf2ec038aef2a30942f33b1451999c6fb71f02f4b374d8b905f5ac83b"
+          "bytes": 2435,
+          "sha256": "bc5ec8e04c9ccf134d51f4c7052b86a7bd3979f9a067cd2ff48cf194e0187cfe"
         },
         {
           "path": "examples/shader-sparkle/src/parameters.ts",
@@ -348,18 +348,18 @@
         },
         {
           "path": "examples/shader-sparkle/example.json",
-          "bytes": 6263,
-          "sha256": "a87636e8b5c7d9746a84a255223aeba6b04ac99a8bfbd88a49d9ab82a6fd145a"
+          "bytes": 6093,
+          "sha256": "1d46a05c34bd126a8803ccfc41d26c76b9926b403cf6570a7e3a0ec578ddb5d8"
         },
         {
           "path": "build/cocosair.module.d.ts",
-          "bytes": 3303581,
-          "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+          "bytes": 3263461,
+          "sha256": "34f39b51f4160a1a72e0e6165a69f00b20f252e67ff0f1ac864915224418faad"
         },
         {
           "path": "docs/example-api-inventory.json",
-          "bytes": 2248439,
-          "sha256": "776aef3e24f4140193083523ab8569e01cdeacc6a7c9645cc3b1c4d2e6b47012"
+          "bytes": 1870128,
+          "sha256": "d29dd6a36979d6084a8be087bd28cd0b96967a4abeedc697814e0c75d9012c7d"
         }
       ],
       "adaptations": {
@@ -370,7 +370,7 @@
         "legacyRoutePolicy": null
       },
       "paramCount": 8,
-      "structureKey": "d207d9b5b670829657e19ff1be9a4633fcf08037900e7e9579b70990424fe073",
+      "structureKey": "26be54d6a0a4f735d1a4fcad2347e3c1923adb8b89baf29e14f80a9d04ef35b1",
       "passes": 1
     },
     {
@@ -397,18 +397,18 @@
         },
         {
           "path": "examples/shader-liquid-metal/example.json",
-          "bytes": 6397,
-          "sha256": "7dbd9ca1d05a6e2f1e467b0b4464783160e323f7f8ea350bc9766d62f921f198"
+          "bytes": 6215,
+          "sha256": "62d8a958ecd260531260f28c0548f1bc446775f2a4e1b89d58ac376d64bd6cc1"
         },
         {
           "path": "build/cocosair.module.d.ts",
-          "bytes": 3303581,
-          "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+          "bytes": 3263461,
+          "sha256": "34f39b51f4160a1a72e0e6165a69f00b20f252e67ff0f1ac864915224418faad"
         },
         {
           "path": "docs/example-api-inventory.json",
-          "bytes": 2248439,
-          "sha256": "776aef3e24f4140193083523ab8569e01cdeacc6a7c9645cc3b1c4d2e6b47012"
+          "bytes": 1870128,
+          "sha256": "d29dd6a36979d6084a8be087bd28cd0b96967a4abeedc697814e0c75d9012c7d"
         }
       ],
       "adaptations": {
@@ -419,7 +419,7 @@
         "legacyRoutePolicy": null
       },
       "paramCount": 17,
-      "structureKey": "828944efecc0881c327d83eaaa2341df0ba10e277c72ac217169dcf1ffc06309",
+      "structureKey": "e1ffd2d08ab5294d9fe89a8e1690d9a9701acc6722212bfb303c87a6b1d103bd",
       "passes": 1
     },
     {
@@ -446,18 +446,18 @@
         },
         {
           "path": "examples/shader-cursor-trail/example.json",
-          "bytes": 6083,
-          "sha256": "dc382e67c43fd79a412ab177b92b6cc84d06dab00c444c7b8ee6d5b706e5f2e3"
+          "bytes": 5849,
+          "sha256": "8f39d3e219a4c50e36297f0a762e5b905026ba7b617933daaf0991c203166f73"
         },
         {
           "path": "build/cocosair.module.d.ts",
-          "bytes": 3303581,
-          "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+          "bytes": 3263461,
+          "sha256": "34f39b51f4160a1a72e0e6165a69f00b20f252e67ff0f1ac864915224418faad"
         },
         {
           "path": "docs/example-api-inventory.json",
-          "bytes": 2248439,
-          "sha256": "776aef3e24f4140193083523ab8569e01cdeacc6a7c9645cc3b1c4d2e6b47012"
+          "bytes": 1870128,
+          "sha256": "d29dd6a36979d6084a8be087bd28cd0b96967a4abeedc697814e0c75d9012c7d"
         }
       ],
       "adaptations": {
@@ -468,7 +468,7 @@
         "legacyRoutePolicy": null
       },
       "paramCount": 6,
-      "structureKey": "e9e121949eb5ae7744f4ea1e6b4121b9f936b4c9c570836d247d34e7f82b088e",
+      "structureKey": "35a36da3fe86d2ac7c244736c043547fe320c40469a1a1494ab6273d3242d91a",
       "passes": 1
     },
     {
@@ -495,18 +495,18 @@
         },
         {
           "path": "examples/shader-glass/example.json",
-          "bytes": 6567,
-          "sha256": "3509ae445228ca9cc036dab07f4a3df09fe2a02ebb7dc62624a08a37c594f586"
+          "bytes": 6345,
+          "sha256": "99b9f8fb351b9a01571e6e59204ae469fd4b48bc12103cf664509a3fa3988fd6"
         },
         {
           "path": "build/cocosair.module.d.ts",
-          "bytes": 3303581,
-          "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+          "bytes": 3263461,
+          "sha256": "34f39b51f4160a1a72e0e6165a69f00b20f252e67ff0f1ac864915224418faad"
         },
         {
           "path": "docs/example-api-inventory.json",
-          "bytes": 2248439,
-          "sha256": "776aef3e24f4140193083523ab8569e01cdeacc6a7c9645cc3b1c4d2e6b47012"
+          "bytes": 1870128,
+          "sha256": "d29dd6a36979d6084a8be087bd28cd0b96967a4abeedc697814e0c75d9012c7d"
         }
       ],
       "adaptations": {
@@ -517,7 +517,7 @@
         "legacyRoutePolicy": null
       },
       "paramCount": 19,
-      "structureKey": "ca21f94f34cf7cbbe8cbc3b921df6f6e382499c2500f98153b757d1855a4ffae",
+      "structureKey": "16e580cc780468edcf0f25736cf888c3a646cb52c7454a1e60a89dc6c3b6b5f0",
       "passes": 2
     },
     {
@@ -544,18 +544,18 @@
         },
         {
           "path": "examples/shader-laser-card/example.json",
-          "bytes": 5634,
-          "sha256": "a7dae7d870c2eac99370ae0c3dcb9ca5affb08e7ac6ca8a4f326dfa1d2dfa613"
+          "bytes": 5420,
+          "sha256": "92bfab66a0176d0f1fda1c254d6af39c74e635549a8dbd72e98459b037a4f079"
         },
         {
           "path": "build/cocosair.module.d.ts",
-          "bytes": 3303581,
-          "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+          "bytes": 3263461,
+          "sha256": "34f39b51f4160a1a72e0e6165a69f00b20f252e67ff0f1ac864915224418faad"
         },
         {
           "path": "docs/example-api-inventory.json",
-          "bytes": 2248439,
-          "sha256": "776aef3e24f4140193083523ab8569e01cdeacc6a7c9645cc3b1c4d2e6b47012"
+          "bytes": 1870128,
+          "sha256": "d29dd6a36979d6084a8be087bd28cd0b96967a4abeedc697814e0c75d9012c7d"
         }
       ],
       "adaptations": {
@@ -566,7 +566,7 @@
         "legacyRoutePolicy": null
       },
       "paramCount": 20,
-      "structureKey": "4efce27b23c700d37ce7028388fe5b544de08c17a2520076013778bdabbe5b99",
+      "structureKey": "3a298c229e558dc30ce18bda39364e7ebb801e47cf70833fec8ed896209a533d",
       "passes": 3
     },
     {
@@ -593,18 +593,18 @@
         },
         {
           "path": "examples/shader-film-neon/example.json",
-          "bytes": 6166,
-          "sha256": "fa4f1de68e9485dca1998745ce97ca2143ba87bae6b8ab0106607439a00d4af9"
+          "bytes": 5984,
+          "sha256": "253aec5cf4213a0d0c5a3058b3159106d02b57dd48d07b9dc0557329eda824c4"
         },
         {
           "path": "build/cocosair.module.d.ts",
-          "bytes": 3303581,
-          "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+          "bytes": 3263461,
+          "sha256": "34f39b51f4160a1a72e0e6165a69f00b20f252e67ff0f1ac864915224418faad"
         },
         {
           "path": "docs/example-api-inventory.json",
-          "bytes": 2248439,
-          "sha256": "776aef3e24f4140193083523ab8569e01cdeacc6a7c9645cc3b1c4d2e6b47012"
+          "bytes": 1870128,
+          "sha256": "d29dd6a36979d6084a8be087bd28cd0b96967a4abeedc697814e0c75d9012c7d"
         }
       ],
       "adaptations": {
@@ -615,7 +615,7 @@
         "legacyRoutePolicy": null
       },
       "paramCount": 23,
-      "structureKey": "281a5ecc3382a8ba46bb1e4a731e0ad82e71c3e87055b2bf8e628fe5188af9d5",
+      "structureKey": "7350c17267e16b7aff0787d980c3e5174890e127edb5d4fcc248cc642c5090d4",
       "passes": 1
     },
     {
@@ -642,18 +642,18 @@
         },
         {
           "path": "examples/shader-glass-trail/example.json",
-          "bytes": 5163,
-          "sha256": "59b41926ebc41e6d8134c02eaa6ed3d2bd97bec8cfc6b4a651aeba5936e5bb55"
+          "bytes": 4911,
+          "sha256": "7f1f51668d1452a6d3a4ba15326fed7639169329cb8577cb3bf8da751025b7e3"
         },
         {
           "path": "build/cocosair.module.d.ts",
-          "bytes": 3303581,
-          "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+          "bytes": 3263461,
+          "sha256": "34f39b51f4160a1a72e0e6165a69f00b20f252e67ff0f1ac864915224418faad"
         },
         {
           "path": "docs/example-api-inventory.json",
-          "bytes": 2248439,
-          "sha256": "776aef3e24f4140193083523ab8569e01cdeacc6a7c9645cc3b1c4d2e6b47012"
+          "bytes": 1870128,
+          "sha256": "d29dd6a36979d6084a8be087bd28cd0b96967a4abeedc697814e0c75d9012c7d"
         }
       ],
       "adaptations": {
@@ -664,7 +664,7 @@
         "legacyRoutePolicy": null
       },
       "paramCount": 19,
-      "structureKey": "0010a27c4826a065c3e123a6099d08e1c841ddccf2dcb40fe1945a6dc69d9cc4",
+      "structureKey": "838c451ff429b1b9b20e11b2061d567f387c693625be8398b7d7c18005c6b35e",
       "passes": 2
     },
     {
@@ -691,18 +691,18 @@
         },
         {
           "path": "examples/shader-input-dissolve/example.json",
-          "bytes": 5760,
-          "sha256": "cc3cf45530f05950ddc3c513a939fcad165416edef83f917a73da4114ebcf2cc"
+          "bytes": 5520,
+          "sha256": "55027d448bd28410e26d743d026f275c342941f5c739281dc0c4c2b52f8a365d"
         },
         {
           "path": "build/cocosair.module.d.ts",
-          "bytes": 3303581,
-          "sha256": "5b67a5608b25e766cd89be09175b24906966222b6b96c47ac9d68eae68242f6e"
+          "bytes": 3263461,
+          "sha256": "34f39b51f4160a1a72e0e6165a69f00b20f252e67ff0f1ac864915224418faad"
         },
         {
           "path": "docs/example-api-inventory.json",
-          "bytes": 2248439,
-          "sha256": "776aef3e24f4140193083523ab8569e01cdeacc6a7c9645cc3b1c4d2e6b47012"
+          "bytes": 1870128,
+          "sha256": "d29dd6a36979d6084a8be087bd28cd0b96967a4abeedc697814e0c75d9012c7d"
         }
       ],
       "adaptations": {
@@ -713,7 +713,7 @@
         "legacyRoutePolicy": "route structure; other omitted modes uniform (read-only time retained)"
       },
       "paramCount": 8,
-      "structureKey": "9793a92bcc927e258e89b02476f2c82b2e7ad2d16e3d5753a3f22ab3875c0d3c",
+      "structureKey": "0277180b4a630c10bd829c35ba9adf9725b69f371931edf65f309c930f314873",
       "passes": "image=1, procedural/rendered=2"
     }
   ]

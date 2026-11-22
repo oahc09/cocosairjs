@@ -1,7 +1,7 @@
 {
   "source": "build/cocosair.module.d.ts",
-  "sourceFingerprint": "186759946f56dd77",
-  "apiInventoryRevision": "66f5b8bc8d26a68e",
+  "sourceFingerprint": "34f39b51f4160a1a",
+  "apiInventoryRevision": "166851415d153e93",
   "units": {
     "MeshBuffer": {
       "kind": "class",
@@ -2090,6 +2090,66 @@
       "tier": "internal",
       "coverageRequired": false,
       "parent": "Label"
+    },
+    "UIMesh": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "UIMesh.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "UIMesh"
+    },
+    "UIMesh.setMeshData": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "UIMesh"
+    },
+    "UIMesh.enableBatch": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "UIMesh"
+    },
+    "UIMesh.premultipliedAlpha": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "UIMesh"
+    },
+    "UIMesh.onLoad": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "UIMesh"
+    },
+    "UIMesh.onEnable": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "UIMesh"
+    },
+    "UIMesh.onDisable": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "UIMesh"
+    },
+    "UIMesh.onDestroy": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "UIMesh"
+    },
+    "UIMesh.updateMaterial": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "UIMesh"
     },
     "MaskComponent": {
       "kind": "class",
@@ -20795,6 +20855,12 @@
       "coverageRequired": false,
       "parent": null
     },
+    "MaxDPR": {
+      "kind": "enum",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
     "Screen": {
       "kind": "class-type",
       "tier": "supporting",
@@ -36193,6 +36259,24 @@
     },
     "Button.constructor": {
       "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "Button"
+    },
+    "Button.on": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "Button"
+    },
+    "Button.off": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "Button"
+    },
+    "Button.targetOff": {
+      "kind": "method",
       "tier": "supporting",
       "coverageRequired": false,
       "parent": "Button"
@@ -58185,6 +58269,18 @@
       "coverageRequired": false,
       "parent": null
     },
+    "loadTiledMap": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "instantiateTiledObjects": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
     "parseAtlasText": {
       "kind": "function",
       "tier": "supporting",
@@ -58358,6 +58454,96 @@
       "tier": "supporting",
       "coverageRequired": false,
       "parent": "AirRenderTarget"
+    },
+    "createAirMRTTarget": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "AirMRTTarget": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "AirMRTTarget.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirMRTTarget"
+    },
+    "AirMRTTarget.info": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirMRTTarget"
+    },
+    "AirMRTTarget.textures": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirMRTTarget"
+    },
+    "AirMRTTarget.renderTextures": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirMRTTarget"
+    },
+    "AirMRTTarget.textureViews": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirMRTTarget"
+    },
+    "AirMRTTarget.depthTexture": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirMRTTarget"
+    },
+    "AirMRTTarget.framebuffer": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirMRTTarget"
+    },
+    "AirMRTTarget.renderPass": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirMRTTarget"
+    },
+    "AirMRTTarget.resize": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirMRTTarget"
+    },
+    "AirMRTTarget.beginPass": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirMRTTarget"
+    },
+    "AirMRTTarget.endPass": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirMRTTarget"
+    },
+    "AirMRTTarget.bindTexture": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirMRTTarget"
+    },
+    "AirMRTTarget.dispose": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirMRTTarget"
     },
     "createAirScreenEffect": {
       "kind": "function",
@@ -58967,6 +59153,96 @@
     },
     "createBox3DKinematicTarget": {
       "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "createWorker": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "isWorkerSupported": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "isSupportStandardWorker": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "checkWorkerScript": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "getWorkerConcurrencyLimit": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "getOptimalWorkerCount": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "getWorkerCapabilities": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "WorkerPool": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "WorkerPool.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "WorkerPool"
+    },
+    "WorkerPool.recheck": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "WorkerPool"
+    },
+    "WorkerPool.backend": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "WorkerPool"
+    },
+    "WorkerPool.concurrency": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "WorkerPool"
+    },
+    "WorkerPool.run": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "WorkerPool"
+    },
+    "WorkerPool.terminate": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "WorkerPool"
+    },
+    "wasm": {
+      "kind": "constant",
       "tier": "supporting",
       "coverageRequired": false,
       "parent": null
@@ -69068,9 +69344,9 @@
     "core": 974,
     "important": 293,
     "advanced": 200,
-    "supporting": 8913,
+    "supporting": 8959,
     "internal": 966
   },
-  "totalUnits": 11346,
+  "totalUnits": 11392,
   "coverageRequiredUnits": 1467
 }

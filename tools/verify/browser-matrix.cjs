@@ -29,8 +29,21 @@ const CONTRACT_ARG = process.argv.find((a) => a.startsWith('--contract='));
 const CONTRACT = CONTRACT_ARG
     ? path.resolve(REPO, CONTRACT_ARG.slice(11))
     : path.join(REPO, 'tools', 'verify', 'browser-matrix-contract.json');
-const OUT_DIR = path.join(REPO, 'docs', 'evidence', 'browser-matrix');
+const ARTIFACT_ARG = process.argv.find((a) => a.startsWith('--artifact-dir='));
 const OUT_ARG = process.argv.find((a) => a.startsWith('--out='));
+if (ARTIFACT_ARG && OUT_ARG) throw Error('--artifact-dir already selects the report path');
+const OUT_DIR = ARTIFACT_ARG
+    ? path.resolve(REPO, ARTIFACT_ARG.slice('--artifact-dir='.length))
+    : path.join(REPO, 'docs', 'evidence', 'browser-matrix');
+if (ARTIFACT_ARG) {
+    const outputRoot = path.join(REPO, 'output');
+    if (!OUT_DIR.startsWith(outputRoot + path.sep) || fs.existsSync(OUT_DIR))
+        throw Error('--artifact-dir must be a fresh directory below output/');
+    const parent = path.dirname(OUT_DIR);
+    if (fs.realpathSync(parent) !== parent || fs.realpathSync(outputRoot) !== outputRoot)
+        throw Error('--artifact-dir must not traverse a link');
+    fs.mkdirSync(OUT_DIR);
+}
 const OUT = OUT_ARG ? path.resolve(REPO, OUT_ARG.slice(6)) : path.join(OUT_DIR, 'browser-matrix.json');
 const specCommon = require(path.join(REPO, 'tools', 'verify', 'example-spec-common.cjs'));
 const { evaluateProbeRanges } = require('./probe-ranges.cjs');
@@ -257,11 +270,15 @@ async function runOne(pw, id, contract, port, engines) {
             }
             const dir = path.join(OUT_DIR, id);
             fs.mkdirSync(dir, { recursive: true });
-            const pngRel = screenshotPath(id, engine);
+            const outputPath = (before = false) =>
+                path
+                    .relative(REPO, path.join(dir, path.basename(screenshotPath(id, engine, before))))
+                    .replace(/\\/g, '/');
+            const pngRel = outputPath();
             fs.writeFileSync(path.join(REPO, pngRel), shotB);
             let pngBeforeRel = null;
             if (shotBefore) {
-                pngBeforeRel = screenshotPath(id, engine, true);
+                pngBeforeRel = outputPath(true);
                 fs.writeFileSync(path.join(REPO, pngBeforeRel), shotBefore);
             }
             const benign = consoleErrors.filter((t) => BENIGN_CONSOLE.some((b) => t.includes(b)));
@@ -343,6 +360,7 @@ async function runOne(pw, id, contract, port, engines) {
     const bundleBuf = fs.readFileSync(bundleFile);
     const identityFiles = [
         bundleFile,
+        path.join(REPO, 'build', 'cocosair.module.d.ts'),
         CONTRACT,
         __filename,
         path.join(__dirname, 'browser-engines.cjs'),

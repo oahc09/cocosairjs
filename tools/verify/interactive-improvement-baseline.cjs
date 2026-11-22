@@ -660,12 +660,21 @@ function applyExecutionReport(baseline, execReport) {
 
 /** 校验报告：格式完整 + 与当前盘面身份一致（HEAD/AIR/组摘要/产物）。 */
 function verifyBaseline(report, options = {}) {
+    try {
+        const current = report?.schemaVersion === SCHEMA_VERSION ? buildBaseline() : null;
+        return compareBaselines(report, current, options);
+    } catch (e) {
+        return { ok: false, failures: [`verify crashed: ${String(e.message).split('\n')[0]}`] };
+    }
+}
+
+/** Compare against a captured baseline without reading the checkout again. */
+function compareBaselines(report, current, options = {}) {
     const failures = [];
     try {
         if (!report || typeof report !== 'object') return { ok: false, failures: ['report missing'] };
         if (report.schemaVersion !== SCHEMA_VERSION)
             return { ok: false, failures: [`schema mismatch: ${String(report.schemaVersion)} != ${SCHEMA_VERSION}`] };
-        const current = buildBaseline();
         if (options.executionReport) {
             const applied = applyExecutionReport(current, options.executionReport);
             if (applied.reason) failures.push(applied.reason);
@@ -737,6 +746,7 @@ module.exports = {
     BUILT_FROM_SAMPLE_SOURCES,
     buildBaseline,
     verifyBaseline,
+    compareBaselines,
     applyExecutionReport,
     executionIdentity,
     currentIdentity,

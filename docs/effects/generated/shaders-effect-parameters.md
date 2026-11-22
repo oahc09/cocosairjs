@@ -4,19 +4,19 @@ Auto-generated from the 13 frozen EffectDefinitions. Source of truth: each examp
 
 | Example | Name                  | Version | Parameters | Structure Key                                                    |
 | ------- | --------------------- | ------- | ---------- | ---------------------------------------------------------------- |
-| E01     | shader-noise-dissolve | 1.0.0   | 5          | f41c9c5f4a790eaf810f1f9edda2fec84c43b36463650b439ea51030d8c72047 |
-| E02     | shader-thin-film      | 1       | 10         | b906b643ba847f96fe8aab2e84a19da44316edf8af97cfde16d3796de2e60dae |
-| E03     | holographic           | 1.0.0   | 13         | bd12b79c0dabd74a53aa87db966b2c996a3cf4f6583f552a40693bebf5a92e1c |
-| E04     | neon                  | 1.0.0   | 20         | 52213de9e21148ce4df0f5656c6d2cf3c7f656c03503cf62be7617a034af7ca5 |
-| E05     | emboss                | 1.0.0   | 8          | c74abc6528af781730004f86d64768db79a57e56d4bc742fce4a20886c51c537 |
-| E06     | sparkle               | 1.0.0   | 8          | d207d9b5b670829657e19ff1be9a4633fcf08037900e7e9579b70990424fe073 |
-| E07     | liquidMetal           | 1.0.0   | 17         | 828944efecc0881c327d83eaaa2341df0ba10e277c72ac217169dcf1ffc06309 |
-| E08     | cursorTrail           | 1.0.0   | 6          | e9e121949eb5ae7744f4ea1e6b4121b9f936b4c9c570836d247d34e7f82b088e |
-| E09     | Glass                 | 1.0.0   | 19         | ca21f94f34cf7cbbe8cbc3b921df6f6e382499c2500f98153b757d1855a4ffae |
-| C01     | laserCard             | 1.0.0   | 20         | 4efce27b23c700d37ce7028388fe5b544de08c17a2520076013778bdabbe5b99 |
-| C02     | filmNeon              | 1.0.0   | 23         | 281a5ecc3382a8ba46bb1e4a731e0ad82e71c3e87055b2bf8e628fe5188af9d5 |
-| C03     | glassTrail            | 1.0.0   | 19         | 0010a27c4826a065c3e123a6099d08e1c841ddccf2dcb40fe1945a6dc69d9cc4 |
-| C04     | inputDissolve         | 1.0.0   | 8          | 9793a92bcc927e258e89b02476f2c82b2e7ad2d16e3d5753a3f22ab3875c0d3c |
+| E01     | shader-noise-dissolve | 1.0.0   | 5          | fee96423052219738a2178575c583dd457ecbcaa5f4bd036db0a99142752649c |
+| E02     | shader-thin-film      | 1       | 10         | 2a1d6dec8313d9a7418b4d3f3b3162a168de56f7493a0f35d942bf9df9bcf27f |
+| E03     | holographic           | 1.0.0   | 13         | 04a0d74f753ccc9cf118c33a47e44388e067fa3db71345ab343a6e3fd884ce16 |
+| E04     | neon                  | 1.0.0   | 20         | d31ed11913be75f0a79376369d28bc40a8abf5d4e90a708de01a34bba69a76c0 |
+| E05     | emboss                | 1.0.0   | 8          | 71bb2f5cb55e18659f903b0e5966378417ba5321b065899b2b12f62b5b6979a3 |
+| E06     | sparkle               | 1.0.0   | 8          | 26be54d6a0a4f735d1a4fcad2347e3c1923adb8b89baf29e14f80a9d04ef35b1 |
+| E07     | liquidMetal           | 1.0.0   | 17         | e1ffd2d08ab5294d9fe89a8e1690d9a9701acc6722212bfb303c87a6b1d103bd |
+| E08     | cursorTrail           | 1.0.0   | 6          | 35a36da3fe86d2ac7c244736c043547fe320c40469a1a1494ab6273d3242d91a |
+| E09     | Glass                 | 1.0.0   | 19         | 16e580cc780468edcf0f25736cf888c3a646cb52c7454a1e60a89dc6c3b6b5f0 |
+| C01     | laserCard             | 1.0.0   | 20         | 3a298c229e558dc30ce18bda39364e7ebb801e47cf70833fec8ed896209a533d |
+| C02     | filmNeon              | 1.0.0   | 23         | 7350c17267e16b7aff0787d980c3e5174890e127edb5d4fcc248cc642c5090d4 |
+| C03     | glassTrail            | 1.0.0   | 19         | 838c451ff429b1b9b20e11b2061d567f387c693625be8398b7d7c18005c6b35e |
+| C04     | inputDissolve         | 1.0.0   | 8          | 0277180b4a630c10bd829c35ba9adf9725b69f371931edf65f309c930f314873 |
 
 ## E01 — shader-noise-dissolve
 
