@@ -108,15 +108,21 @@ function discardResponse (response: Response): void {
     try { void response.body?.cancel().catch(() => undefined); } catch { /* Body may already be locked/closed. */ }
 }
 
-export async function requestArrayBuffer (url: string, policy?: AirRequestPolicy, signal?: AbortSignal,
-    origin?: string): Promise<ArrayBuffer> {
+export async function requestBinaryResponse (url: string, policy?: AirRequestPolicy, signal?: AbortSignal,
+    origin?: string): Promise<{ data: ArrayBuffer; url: string }> {
     const response = await awaitAbortable(() => fetch(url, requestInit(url, policy, signal, origin)), signal, discardResponse);
     try {
         throwIfAborted(signal);
         check(response.ok, `request failed: ${url} (${response.status})`);
-        return await awaitAbortable(() => response.arrayBuffer(), signal);
+        const data = await awaitAbortable(() => response.arrayBuffer(), signal);
+        return { data, url: response.url || url };
     } catch (error) {
         discardResponse(response);
         throw error;
     }
+}
+
+export async function requestArrayBuffer (url: string, policy?: AirRequestPolicy, signal?: AbortSignal,
+    origin?: string): Promise<ArrayBuffer> {
+    return (await requestBinaryResponse(url, policy, signal, origin)).data;
 }

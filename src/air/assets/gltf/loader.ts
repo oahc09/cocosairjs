@@ -26,7 +26,7 @@ import { GLTFAsset } from './asset';
 import { decodeContainer, GLTFParserContext } from './parser-context';
 import { GLTFExtensionRegistry, GLTFExtensionFactory, GLTFExtensionHandler } from './extension-registry';
 import { GLTFLoaderOptions, GLTFLoadProgress } from './progress';
-import { awaitAbortable, mergeRequestPolicy, requestArrayBuffer, requestOrigin, throwIfAborted } from './request-policy';
+import { awaitAbortable, mergeRequestPolicy, requestBinaryResponse, requestOrigin, throwIfAborted } from './request-policy';
 import { GLTFExtensionSupport, GLTFExtensionStatus } from './support';
 import type { GLTFDracoDecoder, GLTFMeshoptDecoder, GLTFKTX2Transcoder } from './decoder/types';
 import { prepareNodes, createSkeletons } from './nodes';
@@ -62,6 +62,14 @@ export function gltfExtension (url: string): string | undefined {
 function absoluteURL (url: string): string {
     return new URL(url, typeof document !== 'undefined' ? document.baseURI : undefined).href;
 }
+
+function documentBase (url: string): string | undefined {
+    return /^(data|blob):/i.test(url) ? undefined : new URL('.', url).href;
+}
+
+// Keep native file/parser caches storing the original ArrayBuffer type.
+const nativeResponseURLs = new WeakMap<ArrayBuffer, string>();
+const parseResolved = Symbol('parseResolved');
 
 let globalDefaults: GLTFLoaderOptions = {};
 /** Sets process-wide fallback options; instance options take precedence over these. */
@@ -159,24 +167,25 @@ export class GLTFLoader {
                 return new Promise<GLTFAsset>((resolve, reject) => assetManager.loadRemote<GLTFAsset>(target,
                     { ext: gltfExtension(url) || '.glb' }, (error, asset) => error ? reject(error) : resolve(asset)));
             }
-            return requestArrayBuffer(target, resolved.request, resolved.signal, requestOrigin(target))
-                .then((data) => this.parseResolvedAsync(data,
-                    /^(data|blob):/i.test(target) ? undefined : new URL('.', target).href, resolved, target));
+            const origin = requestOrigin(target);
+            return requestBinaryResponse(target, resolved.request, resolved.signal, origin)
+                .then(({ data, url: responseURL }) => this[parseResolved](data,
+                    documentBase(responseURL), resolved, target, origin ?? null));
         }, resolved.signal, (asset) => { asset.destroy(); });
     }
 
     public parseAsync (data: string | ArrayBuffer, baseUrl?: string): Promise<GLTFAsset> {
         const resolved = resolveOptions(this.options);
-        return this.parseResolvedAsync(data, baseUrl, resolved);
+        return this[parseResolved](data, baseUrl, resolved);
     }
 
-    private parseResolvedAsync (data: string | ArrayBuffer, baseUrl: string | undefined,
-        resolved: GLTFLoaderOptions, sourceUrl?: string): Promise<GLTFAsset> {
+    public [parseResolved] (data: string | ArrayBuffer, baseUrl: string | undefined,
+        resolved: GLTFLoaderOptions, sourceUrl?: string, policyOrigin?: string | null): Promise<GLTFAsset> {
         let context: GLTFParserContext | undefined;
         return awaitAbortable(async () => {
             const { json, bin } = decodeContainer(data);
             const base = baseUrl === undefined ? undefined : absoluteURL(baseUrl);
-            const parser = new GLTFParserContext(json, base, resolved);
+            const parser = new GLTFParserContext(json, base, resolved, policyOrigin);
             context = parser;
             const report = (phase: GLTFLoadProgress['phase'], loaded: number, total: number): void =>
                 parser.report(phase, loaded, total, sourceUrl);
@@ -258,9 +267,13 @@ export function registerGLTFLoader (): void {
     if (registered) { return; } registered = true;
     for (const ext of ['.gltf', '.glb']) {
         assetManager.downloader.register(ext, (url, options, done) => {
-            // Fetch supports data/blob URLs as well as HTTP, and preserves the original base URL in factory.
             fetch(url, { headers: options.header, credentials: options.withCredentials ? 'include' : 'same-origin' })
-                .then((response) => { check(response.ok, `request failed: ${url} (${response.status})`); return response.arrayBuffer(); })
+                .then(async (response) => {
+                    check(response.ok, `request failed: ${url} (${response.status})`);
+                    const data = await response.arrayBuffer();
+                    if (response.url) { nativeResponseURLs.set(data, response.url); }
+                    return data;
+                })
                 .then((data) => done(null, data), (error) => done(error));
         });
         assetManager.parser.register(ext, (data, _options, done) => {
@@ -269,7 +282,11 @@ export function registerGLTFLoader (): void {
         factory.register(ext, (url, data, options, done) => {
             const loaderOptions = { ...((options as { gltf?: GLTFLoaderOptions } | undefined)?.gltf ?? globalDefaults) };
             delete loaderOptions.experimentalTextureDeduplication;
-            new GLTFLoader(loaderOptions).parseAsync(data, /^(data|blob):/i.test(url) ? undefined : new URL('.', absoluteURL(url)).href).then(
+            const target = absoluteURL(url);
+            const responseURL = nativeResponseURLs.get(data) || target;
+            new GLTFLoader(loaderOptions)[parseResolved](
+                data, documentBase(responseURL), resolveOptions(loaderOptions), undefined, requestOrigin(target) ?? null,
+            ).then(
                 (asset) => done(null, asset), (error) => {
                     // Native parsed/file caches must not turn a repaired URL into a permanent failure.
                     files.remove(`${url}@native`); parsed.remove(`${url}@native`); done(error);

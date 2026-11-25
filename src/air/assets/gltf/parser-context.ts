@@ -97,7 +97,9 @@ export class GLTFParserContext {
     private disposed = false;
     private readonly origin: string | undefined;
     constructor (public readonly json: GLTFDocument, public readonly baseUrl?: string,
-        public readonly options: GLTFLoaderOptions = {}) { this.origin = requestOrigin(baseUrl); }
+        public readonly options: GLTFLoaderOptions = {}, policyOrigin = requestOrigin(baseUrl) ?? null) {
+        this.origin = policyOrigin ?? undefined;
+    }
 
     public get signal (): AbortSignal | undefined { return this.options.signal; }
     /** True when the document declares the extension and a handler takes part in this parse. */
