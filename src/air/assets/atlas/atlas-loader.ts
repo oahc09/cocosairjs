@@ -60,11 +60,11 @@ export interface AirAtlasLoadOptions {
     readonly pageExt?: string;
 }
 
-function pageFileExtension (file: string, explicit: string | undefined): string {
-    const path = file.split(/[?#]/, 1)[0]!;
-    const dot = path.lastIndexOf('.');
-    if (dot > 0 && dot < path.length - 1) {
-        const ext = path.slice(dot + 1).toLowerCase();
+function pageFileExtension (url: URL, file: string, explicit: string | undefined): string {
+    const name = url.pathname.slice(url.pathname.lastIndexOf('/') + 1);
+    const dot = name.lastIndexOf('.');
+    if (dot > 0 && dot < name.length - 1) {
+        const ext = name.slice(dot + 1).toLowerCase();
         if (ext !== 'png') {
             fail('AIR_E_ATLAS_PAGE_FORMAT', `this loader supports PNG pages only, got ".${ext}"; supply other formats via createAtlasHandle`);
         }
@@ -115,8 +115,9 @@ export async function loadAtlas (url: string, options: AirAtlasLoadOptions): Pro
             allSettled: (this: PromiseConstructor, values: readonly PromiseLike<void>[]) => Promise<readonly SettledResult[]>;
         }).allSettled).bind(Promise);
         const pageLoads = document.pages.map(async (page) => {
-            const ext = pageFileExtension(page.file, options.pageExt);
-            const pageURL = new URL(page.file, base).href;
+            const resolvedPage = new URL(page.file, base);
+            const ext = pageFileExtension(resolvedPage, page.file, options.pageExt);
+            const pageURL = resolvedPage.href;
             const image = await bank.load(pageURL, { ext, signal });
             ownedPages.push({ url: pageURL, ext });
             if (signal?.aborted) fail('AIR_E_ABORTED', 'atlas subscription was cancelled');
