@@ -88,7 +88,11 @@ export class WebGPUSampler extends Sampler {
             return null;
         }
         const info = { ...this._gpuSampler, mipLevel };
-        if (forcePoint) info.minFilter = info.magFilter = info.mipFilter = Filter.POINT;
+        if (forcePoint) {
+            info.minFilter = info.magFilter = info.mipFilter = Filter.POINT;
+            // Native anisotropy greater than one requires all three filters to be linear.
+            info.maxAnisotropy = 1;
+        }
         const currKey = this._computeSamplerKey(info);
         let currGPUSampler = samplerCaches.get(currKey);
         if (currGPUSampler) return currGPUSampler;

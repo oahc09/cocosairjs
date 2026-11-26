@@ -657,6 +657,10 @@ The same WebGPU command adapter preserves the scalar prefix of signed/unsigned c
 
 The AIR delta in the WebGPU command buffer uses pass-local descriptors and scissored clears only for explicit CLEAR color attachments when an offscreen render area is partial. LOAD targets and pixels outside the area must be preserved. The native clear pipeline uses the attachment view and a cache keyed by device, format and sample count. This is not a change to the upstream pin or to partial depth/stencil or swapchain composition semantics.
 
+### WebGPU non-filtering sampler fallback
+
+The texture-specific point fallback uses native anisotropy 1 before cache lookup and allocation. Higher anisotropy requires linear minification, magnification and mip filtering. This leaves the original sampler's filtering settings intact when it binds a filterable texture; it does not change which formats or optional features the binder recognizes as filterable.
+
 ### WebGPU texture mip ranges on resize
 
 WebGPU records the owning texture's original mip intent. A chain that initially includes every level and has more than one level stays full as the texture grows or shrinks. A partial chain retains its original cap and a default one-level allocation (including an initially 1×1 texture or single-level MSAA allocation) stays at one. Resize synchronizes the public count, native allocation and default sampled view; render-attachment views still select one mip. Explicit views cannot resize their owner, keep their declared range across replacement, and reject requests while that range no longer fits. This does not preserve texture contents across resize or change the shared highest-mip-index helper, WebGL2 behavior, or WebGPU resource retirement policy.
