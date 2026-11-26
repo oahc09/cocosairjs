@@ -1,0 +1,167 @@
+{
+  "scope": "public GLB parse/instantiate, real WebKit WebGL2 pixels, no native draw batching or device claim",
+  "mode": "fixed",
+  "status": "PASS",
+  "fingerprints": {
+    "src/air/assets/gltf/extensions/scene/instancing.ts": "61b47d8f6e5600c9a4020d976c66a28b2db389d4d7bd3fdc78e9d0bbbeafbc8a",
+    "src/air/assets/gltf/parser-context.ts": "1c365b881b4a541a454e2913807e66684db307c6b73baef49b54db6d4d52c099",
+    "build/cocosair.module.js": "2a7ef7053d9f4aed2f350f4471906dafd98dfbd6f9fe89adfbb573054ce5ca77",
+    "tools/verify/gltf-packed-rotation-fixture.cjs": "a1267887fc47f994f070f02608e7790eb72c5f8ae89bc06da3676131711258e3",
+    "tools/verify/gltf-packed-rotation-browser.cjs": "292c0843ca3dc4f488055d213250879058019b7c94763ecd8a7b974fb5cdb0d9"
+  },
+  "lanes": [
+    {
+      "kind": "float32",
+      "bytes": 1236,
+      "glbSha256": "8ac5404e8660f7c69d6112c2694d441beeee046b57e49a65c1f77a1b285a7102",
+      "observed": {
+        "status": "rendered",
+        "origin": [
+          7,
+          22,
+          34
+        ],
+        "vertex": [
+          7,
+          22,
+          32
+        ],
+        "rotation": [
+          0,
+          0.70711,
+          0,
+          0.70711
+        ],
+        "local": [
+          2,
+          3,
+          4
+        ],
+        "anchorOwnRenderer": false,
+        "childUsesMesh": true
+      },
+      "pixels": {
+        "width": 300,
+        "height": 240,
+        "redPixels": 1800,
+        "sha256": "5058d5ae7bb0aa6c9ab453003455a41ec780801397b20f84031517c7686f72c1"
+      },
+      "release": {
+        "instanceReleased": true,
+        "assetReleased": true,
+        "meshReleased": true
+      }
+    },
+    {
+      "kind": "signed-byte",
+      "bytes": 1240,
+      "glbSha256": "910a37e5e758c5f2fd0e85172d6d464a34770c7ed5db67192e5857f3c7d24d6c",
+      "observed": {
+        "status": "rendered",
+        "origin": [
+          7,
+          22,
+          34
+        ],
+        "vertex": [
+          7,
+          22,
+          32
+        ],
+        "rotation": [
+          0,
+          0.70711,
+          0,
+          0.70711
+        ],
+        "local": [
+          2,
+          3,
+          4
+        ],
+        "anchorOwnRenderer": false,
+        "childUsesMesh": true
+      },
+      "pixels": {
+        "width": 300,
+        "height": 240,
+        "redPixels": 1800,
+        "sha256": "5058d5ae7bb0aa6c9ab453003455a41ec780801397b20f84031517c7686f72c1"
+      },
+      "release": {
+        "instanceReleased": true,
+        "assetReleased": true,
+        "meshReleased": true
+      }
+    },
+    {
+      "kind": "signed-short",
+      "bytes": 1244,
+      "glbSha256": "01397f5c9d026e159c291d3c7b123083c2f8918e65c3fc5dfa0481b0b17b5c84",
+      "observed": {
+        "status": "rendered",
+        "origin": [
+          7,
+          22,
+          34
+        ],
+        "vertex": [
+          7,
+          22,
+          32
+        ],
+        "rotation": [
+          0,
+          0.70711,
+          0,
+          0.70711
+        ],
+        "local": [
+          2,
+          3,
+          4
+        ],
+        "anchorOwnRenderer": false,
+        "childUsesMesh": true
+      },
+      "pixels": {
+        "width": 300,
+        "height": 240,
+        "redPixels": 1800,
+        "sha256": "5058d5ae7bb0aa6c9ab453003455a41ec780801397b20f84031517c7686f72c1"
+      },
+      "release": {
+        "instanceReleased": true,
+        "assetReleased": true,
+        "meshReleased": true
+      }
+    },
+    {
+      "kind": "unsigned",
+      "bytes": 1240,
+      "glbSha256": "341be896f691b894ad05f2626d53575178afbbf87101674c151a9b3f20103166",
+      "observed": {
+        "status": "rejected",
+        "code": "GLTF_EXTENSION_INVALID",
+        "message": "[glTF] EXT_mesh_gpu_instancing: channel ROTATION must be VEC4 with non-normalized FLOAT or normalized BYTE/SHORT components"
+      }
+    },
+    {
+      "kind": "not-normalized",
+      "bytes": 1220,
+      "glbSha256": "5d587838482114e4c0f077e4c113f0abcdfbb4a867272085a93dd07cee5f8a0c",
+      "observed": {
+        "status": "rejected",
+        "code": "GLTF_EXTENSION_INVALID",
+        "message": "[glTF] EXT_mesh_gpu_instancing: channel ROTATION must be VEC4 with non-normalized FLOAT or normalized BYTE/SHORT components"
+      }
+    }
+  ],
+  "pageErrors": [],
+  "browser": "26.5",
+  "backend": {
+    "webgl2": true,
+    "pausedForSteps": true
+  },
+  "closeStatus": "released"
+}

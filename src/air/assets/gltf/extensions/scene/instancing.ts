@@ -65,8 +65,14 @@ function validateDef (ctx: GLTFParserContext, def: InstancingDef): number {
         const expected = CHANNELS[channel];
         if (!expected) { throw invalid(`${EXT_MESH_GPU_INSTANCING}: unsupported channel ${channel}`); }
         const source = item(ctx.json.accessors, accessorIndex, `accessor for ${channel}`);
-        if (source.type !== expected.type || source.componentType !== 5126 || source.normalized) {
-            throw invalid(`${EXT_MESH_GPU_INSTANCING}: channel ${channel} must be a non-normalized float ${expected.type}`);
+        const float = source.componentType === 5126 && !source.normalized;
+        // Only the rotation semantic allows a normalized signed integer accessor.
+        // ctx.accessor() decodes its SNORM components before quaternion validation.
+        const packedRotation = channel === 'ROTATION' && source.normalized === true
+            && (source.componentType === 5120 || source.componentType === 5122);
+        if (source.type !== expected.type || !(float || packedRotation)) {
+            const formats = channel === 'ROTATION' ? 'non-normalized FLOAT or normalized BYTE/SHORT' : 'non-normalized FLOAT';
+            throw invalid(`${EXT_MESH_GPU_INSTANCING}: channel ${channel} must be ${expected.type} with ${formats} components`);
         }
         if (count === -1) { count = source.count; }
         if (source.count !== count) { throw invalid(`${EXT_MESH_GPU_INSTANCING}: channels must share the instance count`); }
