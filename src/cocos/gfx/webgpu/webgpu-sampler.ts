@@ -23,12 +23,12 @@
 */
 
 import { Sampler } from '../base/states/sampler';
-import { WebGPUCmdFuncCreateSampler, WebGPUCmdFuncDestroySampler } from './webgpu-commands';
+import { WebGPUCmdFuncCreateSampler, WebGPUCmdFuncDestroySampler, WebGPUCmdFuncGetSamplerDescriptor } from './webgpu-commands';
 import { IWebGPUGPUSampler } from './webgpu-gpu-objects';
 import { Filter, SamplerInfo } from '../base/define';
 import { WebGPUDeviceManager } from './define';
 
-const samplerCaches: Map<number, GPUSampler> = new Map();
+const samplerCaches = new WeakMap<GPUDevice, Map<string, GPUSampler>>();
 
 export class WebGPUSampler extends Sampler {
     public get gpuSampler (): IWebGPUGPUSampler {
@@ -70,19 +70,6 @@ export class WebGPUSampler extends Sampler {
         };
     }
 
-    private _computeSamplerKey (info: IWebGPUGPUSampler): number {
-        let hash = info.minFilter;
-        hash |= ((info.magFilter as number) << 2);
-        hash |= ((info.mipFilter as number) << 4);
-        hash |= ((info.addressU as number) << 6);
-        hash |= ((info.addressV as number) << 8);
-        hash |= ((info.addressW as number) << 10);
-        hash |= (info.maxAnisotropy << 12);
-        hash |= ((info.compare as number) << 16);
-        hash |= ((info.mipLevel) << 18);
-        return hash;
-    }
-
     public createGPUSampler (mipLevel: number = 1, forcePoint = false): GPUSampler | null {
         if (!this._gpuSampler) {
             return null;
@@ -93,15 +80,24 @@ export class WebGPUSampler extends Sampler {
             // Native anisotropy greater than one requires all three filters to be linear.
             info.maxAnisotropy = 1;
         }
-        const currKey = this._computeSamplerKey(info);
-        let currGPUSampler = samplerCaches.get(currKey);
+        const device = WebGPUDeviceManager.instance;
+        const nativeDevice = device.nativeDevice!;
+        const descriptor = WebGPUCmdFuncGetSamplerDescriptor(info);
+        // Use the effective native descriptor, with identical field order at
+        // every construction. No compare/LOD/aniso bits can overlap.
+        const key = JSON.stringify(descriptor);
+        let cache = samplerCaches.get(nativeDevice);
+        if (!cache) {
+            cache = new Map();
+            samplerCaches.set(nativeDevice, cache);
+        }
+        let currGPUSampler = cache.get(key);
         if (currGPUSampler) return currGPUSampler;
 
-        const device = WebGPUDeviceManager.instance;
         this._hasChange = true;
-        WebGPUCmdFuncCreateSampler(device, info);
+        WebGPUCmdFuncCreateSampler(device, info, descriptor);
         currGPUSampler = info.gpuSampler!;
-        samplerCaches.set(currKey, currGPUSampler);
+        cache.set(key, currGPUSampler);
         return currGPUSampler;
     }
 

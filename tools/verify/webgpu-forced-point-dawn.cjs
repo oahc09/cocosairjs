@@ -37,7 +37,11 @@ function sourceBridge(nativeDevice, descriptors) {
                 .getText()
                 .replace(/^export[ \t]+/, ''),
         );
+    const descriptorHelper = commands.some((node) => node.name?.text === 'WebGPUCmdFuncGetSamplerDescriptor')
+        ? part(commands, ['WebGPUCmdFuncGetSamplerDescriptor'])
+        : [];
     const fixture = [
+        ...descriptorHelper,
         ...part(define, ['Format', 'Filter', 'Address', 'ComparisonFunc']),
         ...part(commands, [
             'WebGPUAdressMode',
@@ -57,34 +61,170 @@ function sourceBridge(nativeDevice, descriptors) {
     const js = ts.transpileModule(fixture, {
         compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.None },
     }).outputText;
-    return vm.runInNewContext(js, {
-        Sampler: class {
-            constructor(info) {
-                this._info = { ...info };
-            }
-        },
-        FormatInfos: new Proxy({}, { get: () => ({ hasDepth: false }) }),
-        warn: (msg) => assert.fail(msg),
-        WebGPUDeviceManager: {
-            instance: {
-                // Deliberately never request float32-filterable on this device.
-                floatFilterable: false,
-                nativeDevice: {
-                    createSampler: (desc) => {
-                        descriptors.push({ ...desc });
-                        return nativeDevice.createSampler(desc);
-                    },
-                },
-            },
+    const wrap = (device) => ({
+        createSampler: (descriptor) => {
+            descriptors.push({ ...descriptor });
+            return device.createSampler(descriptor);
         },
     });
+    const manager = { instance: { floatFilterable: false, nativeDevice: wrap(nativeDevice) } };
+    return {
+        ...vm.runInNewContext(js, {
+            Sampler: class {
+                constructor(info) {
+                    this._info = { ...info };
+                }
+            },
+            FormatInfos: new Proxy({}, { get: () => ({ hasDepth: false }) }),
+            warn: (msg) => assert.fail(msg),
+            WebGPUDeviceManager: manager,
+        }),
+        changeDevice: (device) => {
+            manager.instance.nativeDevice = wrap(device);
+        },
+    };
+}
+
+async function underValidation(device, fn) {
+    device.pushErrorScope('validation');
+    let result, error;
+    try {
+        result = fn();
+    } finally {
+        error = await device.popErrorScope();
+    }
+    return { result, error };
+}
+
+function samplerBind(device, globals, type, sampler) {
+    return underValidation(device, () => {
+        const layout = device.createBindGroupLayout({
+            entries: [{ binding: 0, visibility: globals.GPUShaderStage.FRAGMENT, sampler: { type } }],
+        });
+        return device.createBindGroup({ layout, entries: [{ binding: 0, resource: sampler }] });
+    });
+}
+
+async function verifyCache(gpu, device, globals, broken, uncaptured) {
+    const receipt = { comparison: [], anisotropy: [], deviceOwnership: null, normalizedReuse: null };
+    for (const mips of [1, 2, 3])
+        for (const reverse of [false, true]) {
+            const descs = [];
+            const { WebGPUSampler, Filter, Address, ComparisonFunc } = sourceBridge(device, descs);
+            const point = {
+                minFilter: Filter.POINT,
+                magFilter: Filter.POINT,
+                mipFilter: Filter.POINT,
+                addressU: Address.CLAMP,
+                addressV: Address.CLAMP,
+                addressW: Address.CLAMP,
+                maxAnisotropy: 1,
+            };
+            const arms = [
+                ['non-filtering', new WebGPUSampler({ ...point, cmpFunc: ComparisonFunc.ALWAYS }, 0)],
+                ['comparison', new WebGPUSampler({ ...point, cmpFunc: ComparisonFunc.LESS_EQUAL }, 1)],
+            ];
+            if (reverse) arms.reverse();
+            const row = { mips, order: arms.map(([type]) => type), accepted: [], compareFields: [], allocated: 0 };
+            let previous;
+            for (const [type, request] of arms) {
+                const { result, error } = await underValidation(device, () => request.createGPUSampler(mips));
+                assert.equal(error, null);
+                const same = previous === result;
+                const rejected = broken && mips % 2 === 1 && !!previous;
+                assert.equal(same, rejected);
+                const bind = await samplerBind(device, globals, type, result);
+                if (rejected) assert.match(bind.error?.message ?? '', /sampler|comparison/i);
+                else assert.equal(bind.error, null);
+                const repeated = request.createGPUSampler(mips);
+                assert.equal(repeated, result);
+                row.accepted.push(!bind.error);
+                row.compareFields.push(descs.at(-1).compare ?? null);
+                previous = result;
+            }
+            row.allocated = descs.length;
+            receipt.comparison.push(row);
+        }
+    for (const order of [
+        [0, 16],
+        [16, 0],
+    ]) {
+        const descs = [];
+        const { WebGPUSampler, Filter, Address, ComparisonFunc } = sourceBridge(device, descs);
+        const linear = {
+            minFilter: Filter.LINEAR,
+            magFilter: Filter.LINEAR,
+            mipFilter: Filter.LINEAR,
+            addressU: Address.CLAMP,
+            addressV: Address.CLAMP,
+            addressW: Address.CLAMP,
+            cmpFunc: ComparisonFunc.ALWAYS,
+        };
+        const items = [];
+        for (const maxAnisotropy of order) {
+            const { result, error } = await underValidation(device, () =>
+                new WebGPUSampler({ ...linear, maxAnisotropy }, 0).createGPUSampler(1),
+            );
+            assert.equal(error, null);
+            items.push(result);
+        }
+        assert.equal(items[0] === items[1], broken);
+        const native = descs.map((desc) => desc.maxAnisotropy);
+        assert.deepEqual(
+            native,
+            (broken ? order.slice(0, 1) : order).map((value) => value || 1),
+        );
+        receipt.anisotropy.push({ order, native });
+        if (!broken) {
+            const zero = new WebGPUSampler({ ...linear, maxAnisotropy: 0 }, 0).createGPUSampler(1);
+            const one = new WebGPUSampler({ ...linear, maxAnisotropy: 1 }, 1).createGPUSampler(1);
+            receipt.normalizedReuse = zero === one;
+            assert.equal(receipt.normalizedReuse, true);
+            assert.equal(descs.length, 2);
+        }
+    }
+    const secondAdapter = await gpu.requestAdapter();
+    assert.ok(secondAdapter);
+    const second = await secondAdapter.requestDevice();
+    const onError = ({ error }) => uncaptured.push(error.message);
+    second.addEventListener('uncapturederror', onError);
+    try {
+        const descs = [];
+        const { WebGPUSampler, Filter, Address, ComparisonFunc, changeDevice } = sourceBridge(device, descs);
+        const request = new WebGPUSampler(
+            {
+                minFilter: Filter.POINT,
+                magFilter: Filter.POINT,
+                mipFilter: Filter.POINT,
+                addressU: Address.CLAMP,
+                addressV: Address.CLAMP,
+                addressW: Address.CLAMP,
+                maxAnisotropy: 1,
+                cmpFunc: ComparisonFunc.ALWAYS,
+            },
+            0,
+        );
+        const first = request.createGPUSampler(1);
+        changeDevice(second);
+        const other = request.createGPUSampler(1);
+        assert.equal(first === other, broken);
+        const bind = await samplerBind(second, globals, 'non-filtering', other);
+        if (broken) assert.match(bind.error?.message ?? '', /device/i);
+        else assert.equal(bind.error, null);
+        receipt.deviceOwnership = { reusedAcrossDevices: first === other, acceptedByOwner: !bind.error };
+    } finally {
+        second.destroy();
+    }
+    return receipt;
 }
 
 async function main() {
     const [mode, addon, ...rest] = process.argv.slice(2);
     assert.ok(
-        ['baseline', 'fixed'].includes(mode) && path.isAbsolute(addon) && rest.length === 0,
-        'usage: <baseline|fixed> <absolute node-webgpu entry>',
+        ['baseline', 'fixed', 'cache-baseline', 'cache-fixed'].includes(mode) &&
+            path.isAbsolute(addon) &&
+            rest.length === 0,
+        'usage: <baseline|fixed|cache-baseline|cache-fixed> <absolute node-webgpu entry>',
     );
     const meta = JSON.parse(readFileSync(path.join(path.dirname(addon), 'package.json'), 'utf8'));
     assert.equal(meta.name, 'webgpu');
@@ -214,6 +354,8 @@ async function main() {
             assert.equal(sampler.gpuSampler.maxAnisotropy, 4);
             assert.equal(sampler.gpuSampler.minFilter, Filter.LINEAR);
         }
+        if (mode.startsWith('cache-'))
+            report.cache = await verifyCache(gpu, device, globals, mode === 'cache-baseline', uncaptured);
         assert.deepEqual(uncaptured, []);
         report.status = 'PASS';
         console.log(JSON.stringify(report, null, 2));
