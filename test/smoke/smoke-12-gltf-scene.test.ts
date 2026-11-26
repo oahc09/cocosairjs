@@ -154,6 +154,31 @@ describe('glTF scene extensions', () => {
         instance.dispose(); asset.destroy();
     });
 
+    test.each([5120, 5122])('instancing accepts normalized signed rotation component %s', async (type) => {
+        const { makePackedRotationGlb } = require('../../tools/verify/gltf-packed-rotation-fixture.cjs');
+        const asset = await loader.parseAsync(makePackedRotationGlb(type, true));
+        const instance = asset.instantiate();
+        try {
+            const anchor = findDeep(instance.root, 'anchor');
+            const node = anchor.children.find((child) => child.name.endsWith('__inst_0'))!;
+            expect(node.worldPosition.equals(new Vec3(7, 22, 34), 1e-5)).toBe(true);
+            const tip = Vec3.transformMat4(new Vec3(), new Vec3(1, 0, 0), node.worldMatrix);
+            expect(tip.equals(new Vec3(7, 22, 32), 1e-5)).toBe(true);
+        } finally {
+            instance.dispose();
+            asset.destroy();
+        }
+    });
+
+    test.each([
+        [5121, true],
+        [5120, false],
+    ])('instancing rejects incompatible rotation component %s normalized=%s', async (type, normalized) => {
+        const { makePackedRotationGlb } = require('../../tools/verify/gltf-packed-rotation-fixture.cjs');
+        await expect(loader.parseAsync(makePackedRotationGlb(type, normalized))).rejects
+            .toMatchObject({ code: 'GLTF_EXTENSION_INVALID' });
+    });
+
     test('instancing validation rejects count mismatches and bad accessor types', async () => {
         // count mismatch: TRANSLATION 3 instances vs ROTATION 2
         const mismatch = addChannelsToFixture({ TRANSLATION: { values: [0, 0, 0, 1, 1, 1, 2, 2, 2] },

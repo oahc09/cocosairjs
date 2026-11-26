@@ -74,10 +74,11 @@ metadata+告警。同一 light def 多节点=独立组件。相机仅保留描�
 
 ### EXT_mesh_gpu_instancing
 当前**正确性展开路径**：`resolveData` 快照 TRANSLATION/ROTATION/SCALE 二进制并校验
-（VEC3/VEC4 float、四元数、count 一致，违规 `GLTF_EXTENSION_INVALID`；skin 节点拒绝）；
+（位移和缩放为非归一化 FLOAT VEC3；旋转为 FLOAT VEC4 或归一化有符号 BYTE/SHORT VEC4，
+并检查四元数、count 一致；非法格式报 `GLTF_EXTENSION_INVALID`，skin 节点拒绝）；
 `buildNode` 展开为共享 Mesh/Material 子节点，`renderTargets` 声明渲染归属，负缩放卷绕由
 `GLTFWinding` 自动修正。原生 instanced-draw 为后续快路径（计划允许，性能报告已注明路径）。
-证据：smoke-12 + scene 证据（4 实例矩阵断言）。
+证据：smoke-12；[WebKit 专项回执](../evidence/gltf-packed-rotation-webkit.json)对比三种合法 GLB 的世界变换、像素与释放，并检查无符号及未归一化整数拒绝。
 
 ## 材质（T5/T6）
 
