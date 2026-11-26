@@ -26,6 +26,7 @@ import { EDITOR, NODEJS } from 'internal:constants';
 import { ImageAsset } from '../assets/image-asset';
 import JsonAsset from '../assets/json-asset';
 import { TextAsset } from '../assets/text-asset';
+import { AtlasTextResponse, rememberAtlasResponseURL } from './atlas-text-response';
 import { Asset } from '../assets/asset';
 import { BufferAsset } from '../assets/buffer-asset';
 import Bundle, { resources } from './bundle';
@@ -162,7 +163,10 @@ export class Factory {
         }
 
         this._creating.add(id, [onComplete]);
-        handler(id, data, options, (err, result): void => {
+        const atlasResponse = type === '.atlas' && data instanceof AtlasTextResponse ? data : undefined;
+        // Factory extensions still receive the plain text transported by .atlas.
+        handler(id, atlasResponse ? atlasResponse.text : data, options, (err, result): void => {
+            if (!err && atlasResponse && result instanceof TextAsset) rememberAtlasResponseURL(result, atlasResponse.responseURL);
             if (!err && result instanceof Asset) {
                 result._uuid = id;
                 cache(id, result, options.cacheAsset);

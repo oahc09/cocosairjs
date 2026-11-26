@@ -25,6 +25,7 @@ import { BUILD, EDITOR, PREVIEW } from 'internal:constants';
 import { Asset } from '../assets/asset';
 import { error, cclegacy, errorID } from '../../core';
 import packManager from './pack-manager';
+import { AtlasTextResponse } from './atlas-text-response';
 import parser from './parser';
 import { Pipeline } from './pipeline';
 import RequestItem from './request-item';
@@ -129,7 +130,10 @@ const loadOneAssetPipeline = new Pipeline('loadOneAsset', [
                     done(err);
                     return;
                 }
-                item.content = asset;
+                // loadAny callers still receive native atlas source as a string.
+                // Only the loadRemote factory consumes the private metadata.
+                item.content = asset instanceof AtlasTextResponse && !task.options!.__atlasResponseForFactory__
+                    ? asset.text : asset;
                 if (progress.canInvoke) {
                     task.dispatch('progress', ++progress.finish, progress.total, item);
                 }

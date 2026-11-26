@@ -28,6 +28,7 @@ import Cache from './cache';
 import downloadDomImage from './download-dom-image';
 import downloadFile, { FileProgressCallback } from './download-file';
 import downloadScript from './download-script';
+import { AtlasTextResponse } from './atlas-text-response';
 import { files } from './shared';
 import { retry, RetryFunction, urlAppendTimestamp } from './utilities';
 import { IConfigOption } from './config';
@@ -95,6 +96,14 @@ const downloadCCONB = (url: string, options: Record<string, any>, onComplete: ((
 const downloadText = (url: string, options: Record<string, any>, onComplete: ((err: Error | null, data?: any) => void)): void => {
     options.xhrResponseType = 'text';
     downloadFile(url, options, options.onFileProgress as FileProgressCallback, onComplete);
+};
+
+const downloadAtlasText: DownloadHandler = (url, options, onComplete): void => {
+    options.xhrResponseType = 'text';
+    downloadFile(url, options, options.onFileProgress as FileProgressCallback, (err, data, responseURL) => {
+        if (err) onComplete(err);
+        else onComplete(null, responseURL ? new AtlasTextResponse(data as string, responseURL) : data);
+    }, true);
 };
 
 const downloadBundle = (nameOrUrl: string, options: Record<string, any>, onComplete: ((err: Error | null, data?: any) => void)): void => {
@@ -278,7 +287,7 @@ export class Downloader {
         '.xml': downloadText,
         '.vsh': downloadText,
         '.fsh': downloadText,
-        '.atlas': downloadText,
+        '.atlas': downloadAtlasText,
 
         '.tmx': downloadText,
         '.tsx': downloadText,
