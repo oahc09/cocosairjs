@@ -1,0 +1,269 @@
+{
+  "scope": "native Tiled TSX animation with controlled engine delta time, real rendered pixels and existing static/transform refresh",
+  "engine": "webkit",
+  "fingerprints": {
+    "src/cocos/tiledmap/tiled-map.ts": "c4aec95da36bfef44207ccdaffdb4d321749cdd88a26a8246c2aafd639e62f32",
+    "src/cocos/tiledmap/tmx-xml-parser.ts": "a9c96802fc1305f945de7ef62174cddc1a5d3bb3a070a3b3a911f35a3b0306a3",
+    "build/cocosair.module.js": "1ae4641da71cf28ae5b8a511c30981152c5b6e132d135cbdb71dc3050f14aebd",
+    "tools/verify/air-tiled-animation-browser.cjs": "b883669bfa0200fb5e2c4b4485151d2f58822af19d7cde393cb71cf9fdd1ee1c"
+  },
+  "status": "FAIL",
+  "pageErrors": [],
+  "runtimeErrors": [],
+  "stages": {
+    "initial": {
+      "counts": [
+        256,
+        0,
+        0,
+        256,
+        0,
+        0,
+        0
+      ],
+      "left": [
+        188,
+        null,
+        null,
+        276,
+        null,
+        null,
+        null
+      ],
+      "screenshotSha256": "5f3adb3670952ddf6fad4c8ee2db14ca65d66f0835232f0ecc8c77b84d91c2a1"
+    },
+    "just-before": {
+      "counts": [
+        256,
+        0,
+        0,
+        256,
+        0,
+        0,
+        0
+      ],
+      "left": [
+        188,
+        null,
+        null,
+        276,
+        null,
+        null,
+        null
+      ],
+      "screenshotSha256": "5f3adb3670952ddf6fad4c8ee2db14ca65d66f0835232f0ecc8c77b84d91c2a1"
+    },
+    "first-boundary": {
+      "counts": [
+        256,
+        0,
+        0,
+        256,
+        0,
+        0,
+        0
+      ],
+      "left": [
+        188,
+        null,
+        null,
+        276,
+        null,
+        null,
+        null
+      ],
+      "screenshotSha256": "5f3adb3670952ddf6fad4c8ee2db14ca65d66f0835232f0ecc8c77b84d91c2a1"
+    },
+    "second-boundary": {
+      "counts": [
+        0,
+        256,
+        0,
+        256,
+        0,
+        0,
+        0
+      ],
+      "left": [
+        null,
+        188,
+        null,
+        276,
+        null,
+        null,
+        null
+      ],
+      "screenshotSha256": "2bebdc82cf9d81d10adf98fcd024b514ed67a50ca27278d8acced734aaeada83"
+    },
+    "hitch": {
+      "counts": [
+        0,
+        256,
+        0,
+        256,
+        0,
+        0,
+        0
+      ],
+      "left": [
+        null,
+        188,
+        null,
+        276,
+        null,
+        null,
+        null
+      ],
+      "screenshotSha256": "2bebdc82cf9d81d10adf98fcd024b514ed67a50ca27278d8acced734aaeada83"
+    },
+    "hitch-followup": {
+      "counts": [
+        0,
+        256,
+        0,
+        256,
+        0,
+        0,
+        0
+      ],
+      "left": [
+        null,
+        188,
+        null,
+        276,
+        null,
+        null,
+        null
+      ],
+      "screenshotSha256": "2bebdc82cf9d81d10adf98fcd024b514ed67a50ca27278d8acced734aaeada83"
+    },
+    "split": {
+      "counts": [
+        0,
+        256,
+        0,
+        256,
+        0,
+        0,
+        0
+      ],
+      "left": [
+        null,
+        188,
+        null,
+        276,
+        null,
+        null,
+        null
+      ],
+      "screenshotSha256": "2bebdc82cf9d81d10adf98fcd024b514ed67a50ca27278d8acced734aaeada83"
+    },
+    "split-followup": {
+      "counts": [
+        0,
+        0,
+        256,
+        256,
+        0,
+        0,
+        0
+      ],
+      "left": [
+        null,
+        null,
+        188,
+        276,
+        null,
+        null,
+        null
+      ],
+      "screenshotSha256": "af97e96d7c5dd2eb91dce146583340b3275688f0b36c5602631f739a1862d712"
+    },
+    "exact-wrap": {
+      "counts": [
+        0,
+        256,
+        0,
+        256,
+        0,
+        0,
+        0
+      ],
+      "left": [
+        null,
+        188,
+        null,
+        276,
+        null,
+        null,
+        null
+      ],
+      "screenshotSha256": "2bebdc82cf9d81d10adf98fcd024b514ed67a50ca27278d8acced734aaeada83"
+    },
+    "long-hitch": {
+      "counts": [
+        0,
+        256,
+        0,
+        256,
+        0,
+        0,
+        0
+      ],
+      "left": [
+        null,
+        188,
+        null,
+        276,
+        null,
+        null,
+        null
+      ],
+      "screenshotSha256": "2bebdc82cf9d81d10adf98fcd024b514ed67a50ca27278d8acced734aaeada83"
+    },
+    "static-edit": {
+      "counts": [
+        0,
+        0,
+        0,
+        0,
+        256,
+        0,
+        0
+      ],
+      "left": [
+        null,
+        null,
+        null,
+        null,
+        276,
+        null,
+        null
+      ],
+      "screenshotSha256": "31715f8719c05a90abe24c0df26e74f6ed2d6bfecfd4745a3335b338b7577ef4"
+    },
+    "static-transform": {
+      "counts": [
+        0,
+        0,
+        0,
+        0,
+        256,
+        0,
+        0
+      ],
+      "left": [
+        null,
+        null,
+        null,
+        null,
+        308,
+        null,
+        null
+      ],
+      "screenshotSha256": "c45f52d9c15bb18d87363625aa06f433a99a275d7e9671bd4d09d47ee627e22f"
+    }
+  },
+  "browserVersion": "26.5",
+  "error": "first-boundary expected frame 1, observed 256,0,0"
+}

@@ -6545,8 +6545,8 @@
       "airPath": "src/cocos/tiledmap/tiled-map.ts",
       "upstreamPath": "cocos/tiledmap/tiled-map.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 b3-tiledmap 回归抽取，官方原文"
+      "modified": true,
+      "reason": "Resolve native TSX animations by elapsed cycle time, preserving hitch overshoot, half-open frame boundaries and static fallback when grids are missing."
     },
     {
       "airPath": "src/cocos/tiledmap/tiled-object-group.ts",
@@ -6581,7 +6581,7 @@
       "upstreamPath": "cocos/tiledmap/tmx-xml-parser.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
       "modified": true,
-      "reason": "PG-03 retain modern object class and legacy type in className; existing native shape classification remains unchanged."
+      "reason": "PG-03 retain modern object class and legacy type in className; existing native shape classification remains unchanged. Empty clips and invalid frame durations retain the static tile."
     },
     {
       "airPath": "src/cocos/tween/actions/action-instant.ts",
