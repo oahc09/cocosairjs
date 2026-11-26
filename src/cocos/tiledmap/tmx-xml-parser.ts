@@ -754,13 +754,16 @@ export class TMXMapInfo {
                         const animation = animations[0];
                         const framesData = animation.getElementsByTagName('frame');
                         const animationProp: TiledAnimation = { frames: [], dt: 0, frameIdx: 0 };
-                        this._tileAnimations.set(pid, animationProp);
                         const frames = animationProp.frames;
                         for (let frameIdx = 0; frameIdx < framesData.length; frameIdx++) {
                             const frame = framesData[frameIdx];
                             const tileid = fgid + (parseInt(frame.getAttribute('tileid')!) || 0);
-                            const duration = parseFloat(frame.getAttribute('duration')!) || 0;
-                            frames.push({ tileid: tileid as unknown as GID, duration: duration / 1000, grid: null });
+                            const duration = Number(frame.getAttribute('duration')) / 1000;
+                            if (!Number.isFinite(duration) || duration <= 0) break;
+                            frames.push({ tileid: tileid as unknown as GID, duration, grid: null });
+                        }
+                        if (frames.length && frames.length === framesData.length) {
+                            this._tileAnimations.set(pid, animationProp);
                         }
                     }
                 }

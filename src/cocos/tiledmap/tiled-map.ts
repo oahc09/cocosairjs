@@ -26,7 +26,7 @@ import { ccclass, displayOrder, executeInEditMode, help, menu, requireComponent,
 import { EDITOR, JSB } from 'internal:constants';
 import { Component } from '../scene-graph/component';
 import { UITransform } from '../2d/framework';
-import { GID, Orientation, PropertiesInfo, Property, RenderOrder, StaggerAxis, StaggerIndex, TiledAnimationType, TiledTextureGrids, TileFlag,
+import { GID, Orientation, PropertiesInfo, Property, RenderOrder, StaggerAxis, StaggerIndex, TiledAnimation, TiledAnimationType, TiledTextureGrids, TileFlag,
     TMXImageLayerInfo, TMXLayerInfo, TMXObjectGroupInfo, TMXObjectType, TMXTilesetInfo } from './tiled-types';
 import { TMXMapInfo } from './tmx-xml-parser';
 import { TiledLayer } from './tiled-layer';
@@ -63,6 +63,7 @@ export class TiledMap extends Component {
     _tilesets: TMXTilesetInfo[] = [];
 
     _animations: TiledAnimationType = new Map();
+    private readonly _animationEnds = new WeakMap<TiledAnimation, number[]>();
     _imageLayers: TMXImageLayerInfo[] = [];
     _layers: TiledLayer[] = [];
     _groups: TiledObjectGroup[] = [];
@@ -454,13 +455,23 @@ export class TiledMap extends Component {
     }
 
     _fillAniGrids (texGrids: TiledTextureGrids, animations: TiledAnimationType): void {
-        for (const i of animations.keys()) {
-            const animation = animations.get(i);
-            if (!animation) continue;
-            const frames = animation.frames;
-            for (let j = 0; j < frames.length; j++) {
-                const frame = frames[j];
-                frame.grid = texGrids.get(frame.tileid)!;
+        for (const [gid, animation] of animations) {
+            const endTimes: number[] = [];
+            let total = 0;
+            for (const frame of animation.frames) {
+                const grid = texGrids.get(frame.tileid);
+                const end = total + frame.duration;
+                if (!grid || !Number.isFinite(end) || end <= total) break;
+                frame.grid = grid;
+                endTimes.push(end);
+                total = end;
+            }
+            if (endTimes.length && endTimes.length === animation.frames.length) {
+                this._animationEnds.set(animation, endTimes);
+            } else {
+                // A malformed animation must not replace the original static grid.
+                this._animationEnds.delete(animation);
+                animations.delete(gid);
             }
         }
     }
@@ -636,20 +647,30 @@ export class TiledMap extends Component {
     lateUpdate (dt: number): void {
         const animations = this._animations;
         const texGrids = this._texGrids;
-        for (const aniGID of animations.keys()) {
-            const animation = animations.get(aniGID)!;
-            const frames = animation.frames;
-            let frame = frames[animation.frameIdx];
-            animation.dt += dt;
-            if (frame.duration < animation.dt) {
-                animation.dt = 0;
-                animation.frameIdx++;
-                if (animation.frameIdx >= frames.length) {
-                    animation.frameIdx = 0;
-                }
-                frame = frames[animation.frameIdx];
+        const delta = Number.isFinite(dt) && dt > 0 ? dt : 0;
+        for (const [gid, animation] of animations) {
+            const ends = this._animationEnds.get(animation);
+            if (!ends) continue;
+            const total = ends[ends.length - 1];
+            // Wrap whole cycles before adding to the phase, even after a long hitch.
+            const advance = delta < total ? delta : delta % total;
+            const remaining = total - animation.dt;
+            let phase = advance >= remaining ? advance - remaining : animation.dt + advance;
+            // Absorb roundoff at the cycle boundary (for example 0.1 + 0.2).
+            if (total - phase <= total * Number.EPSILON * 2) phase = 0;
+            animation.dt = phase;
+
+            // Frame intervals are half-open; a boundary belongs to the next frame.
+            let low = 0;
+            let high = ends.length - 1;
+            while (low < high) {
+                const mid = (low + high) >>> 1;
+                const end = ends[mid];
+                if (end - phase > end * Number.EPSILON * 2) high = mid;
+                else low = mid + 1;
             }
-            texGrids.set(aniGID, frame.grid!);
+            animation.frameIdx = low;
+            texGrids.set(gid, animation.frames[low].grid!);
         }
         const layers = this.getLayers();
         for (let i = 0, l = layers.length; i < l; i++) {

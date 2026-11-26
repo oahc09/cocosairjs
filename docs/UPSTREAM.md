@@ -433,6 +433,10 @@ The TMX parser retains the modern `class` attribute (falling back to legacy `typ
 
 The native single-cell and rectangle setters share `_updateTileForGID`. A changed tile still updates the existing culling bookkeeping, and now also queues its renderer so a stationary camera or disabled culling does not strand the edit. The existing UI renderer queue coalesces multiple requests in the same frame. Public GID/flag semantics, culling geometry and TSX animation are unchanged.
 
+## Tiled animation timing
+
+Native TSX clips use elapsed cycle time and half-open frame intervals. A large engine tick can cross several frames or whole loops without losing the fractional remainder. The XML parser admits only nonempty clips with finite positive frame durations; missing frame grids also leave the original static tile in place. Existing layer transform and static edit refresh behavior is unchanged.
+
 ## Input action ownership (PG-28)
 
 `cocos/input/input.ts` includes the already-dispatched `MOUSE_ENTER` and `MOUSE_LEAVE` events in its native input type map (PG-28). This adds typed subscriptions without changing event dispatch. The optional AIR action adapter uses mouse-leave to release its simulated mouse source and PAL's existing physical-key map to clean up held keys released after focus moves away from the canvas. It does not admit a second keydown channel or synthesize engine events.
