@@ -656,6 +656,8 @@ export class AssetManager {
             return;
         }
 
+        const ext = (opts.ext as string) || path.extname(url);
+        if (ext === '.atlas') opts.__atlasResponseForFactory__ = true;
         opts.__isNative__ = true;
         opts.preset = opts.preset || 'remote';
         this.loadAny({ url }, opts, null, (err, data): void => {
@@ -663,7 +665,7 @@ export class AssetManager {
                 error(err.message, err.stack);
                 if (onComp) { onComp(err, data as T); }
             } else {
-                factory.create(url, data, (opts.ext as string) || path.extname(url), opts, (p1, p2): void => {
+                factory.create(url, data, ext, opts, (p1, p2): void => {
                     if (onComp) { onComp(p1, p2 as T); }
                 });
             }

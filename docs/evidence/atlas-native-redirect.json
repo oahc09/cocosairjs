@@ -1,0 +1,443 @@
+{
+  "format": "cocosair-atlas-native-redirect",
+  "version": 1,
+  "baselineCommit": "e03c7902f935fe57035a15f942b9eb746679c961",
+  "scope": "Built source, local WebKit native XHR plus native PNG decode; exact RGBA markers, not GPU draw, physical device or deployed CDN",
+  "repeatedFixedReceipt": "byte-identical",
+  "typecheck": "PASS",
+  "unitTests": 63,
+  "baseline": {
+    "scope": "loopback HTTP redirects, native XHR/image decode, public loadAtlas and AssetBank",
+    "bundleSha256": "06124d685e3778428e5458d91934d2e2b9c910c4ef8e6b207bd836f03d9a26bd",
+    "mode": "baseline",
+    "cases": [
+      {
+        "name": "default",
+        "requests": [
+          {
+            "path": "/alias/pack.atlas?case=default",
+            "status": 302
+          },
+          {
+            "path": "/release/v2.1/pack.atlas?case=default",
+            "status": 200
+          },
+          {
+            "path": "/alias/pictures.v3/page.png?rev=.webp",
+            "status": 404
+          },
+          {
+            "path": "/alias/pictures.v3/page.png?rev=.webp",
+            "status": 404
+          },
+          {
+            "path": "/alias/pictures.v3/page.png?rev=.webp",
+            "status": 404
+          },
+          {
+            "path": "/alias/pictures.v3/page.png?rev=.webp",
+            "status": 404
+          },
+          {
+            "path": "/alias/pictures.v3/page.png?rev=.webp",
+            "status": 404
+          }
+        ],
+        "statuses": [
+          "rejected",
+          "rejected"
+        ],
+        "colors": [],
+        "refs": [
+          0
+        ],
+        "inFlight": 0,
+        "requestedRelease": false
+      },
+      {
+        "name": "explicit",
+        "requests": [
+          {
+            "path": "/alias/pack.atlas?case=explicit",
+            "status": 302
+          },
+          {
+            "path": "/release/v2.1/pack.atlas?case=explicit",
+            "status": 200
+          },
+          {
+            "path": "/override/pictures.v3/page.png?rev=.webp",
+            "status": 200
+          }
+        ],
+        "statuses": [
+          "fulfilled"
+        ],
+        "colors": [
+          [
+            219,
+            104,
+            53,
+            255
+          ]
+        ],
+        "refs": [
+          2,
+          0
+        ],
+        "inFlight": 0,
+        "requestedRelease": false
+      },
+      {
+        "name": "direct",
+        "requests": [
+          {
+            "path": "/release/v2.1/pack.atlas?case=direct",
+            "status": 200
+          },
+          {
+            "path": "/release/v2.1/pictures.v3/page.png?rev=.webp",
+            "status": 200
+          }
+        ],
+        "statuses": [
+          "fulfilled"
+        ],
+        "colors": [
+          [
+            37,
+            129,
+            225,
+            255
+          ]
+        ],
+        "refs": [
+          2,
+          0
+        ],
+        "inFlight": 0,
+        "requestedRelease": false
+      },
+      {
+        "name": "suffixless",
+        "requests": [
+          {
+            "path": "/alias/pack.atlas?case=suffixless",
+            "status": 302
+          },
+          {
+            "path": "/release/v2.1/pack.atlas?case=suffixless",
+            "status": 200
+          },
+          {
+            "path": "/alias/pictures.v3/page?rev=.webp",
+            "status": 404
+          },
+          {
+            "path": "/alias/pictures.v3/page?rev=.webp",
+            "status": 404
+          },
+          {
+            "path": "/alias/pictures.v3/page?rev=.webp",
+            "status": 404
+          },
+          {
+            "path": "/alias/pictures.v3/page?rev=.webp",
+            "status": 404
+          },
+          {
+            "path": "/alias/pictures.v3/page?rev=.webp",
+            "status": 404
+          }
+        ],
+        "statuses": [
+          "rejected"
+        ],
+        "colors": [],
+        "refs": [
+          0
+        ],
+        "inFlight": 0,
+        "requestedRelease": false
+      },
+      {
+        "name": "custom",
+        "requests": [
+          {
+            "path": "/alias/pack.atlas?case=custom",
+            "status": 302
+          },
+          {
+            "path": "/release/v2.1/pack.atlas?case=custom",
+            "status": 200
+          },
+          {
+            "path": "/alias/pictures.v3/page.png?rev=.webp",
+            "status": 404
+          },
+          {
+            "path": "/alias/pictures.v3/page.png?rev=.webp",
+            "status": 404
+          },
+          {
+            "path": "/alias/pictures.v3/page.png?rev=.webp",
+            "status": 404
+          },
+          {
+            "path": "/alias/pictures.v3/page.png?rev=.webp",
+            "status": 404
+          },
+          {
+            "path": "/alias/pictures.v3/page.png?rev=.webp",
+            "status": 404
+          }
+        ],
+        "statuses": [
+          "rejected"
+        ],
+        "colors": [],
+        "refs": [
+          0
+        ],
+        "inFlight": 0,
+        "factoryInput": "string",
+        "requestedRelease": false
+      }
+    ],
+    "browser": "26.5",
+    "distinctAtlasKeys": {
+      "statuses": [
+        "rejected",
+        "fulfilled"
+      ],
+      "refs": [
+        2,
+        0
+      ],
+      "inFlight": 0
+    },
+    "rawLoadAny": {
+      "type": "string",
+      "requests": [
+        {
+          "path": "/alias/pack.atlas?case=raw",
+          "status": 302
+        },
+        {
+          "path": "/release/v2.1/pack.atlas?case=raw",
+          "status": 200
+        }
+      ]
+    },
+    "result": "PASS"
+  },
+  "fixed": {
+    "scope": "loopback HTTP redirects, native XHR/image decode, public loadAtlas and AssetBank",
+    "bundleSha256": "3958ded6f2210a0d98ad1a60b3972ba920a475da40472938cad47ff08c8a52ca",
+    "mode": "fixed",
+    "cases": [
+      {
+        "name": "default",
+        "requests": [
+          {
+            "path": "/alias/pack.atlas?case=default",
+            "status": 302
+          },
+          {
+            "path": "/release/v2.1/pack.atlas?case=default",
+            "status": 200
+          },
+          {
+            "path": "/release/v2.1/pictures.v3/page.png?rev=.webp",
+            "status": 200
+          }
+        ],
+        "statuses": [
+          "fulfilled",
+          "fulfilled"
+        ],
+        "colors": [
+          [
+            37,
+            129,
+            225,
+            255
+          ],
+          [
+            37,
+            129,
+            225,
+            255
+          ]
+        ],
+        "refs": [
+          2,
+          2,
+          0
+        ],
+        "inFlight": 0,
+        "requestedRelease": false
+      },
+      {
+        "name": "explicit",
+        "requests": [
+          {
+            "path": "/alias/pack.atlas?case=explicit",
+            "status": 302
+          },
+          {
+            "path": "/release/v2.1/pack.atlas?case=explicit",
+            "status": 200
+          },
+          {
+            "path": "/override/pictures.v3/page.png?rev=.webp",
+            "status": 200
+          }
+        ],
+        "statuses": [
+          "fulfilled"
+        ],
+        "colors": [
+          [
+            219,
+            104,
+            53,
+            255
+          ]
+        ],
+        "refs": [
+          2,
+          0
+        ],
+        "inFlight": 0,
+        "requestedRelease": false
+      },
+      {
+        "name": "direct",
+        "requests": [
+          {
+            "path": "/release/v2.1/pack.atlas?case=direct",
+            "status": 200
+          },
+          {
+            "path": "/release/v2.1/pictures.v3/page.png?rev=.webp",
+            "status": 200
+          }
+        ],
+        "statuses": [
+          "fulfilled"
+        ],
+        "colors": [
+          [
+            37,
+            129,
+            225,
+            255
+          ]
+        ],
+        "refs": [
+          2,
+          0
+        ],
+        "inFlight": 0,
+        "requestedRelease": false
+      },
+      {
+        "name": "suffixless",
+        "requests": [
+          {
+            "path": "/alias/pack.atlas?case=suffixless",
+            "status": 302
+          },
+          {
+            "path": "/release/v2.1/pack.atlas?case=suffixless",
+            "status": 200
+          },
+          {
+            "path": "/release/v2.1/pictures.v3/page?rev=.webp",
+            "status": 200
+          }
+        ],
+        "statuses": [
+          "fulfilled"
+        ],
+        "colors": [
+          [
+            37,
+            129,
+            225,
+            255
+          ]
+        ],
+        "refs": [
+          2,
+          0
+        ],
+        "inFlight": 0,
+        "requestedRelease": false
+      },
+      {
+        "name": "custom",
+        "requests": [
+          {
+            "path": "/alias/pack.atlas?case=custom",
+            "status": 302
+          },
+          {
+            "path": "/release/v2.1/pack.atlas?case=custom",
+            "status": 200
+          },
+          {
+            "path": "/release/v2.1/pictures.v3/page.png?rev=.webp",
+            "status": 200
+          }
+        ],
+        "statuses": [
+          "fulfilled"
+        ],
+        "colors": [
+          [
+            37,
+            129,
+            225,
+            255
+          ]
+        ],
+        "refs": [
+          2,
+          0
+        ],
+        "inFlight": 0,
+        "factoryInput": "string",
+        "requestedRelease": false
+      }
+    ],
+    "browser": "26.5",
+    "distinctAtlasKeys": {
+      "statuses": [
+        "fulfilled",
+        "fulfilled"
+      ],
+      "refs": [
+        3,
+        2,
+        0
+      ],
+      "inFlight": 0
+    },
+    "rawLoadAny": {
+      "type": "string",
+      "requests": [
+        {
+          "path": "/alias/pack.atlas?case=raw",
+          "status": 302
+        },
+        {
+          "path": "/release/v2.1/pack.atlas?case=raw",
+          "status": 200
+        }
+      ]
+    },
+    "result": "PASS"
+  }
+}

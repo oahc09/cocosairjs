@@ -28,7 +28,8 @@ export default function downloadFile (
     url: string,
     options: Record<string, any>,
     onProgress: FileProgressCallback | null | undefined,
-    onComplete: ((err: Error | null, data?: any) => void),
+    onComplete: ((err: Error | null, data?: any, responseURL?: string) => void),
+    includeResponseURL = false,
 ): XMLHttpRequest {
     const xhr = new XMLHttpRequest();
     const errInfo = `download failed: ${url}, status: `;
@@ -48,7 +49,10 @@ export default function downloadFile (
 
     xhr.onload = (): void => {
         if (xhr.status === 200 || xhr.status === 0) {
-            if (onComplete) { onComplete(null, xhr.response); }
+            if (onComplete) {
+                if (includeResponseURL) onComplete(null, xhr.response, xhr.responseURL);
+                else onComplete(null, xhr.response);
+            }
         } else if (onComplete) { onComplete(new Error(`${errInfo}${xhr.status}(no response)`)); }
     };
 

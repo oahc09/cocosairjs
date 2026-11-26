@@ -24,7 +24,7 @@
  *
  * 加载流程（全部经 AssetBank 合同，取消是订阅者取消，不声称网络级可取消）：
  *   1. bank.load(url, { ext: 'atlas', signal }) → TextAsset → parseAtlasText；
- *   2. 解析每页相对 URL（相对 atlas URL 或显式 baseURL）；
+ *   2. 解析每页相对 URL（显式 baseURL、XHR 最终响应 URL 或请求 URL）；
  *   3. 页扩展名：页文件自带 .png 后缀 → ext 'png'；无后缀页必须显式 options.pageExt；
  *      非 PNG 在自动路径拒绝（AIR_E_ATLAS_PAGE_FORMAT）——其他格式请自备 Texture2D 走
  *      createAtlasHandle 手动 API（边界见手册）；
@@ -38,6 +38,7 @@
 import { SpriteFrame } from '../../../cocos/2d/assets/sprite-frame';
 import { Texture2D } from '../../../cocos/asset/assets/texture-2d';
 import { ImageAsset } from '../../../cocos/asset/assets/image-asset';
+import { getAtlasResponseURL } from '../../../cocos/asset/asset-manager/atlas-text-response';
 import { TextAsset } from '../../../cocos/asset/assets/text-asset';
 import { AssetBank } from '../asset-bank';
 import { parseAtlasText, type AirAtlasDocument } from './atlas-parser';
@@ -54,9 +55,9 @@ export interface AirAtlasLoadOptions {
     readonly bank: AssetBank;
     /** @en Subscriber-side cancellation (no network-level cancel — see AssetBank contract). @zh 订阅者取消（非网络级取消——见 AssetBank 合同）。 */
     readonly signal?: AbortSignal;
-    /** @en Explicit base for relative page URLs; defaults to the atlas URL, then document base. @zh 相对页 URL 的显式基址；缺省依次取 atlas URL 与 document base。 */
+    /** @en Explicit base for relative page URLs; defaults to the atlas response URL, then the request URL relative to the document. @zh 相对页 URL 的显式基址；缺省优先取最终响应 URL，再取基于文档解析的请求 URL。 */
     readonly baseURL?: string;
-    /** @en Ext for suffix-less page files (default 'png'); other formats rejected on the auto path. @zh 无后缀页文件的扩展名（默认 'png'）；其他格式在自动路径拒绝。 */
+    /** @en Required for suffix-less page files; only 'png' is accepted by the automatic loader. @zh 无后缀页文件必须显式指定；自动加载仅接受 'png'。 */
     readonly pageExt?: string;
 }
 
@@ -102,7 +103,7 @@ export async function loadAtlas (url: string, options: AirAtlasLoadOptions): Pro
         try {
             base = options.baseURL
                 ? new URL(options.baseURL, documentBaseURI()).href
-                : new URL(url, documentBaseURI()).href;
+                : new URL(getAtlasResponseURL(text) ?? url, documentBaseURI()).href;
         } catch {
             fail('AIR_E_ATLAS_BASE_URL', 'relative pages require an absolute atlas URL, document base or explicit baseURL');
         }

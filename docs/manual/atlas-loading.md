@@ -49,12 +49,13 @@
 const handle = await loadAtlas('https://cdn.test/atlas/pack.atlas', {
     bank,                       // 共享 AssetBank（PG-06/32 合同）
     signal,                     // 订阅者取消（非网络级取消）
-    baseURL,                    // 可选；缺省相对页 URL 基于 atlas URL，再退 document base
+    baseURL,                    // 可选；缺省使用最终响应 URL，无法获取时使用原请求 URL
     pageExt,                    // 无后缀页文件必需；无默认值，缺失即拒绝
 });
 ```
 
 - 图集文本经 `bank.load(url, { ext: 'atlas', signal })`；页文件自带 `.png` 后缀自动使用；无后缀页必须显式 `pageExt`（无默认值，缺失即拒绝）；**自动路径仅支持 PNG**（其他格式拒绝 `AIR_E_ATLAS_PAGE_FORMAT`——请自备 Texture2D 走 `createAtlasHandle`）。
+- XHR 重定向后，相对页地址基于最终响应 URL。显式 `baseURL` 优先；自定义 transport 没有最终地址时回退到原请求 URL（相对请求仍按 document base 解析）。AssetBank 的图集订阅、缓存和释放仍使用原请求 URL 加扩展名，不会把别名与最终地址视作同一个 key。
 - 全部页以 `Promise.allSettled` 语义收敛后统一决策：任一页失败/取消 → 回滚已取得订阅（text+pages）、销毁未接管中间 Texture2D、不产出半成品 handle；兄弟页的迟到完成按"无人接管"出清（in-flight 记录正常清除，不挂 ghost 条目）。
 - 取消是订阅者取消：底层 loadRemote 不可网络取消（`AssetBank.underlyingCancelSupported === false`），被取消页的迟到结果按无人接管归还。
 
