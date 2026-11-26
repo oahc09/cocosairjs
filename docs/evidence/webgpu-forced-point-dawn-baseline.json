@@ -1,0 +1,90 @@
+{
+  "status": "PASS",
+  "mode": "baseline",
+  "softwareAPI": "Dawn Vulkan/node-webgpu",
+  "nodeWebGPU": "0.6.2",
+  "browser": false,
+  "adapter": {
+    "description": "llvmpipe: Mesa 25.0.7-2+deb13u1 (LLVM 19.1.7) 0.0.1",
+    "architecture": "software"
+  },
+  "float32FilterableAdvertised": true,
+  "float32FilterableEnabled": false,
+  "sources": {
+    "src/cocos/gfx/webgpu/webgpu-commands.ts": "55ad9fed1be5c0731c87793b6ebaeaeca2f29a28c6ec1afe94aab025d91c571b",
+    "src/cocos/gfx/webgpu/webgpu-sampler.ts": "1e7bc7bc0a9e2fa0922f19abe7f52185eaa7a62c7a6cfb8d59fa61ec6b20acfd",
+    "src/cocos/gfx/webgpu/webgpu-descriptor-set.ts": "48be04522daa70bad2f6a38cd36de8e5091f12968d2f01fa383562d967a467c4",
+    "src/cocos/gfx/base/define.ts": "cc08cc3890726cd8d6227f201079b0243d98016b197033ca4adccc9d23880162"
+  },
+  "harnessSha256": "38aa0281ac5d614741649e20f0f6fb8cc7fd13151e17d1bc430c0fcadaf55acd",
+  "orders": [
+    {
+      "kinds": [
+        "rgba8",
+        "rgba32f",
+        "rgba8"
+      ],
+      "steps": [
+        {
+          "texture": "rgba8unorm",
+          "filters": "linear",
+          "anisotropy": 4,
+          "allocationRejected": false,
+          "cached": false,
+          "bindValidated": true
+        },
+        {
+          "texture": "rgba32float",
+          "filters": "nearest",
+          "anisotropy": 4,
+          "allocationRejected": true,
+          "cached": false,
+          "bindValidated": null
+        },
+        {
+          "texture": "rgba8unorm",
+          "filters": "linear",
+          "anisotropy": 4,
+          "allocationRejected": false,
+          "cached": true,
+          "bindValidated": true
+        }
+      ],
+      "cacheRestored": true
+    },
+    {
+      "kinds": [
+        "rgba32f",
+        "rgba8",
+        "rgba32f"
+      ],
+      "steps": [
+        {
+          "texture": "rgba32float",
+          "filters": "nearest",
+          "anisotropy": 4,
+          "allocationRejected": true,
+          "cached": false,
+          "bindValidated": null
+        },
+        {
+          "texture": "rgba8unorm",
+          "filters": "linear",
+          "anisotropy": 4,
+          "allocationRejected": false,
+          "cached": false,
+          "bindValidated": true
+        },
+        {
+          "texture": "rgba32float",
+          "filters": "nearest",
+          "anisotropy": 4,
+          "allocationRejected": true,
+          "cached": true,
+          "bindValidated": null
+        }
+      ],
+      "cacheRestored": true
+    }
+  ]
+}

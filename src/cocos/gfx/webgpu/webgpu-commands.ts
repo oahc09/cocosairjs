@@ -725,9 +725,7 @@ export function WebGPUCmdFuncResizeTexture (device: WebGPUDevice, gpuTexture: IW
     WebGPUCmdFuncCreateTexture(device, gpuTexture);
 }
 
-export function WebGPUCmdFuncCreateSampler (device: WebGPUDevice, gpuSampler: IWebGPUGPUSampler): void {
-    const nativeDevice: GPUDevice = device.nativeDevice!;
-
+export function WebGPUCmdFuncGetSamplerDescriptor (gpuSampler: IWebGPUGPUSampler): GPUSamplerDescriptor {
     gpuSampler.gpuMinFilter = (gpuSampler.minFilter === Filter.LINEAR || gpuSampler.minFilter === Filter.ANISOTROPIC) ? 'linear' : 'nearest';
     gpuSampler.gpuMagFilter = (gpuSampler.magFilter === Filter.LINEAR || gpuSampler.magFilter === Filter.ANISOTROPIC) ? 'linear' : 'nearest';
     gpuSampler.gpuMipFilter = (gpuSampler.mipFilter === Filter.LINEAR || gpuSampler.mipFilter === Filter.ANISOTROPIC) ? 'linear' : 'nearest';
@@ -748,8 +746,13 @@ export function WebGPUCmdFuncCreateSampler (device: WebGPUDevice, gpuSampler: IW
         samplerDesc.compare = WebGPUCompareFunc[gpuSampler.compare];
     }
     samplerDesc.maxAnisotropy = gpuSampler.maxAnisotropy || 1;
-    const sampler: GPUSampler = nativeDevice.createSampler(samplerDesc);
-    gpuSampler.gpuSampler = sampler;
+    return samplerDesc;
+}
+
+export function WebGPUCmdFuncCreateSampler (
+    device: WebGPUDevice, gpuSampler: IWebGPUGPUSampler, descriptor = WebGPUCmdFuncGetSamplerDescriptor(gpuSampler),
+): void {
+    gpuSampler.gpuSampler = device.nativeDevice!.createSampler(descriptor);
 }
 
 export function WebGPUCmdFuncDestroySampler (device: WebGPUDevice, gpuSampler: IWebGPUGPUSampler): void {

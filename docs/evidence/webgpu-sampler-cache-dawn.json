@@ -1,0 +1,217 @@
+{
+  "status": "PASS",
+  "mode": "cache-fixed",
+  "softwareAPI": "Dawn Vulkan/node-webgpu",
+  "nodeWebGPU": "0.6.2",
+  "browser": false,
+  "adapter": {
+    "description": "llvmpipe: Mesa 25.0.7-2+deb13u1 (LLVM 19.1.7) 0.0.1",
+    "architecture": "software"
+  },
+  "float32FilterableAdvertised": true,
+  "float32FilterableEnabled": false,
+  "sources": {
+    "src/cocos/gfx/webgpu/webgpu-commands.ts": "a374100f7fb05b8729cb6a86963a89be104d1c7c58c1a517faadfb22b61a0dc1",
+    "src/cocos/gfx/webgpu/webgpu-sampler.ts": "9316f6c44570732edb4f0c0313e6c4510cbd1898cbf71613a63b47aa55134fba",
+    "src/cocos/gfx/webgpu/webgpu-descriptor-set.ts": "48be04522daa70bad2f6a38cd36de8e5091f12968d2f01fa383562d967a467c4",
+    "src/cocos/gfx/base/define.ts": "cc08cc3890726cd8d6227f201079b0243d98016b197033ca4adccc9d23880162"
+  },
+  "harnessSha256": "d40b940447ef25ca705fc8b9d4b98d8d77b8b2f4de0f465268dfd40fd3fb3ae7",
+  "orders": [
+    {
+      "kinds": [
+        "rgba8",
+        "rgba32f",
+        "rgba8"
+      ],
+      "steps": [
+        {
+          "texture": "rgba8unorm",
+          "filters": "linear",
+          "anisotropy": 4,
+          "allocationRejected": false,
+          "cached": false,
+          "bindValidated": true
+        },
+        {
+          "texture": "rgba32float",
+          "filters": "nearest",
+          "anisotropy": 1,
+          "allocationRejected": false,
+          "cached": false,
+          "bindValidated": true
+        },
+        {
+          "texture": "rgba8unorm",
+          "filters": "linear",
+          "anisotropy": 4,
+          "allocationRejected": false,
+          "cached": true,
+          "bindValidated": true
+        }
+      ],
+      "cacheRestored": true
+    },
+    {
+      "kinds": [
+        "rgba32f",
+        "rgba8",
+        "rgba32f"
+      ],
+      "steps": [
+        {
+          "texture": "rgba32float",
+          "filters": "nearest",
+          "anisotropy": 1,
+          "allocationRejected": false,
+          "cached": false,
+          "bindValidated": true
+        },
+        {
+          "texture": "rgba8unorm",
+          "filters": "linear",
+          "anisotropy": 4,
+          "allocationRejected": false,
+          "cached": false,
+          "bindValidated": true
+        },
+        {
+          "texture": "rgba32float",
+          "filters": "nearest",
+          "anisotropy": 1,
+          "allocationRejected": false,
+          "cached": true,
+          "bindValidated": true
+        }
+      ],
+      "cacheRestored": true
+    }
+  ],
+  "cache": {
+    "comparison": [
+      {
+        "mips": 1,
+        "order": [
+          "non-filtering",
+          "comparison"
+        ],
+        "accepted": [
+          true,
+          true
+        ],
+        "compareFields": [
+          null,
+          "less-equal"
+        ],
+        "allocated": 2
+      },
+      {
+        "mips": 1,
+        "order": [
+          "comparison",
+          "non-filtering"
+        ],
+        "accepted": [
+          true,
+          true
+        ],
+        "compareFields": [
+          "less-equal",
+          null
+        ],
+        "allocated": 2
+      },
+      {
+        "mips": 2,
+        "order": [
+          "non-filtering",
+          "comparison"
+        ],
+        "accepted": [
+          true,
+          true
+        ],
+        "compareFields": [
+          null,
+          "less-equal"
+        ],
+        "allocated": 2
+      },
+      {
+        "mips": 2,
+        "order": [
+          "comparison",
+          "non-filtering"
+        ],
+        "accepted": [
+          true,
+          true
+        ],
+        "compareFields": [
+          "less-equal",
+          null
+        ],
+        "allocated": 2
+      },
+      {
+        "mips": 3,
+        "order": [
+          "non-filtering",
+          "comparison"
+        ],
+        "accepted": [
+          true,
+          true
+        ],
+        "compareFields": [
+          null,
+          "less-equal"
+        ],
+        "allocated": 2
+      },
+      {
+        "mips": 3,
+        "order": [
+          "comparison",
+          "non-filtering"
+        ],
+        "accepted": [
+          true,
+          true
+        ],
+        "compareFields": [
+          "less-equal",
+          null
+        ],
+        "allocated": 2
+      }
+    ],
+    "anisotropy": [
+      {
+        "order": [
+          0,
+          16
+        ],
+        "native": [
+          1,
+          16
+        ]
+      },
+      {
+        "order": [
+          16,
+          0
+        ],
+        "native": [
+          16,
+          1
+        ]
+      }
+    ],
+    "deviceOwnership": {
+      "reusedAcrossDevices": false,
+      "acceptedByOwner": true
+    },
+    "normalizedReuse": true
+  }
+}

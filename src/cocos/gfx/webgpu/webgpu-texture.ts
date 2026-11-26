@@ -31,6 +31,7 @@ import {
     TextureHandle,
     FormatInfos,
     TextureUsageBit,
+    TextureType,
 } from '../base/define';
 import { Texture } from '../base/texture';
 import { WebGPUDeviceManager } from './define';
@@ -43,6 +44,12 @@ import {
     WGPUFormatToGFXFormat,
 } from './webgpu-commands';
 import { IWebGPUTexture } from './webgpu-gpu-objects';
+
+// This is a count including the base level, unlike Texture.getLevelCount().
+function maxMipLevels (type: TextureType, width: number, height: number, depth: number): number {
+    if (type === TextureType.TEX1D) return 1;
+    return 1 + Math.floor(Math.log2(Math.max(width, height, type === TextureType.TEX3D ? depth : 1)));
+}
 
 export class WebGPUTexture extends Texture {
     public getTextureHandle (): TextureHandle {
@@ -70,6 +77,8 @@ export class WebGPUTexture extends Texture {
     private _gpuTexture: IWebGPUTexture | null = null;
     private _texDescriptor: GPUTextureDescriptor | null = null;
     private _lodLevel = 0;
+    private _requestedMipLevels = 1;
+    private _fullMipChain = false;
     private _hasChange = false;
     get lodLevel (): number {
         return this._lodLevel;
@@ -98,6 +107,10 @@ export class WebGPUTexture extends Texture {
             this._info.levelCount,
         ) * this._info.layerCount;
         if (!this._isTextureView) {
+            this._requestedMipLevels = texInfo.levelCount;
+            // One level is also the default for a 1x1 texture; do not infer growth from it.
+            this._fullMipChain = !isSwapchainTexture && texInfo.samples === 1 && texInfo.levelCount > 1
+                && texInfo.levelCount === maxMipLevels(texInfo.type, texInfo.width, texInfo.height, texInfo.depth);
             this._gpuTexture = {
                 type: texInfo.type,
                 format: texInfo.format,
@@ -165,6 +178,11 @@ export class WebGPUTexture extends Texture {
         if (!this._gpuTexture || !this._gpuTexture.gpuTexture) {
             return null;
         }
+        // Explicit view ranges are never clamped or silently widened on owner resize.
+        const { baseLevel, levelCount } = this.viewInfo;
+        if (baseLevel + levelCount > this._gpuTexture.mipLevel) {
+            throw new RangeError('WebGPU texture view mip range exceeds the owning texture.');
+        }
         return this._gpuTexture.gpuTexture.createView({
             format: !attachment && FormatInfos[this.format].hasDepth ? undefined : this.gpuTexture.gpuFormat,
             aspect: !attachment && FormatInfos[this.format].hasDepth ? 'depth-only' : 'all',
@@ -189,14 +207,19 @@ export class WebGPUTexture extends Texture {
     }
 
     public resize (width: number, height: number): void {
+        if (this._isTextureView) {
+            throw new Error('WebGPU texture views cannot resize the owning resource.');
+        }
+        if (!Number.isSafeInteger(width) || !Number.isSafeInteger(height) || width < 1 || height < 1) {
+            throw new RangeError('WebGPU texture dimensions must be positive integers.');
+        }
         if (this._info.width === width && this._info.height === height) {
             return;
         }
-        if (this._info.levelCount === WebGPUTexture.getLevelCount(this._info.width, this._info.height)) {
-            this._info.levelCount = WebGPUTexture.getLevelCount(width, height);
-        } else if (this._info.levelCount > 1) {
-            this._info.levelCount = Math.min(this._info.levelCount, WebGPUTexture.getLevelCount(width, height));
-        }
+        const limit = maxMipLevels(this.type, width, height, this.depth);
+        this._info.levelCount = this._fullMipChain ? limit : Math.min(this._requestedMipLevels, limit);
+        this._viewInfo.levelCount = this._info.levelCount;
+        this._isPowerOf2 = IsPowerOf2(width) && IsPowerOf2(height);
         this._hasChange = true;
         const oldSize = this._size;
         this._info.width = width;
@@ -213,6 +236,8 @@ export class WebGPUTexture extends Texture {
             this._gpuTexture.width = width;
             this._gpuTexture.height = height;
             this._gpuTexture.size = this._size;
+            this._gpuTexture.mipLevel = this._info.levelCount;
+            this._gpuTexture.isPowerOf2 = this._isPowerOf2;
             if (!this._gpuTexture.isSwapchainTexture) {
                 const device = WebGPUDeviceManager.instance;
                 WebGPUCmdFuncResizeTexture(device, this._gpuTexture);
