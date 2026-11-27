@@ -10,7 +10,7 @@
  *
  * 引擎根目录为 src/（与上游相对布局一致）；feature 集见 docs/reference/web-features.md。
  */
-const { join, dirname, resolve, relative, isAbsolute } = require('path');
+const { join, dirname, resolve, relative, isAbsolute, sep } = require('path');
 const fs = require('fs');
 const { ensureDir, moveSync, existsSync } = require('fs-extra');
 const { buildEngine } = require('@cocos/ccbuild');
@@ -61,6 +61,20 @@ const args = process.argv.slice(2);
 const min = args.includes('--min');
 const formatIdx = args.indexOf('--format');
 const moduleFormat = formatIdx >= 0 ? args[formatIdx + 1] : 'esm';
+const deferGltf = args.includes('--defer-gltf-effect');
+if (deferGltf) {
+    // Resolve existing ancestors as well as the output itself, so a custom
+    // path through a symlink cannot overwrite the default release artifacts.
+    const realDestination = (directory) => {
+        if (fs.existsSync(directory)) return fs.realpathSync(directory);
+        return join(realDestination(dirname(directory)), relative(dirname(directory), directory));
+    };
+    const inside = relative(realDestination(join(ROOT, 'build')), realDestination(OUT));
+    if (spark || FEATURES.length || !process.env.AIR_OUT_DIR || moduleFormat !== 'esm'
+        || !inside || (!inside.startsWith('..' + sep) && inside !== '..' && !isAbsolute(inside))) {
+        throw Error('--defer-gltf-effect requires default features and a separate AIR_OUT_DIR for ESM.');
+    }
+}
 
 (async function exec() {
     if (spark) {
@@ -86,6 +100,7 @@ const moduleFormat = formatIdx >= 0 ? args[formatIdx + 1] : 'esm';
             outputDirectory: OUT,
             buildDirectory: process.env.AIR_BOX3D_ST_BUILD_DIR,
         });
+        const gltf = deferGltf ? require('./deferred-gltf-effect.cjs').deferredGltfEffect(ROOT) : null;
         const started = Date.now();
         const build = () =>
             withESMHelpers(
@@ -111,6 +126,7 @@ const moduleFormat = formatIdx >= 0 ? args[formatIdx + 1] : 'esm';
                         targets: { chrome: '66' },
                     }),
                 [
+                    ...(gltf ? [gltf.plugin] : []),
                     lineEndingsPlugin(),
                     require('./webgpu-assets.cjs').webgpuAssetsPlugin(ROOT),
                     require('./box2d3.cjs').box2dAssetsPlugin(),
@@ -121,6 +137,8 @@ const moduleFormat = formatIdx >= 0 ? args[formatIdx + 1] : 'esm';
         if (!min && moduleFormat === 'esm' && !VARIANT) await withIncrementalCache(ROOT, build);
         else await build();
         console.log(`[build] ccbuild done in ${((Date.now() - started) / 1000).toFixed(1)}s`);
+
+        gltf?.publish(OUT);
 
         // 归一化产物名并移动到 build/ 根目录：
         //   ESM  dev: build/cocosair.module.js      min: build/cocosair.module.min.js

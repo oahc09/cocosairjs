@@ -4,7 +4,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const http = require('node:http');
 const { gzipSync } = require('node:zlib');
-const { webkit } = require('playwright');
+const { chromium, webkit } = require('playwright');
 const { PNG } = require('pngjs');
 const { digest, writeNew } = require('./evidence.cjs');
 const { stripRuntimeSourceMap } = require('../../build/runtime-layout.cjs');
@@ -13,7 +13,6 @@ const html = `<!DOCTYPE html><html><head><link rel="icon" href="data:,">
 <style>html,body{margin:0}canvas{display:block;width:480px;height:270px}</style></head>
 <body><div id="GameDiv"><div id="Cocos3dGameContainer"><canvas id="GameCanvas" width="480" height="270"></canvas></div></div>
 <script type="module" src="/page.mjs"></script></body></html>`;
-const effectPath = '/optional-gltf-effect.json';
 
 function countVisible(data) {
     const png = PNG.sync.read(data);
@@ -26,14 +25,39 @@ function countVisible(data) {
 }
 
 async function main([fullPath, probeDir, executable, out, ...extra]) {
-    if (!fullPath || !probeDir || !executable || !out || extra.length)
-        throw new Error('Usage: node lazy-gltf-browser.cjs <full-sdk> <probe-dir> <WPE-executable> <new-out>');
+    const compiled = extra.includes('--compiled-profile');
+    const chrome = extra.includes('--chromium');
+    if (
+        !fullPath ||
+        !probeDir ||
+        !executable ||
+        !out ||
+        extra.some((flag) => !['--compiled-profile', '--chromium'].includes(flag))
+    )
+        throw new Error(
+            'Usage: node lazy-gltf-browser.cjs <full-sdk> <probe-dir> <executable> <new-out> [--compiled-profile] [--chromium]',
+        );
     const full = Buffer.from(stripRuntimeSourceMap(fs.readFileSync(fullPath, 'utf8')));
-    const reduced = fs.readFileSync(path.join(probeDir, 'runtime.mjs'));
-    const sidecar = fs.readFileSync(path.join(probeDir, effectPath.slice(1)));
-    const declared = JSON.parse(fs.readFileSync(path.join(probeDir, 'receipt.json'), 'utf8'));
-    assert.equal(digest(reduced), declared.runtime.sha256);
-    assert.equal(digest(sidecar), declared.payload.sha256);
+    const variantPath = path.join(probeDir, compiled ? path.basename(fullPath) : 'runtime.mjs');
+    const reduced = Buffer.from(stripRuntimeSourceMap(fs.readFileSync(variantPath, 'utf8')));
+    const sidecars = compiled
+        ? fs
+              .readdirSync(probeDir)
+              .filter((name) => /^air-gltf-effect-[0-9a-f]{64}\.json$/.test(name) && reduced.includes(name))
+        : ['optional-gltf-effect.json'];
+    assert.equal(sidecars.length, 1);
+    const effectPath = '/' + sidecars[0];
+    const sidecar = fs.readFileSync(path.join(probeDir, sidecars[0]));
+    if (compiled) {
+        const { verifySourceBinding } = require('../../build/source-binding.cjs');
+        const root = path.resolve(__dirname, '../../..');
+        for (const file of [fullPath, variantPath]) assert.ok(verifySourceBinding(root, file).matches);
+        assert.equal(sidecars[0], 'air-gltf-effect-' + digest(sidecar) + '.json');
+    } else {
+        const declared = JSON.parse(fs.readFileSync(path.join(probeDir, 'receipt.json'), 'utf8'));
+        assert.equal(digest(reduced), declared.runtime.sha256);
+        assert.equal(digest(sidecar), declared.payload.sha256);
+    }
     const pageJs = fs.readFileSync(path.join(__dirname, 'lazy-gltf-page.mjs'));
     fs.mkdirSync(out);
     const results = [];
@@ -86,6 +110,7 @@ async function main([fullPath, probeDir, executable, out, ...extra]) {
         const record = {
             id,
             errors: [],
+            expectedIntegrityDiagnostics: [],
             fullRuntimeSha256: digest(full),
             runtimeSha256: digest(body),
             assetsGzipBytes: {
@@ -98,13 +123,26 @@ async function main([fullPath, probeDir, executable, out, ...extra]) {
                 server.once('error', reject);
                 server.listen(0, '127.0.0.1', resolve);
             });
-            browser = await webkit.launch({ executablePath: path.resolve(executable) });
+            browser = await (chrome ? chromium : webkit).launch({
+                executablePath: path.resolve(executable),
+                ...(chrome ? { chromiumSandbox: true } : {}),
+            });
             record.browser = browser.version();
             const page = await browser.newPage({ viewport: { width: 480, height: 270 }, deviceScaleFactor: 1 });
             page.setDefaultTimeout(15000);
             page.on('pageerror', (error) => record.errors.push(error.message));
             page.on('console', (msg) => {
-                if (msg.type() === 'error') record.errors.push(msg.text());
+                if (msg.type() !== 'error') return;
+                const text = msg.text();
+                const corruptUrl = `http://127.0.0.1:${server.address().port}${effectPath}`;
+                const expected =
+                    compiled &&
+                    corrupt &&
+                    effectRequests === 1 &&
+                    text.includes(corruptUrl) &&
+                    (/Failed to find a valid digest in the 'integrity' attribute/.test(text) ||
+                        /SRI's integrity checks failed/.test(text));
+                (expected ? record.expectedIntegrityDiagnostics : record.errors).push(text);
             });
             page.on('response', (res) => {
                 if (res.status() >= 400) record.errors.push(`HTTP ${res.status()}`);
@@ -117,6 +155,13 @@ async function main([fullPath, probeDir, executable, out, ...extra]) {
             );
             assert.equal(record.before.template, !lazy);
             assert.equal(effectRequests, 0);
+            if (!cold) {
+                const image = await page.screenshot({ type: 'png' });
+                assert.ok(countVisible(image) > 500, 'no initial cube pixels confirmed');
+                record.initialImageSha256 = digest(image);
+                assert.equal(effectRequests, 0);
+            }
+
             await page.evaluate((pair) => window.probe.begin(pair), pair);
             if (pair) {
                 await page.waitForFunction(() => window.probe.snapshot().states.texturePhases >= 2);
@@ -130,7 +175,10 @@ async function main([fullPath, probeDir, executable, out, ...extra]) {
             }
             if (corrupt) {
                 record.rejectedPayload = await page.evaluate(() => window.probe.finish(false));
-                assert.match(record.rejectedPayload.error, /Optional glTF effect identity mismatch/);
+                assert.match(
+                    record.rejectedPayload.error,
+                    compiled ? /failed to fetch|load failed|networkerror/i : /Optional glTF effect identity mismatch/,
+                );
                 assert.equal(record.rejectedPayload.registrations, 0);
                 await page.evaluate(() => window.probe.begin(false));
             }
@@ -140,7 +188,14 @@ async function main([fullPath, probeDir, executable, out, ...extra]) {
             assert.equal(record.after.physicalEffect, physical);
             assert.equal(effectRequests, corrupt ? 2 : Number(lazy));
             const arrivals = record.after.resources.filter(({ path }) => path === effectPath);
-            assert.equal(arrivals.length, effectRequests);
+            if (compiled && corrupt) {
+                assert.equal(
+                    arrivals.filter((arrival) => arrival.encoded === record.assetsGzipBytes.optionalEffect).length,
+                    1,
+                );
+            } else {
+                assert.equal(arrivals.length, effectRequests);
+            }
             if (lazy) {
                 const arrival = arrivals.at(-1);
                 assert.equal(arrival.encoded, record.assetsGzipBytes.optionalEffect);
@@ -180,6 +235,8 @@ async function main([fullPath, probeDir, executable, out, ...extra]) {
     }
     const [a, b, c, d, e, f] = results;
     const visualEqual = Boolean(
+        a.initialImageSha256 &&
+        a.initialImageSha256 === b.initialImageSha256 &&
         a.imageSha256 &&
         a.imageSha256 === b.imageSha256 &&
         a.imageSha256 === e.imageSha256 &&
@@ -189,7 +246,7 @@ async function main([fullPath, probeDir, executable, out, ...extra]) {
     );
     const passed = visualEqual && results.every((record) => !record.errors.length);
     writeNew(path.join(out, 'summary.json'), {
-        scope: 'loopback software WebKit; direct SDK artifact; not npm or device certification',
+        scope: `loopback ${chrome ? 'Chromium' : 'WebKit'}; ${compiled ? 'compiler-built profile' : 'post-build diagnostic'}; not npm or device certification`,
         passed,
         visualEqual,
         cases: results.map(({ id, errors, foregroundPixels }) => ({ id, errors, foregroundPixels })),

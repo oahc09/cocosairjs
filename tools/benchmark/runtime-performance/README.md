@@ -229,3 +229,21 @@ brackets were about 160–163 ms wide, so they cannot resolve smaller difference
 the actual AIR S01 and S02 scene setup and bound development SDK rejected S01 and recognized S02. The S02 trace
 had no calibrated negative snapshot before the first cube snapshot and correctly returned `left-censored`.
 No physical presentation timing, package ranking, or instrumented startup speed claim follows from these checks.
+
+### Compiler-built profile correctness
+
+Build the default and optional ESMs from the same source revision into two fresh
+output directories, then use the direct SDK browser fixture:
+
+```sh
+AIR_OUT_DIR=/tmp/full-air npm run build
+AIR_OUT_DIR=/tmp/lazy-air npm run build -- --defer-gltf-effect
+node tools/benchmark/runtime-performance/lazy-gltf-browser.cjs \
+  /tmp/full-air/cocosair.module.js /tmp/lazy-air <browser-executable> /tmp/lazy-proof \
+  --compiled-profile --chromium
+```
+
+Omit `--chromium` for a Playwright-compatible WebKit binary. This compares the
+same visual content before and after glTF, checks the cold-model request,
+cancellation and corrupted sidecar retry, and measures compressed artifact
+bytes. It does not establish hardware startup speed or a Three.js ranking.

@@ -19,6 +19,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
 */
+import { prepareBuiltinGltfEffect } from '../../builtin/register';
 import { assetManager } from '../../../cocos/asset/asset-manager';
 import factory from '../../../cocos/asset/asset-manager/factory';
 import { files, parsed } from '../../../cocos/asset/asset-manager/shared';
@@ -231,6 +232,13 @@ export class GLTFLoader {
                 // replaced their bufferView payload during loadBuffers().
                 await parser.resolvePrimitives();
                 parser.throwIfAborted();
+                if (json.meshes?.some((mesh) => mesh.primitives.length > 0)) {
+                    const preparation = prepareBuiltinGltfEffect();
+                    if (preparation) {
+                        await parser.wait(() => preparation);
+                        parser.throwIfAborted();
+                    }
+                }
                 const materials = new Map<string, ReturnType<typeof createGLTFMaterial>>();
                 for (const [i, mesh] of (json.meshes || []).entries()) {
                     asset.owned.meshes.push(createGLTFMesh(parser, i));
