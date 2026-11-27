@@ -129,3 +129,24 @@ error was 0.00222. The unchanged micro-fixture budget is 0.035. Capture receipt
 SHA-256: `d792eb67e9cf68ee2fbf9ddc21442aab6b3f0507981f9b59add690e1bdba5c13`.
 The capture intentionally has no temporal filter; it validates the scene and
 measurement route, not an implementation of TAA or full E12 acceptance.
+
+### E12 native TAA graph negative control
+
+The 16-frame supersampled capture above does not exercise the native custom-pipeline TAA effect. Run the separate
+source-executed graph probe after installing the repository's TypeScript dependency:
+
+```sh
+node tools/verify/rendering-iteration/taa-graph-probe.cjs
+```
+
+This loads the checkout's actual `PostProcessBuilder` and `TAAPass` TypeScript and exercises their render methods for
+two interleaved cameras over three frames. Math, non-TAA passes, and draw recording are stubs; in particular, no pixels
+are drawn. The probe checks each camera's first-frame seed, the last history slot written by that camera, its previous
+projection, the jitter actually applied versus the material value, and whether queued bindings survive scheduling the
+second camera. Results include both source hashes and per-camera observations.
+
+The original `31d3daf3` branch is a deliberate negative control: six camera invocations complete, with **5** wrong
+history bindings, **5** wrong previous matrices at enqueue, **6** same-frame jitter mismatches, and **3** overwritten
+bindings at simulated recording time. Exit status 1 means one or more invariants failed; the baseline is not a passing
+test. Actual browser custom-pipeline draw, isolated camera cut, target replacement, and device validation are separate
+gates, not implied by the CPU result.
