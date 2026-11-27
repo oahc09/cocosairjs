@@ -23,6 +23,8 @@ import { inheritBasis, poseBasis } from './affine';
 import type { Bone2dInheritance, Matrix2D, Shears } from './affine';
 import { aimBone2d, aimBone2dPair } from './ik';
 import type { Bone2dAimOptions } from './ik';
+import { transformApplied, transformProperties, transformReadLocal, transformReadWorld, transformWriteLocal, transformWriteWorld } from './transform';
+import type { AppliedPose, Bone2dTransform, TransformProperty } from './transform';
 
 /** Strict reader for the supported subset of Bone-2D Save Project v1. No editor or Spine dependency. */
 type Obj = Record<string, unknown>;
@@ -101,6 +103,7 @@ interface Slot {
     color: RGBA;
 }
 interface AimConstraint extends Bone2dAimOptions {
+    kind: 'ik';
     id: string;
     bone: string;
     child: string | null;
@@ -142,6 +145,7 @@ interface Clip {
     sequences: ReadonlyMap<Visual, Key<SequenceKey>[]>;
     markers: Key<Bone2dMarker>[];
     ik: ReadonlyMap<string, AimKey[]>;
+    transform: ReadonlyMap<string, ValueKey[]>;
 }
 export interface Bone2dMarker {
     readonly id: string;
@@ -163,7 +167,7 @@ export interface Bone2dProject {
     readonly folders: ReadonlyMap<string, Folder>;
     readonly bones: readonly Bone[];
     readonly affineSprites: boolean;
-    readonly constraints: ReadonlyMap<string, AimConstraint>;
+    readonly constraints: ReadonlyMap<string, AimConstraint | Bone2dTransform>;
     readonly slots: readonly Slot[];
     readonly clips: ReadonlyMap<string, Clip>;
     readonly images: ReadonlyMap<string, Bone2dImage>;
@@ -178,6 +182,7 @@ export interface Bone2dSample {
     readonly shears: ReadonlyMap<string, Shears>;
     readonly activeBones: ReadonlySet<string>;
     readonly ik: ReadonlyMap<string, Bone2dAimOptions>;
+    readonly transforms: ReadonlyMap<string, readonly number[]>;
     readonly slots: ReadonlyMap<string, Bone2dSlotPose>;
     readonly order: readonly string[];
     readonly sequenceFrames: ReadonlyMap<Visual, number>;
@@ -358,8 +363,39 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
             id = parent.parent;
         }
     }
-    const constraints = index(list(sk.constraints ?? [], 128, 'constraints').map((raw): AimConstraint => {
+    let mappingWrites = 0;
+    const constraints = index(list(sk.constraints ?? [], 128, 'constraints').map((raw): AimConstraint | Bone2dTransform => {
         const o = obj(raw, 'constraint');
+        if (o.type === 'transform') {
+            const id = str(o.id, 'transform id'), source = str(o.source, 'transform source');
+            const targets = list(o.bones, bones.length, 'transform bones').map((v) => str(v, 'transform bone'));
+            if (!byBone.has(source) || !targets.length || targets.some((b) => !byBone.has(b)) ||
+                new Set(targets).size !== targets.length) fail('invalid transform bone reference');
+            const { localSource, localTarget, additive, clamp, skinRequired } = o;
+            if (typeof localSource !== 'boolean' || typeof localTarget !== 'boolean' || typeof additive !== 'boolean' ||
+                typeof clamp !== 'boolean' || typeof skinRequired !== 'boolean') fail('invalid transform flags');
+            const prop = (v: unknown): TransformProperty => {
+                if (!transformProperties.includes(v as TransformProperty)) fail('invalid transform property');
+                return v as TransformProperty;
+            };
+            const offsets = obj(o.offsets, 'transform offsets'), mix = obj(o.mix, 'transform mix');
+            const mappings = list(o.properties, 64, 'transform mappings').map((item) => {
+                const from = obj(item, 'transform from');
+                return { prop: prop(from.prop), offset: num(from.offset, 'transform from offset'),
+                    to: list(from.to, 64, 'transform targets').map((entry) => {
+                        const to = obj(entry, 'transform to');
+                        return { prop: prop(to.prop), offset: num(to.offset, 'transform to offset'),
+                            max: num(to.max, 'transform max'), scale: num(to.scale, 'transform multiplier') };
+                    }),
+                };
+            });
+            mappingWrites += targets.length * mappings.reduce((sum, map) => sum + map.to.length, 0);
+            if (mappingWrites > 8192) fail('transform mapping budget exceeded', true);
+            return { kind: 'transform', id, source, bones: targets, localSource, localTarget, additive, clamp, skinRequired, mappings,
+                offsets: transformProperties.map((p) => num(offsets[p === 'rotate' ? 'rotation' : p], 'transform source offset')),
+                mix: transformProperties.map((p) => num(mix[p], 'transform mix', 0, 1)),
+            };
+        }
         if (o.type !== 'ik') fail('unsupported constraint type', true);
         const [idOfBone, idOfChild] = list(o.bones, 2, 'IK bones');
         const child = idOfChild === undefined ? null : str(idOfChild, 'IK child bone');
@@ -370,7 +406,7 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
         if (scaleY !== 'none' && scaleY !== 'uniform' && scaleY !== 'volume') fail('invalid IK scaleY mode');
         if (typeof o.bendPositive !== 'boolean' || typeof o.compress !== 'boolean' || typeof o.stretch !== 'boolean' ||
             typeof o.skinRequired !== 'boolean') fail('invalid IK flags');
-        return { id, bone, child, target, mix: num(o.mix, 'IK mix', 0, 1), scaleY, compress: o.compress, stretch: o.stretch,
+        return { kind: 'ik', id, bone, child, target, mix: num(o.mix, 'IK mix', 0, 1), scaleY, compress: o.compress, stretch: o.stretch,
             skinRequired: o.skinRequired, softness: num(o.softness, 'IK softness', 0), bendPositive: o.bendPositive };
 
     }), 'duplicate constraint id');
@@ -509,10 +545,17 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
             const id = str(o.id, 'animation id'),
                 name = str(o.name, 'animation name');
             const duration = num(o.duration, 'animation duration', 0, 3600);
-            for (const k of ['transform', 'slider', 'path', 'physics']) none(o[k], k);
+            for (const k of ['slider', 'path', 'physics']) none(o[k], k);
+            const transform = new Map<string, ValueKey[]>();
+            for (const [id, raw] of entries(o.transform, 'transform timelines')) {
+                if (constraints.get(id)?.kind !== 'transform') fail(`unknown transform timeline: ${id}`);
+                const track = values(raw, 6, duration, 'transform key');
+                for (const key of track) key.value.forEach((mix) => num(mix, 'transform key mix', 0, 1));
+                transform.set(id, track);
+            }
             const ik = new Map<string, AimKey[]>();
             for (const [id, raw] of entries(o.ik, 'IK timelines')) {
-                if (!constraints.has(id)) fail(`unknown IK timeline: ${id}`);
+                if (constraints.get(id)?.kind !== 'ik') fail(`unknown IK timeline: ${id}`);
                 const numbers = values(raw, 2, duration, 'IK key');
                 const flags = keys(raw, duration, 'IK key', (k) => {
                     if (typeof k.bendPositive !== 'boolean' || typeof k.compress !== 'boolean' || typeof k.stretch !== 'boolean') {
@@ -622,7 +665,7 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
                     }
                 }
             }
-            return { id, name, duration, order, folderOrder, markers, bones: boneTracks, slots: slotTracks, deform, sequences, ik };
+            return { id, name, duration, order, folderOrder, markers, bones: boneTracks, slots: slotTracks, deform, sequences, ik, transform };
         }),
         'duplicate animation id',
     );
@@ -861,9 +904,14 @@ export function sampleBone2dProject(
         const frame = sequenceFrame(key.value, time - key.time, sequence.frames.length);
         sequenceFrames.set(visual, frame === -1 ? sequence.setup : frame);
     }
-    const ik = new Map<string, Bone2dAimOptions>();
+    const ik = new Map<string, Bone2dAimOptions>(), transforms = new Map<string, readonly number[]>();
     for (const [id, c] of project.constraints) {
-        if (!activeBones.has(c.target) || !activeBones.has(c.bone) || (c.skinRequired && !skinConstraints.has(id))) continue;
+        if (c.skinRequired && !skinConstraints.has(id)) continue;
+        if (c.kind === 'transform') {
+            if (activeBones.has(c.source)) transforms.set(id, sampled(clip?.transform.get(id), time) ?? c.mix);
+            continue;
+        }
+        if (!activeBones.has(c.target) || !activeBones.has(c.bone)) continue;
         const track = clip?.ik.get(id);
         const i = track ? last(track, time) : -1;
         if (i < 0) ik.set(id, c);
@@ -873,13 +921,14 @@ export function sampleBone2dProject(
             ik.set(id, { mix, softness, scaleY: c.scaleY, compress, stretch, bendPositive });
         }
     }
-    return { bones, shears, activeBones, ik, slots, meshDeltas, shapeDeltas, order, sequenceFrames };
+    return { bones, shears, activeBones, ik, transforms, slots, meshDeltas, shapeDeltas, order, sequenceFrames };
 }
 
 /** Resolve ordered parent/local 2D affine products without decomposing shear. */
 export function bone2dWorldMatrices(project: Bone2dProject, sample: Bone2dSample): ReadonlyMap<string, Matrix2D> {
     const out = new Map<string, Matrix2D>();
-    const solved = new Map<string, Bone2dPose>();
+    const solved = new Map<string, AppliedPose>();
+    const explicitWorld = new Set<string>();
     const byId = new Map(project.bones.map((b) => [b.id, b] as const));
     const compute = (id: string): Matrix2D => {
         const cached = out.get(id);
@@ -890,8 +939,9 @@ export function bone2dWorldMatrices(project: Bone2dProject, sample: Bone2dSample
             return identity;
         }
         const bone = byId.get(id)!;
-        const [x, y, degrees, sx, sy] = solved.get(id) ?? sample.bones.get(id)!;
-        const shear = sample.shears.get(id)!;
+        const local = solved.get(id);
+        const [x, y, degrees, sx, sy] = local?.pose ?? sample.bones.get(id)!;
+        const shear = local?.shear ?? sample.shears.get(id)!;
         let m: Matrix2D;
         if (bone.parent === null) {
             m = [...poseBasis(degrees, sx, sy, shear), x, y];
@@ -900,10 +950,11 @@ export function bone2dWorldMatrices(project: Bone2dProject, sample: Bone2dSample
             const [pa, pb, pc, pd, px, py] = parent;
             m = [...inheritBasis(parent, bone.inherit, degrees, sx, sy, shear), pa*x+pb*y+px, pc*x+pd*y+py];
         }
+        if (!m.every(Number.isFinite)) fail(`non-finite solved bone: ${id}`);
         out.set(id, m);
         return m;
     };
-    if (sample.ik.size) {
+    if (sample.ik.size || sample.transforms.size) {
         const children = new Map<string, string[]>();
         for (const { id, parent } of project.bones) {
             if (parent === null) continue;
@@ -911,11 +962,64 @@ export function bone2dWorldMatrices(project: Bone2dProject, sample: Bone2dSample
             if (siblings) siblings.push(id);
             else children.set(parent, [id]);
         }
+        const readLocal = (id: string): AppliedPose => {
+            const bone = byId.get(id)!;
+            if (explicitWorld.delete(id)) {
+                solved.set(id, transformApplied(out.get(id)!, bone.parent === null ? null : compute(bone.parent), bone.inherit));
+            }
+            return solved.get(id) ?? { pose: sample.bones.get(id)!, shear: sample.shears.get(id)! };
+        };
         const invalidate = (id: string): void => {
-            if (!out.delete(id)) return;
+            if (!out.has(id)) return;
+            // Convert descendants against the old parent before dropping
+            // either matrix; subsequent reads inherit the updated parent.
             for (const child of children.get(id) ?? []) invalidate(child);
+            if (explicitWorld.has(id)) readLocal(id);
+            out.delete(id);
+        };
+        const writeLocal = (id: string, pose: AppliedPose): void => {
+            invalidate(id);
+            solved.set(id, pose);
         };
         for (const [id, c] of project.constraints) {
+            if (c.kind === 'transform') {
+                const mix = sample.transforms.get(id);
+                if (!mix?.some((amount) => amount !== 0)) continue;
+                let worldSource = c.localSource ? null : compute(c.source);
+                let localSource = c.localSource ? readLocal(c.source) : null;
+                const targets = c.bones.filter((bone) => sample.activeBones.has(bone));
+                const previous = c.localTarget ? [] : targets.map(compute);
+                for (let i = 0; i < targets.length; i++) {
+                    const targetId = targets[i];
+                    let world = previous[i];
+                    let local = c.localTarget ? readLocal(targetId) : null;
+                    for (const from of c.mappings) {
+                        const value = (localSource !== null ? transformReadLocal(from.prop, localSource, c.offsets) :
+                            transformReadWorld(from.prop, worldSource!, c.offsets)) - from.offset;
+                        for (const to of from.to) {
+                            const weight = mix[transformProperties.indexOf(to.prop)];
+                            if (weight === 0) continue;
+                            const wanted = to.offset + value * to.scale;
+                            const mapped = c.clamp ? Math.min(Math.max(to.offset, to.max), Math.max(Math.min(to.offset, to.max), wanted)) : wanted;
+                            if (local !== null) {
+                                local = transformWriteLocal(to.prop, local, mapped, weight, c.additive);
+                                if (targetId === c.source && localSource !== null) localSource = local;
+                            } else {
+                                world = transformWriteWorld(to.prop, world, mapped, weight, c.additive);
+                                if (targetId === c.source && worldSource !== null) worldSource = world;
+                            }
+                        }
+                    }
+                    if (local !== null) writeLocal(targetId, local);
+                    else {
+                        for (const child of children.get(targetId) ?? []) invalidate(child);
+                        if (!world.every(Number.isFinite)) fail(`non-finite world transform: ${targetId}`);
+                        out.set(targetId, world);
+                        explicitWorld.add(targetId);
+                    }
+                }
+                continue;
+            }
             const options = sample.ik.get(id);
             if (!options || options.mix === 0) continue;
             const bone = byId.get(c.bone)!;
@@ -925,24 +1029,22 @@ export function bone2dWorldMatrices(project: Bone2dProject, sample: Bone2dSample
             // downstream of an earlier constraint must see its new matrix.
             const target = compute(c.target);
             const current = compute(c.bone);
-            const local = solved.get(c.bone) ?? sample.bones.get(c.bone)!;
-            const shear = sample.shears.get(c.bone)!;
+            const { pose: local, shear } = readLocal(c.bone);
             const frame = compute(bone.parent);
             if (c.child === null) {
-                solved.set(c.bone, aimBone2d(local, shear, bone.inherit, bone.length, frame, current, target, options));
+                writeLocal(c.bone, { pose: aimBone2d(local, shear, bone.inherit, bone.length, frame, current, target, options), shear });
             } else {
                 const child = byId.get(c.child)!;
                 if (bone.inherit !== 'normal' || child.inherit !== 'normal') continue;
                 // Even an inactive child contributes its setup offset to the
                 // upper bone's solve; inactive descendants still do not render.
+                const lowerLocal = readLocal(c.child);
                 const [upper, lower] = aimBone2dPair(
-                    local, solved.get(c.child) ?? sample.bones.get(c.child)!, shear, sample.shears.get(c.child)!,
-                    bone.length, child.length, frame, current, target, options,
+                    local, lowerLocal.pose, shear, lowerLocal.shear, bone.length, child.length, frame, current, target, options,
                 );
-                solved.set(c.bone, upper);
-                solved.set(c.child, lower);
+                writeLocal(c.bone, { pose: upper, shear });
+                writeLocal(c.child, { pose: lower, shear: lowerLocal.shear });
             }
-            invalidate(c.bone);
         }
     }
     for (const bone of project.bones) compute(bone.id);

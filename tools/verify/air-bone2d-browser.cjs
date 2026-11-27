@@ -20,6 +20,8 @@ const files = [
     'src/air/bone2d/ik.ts',
     'test/fixtures/bone2d/ordered-ik.bone2d',
     'test/fixtures/bone2d/two-bone-ik.bone2d',
+    'test/fixtures/bone2d/transform.bone2d',
+    'src/air/bone2d/transform.ts',
 ];
 async function main() {
     const [engine, output, ...extra] = process.argv.slice(2);
@@ -54,6 +56,10 @@ async function main() {
         if (req.url === '/two-bone-ik.bone2d') {
             res.setHeader('Content-Type', 'application/json');
             return res.end(fs.readFileSync(path.join(root, 'test/fixtures/bone2d/two-bone-ik.bone2d')));
+        }
+        if (req.url === '/transform.bone2d') {
+            res.setHeader('Content-Type', 'application/json');
+            return res.end(fs.readFileSync(path.join(root, 'test/fixtures/bone2d/transform.bone2d')));
         }
         if (req.url === '/') {
             res.setHeader('Content-Type', 'text/html');
@@ -839,6 +845,21 @@ async function main() {
                     spriteAngle: (Math.atan2(sprite.m01, sprite.m00) * 180) / Math.PI,
                 };
             };
+            const transformMount = async () => {
+                const input = await fetch('/transform.bone2d').then((r) => r.text());
+                ikPlayer = await air.createAirBone2dPlayer(parent, input);
+                ikPlayer.play('idle');
+            };
+            const mappedPose = async (time) => {
+                ikPlayer.seek(time);
+                await clock.step(0);
+                return ['local', 'world'].map((id) => {
+                    const point = ikPlayer.getAttachmentGeometry(id + '-point');
+                    const sprite = leaves(ikPlayer.node.getChildByName(id + '-sprite'))[0].node.worldMatrix;
+                    const root = ikPlayer.node.worldMatrix;
+                    return [point.x, point.y, sprite.m12 - root.m12, sprite.m13 - root.m13];
+                });
+            };
             const ikClose = async () => {
                 ikPlayer.dispose();
                 await clock.step(0);
@@ -847,6 +868,8 @@ async function main() {
                 ikMount,
                 ikState,
                 ikPairMount,
+                transformMount,
+                mappedPose,
                 ikClose,
                 frame,
                 requiredMount,
@@ -1393,6 +1416,24 @@ async function main() {
         assert.notEqual(pairs.rest.screenshot, pairs.stretch.screenshot);
         assert.notEqual(pairs.positive.screenshot, pairs.negative.screenshot);
         report.twoBoneIk = pairs;
+        await page.evaluate(() => window.bone2dTest.transformMount());
+        const mappedStart = await page.evaluate(() => window.bone2dTest.mappedPose(0));
+        const mappedStartHash = sha(await page.screenshot());
+        const mappedEnd = await page.evaluate(() => window.bone2dTest.mappedPose(1));
+        const mappedEndHash = sha(await page.screenshot());
+        assert.deepEqual(mappedStart, [
+            [10, 14, 10, 14],
+            [-20, -14, -20, -14],
+        ]);
+        assert.deepEqual(mappedEnd, [
+            [9, 14, 9, 14],
+            [9, -14, 9, -14],
+        ]);
+        assert.notEqual(mappedEndHash, mappedStartHash);
+        assert.deepEqual(await page.evaluate(() => window.bone2dTest.mappedPose(0)), mappedStart);
+        assert.equal(sha(await page.screenshot()), mappedStartHash);
+        report.transform = { mappedStart, mappedEnd, mappedStartHash, mappedEndHash };
+        await page.evaluate(() => window.bone2dTest.ikClose());
         await page.evaluate(() => window.bone2dTest.close());
         assert.deepEqual(report.pageErrors, []);
         report.status = 'PASS';

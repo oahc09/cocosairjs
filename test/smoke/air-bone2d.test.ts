@@ -663,3 +663,115 @@ test('mixed one- and two-bone constraints respect authored order and keep inacti
     expect(sample.slots.get('tip-slot')!.attachment).toBeNull();
     xyzClose(anglesForPair(bone2dWorldMatrices(parsed, sample)).slice(0, 1), [-36.869897]);
 });
+
+const transformText = readFileSync(resolve(__dirname, '../fixtures/bone2d/transform.bone2d'), 'utf8');
+const transformFixture = (): any => JSON.parse(transformText);
+test('transform maps wrapped world rotation into translation with descending clamp endpoints', () => {
+    const file = transformFixture();
+    const atStart = ikWorld(file, [], 0),
+        atEnd = ikWorld(file, [], 1);
+    xyzClose(atStart.get('local')!.slice(4), [10, 14]);
+    xyzClose(atStart.get('world')!.slice(4), [-20, -14]);
+    xyzClose(atEnd.get('local')!.slice(4), [9, 14]);
+    xyzClose(atEnd.get('world')!.slice(4), [9, -14]);
+});
+
+test('world-source mappings transform both position offsets before taking a channel, unlike local reads', () => {
+    const file = transformFixture(),
+        rig = file.project.skeleton;
+    Object.assign(rig.bones[1], { x: 10, y: 20, rotation: 90 });
+    for (const c of rig.constraints) {
+        Object.assign(c.offsets, { x: 2, y: 3 });
+        c.clamp = false;
+        c.mix.y = 1;
+        c.properties = ['x', 'y'].map((prop) => ({ prop, offset: 0, to: [{ prop, offset: 0, max: 0, scale: 1 }] }));
+    }
+    const world = ikWorld(file, [], 0);
+    xyzClose(world.get('local')!.slice(4), [12, 23]);
+    xyzClose(world.get('world')!.slice(4), [7, 22]);
+});
+
+test('world transform edits are converted back to the current local pose before ordered IK', () => {
+    const file = transformFixture(),
+        rig = file.project.skeleton;
+    const [c] = rig.constraints;
+    Object.assign(c, {
+        localTarget: false,
+        clamp: false,
+        properties: [{ prop: 'x', offset: 0, to: [{ prop: 'x', offset: 8, max: 0, scale: 0 }] }],
+    });
+    rig.bones[0].scaleX = 2;
+    rig.bones[1].x = 2;
+    rig.bones[1].y = 22;
+    rig.constraints = [
+        c,
+        {
+            id: 'aim',
+            type: 'ik',
+            bones: ['local'],
+            target: 'source',
+            mix: 1,
+            softness: 0,
+            bendPositive: true,
+            compress: false,
+            stretch: false,
+            scaleY: 'none',
+            skinRequired: false,
+        },
+    ];
+    const matrix = ikWorld(file, [], 0).get('local')!;
+    xyzClose(matrix.slice(4), [8, 14]);
+    expect(matrix[0] / matrix[2]).toBeCloseTo(-0.5);
+});
+
+test('transform skin activation and mix tracks are sampled without retaining a previous world override', () => {
+    const file = transformFixture(),
+        rig = file.project.skeleton,
+        c = rig.constraints[1];
+    c.skinRequired = true;
+    rig.skins.push({ id: 'map', name: 'Map', bones: [], constraints: [c.id], attachments: {} });
+    rig.animations[0].transform = {
+        [c.id]: [
+            { time: 0, value: [0, 0, 0, 0, 0, 0] },
+            { time: 1, value: [0, 1, 0, 0, 0, 0] },
+        ],
+    };
+    xyzClose(ikWorld(file, [], 0.25).get('world')!.slice(4), [0, -14]);
+    xyzClose(ikWorld(file, ['map'], 0.25).get('world')!.slice(4), [-5, -14]);
+    xyzClose(ikWorld(file, [], 0.25).get('world')!.slice(4), [0, -14]);
+    c.properties[0].to[0].prop = 'bad';
+    expect(() => parse(file)).toThrow(/FORMAT.*transform property/);
+});
+
+test('an edited world child retains its applied offset when a later constraint moves its parent', () => {
+    const file = transformFixture(),
+        rig = file.project.skeleton;
+    rig.bones[3].parent = 'local';
+    rig.bones[2].x = 4;
+    const [a, b] = rig.constraints;
+    const placeX = (c: any, targetX: number, localTarget: boolean): void => {
+        Object.assign(c, {
+            localTarget,
+            clamp: false,
+            properties: [{ prop: 'x', offset: 0, to: [{ prop: 'x', offset: targetX, max: 0, scale: 0 }] }],
+        });
+    };
+    placeX(a, 7, true);
+    placeX(b, 20, false);
+    rig.constraints.reverse();
+    const matrices = ikWorld(file, [], 0);
+    xyzClose(matrices.get('local')!.slice(4), [7, 14]);
+    xyzClose(matrices.get('world')!.slice(4), [23, 0]);
+    rig.constraints.reverse();
+    xyzClose(ikWorld(file, [], 0).get('world')!.slice(4), [20, 0]);
+});
+
+test('transform parsing bounds the number of mapping writes per sample', () => {
+    const file = transformFixture(),
+        rig = file.project.skeleton;
+    const c = rig.constraints[0],
+        channel = c.properties[0].to[0];
+    c.bones = rig.bones.map((b: any) => b.id);
+    c.properties = Array.from({ length: 64 }, () => ({ prop: 'rotate', offset: 0, to: Array(64).fill(channel) }));
+    expect(() => parse(file)).toThrow(/UNSUPPORTED.*mapping budget/);
+});
