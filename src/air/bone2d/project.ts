@@ -64,9 +64,13 @@ type Positioned = Pick<Bone2dMesh, 'xy' | 'weights' | 'deformSize'>;
 type PointAttachment = { kind: 'point'; x: number; y: number; rotation: number };
 type BoundsAttachment = Positioned & { kind: 'boundingbox' };
 type PathAttachment = Positioned & { kind: 'path'; closed: boolean; constantSpeed: boolean };
+export type Bone2dClipAttachment = Positioned & {
+    kind: 'clipping'; end: string | null; convex: boolean; inverse: boolean;
+};
 type Shape = PointAttachment | BoundsAttachment | PathAttachment;
-type VertexAttachment = Bone2dMesh | BoundsAttachment | PathAttachment;
-type Attachment = Visual | Shape;
+type PolygonAttachment = BoundsAttachment | PathAttachment | Bone2dClipAttachment;
+type VertexAttachment = Bone2dMesh | PolygonAttachment;
+type Attachment = Visual | Shape | Bone2dClipAttachment;
 /** The active non-rendering attachment in player-root coordinates. XY lists are packed. */
 export type Bone2dAttachmentGeometry =
     | { readonly kind: 'point'; readonly x: number; readonly y: number; readonly rotation: number }
@@ -148,7 +152,7 @@ export interface Bone2dSample {
     readonly slots: ReadonlyMap<string, Bone2dSlotPose>;
     readonly order: readonly string[];
     readonly sequenceFrames: ReadonlyMap<Visual, number>;
-    readonly shapeDeltas: ReadonlyMap<BoundsAttachment | PathAttachment, readonly number[]>;
+    readonly shapeDeltas: ReadonlyMap<PolygonAttachment, readonly number[]>;
     readonly meshDeltas: ReadonlyMap<Bone2dMesh, readonly number[]>;
 }
 
@@ -364,8 +368,11 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
                 const regions = new Map<string, Attachment>();
                 for (const [attachment, rawRegion] of entries(rawRegions, 'regions')) {
                     const r = obj(rawRegion, 'attachment');
-                    if (r.type === 'point' || r.type === 'boundingbox' || r.type === 'path') {
-                        regions.set(attachment, parseShape(r, byBone));
+                    if (r.type === 'point' || r.type === 'boundingbox' || r.type === 'path' || r.type === 'clipping') {
+                        const shape = parseShape(r, byBone);
+                        if (shape.kind === 'clipping' && shape.end !== null && !bySlot.has(shape.end))
+                            fail(`unknown clipping end slot: ${shape.end}`);
+                        regions.set(attachment, shape);
                         continue;
                     }
                     if (r.type !== 'region' && r.type !== 'mesh')
@@ -574,7 +581,7 @@ function parseMesh(r: Obj, path: string, byBone: ReadonlyMap<string, Bone>): Bon
     if (indices.length < 3 || indices.length % 3) fail('invalid triangle index count');
     return { kind: 'mesh', path, color: color(r.color, path), ...parsePositions(r, vertexCount, byBone), uvs, indices, link };
 }
-function parseShape(r: Obj, byBone: ReadonlyMap<string, Bone>): Shape {
+function parseShape(r: Obj, byBone: ReadonlyMap<string, Bone>): Shape | Bone2dClipAttachment {
     if (r.sequence != null) fail('picture sequence requires a visual attachment');
     if (r.type === 'point') {
         return { kind: 'point', x: num(r.x, 'point x'), y: num(r.y, 'point y'), rotation: num(r.rotation, 'point rotation') };
@@ -585,6 +592,10 @@ function parseShape(r: Obj, byBone: ReadonlyMap<string, Bone>): Shape {
     if (!Number.isInteger(count) || count < 3) fail('shape needs at least three XY pairs');
     const positions = parsePositions(r, count, byBone);
     if (r.type === 'boundingbox') return { kind: 'boundingbox', ...positions };
+    if (r.type === 'clipping') {
+        if (typeof r.convex !== 'boolean' || typeof r.inverse !== 'boolean') fail('invalid clipping mode');
+        return { kind: 'clipping', ...positions, end: optionalStr(r.end, 'clipping end'), convex: r.convex, inverse: r.inverse };
+    }
     if (typeof r.closed !== 'boolean' || typeof r.constantSpeed !== 'boolean' || count % 3 || (!r.closed && count < 6))
         fail('path needs complete in-handle, anchor and out-handle triplets');
     return { kind: 'path', ...positions, closed: r.closed, constantSpeed: r.constantSpeed };
@@ -706,7 +717,7 @@ export function sampleBone2dProject(project: Bone2dProject, clipId: string | nul
     );
     const i = clip ? last(clip.order, time) : -1;
     const meshDeltas = new Map<Bone2dMesh, readonly number[]>();
-    const shapeDeltas = new Map<BoundsAttachment | PathAttachment, readonly number[]>();
+    const shapeDeltas = new Map<PolygonAttachment, readonly number[]>();
     for (const [target, track] of clip?.deform ?? []) {
         const deltas = sampled(track, time);
         if (!deltas) continue;

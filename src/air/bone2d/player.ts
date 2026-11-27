@@ -20,6 +20,8 @@
  THE SOFTWARE.
 */
 import { Sprite } from '../../cocos/2d/components/sprite';
+import { Mask } from '../../cocos/2d/components/mask';
+import { Graphics } from '../../cocos/2d/components/graphics';
 import { SpriteFrame } from '../../cocos/2d/assets/sprite-frame';
 import { UITransform } from '../../cocos/2d/framework/ui-transform';
 import { Texture2D } from '../../cocos/asset/assets/texture-2d';
@@ -32,8 +34,9 @@ import { Node } from '../../cocos/scene-graph/node';
 import { spriteNode } from '../ui-kit';
 import { AirUIMesh } from '../ui-mesh';
 import type { AirAtlasHandle } from '../assets/atlas/atlas-factory';
+import { convexClipOutline, hasNonCollinearPoints } from './polygon';
 import { parseBone2dProject, sampleBone2dProject, bone2dWorldMatrices, bone2dMeshPositions, bone2dPicture, resolveBone2dAttachment, bone2dShapeGeometry } from './project';
-import type { Bone2dAttachmentGeometry, Bone2dImage, Bone2dMarker, Bone2dPose, Bone2dProjectOptions, Bone2dSample } from './project';
+import type { Bone2dAttachmentGeometry, Bone2dClipAttachment, Bone2dImage, Bone2dMarker, Bone2dPose, Bone2dProjectOptions, Bone2dSample } from './project';
 
 export interface AirBone2dOptions extends Bone2dProjectOptions {
     /** If specified, borrow exact-name frames instead of decoding embedded PNGs. The caller owns the atlas. */
@@ -159,6 +162,7 @@ export async function createAirBone2dPlayer(
         string,
         { root: Node; bones: Map<string, Node>; leaf: Node; sprite: Sprite; transform: UITransform; mesh?: AirUIMesh }
     >();
+    const masks = new Map<string, { node: Node; mask: Mask; graphics: Graphics; outline: number[] }>();
     let disposed = false;
     const release = (destroyNode: boolean): void => {
         if (disposed) return;
@@ -167,6 +171,8 @@ export async function createAirBone2dPlayer(
             if (s.sprite.isValid) s.sprite.spriteFrame = null;
             if (s.mesh?.isValid) s.mesh.dispose();
         }
+        for (const { node } of masks.values()) if (node.parent !== root && isValid(node, true)) node.destroy();
+        masks.clear();
         if (destroyNode && isValid(root, true)) root.destroy();
         for (const f of retained) f.decRef(false);
         for (const f of adapted) f.destroy();
@@ -182,22 +188,96 @@ export async function createAirBone2dPlayer(
         adapted.clear();
         owned.length = 0;
     };
+    const slotDefinitions = new Map(project.slots.map((slot) => [slot.id, slot] as const));
+    const getMask = (id: string, attachment: Bone2dClipAttachment, outline: number[]): Node => {
+        let entry = masks.get(id);
+        if (!entry) {
+            const node = new Node(`Clip:${id}`);
+            node.layer = layer;
+            const mask = node.addComponent(Mask);
+            mask.type = Mask.Type.GRAPHICS_STENCIL;
+            entry = { node, mask, graphics: node.getComponent(Graphics)!, outline: [] };
+            masks.set(id, entry);
+        }
+        if (entry.mask.inverted !== attachment.inverse) entry.mask.inverted = attachment.inverse;
+        if (outline.length !== entry.outline.length || outline.some((v, i) => v !== entry!.outline[i])) {
+            const graphics = entry.graphics;
+            graphics.clear();
+            graphics.moveTo(outline[0], outline[1]);
+            for (let i = 2; i < outline.length; i += 2) graphics.lineTo(outline[i], outline[i + 1]);
+            graphics.close();
+            graphics.fill();
+            entry.outline = outline;
+        }
+        return entry.node;
+    };
     const lookup = new Map(project.bones.map((bone) => [bone.id, bone] as const));
     const defaultSkin = project.skins.values().next().value!;
     let selectedSkins = [defaultSkin];
     let currentSample: Bone2dSample;
     const apply = (sample: Bone2dSample): void => {
         let world: ReturnType<typeof bone2dWorldMatrices> | null = null;
-        for (let index = 0; index < sample.order.length; index++) {
-            const id = sample.order[index],
-                s = slots.get(id)!;
-            if (s.root.getSiblingIndex() !== index) s.root.setSiblingIndex(index);
+        const active = new Map(project.slots.map((s) =>
+            [s.id, resolveBone2dAttachment(selectedSkins, s.id, sample.slots.get(s.id)!.attachment)] as const,
+        ));
+        const suppressed = new Set<string>();
+        if (masks.size || Array.from(active.values()).some((a) => a?.kind === 'clipping')) {
+            const clipNodes = new Set<Node>();
+            const ordered = new Map<Node, Node[]>([[root, []]]);
+            const add = (parent: Node, child: Node): void => {
+                const group = ordered.get(parent);
+                if (group) group.push(child);
+                else ordered.set(parent, [child]);
+            };
+            let scope: { end: string | null; parent: Node; empty: boolean } | null = null;
+            for (const id of sample.order) {
+                const attachment = active.get(id);
+                const slot = slots.get(id)!.root;
+                if (attachment?.kind !== 'clipping') {
+                    if (scope?.empty) suppressed.add(id);
+                    add(scope?.parent ?? root, slot);
+                    if (scope?.end === id) scope = null;
+                    continue;
+                }
+                add(root, slot);
+                if (scope?.end === id) scope = null;
+                if (scope) continue; // A nested mask does not replace the current one.
+                world ??= bone2dWorldMatrices(project, sample);
+                const clip = attachment;
+                const bone = slotDefinitions.get(id)!.bone;
+                const vertices = bone2dMeshPositions(clip, bone, world, sample.shapeDeltas.get(clip));
+                const outline = clip.convex || clip.inverse ? convexClipOutline(vertices) : vertices;
+                if (outline.length < 6 || !hasNonCollinearPoints(outline)) {
+                    if (!clip.inverse) scope = { end: clip.end, parent: root, empty: true };
+                    continue;
+                }
+                const mask = getMask(id, clip, outline);
+                clipNodes.add(mask);
+                add(root, mask);
+                scope = { end: clip.end, parent: mask, empty: false };
+            }
+            for (const [parent, children] of ordered) {
+                for (const child of children) if (child.parent !== parent) child.setParent(parent);
+            }
+            for (const { node } of masks.values()) {
+                if (!clipNodes.has(node) && node.parent === root) node.setParent(null);
+            }
+            for (const [, children] of ordered) {
+                children.forEach((child, index) => {
+                    if (child.getSiblingIndex() !== index) child.setSiblingIndex(index);
+                });
+            }
+        } else {
+            sample.order.forEach((id, index) => {
+                const node = slots.get(id)!.root;
+                if (node.getSiblingIndex() !== index) node.setSiblingIndex(index);
+            });
         }
         for (const def of project.slots) {
             const s = slots.get(def.id)!,
                 p = sample.slots.get(def.id)!;
-            const region = resolveBone2dAttachment(selectedSkins, def.id, p.attachment);
-            const drawable = region?.kind === 'region' || region?.kind === 'mesh';
+            const region = active.get(def.id);
+            const drawable = !suppressed.has(def.id) && (region?.kind === 'region' || region?.kind === 'mesh');
             s.root.active = drawable;
             if (!drawable) {
                 s.sprite.spriteFrame = null;
@@ -374,10 +454,10 @@ export async function createAirBone2dPlayer(
         },
         getAttachmentGeometry(slotId): Bone2dAttachmentGeometry | null {
             ensure();
-            const slot = project.slots.find((value) => value.id === slotId);
+            const slot = slotDefinitions.get(slotId);
             if (!slot) error(`unknown slot: ${slotId}`);
             const attachment = resolveBone2dAttachment(selectedSkins, slotId, currentSample.slots.get(slotId)!.attachment);
-            if (!attachment || attachment.kind === 'mesh' || attachment.kind === 'region') return null;
+            if (!attachment || attachment.kind === 'mesh' || attachment.kind === 'region' || attachment.kind === 'clipping') return null;
             return bone2dShapeGeometry(attachment, slot.bone, currentSample, bone2dWorldMatrices(project, currentSample));
         },
         animations,

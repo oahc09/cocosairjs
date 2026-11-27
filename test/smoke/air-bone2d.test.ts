@@ -1,5 +1,6 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
+import { convexClipOutline } from '../../src/air/bone2d/polygon';
 import {
     parseBone2dProject,
     sampleBone2dProject,
@@ -53,11 +54,11 @@ test.each([
         /UNSUPPORTED/,
     ],
     [
-        'unsupported clipping shape',
+        'malformed clipping shape',
         (d) => {
             d.project.skeleton.skins[0].attachments['body-slot'].body.type = 'clipping';
         },
-        /UNSUPPORTED/,
+        /FORMAT/,
     ],
     [
         'unknown image',
@@ -338,7 +339,8 @@ test('queries non-rendering markers and deformed polygons in player-root coordin
     const world = bone2dWorldMatrices(model, sample);
     function query(key: string) {
         const a = model.skins.get('skin')!.regions.get('body-slot')!.get(key)!;
-        if (a.kind === 'mesh' || a.kind === 'region') throw new Error('expected a non-rendering shape');
+        if (a.kind === 'mesh' || a.kind === 'region' || a.kind === 'clipping')
+            throw new Error('expected a non-rendering shape');
         return bone2dShapeGeometry(a, 'root', sample, world);
     }
     const point = query('body');
@@ -354,4 +356,8 @@ test('queries non-rendering markers and deformed polygons in player-root coordin
     });
     body.path.vertices.pop();
     expect(() => parse(file)).toThrow(/shape needs at least three XY pairs/);
+});
+
+test('convex clipping removes concave dents and duplicate vertices', () => {
+    expect(convexClipOutline([-3, -4, 8, -4, 8, 5, 0, 0, -3, 5, -3, -4])).toEqual([-3, -4, 8, -4, 8, 5, -3, 5]);
 });

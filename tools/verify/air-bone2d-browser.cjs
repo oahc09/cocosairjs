@@ -14,6 +14,7 @@ const files = [
     'build/cocosair.module.js',
     'test/fixtures/bone2d/clawbot.bone2d',
     'tools/verify/air-bone2d-browser.cjs',
+    'src/air/bone2d/polygon.ts',
 ];
 async function main() {
     const [engine, output, ...extra] = process.argv.slice(2);
@@ -487,8 +488,101 @@ async function main() {
                 }
                 return result;
             };
+            let clipPlayer;
+            const clipMount = async () => {
+                const file = JSON.parse(text),
+                    rig = file.project.skeleton,
+                    clip = rig.animations[1];
+                rig.bones.find((b) => b.id === 'arm-bone').x = 64;
+                rig.slots.unshift({
+                    id: 'clip-slot',
+                    bone: 'root',
+                    color: [1, 1, 1, 1],
+                    dark: null,
+                    attachment: 'clip',
+                    blend: 'normal',
+                });
+                const mask = {
+                    type: 'clipping',
+                    vertices: [-40, -20, 0, -20, 0, 20, -40, 20],
+                    convex: false,
+                    inverse: false,
+                    end: 'body-slot',
+                    weights: null,
+                };
+                rig.skins[0].attachments['clip-slot'] = { clip: mask };
+                rig.skins.push({
+                    id: 'inverse',
+                    name: 'Inverse',
+                    bones: [],
+                    constraints: [],
+                    attachments: { 'clip-slot': { clip: { ...mask, inverse: true } } },
+                });
+                const points = [
+                    [-40, -20],
+                    [0, -20],
+                    [0, -8],
+                    [-32, -8],
+                    [-32, 8],
+                    [0, 8],
+                    [0, 20],
+                    [-40, 20],
+                ];
+                rig.skins.push({
+                    id: 'dent',
+                    name: 'Deformed concave mask',
+                    bones: [],
+                    constraints: [],
+                    attachments: {
+                        'clip-slot': {
+                            clip: {
+                                ...mask,
+                                vertices: [],
+                                weights: points.map(([x, y]) => [['root', x, y, 1]]),
+                            },
+                        },
+                    },
+                });
+                const displacements = Array(16).fill(0);
+                displacements[6] = displacements[8] = 22;
+                clip.deform.dent = {
+                    'clip-slot': {
+                        clip: [
+                            { time: 0, value: Array(16).fill(0) },
+                            { time: 0.5, value: displacements },
+                        ],
+                    },
+                };
+                clip.bones = {};
+                clip.drawOrder = [];
+                clip.slots = { 'clip-slot': { attachment: [{ time: 0.75, name: null }] } };
+                clipPlayer = await air.createAirBone2dPlayer(parent, JSON.stringify(file));
+                clipPlayer.play('attack');
+            };
+            const clipStep = async (stage) => {
+                if (stage === 'inverse') clipPlayer.setSkins(['inverse']);
+                if (stage === 'off') clipPlayer.seek(0.75);
+                if (stage === 'dent') {
+                    clipPlayer.seek(0);
+                    clipPlayer.setSkins(['dent']);
+                }
+                if (stage === 'dent-deformed') clipPlayer.seek(0.5);
+                if (stage === 'back') {
+                    clipPlayer.seek(0);
+                    clipPlayer.setSkins([]);
+                }
+                await clock.step(0);
+                return clipPlayer.node.children.map((node) => [node.name, node.children.map((child) => child.name)]);
+            };
+            const clipClose = async () => {
+                clipPlayer.dispose();
+                await clock.step(0);
+            };
             window.bone2dTest = {
                 frame,
+                clipMount,
+                clipStep,
+                clipClose,
                 shapes,
                 sequenceMount,
                 sequenceStep,
@@ -507,6 +601,7 @@ async function main() {
                 close: async () => {
                     player.dispose();
                     sequencePlayer?.dispose();
+                    clipPlayer?.dispose();
                     wardrobe?.dispose();
                     meshInstance?.dispose();
                     folderPlayer?.dispose();
@@ -721,6 +816,60 @@ async function main() {
         });
         assert.equal(noDraw, true);
         assert.equal(hiddenShape, null);
+        await page.evaluate(() => window.bone2dTest.clipMount());
+        report.clipping = {};
+        for (const stage of ['normal', 'inverse', 'off', 'dent', 'dent-deformed', 'back']) {
+            const nodes = await page.evaluate((s) => window.bone2dTest.clipStep(s), stage);
+            const pixels = await page.evaluate(
+                async (data) => {
+                    const image = new Image();
+                    image.src = 'data:image/png;base64,' + data;
+                    await image.decode();
+                    const canvas = document.createElement('canvas');
+                    canvas.width = image.width;
+                    canvas.height = image.height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(image, 0, 0);
+                    return [
+                        [130, 120],
+                        [190, 120],
+                        [256, 120],
+                        [25, 120],
+                        [130, 108],
+                    ].map(([x, y]) => [...ctx.getImageData(x, y, 1, 1).data]);
+                },
+                (await page.screenshot()).toString('base64'),
+            );
+            report.clipping[stage] = { nodes, pixels };
+        }
+        const { normal, inverse, off, back } = report.clipping;
+        const [left, right, outside, bg, top] = off.pixels;
+        assert.notDeepEqual(top, bg);
+        assert.notDeepEqual(left, bg);
+        assert.notDeepEqual(right, bg);
+        assert.notDeepEqual(outside, bg);
+        assert.deepEqual(
+            normal.pixels,
+            [left, bg, outside, bg, top],
+            'the inclusive end slot is clipped, the following slot is not',
+        );
+        assert.deepEqual(
+            inverse.pixels,
+            [bg, right, outside, bg, bg],
+            'inverse clipping must preserve only outside pixels',
+        );
+        assert.deepEqual(
+            report.clipping.dent.pixels,
+            [bg, bg, outside, bg, top],
+            'the concave indentation excludes the left sample',
+        );
+        assert.deepEqual(
+            report.clipping['dent-deformed'].pixels,
+            normal.pixels,
+            'deforming the weighted indentation exposes the left sample',
+        );
+        assert.deepEqual(back, normal, 'seek and skin swap must recreate the original compositor state');
+        await page.evaluate(() => window.bone2dTest.clipClose());
         await page.evaluate(() => window.bone2dTest.close());
         assert.deepEqual(report.pageErrors, []);
         report.status = 'PASS';
