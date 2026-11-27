@@ -83,9 +83,13 @@ function inspectMotion(result) {
             throw new Error('Invalid motion-frame controls: ' + name);
         if (enabled) {
             const [a, b] = frames.map((r) => r.draws[0]);
-            for (const draw of [a, b]) {
+            for (const [index, draw] of [a, b].entries()) {
                 if (
-                    !same(draw.params, [0, 0, name === 'fence-zero' ? 0 : 0.9]) ||
+                    !same(draw.params, [
+                        0,
+                        0,
+                        name === 'fence-zero' || (index === 0 && track.seedUsesZeroFeedback) ? 0 : 0.9,
+                    ]) ||
                     draw.width !== 160 ||
                     draw.height !== 96 ||
                     !draw.inputs.depthTex

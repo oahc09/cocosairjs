@@ -186,6 +186,7 @@ window.__probe = async () => {
             scanY: 48,
             extent: [width, height],
             webgl2: !!gl,
+            seedUsesZeroFeedback: typeof taa.resetHistory === 'function',
             rgba16f: !!gl?.getExtension('EXT_color_buffer_float'),
         };
     } finally {
