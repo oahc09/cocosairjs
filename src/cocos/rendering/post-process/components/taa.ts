@@ -8,6 +8,13 @@ import { PostProcessSetting } from './post-process-setting';
 @disallowMultiple
 @executeInEditMode
 export class TAA extends PostProcessSetting {
+    private _historyRevision = 0;
+
+    get historyRevision (): number { return this._historyRevision; }
+
+    /** Discard accumulated samples after a camera cut or scene discontinuity. */
+    resetHistory (): void { ++this._historyRevision; }
+
     @serializable
     protected _sampleScale = 1;
 

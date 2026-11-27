@@ -686,3 +686,5 @@ PR #22 carries the XHR final response URL through the native Atlas text path. Th
 The WebGPU backend validates allocation size and storage binding range against the granted device limits. A rejected resize keeps the previous native buffer and accounting. Applications can use aligned buffer views to bind ranges independently.
 
 Effects may supply pre-specialized WGSL render stages with explicit entry points. The WebGPU backend compiles those stages directly using their GFX layout, while the existing GLSL path continues to handle effects without the variant and WebGL2.
+
+2026-11-28 AIR TAA: keep history and material bindings per active camera in the native post-process builder, recycle persistent resource slots, and reset on target/scene changes or explicit `TAA.resetHistory()`. The viewport-relative clip-W jitter correction is WebGL2-only; this is not WebGPU or motion-vector acceptance.

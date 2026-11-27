@@ -245,3 +245,20 @@ reconstructs to −2.0408/−4.1667 with the frozen remap. Correcting depth and 
 history rows because the frozen output helper negates an already normalized coordinate. Applying the explicit
 clip-depth and both Y mappings recovers the expected world coordinates and rows. This is not a WebGPU adapter,
 full native TAA resolve, or motion-vector validation.
+
+### Runtime camera-local TAA regression
+
+After a fresh source-bound ESM build, run:
+
+```sh
+node tools/verify/rendering-iteration/taa-native-probe.cjs \
+  <WPE-or-chrome-headless-shell> <new-report.json> --expect-runtime
+```
+
+This path observes the production pass without substituting a pass or changing
+jitter. It compares the two-camera history bindings, materials and previous
+matrices, reseeds camera A on an explicit `TAA.resetHistory()` and on target
+resize, and compares B's readback with an untouched two-camera control.
+History slots are reused up to the observed simultaneous-camera high-water
+mark for that pass. This does not certify moving-object disocclusion, HDR
+presentation, or the modeled WebGPU coordinate path.

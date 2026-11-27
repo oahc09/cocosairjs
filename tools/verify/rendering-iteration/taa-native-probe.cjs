@@ -5,7 +5,7 @@ const { readFileSync, writeFileSync } = require('node:fs');
 const { once } = require('node:events');
 const { createServer } = require('node:http');
 const { join, resolve } = require('node:path');
-const { webkit } = require('playwright');
+const { chromium, webkit } = require('playwright');
 const { verifySourceBinding } = require('../../build/source-binding.cjs');
 
 const motion = ['plain-off', 'plain-taa', 'fence-off', 'fence-taa', 'fence-zero', 'fence-current', 'fence-union'];
@@ -139,10 +139,17 @@ async function main([executable, output, flag, ...rest]) {
         !executable ||
         !output ||
         rest.length ||
-        (flag && !['--expect-baseline', '--expect-isolation', '--expect-jitter', '--expect-motion'].includes(flag))
+        (flag &&
+            ![
+                '--expect-baseline',
+                '--expect-isolation',
+                '--expect-jitter',
+                '--expect-motion',
+                '--expect-runtime',
+            ].includes(flag))
     )
         throw new Error(
-            'Usage: node taa-native-probe.cjs <WPE executable> <new-report.json> [--expect-baseline|--expect-isolation|--expect-jitter|--expect-motion]',
+            'Usage: node taa-native-probe.cjs <WPE or Chrome headless shell executable> <new-report.json> [--expect-baseline|--expect-isolation|--expect-jitter|--expect-motion|--expect-runtime]',
         );
     const binding = verifySourceBinding(root, files['/build/cocosair.module.js'][1]);
     if (!binding.matches) throw new Error('Native probe requires an SDK bound to the current src bytes');
@@ -163,9 +170,14 @@ async function main([executable, output, flag, ...rest]) {
     let browser;
     const result = { mode: 'native-webgl2-custom-pipeline', assetHashes: hashes, binding, tracks: {}, errors: [] };
     try {
-        browser = await webkit.launch({ executablePath: resolve(executable) });
+        const chrome = executable.includes('chrome-headless-shell');
+        browser = await (chrome ? chromium : webkit).launch({
+            executablePath: resolve(executable),
+            ...(chrome ? { chromiumSandbox: true } : {}),
+        });
         result.browserVersion = browser.version();
         const modes = flag === '--expect-motion' ? motion.slice() : ['off', 'single', 'both'];
+        if (flag === '--expect-runtime') modes.push('runtime', 'runtime-control');
         if (flag === '--expect-jitter') modes.push('isolated-jitter');
         if (flag === '--expect-isolation') modes.push('isolated', 'isolated-control', 'isolated-b');
         for (const mode of modes) {
@@ -240,6 +252,35 @@ async function main([executable, output, flag, ...rest]) {
             throw new Error('Expected contamination did not reproduce');
     } else if (Object.values(both.check).some(Boolean) || both.consoleErrors.length)
         throw new Error('Dual-camera native TAA invariant failed: see report');
+
+    if (flag === '--expect-runtime') {
+        const { runtime, 'runtime-control': control } = result.tracks;
+        const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+        if (
+            [runtime, control].some(
+                (track) => !track || Object.values(track.check).some(Boolean) || track.consoleErrors.length,
+            )
+        )
+            throw new Error('Runtime history control failed');
+        for (const [i, frame] of runtime.records.entries()) {
+            if (frame.alias || frame.pixels.B.sha256 !== control.records[i].pixels.B.sha256)
+                throw new Error('Second camera changed across the first camera cut or resize');
+            for (const draw of frame.captures) {
+                const previous = runtime.records[i - 1]?.captures.find((d) => d.name === draw.name);
+                const seed = !previous || (draw.name === 'A' && i >= 3);
+                if (
+                    draw.output === draw.inputs.taaPrevTexture ||
+                    draw.inputs.taaPrevTexture !== (seed ? draw.inputs.inputTexture : previous.output) ||
+                    !same(draw.atQueue.previous, seed ? draw.current : previous.current) ||
+                    !same(draw.atQueue, draw.afterFrame) ||
+                    draw.atQueue.params[2] !== (seed ? 0 : draw.name === 'A' ? 0.95 : 0.75)
+                )
+                    throw new Error(`Runtime TAA boundary failed: ${draw.name}/${i}`);
+            }
+        }
+        if (runtime.records[4].pixels.A.width !== 192 || runtime.records[4].pixels.A.height !== 112)
+            throw new Error('Missing runtime resize readback');
+    }
 
     if (flag === '--expect-jitter') {
         const track = result.tracks['isolated-jitter'];

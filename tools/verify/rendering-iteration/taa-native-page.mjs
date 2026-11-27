@@ -1,6 +1,18 @@
 import * as m from '/build/cocosair.module.js';
 const mode = new URL(location.href).searchParams.get('mode') || 'both';
-if (!['off', 'single', 'both', 'isolated', 'isolated-b', 'isolated-control', 'isolated-jitter'].includes(mode))
+if (
+    ![
+        'off',
+        'single',
+        'both',
+        'isolated',
+        'isolated-b',
+        'isolated-control',
+        'isolated-jitter',
+        'runtime',
+        'runtime-control',
+    ].includes(mode)
+)
     throw new Error('Invalid TAA probe mode');
 const response = await fetch('/vendor/builtin-source/generated/custom-effects.json');
 if (!response.ok) throw new Error('Could not load the frozen custom effects');
@@ -26,6 +38,8 @@ const tags = new Map();
 // These copies live only for one browser page. This is not a runtime ownership or disposal design.
 const isolate = mode.startsWith('isolated');
 const pixelJitter = mode === 'isolated-jitter';
+const runtime = mode === 'runtime' || mode === 'runtime-control';
+const stable = mode === 'isolated-control' || mode === 'runtime-control';
 const projected = new WeakMap();
 const forward = builder.pipelines.get('forward');
 const slot = forward.findIndex((pass) => pass.name === 'TAAPass');
@@ -82,7 +96,7 @@ function lane(name, priority, layer, width, height, tone) {
     const camera = node.addComponent(m.Camera);
     camera.priority = priority;
     camera.fov = priority ? 58 : 42;
-    if (pixelJitter && name === 'B') {
+    if ((pixelJitter || runtime) && name === 'B') {
         camera.projection = m.Camera.ProjectionType.ORTHO;
         camera.orthoHeight = 2;
     }
@@ -94,11 +108,12 @@ function lane(name, priority, layer, width, height, tone) {
     camera.usePostProcess = true;
     const pp = node.addComponent(m.postProcess.PostProcess);
     pp.global = false;
-    if (pixelJitter && name === 'B') pp.shadingScale = 0.75;
+    if ((pixelJitter || runtime) && name === 'B') pp.shadingScale = 0.75;
     camera.postProcess = pp;
     const taa = node.addComponent(m.postProcess.TAA);
     taa.enabled =
         mode === 'both' ||
+        runtime ||
         pixelJitter ||
         mode === 'isolated' ||
         mode === 'isolated-control' ||
@@ -233,10 +248,11 @@ window.__probe = async () => {
     try {
         for (let i = 0; i < 5; i++) {
             draw.length = 0;
-            A.node.setPosition(i >= 3 && mode !== 'isolated-control' ? 1.4 : i * 0.07, 0, 5);
+            A.node.setPosition(i >= 3 && !stable ? 1.4 : i * 0.07, 0, 5);
             B.node.setPosition(-i * 0.09, 0, 5);
             if ((mode === 'isolated' || pixelJitter) && i >= 3) seed(A.camera.camera);
-            if (i === 4 && mode !== 'isolated-control') A.target.resize(192, 112);
+            if (mode === 'runtime' && i === 3) A.node.getComponent(m.postProcess.TAA).resetHistory();
+            if (i === 4 && !stable) A.target.resize(192, 112);
             const frame = await clock.step();
             const expected = {
                 both: 2,
@@ -246,6 +262,8 @@ window.__probe = async () => {
                 'isolated-b': 1,
                 'isolated-control': 2,
                 'isolated-jitter': 2,
+                runtime: 2,
+                'runtime-control': 2,
             }[mode];
             if (draw.length !== expected) throw new Error('Wrong native TAA draw count: ' + draw.length);
             const read = async (target) => {
