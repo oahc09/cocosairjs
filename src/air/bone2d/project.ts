@@ -25,6 +25,8 @@ import { aimBone2d, aimBone2dPair } from './ik';
 import type { Bone2dAimOptions } from './ik';
 import { transformApplied, transformProperties, transformReadLocal, transformReadWorld, transformWriteLocal, transformWriteWorld } from './transform';
 import type { AppliedPose, Bone2dTransform, TransformProperty } from './transform';
+import { followBone2dPath, pathSetupLengths } from './path';
+import type { PathConstraint, PathState } from './path';
 
 /** Strict reader for the supported subset of Bone-2D Save Project v1. No editor or Spine dependency. */
 type Obj = Record<string, unknown>;
@@ -132,6 +134,7 @@ interface SliderTracks {
     time: ValueKey[];
     mix: ValueKey[];
 }
+interface PathTracks { position: ValueKey[]; spacing: ValueKey[]; mix: ValueKey[] }
 type AimKey = ValueKey & Pick<Bone2dAimOptions, 'compress' | 'stretch' | 'bendPositive'>;
 interface Skin {
     id: string;
@@ -169,6 +172,7 @@ interface Clip {
     ik: ReadonlyMap<string, AimKey[]>;
     transform: ReadonlyMap<string, ValueKey[]>;
     slider: ReadonlyMap<string, SliderTracks>;
+    path: ReadonlyMap<string, PathTracks>;
 }
 export interface Bone2dMarker {
     readonly id: string;
@@ -190,7 +194,7 @@ export interface Bone2dProject {
     readonly folders: ReadonlyMap<string, Folder>;
     readonly bones: readonly Bone[];
     readonly affineSprites: boolean;
-    readonly constraints: ReadonlyMap<string, AimConstraint | Bone2dTransform | SliderConstraint>;
+    readonly constraints: ReadonlyMap<string, AimConstraint | Bone2dTransform | SliderConstraint | PathConstraint>;
     readonly slots: readonly Slot[];
     readonly clips: ReadonlyMap<string, Clip>;
     readonly images: ReadonlyMap<string, Bone2dImage>;
@@ -207,6 +211,7 @@ export interface Bone2dSample {
     readonly ik: ReadonlyMap<string, Bone2dAimOptions>;
     readonly transforms: ReadonlyMap<string, readonly number[]>;
     readonly sliders: ReadonlyMap<string, SliderState>;
+    readonly paths: ReadonlyMap<string, PathState>;
     readonly solvedWorld?: ReadonlyMap<string, Matrix2D>;
     readonly slotFrames?: ReadonlyMap<string, number>;
     readonly slotDeform?: ReadonlyMap<string, readonly number[]>;
@@ -392,8 +397,23 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
         }
     }
     let mappingWrites = 0;
-    const constraints = index(list(sk.constraints ?? [], 128, 'constraints').map((raw): AimConstraint | Bone2dTransform | SliderConstraint => {
+    const constraints = index(list(sk.constraints ?? [], 128, 'constraints').map((raw): AimConstraint | Bone2dTransform | SliderConstraint | PathConstraint => {
         const o = obj(raw, 'constraint');
+        if (o.type === 'path') {
+            const id = str(o.id, 'path constraint id'), target = str(o.target, 'path target slot');
+            const targets = list(o.bones, bones.length, 'path bones').map((b) => str(b, 'path bone'));
+            if (!targets.length || targets.some((b) => !byBone.has(b)) || new Set(targets).size !== targets.length) fail('invalid path bones');
+            const { positionMode, spacingMode, rotateMode, skinRequired } = o;
+            if (positionMode !== 'fixed' && positionMode !== 'percent') fail('invalid path position mode');
+            if (spacingMode !== 'fixed' && spacingMode !== 'length' && spacingMode !== 'percent' && spacingMode !== 'proportional') fail('invalid path spacing mode');
+            if (rotateMode !== 'tangent' && rotateMode !== 'chain' && rotateMode !== 'chainScale') fail('invalid path rotation mode');
+            if (typeof skinRequired !== 'boolean') fail('invalid path skin flag');
+            const mix = obj(o.mix, 'path mix');
+            return { kind: 'path', id, bones: targets, target, positionMode, spacingMode, rotateMode, skinRequired,
+                offsetRotation: num(o.offsetRotation, 'path rotation offset'), position: num(o.position, 'path position'),
+                spacing: num(o.spacing, 'path spacing'), mix: ['rotate', 'x', 'y'].map((axis) => num(mix[axis], 'path mix', 0, 1)),
+            };
+        }
         if (o.type === 'slider') {
             const id = str(o.id, 'slider id'), animation = optionalStr(o.animation, 'slider animation'), bone = optionalStr(o.bone, 'slider driver');
             if (bone !== null && !byBone.has(bone)) fail('invalid slider driver');
@@ -478,6 +498,7 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
         return { id, bone, blend, dark: dark ?? null, attachment: optionalStr(o.attachment, 'setup attachment'), color: color(o.color, id) };
     });
     const bySlot = index(slots, 'duplicate slot id');
+    for (const c of constraints.values()) if (c.kind === 'path' && !bySlot.has(c.target)) fail('unknown path target slot');
     const slotIds = slots.map((s) => s.id);
     const folders = index(
         list(sk.drawOrderFolders ?? [], 128, 'draw order folders').map((raw): Folder => {
@@ -586,7 +607,16 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
             const id = str(o.id, 'animation id'),
                 name = str(o.name, 'animation name');
             const duration = num(o.duration, 'animation duration', 0, 3600);
-            for (const k of ['path', 'physics']) none(o[k], k);
+            none(o.physics, 'physics');
+            const path = new Map<string, PathTracks>();
+            for (const [id, raw] of entries(o.path, 'path constraint timelines')) {
+                if (constraints.get(id)?.kind !== 'path') fail(`unknown path timeline: ${id}`);
+                const t = obj(raw, 'path tracks');
+                const mix = values(t.mix, 3, duration, 'path mix key');
+                for (const key of mix) key.value.forEach((v) => num(v, 'path mix key', 0, 1));
+                path.set(id, { position: values(t.position, 1, duration, 'path position key'),
+                    spacing: values(t.spacing, 1, duration, 'path spacing key'), mix });
+            }
             const slider = new Map<string, SliderTracks>();
             for (const [id, raw] of entries(o.slider, 'slider timelines')) {
                 if (constraints.get(id)?.kind !== 'slider') fail(`unknown slider timeline: ${id}`);
@@ -714,7 +744,7 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
                     }
                 }
             }
-            return { id, name, duration, order, folderOrder, markers, bones: boneTracks, slots: slotTracks, deform, sequences, ik, transform, slider };
+            return { id, name, duration, order, folderOrder, markers, bones: boneTracks, slots: slotTracks, deform, sequences, ik, transform, slider, path };
         }),
         'duplicate animation id',
     );
@@ -958,9 +988,19 @@ export function sampleBone2dProject(
         const frame = sequenceFrame(key.value, time - key.time, sequence.frames.length);
         sequenceFrames.set(visual, frame === -1 ? sequence.setup : frame);
     }
+    const paths = new Map<string, PathState>();
     const ik = new Map<string, Bone2dAimOptions>(), transforms = new Map<string, readonly number[]>(), sliders = new Map<string, SliderState>();
     for (const [id, c] of project.constraints) {
         if (c.skinRequired && !skinConstraints.has(id)) continue;
+        if (c.kind === 'path') {
+            const target = project.slots.find((slot) => slot.id === c.target)!;
+            if (activeBones.has(target.bone)) {
+                const track = clip?.path.get(id);
+                paths.set(id, { position: sampled(track?.position, time)?.[0] ?? c.position,
+                    spacing: sampled(track?.spacing, time)?.[0] ?? c.spacing, mix: sampled(track?.mix, time) ?? c.mix });
+            }
+            continue;
+        }
         if (c.kind === 'slider') {
             if (c.animation !== null && (c.bone === null || activeBones.has(c.bone))) {
                 const track = clip?.slider.get(id);
@@ -982,13 +1022,39 @@ export function sampleBone2dProject(
             ik.set(id, { mix, softness, scaleY: c.scaleY, compress, stretch, bendPositive });
         }
     }
-    const sample: Bone2dSample = { bones, shears, activeBones, ik, transforms, sliders, slots, meshDeltas, shapeDeltas, order, sequenceFrames };
-    return sliders.size ? solvePose(project, sample, selectedSkins) : sample;
+    const sample: Bone2dSample = { bones, shears, activeBones, ik, transforms, sliders, paths, slots, meshDeltas, shapeDeltas, order, sequenceFrames };
+    return sliders.size || paths.size ? solvePose(project, sample, selectedSkins) : sample;
 }
 
 /** Resolve ordered parent/local 2D affine products without decomposing shear. */
 export function bone2dWorldMatrices(project: Bone2dProject, sample: Bone2dSample): ReadonlyMap<string, Matrix2D> {
     return sample.solvedWorld ?? solvePose(project, sample, []).solvedWorld!;
+}
+
+const setupLengths = new WeakMap<PathAttachment, readonly number[]>();
+
+function setupLengthsOf(a: PathAttachment, slotBone: string, byId: ReadonlyMap<string, Bone>): readonly number[] {
+    const cached = setupLengths.get(a);
+    if (cached) return cached;
+    const matrices = new Map<string, Matrix2D>();
+    const visit = (id: string): Matrix2D => {
+        let m = matrices.get(id);
+        if (m) return m;
+        const b = byId.get(id)!;
+        const [x, y, r, sx, sy] = b.pose;
+        if (b.parent === null) m = [...poseBasis(r, sx, sy, b.shear), x, y];
+        else {
+            const p = visit(b.parent);
+            m = [...inheritBasis(p, b.inherit, r, sx, sy, b.shear), p[0] * x + p[1] * y + p[4], p[2] * x + p[3] * y + p[5]];
+        }
+        matrices.set(id, m);
+        return m;
+    };
+    visit(slotBone);
+    for (const influences of a.weights ?? []) for (const [id] of influences) visit(id);
+    const answer = pathSetupLengths(bone2dMeshPositions(a, slotBone, matrices), a.closed);
+    setupLengths.set(a, answer);
+    return answer;
 }
 
 function solvePose(project: Bone2dProject, sample: Bone2dSample, skins: readonly Skin[]): Bone2dSample {
@@ -1021,6 +1087,7 @@ function solvePose(project: Bone2dProject, sample: Bone2dSample, skins: readonly
         return m;
     };
     let order = sample.order;
+    const paths = new Map(sample.paths);
     const ik = new Map(sample.ik), transforms = new Map(sample.transforms), sliders = new Map(sample.sliders);
     const slots = new Map(sample.slots);
     const slotFrames = new Map<string, number>(), slotDeform = new Map<string, readonly number[]>();
@@ -1040,7 +1107,7 @@ function solvePose(project: Bone2dProject, sample: Bone2dSample, skins: readonly
             if (deform !== undefined) slotDeform.set(id, deform);
         }
     }
-    if (ik.size || transforms.size || sliders.size) {
+    if (ik.size || transforms.size || sliders.size || paths.size) {
         const children = new Map<string, string[]>();
         for (const { id, parent } of project.bones) {
             if (parent === null) continue;
@@ -1067,7 +1134,25 @@ function solvePose(project: Bone2dProject, sample: Bone2dSample, skins: readonly
             invalidate(id);
             solved.set(id, pose);
         };
+        const writeWorld = (id: string, world: Matrix2D): void => {
+            for (const child of children.get(id) ?? []) invalidate(child);
+            if (!world.every(Number.isFinite)) fail(`non-finite world transform: ${id}`);
+            out.set(id, world);
+            explicitWorld.add(id);
+        };
         for (const [id, c] of project.constraints) {
+            if (c.kind === 'path') {
+                const state = paths.get(id), a = attachment(c.target);
+                if (!state?.mix.some((n) => n !== 0) || a?.kind !== 'path') continue;
+                const slot = bySlot.get(c.target)!;
+                const holder = compute(slot.bone);
+                for (const weights of a.weights ?? []) for (const [bone] of weights) compute(bone);
+                const points = bone2dMeshPositions(a, slot.bone, out, sliders.size ? slotDeform.get(c.target) : sample.shapeDeltas.get(a));
+                const result = followBone2dPath(c, state, points, a.constantSpeed ? null : setupLengthsOf(a, slot.bone, byId), a.closed,
+                    holder, c.bones.map((bone) => ({ matrix: compute(bone), length: byId.get(bone)!.length })));
+                result.forEach((m, i) => { if (sample.activeBones.has(c.bones[i])) writeWorld(c.bones[i], m); });
+                continue;
+            }
             if (c.kind === 'slider') {
                 const state = sliders.get(id);
                 const clip = c.animation === null ? undefined : project.clips.get(c.animation);
@@ -1180,6 +1265,15 @@ function solvePose(project: Bone2dProject, sample: Bone2dSample, skins: readonly
                     const cur = transforms.get(idOfTransform), val = sampled(keys, time);
                     if (cur && val) transforms.set(idOfTransform, cur.map((v, i) => blend(v, val[i])));
                 }
+                for (const [pathId, keys] of clip.path) {
+                    const cur = paths.get(pathId);
+                    if (!cur) continue;
+                    const p = sampled(keys.position, time)?.[0], s = sampled(keys.spacing, time)?.[0], m = sampled(keys.mix, time);
+                    paths.set(pathId, { position: p === undefined ? cur.position : blend(cur.position, p),
+                        spacing: s === undefined ? cur.spacing : blend(cur.spacing, s, false),
+                        mix: m === undefined ? cur.mix : cur.mix.map((v, i) => blend(v, m[i])),
+                    });
+                }
                 for (const [idOfSlider, keys] of clip.slider) {
                     const cur = sliders.get(idOfSlider);
                     if (!cur) continue;
@@ -1218,12 +1312,7 @@ function solvePose(project: Bone2dProject, sample: Bone2dSample, skins: readonly
                         }
                     }
                     if (local !== null) writeLocal(targetId, local);
-                    else {
-                        for (const child of children.get(targetId) ?? []) invalidate(child);
-                        if (!world.every(Number.isFinite)) fail(`non-finite world transform: ${targetId}`);
-                        out.set(targetId, world);
-                        explicitWorld.add(targetId);
-                    }
+                    else writeWorld(targetId, world);
                 }
                 continue;
             }
@@ -1255,7 +1344,7 @@ function solvePose(project: Bone2dProject, sample: Bone2dSample, skins: readonly
         }
     }
     for (const bone of project.bones) compute(bone.id);
-    return { ...sample, solvedWorld: out, slots, order, ik, transforms, sliders,
+    return { ...sample, solvedWorld: out, slots, order, ik, transforms, sliders, paths,
         ...(sliders.size ? { slotFrames, slotDeform } : {}),
     };
 }

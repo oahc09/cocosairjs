@@ -22,6 +22,8 @@ const files = [
     'test/fixtures/bone2d/two-bone-ik.bone2d',
     'test/fixtures/bone2d/transform.bone2d',
     'test/fixtures/bone2d/slider.bone2d',
+    'test/fixtures/bone2d/path-follow.bone2d',
+    'src/air/bone2d/path.ts',
     'src/air/bone2d/transform.ts',
 ];
 async function main() {
@@ -65,6 +67,10 @@ async function main() {
         if (req.url === '/slider.bone2d') {
             res.setHeader('Content-Type', 'application/json');
             return res.end(fs.readFileSync(path.join(root, 'test/fixtures/bone2d/slider.bone2d')));
+        }
+        if (req.url === '/path-follow.bone2d') {
+            res.setHeader('Content-Type', 'application/json');
+            return res.end(fs.readFileSync(path.join(root, 'test/fixtures/bone2d/path-follow.bone2d')));
         }
         if (req.url === '/') {
             res.setHeader('Content-Type', 'text/html');
@@ -887,6 +893,22 @@ async function main() {
                     xy: mesh.geometry.positions,
                 };
             };
+            const pathMount = async (fixed) => {
+                const file = await fetch('/path-follow.bone2d').then((r) => r.json());
+                if (fixed !== undefined)
+                    Object.assign(file.project.skeleton.constraints[0], { positionMode: 'fixed', position: fixed });
+                ikPlayer = await air.createAirBone2dPlayer(parent, JSON.stringify(file));
+                ikPlayer.play('idle');
+            };
+            const pathState = async ({ skin, time }) => {
+                ikPlayer.setSkins(skin ? [skin] : []);
+                ikPlayer.seek(time);
+                await clock.step(0);
+                const point = ikPlayer.getAttachmentGeometry('point');
+                const sprite = leaves(ikPlayer.node.getChildByName('arm-slot'))[0].node.worldMatrix;
+                const root = ikPlayer.node.worldMatrix;
+                return { point, sprite: [sprite.m12 - root.m12, sprite.m13 - root.m13], time: ikPlayer.time };
+            };
             const ikClose = async () => {
                 ikPlayer.dispose();
                 await clock.step(0);
@@ -899,6 +921,8 @@ async function main() {
                 mappedPose,
                 sliderMount,
                 sliderStep,
+                pathMount,
+                pathState,
                 ikClose,
                 frame,
                 requiredMount,
@@ -1482,6 +1506,33 @@ async function main() {
             report.slider[mode.key] = { before, after, beforeHash, afterHash };
             await page.evaluate(() => window.bone2dTest.ikClose());
         }
+        const path = {};
+        async function pathCase(key, skin, time, x, y) {
+            const state = await page.evaluate((v) => window.bone2dTest.pathState(v), { skin, time });
+            const { point, sprite } = state;
+            assert.equal(point.kind, 'point');
+            assert.ok(Math.hypot(point.x - x, point.y - y) < 2e-6, JSON.stringify(state));
+            assert.ok(Math.hypot(sprite[0] - x, sprite[1] - y) < 2e-6, JSON.stringify(state));
+            assert.equal(state.time, time);
+            path[key] = { ...state, image: sha(await page.screenshot()) };
+        }
+        await page.evaluate(() => window.bone2dTest.pathMount());
+        await pathCase('setupParameter', '', 0, 1.75, 0);
+        await pathCase('liveDistance', 'distance', 0, 3.9625233619, 0);
+        await pathCase('setupParameterScaled', '', 1, 3.5, 0);
+        await pathCase('liveDistanceScaled', 'distance', 1, 7.9250467239, 0);
+        await pathCase('nonPath', 'nonpath', 1, 40, 10);
+        await pathCase('setupParameterAgain', '', 0, 1.75, 0);
+        assert.notEqual(path.setupParameter.image, path.liveDistance.image);
+        assert.notEqual(path.setupParameterScaled.image, path.liveDistanceScaled.image);
+        assert.equal(path.setupParameterAgain.image, path.setupParameter.image);
+        await page.evaluate(() => window.bone2dTest.ikClose());
+        for (const position of [-2, 10]) {
+            await page.evaluate((v) => window.bone2dTest.pathMount(v), position);
+            await pathCase(String(position), 'distance', 0, position, 0);
+            await page.evaluate(() => window.bone2dTest.ikClose());
+        }
+        report.pathConstraint = path;
         await page.evaluate(() => window.bone2dTest.close());
         assert.deepEqual(report.pageErrors, []);
         report.status = 'PASS';

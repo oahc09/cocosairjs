@@ -78,7 +78,7 @@ test.each([
     [
         'unsupported constraints',
         (d) => {
-            d.project.skeleton.constraints.push({ type: 'path' });
+            d.project.skeleton.constraints.push({ type: 'physics' });
         },
         /UNSUPPORTED/,
     ],
@@ -826,4 +826,120 @@ test('a later driver reads the current constrained property, and a looping negat
     expect(read().slot.attachment).toBe('source');
     slider.animation = 'missing';
     expect(() => parse(file)).toThrow(/FORMAT.*slider animation/);
+});
+
+const pathFollowText = readFileSync(resolve(__dirname, '../fixtures/bone2d/path-follow.bone2d'), 'utf8');
+const pathFollowFixture = (): any => JSON.parse(pathFollowText);
+test('path parameter and responsive arc distance differ under identical uneven handles', () => {
+    const f = pathFollowFixture();
+    const read = (skins: string[], t: number) => ikWorld(f, skins, t).get('arm-bone')!.slice(4);
+    xyzClose(read([], 0), [1.75, 0]);
+    xyzClose(read([], 1), [3.5, 0]);
+    const [mid, y] = read(['distance'], 0);
+    expect(mid).toBeCloseTo(3.9625233619290583, 7);
+    xyzClose(read(['distance'], 1), [mid * 2, y * 2]);
+    xyzClose(read(['nonpath'], 0), [40, 10]);
+    const c = f.project.skeleton.constraints[0];
+    c.positionMode = 'fixed';
+    c.position = -2;
+    xyzClose(read(['distance'], 0), [-2, 0]);
+    c.position = 10;
+    xyzClose(read(['distance'], 0), [10, 0]);
+});
+
+test('path spacing, chain tip translation, and chainScale update consecutive roots', () => {
+    const f = pathFollowFixture(),
+        c = f.project.skeleton.constraints[0];
+    c.bones.push('second');
+    c.position = 0;
+    c.spacing = 2;
+    c.rotateMode = 'chainScale';
+    let w = ikWorld(f, ['distance'], 0);
+    const distance = w.get('second')![4];
+    expect(distance).toBeCloseTo(2, 1);
+    expect(w.get('arm-bone')![0] * 4).toBeCloseTo(distance, 7);
+    c.rotateMode = 'chain';
+    w = ikWorld(f, ['distance'], 0);
+    expect(w.get('second')![4]).toBeCloseTo(4);
+    c.rotateMode = 'tangent';
+    c.spacingMode = 'length';
+    w = ikWorld(f, ['distance'], 0);
+    expect(w.get('second')![4]).toBeCloseTo(6, 1);
+    c.spacingMode = 'percent';
+    c.spacing = 0.75;
+    expect(ikWorld(f, ['distance'], 0).get('second')![4]).toBeCloseTo(6, 1);
+    c.spacingMode = 'proportional';
+    expect(ikWorld(f, ['distance'], 0).get('second')![4]).toBeCloseTo(6, 1);
+});
+
+test('path shape deform, weight motion, and animated path mix drive the same follower', () => {
+    const f = pathFollowFixture(),
+        rig = f.project.skeleton;
+    const a = rig.skins[0].attachments.track.line;
+    a.weights = Array.from({ length: 6 }, (_, i) => [['holder', a.vertices[i * 2], 0, 1]]);
+    a.vertices = [];
+    rig.animations[0].deform = {
+        skin: { track: { line: [{ time: 0, value: [0, 4, 0, 4, 0, 4, 0, 4, 0, 4, 0, 4] }] } },
+    };
+    rig.animations[0].path = {
+        follow: {
+            mix: [
+                { time: 0, value: [1, 1, 0] },
+                { time: 1, value: [1, 1, 1] },
+            ],
+        },
+    };
+    xyzClose(ikWorld(f, [], 0).get('arm-bone')!.slice(4), [1.75, 10]);
+    xyzClose(ikWorld(f, [], 1).get('arm-bone')!.slice(4), [3.5, 4]);
+    rig.constraints[0].offsetRotation = 20;
+    rig.bones[1].scaleX = -1;
+    const [a0, , a2] = ikWorld(f, [], 0).get('arm-bone')!;
+    expect((Math.atan2(a2, a0) * 180) / Math.PI).toBeCloseTo(160, 5);
+});
+
+test('closed paths wrap signed fixed positions and repeatedly sample the same station', () => {
+    const f = pathFollowFixture(),
+        rig = f.project.skeleton,
+        shape = rig.skins[0].attachments.track.line,
+        path = rig.constraints[0];
+    Object.assign(shape, { vertices: [1, 0, 0, 0, 1, 0, 1, 0, 8, 0, 7, 0], closed: true, constantSpeed: true });
+    path.positionMode = 'fixed';
+    path.position = 14;
+    const a = ikWorld(f, [], 0).get('arm-bone')!;
+    path.position = -2;
+    xyzClose(ikWorld(f, [], 0).get('arm-bone')!, a, 7);
+    expect(a[0]).toBeCloseTo(-1, 7);
+});
+
+test('slider edits to path position only affect constraints later in authored order', () => {
+    const f = pathFollowFixture(),
+        rig = f.project.skeleton,
+        main = rig.animations[0];
+    rig.animations.push({
+        ...main,
+        id: 'bend',
+        name: 'Bend',
+        bones: {},
+        path: { follow: { position: [{ time: 0, value: [1] }] } },
+    });
+    rig.constraints.unshift({
+        type: 'slider',
+        id: 'driver',
+        name: 'Path driver',
+        animation: 'bend',
+        bone: null,
+        property: 'x',
+        local: true,
+        additive: false,
+        loop: false,
+        skinRequired: false,
+        time: 0.25,
+        mix: 1,
+        from: 0,
+        to: 0,
+        scale: 1,
+    });
+    xyzClose(ikWorld(f, [], 0).get('arm-bone')!.slice(4), [8, 0]);
+    rig.constraints.reverse();
+    xyzClose(ikWorld(f, [], 0).get('arm-bone')!.slice(4), [1.75, 0]);
 });
