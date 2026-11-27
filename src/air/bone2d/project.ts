@@ -21,6 +21,8 @@
 */
 import { inheritBasis, poseBasis } from './affine';
 import type { Bone2dInheritance, Matrix2D, Shears } from './affine';
+import { aimBone2d } from './ik';
+import type { Bone2dAimOptions } from './ik';
 
 /** Strict reader for the supported subset of Bone-2D Save Project v1. No editor or Spine dependency. */
 type Obj = Record<string, unknown>;
@@ -87,6 +89,7 @@ interface Bone {
     shear: Shears;
     inherit: Bone2dInheritance;
     skinRequired: boolean;
+    length: number;
 }
 export type Bone2dBlend = 'normal' | 'additive' | 'multiply' | 'screen';
 interface Slot {
@@ -97,10 +100,18 @@ interface Slot {
     attachment: string | null;
     color: RGBA;
 }
+interface AimConstraint extends Bone2dAimOptions {
+    id: string;
+    bone: string;
+    target: string;
+    skinRequired: boolean;
+}
+type AimKey = ValueKey & Pick<Bone2dAimOptions, 'compress' | 'stretch'>;
 interface Skin {
     id: string;
     name: string;
     bones: readonly string[];
+    constraints: readonly string[];
     regions: ReadonlyMap<string, ReadonlyMap<string, Attachment>>;
 }
 export interface Bone2dProjectOptions {
@@ -129,6 +140,7 @@ interface Clip {
     deform: ReadonlyMap<VertexAttachment, ValueKey[]>;
     sequences: ReadonlyMap<Visual, Key<SequenceKey>[]>;
     markers: Key<Bone2dMarker>[];
+    ik: ReadonlyMap<string, AimKey[]>;
 }
 export interface Bone2dMarker {
     readonly id: string;
@@ -150,6 +162,7 @@ export interface Bone2dProject {
     readonly folders: ReadonlyMap<string, Folder>;
     readonly bones: readonly Bone[];
     readonly affineSprites: boolean;
+    readonly constraints: ReadonlyMap<string, AimConstraint>;
     readonly slots: readonly Slot[];
     readonly clips: ReadonlyMap<string, Clip>;
     readonly images: ReadonlyMap<string, Bone2dImage>;
@@ -163,6 +176,7 @@ export interface Bone2dSample {
     readonly bones: ReadonlyMap<string, Bone2dPose>;
     readonly shears: ReadonlyMap<string, Shears>;
     readonly activeBones: ReadonlySet<string>;
+    readonly ik: ReadonlyMap<string, Bone2dAimOptions>;
     readonly slots: ReadonlyMap<string, Bone2dSlotPose>;
     readonly order: readonly string[];
     readonly sequenceFrames: ReadonlyMap<Visual, number>;
@@ -315,7 +329,6 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
     docs.splice(active, 0, obj(p.skeleton, 'skeleton'));
     const skeletonNames = docs.map((d) => str(d.name, 'skeleton name'));
     const sk = docs[selected];
-    none(sk.constraints, 'constraints');
 
     const bones = list(sk.bones, 128, 'bones').map((raw): Bone => {
         const b = obj(raw, 'bone');
@@ -326,6 +339,7 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
         if (b.skinRequired != null && typeof b.skinRequired !== 'boolean') fail(`invalid skin-required flag: ${id}`);
         return {
             id, parent: optionalStr(b.parent, 'parent'), pose: pose(b, id), inherit: mode, skinRequired: b.skinRequired === true,
+            length: num(b.length ?? 0, 'bone length', 0),
             shear: [num(b.shearX, 'bone shearX'), num(b.shearY, 'bone shearY')],
         };
     });
@@ -338,9 +352,25 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
             if (!parent || seen.has(id)) fail(`invalid parent chain: ${bone.id}`);
             if (seen.size >= 32) fail(`bone depth exceeds 32: ${bone.id}`, true);
             seen.add(id);
+            // A descendant cannot be sampled before the skin enables its parent chain.
+            bone.skinRequired ||= parent.skinRequired;
             id = parent.parent;
         }
     }
+    const constraints = index(list(sk.constraints ?? [], 128, 'constraints').map((raw): AimConstraint => {
+        const o = obj(raw, 'constraint');
+        if (o.type !== 'ik') fail('unsupported constraint type', true);
+        if (Array.isArray(o.bones) && o.bones.length === 2) fail('two-bone IK', true);
+        const [idOfBone] = list(o.bones, 1, 'IK bones');
+        const id = str(o.id, 'IK constraint id'), bone = str(idOfBone, 'IK bone'), target = str(o.target, 'IK target');
+        const scaleY = o.scaleY;
+        if (!byBone.has(bone) || !byBone.has(target)) fail('unknown IK bone or target');
+        if (scaleY !== 'none' && scaleY !== 'uniform' && scaleY !== 'volume') fail('invalid IK scaleY mode');
+        if (typeof o.bendPositive !== 'boolean' || typeof o.compress !== 'boolean' || typeof o.stretch !== 'boolean' ||
+            typeof o.skinRequired !== 'boolean') fail('invalid IK flags');
+        num(o.softness, 'IK softness', 0);
+        return { id, bone, target, mix: num(o.mix, 'IK mix', 0, 1), scaleY, compress: o.compress, stretch: o.stretch, skinRequired: o.skinRequired };
+    }), 'duplicate constraint id');
     const images = new Map<string, Bone2dImage>();
     const pictures = new Map(entries(file.images, 'embedded images'));
     for (const raw of list(p.images, 256, 'image references')) {
@@ -388,7 +418,10 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
             const skinBones = list(o.bones ?? [], bones.length, 'skin bones').map((b) => str(b, 'skin bone'));
             if (new Set(skinBones).size !== skinBones.length || skinBones.some((b) => !byBone.has(b)))
                 fail(`invalid skin bones: ${id}`);
-            none(o.constraints, 'skin-required constraints');
+            const skinConstraints = list(o.constraints ?? [], constraints.size, 'skin constraints').map((c) => str(c, 'skin constraint'));
+            if (new Set(skinConstraints).size !== skinConstraints.length || skinConstraints.some((c) => !constraints.has(c))) {
+                fail(`invalid skin constraints: ${id}`);
+            }
             const bySlotRegion = new Map<string, Map<string, Attachment>>();
             for (const [slotId, rawRegions] of entries(o.attachments, 'skin attachments')) {
                 if (!bySlot.has(slotId)) fail(`unknown skin slot: ${slotId}`);
@@ -423,7 +456,7 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
                 }
                 bySlotRegion.set(slotId, regions);
             }
-            return { id, name, bones: skinBones, regions: bySlotRegion };
+            return { id, name, bones: skinBones, constraints: skinConstraints, regions: bySlotRegion };
         }),
         'duplicate skin id',
     );
@@ -473,7 +506,23 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
             const id = str(o.id, 'animation id'),
                 name = str(o.name, 'animation name');
             const duration = num(o.duration, 'animation duration', 0, 3600);
-            for (const k of ['ik', 'transform', 'slider', 'path', 'physics']) none(o[k], k);
+            for (const k of ['transform', 'slider', 'path', 'physics']) none(o[k], k);
+            const ik = new Map<string, AimKey[]>();
+            for (const [id, raw] of entries(o.ik, 'IK timelines')) {
+                if (!constraints.has(id)) fail(`unknown IK timeline: ${id}`);
+                const numbers = values(raw, 2, duration, 'IK key');
+                const flags = keys(raw, duration, 'IK key', (k) => {
+                    if (typeof k.bendPositive !== 'boolean' || typeof k.compress !== 'boolean' || typeof k.stretch !== 'boolean') {
+                        fail('invalid IK key flags');
+                    }
+                    return { compress: k.compress, stretch: k.stretch };
+                });
+                ik.set(id, numbers.map((key, j) => {
+                    num(key.value[0], 'IK key mix', 0, 1);
+                    num(key.value[1], 'IK key softness', 0);
+                    return { ...key, ...flags[j].value };
+                }));
+            }
             const boneTracks = new Map<string, Map<string, ValueKey[]>>();
             for (const [boneId, rawTrack] of entries(o.bones, 'bone timelines')) {
                 if (!byBone.has(boneId)) fail(`unknown animated bone: ${boneId}`);
@@ -570,15 +619,15 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
                     }
                 }
             }
-            return { id, name, duration, order, folderOrder, markers, bones: boneTracks, slots: slotTracks, deform, sequences };
+            return { id, name, duration, order, folderOrder, markers, bones: boneTracks, slots: slotTracks, deform, sequences, ik };
         }),
         'duplicate animation id',
     );
-    const affineSprites = bones.some((bone) => bone.skinRequired || bone.inherit !== 'normal' || bone.shear[0] !== 0 || bone.shear[1] !== 0) ||
+    const affineSprites = constraints.size > 0 || bones.some((bone) => bone.skinRequired || bone.inherit !== 'normal' || bone.shear[0] !== 0 || bone.shear[1] !== 0) ||
         Array.from(clips.values()).some((clip) => Array.from(clip.bones.values()).some(
             (track) => ['shear', 'shearx', 'sheary'].some((channel) => track.has(channel)),
         ));
-    return { skeletonIndex: selected, skeletonNames, bones, affineSprites, slots, clips, images, skins, folders };
+    return { skeletonIndex: selected, skeletonNames, bones, affineSprites, constraints, slots, clips, images, skins, folders };
 }
 function arrangement(raw: unknown, setup: readonly string[]): string[] {
     const desired = list(raw, setup.length, 'slot order').map((entry) => str(entry, 'slot id'));
@@ -715,6 +764,7 @@ export function sampleBone2dProject(
     if (!Number.isFinite(seconds)) fail('invalid sample time');
     const time = Math.max(0, Math.min(seconds, clip?.duration ?? 0));
     const activeBones = new Set(project.bones.filter((bone) => !bone.skinRequired).map((bone) => bone.id));
+    const skinConstraints = new Set<string>();
     if (overlays.length) {
         const byId = new Map(project.bones.map((bone) => [bone.id, bone] as const));
         const fallback = project.skins.values().next().value!;
@@ -722,6 +772,7 @@ export function sampleBone2dProject(
             const skin = project.skins.get(id);
             if (!skin) fail(`unknown skin: ${id}`);
             if (skin === fallback) continue;
+            for (const constraint of skin.constraints) skinConstraints.add(constraint);
             for (const listed of skin.bones) {
                 for (let current: string | null = listed; current !== null; current = byId.get(current)!.parent) {
                     activeBones.add(current);
@@ -807,12 +858,24 @@ export function sampleBone2dProject(
         const frame = sequenceFrame(key.value, time - key.time, sequence.frames.length);
         sequenceFrames.set(visual, frame === -1 ? sequence.setup : frame);
     }
-    return { bones, shears, activeBones, slots, meshDeltas, shapeDeltas, order, sequenceFrames };
+    const ik = new Map<string, Bone2dAimOptions>();
+    for (const [id, c] of project.constraints) {
+        if (!activeBones.has(c.target) || !activeBones.has(c.bone) || (c.skinRequired && !skinConstraints.has(id))) continue;
+        const track = clip?.ik.get(id);
+        const i = track ? last(track, time) : -1;
+        if (i < 0) ik.set(id, c);
+        else {
+            const { compress, stretch } = track![i];
+            ik.set(id, { mix: sampled(track, time)![0], scaleY: c.scaleY, compress, stretch });
+        }
+    }
+    return { bones, shears, activeBones, ik, slots, meshDeltas, shapeDeltas, order, sequenceFrames };
 }
 
 /** Resolve ordered parent/local 2D affine products without decomposing shear. */
 export function bone2dWorldMatrices(project: Bone2dProject, sample: Bone2dSample): ReadonlyMap<string, Matrix2D> {
     const out = new Map<string, Matrix2D>();
+    const solved = new Map<string, Bone2dPose>();
     const byId = new Map(project.bones.map((b) => [b.id, b] as const));
     const compute = (id: string): Matrix2D => {
         const cached = out.get(id);
@@ -823,7 +886,7 @@ export function bone2dWorldMatrices(project: Bone2dProject, sample: Bone2dSample
             return identity;
         }
         const bone = byId.get(id)!;
-        const [x, y, degrees, sx, sy] = sample.bones.get(id)!;
+        const [x, y, degrees, sx, sy] = solved.get(id) ?? sample.bones.get(id)!;
         const shear = sample.shears.get(id)!;
         let m: Matrix2D;
         if (bone.parent === null) {
@@ -836,6 +899,35 @@ export function bone2dWorldMatrices(project: Bone2dProject, sample: Bone2dSample
         out.set(id, m);
         return m;
     };
+    if (sample.ik.size) {
+        const children = new Map<string, string[]>();
+        for (const { id, parent } of project.bones) {
+            if (parent === null) continue;
+            const siblings = children.get(parent);
+            if (siblings) siblings.push(id);
+            else children.set(parent, [id]);
+        }
+        const invalidate = (id: string): void => {
+            if (!out.delete(id)) return;
+            for (const child of children.get(id) ?? []) invalidate(child);
+        };
+        for (const [id, c] of project.constraints) {
+            const options = sample.ik.get(id);
+            if (!options || options.mix === 0) continue;
+            const bone = byId.get(c.bone)!;
+            // The pinned editor does not aim an unparented bone.
+            if (bone.parent === null) continue;
+            // Read the current target before changing this subtree. Targets
+            // downstream of an earlier constraint must see its new matrix.
+            const target = compute(c.target);
+            const current = compute(c.bone);
+            solved.set(c.bone, aimBone2d(
+                solved.get(c.bone) ?? sample.bones.get(c.bone)!,
+                sample.shears.get(c.bone)!, bone.inherit, bone.length, compute(bone.parent), current, target, options,
+            ));
+            invalidate(c.bone);
+        }
+    }
     for (const bone of project.bones) compute(bone.id);
     return out;
 }

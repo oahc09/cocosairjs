@@ -78,7 +78,7 @@ test.each([
     [
         'unsupported constraints',
         (d) => {
-            d.project.skeleton.constraints.push({ type: 'ik' });
+            d.project.skeleton.constraints.push({ type: 'path' });
         },
         /UNSUPPORTED/,
     ],
@@ -470,4 +470,91 @@ test('skin membership activates required ancestors without activating the defaul
     expect(() => sampleBone2dProject(model, 'attack', 0.5, ['missing'])).toThrow(/unknown skin/);
     rig.skins[1].bones = ['missing'];
     expect(() => parse(file)).toThrow(/invalid skin bones/);
+});
+
+const ikFixtureText = readFileSync(resolve(__dirname, '../fixtures/bone2d/ordered-ik.bone2d'), 'utf8');
+const ikFixture = (): any => JSON.parse(ikFixtureText);
+const ikWorld = (file: unknown, skins: readonly string[] = ['engaged'], time = 0) => {
+    const model = parse(file);
+    return bone2dWorldMatrices(model, sampleBone2dProject(model, 'idle', time, skins));
+};
+
+test('IK reads the latest target matrix in authored order; a skin sample cannot reuse a previous pose', () => {
+    const file = ikFixture();
+    const aim = (world: ReturnType<typeof ikWorld>) => {
+        const [a, , c] = world.get('arm-bone')!;
+        return (Math.atan2(c, a) * 180) / Math.PI;
+    };
+    const off = ikWorld(file, ['skin']);
+    expect(aim(off)).toBeCloseTo(36.86989765, 7);
+    expect(off.get('tip')!.slice(4)).toEqual([4, 0]);
+    const on = ikWorld(file);
+    expect(aim(on)).toBeCloseTo(90, 7);
+    expect(on.get('tip')![4]).toBeCloseTo(0, 7);
+    expect(on.get('tip')![5]).toBeCloseTo(4, 7);
+    expect(ikWorld(file, [])).toEqual(off);
+    file.project.skeleton.constraints.reverse();
+    const reverse = ikWorld(file);
+    expect(reverse.get('tip')).toEqual(on.get('tip'));
+    expect(aim(reverse)).toBeCloseTo(36.86989765, 7);
+});
+
+test('IK interpolates mix, steps per-key flags and evaluates scaleY modes at the sample time', () => {
+    for (const scaleY of ['none', 'uniform', 'volume']) {
+        const file = ikFixture();
+        const rig = file.project.skeleton;
+        rig.constraints[0].scaleY = scaleY;
+        const key = (time: number, mix: number, stretch: boolean, compress = false) => ({
+            time,
+            value: [mix, 0],
+            stretch,
+            compress,
+            bendPositive: true,
+        });
+        rig.animations[0].ik = { first: [key(0.25, 0, true), key(0.75, 1, false)] };
+        const [a, b, c, d] = ikWorld(file, ['engaged'], 0.5).get('driver')!;
+        expect(Math.atan2(c, a)).toBeCloseTo(Math.PI / 4, 7);
+        expect(Math.hypot(a, c)).toBeCloseTo(1.75, 7);
+        expect(Math.hypot(b, d)).toBeCloseTo(scaleY === 'none' ? 1 : scaleY === 'uniform' ? 1.75 : 1 / 1.75, 7);
+        expect(Math.hypot(...ikWorld(file, ['engaged'], 0.75).get('tip')!.slice(4))).toBeCloseTo(4, 7);
+        expect(ikWorld(file, ['engaged'], 0.125).get('tip')![5]).toBeCloseTo(4, 7);
+        rig.bones[3].y = 1;
+        rig.animations[0].ik = { first: [key(0, 1, false, true)] };
+        const [aa, bb, cc, dd] = ikWorld(file).get('driver')!;
+        expect(Math.hypot(aa, cc)).toBeCloseTo(0.25, 7);
+        expect(Math.hypot(bb, dd)).toBeCloseTo(scaleY === 'none' ? 1 : scaleY === 'uniform' ? 0.25 : 1 / 0.41071425, 7);
+    }
+});
+
+test('IK skin membership does not activate a skin-required target bone by itself', () => {
+    const file = ikFixture();
+    const rig = file.project.skeleton;
+    rig.bones[3].skinRequired = true;
+    rig.skins.push({ id: 'target-skin', name: 'Target', bones: ['target'], constraints: [], attachments: {} });
+    expect(ikWorld(file).get('tip')!.slice(4)).toEqual([4, 0]);
+    expect(ikWorld(file, ['target-skin']).get('tip')!.slice(4)).toEqual([4, 0]);
+    expect(ikWorld(file, ['engaged', 'target-skin']).get('tip')![5]).toBeCloseTo(4, 7);
+});
+
+test('an IK target below a skin-required bone is disabled until that target or its descendant is listed', () => {
+    const file = ikFixture();
+    const rig = file.project.skeleton;
+    rig.bones[1].skinRequired = true;
+    rig.skins[1].bones = ['driver'];
+    rig.skins.push({ id: 'tip-skin', name: 'Tip', bones: ['tip'], constraints: [], attachments: {} });
+    const driverOnly = ikWorld(file);
+    expect(driverOnly.get('tip')).toEqual([1, 0, 0, 1, 0, 0]);
+    expect(driverOnly.get('arm-bone')![2]).toBeCloseTo(0, 7);
+    const both = ikWorld(file, ['engaged', 'tip-skin']);
+    expect(both.get('tip')![5]).toBeCloseTo(4, 7);
+    expect(both.get('arm-bone')![2]).toBeCloseTo(1, 7);
+});
+
+test('rejects unknown IK references and reports two-bone IK as unsupported', () => {
+    const file = ikFixture();
+    file.project.skeleton.constraints[0].target = 'missing';
+    expect(() => parse(file)).toThrow(/FORMAT.*unknown IK/);
+    file.project.skeleton.constraints[0].target = 'target';
+    file.project.skeleton.constraints[0].bones.push('tip');
+    expect(() => parse(file)).toThrow(/UNSUPPORTED.*two-bone IK/);
 });

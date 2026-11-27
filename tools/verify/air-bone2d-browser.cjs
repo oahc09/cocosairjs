@@ -17,6 +17,8 @@ const files = [
     'src/air/bone2d/polygon.ts',
     'src/air/bone2d/two-color.ts',
     'src/air/bone2d/affine.ts',
+    'src/air/bone2d/ik.ts',
+    'test/fixtures/bone2d/ordered-ik.bone2d',
 ];
 async function main() {
     const [engine, output, ...extra] = process.argv.slice(2);
@@ -43,6 +45,10 @@ async function main() {
         if (req.url === '/clawbot.bone2d') {
             res.setHeader('Content-Type', 'application/json');
             return res.end(nativeFile);
+        }
+        if (req.url === '/ordered-ik.bone2d') {
+            res.setHeader('Content-Type', 'application/json');
+            return res.end(fs.readFileSync(path.join(root, 'test/fixtures/bone2d/ordered-ik.bone2d')));
         }
         if (req.url === '/') {
             res.setHeader('Content-Type', 'text/html');
@@ -789,7 +795,32 @@ async function main() {
                 await clock.step(0);
                 return markers;
             };
+            let ikPlayer;
+            const ikMount = async (reverse) => {
+                const file = await fetch('/ordered-ik.bone2d').then((r) => r.json());
+                if (reverse) file.project.skeleton.constraints.reverse();
+                ikPlayer = await air.createAirBone2dPlayer(parent, JSON.stringify(file));
+                ikPlayer.play('idle');
+                ikPlayer.seek(0.25);
+            };
+            const ikState = async (on) => {
+                ikPlayer.setSkins(on ? ['engaged'] : []);
+                await clock.step(0);
+                const sprite = leaves(ikPlayer.node.getChildByName('arm-slot'))[0].node.worldMatrix;
+                return {
+                    angle: (Math.atan2(sprite.m01, sprite.m00) * 180) / Math.PI,
+                    point: ikPlayer.getAttachmentGeometry('tip-slot'),
+                    time: ikPlayer.time,
+                };
+            };
+            const ikClose = async () => {
+                ikPlayer.dispose();
+                await clock.step(0);
+            };
             window.bone2dTest = {
+                ikMount,
+                ikState,
+                ikClose,
                 frame,
                 requiredMount,
                 requiredSkin,
@@ -823,6 +854,7 @@ async function main() {
                     clipPlayer?.dispose();
                     requiredPlayer?.dispose();
                     affinePlayer?.dispose();
+                    ikPlayer?.dispose();
                     wardrobe?.dispose();
                     meshInstance?.dispose();
                     folderPlayer?.dispose();
@@ -1286,6 +1318,31 @@ async function main() {
         const laterMarkers = await page.evaluate(() => window.bone2dTest.requiredClose());
         assert.deepEqual(laterMarkers, []);
         report.skinRequirements = { hiddenHash, shownHash, startMarkers, laterMarkers };
+        {
+            await page.evaluate(() => window.bone2dTest.ikMount(false));
+            const off = await page.evaluate(() => window.bone2dTest.ikState(false));
+            const ikOffHash = sha(await page.screenshot());
+            const on = await page.evaluate(() => window.bone2dTest.ikState(true));
+            const ikOnHash = sha(await page.screenshot());
+            assert.equal(off.time, 0.25);
+            assert.equal(on.time, off.time);
+            assert.equal(off.point.kind, 'point');
+            assert.ok(Math.abs(off.angle - 36.86989765) < 1e-4);
+            assert.ok(Math.hypot(off.point.x - 4, off.point.y) < 1e-5);
+            assert.ok(Math.abs(on.angle - 90) < 1e-4);
+            assert.ok(Math.hypot(on.point.x, on.point.y - 4) < 1e-5);
+            assert.notEqual(ikOnHash, ikOffHash);
+            assert.deepEqual(await page.evaluate(() => window.bone2dTest.ikState(false)), off);
+            assert.equal(sha(await page.screenshot()), ikOffHash);
+            await page.evaluate(() => window.bone2dTest.ikClose());
+            await page.evaluate(() => window.bone2dTest.ikMount(true));
+            const reversed = await page.evaluate(() => window.bone2dTest.ikState(true));
+            assert.ok(Math.abs(reversed.angle - off.angle) < 1e-4);
+            assert.deepEqual(reversed.point, on.point);
+            assert.equal(sha(await page.screenshot()), ikOffHash);
+            await page.evaluate(() => window.bone2dTest.ikClose());
+            report.orderedIk = { off, on, reversed, ikOffHash, ikOnHash };
+        }
         await page.evaluate(() => window.bone2dTest.close());
         assert.deepEqual(report.pageErrors, []);
         report.status = 'PASS';
