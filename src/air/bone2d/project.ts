@@ -110,6 +110,28 @@ interface AimConstraint extends Bone2dAimOptions {
     target: string;
     skinRequired: boolean;
 }
+interface SliderState {
+    time: number;
+    mix: number;
+}
+interface SliderConstraint extends SliderState {
+    kind: 'slider';
+    id: string;
+    animation: string | null;
+    bone: string | null;
+    property: TransformProperty;
+    local: boolean;
+    additive: boolean;
+    loop: boolean;
+    from: number;
+    to: number;
+    scale: number;
+    skinRequired: boolean;
+}
+interface SliderTracks {
+    time: ValueKey[];
+    mix: ValueKey[];
+}
 type AimKey = ValueKey & Pick<Bone2dAimOptions, 'compress' | 'stretch' | 'bendPositive'>;
 interface Skin {
     id: string;
@@ -146,6 +168,7 @@ interface Clip {
     markers: Key<Bone2dMarker>[];
     ik: ReadonlyMap<string, AimKey[]>;
     transform: ReadonlyMap<string, ValueKey[]>;
+    slider: ReadonlyMap<string, SliderTracks>;
 }
 export interface Bone2dMarker {
     readonly id: string;
@@ -167,7 +190,7 @@ export interface Bone2dProject {
     readonly folders: ReadonlyMap<string, Folder>;
     readonly bones: readonly Bone[];
     readonly affineSprites: boolean;
-    readonly constraints: ReadonlyMap<string, AimConstraint | Bone2dTransform>;
+    readonly constraints: ReadonlyMap<string, AimConstraint | Bone2dTransform | SliderConstraint>;
     readonly slots: readonly Slot[];
     readonly clips: ReadonlyMap<string, Clip>;
     readonly images: ReadonlyMap<string, Bone2dImage>;
@@ -183,6 +206,10 @@ export interface Bone2dSample {
     readonly activeBones: ReadonlySet<string>;
     readonly ik: ReadonlyMap<string, Bone2dAimOptions>;
     readonly transforms: ReadonlyMap<string, readonly number[]>;
+    readonly sliders: ReadonlyMap<string, SliderState>;
+    readonly solvedWorld?: ReadonlyMap<string, Matrix2D>;
+    readonly slotFrames?: ReadonlyMap<string, number>;
+    readonly slotDeform?: ReadonlyMap<string, readonly number[]>;
     readonly slots: ReadonlyMap<string, Bone2dSlotPose>;
     readonly order: readonly string[];
     readonly sequenceFrames: ReadonlyMap<Visual, number>;
@@ -229,9 +256,10 @@ function pictureSequence(raw: unknown, path: string, images: ReadonlyMap<string,
     for (const name of frames) if (!images.has(name)) fail(`unknown sequence image: ${name}`);
     return { frames, setup };
 }
-export function bone2dPicture(visual: Visual, sample: Bone2dSample): string {
+export function bone2dPicture(visual: Visual, sample: Bone2dSample, slot?: string): string {
     const sequence = visual.sequence;
-    return sequence ? sequence.frames[sample.sequenceFrames.get(visual) ?? sequence.setup] : visual.path;
+    const frame = slot !== undefined && sample.slotFrames ? sample.slotFrames.get(slot) : sample.sequenceFrames.get(visual);
+    return sequence ? sequence.frames[frame ?? sequence.setup] : visual.path;
 }
 function optionalStr(x: unknown, label: string): string | null {
     return x == null ? null : str(x, label);
@@ -364,8 +392,21 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
         }
     }
     let mappingWrites = 0;
-    const constraints = index(list(sk.constraints ?? [], 128, 'constraints').map((raw): AimConstraint | Bone2dTransform => {
+    const constraints = index(list(sk.constraints ?? [], 128, 'constraints').map((raw): AimConstraint | Bone2dTransform | SliderConstraint => {
         const o = obj(raw, 'constraint');
+        if (o.type === 'slider') {
+            const id = str(o.id, 'slider id'), animation = optionalStr(o.animation, 'slider animation'), bone = optionalStr(o.bone, 'slider driver');
+            if (bone !== null && !byBone.has(bone)) fail('invalid slider driver');
+            const { local, additive, loop, skinRequired } = o;
+            if (typeof local !== 'boolean' || typeof additive !== 'boolean' || typeof loop !== 'boolean' ||
+                typeof skinRequired !== 'boolean') fail('invalid slider flags');
+            const property = o.property as TransformProperty;
+            if (!transformProperties.includes(property)) fail('invalid slider property');
+            return { kind: 'slider', id, animation, bone, property, local, additive, loop, skinRequired,
+                time: num(o.time, 'slider time'), mix: num(o.mix, 'slider mix', 0, 1), from: num(o.from, 'slider from'),
+                to: num(o.to, 'slider to'), scale: num(o.scale, 'slider scale'),
+            };
+        }
         if (o.type === 'transform') {
             const id = str(o.id, 'transform id'), source = str(o.source, 'transform source');
             const targets = list(o.bones, bones.length, 'transform bones').map((v) => str(v, 'transform bone'));
@@ -545,7 +586,15 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
             const id = str(o.id, 'animation id'),
                 name = str(o.name, 'animation name');
             const duration = num(o.duration, 'animation duration', 0, 3600);
-            for (const k of ['slider', 'path', 'physics']) none(o[k], k);
+            for (const k of ['path', 'physics']) none(o[k], k);
+            const slider = new Map<string, SliderTracks>();
+            for (const [id, raw] of entries(o.slider, 'slider timelines')) {
+                if (constraints.get(id)?.kind !== 'slider') fail(`unknown slider timeline: ${id}`);
+                const tracks = obj(raw, 'slider tracks');
+                const time = values(tracks.time, 1, duration, 'slider time key'), mix = values(tracks.mix, 1, duration, 'slider mix key');
+                for (const key of mix) num(key.value[0], 'slider mix key', 0, 1);
+                slider.set(id, { time, mix });
+            }
             const transform = new Map<string, ValueKey[]>();
             for (const [id, raw] of entries(o.transform, 'transform timelines')) {
                 if (constraints.get(id)?.kind !== 'transform') fail(`unknown transform timeline: ${id}`);
@@ -665,10 +714,13 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
                     }
                 }
             }
-            return { id, name, duration, order, folderOrder, markers, bones: boneTracks, slots: slotTracks, deform, sequences, ik, transform };
+            return { id, name, duration, order, folderOrder, markers, bones: boneTracks, slots: slotTracks, deform, sequences, ik, transform, slider };
         }),
         'duplicate animation id',
     );
+    for (const c of constraints.values()) {
+        if (c.kind === 'slider' && c.animation !== null && !clips.has(c.animation)) fail('unknown slider animation');
+    }
     const affineSprites = constraints.size > 0 || bones.some((bone) => bone.skinRequired || bone.inherit !== 'normal' || bone.shear[0] !== 0 || bone.shear[1] !== 0) ||
         Array.from(clips.values()).some((clip) => Array.from(clip.bones.values()).some(
             (track) => ['shear', 'shearx', 'sheary'].some((channel) => track.has(channel)),
@@ -811,13 +863,15 @@ export function sampleBone2dProject(
     const time = Math.max(0, Math.min(seconds, clip?.duration ?? 0));
     const activeBones = new Set(project.bones.filter((bone) => !bone.skinRequired).map((bone) => bone.id));
     const skinConstraints = new Set<string>();
+    const selectedSkins = [project.skins.values().next().value!];
     if (overlays.length) {
         const byId = new Map(project.bones.map((bone) => [bone.id, bone] as const));
         const fallback = project.skins.values().next().value!;
         for (const id of overlays) {
             const skin = project.skins.get(id);
             if (!skin) fail(`unknown skin: ${id}`);
-            if (skin === fallback) continue;
+            if (skin === fallback || selectedSkins.includes(skin)) continue;
+            selectedSkins.push(skin);
             for (const constraint of skin.constraints) skinConstraints.add(constraint);
             for (const listed of skin.bones) {
                 for (let current: string | null = listed; current !== null; current = byId.get(current)!.parent) {
@@ -904,9 +958,16 @@ export function sampleBone2dProject(
         const frame = sequenceFrame(key.value, time - key.time, sequence.frames.length);
         sequenceFrames.set(visual, frame === -1 ? sequence.setup : frame);
     }
-    const ik = new Map<string, Bone2dAimOptions>(), transforms = new Map<string, readonly number[]>();
+    const ik = new Map<string, Bone2dAimOptions>(), transforms = new Map<string, readonly number[]>(), sliders = new Map<string, SliderState>();
     for (const [id, c] of project.constraints) {
         if (c.skinRequired && !skinConstraints.has(id)) continue;
+        if (c.kind === 'slider') {
+            if (c.animation !== null && (c.bone === null || activeBones.has(c.bone))) {
+                const track = clip?.slider.get(id);
+                sliders.set(id, { time: sampled(track?.time, time)?.[0] ?? c.time, mix: sampled(track?.mix, time)?.[0] ?? c.mix });
+            }
+            continue;
+        }
         if (c.kind === 'transform') {
             if (activeBones.has(c.source)) transforms.set(id, sampled(clip?.transform.get(id), time) ?? c.mix);
             continue;
@@ -921,11 +982,16 @@ export function sampleBone2dProject(
             ik.set(id, { mix, softness, scaleY: c.scaleY, compress, stretch, bendPositive });
         }
     }
-    return { bones, shears, activeBones, ik, transforms, slots, meshDeltas, shapeDeltas, order, sequenceFrames };
+    const sample: Bone2dSample = { bones, shears, activeBones, ik, transforms, sliders, slots, meshDeltas, shapeDeltas, order, sequenceFrames };
+    return sliders.size ? solvePose(project, sample, selectedSkins) : sample;
 }
 
 /** Resolve ordered parent/local 2D affine products without decomposing shear. */
 export function bone2dWorldMatrices(project: Bone2dProject, sample: Bone2dSample): ReadonlyMap<string, Matrix2D> {
+    return sample.solvedWorld ?? solvePose(project, sample, []).solvedWorld!;
+}
+
+function solvePose(project: Bone2dProject, sample: Bone2dSample, skins: readonly Skin[]): Bone2dSample {
     const out = new Map<string, Matrix2D>();
     const solved = new Map<string, AppliedPose>();
     const explicitWorld = new Set<string>();
@@ -954,7 +1020,27 @@ export function bone2dWorldMatrices(project: Bone2dProject, sample: Bone2dSample
         out.set(id, m);
         return m;
     };
-    if (sample.ik.size || sample.transforms.size) {
+    let order = sample.order;
+    const ik = new Map(sample.ik), transforms = new Map(sample.transforms), sliders = new Map(sample.sliders);
+    const slots = new Map(sample.slots);
+    const slotFrames = new Map<string, number>(), slotDeform = new Map<string, readonly number[]>();
+    const bySlot = new Map(project.slots.map((s) => [s.id, s] as const));
+    const attachment = (id: string): Attachment | undefined => resolveBone2dAttachment(skins, id, slots.get(id)!.attachment);
+    const owner = (a: Attachment | undefined): Attachment | undefined => a?.kind === 'mesh' ? a.deformParent ?? a : a;
+    if (sliders.size) {
+        for (const { id } of project.slots) {
+            const a = attachment(id);
+            if (!a) continue;
+            if (a.kind === 'mesh' || a.kind === 'region') {
+                const frame = sample.sequenceFrames.get(a);
+                if (frame !== undefined) slotFrames.set(id, frame);
+            }
+            const deform = a.kind === 'mesh' ? sample.meshDeltas.get(a.deformParent ?? a) :
+                a.kind === 'point' || a.kind === 'region' ? undefined : sample.shapeDeltas.get(a);
+            if (deform !== undefined) slotDeform.set(id, deform);
+        }
+    }
+    if (ik.size || transforms.size || sliders.size) {
         const children = new Map<string, string[]>();
         for (const { id, parent } of project.bones) {
             if (parent === null) continue;
@@ -982,8 +1068,129 @@ export function bone2dWorldMatrices(project: Bone2dProject, sample: Bone2dSample
             solved.set(id, pose);
         };
         for (const [id, c] of project.constraints) {
+            if (c.kind === 'slider') {
+                const state = sliders.get(id);
+                const clip = c.animation === null ? undefined : project.clips.get(c.animation);
+                if (!state || state.mix === 0 || !clip) continue;
+                const alpha = state.mix;
+                let time = state.time;
+                if (c.bone !== null) {
+                    const none = [0, 0, 0, 0, 0, 0];
+                    const driven = c.local ? transformReadLocal(c.property, readLocal(c.bone), none) :
+                        transformReadWorld(c.property, compute(c.bone), none);
+                    time = c.to + (driven - c.from) * c.scale;
+                    time = c.loop && clip.duration > 0 ? clip.duration + time % clip.duration : Math.max(0, time);
+                    sliders.set(id, { ...state, time });
+                }
+                if (c.loop && clip.duration > 0) time %= clip.duration;
+                const blend = (from: number, value: number, add = c.additive): number => from + (value - (add ? 0 : from)) * alpha;
+                for (const [bone, tracks] of clip.bones) {
+                    if (!sample.activeBones.has(bone)) continue;
+                    const setup = byId.get(bone)!;
+                    const from = readLocal(bone);
+                    const value = [...from.pose, ...from.shear];
+                    const base = [...setup.pose, ...setup.shear];
+                    const apply = (channel: string, ...axes: number[]): void => {
+                        const key = sampled(tracks.get(channel), time);
+                        if (!key) return;
+                        axes.forEach((axis, component) => {
+                            const v = key[component];
+                            if (axis !== 3 && axis !== 4) {
+                                value[axis] = blend(value[axis], v + (c.additive ? 0 : base[axis]));
+                            } else {
+                                const target = v * base[axis];
+                                if (c.additive) value[axis] += (target - base[axis]) * alpha;
+                                else value[axis] = blend(Math.abs(value[axis]) * Math.sign(target), target, false);
+                            }
+                        });
+                    };
+                    apply('rotate', 2);
+                    apply('translate', 0, 1);
+                    apply('scale', 3, 4);
+                    apply('shear', 5, 6);
+                    for (const [axis, channel] of ['translatex', 'translatey', '', 'scalex', 'scaley', 'shearx', 'sheary'].entries()) {
+                        if (channel) apply(channel, axis);
+                    }
+                    writeLocal(bone, { pose: [value[0], value[1], value[2], value[3], value[4]], shear: [value[5], value[6]] });
+                }
+                const mixColor = (old: readonly number[], values: readonly number[]): number[] =>
+                    old.map((x, i) => Math.max(0, Math.min(1, blend(x, values[i], false))));
+                for (const [slot, track] of clip.slots) {
+                    if (!sample.activeBones.has(bySlot.get(slot)!.bone)) continue;
+                    let current = slots.get(slot)!;
+                    const index = last(track.attachment, time);
+                    const name = index < 0 ? current.attachment : track.attachment[index].value;
+                    if (name !== current.attachment) {
+                        const before = attachment(slot);
+                        current = { ...current, attachment: name };
+                        slots.set(slot, current);
+                        const after = attachment(slot);
+                        slotFrames.delete(slot);
+                        if (!before || !after || before === after || owner(before) !== owner(after)) slotDeform.delete(slot);
+                    }
+                    const light = sampled(track.rgba, time), pair = sampled(track.rgba2, time);
+                    let color = current.color, dark = current.dark;
+                    if (light) color = mixColor(color, light) as unknown as RGBA;
+                    if (pair) {
+                        color = mixColor(color, pair) as unknown as RGBA;
+                        if (dark) dark = mixColor(dark, pair.slice(4)) as unknown as RGB;
+                    }
+                    slots.set(slot, { ...current, color, dark });
+                }
+                for (const [slot, s] of bySlot) {
+                    if (!sample.activeBones.has(s.bone)) continue;
+                    const a = attachment(slot), base = owner(a);
+                    if (base?.kind === 'mesh' || base?.kind === 'path') {
+                        const val = sampled(clip.deform.get(base), time);
+                        if (val) {
+                            const prior = slotDeform.get(slot);
+                            slotDeform.set(slot, val.map((v, i) => blend(prior?.[i] ?? 0, v)));
+                        }
+                    }
+                    if ((a?.kind === 'mesh' || a?.kind === 'region') && a.sequence) {
+                        const track = clip.sequences.get(a);
+                        const j = track ? last(track, time) : -1;
+                        if (j >= 0) {
+                            const key = track![j];
+                            const frame = sequenceFrame(key.value, time - key.time, a.sequence.frames.length);
+                            if (frame >= 0) slotFrames.set(slot, frame);
+                        }
+                    }
+                }
+                const draw = last(clip.order, time);
+                if (draw >= 0) order = clip.order[draw].value;
+                for (const [folderId, folder] of project.folders) {
+                    const track = clip.folderOrder.get(folderId);
+                    if (!track?.length) continue;
+                    const key = last(track, time);
+                    const next = key >= 0 ? track[key].value : folder.members;
+                    const seats = new Set(folder.members);
+                    let offset = 0;
+                    order = order.map((slot) => seats.has(slot) ? next[offset++] : slot);
+                }
+                for (const [idOfIk, keys] of clip.ik) {
+                    const cur = ik.get(idOfIk), key = last(keys, time);
+                    if (!cur || key < 0) continue;
+                    const [mix, softness] = sampled(keys, time)!;
+                    const { compress, stretch, bendPositive } = keys[key];
+                    ik.set(idOfIk, { ...cur, mix: blend(cur.mix, mix, false), softness: blend(cur.softness, softness, false),
+                        compress, stretch, bendPositive });
+                }
+                for (const [idOfTransform, keys] of clip.transform) {
+                    const cur = transforms.get(idOfTransform), val = sampled(keys, time);
+                    if (cur && val) transforms.set(idOfTransform, cur.map((v, i) => blend(v, val[i])));
+                }
+                for (const [idOfSlider, keys] of clip.slider) {
+                    const cur = sliders.get(idOfSlider);
+                    if (!cur) continue;
+                    const t = sampled(keys.time, time)?.[0], m = sampled(keys.mix, time)?.[0];
+                    sliders.set(idOfSlider, { time: t === undefined ? cur.time : blend(cur.time, t),
+                        mix: m === undefined ? cur.mix : blend(cur.mix, m) });
+                }
+                continue;
+            }
             if (c.kind === 'transform') {
-                const mix = sample.transforms.get(id);
+                const mix = transforms.get(id);
                 if (!mix?.some((amount) => amount !== 0)) continue;
                 let worldSource = c.localSource ? null : compute(c.source);
                 let localSource = c.localSource ? readLocal(c.source) : null;
@@ -1020,7 +1227,7 @@ export function bone2dWorldMatrices(project: Bone2dProject, sample: Bone2dSample
                 }
                 continue;
             }
-            const options = sample.ik.get(id);
+            const options = ik.get(id);
             if (!options || options.mix === 0) continue;
             const bone = byId.get(c.bone)!;
             // The pinned editor does not aim an unparented bone.
@@ -1048,7 +1255,9 @@ export function bone2dWorldMatrices(project: Bone2dProject, sample: Bone2dSample
         }
     }
     for (const bone of project.bones) compute(bone.id);
-    return out;
+    return { ...sample, solvedWorld: out, slots, order, ik, transforms, sliders,
+        ...(sliders.size ? { slotFrames, slotDeform } : {}),
+    };
 }
 
 /** Build a mesh in player-root coordinates. Weighted deform offsets are per influence, not per final vertex. */
@@ -1096,6 +1305,7 @@ export function bone2dShapeGeometry(
     slotBone: string,
     sample: Bone2dSample,
     world: ReadonlyMap<string, Matrix2D>,
+    slotId?: string,
 ): Bone2dAttachmentGeometry {
     if (attachment.kind === 'point') {
         const [a, b, c, d, tx, ty] = world.get(slotBone)!;
@@ -1107,7 +1317,8 @@ export function bone2dShapeGeometry(
             rotation: Math.atan2(c * x + d * y, a * x + b * y) * 180 / Math.PI,
         };
     }
-    const vertices = bone2dMeshPositions(attachment, slotBone, world, sample.shapeDeltas.get(attachment));
+    const vertices = bone2dMeshPositions(attachment, slotBone, world,
+        slotId !== undefined && sample.slotDeform ? sample.slotDeform.get(slotId) : sample.shapeDeltas.get(attachment));
     if (attachment.kind === 'boundingbox') return { kind: 'boundingbox', vertices };
     return { kind: 'path', vertices, closed: attachment.closed, constantSpeed: attachment.constantSpeed };
 }

@@ -21,6 +21,7 @@ const files = [
     'test/fixtures/bone2d/ordered-ik.bone2d',
     'test/fixtures/bone2d/two-bone-ik.bone2d',
     'test/fixtures/bone2d/transform.bone2d',
+    'test/fixtures/bone2d/slider.bone2d',
     'src/air/bone2d/transform.ts',
 ];
 async function main() {
@@ -60,6 +61,10 @@ async function main() {
         if (req.url === '/transform.bone2d') {
             res.setHeader('Content-Type', 'application/json');
             return res.end(fs.readFileSync(path.join(root, 'test/fixtures/bone2d/transform.bone2d')));
+        }
+        if (req.url === '/slider.bone2d') {
+            res.setHeader('Content-Type', 'application/json');
+            return res.end(fs.readFileSync(path.join(root, 'test/fixtures/bone2d/slider.bone2d')));
         }
         if (req.url === '/') {
             res.setHeader('Content-Type', 'text/html');
@@ -860,6 +865,28 @@ async function main() {
                     return [point.x, point.y, sprite.m12 - root.m12, sprite.m13 - root.m13];
                 });
             };
+            const sliderMount = async ({ additive, zero, independent }) => {
+                const file = await fetch('/slider.bone2d').then((r) => r.json());
+                const rig = file.project.skeleton;
+                Object.assign(rig.constraints[1], { additive, mix: zero ? 0 : 0.25 });
+                if (independent) rig.animations[1].slots['arm-slot'].attachment[0].name = 'independent';
+                ikPlayer = await air.createAirBone2dPlayer(parent, JSON.stringify(file));
+                ikPlayer.play('idle');
+            };
+            const sliderStep = async (dt) => {
+                const events = ikPlayer.advance(dt).map((event) => event.id);
+                await clock.step(0);
+                const mesh = ikPlayer.node
+                    .getChildByName('arm-slot')
+                    .getChildByName('Mesh')
+                    .getComponent(air.AirUIMesh);
+                return {
+                    events,
+                    time: ikPlayer.time,
+                    width: mesh.spriteFrame.originalSize.width,
+                    xy: mesh.geometry.positions,
+                };
+            };
             const ikClose = async () => {
                 ikPlayer.dispose();
                 await clock.step(0);
@@ -870,6 +897,8 @@ async function main() {
                 ikPairMount,
                 transformMount,
                 mappedPose,
+                sliderMount,
+                sliderStep,
                 ikClose,
                 frame,
                 requiredMount,
@@ -1434,6 +1463,25 @@ async function main() {
         assert.equal(sha(await page.screenshot()), mappedStartHash);
         report.transform = { mappedStart, mappedEnd, mappedStartHash, mappedEndHash };
         await page.evaluate(() => window.bone2dTest.ikClose());
+        report.slider = {};
+        for (const mode of [
+            { key: 'replace', additive: false, zero: false, independent: false, xy: [11, 0, -33, 0, 5.5, 8] },
+            { key: 'add', additive: true, zero: false, independent: false, xy: [13, 0, 45, 0, 17, 8] },
+            { key: 'zero', additive: false, zero: true, independent: false, xy: [12, 0, 60, 0, 18, 8] },
+            { key: 'independent', additive: false, zero: false, independent: true, xy: [11, 0, -33, 0, 11, 8] },
+        ]) {
+            await page.evaluate((m) => window.bone2dTest.sliderMount(m), mode);
+            const before = await page.evaluate(() => window.bone2dTest.sliderStep(0.25));
+            const beforeHash = sha(await page.screenshot());
+            const after = await page.evaluate(() => window.bone2dTest.sliderStep(0.5));
+            const afterHash = sha(await page.screenshot());
+            assert.deepEqual(before, { events: [], time: 0.25, width: 16, xy: [12, 0, 60, 0, 18, 8] });
+            assert.deepEqual(after, { events: ['ev-start'], time: 0.75, width: mode.zero ? 16 : 8, xy: mode.xy });
+            if (mode.zero) assert.equal(afterHash, beforeHash);
+            else assert.notEqual(afterHash, beforeHash);
+            report.slider[mode.key] = { before, after, beforeHash, afterHash };
+            await page.evaluate(() => window.bone2dTest.ikClose());
+        }
         await page.evaluate(() => window.bone2dTest.close());
         assert.deepEqual(report.pageErrors, []);
         report.status = 'PASS';

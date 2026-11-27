@@ -1,6 +1,6 @@
 # Bone-2D runtime for Cocos AIR
 
-**Status: playback, skin selection, mesh deformation, single- and two-bone IK, and transform constraints, not full Bone-2D parity.** Bone-2D remains the visual authoring tool. AIR consumes the native Save Project JSON (`.bone2d` format/version 1); it does not run the editor, read Spine JSON/binary, or ship a Spine runtime. The inspected authoring baseline is [Bone-2D 30bee4a](https://github.com/iamgatz/Bone-2D/tree/30bee4a7e348107877707596e0b702f60dce5369).
+**Status: playback, skin selection, mesh deformation, single- and two-bone IK, transform constraints, and sliders, not full Bone-2D parity.** Bone-2D remains the visual authoring tool. AIR consumes the native Save Project JSON (`.bone2d` format/version 1); it does not run the editor, read Spine JSON/binary, or ship a Spine runtime. The inspected authoring baseline is [Bone-2D 30bee4a](https://github.com/iamgatz/Bone-2D/tree/30bee4a7e348107877707596e0b702f60dce5369).
 
 ## Play a project
 
@@ -46,6 +46,8 @@ Two-bone IK follows the authored constraint order and accepts a parent followed 
 
 Transform constraints map one source property to one or more properties of each target bone in authored order. Source and target spaces are independent. World-source translation offsets follow the source basis; negative world-source headings read on the 0–360° branch. Mappings support offset, multiplier, ascending or descending clamping, and additive or absolute writes. Each target property has a separately keyed mix; later constraints read the edited pose.
 
+Sliders sample a second animation at a keyed time or at a time driven by a bone property. A nonzero mix blends keyed values onto the current constrained pose and applies keyed attachment, picture, and draw-order changes discretely. Changing an attachment resets its picture to setup and keeps deformation only for a shared deform owner. Slider clips do not emit markers; only playback of the main clip does.
+
 ## Full runtime acceptance matrix
 
 A native project must either play with its intended semantics or report a specific unsupported feature. Silently dropping a runtime feature is not compatibility. Editor-only fields (selection, locks, guides, notes, viewport) do not affect exported runtime state.
@@ -70,7 +72,8 @@ A native project must either play with its intended semantics or report a specif
 | Single-bone IK                                                                                           | Implemented         | Authored order, mix keys, compression/stretch flags and Y scale modes; shared solved pose                      |
 | Two-bone IK                                                                                              | Implemented         | Off-axis joint, signed and nonuniform scale, bend/softness keys, joint and tip agreement in the rendered pose  |
 | Transform constraints                                                                                    | Implemented         | Local/world cross-property mapping, signed transforms, channel mixes, and ordered interaction with IK          |
-| Slider, path and physics constraints                                                                     | R2 solver parity    | Pinned pure solver differential checks, including constraint order, reset and fixed-step advance               |
+| Slider constraints                                                                                       | Implemented         | Authored order, manual and driven time, signed scale blending and linked attachment/sequence/deform switches   |
+| Path and physics constraints                                                                             | R2 solver parity    | Pinned pure solver differential checks, including constraint order, reset and fixed-step advance               |
 | Crossfades, mixed tracks, playback range and ping-pong, lifecycle across several instances               | R2 playback parity  | Blend/interrupt/control cases; isolated events and resources; real-browser performance and lifecycle tests     |
 | Latest compatible editor project corpus and real workloads                                               | R3 sign-off         | Browser/device matrix and editor-reference results for every supported field; documented format/version limits |
 

@@ -291,7 +291,7 @@ export async function createAirBone2dPlayer(
                 world ??= bone2dWorldMatrices(project, sample);
                 const clip = attachment;
                 const bone = slotDefinitions.get(id)!.bone;
-                const deltas = options.deformClipping ? sample.shapeDeltas.get(clip) : undefined;
+                const deltas = options.deformClipping ? (sample.slotDeform ? sample.slotDeform.get(id) : sample.shapeDeltas.get(clip)) : undefined;
                 const vertices = bone2dMeshPositions(clip, bone, world, deltas);
                 const outline = clip.convex || clip.inverse ? convexClipOutline(vertices) : vertices;
                 if (outline.length < 6 || !hasNonCollinearPoints(outline)) {
@@ -331,7 +331,7 @@ export async function createAirBone2dPlayer(
                 if (s.mesh) s.mesh.spriteFrame = null;
                 continue;
             }
-            const newFrame = frames.get(bone2dPicture(region, sample))!;
+            const newFrame = frames.get(bone2dPicture(region, sample, def.id))!;
             if (p.dark) {
                 const { material, values } = tintedSlots.get(def.id)!;
                 if (p.dark[0] !== values.x || p.dark[1] !== values.y || p.dark[2] !== values.z) {
@@ -356,7 +356,7 @@ export async function createAirBone2dPlayer(
                         region,
                         def.bone,
                         world,
-                        sample.meshDeltas.get(region.deformParent ?? region),
+                        sample.slotDeform ? sample.slotDeform.get(def.id) : sample.meshDeltas.get(region.deformParent ?? region),
                     ),
                     uvs: region.uvs,
                     indices: region.indices,
@@ -537,7 +537,7 @@ export async function createAirBone2dPlayer(
             if (!slot) error(`unknown slot: ${slotId}`);
             const attachment = resolveBone2dAttachment(selectedSkins, slotId, currentSample.slots.get(slotId)!.attachment);
             if (!attachment || attachment.kind === 'mesh' || attachment.kind === 'region' || attachment.kind === 'clipping') return null;
-            return bone2dShapeGeometry(attachment, slot.bone, currentSample, bone2dWorldMatrices(project, currentSample));
+            return bone2dShapeGeometry(attachment, slot.bone, currentSample, bone2dWorldMatrices(project, currentSample), slotId);
         },
         animations,
         get time() {

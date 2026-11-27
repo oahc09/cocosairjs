@@ -775,3 +775,55 @@ test('transform parsing bounds the number of mapping writes per sample', () => {
     c.properties = Array.from({ length: 64 }, () => ({ prop: 'rotate', offset: 0, to: Array(64).fill(channel) }));
     expect(() => parse(file)).toThrow(/UNSUPPORTED.*mapping budget/);
 });
+
+const sliderText = readFileSync(resolve(__dirname, '../fixtures/bone2d/slider.bone2d'), 'utf8');
+const sliderFixture = (): any => JSON.parse(sliderText);
+test('fractional slider overlays change signed scale and immediately switch to their linked mesh', () => {
+    const controls = [
+        { additive: false, mix: 0.25, name: 'linked', x: 11, sx: -2.75, owner: true },
+        { additive: true, mix: 0.25, name: 'linked', x: 13, sx: 2, owner: true },
+        { additive: false, mix: 0, name: 'source', x: 12, sx: 3, owner: true },
+        { additive: false, mix: 0.25, name: 'independent', x: 11, sx: -2.75, owner: false },
+    ];
+    for (const expected of controls) {
+        const file = sliderFixture(),
+            rig = file.project.skeleton;
+        Object.assign(rig.constraints[1], { additive: expected.additive, mix: expected.mix });
+        rig.animations[1].slots['arm-slot'].attachment[0].name =
+            expected.name === 'independent' ? 'independent' : 'linked';
+        const project = parse(file);
+        const read = (time: number) => sampleBone2dProject(project, 'idle', time);
+        const incoming = read(0.25),
+            evaluated = read(0.75);
+        const middle = bone2dWorldMatrices(project, incoming).get('arm-bone')!;
+        const end = bone2dWorldMatrices(project, evaluated).get('arm-bone')!;
+        expect([middle[4], middle[0]]).toEqual([12, 3]);
+        expect([end[4], end[0]]).toEqual([expected.x, expected.sx]);
+        expect(incoming.slots.get('arm-slot')!.attachment).toBe('source');
+        expect(evaluated.slots.get('arm-slot')!.attachment).toBe(expected.name);
+        expect(incoming.slotFrames!.get('arm-slot')).toBe(1);
+        expect(evaluated.slotFrames!.get('arm-slot')).toBe(expected.mix === 0 ? 1 : undefined);
+        expect(evaluated.slotDeform!.get('arm-slot')).toEqual(expected.owner ? [0, 0, 0, 0, 2, 0] : undefined);
+    }
+});
+
+test('a later driver reads the current constrained property, and a looping negative driven time wraps', () => {
+    const file = sliderFixture(),
+        rig = file.project.skeleton,
+        slider = rig.constraints[1];
+    Object.assign(slider, { bone: 'arm-bone', local: true, property: 'x', from: 12, to: -0.25, loop: true });
+    const read = () => {
+        const project = parse(file),
+            sample = sampleBone2dProject(project, 'idle', 0.2);
+        return { pose: bone2dWorldMatrices(project, sample).get('arm-bone')!, slot: sample.slots.get('arm-slot')! };
+    };
+    expect(read().pose[4]).toBe(11);
+    expect(read().slot.attachment).toBe('linked');
+    rig.constraints.reverse();
+    expect(read().pose[4]).toBe(12);
+    expect(read().slot.attachment).toBe('linked'); // setup driver x=4 wraps the same remainder
+    slider.loop = false;
+    expect(read().slot.attachment).toBe('source');
+    slider.animation = 'missing';
+    expect(() => parse(file)).toThrow(/FORMAT.*slider animation/);
+});
