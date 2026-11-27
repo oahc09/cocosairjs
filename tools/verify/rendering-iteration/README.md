@@ -226,3 +226,22 @@ trail; covering both old and new footprints matched TAA-off RGBA bytes for both 
 authored diagnostic masks that drive the real shader mask branch at zero jitter. They are not runtime motion
 vectors, automatic previous-depth rejection, a validation of the production mask camera, or a claim that the
 masked current-color lookup is correct under nonzero jitter.
+
+### E12 camera-only reprojection coordinates
+
+```sh
+node tools/verify/rendering-iteration/taa-jitter-probe.cjs <WPE-executable> <new-report.json> --reprojection
+```
+
+This pre-blend control compiles the frozen TAA reconstruction and prior-UV helpers and draws them in a small
+WebGL2 shader against asymmetric, point-sampled history stripes. It uses the SDK's camera matrices and checks
+world position, signed previous UV, and the actual sampled texel against independent expectations. It covers a
+stationary camera and a known lateral/vertical translation at two depths and two history rows.
+
+In the WebGL2 convention (clip-depth minimum −1), the frozen helpers return each stationary coordinate to its
+own history row; camera translation returns the expected shifted coordinates. A **modeled** WebGPU convention
+(clip-depth minimum 0 and descending texture Y) run in the same GL shader exposes a separate problem: depth −4/−8
+reconstructs to −2.0408/−4.1667 with the frozen remap. Correcting depth and input Y alone still produces negative
+history rows because the frozen output helper negates an already normalized coordinate. Applying the explicit
+clip-depth and both Y mappings recovers the expected world coordinates and rows. This is not a WebGPU adapter,
+full native TAA resolve, or motion-vector validation.

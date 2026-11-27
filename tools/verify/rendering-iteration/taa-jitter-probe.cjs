@@ -37,15 +37,54 @@ function check(report) {
     }
 }
 
-async function main([executable, output, ...rest]) {
-    if (!executable || !output || rest.length)
-        throw new Error('Usage: node taa-jitter-probe.cjs <WPE executable> <new-report.json>');
+function checkReprojection(report) {
+    if (!report.webgl?.startsWith('WebGL 2') || report.samples.length !== 48)
+        throw new Error('Incomplete reprojection controls');
+    const equal = (a, b) => Math.abs(a - b) < 0.000025;
+    const f = Math.sqrt(3);
+    const stripe = (u, v) => {
+        const col = Math.max(0, Math.min(15, Math.floor(u * 16)));
+        const row = Math.max(0, Math.min(15, Math.floor(v * 16)));
+        return [11 * (col + 1), 13 * (row + 1), (row % 3) * 51];
+    };
+    for (const a of report.samples) {
+        const model = a.profile === 'modeled-webgpu';
+        const d = model && a.policy === 'frozen' ? (a.depth * 100) / (200 - a.depth) : a.depth;
+        const currentYSign = model && a.policy !== 'frozen' ? -1 : 1;
+        const world = [
+            ((2 * 0.33 - 1) * d) / (f / (4 / 3)) + (a.moved ? 0.25 : 0),
+            (currentYSign * (2 * a.row - 1) * d) / f - (a.moved ? 0.5 : 0),
+            -d,
+        ];
+        const u = 0.33 + (a.moved ? (0.25 * (f / (4 / 3))) / (2 * d) : 0);
+        let v = a.row + (a.moved ? ((model ? 1 : -1) * 0.5 * f) / (2 * d) : 0);
+        if (model && a.policy === 'frozen') v = -(a.row - (a.moved ? (0.5 * f) / (2 * d) : 0));
+        if (model && a.policy === 'depth-only') v -= 1;
+        if (
+            world.some((v, i) => !equal(a.world[i], v)) ||
+            !equal(a.prior[0], u) ||
+            !equal(a.prior[1], v) ||
+            !a.stripe.every((channel, index) => channel === stripe(u, v)[index])
+        )
+            throw new Error('Unexpected depth or history coordinate: ' + JSON.stringify(a));
+    }
+}
+
+async function main([executable, output, flag, ...rest]) {
+    if (!executable || !output || rest.length || (flag && flag !== '--reprojection'))
+        throw new Error('Usage: node taa-jitter-probe.cjs <WPE executable> <new-report.json> [--reprojection]');
+    if (flag) assets['/fixture.mjs'][1] = resolve(__dirname, 'taa-reprojection-page.mjs');
     const binding = verifySourceBinding(root, sdk);
     if (!binding.matches) throw new Error('Requires source-bound development SDK');
     const frozenEffects = readFileSync(resolve(root, 'vendor/builtin-source/generated/custom-effects.json'));
     const shaders = JSON.parse(frozenEffects).find((effect) => effect.name === 'pipeline/post-process/taa')?.shaders;
     if (shaders?.length !== 1 || !shaders[0].glsl3?.frag.includes(sourceExpression))
         throw new Error('Frozen WebGL2 TAA shader no longer matches the sampling control');
+    if (
+        flag &&
+        (!shaders[0].glsl3.frag.includes('screenPos.xyz * 2. - 1.0') || !shaders[0].glsl3.frag.includes('uv.y = -uv.y'))
+    )
+        throw new Error('Frozen helpers no longer match the reprojection control');
     const assetHashes = { frozenEffects: createHash('sha256').update(frozenEffects).digest('hex') };
     for (const [route, asset] of Object.entries(assets)) {
         asset[1] = readFileSync(asset[1]);
@@ -62,7 +101,9 @@ async function main([executable, output, ...rest]) {
     await once(server, 'listening');
     let browser;
     const report = {
-        mode: 'webgl2-offscreen-projection-and-current-color-expression',
+        mode: flag
+            ? 'webgl2-reprojection-with-modeled-clip-conventions'
+            : 'webgl2-offscreen-projection-and-current-color-expression',
         binding,
         assetHashes,
         errors: [],
@@ -82,7 +123,8 @@ async function main([executable, output, ...rest]) {
         await page.goto(`http://127.0.0.1:${server.address().port}/`);
         await page.waitForFunction(() => typeof window.probeJitter === 'function', null, { timeout: 12000 });
         Object.assign(report, await page.evaluate(() => window.probeJitter()));
-        check(report);
+        if (flag) checkReprojection(report);
+        else check(report);
     } catch (error) {
         report.errors.push(error.message);
     } finally {
