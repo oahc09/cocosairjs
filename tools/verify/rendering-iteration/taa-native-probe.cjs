@@ -54,9 +54,14 @@ function inspect(track) {
 }
 
 async function main([executable, output, flag, ...rest]) {
-    if (!executable || !output || rest.length || (flag && !['--expect-baseline', '--expect-isolation'].includes(flag)))
+    if (
+        !executable ||
+        !output ||
+        rest.length ||
+        (flag && !['--expect-baseline', '--expect-isolation', '--expect-jitter'].includes(flag))
+    )
         throw new Error(
-            'Usage: node taa-native-probe.cjs <WPE executable> <new-report.json> [--expect-baseline|--expect-isolation]',
+            'Usage: node taa-native-probe.cjs <WPE executable> <new-report.json> [--expect-baseline|--expect-isolation|--expect-jitter]',
         );
     const binding = verifySourceBinding(root, files['/build/cocosair.module.js'][1]);
     if (!binding.matches) throw new Error('Native probe requires an SDK bound to the current src bytes');
@@ -79,6 +84,7 @@ async function main([executable, output, flag, ...rest]) {
         browser = await webkit.launch({ executablePath: resolve(executable) });
         result.browserVersion = browser.version();
         const modes = ['off', 'single', 'both'];
+        if (flag === '--expect-jitter') modes.push('isolated-jitter');
         if (flag === '--expect-isolation') modes.push('isolated', 'isolated-control', 'isolated-b');
         for (const mode of modes) {
             const page = await browser.newPage({ viewport: { width: 384, height: 256 }, deviceScaleFactor: 1 });
@@ -133,11 +139,45 @@ async function main([executable, output, flag, ...rest]) {
     ) {
         throw new Error('TAA-off/single-camera controls failed');
     }
-    if (flag === '--expect-baseline' || flag === '--expect-isolation') {
+    if (flag === '--expect-baseline' || flag === '--expect-isolation' || flag === '--expect-jitter') {
         if (both.check.badHistory !== 5 || both.check.wrongPreviousMatrix !== 5 || both.check.changedMaterial !== 3)
             throw new Error('Expected contamination did not reproduce');
     } else if (Object.values(both.check).some(Boolean) || both.consoleErrors.length)
         throw new Error('Dual-camera native TAA invariant failed: see report');
+
+    if (flag === '--expect-jitter') {
+        const track = result.tracks['isolated-jitter'];
+        if (!track || Object.values(track.check).some(Boolean) || track.consoleErrors.length)
+            throw new Error('Native pixel-jitter control failed');
+        const nonzero = new Set();
+        for (const [i, frame] of track.records.entries()) {
+            if (frame.alias) throw new Error('Native pixel-jitter control aliased camera materials');
+            for (const draw of frame.captures) {
+                const { baseline, pixels } = draw.projectionProof;
+                if (
+                    draw.name === 'A'
+                        ? !(baseline[11] === -1 && baseline[15] === 0)
+                        : !(baseline[11] === 0 && baseline[15] === 1)
+                )
+                    throw new Error('Unexpected native projection type');
+                const extent = draw.name === 'B' ? [132, 75] : i < 4 ? [160, 96] : [192, 112];
+                const near = (a, b) => Math.abs(a - b) < 1e-8;
+                if (draw.width !== extent[0] || draw.height !== extent[1])
+                    throw new Error('Unexpected native post-process extent');
+                for (const depth of [2, 8]) {
+                    const at = (matrix, axis) =>
+                        (-depth * matrix[8 + axis] + matrix[12 + axis]) / (-depth * matrix[11] + matrix[15]);
+                    for (const [axis, size] of extent.entries()) {
+                        const ndc = at(draw.beforeProj, axis) - at(baseline, axis);
+                        if (Math.abs(pixels[axis]) > 0.01) nonzero.add(draw.name + axis);
+                        if (!near((ndc * size) / 2, pixels[axis]) || !near(draw.atQueue.params[axis], -ndc))
+                            throw new Error('Same-frame pixel shift or signed native material upload mismatch');
+                    }
+                }
+            }
+        }
+        if (nonzero.size !== 4) throw new Error('Insufficient native jitter coverage on both axes');
+    }
 
     if (flag === '--expect-isolation') {
         const isolated = result.tracks.isolated;

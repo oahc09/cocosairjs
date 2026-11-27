@@ -1,6 +1,6 @@
 import * as m from '/build/cocosair.module.js';
 const mode = new URL(location.href).searchParams.get('mode') || 'both';
-if (!['off', 'single', 'both', 'isolated', 'isolated-b', 'isolated-control'].includes(mode))
+if (!['off', 'single', 'both', 'isolated', 'isolated-b', 'isolated-control', 'isolated-jitter'].includes(mode))
     throw new Error('Invalid TAA probe mode');
 const response = await fetch('/vendor/builtin-source/generated/custom-effects.json');
 if (!response.ok) throw new Error('Could not load the frozen custom effects');
@@ -25,6 +25,8 @@ const tags = new Map();
 // Diagnostic only: use one copy of the existing pass per camera and advance the sample before projection.
 // These copies live only for one browser page. This is not a runtime ownership or disposal design.
 const isolate = mode.startsWith('isolated');
+const pixelJitter = mode === 'isolated-jitter';
+const projected = new WeakMap();
 const forward = builder.pipelines.get('forward');
 const slot = forward.findIndex((pass) => pass.name === 'TAAPass');
 const originalPass = forward[slot];
@@ -38,7 +40,28 @@ function experiment(camera) {
         pass.updateSample = () => {};
         pass.applyCameraJitter = function (target) {
             advance.call(this);
-            return apply.call(this, target);
+            if (!pixelJitter) return apply.call(this, target);
+            const sample = this.samples[this.sampleIndex % this.samples.length];
+            const pixels = [sample.x * this.setting.sampleScale, sample.y * this.setting.sampleScale];
+            const { width, height } = this.context.viewport;
+            this.sampleOffset.set(0, 0);
+            apply.call(this, target);
+            const baseline = matrix(target.matProj);
+            // Diagnostic WebGL2 identity-viewport convention: positive NDC moves toward larger texture coordinates.
+            const dx = (2 * pixels[0]) / width;
+            const dy = (2 * pixels[1]) / height;
+            const p = baseline.slice();
+            for (const col of [0, 4, 8, 12]) {
+                p[col] += dx * baseline[col + 3];
+                p[col + 1] += dy * baseline[col + 3];
+            }
+            m.Mat4.fromArray(target.matProj, p);
+            m.Mat4.invert(target.matProjInv, target.matProj);
+            m.Mat4.multiply(target.matViewProj, target.matProj, target.matView);
+            m.Mat4.invert(target.matViewProjInv, target.matViewProj);
+            target.frustum.update(target.matViewProj, target.matViewProjInv);
+            this.sampleOffset.set(-dx, -dy);
+            projected.set(target, { baseline, pixels });
         };
         experiments.set(camera, pass);
     }
@@ -59,6 +82,10 @@ function lane(name, priority, layer, width, height, tone) {
     const camera = node.addComponent(m.Camera);
     camera.priority = priority;
     camera.fov = priority ? 58 : 42;
+    if (pixelJitter && name === 'B') {
+        camera.projection = m.Camera.ProjectionType.ORTHO;
+        camera.orthoHeight = 2;
+    }
     camera.visibility = layer;
     camera.clearColor = new m.Color(13, 19, 31, 255);
     const target = new m.RenderTexture();
@@ -67,10 +94,12 @@ function lane(name, priority, layer, width, height, tone) {
     camera.usePostProcess = true;
     const pp = node.addComponent(m.postProcess.PostProcess);
     pp.global = false;
+    if (pixelJitter && name === 'B') pp.shadingScale = 0.75;
     camera.postProcess = pp;
     const taa = node.addComponent(m.postProcess.TAA);
     taa.enabled =
         mode === 'both' ||
+        pixelJitter ||
         mode === 'isolated' ||
         mode === 'isolated-control' ||
         (mode === 'single' && name === 'A') ||
@@ -130,6 +159,7 @@ builder.renderCamera = function (camera, pipeline) {
         const pass = add.call(this, width, height, layout, ...args);
         if (!layout.startsWith('DeferredTAA')) return pass;
         const record = { name, layout, width, height, inputs: {}, beforeProj: matrix(camera.matProj), atQueue: null };
+        if (pixelJitter) record.projectionProof = projected.get(camera);
         draw.push(record);
         install(
             pass,
@@ -205,10 +235,18 @@ window.__probe = async () => {
             draw.length = 0;
             A.node.setPosition(i >= 3 && mode !== 'isolated-control' ? 1.4 : i * 0.07, 0, 5);
             B.node.setPosition(-i * 0.09, 0, 5);
-            if (mode === 'isolated' && i >= 3) seed(A.camera.camera);
+            if ((mode === 'isolated' || pixelJitter) && i >= 3) seed(A.camera.camera);
             if (i === 4 && mode !== 'isolated-control') A.target.resize(192, 112);
             const frame = await clock.step();
-            const expected = { both: 2, single: 1, off: 0, isolated: 2, 'isolated-b': 1, 'isolated-control': 2 }[mode];
+            const expected = {
+                both: 2,
+                single: 1,
+                off: 0,
+                isolated: 2,
+                'isolated-b': 1,
+                'isolated-control': 2,
+                'isolated-jitter': 2,
+            }[mode];
             if (draw.length !== expected) throw new Error('Wrong native TAA draw count: ' + draw.length);
             const read = async (target) => {
                 try {

@@ -198,3 +198,11 @@ and +0.015625 pixels in X at the two depths (64-phase quantization). Clip-W tran
 at both depths across all four cases. Sending the negative of that NDC delta into the original subtracting sampler
 returned measured displacement (0, 0) in all four cases; using the same sign doubled it to (+1, −1).
 This isolates a separate defect from history ownership and does not explain cross-mode B pixels.
+
+Use `--expect-jitter` with `taa-native-probe.cjs` for the same-frame Custom pipeline check. This additional page
+prototype applies the candidate after advancing the actual sample. It observes the camera projection used to queue
+the pass and the signed uniform handed to the existing material before the real native frame records. Over five
+frames the perspective A camera runs at 160×96 then 192×112; orthographic B runs at a real 0.75 post-process scale
+(132×75 from its 176×100 target). The check verifies depth-2/depth-8 shifts and signed uploads on both axes. Native
+draws and readbacks complete without the negative control's GL error. This is still a browser fixture override,
+not an engine change, proof of overall TAA resolve quality, or WebGPU sign validation.
