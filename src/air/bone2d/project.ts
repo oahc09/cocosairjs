@@ -21,7 +21,7 @@
 */
 import { inheritBasis, poseBasis } from './affine';
 import type { Bone2dInheritance, Matrix2D, Shears } from './affine';
-import { aimBone2d } from './ik';
+import { aimBone2d, aimBone2dPair } from './ik';
 import type { Bone2dAimOptions } from './ik';
 
 /** Strict reader for the supported subset of Bone-2D Save Project v1. No editor or Spine dependency. */
@@ -103,10 +103,11 @@ interface Slot {
 interface AimConstraint extends Bone2dAimOptions {
     id: string;
     bone: string;
+    child: string | null;
     target: string;
     skinRequired: boolean;
 }
-type AimKey = ValueKey & Pick<Bone2dAimOptions, 'compress' | 'stretch'>;
+type AimKey = ValueKey & Pick<Bone2dAimOptions, 'compress' | 'stretch' | 'bendPositive'>;
 interface Skin {
     id: string;
     name: string;
@@ -360,16 +361,18 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
     const constraints = index(list(sk.constraints ?? [], 128, 'constraints').map((raw): AimConstraint => {
         const o = obj(raw, 'constraint');
         if (o.type !== 'ik') fail('unsupported constraint type', true);
-        if (Array.isArray(o.bones) && o.bones.length === 2) fail('two-bone IK', true);
-        const [idOfBone] = list(o.bones, 1, 'IK bones');
+        const [idOfBone, idOfChild] = list(o.bones, 2, 'IK bones');
+        const child = idOfChild === undefined ? null : str(idOfChild, 'IK child bone');
         const id = str(o.id, 'IK constraint id'), bone = str(idOfBone, 'IK bone'), target = str(o.target, 'IK target');
         const scaleY = o.scaleY;
         if (!byBone.has(bone) || !byBone.has(target)) fail('unknown IK bone or target');
+        if (child !== null && byBone.get(child)?.parent !== bone) fail('IK chain needs a direct child');
         if (scaleY !== 'none' && scaleY !== 'uniform' && scaleY !== 'volume') fail('invalid IK scaleY mode');
         if (typeof o.bendPositive !== 'boolean' || typeof o.compress !== 'boolean' || typeof o.stretch !== 'boolean' ||
             typeof o.skinRequired !== 'boolean') fail('invalid IK flags');
-        num(o.softness, 'IK softness', 0);
-        return { id, bone, target, mix: num(o.mix, 'IK mix', 0, 1), scaleY, compress: o.compress, stretch: o.stretch, skinRequired: o.skinRequired };
+        return { id, bone, child, target, mix: num(o.mix, 'IK mix', 0, 1), scaleY, compress: o.compress, stretch: o.stretch,
+            skinRequired: o.skinRequired, softness: num(o.softness, 'IK softness', 0), bendPositive: o.bendPositive };
+
     }), 'duplicate constraint id');
     const images = new Map<string, Bone2dImage>();
     const pictures = new Map(entries(file.images, 'embedded images'));
@@ -515,7 +518,7 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
                     if (typeof k.bendPositive !== 'boolean' || typeof k.compress !== 'boolean' || typeof k.stretch !== 'boolean') {
                         fail('invalid IK key flags');
                     }
-                    return { compress: k.compress, stretch: k.stretch };
+                    return { compress: k.compress, stretch: k.stretch, bendPositive: k.bendPositive };
                 });
                 ik.set(id, numbers.map((key, j) => {
                     num(key.value[0], 'IK key mix', 0, 1);
@@ -865,8 +868,9 @@ export function sampleBone2dProject(
         const i = track ? last(track, time) : -1;
         if (i < 0) ik.set(id, c);
         else {
-            const { compress, stretch } = track![i];
-            ik.set(id, { mix: sampled(track, time)![0], scaleY: c.scaleY, compress, stretch });
+            const { compress, stretch, bendPositive } = track![i];
+            const [mix, softness] = sampled(track, time)!;
+            ik.set(id, { mix, softness, scaleY: c.scaleY, compress, stretch, bendPositive });
         }
     }
     return { bones, shears, activeBones, ik, slots, meshDeltas, shapeDeltas, order, sequenceFrames };
@@ -921,10 +925,23 @@ export function bone2dWorldMatrices(project: Bone2dProject, sample: Bone2dSample
             // downstream of an earlier constraint must see its new matrix.
             const target = compute(c.target);
             const current = compute(c.bone);
-            solved.set(c.bone, aimBone2d(
-                solved.get(c.bone) ?? sample.bones.get(c.bone)!,
-                sample.shears.get(c.bone)!, bone.inherit, bone.length, compute(bone.parent), current, target, options,
-            ));
+            const local = solved.get(c.bone) ?? sample.bones.get(c.bone)!;
+            const shear = sample.shears.get(c.bone)!;
+            const frame = compute(bone.parent);
+            if (c.child === null) {
+                solved.set(c.bone, aimBone2d(local, shear, bone.inherit, bone.length, frame, current, target, options));
+            } else {
+                const child = byId.get(c.child)!;
+                if (bone.inherit !== 'normal' || child.inherit !== 'normal') continue;
+                // Even an inactive child contributes its setup offset to the
+                // upper bone's solve; inactive descendants still do not render.
+                const [upper, lower] = aimBone2dPair(
+                    local, solved.get(c.child) ?? sample.bones.get(c.child)!, shear, sample.shears.get(c.child)!,
+                    bone.length, child.length, frame, current, target, options,
+                );
+                solved.set(c.bone, upper);
+                solved.set(c.child, lower);
+            }
             invalidate(c.bone);
         }
     }

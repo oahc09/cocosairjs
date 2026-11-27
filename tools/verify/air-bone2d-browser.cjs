@@ -19,6 +19,7 @@ const files = [
     'src/air/bone2d/affine.ts',
     'src/air/bone2d/ik.ts',
     'test/fixtures/bone2d/ordered-ik.bone2d',
+    'test/fixtures/bone2d/two-bone-ik.bone2d',
 ];
 async function main() {
     const [engine, output, ...extra] = process.argv.slice(2);
@@ -49,6 +50,10 @@ async function main() {
         if (req.url === '/ordered-ik.bone2d') {
             res.setHeader('Content-Type', 'application/json');
             return res.end(fs.readFileSync(path.join(root, 'test/fixtures/bone2d/ordered-ik.bone2d')));
+        }
+        if (req.url === '/two-bone-ik.bone2d') {
+            res.setHeader('Content-Type', 'application/json');
+            return res.end(fs.readFileSync(path.join(root, 'test/fixtures/bone2d/two-bone-ik.bone2d')));
         }
         if (req.url === '/') {
             res.setHeader('Content-Type', 'text/html');
@@ -813,6 +818,27 @@ async function main() {
                     time: ikPlayer.time,
                 };
             };
+            const ikPairMount = async (mode) => {
+                const file = await fetch('/two-bone-ik.bone2d').then((r) => r.json());
+                const rig = file.project.skeleton;
+                const ik = rig.constraints[0];
+                if (mode === 'stretch') ik.stretch = true;
+                if (mode === 'positive' || mode === 'negative') {
+                    rig.bones[1].scaleX = 2;
+                    Object.assign(rig.bones[4], { x: 5, y: 3 });
+                    ik.bendPositive = mode === 'positive';
+                }
+                ikPlayer = await air.createAirBone2dPlayer(parent, JSON.stringify(file));
+                ikPlayer.play('idle');
+                ikPlayer.seek(0.25);
+                await clock.step(0);
+                const sprite = leaves(ikPlayer.node.getChildByName('arm-slot'))[0].node.worldMatrix;
+                return {
+                    tip: ikPlayer.getAttachmentGeometry('tip-slot'),
+                    elbow: ikPlayer.getAttachmentGeometry('elbow-slot'),
+                    spriteAngle: (Math.atan2(sprite.m01, sprite.m00) * 180) / Math.PI,
+                };
+            };
             const ikClose = async () => {
                 ikPlayer.dispose();
                 await clock.step(0);
@@ -820,6 +846,7 @@ async function main() {
             window.bone2dTest = {
                 ikMount,
                 ikState,
+                ikPairMount,
                 ikClose,
                 frame,
                 requiredMount,
@@ -1343,6 +1370,29 @@ async function main() {
             await page.evaluate(() => window.bone2dTest.ikClose());
             report.orderedIk = { off, on, reversed, ikOffHash, ikOnHash };
         }
+        const pairs = {};
+        for (const mode of ['rest', 'stretch', 'positive', 'negative']) {
+            const state = await page.evaluate((m) => window.bone2dTest.ikPairMount(m), mode);
+            pairs[mode] = { ...state, screenshot: sha(await page.screenshot()) };
+            assert.equal(state.elbow.kind, 'point');
+            assert.equal(state.tip.kind, 'point');
+            const expected = mode === 'rest' || mode === 'stretch' ? [4, 2] : [5, 3];
+            assert.ok(Math.hypot(state.tip.x - expected[0], state.tip.y - expected[1]) < 1e-5, JSON.stringify(state));
+            assert.ok(Math.abs(state.elbow.rotation - state.spriteAngle) < 1e-4, JSON.stringify(state));
+            await page.evaluate(() => window.bone2dTest.ikClose());
+        }
+        assert.ok(Math.hypot(pairs.rest.elbow.x - 2.2, pairs.rest.elbow.y + 0.4) < 1e-5);
+        assert.ok(Math.abs(pairs.rest.spriteAngle - 53.130102) < 1e-4);
+        assert.ok(Math.abs(pairs.stretch.spriteAngle - 47.864456) < 1e-4);
+        assert.ok(
+            Math.hypot(
+                pairs.positive.elbow.x - pairs.negative.elbow.x,
+                pairs.positive.elbow.y - pairs.negative.elbow.y,
+            ) > 2,
+        );
+        assert.notEqual(pairs.rest.screenshot, pairs.stretch.screenshot);
+        assert.notEqual(pairs.positive.screenshot, pairs.negative.screenshot);
+        report.twoBoneIk = pairs;
         await page.evaluate(() => window.bone2dTest.close());
         assert.deepEqual(report.pageErrors, []);
         report.status = 'PASS';

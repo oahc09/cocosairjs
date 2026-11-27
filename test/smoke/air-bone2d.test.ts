@@ -550,11 +550,116 @@ test('an IK target below a skin-required bone is disabled until that target or i
     expect(both.get('arm-bone')![2]).toBeCloseTo(1, 7);
 });
 
-test('rejects unknown IK references and reports two-bone IK as unsupported', () => {
+test('rejects unknown IK references and non-contiguous two-bone chains', () => {
     const file = ikFixture();
     file.project.skeleton.constraints[0].target = 'missing';
     expect(() => parse(file)).toThrow(/FORMAT.*unknown IK/);
     file.project.skeleton.constraints[0].target = 'target';
-    file.project.skeleton.constraints[0].bones.push('tip');
-    expect(() => parse(file)).toThrow(/UNSUPPORTED.*two-bone IK/);
+    file.project.skeleton.constraints[0].bones.push('arm-bone');
+    expect(() => parse(file)).toThrow(/FORMAT.*direct child/);
+});
+
+const twoBoneIkText = readFileSync(resolve(__dirname, '../fixtures/bone2d/two-bone-ik.bone2d'), 'utf8');
+const twoBoneFixture = (): any => JSON.parse(twoBoneIkText);
+function anglesForPair(world: ReturnType<typeof ikWorld>): [number, number] {
+    const [a, b, c, d] = world.get('driver')!;
+    const [e, , g] = world.get('elbow')!;
+    return [(Math.atan2(c, a) * 180) / Math.PI, (Math.atan2(a * g - c * e, d * e - b * g) * 180) / Math.PI];
+}
+const xyzClose = (actual: readonly number[], expected: readonly number[], precision = 5): void => {
+    expect(actual).toHaveLength(expected.length);
+    expect(actual.every(Number.isFinite)).toBe(true);
+    actual.forEach((v, i) => expect(v).toBeCloseTo(expected[i], precision));
+};
+test('two-bone reachable stretch changes the elbow without stretching or moving the tip', () => {
+    const file = twoBoneFixture();
+    const rest = ikWorld(file, []);
+    xyzClose(anglesForPair(rest), [-36.869897, 90]);
+    xyzClose(rest.get('elbow')!.slice(4), [2.2, -0.4]);
+    xyzClose(rest.get('tip')!.slice(4), [4, 2]);
+    file.project.skeleton.constraints[0].stretch = true;
+    const stretch = ikWorld(file, []);
+    xyzClose(anglesForPair(stretch), [-6.450208, 54.314664]);
+    xyzClose(stretch.get('tip')!.slice(4), [4, 2]);
+    xyzClose([Math.hypot(stretch.get('driver')![0], stretch.get('driver')![2])], [1]);
+    expect(stretch.get('elbow')!.slice(4)).not.toEqual(rest.get('elbow')!.slice(4));
+});
+
+test('the anisotropic IK ellipse gives two distinct joint poses to the same reachable point', () => {
+    const file = twoBoneFixture();
+    const rig = file.project.skeleton;
+    rig.bones[1].scaleX = 2;
+    Object.assign(rig.bones[4], { x: 5, y: 3 });
+    let world = ikWorld(file, []);
+    xyzClose(anglesForPair(world), [0.505274, 80.1515]);
+    xyzClose(world.get('tip')!.slice(4), [5, 3]);
+    rig.constraints[0].bendPositive = false;
+    world = ikWorld(file, []);
+    xyzClose(anglesForPair(world), [61.422238, -80.1515], 4);
+    xyzClose(world.get('tip')!.slice(4), [5, 3]);
+    rig.constraints[0].bendPositive = true;
+    rig.constraints[0].mix = 0.25;
+    world = ikWorld(file, []);
+    xyzClose(world.get('tip')!.slice(4), [9.634508, 1.049167]);
+    xyzClose(anglesForPair(world), [0.126319, 20.037875]);
+});
+
+test('two-bone IK keys interpolate softness, step bend, and do not solve non-normal inheritance', () => {
+    const file = twoBoneFixture();
+    const rig = file.project.skeleton;
+    Object.assign(rig.bones[4], { x: 5.4, y: 0 });
+    const key = (time: number, soft: number, bendPositive: boolean) => ({
+        time,
+        value: [1, soft],
+        stretch: false,
+        compress: false,
+        bendPositive,
+    });
+    rig.animations[0].ik = { first: [key(0, 0, true), key(1, 1, false)] };
+    xyzClose(ikWorld(file, [], 0).get('tip')!.slice(4), [5.236068, 0]);
+    const middle = ikWorld(file, [], 0.5);
+    expect(middle.get('tip')![4]).toBeLessThan(5.236068);
+    expect(anglesForPair(middle)[1]).toBeGreaterThan(0);
+    const last = ikWorld(file, [], 1);
+    xyzClose(last.get('tip')!.slice(4), [5.061316, 0]);
+    expect(anglesForPair(last)[1]).toBeLessThan(0);
+    rig.bones[2].inherit = 'onlyTranslation';
+    const unsolved = ikWorld(file, [], 1);
+    xyzClose(unsolved.get('tip')!.slice(4), [5, 1]);
+});
+
+test('two-bone fallback stays finite for a collapsed elbow, distal length or grandparent basis', () => {
+    const file = twoBoneFixture();
+    const rig = file.project.skeleton;
+    const assertFinite = () => {
+        for (const matrix of ikWorld(file, []).values()) expect(matrix.every(Number.isFinite)).toBe(true);
+    };
+    Object.assign(rig.bones[2], { x: 0, y: 0 });
+    assertFinite();
+    Object.assign(rig.bones[2], { x: 2, y: 0, length: 0 });
+    Object.assign(rig.bones[4], { x: 2, y: 0 });
+    assertFinite();
+    rig.bones[0].scaleX = 0;
+    assertFinite();
+});
+
+test('mixed one- and two-bone constraints respect authored order and keep inactive child slots hidden', () => {
+    const file = twoBoneFixture();
+    const rig = file.project.skeleton;
+    rig.bones.push({ ...rig.bones[1], id: 'follower', x: 0, y: -3 });
+    rig.constraints.push({ ...rig.constraints[0], id: 'follow', bones: ['follower'], target: 'tip' });
+    const read = () => {
+        const matrices = ikWorld(file, []);
+        const [a, , c] = matrices.get('follower')!;
+        return [Math.atan2(c, a), ...matrices.get('tip')!.slice(4)];
+    };
+    xyzClose(read(), [Math.atan2(5, 4), 4, 2]);
+    rig.constraints.reverse();
+    xyzClose(read(), [Math.atan2(4, 5), 4, 2]);
+    rig.bones[2].skinRequired = true;
+    const parsed = parse(file);
+    const sample = sampleBone2dProject(parsed, 'idle', 0.25);
+    expect(sample.slots.get('elbow-slot')!.attachment).toBeNull();
+    expect(sample.slots.get('tip-slot')!.attachment).toBeNull();
+    xyzClose(anglesForPair(bone2dWorldMatrices(parsed, sample)).slice(0, 1), [-36.869897]);
 });
