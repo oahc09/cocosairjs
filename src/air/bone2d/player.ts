@@ -178,6 +178,7 @@ export async function createAirBone2dPlayer(
     }
     if (signal?.aborted) throw new Error('AIR_E_BONE2D_ABORTED');
     const frames = new Map<string, SpriteFrame>();
+    const premultiplied = new Set<SpriteFrame>();
     const crops = new Map<SpriteFrame, { polygon: Bone2dAtlasCrop; uvClamp: Vec4 }>();
     const meshPlans = new WeakMap<Bone2dMesh, WeakMap<SpriteFrame, ReturnType<typeof buildBone2dAtlasMesh>>>();
     const disableMesh = (mesh: AirUIMesh): void => {
@@ -189,34 +190,17 @@ export async function createAirBone2dPlayer(
     const retained = new Set<SpriteFrame>();
     const blendMaterials = new Map<Bone2dBlend, Material>();
     let tintEffect: EffectAsset | undefined;
-    let cropEffect: EffectAsset | undefined;
-    const cropMaterials = new Map<string, Material>();
+    const atlasEffects = new Map<number, EffectAsset>();
+    const atlasMaterials = new Map<string, { material: Material; crop: Vec4 | null; dark: Vec4 }>();
     const tintedSlots = new Map<string, { material: Material; values: Vec4 }>();
-    const materialFor = (mode: Bone2dBlend, darkSlot?: string, cropSlot?: string): Material => {
-        if (cropSlot !== undefined) {
-            const existing = cropMaterials.get(cropSlot);
-            if (existing) return existing;
-        }
-        if (darkSlot === undefined && cropSlot === undefined) {
-            const existing = blendMaterials.get(mode);
-            if (existing) return existing;
-        }
+    const materialFor = (mode: Bone2dBlend, effect?: EffectAsset): Material => {
         const material = new Material();
-        if (cropSlot !== undefined) {
-            cropMaterials.set(cropSlot, material);
-            cropEffect ??= createBone2dTintEffect(true);
-        } else if (darkSlot === undefined) blendMaterials.set(mode, material);
-        else {
-            tintedSlots.set(darkSlot, { material, values: new Vec4(-1, -1, -1, 0) });
-            tintEffect ??= createBone2dTintEffect();
-        }
         const colorSrc = mode === 'multiply' ? BlendFactor.DST_COLOR :
             mode === 'screen' ? BlendFactor.ONE : BlendFactor.SRC_ALPHA;
         const colorDst = mode === 'additive' ? BlendFactor.ONE :
             mode === 'screen' ? BlendFactor.ONE_MINUS_SRC_COLOR : BlendFactor.ONE_MINUS_SRC_ALPHA;
         material.initialize({
-            ...(cropSlot !== undefined ? { effectAsset: cropEffect } :
-                darkSlot === undefined ? { effectName: 'builtin-sprite' } : { effectAsset: tintEffect }),
+            ...(effect ? { effectAsset: effect } : { effectName: 'builtin-sprite' }),
             defines: { USE_TEXTURE: true, USE_ALPHA_TEST: false, CC_USE_EMBEDDED_ALPHA: false },
             states: { blendState: { targets: [{
                 blend: true, blendEq: BlendOp.ADD, blendAlphaEq: BlendOp.ADD,
@@ -225,6 +209,38 @@ export async function createAirBone2dPlayer(
             }] } },
         });
         return material;
+    };
+    const materialForFrame = (
+        slot: string,
+        mode: Bone2dBlend,
+        base: Material | null,
+        frame: SpriteFrame,
+        dark: Vec4 | undefined,
+        crop?: Vec4,
+    ): Material | null => {
+        const pma = premultiplied.has(frame);
+        if (!crop && !pma) return base;
+        const flag = (crop ? 1 : 0) | (pma ? 2 : 0);
+        const key = `${flag}:${slot}`;
+        let entry = atlasMaterials.get(key);
+        if (!entry) {
+            let effect = atlasEffects.get(flag);
+            if (!effect) {
+                effect = createBone2dTintEffect(!!crop, pma);
+                atlasEffects.set(flag, effect);
+            }
+            entry = { material: materialFor(mode, effect), crop: null, dark: new Vec4() };
+            atlasMaterials.set(key, entry);
+        }
+        if (crop && entry.crop !== crop) {
+            entry.crop = crop;
+            entry.material.setProperty('bone2dCrop', crop);
+        }
+        if (dark && (dark.x !== entry.dark.x || dark.y !== entry.dark.y || dark.z !== entry.dark.z)) {
+            entry.dark.set(dark);
+            entry.material.setProperty('bone2dDark', dark);
+        }
+        return entry.material;
     };
     const adapted = new Set<SpriteFrame>();
     const owned: { image: ImageAsset; texture: Texture2D; frame: SpriteFrame }[] = [];
@@ -250,9 +266,10 @@ export async function createAirBone2dPlayer(
         for (const { material } of tintedSlots.values()) material.destroy();
         tintedSlots.clear();
         tintEffect?.destroy();
-        for (const material of cropMaterials.values()) material.destroy();
-        cropMaterials.clear();
-        cropEffect?.destroy();
+        for (const { material } of atlasMaterials.values()) material.destroy();
+        atlasMaterials.clear();
+        for (const effect of atlasEffects.values()) effect.destroy();
+        atlasEffects.clear();
         if (destroyNode && isValid(root, true)) root.destroy();
         for (const f of retained) f.decRef(false);
         for (const f of adapted) f.destroy();
@@ -265,6 +282,7 @@ export async function createAirBone2dPlayer(
         slots.clear();
         frames.clear();
         crops.clear();
+        premultiplied.clear();
         retained.clear();
         adapted.clear();
         owned.length = 0;
@@ -384,12 +402,14 @@ export async function createAirBone2dPlayer(
                 continue;
             }
             const newFrame = frames.get(bone2dPicture(region, sample, def.id))!;
+            let dark: Vec4 | undefined;
             if (p.dark) {
                 const { material, values } = tintedSlots.get(def.id)!;
                 if (p.dark[0] !== values.x || p.dark[1] !== values.y || p.dark[2] !== values.z) {
                     values.set(p.dark[0], p.dark[1], p.dark[2], 0);
                     material.setProperty('bone2dDark', values);
                 }
+                dark = values;
             }
             const c = p.color.map((v, i) => Math.round(255 * v * region.color[i]));
             const tint = (renderer: Sprite | AirUIMesh): void => {
@@ -413,11 +433,7 @@ export async function createAirBone2dPlayer(
                 }
                 const count = chunks?.length ?? 1;
                 if (count) {
-                    const material = crop ? materialFor(def.blend, undefined, def.id) : s.meshMaterial;
-                    if (crop && material) {
-                        material.setProperty('bone2dCrop', crop.uvClamp);
-                        if (p.dark) material.setProperty('bone2dDark', tintedSlots.get(def.id)!.values);
-                    }
+                    const material = materialForFrame(def.id, def.blend, s.meshMaterial, newFrame, dark, crop?.uvClamp);
                     const positions = bone2dMeshPositions(
                         region, def.bone, world,
                         sample.slotDeform ? sample.slotDeform.get(def.id) : sample.meshDeltas.get(region.deformParent ?? region),
@@ -457,6 +473,8 @@ export async function createAirBone2dPlayer(
             }
             poseNode(s.leaf, region.pose);
             s.transform.setContentSize(region.width, region.height);
+            const material = materialForFrame(def.id, def.blend, s.meshMaterial, newFrame, dark);
+            if (s.sprite.customMaterial !== material) s.sprite.customMaterial = material;
             if (s.sprite.spriteFrame !== newFrame) s.sprite.spriteFrame = newFrame;
             tint(s.sprite);
         }
@@ -487,7 +505,10 @@ export async function createAirBone2dPlayer(
                 }
                 const trim = width !== spec.width || height !== spec.height;
                 const reverse = frame.rotated && (options.atlasRotation ?? 'bone2d') === 'bone2d';
-                const selected = reverse || trim ? frame.clone() : frame;
+                const pageIndex = atlas.document.getRegion(name)?.pageIndex;
+                const pma = pageIndex !== undefined && atlas.document.pages[pageIndex]?.pma === true;
+                const selected = reverse || trim || pma ? frame.clone() : frame;
+                if (pma) premultiplied.add(selected);
                 if (selected !== frame) {
                     // Crop shader bounds address this fixed atlas page. Do not
                     // dynamically repack the clone or mutate the borrowed frame.
@@ -571,9 +592,15 @@ export async function createAirBone2dPlayer(
             const leaf = spriteNode(branch, 'Region', { layer });
             const sprite = leaf.getComponent(Sprite)!;
             sprite.trim = false;
-            const material = slot.dark ? materialFor(slot.blend, slot.id) :
-                slot.blend !== 'normal' ? materialFor(slot.blend) : null;
-            if (material) sprite.customMaterial = material;
+            let material: Material | null = null;
+            if (slot.dark) {
+                tintEffect ??= createBone2dTintEffect();
+                material = materialFor(slot.blend, tintEffect);
+                tintedSlots.set(slot.id, { material, values: new Vec4(-1, -1, -1, 0) });
+            } else if (slot.blend !== 'normal') {
+                material = blendMaterials.get(slot.blend) ?? materialFor(slot.blend);
+                blendMaterials.set(slot.blend, material);
+            }
             slots.set(slot.id, {
                 meshes: [],
                 meshMaterial: material,

@@ -700,7 +700,7 @@ async function main() {
                 clipPlayer.dispose();
                 await clock.step(0);
             };
-            const blends = async (swap, tint = false) => {
+            const blends = async (swap, tint = false, pack = null) => {
                 const camera = parent.getComponent(air.Canvas).cameraComponent;
                 const saved = camera.clearColor.clone();
                 const target = new air.RenderTexture();
@@ -772,11 +772,41 @@ async function main() {
                     }),
                 );
                 const read = (x) => Array.from(target.readPixels(x, 120, 1, 1));
-                let player;
+                let player, atlas, image, tex;
+                if (pack) {
+                    const n = pack === 'trim' ? 12 : 16;
+                    const bytes = new Uint8Array(n * n * 4);
+                    const a = pack === 'zero' ? 0 : source[3];
+                    const rgba = [...source.slice(0, 3).map((v) => Math.round((v * a) / 255)), a];
+                    for (let i = 0; i < bytes.length; i += 4) bytes.set(rgba, i);
+                    image = new air.ImageAsset({
+                        _data: bytes,
+                        _compressed: false,
+                        width: n,
+                        height: n,
+                        format: air.Texture2D.PixelFormat.RGBA8888,
+                    });
+                    tex = new air.Texture2D();
+                    tex.image = image;
+                    tex.setFilters(air.Texture2D.Filter.NEAREST, air.Texture2D.Filter.NEAREST);
+                    atlas = air.createAtlasHandle(
+                        air.parseAtlasText(
+                            [
+                                'packed.png',
+                                `size: ${n},${n}`,
+                                'pma: true',
+                                'body',
+                                `bounds: 0,0,${n},${n}`,
+                                ...(n === 12 ? ['offsets: 2,2,16,16'] : []),
+                            ].join('\n'),
+                        ),
+                        [tex],
+                    );
+                }
                 try {
                     await clock.step(0);
                     const clear = read(160);
-                    player = await air.createAirBone2dPlayer(parent, JSON.stringify(file));
+                    player = await air.createAirBone2dPlayer(parent, JSON.stringify(file), { atlas });
                     await clock.step(0);
                     const capture = () => modes.map((_, i) => read(64 + i * 64));
                     const rgba = capture();
@@ -787,6 +817,12 @@ async function main() {
                     return { clear, source, rgba, animated: capture() };
                 } finally {
                     player?.dispose();
+                    if (atlas) {
+                        await clock.step(0);
+                        if (!tex.getGFXTexture()) throw new Error('PMA atlas page lost its caller lease');
+                        atlas.dispose();
+                        image.destroy();
+                    }
                     camera.targetTexture = null;
                     camera.clearColor = saved;
                     target.destroy();
@@ -1547,6 +1583,19 @@ async function main() {
                 composed(i, [i / 8 + 0.125, (3 - i) / 8, (i + 2) / 16], [0.75, 0.5, 0.25, 0.5]),
             );
         }
+        report.pma = [];
+        for (const pack of ['plain', 'trim', 'zero'])
+            for (const swap of [false, true]) {
+                const actual = await page.evaluate(
+                    ([swap, pack]) => window.bone2dTest.blends(swap, true, pack),
+                    [swap, pack],
+                );
+                for (let i = 0; i < 4; i++) {
+                    compare(actual.rgba[i], pack === 'zero' ? actual.clear : report.twoColor.rgba[i]);
+                    compare(actual.animated[i], pack === 'zero' ? actual.clear : report.twoColor.animated[i]);
+                }
+                report.pma.push({ pack, swap, ...actual });
+            }
         report.inherit = [];
         for (const [mode, basis] of [
             ['normal', [-2.025449, 0.041812, 0.4228, 1.279957]],
