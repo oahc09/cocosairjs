@@ -672,3 +672,17 @@ The sampler cache uses the same effective native descriptor as allocation and is
 WebGPU records the owning texture's original mip intent. A chain that initially includes every level and has more than one level stays full as the texture grows or shrinks. A partial chain retains its original cap and a default one-level allocation (including an initially 1×1 texture or single-level MSAA allocation) stays at one. Resize synchronizes the public count, native allocation and default sampled view; render-attachment views still select one mip. Explicit views cannot resize their owner, keep their declared range across replacement, and reject requests while that range no longer fits. This does not preserve texture contents across resize or change the shared highest-mip-index helper, WebGL2 behavior, or WebGPU resource retirement policy.
 
 The focused Jest regression uses a recording texture allocation/view boundary. It is not native WebGPU rendering or pixel acceptance.
+
+### Native Atlas redirects
+
+PR #22 carries the XHR final response URL through the native Atlas text path. The remote factory leaves the public asset as a TextAsset and keeps the requested URL as its cache key. AIR resolves Atlas image pages against the final response URL. Generic loadAny callers still receive plain Atlas text. The five extracted asset-manager changes and the AIR-owned atlas-text-response.ts are recorded in the file map.
+
+### WebGPU buffer limit diagnostics
+
+`WebGPUDevice.webgpuLimits` reports adapter ceilings, the required limits requested at admission, and the granted device buffer limits. Device initialization requests the same limits as before.
+
+### WebGPU buffer limits and native Effect stages
+
+The WebGPU backend validates allocation size and storage binding range against the granted device limits. A rejected resize keeps the previous native buffer and accounting. Applications can use aligned buffer views to bind ranges independently.
+
+Effects may supply pre-specialized WGSL render stages with explicit entry points. The WebGPU backend compiles those stages directly using their GFX layout, while the existing GLSL path continues to handle effects without the variant and WebGL2.

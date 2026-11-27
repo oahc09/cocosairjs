@@ -165,6 +165,8 @@ export declare namespace EffectAsset {
         name: string;
         hash: number;
         glsl4: { vert: string, frag: string, compute?: string };
+        /** Optional pre-specialized WebGPU render stages in the final GFX binding layout. */
+        wgsl?: { vert: string, frag: string, vertexEntryPoint?: string, fragmentEntryPoint?: string };
         glsl3: { vert: string, frag: string, compute?: string };
         glsl1: { vert: string, frag: string };
         builtins: { globals: IBuiltinInfo, locals: IBuiltinInfo, statistics: Record<string, number> };

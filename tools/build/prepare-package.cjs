@@ -8,9 +8,8 @@ const path = require('path');
 const root = path.resolve(__dirname, '../..');
 const buildDir = path.join(root, 'build');
 const packageDir = path.join(buildDir, 'npm');
-const { runtimeBundles: bundles, removeRetiredEntries } = require('./runtime-layout.cjs');
+const { runtimeBundles: bundles, removeRetiredEntries, stripRuntimeSourceMap } = require('./runtime-layout.cjs');
 removeRetiredEntries(buildDir);
-const sourceMapComment = /(?:\r?\n)?\/\/# sourceMappingURL=[^\r\n]*(?:\r?\n)?$/;
 
 async function preparePackage() {
     for (const bundle of bundles) {
@@ -23,7 +22,7 @@ async function preparePackage() {
             throw new Error(`Missing ${path.relative(root, map)}; the development build must retain its source map.`);
         }
         const code = fs.readFileSync(source, 'utf8');
-        const releaseCode = code.replace(sourceMapComment, '\n');
+        const releaseCode = stripRuntimeSourceMap(code);
         if (releaseCode === code || /\/\/# sourceMappingURL=/.test(releaseCode)) {
             throw new Error(`${path.relative(root, source)} has no removable trailing sourceMappingURL.`);
         }

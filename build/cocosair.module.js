@@ -5391,13 +5391,15 @@ class UniformInputAttachment {
   }
 }
 class ShaderStage {
-  constructor(stage = ShaderStageFlagBit.NONE, source = '') {
+  constructor(stage = ShaderStageFlagBit.NONE, source = '', wgslEntryPoint) {
     this.stage = stage;
     this.source = source;
+    this.wgslEntryPoint = wgslEntryPoint;
   }
   copy(info) {
     this.stage = info.stage;
     this.source = info.source;
+    this.wgslEntryPoint = info.wgslEntryPoint;
     return this;
   }
 }
@@ -27449,7 +27451,7 @@ function downloadDomImage(url, options, onComplete) {
   return img;
 }
 
-function downloadFile(url, options, onProgress, onComplete) {
+function downloadFile(url, options, onProgress, onComplete, includeResponseURL = false) {
   const xhr = new XMLHttpRequest();
   const errInfo = `download failed: ${url}, status: `;
   xhr.open('GET', url, true);
@@ -27473,7 +27475,7 @@ function downloadFile(url, options, onProgress, onComplete) {
   xhr.onload = () => {
     if (xhr.status === 200 || xhr.status === 0) {
       if (onComplete) {
-        onComplete(null, xhr.response);
+        if (includeResponseURL) onComplete(null, xhr.response, xhr.responseURL);else onComplete(null, xhr.response);
       }
     } else if (onComplete) {
       onComplete(new Error(`${errInfo}${xhr.status}(no response)`));
@@ -27543,6 +27545,20 @@ function downloadScript(url, options, onComplete) {
   return script;
 }
 
+class AtlasTextResponse {
+  constructor(text, responseURL) {
+    this.text = text;
+    this.responseURL = responseURL;
+  }
+}
+const atlasResponseURLs = new WeakMap();
+function rememberAtlasResponseURL(asset, responseURL) {
+  if (responseURL) atlasResponseURLs.set(asset, responseURL);
+}
+function getAtlasResponseURL(asset) {
+  return atlasResponseURLs.get(asset);
+}
+
 const REGEX = /^(?:\w+:\/\/|\.+\/).+/;
 const downloadImage = (url, options, onComplete) => {
   const func = sys.hasFeature(sys.Feature.IMAGE_BITMAP) && cclegacy.assetManager.allowImageBitmap ? downloadBlob : downloadDomImage;
@@ -27586,6 +27602,12 @@ const downloadCCONB = (url, options, onComplete) => {
 const downloadText = (url, options, onComplete) => {
   options.xhrResponseType = 'text';
   downloadFile(url, options, options.onFileProgress, onComplete);
+};
+const downloadAtlasText = (url, options, onComplete) => {
+  options.xhrResponseType = 'text';
+  downloadFile(url, options, options.onFileProgress, (err, data, responseURL) => {
+    if (err) onComplete(err);else onComplete(null, responseURL ? new AtlasTextResponse(data, responseURL) : data);
+  }, true);
 };
 const downloadBundle = (nameOrUrl, options, onComplete) => {
   const bundleName = basename(nameOrUrl);
@@ -27750,7 +27772,7 @@ class Downloader {
       '.xml': downloadText,
       '.vsh': downloadText,
       '.fsh': downloadText,
-      '.atlas': downloadText,
+      '.atlas': downloadAtlasText,
       '.tmx': downloadText,
       '.tsx': downloadText,
       '.json': downloadJson,
@@ -27966,7 +27988,9 @@ class Factory {
       return;
     }
     this._creating.add(id, [onComplete]);
-    handler(id, data, options, (err, result) => {
+    const atlasResponse = type === '.atlas' && data instanceof AtlasTextResponse ? data : undefined;
+    handler(id, atlasResponse ? atlasResponse.text : data, options, (err, result) => {
+      if (!err && atlasResponse && result instanceof TextAsset) rememberAtlasResponseURL(result, atlasResponse.responseURL);
       if (!err && result instanceof Asset) {
         result._uuid = id;
         cache(id, result, options.cacheAsset);
@@ -28596,7 +28620,7 @@ const loadOneAssetPipeline = new Pipeline('loadOneAsset', [function fetch(task, 
         done(err);
         return;
       }
-      item.content = asset;
+      item.content = asset instanceof AtlasTextResponse && !task.options.__atlasResponseForFactory__ ? asset.text : asset;
       if (progress.canInvoke) {
         task.dispatch('progress', ++progress.finish, progress.total, item);
       }
@@ -29173,6 +29197,8 @@ class AssetManager {
       asyncify(onComp)(null, this.assets.get(url));
       return;
     }
+    const ext = opts.ext || extname(url);
+    if (ext === '.atlas') opts.__atlasResponseForFactory__ = true;
     opts.__isNative__ = true;
     opts.preset = opts.preset || 'remote';
     this.loadAny({
@@ -29184,7 +29210,7 @@ class AssetManager {
           onComp(err, data);
         }
       } else {
-        factory.create(url, data, opts.ext || extname(url), opts, (p1, p2) => {
+        factory.create(url, data, ext, opts, (p1, p2) => {
           if (onComp) {
             onComp(p1, p2);
           }
@@ -29587,6 +29613,29 @@ function normalizeEffectShader(input, effect = '<direct>', path = 'shader') {
   }
   if (source.hash !== undefined && !Number.isSafeInteger(source.hash)) invalid$3(effect, name, `${path}.hash`, 'finite safe integer');
   const normalized = copy(source);
+  if (source.wgsl !== undefined) {
+    const variant = record$2(source.wgsl, effect, name, `${path}.wgsl`);
+    for (const stage of ['vert', 'frag']) {
+      if (typeof variant[stage] !== 'string' || !variant[stage].trim()) {
+        invalid$3(effect, name, `${path}.wgsl.${stage}`, 'non-empty WGSL source', variant[stage] === undefined);
+      }
+    }
+    for (const entry of ['vertexEntryPoint', 'fragmentEntryPoint']) {
+      if (variant[entry] !== undefined && (typeof variant[entry] !== 'string' || !/^[A-Za-z_][A-Za-z_0-9]*$/.test(variant[entry]))) {
+        invalid$3(effect, name, `${path}.wgsl.${entry}`, 'WGSL entry point identifier');
+      }
+    }
+    for (const target of ['glsl3', 'glsl4']) {
+      var _source$target;
+      const fallback = (_source$target = source[target]) !== null && _source$target !== void 0 ? _source$target : {};
+      if (fallback.compute) invalid$3(effect, name, `${path}.wgsl`, 'render shader variant');
+      for (const stage of ['vert', 'frag']) {
+        if (typeof fallback[stage] !== 'string' || !fallback[stage].trim()) {
+          invalid$3(effect, name, `${path}.${target}.${stage}`, 'non-empty GLSL fallback', fallback[stage] === undefined);
+        }
+      }
+    }
+  }
   for (const key of arrays) {
     var _normalized$key;
     (_normalized$key = normalized[key]) !== null && _normalized$key !== void 0 ? _normalized$key : normalized[key] = [];
@@ -30354,10 +30403,21 @@ class ProgramLib {
     if (device.gfxAPI === API.WEBGPU) {
       shaderInfo = new ShaderInfo();
       shaderInfo.copy(tmplInfo.shaderInfo);
-      processShaderInfo(tmpl, macroArray, shaderInfo);
+      if (!selectNativeEffectWGSL(device, tmpl, shaderInfo)) {
+        processShaderInfo(tmpl, macroArray, shaderInfo);
+      }
     }
     return this._cache[key] = device.createShader(shaderInfo);
   }
+}
+function selectNativeEffectWGSL(device, program, info) {
+  var _variant$vertexEntryP, _variant$fragmentEntr;
+  const variant = program.wgsl;
+  if (device.gfxAPI !== API.WEBGPU || !variant) return false;
+  info.stages.length = 2;
+  info.stages[0] = new ShaderStage(ShaderStageFlagBit.VERTEX, variant.vert, (_variant$vertexEntryP = variant.vertexEntryPoint) !== null && _variant$vertexEntryP !== void 0 ? _variant$vertexEntryP : 'main');
+  info.stages[1] = new ShaderStage(ShaderStageFlagBit.FRAGMENT, variant.frag, (_variant$fragmentEntr = variant.fragmentEntryPoint) !== null && _variant$fragmentEntr !== void 0 ? _variant$fragmentEntr : 'main');
+  return true;
 }
 function getDeviceShaderVersion(device) {
   switch (device.gfxAPI) {
@@ -86597,17 +86657,20 @@ class TMXMapInfo {
               dt: 0,
               frameIdx: 0
             };
-            this._tileAnimations.set(pid, animationProp);
             const frames = animationProp.frames;
             for (let frameIdx = 0; frameIdx < framesData.length; frameIdx++) {
               const frame = framesData[frameIdx];
               const tileid = fgid + (parseInt(frame.getAttribute('tileid')) || 0);
-              const duration = parseFloat(frame.getAttribute('duration')) || 0;
+              const duration = Number(frame.getAttribute('duration')) / 1000;
+              if (!Number.isFinite(duration) || duration <= 0) break;
               frames.push({
                 tileid: tileid,
-                duration: duration / 1000,
+                duration,
                 grid: null
               });
+            }
+            if (frames.length && frames.length === framesData.length) {
+              this._tileAnimations.set(pid, animationProp);
             }
           }
         }
@@ -88478,6 +88541,7 @@ let TiledMap = (_dec$1G = ccclass$x('cc.TiledMap'), _dec2$1k = requireComponent(
     this._textures = [];
     this._tilesets = [];
     this._animations = new Map();
+    this._animationEnds = new WeakMap();
     this._imageLayers = [];
     this._layers = [];
     this._groups = [];
@@ -88662,13 +88726,22 @@ let TiledMap = (_dec$1G = ccclass$x('cc.TiledMap'), _dec2$1k = requireComponent(
     }
   }
   _fillAniGrids(texGrids, animations) {
-    for (const i of animations.keys()) {
-      const animation = animations.get(i);
-      if (!animation) continue;
-      const frames = animation.frames;
-      for (let j = 0; j < frames.length; j++) {
-        const frame = frames[j];
-        frame.grid = texGrids.get(frame.tileid);
+    for (const [gid, animation] of animations) {
+      const endTimes = [];
+      let total = 0;
+      for (const frame of animation.frames) {
+        const grid = texGrids.get(frame.tileid);
+        const end = total + frame.duration;
+        if (!grid || !Number.isFinite(end) || end <= total) break;
+        frame.grid = grid;
+        endTimes.push(end);
+        total = end;
+      }
+      if (endTimes.length && endTimes.length === animation.frames.length) {
+        this._animationEnds.set(animation, endTimes);
+      } else {
+        this._animationEnds.delete(animation);
+        animations.delete(gid);
       }
     }
   }
@@ -88815,20 +88888,25 @@ let TiledMap = (_dec$1G = ccclass$x('cc.TiledMap'), _dec2$1k = requireComponent(
   lateUpdate(dt) {
     const animations = this._animations;
     const texGrids = this._texGrids;
-    for (const aniGID of animations.keys()) {
-      const animation = animations.get(aniGID);
-      const frames = animation.frames;
-      let frame = frames[animation.frameIdx];
-      animation.dt += dt;
-      if (frame.duration < animation.dt) {
-        animation.dt = 0;
-        animation.frameIdx++;
-        if (animation.frameIdx >= frames.length) {
-          animation.frameIdx = 0;
-        }
-        frame = frames[animation.frameIdx];
+    const delta = Number.isFinite(dt) && dt > 0 ? dt : 0;
+    for (const [gid, animation] of animations) {
+      const ends = this._animationEnds.get(animation);
+      if (!ends) continue;
+      const total = ends[ends.length - 1];
+      const advance = delta < total ? delta : delta % total;
+      const remaining = total - animation.dt;
+      let phase = advance >= remaining ? advance - remaining : animation.dt + advance;
+      if (total - phase <= total * Number.EPSILON * 2) phase = 0;
+      animation.dt = phase;
+      let low = 0;
+      let high = ends.length - 1;
+      while (low < high) {
+        const mid = low + high >>> 1;
+        const end = ends[mid];
+        if (end - phase > end * Number.EPSILON * 2) high = mid;else low = mid + 1;
       }
-      texGrids.set(aniGID, frame.grid);
+      animation.frameIdx = low;
+      texGrids.set(gid, animation.frames[low].grid);
     }
     const layers = this.getLayers();
     for (let i = 0, l = layers.length; i < l; i++) {
@@ -138007,14 +138085,17 @@ class WebProgramLibrary {
     } else {
       errorID(16346);
     }
-    const shaderInfo = info.shaderInfo;
-    if (src.compute) {
-      shaderInfo.stages[0].source = prefix + src.compute;
-      shaderInfo.stages[0].stage = ShaderStageFlagBit.COMPUTE;
-      shaderInfo.stages.length = 1;
-    } else {
-      shaderInfo.stages[0].source = prefix + src.vert;
-      shaderInfo.stages[1].source = prefix + src.frag;
+    const shaderInfo = new ShaderInfo();
+    shaderInfo.copy(info.shaderInfo);
+    if (!selectNativeEffectWGSL(device, programInfo, shaderInfo)) {
+      if (src.compute) {
+        shaderInfo.stages[0].source = prefix + src.compute;
+        shaderInfo.stages[0].stage = ShaderStageFlagBit.COMPUTE;
+        shaderInfo.stages.length = 1;
+      } else {
+        shaderInfo.stages[0].source = prefix + src.vert;
+        shaderInfo.stages[1].source = prefix + src.frag;
+      }
     }
     shaderInfo.attributes = getActiveAttributes(programInfo, info.attributes, defines);
     shaderInfo.name = getShaderInstanceName(name, macroArray);
@@ -142653,8 +142734,8 @@ function createSessionScope() {
 
 const AIR_VERSION = '1.0.0';
 const AIR_REVISION = 100;
-const AIR_BUILD_DATE = "202611222133";
-const AIR_BUILD_NUMBER = 288;
+const AIR_BUILD_DATE = "202611272210";
+const AIR_BUILD_NUMBER = 296;
 class AirAppImpl {
   get session() {
     return this._scope;
@@ -145409,6 +145490,14 @@ class WebGPUCmdPackage {
 }
 function WebGPUCmdFuncCreateBuffer(device, gpuBuffer) {
   const nativeDevice = device.nativeDevice;
+  const limit = nativeDevice.limits.maxBufferSize;
+  if (!Number.isSafeInteger(gpuBuffer.size) || gpuBuffer.size < 0 || gpuBuffer.size > limit) {
+    throw Object.assign(new RangeError(`WebGPU buffer size ${gpuBuffer.size} exceeds the valid range 0–${limit} bytes.`), {
+      code: 'WEBGPU_BUFFER_SIZE_LIMIT',
+      size: gpuBuffer.size,
+      limit
+    });
+  }
   const bufferDesc = {};
   bufferDesc.size = gpuBuffer.size;
   let bufferUsage = 0x0;
@@ -145438,9 +145527,14 @@ function WebGPUCmdFuncDestroyBuffer(device, gpuBuffer) {
     gpuBuffer.gpuBuffer.destroy();
   }
 }
-function WebGPUCmdFuncResizeBuffer(device, gpuBuffer) {
+function WebGPUCmdFuncResizeBuffer(device, gpuBuffer, size) {
+  const replacement = {
+    ...gpuBuffer,
+    size
+  };
+  WebGPUCmdFuncCreateBuffer(device, replacement);
   WebGPUCmdFuncDestroyBuffer(device, gpuBuffer);
-  WebGPUCmdFuncCreateBuffer(device, gpuBuffer);
+  Object.assign(gpuBuffer, replacement);
 }
 function WebGPUCmdFuncUpdateBuffer(device, gpuBuffer, buffer, offset, size) {
   if (gpuBuffer.usage & BufferUsageBit.INDIRECT && buffer.drawInfos) {
@@ -145535,8 +145629,7 @@ function WebGPUCmdFuncResizeTexture(device, gpuTexture) {
   }
   WebGPUCmdFuncCreateTexture(device, gpuTexture);
 }
-function WebGPUCmdFuncCreateSampler(device, gpuSampler) {
-  const nativeDevice = device.nativeDevice;
+function WebGPUCmdFuncGetSamplerDescriptor(gpuSampler) {
   gpuSampler.gpuMinFilter = gpuSampler.minFilter === Filter.LINEAR || gpuSampler.minFilter === Filter.ANISOTROPIC ? 'linear' : 'nearest';
   gpuSampler.gpuMagFilter = gpuSampler.magFilter === Filter.LINEAR || gpuSampler.magFilter === Filter.ANISOTROPIC ? 'linear' : 'nearest';
   gpuSampler.gpuMipFilter = gpuSampler.mipFilter === Filter.LINEAR || gpuSampler.mipFilter === Filter.ANISOTROPIC ? 'linear' : 'nearest';
@@ -145556,8 +145649,10 @@ function WebGPUCmdFuncCreateSampler(device, gpuSampler) {
     samplerDesc.compare = WebGPUCompareFunc[gpuSampler.compare];
   }
   samplerDesc.maxAnisotropy = gpuSampler.maxAnisotropy || 1;
-  const sampler = nativeDevice.createSampler(samplerDesc);
-  gpuSampler.gpuSampler = sampler;
+  return samplerDesc;
+}
+function WebGPUCmdFuncCreateSampler(device, gpuSampler, descriptor = WebGPUCmdFuncGetSamplerDescriptor(gpuSampler)) {
+  gpuSampler.gpuSampler = device.nativeDevice.createSampler(descriptor);
 }
 function WebGPUCmdFuncDestroySampler(device, gpuSampler) {
   if (gpuSampler.gpuSampler) {
@@ -146009,19 +146104,39 @@ function seperateCombinedSamplerTexture(shaderSource) {
   code = `${code.slice(0, firstPrecisionIdx)}\n${functionDefs}\n${code.slice(firstPrecisionIdx)}`;
   return code;
 }
-function reflect(wgsl) {
+function reflect(wgsl, native) {
   const bindingList = [];
-  for (const wgslStr of wgsl) {
-    const reg = /@group\((\d)\)\s+@binding\((\d+)\)/g;
-    let iter = reg.exec(wgslStr);
+  for (const source of wgsl) {
+    let comments = 0;
+    let lineComment = false;
+    const clean = native ? source.replace(/\/\*|\*\/|\/\/|\r?\n|[^/*\r\n]+|[/*\r]/g, token => {
+      if (token.endsWith('\n')) {
+        lineComment = false;
+        return token;
+      }
+      if (lineComment) return ' ';
+      if (token === '/*') {
+        ++comments;
+        return ' ';
+      }
+      if (token === '*/' && comments) {
+        --comments;
+        return ' ';
+      }
+      if (token === '//' && !comments) lineComment = true;
+      return comments || lineComment ? ' ' : token;
+    }) : source;
+    const reg = /@group\s*\(\s*(\d)\s*\)\s*@binding\s*\(\s*(\d+)\s*\)|@binding\s*\(\s*(\d+)\s*\)\s*@group\s*\(\s*(\d)\s*\)/g;
+    let iter = reg.exec(clean);
     while (iter) {
-      const set = +iter[1];
-      const binding = +iter[2];
+      var _iter$, _iter$2;
+      const set = Number((_iter$ = iter[1]) !== null && _iter$ !== void 0 ? _iter$ : iter[4]);
+      const binding = Number((_iter$2 = iter[2]) !== null && _iter$2 !== void 0 ? _iter$2 : iter[3]);
       while (bindingList.length <= set) {
         bindingList.push([]);
       }
       bindingList[set][bindingList[set].length] = binding;
-      iter = reg.exec(wgslStr);
+      iter = reg.exec(clean);
     }
   }
   return bindingList;
@@ -146222,58 +146337,68 @@ function WebGPUCmdFuncCreateGPUShader(device, gpuShader) {
   const wgslCodes = [];
   const stageSize = gpuShader.gpuStages.length;
   for (let i = 0; i < stageSize; ++i) {
+    var _RegExp$exec;
     wgslCodes.length = 0;
     const gpuStage = gpuShader.gpuStages[i];
-    let source = gpuStage.source;
-    const shadowSample = /\btexture\s*\(\s*(?:shadowMap|cc_shadowMap|cc_spotShadowMap)\s*,/g;
-    let match;
-    while (match = shadowSample.exec(source)) {
-      const open = source.indexOf('(', match.index);
-      let end = open + 1,
-        depth = 1;
-      for (; end < source.length && depth; end++) {
-        if (source[end] === '(') depth++;
-        if (source[end] === ')') depth--;
-      }
-      source = source.slice(0, match.index) + 'textureLod' + source.slice(open, end - 1) + ', 0.0)' + source.slice(end);
-      shadowSample.lastIndex = end + 8;
-    }
-    const glslSource = seperateCombinedSamplerTexture(source);
     const stageStr = gpuStage.type === ShaderStageFlagBit.VERTEX ? 'vertex' : gpuStage.type === ShaderStageFlagBit.FRAGMENT ? 'fragment' : 'compute';
-    const sourceCode = `#version 450\n#define CC_USE_WGPU 1\n${glslSource}`;
-    let wgsl;
-    try {
-      const spv = glslang.compileGLSL(sourceCode, stageStr, false, '1.3');
-      wgsl = twgsl.convertSpirV2WGSL(spv);
-      if (!wgsl) throw new Error('Translator returned empty WGSL.');
-    } catch (cause) {
-      throw Object.assign(new Error(`WebGPU shader '${gpuShader.name}' ${stageStr} translation failed.`), {
-        code: 'WEBGPU_SHADER_TRANSLATION_FAILED',
-        cause
-      });
+    const nativeEntry = gpuStage.wgslEntryPoint;
+    let wgsl = gpuStage.source;
+    let sourceCode = wgsl;
+    if (nativeEntry === undefined) {
+      let source = gpuStage.source;
+      const shadowSample = /\btexture\s*\(\s*(?:shadowMap|cc_shadowMap|cc_spotShadowMap)\s*,/g;
+      let match;
+      while (match = shadowSample.exec(source)) {
+        const open = source.indexOf('(', match.index);
+        let end = open + 1,
+          depth = 1;
+        for (; end < source.length && depth; end++) {
+          if (source[end] === '(') depth++;
+          if (source[end] === ')') depth--;
+        }
+        source = source.slice(0, match.index) + 'textureLod' + source.slice(open, end - 1) + ', 0.0)' + source.slice(end);
+        shadowSample.lastIndex = end + 8;
+      }
+      const glslSource = seperateCombinedSamplerTexture(source);
+      sourceCode = `#version 450\n#define CC_USE_WGPU 1\n${glslSource}`;
+      try {
+        const spv = glslang.compileGLSL(sourceCode, stageStr, false, '1.3');
+        wgsl = twgsl.convertSpirV2WGSL(spv);
+        if (!wgsl) throw new Error('Translator returned empty WGSL.');
+      } catch (cause) {
+        throw Object.assign(new Error(`WebGPU shader '${gpuShader.name}' ${stageStr} translation failed.`), {
+          code: 'WEBGPU_SHADER_TRANSLATION_FAILED',
+          cause
+        });
+      }
+      gpuStage.source = wgsl;
+      findEmployAttr(gpuStage);
+      wgsl = gpuStage.source;
     }
-    gpuStage.source = wgsl;
-    findEmployAttr(gpuStage);
-    wgsl = gpuStage.source;
-    const shader = nativeDevice == null ? void 0 : nativeDevice.createShaderModule({
-      code: wgsl
+    const entry = nativeEntry !== null && nativeEntry !== void 0 ? nativeEntry : (_RegExp$exec = new RegExp(`@${stageStr}\\b[\\s\\S]*?\\bfn\\s+(\\w+)\\s*\\(`).exec(wgsl)) == null ? void 0 : _RegExp$exec[1];
+    if (!entry) throw new Error(`WEBGPU_SHADER_ENTRY_POINT: ${gpuShader.name} ${stageStr}`);
+    const shader = nativeDevice.createShaderModule({
+      code: wgsl,
+      label: `${gpuShader.name} ${stageStr}`
     });
     shader.getCompilationInfo().then(compileInfo => {
       compileInfo.messages.forEach(info => {
-        log(sourceCode, wgsl, info.lineNum, info.linePos, info.type, info.message);
+        if (nativeEntry !== undefined && info.type === 'error') {
+          error(`[WEBGPU_SHADER_COMPILATION_FAILED] ${gpuShader.name} ${stageStr} ${info.lineNum}:${info.linePos} ${info.message}`);
+        } else {
+          log(sourceCode, wgsl, info.lineNum, info.linePos, info.type, info.message);
+        }
       });
-    }).catch(compileInfo => {
-      error(`WebGPU shader '${gpuShader.name}' ${stageStr} diagnostics failed:`, compileInfo);
+    }).catch(cause => {
+      error(`WebGPU shader '${gpuShader.name}' ${stageStr} diagnostics failed:`, cause);
     });
-    const entry = new RegExp(`@${stageStr}\\b[\\s\\S]*?\\bfn\\s+(\\w+)\\s*\\(`).exec(wgsl);
-    if (!entry) throw new Error(`WEBGPU_SHADER_ENTRY_POINT: ${gpuShader.name} ${stageStr}`);
     const shaderStage = {
       module: shader,
-      entryPoint: entry[1]
+      entryPoint: entry
     };
     gpuStage.gpuShader = shaderStage;
     wgslCodes.push(wgsl);
-    const bindingList = reflect(wgslCodes);
+    const bindingList = reflect(wgslCodes, nativeEntry !== undefined);
     gpuStage.bindings = bindingList;
     const bindingListSize = bindingList.length;
     for (let s = 0; s < bindingListSize; s++) {
@@ -146762,6 +146887,18 @@ class WebGPUDescriptorSet extends DescriptorSet {
     this._resourceSignatures.clear();
   }
   _bindBufferEntry(bind, buffer) {
+    if (bind.descriptorType & DESCRIPTOR_STORAGE_BUFFER_TYPE) {
+      const limit = WebGPUDeviceManager.instance.nativeDevice.limits.maxStorageBufferBindingSize;
+      const size = buffer.gpuBuffer.size;
+      if (size > limit) {
+        throw Object.assign(new RangeError(`WebGPU storage binding ${bind.binding} size ${size} exceeds ${limit} bytes.`), {
+          code: 'WEBGPU_STORAGE_BINDING_SIZE_LIMIT',
+          binding: bind.binding,
+          size,
+          limit
+        });
+      }
+    }
     const destBind = this._gpuDescriptorSet.gpuDescriptors[bind.binding];
     if (destBind) {
       destBind.gpuBuffer = buffer.gpuBuffer;
@@ -146998,18 +147135,14 @@ class WebGPUBuffer extends Buffer {
     if (oldSize === size) {
       return;
     }
-    this._size = size;
-    this._count = this._size / this._stride;
-    this._hasChange = true;
     if (this._gpuBuffer) {
-      this._gpuBuffer.size = this._size;
-      if (this._size > 0) {
-        const device = WebGPUDeviceManager.instance;
-        WebGPUCmdFuncResizeBuffer(device, this._gpuBuffer);
-        device.memoryStatus.bufferSize -= oldSize;
-        device.memoryStatus.bufferSize += this._size;
-      }
+      const device = WebGPUDeviceManager.instance;
+      WebGPUCmdFuncResizeBuffer(device, this._gpuBuffer, size);
+      device.memoryStatus.bufferSize += size - oldSize;
     }
+    this._size = size;
+    this._count = size / this._stride;
+    this._hasChange = true;
   }
   update(buffer, size) {
     if (this._isBufferView) {
@@ -148586,7 +148719,7 @@ class WebGPURenderPass extends RenderPass {
   }
 }
 
-const samplerCaches = new Map();
+const samplerCaches = new WeakMap();
 class WebGPUSampler extends Sampler {
   get gpuSampler() {
     return this._gpuSampler;
@@ -148623,18 +148756,6 @@ class WebGPUSampler extends Sampler {
       gpuWrapR: 'clamp-to-edge'
     };
   }
-  _computeSamplerKey(info) {
-    let hash = info.minFilter;
-    hash |= info.magFilter << 2;
-    hash |= info.mipFilter << 4;
-    hash |= info.addressU << 6;
-    hash |= info.addressV << 8;
-    hash |= info.addressW << 10;
-    hash |= info.maxAnisotropy << 12;
-    hash |= info.compare << 16;
-    hash |= info.mipLevel << 18;
-    return hash;
-  }
   createGPUSampler(mipLevel = 1, forcePoint = false) {
     if (!this._gpuSampler) {
       return null;
@@ -148643,15 +148764,25 @@ class WebGPUSampler extends Sampler {
       ...this._gpuSampler,
       mipLevel
     };
-    if (forcePoint) info.minFilter = info.magFilter = info.mipFilter = Filter.POINT;
-    const currKey = this._computeSamplerKey(info);
-    let currGPUSampler = samplerCaches.get(currKey);
-    if (currGPUSampler) return currGPUSampler;
+    if (forcePoint) {
+      info.minFilter = info.magFilter = info.mipFilter = Filter.POINT;
+      info.maxAnisotropy = 1;
+    }
     const device = WebGPUDeviceManager.instance;
+    const nativeDevice = device.nativeDevice;
+    const descriptor = WebGPUCmdFuncGetSamplerDescriptor(info);
+    const key = JSON.stringify(descriptor);
+    let cache = samplerCaches.get(nativeDevice);
+    if (!cache) {
+      cache = new Map();
+      samplerCaches.set(nativeDevice, cache);
+    }
+    let currGPUSampler = cache.get(key);
+    if (currGPUSampler) return currGPUSampler;
     this._hasChange = true;
-    WebGPUCmdFuncCreateSampler(device, info);
+    WebGPUCmdFuncCreateSampler(device, info, descriptor);
     currGPUSampler = info.gpuSampler;
-    samplerCaches.set(currKey, currGPUSampler);
+    cache.set(key, currGPUSampler);
     return currGPUSampler;
   }
   destroy() {
@@ -148695,7 +148826,7 @@ class WebGPUShader extends Shader {
     for (let i = 0; i < stageSize; ++i) {
       const stage = info.stages[i];
       const resources = [...info.blocks, ...info.buffers, ...info.samplerTextures, ...info.samplers, ...info.textures, ...info.images, ...info.subpassInputs];
-      const source = stage.source.replace(/layout\s*\(([^)]+)\)(\s*(?:(?:readonly|writeonly)\s+)?uniform\s+(?:(?:lowp|mediump|highp)\s+)?(?:[iu]?sampler\w+\s+)?|\s*(?:(?:readonly|writeonly)\s+)?buffer\s+)(\w+)(?=\s*[{;])/g, (declaration, layout, middle, name) => {
+      const source = stage.wgslEntryPoint !== undefined ? stage.source : stage.source.replace(/layout\s*\(([^)]+)\)(\s*(?:(?:readonly|writeonly)\s+)?uniform\s+(?:(?:lowp|mediump|highp)\s+)?(?:[iu]?sampler\w+\s+)?|\s*(?:(?:readonly|writeonly)\s+)?buffer\s+)(\w+)(?=\s*[{;])/g, (declaration, layout, middle, name) => {
         const resource = resources.find(item => item.name === name);
         if (!resource) return declaration;
         const mapped = layout.replace(/set\s*=\s*\d+/, `set = ${resource.set}`).replace(/binding\s*=\s*\d+/, `binding = ${resource.binding}`).replace(/,\s*/g, ', ');
@@ -148704,6 +148835,7 @@ class WebGPUShader extends Shader {
       this._gpuShader.gpuStages[i] = {
         type: stage.stage,
         source,
+        wgslEntryPoint: stage.wgslEntryPoint,
         gpuShader: null,
         bindings: [],
         attrs: new Map()
@@ -148761,12 +148893,18 @@ class WebGPUStateCache {
   }
 }
 
+function maxMipLevels(type, width, height, depth) {
+  if (type === TextureType.TEX1D) return 1;
+  return 1 + Math.floor(Math.log2(Math.max(width, height, type === TextureType.TEX3D ? depth : 1)));
+}
 class WebGPUTexture extends Texture {
   constructor(...args) {
     super(...args);
     this._gpuTexture = null;
     this._texDescriptor = null;
     this._lodLevel = 0;
+    this._requestedMipLevels = 1;
+    this._fullMipChain = false;
     this._hasChange = false;
   }
   getTextureHandle() {
@@ -148810,6 +148948,8 @@ class WebGPUTexture extends Texture {
     this._isPowerOf2 = IsPowerOf2(this._info.width) && IsPowerOf2(this._info.height);
     this._size = FormatSurfaceSize(this._info.format, this.width, this.height, this.depth, this._info.levelCount) * this._info.layerCount;
     if (!this._isTextureView) {
+      this._requestedMipLevels = texInfo.levelCount;
+      this._fullMipChain = !isSwapchainTexture && texInfo.samples === 1 && texInfo.levelCount > 1 && texInfo.levelCount === maxMipLevels(texInfo.type, texInfo.width, texInfo.height, texInfo.depth);
       this._gpuTexture = {
         type: texInfo.type,
         format: texInfo.format,
@@ -148872,6 +149012,13 @@ class WebGPUTexture extends Texture {
     if (!this._gpuTexture || !this._gpuTexture.gpuTexture) {
       return null;
     }
+    const {
+      baseLevel,
+      levelCount
+    } = this.viewInfo;
+    if (baseLevel + levelCount > this._gpuTexture.mipLevel) {
+      throw new RangeError('WebGPU texture view mip range exceeds the owning texture.');
+    }
     return this._gpuTexture.gpuTexture.createView({
       format: !attachment && FormatInfos[this.format].hasDepth ? undefined : this.gpuTexture.gpuFormat,
       aspect: !attachment && FormatInfos[this.format].hasDepth ? 'depth-only' : 'all',
@@ -148894,14 +149041,19 @@ class WebGPUTexture extends Texture {
     this._gpuTexture = null;
   }
   resize(width, height) {
+    if (this._isTextureView) {
+      throw new Error('WebGPU texture views cannot resize the owning resource.');
+    }
+    if (!Number.isSafeInteger(width) || !Number.isSafeInteger(height) || width < 1 || height < 1) {
+      throw new RangeError('WebGPU texture dimensions must be positive integers.');
+    }
     if (this._info.width === width && this._info.height === height) {
       return;
     }
-    if (this._info.levelCount === WebGPUTexture.getLevelCount(this._info.width, this._info.height)) {
-      this._info.levelCount = WebGPUTexture.getLevelCount(width, height);
-    } else if (this._info.levelCount > 1) {
-      this._info.levelCount = Math.min(this._info.levelCount, WebGPUTexture.getLevelCount(width, height));
-    }
+    const limit = maxMipLevels(this.type, width, height, this.depth);
+    this._info.levelCount = this._fullMipChain ? limit : Math.min(this._requestedMipLevels, limit);
+    this._viewInfo.levelCount = this._info.levelCount;
+    this._isPowerOf2 = IsPowerOf2(width) && IsPowerOf2(height);
     this._hasChange = true;
     const oldSize = this._size;
     this._info.width = width;
@@ -148911,6 +149063,8 @@ class WebGPUTexture extends Texture {
       this._gpuTexture.width = width;
       this._gpuTexture.height = height;
       this._gpuTexture.size = this._size;
+      this._gpuTexture.mipLevel = this._info.levelCount;
+      this._gpuTexture.isPowerOf2 = this._isPowerOf2;
       if (!this._gpuTexture.isSwapchainTexture) {
         const device = WebGPUDeviceManager.instance;
         WebGPUCmdFuncResizeTexture(device, this._gpuTexture);
@@ -149233,6 +149387,7 @@ class WebGPUDevice extends Device {
     this.defaultResource = new DefaultResources();
     this._adapter = null;
     this._device = null;
+    this._requestedLimits = void 0;
     this._context = null;
     this._swapchain = null;
     this._glslang = void 0;
@@ -149452,12 +149607,14 @@ class WebGPUDevice extends Device {
     for (const feature of ['texture-compression-bc', 'texture-compression-etc2', 'texture-compression-astc', 'indirect-first-instance']) {
       if (this._adapter.features.has(feature)) submitFeatures.push(feature);
     }
+    const requiredLimits = {
+      maxVertexAttributes: maxVertAttrs,
+      maxSampledTexturesPerShaderStage: maxSampledTexPerShaderStage
+    };
+    this._requestedLimits = requiredLimits;
     try {
       this._device = await this._adapter.requestDevice({
-        requiredLimits: {
-          maxVertexAttributes: maxVertAttrs,
-          maxSampledTexturesPerShaderStage: maxSampledTexPerShaderStage
-        },
+        requiredLimits,
         requiredFeatures: submitFeatures
       });
     } catch (cause) {
@@ -149613,6 +149770,22 @@ class WebGPUDevice extends Device {
   }
   resize(width, height) {}
   acquire() {}
+  get webgpuLimits() {
+    var _this$_adapter, _this$_device2;
+    const adapter = (_this$_adapter = this._adapter) == null ? void 0 : _this$_adapter.limits;
+    const device = this.isLost ? undefined : (_this$_device2 = this._device) == null ? void 0 : _this$_device2.limits;
+    const bufferLimits = limits => limits ? {
+      maxBufferSize: limits.maxBufferSize,
+      maxStorageBufferBindingSize: limits.maxStorageBufferBindingSize
+    } : null;
+    return {
+      adapter: bufferLimits(adapter),
+      requested: this._requestedLimits ? {
+        ...this._requestedLimits
+      } : null,
+      device: bufferLimits(device)
+    };
+  }
   get nativeDevice() {
     return this._device;
   }
@@ -153652,16 +153825,23 @@ function discardResponse(response) {
     void ((_response$body = response.body) == null ? void 0 : _response$body.cancel().catch(() => undefined));
   } catch {}
 }
-async function requestArrayBuffer(url, policy, signal, origin) {
+async function requestBinaryResponse(url, policy, signal, origin) {
   const response = await awaitAbortable(() => fetch(url, requestInit(url, policy, signal, origin)), signal, discardResponse);
   try {
     throwIfAborted(signal);
     check(response.ok, `request failed: ${url} (${response.status})`);
-    return await awaitAbortable(() => response.arrayBuffer(), signal);
+    const data = await awaitAbortable(() => response.arrayBuffer(), signal);
+    return {
+      data,
+      url: response.url || url
+    };
   } catch (error) {
     discardResponse(response);
     throw error;
   }
+}
+async function requestArrayBuffer(url, policy, signal, origin) {
+  return (await requestBinaryResponse(url, policy, signal, origin)).data;
 }
 
 const COMPONENTS = {
@@ -153738,7 +153918,7 @@ const DependencyKeys = {
   primitive: (meshIndex, primitiveIndex) => `primitive:${meshIndex}:${primitiveIndex}`
 };
 class GLTFParserContext {
-  constructor(json, baseUrl, options = {}) {
+  constructor(json, baseUrl, options = {}, policyOrigin = (_requestOrigin => (_requestOrigin = requestOrigin(baseUrl)) !== null && _requestOrigin !== void 0 ? _requestOrigin : null)()) {
     this.warnings = [];
     this.buffers = [];
     this.handlers = [];
@@ -153754,7 +153934,7 @@ class GLTFParserContext {
     this.json = json;
     this.baseUrl = baseUrl;
     this.options = options;
-    this.origin = requestOrigin(baseUrl);
+    this.origin = policyOrigin !== null && policyOrigin !== void 0 ? policyOrigin : undefined;
   }
   get signal() {
     return this.options.signal;
@@ -156925,8 +157105,11 @@ function validateDef(ctx, def) {
       throw invalid$1(`${EXT_MESH_GPU_INSTANCING}: unsupported channel ${channel}`);
     }
     const source = item(ctx.json.accessors, accessorIndex, `accessor for ${channel}`);
-    if (source.type !== expected.type || source.componentType !== 5126 || source.normalized) {
-      throw invalid$1(`${EXT_MESH_GPU_INSTANCING}: channel ${channel} must be a non-normalized float ${expected.type}`);
+    const float = source.componentType === 5126 && !source.normalized;
+    const packedRotation = channel === 'ROTATION' && source.normalized === true && (source.componentType === 5120 || source.componentType === 5122);
+    if (source.type !== expected.type || !(float || packedRotation)) {
+      const formats = channel === 'ROTATION' ? 'non-normalized FLOAT or normalized BYTE/SHORT' : 'non-normalized FLOAT';
+      throw invalid$1(`${EXT_MESH_GPU_INSTANCING}: channel ${channel} must be ${expected.type} with ${formats} components`);
     }
     if (count === -1) {
       count = source.count;
@@ -157011,6 +157194,11 @@ function gltfExtension(url) {
 function absoluteURL(url) {
   return new URL(url, typeof document !== 'undefined' ? document.baseURI : undefined).href;
 }
+function documentBase(url) {
+  return /^(data|blob):/i.test(url) ? undefined : new URL('.', url).href;
+}
+const nativeResponseURLs = new WeakMap();
+const parseResolved = Symbol('parseResolved');
 let globalDefaults = {};
 function configureGLTFLoaderDefaults(options) {
   const defaults = {
@@ -157113,16 +157301,20 @@ class GLTFLoader {
           ext: gltfExtension(url) || '.glb'
         }, (error, asset) => error ? reject(error) : resolve(asset)));
       }
-      return requestArrayBuffer(target, resolved.request, resolved.signal, requestOrigin(target)).then(data => this.parseResolvedAsync(data, /^(data|blob):/i.test(target) ? undefined : new URL('.', target).href, resolved, target));
+      const origin = requestOrigin(target);
+      return requestBinaryResponse(target, resolved.request, resolved.signal, origin).then(({
+        data,
+        url: responseURL
+      }) => this[parseResolved](data, documentBase(responseURL), resolved, target, origin !== null && origin !== void 0 ? origin : null));
     }, resolved.signal, asset => {
       asset.destroy();
     });
   }
   parseAsync(data, baseUrl) {
     const resolved = resolveOptions(this.options);
-    return this.parseResolvedAsync(data, baseUrl, resolved);
+    return this[parseResolved](data, baseUrl, resolved);
   }
-  parseResolvedAsync(data, baseUrl, resolved, sourceUrl) {
+  [parseResolved](data, baseUrl, resolved, sourceUrl, policyOrigin) {
     let context;
     return awaitAbortable(async () => {
       const {
@@ -157130,7 +157322,7 @@ class GLTFLoader {
         bin
       } = decodeContainer(data);
       const base = baseUrl === undefined ? undefined : absoluteURL(baseUrl);
-      const parser = new GLTFParserContext(json, base, resolved);
+      const parser = new GLTFParserContext(json, base, resolved, policyOrigin);
       context = parser;
       const report = (phase, loaded, total) => parser.report(phase, loaded, total, sourceUrl);
       const layout = prepareNodes(parser);
@@ -157225,9 +157417,13 @@ function registerGLTFLoader() {
       fetch(url, {
         headers: options.header,
         credentials: options.withCredentials ? 'include' : 'same-origin'
-      }).then(response => {
+      }).then(async response => {
         check(response.ok, `request failed: ${url} (${response.status})`);
-        return response.arrayBuffer();
+        const data = await response.arrayBuffer();
+        if (response.url) {
+          nativeResponseURLs.set(data, response.url);
+        }
+        return data;
       }).then(data => done(null, data), error => done(error));
     });
     assetManager.parser.register(ext, (data, _options, done) => {
@@ -157239,12 +157435,14 @@ function registerGLTFLoader() {
       }
     });
     factory.register(ext, (url, data, options, done) => {
-      var _gltf;
+      var _gltf, _requestOrigin;
       const loaderOptions = {
         ...((_gltf = options == null ? void 0 : options.gltf) !== null && _gltf !== void 0 ? _gltf : globalDefaults)
       };
       delete loaderOptions.experimentalTextureDeduplication;
-      new GLTFLoader(loaderOptions).parseAsync(data, /^(data|blob):/i.test(url) ? undefined : new URL('.', absoluteURL(url)).href).then(asset => done(null, asset), error => {
+      const target = absoluteURL(url);
+      const responseURL = nativeResponseURLs.get(data) || target;
+      new GLTFLoader(loaderOptions)[parseResolved](data, documentBase(responseURL), resolveOptions(loaderOptions), undefined, (_requestOrigin = requestOrigin(target)) !== null && _requestOrigin !== void 0 ? _requestOrigin : null).then(asset => done(null, asset), error => {
         files.remove(`${url}@native`);
         parsed.remove(`${url}@native`);
         done(error);
@@ -164804,11 +165002,11 @@ function fail$8(code, message) {
   });
   throw error;
 }
-function pageFileExtension(file, explicit) {
-  const path = file.split(/[?#]/, 1)[0];
-  const dot = path.lastIndexOf('.');
-  if (dot > 0 && dot < path.length - 1) {
-    const ext = path.slice(dot + 1).toLowerCase();
+function pageFileExtension(url, file, explicit) {
+  const name = url.pathname.slice(url.pathname.lastIndexOf('/') + 1);
+  const dot = name.lastIndexOf('.');
+  if (dot > 0 && dot < name.length - 1) {
+    const ext = name.slice(dot + 1).toLowerCase();
     if (ext !== 'png') {
       fail$8('AIR_E_ATLAS_PAGE_FORMAT', `this loader supports PNG pages only, got ".${ext}"; supply other formats via createAtlasHandle`);
     }
@@ -164853,15 +165051,17 @@ async function loadAtlas(url, options) {
     if (signal != null && signal.aborted) fail$8('AIR_E_ABORTED', 'atlas subscription was cancelled');
     let base;
     try {
-      base = options.baseURL ? new URL(options.baseURL, documentBaseURI()).href : new URL(url, documentBaseURI()).href;
+      var _getAtlasResponseURL;
+      base = options.baseURL ? new URL(options.baseURL, documentBaseURI()).href : new URL((_getAtlasResponseURL = getAtlasResponseURL(text)) !== null && _getAtlasResponseURL !== void 0 ? _getAtlasResponseURL : url, documentBaseURI()).href;
     } catch {
       fail$8('AIR_E_ATLAS_BASE_URL', 'relative pages require an absolute atlas URL, document base or explicit baseURL');
     }
     const textures = new Array(document.pages.length).fill(undefined);
     const allSettled = Promise.allSettled.bind(Promise);
     const pageLoads = document.pages.map(async page => {
-      const ext = pageFileExtension(page.file, options.pageExt);
-      const pageURL = new URL(page.file, base).href;
+      const resolvedPage = new URL(page.file, base);
+      const ext = pageFileExtension(resolvedPage, page.file, options.pageExt);
+      const pageURL = resolvedPage.href;
       const image = await bank.load(pageURL, {
         ext,
         signal
@@ -165017,6 +165217,14 @@ let AirTransmissionCapture = (_dec$k = ccclass$x('air.AirTransmissionCapture'), 
     if (!main || !this._off || !this._rt) {
       return;
     }
+    const mw = main.camera.window;
+    const w = mw ? mw.width : 0;
+    const h = mw ? mw.height : 0;
+    if (w > 0 && h > 0 && (w !== this._w || h !== this._h)) {
+      this._rt.resize(w, h);
+      this._w = w;
+      this._h = h;
+    }
     const info = new Vec4(this._w, this._h, 1 / Math.max(this._w, 1), 1 / Math.max(this._h, 1));
     for (const renderer of this._bound) {
       if (!renderer.isValid) {
@@ -165044,14 +165252,6 @@ let AirTransmissionCapture = (_dec$k = ccclass$x('air.AirTransmissionCapture'), 
     }
     this._bound = this._bound.filter(renderer => renderer.isValid);
     this._rescan(main);
-    const mw = main.camera.window;
-    const w = mw ? mw.width : 0;
-    const h = mw ? mw.height : 0;
-    if (w > 0 && h > 0 && (w !== this._w || h !== this._h)) {
-      this._rt.resize(w, h);
-      this._w = w;
-      this._h = h;
-    }
     const offNode = this._offNode;
     const mainNode = main.node;
     if (offNode && mainNode) {

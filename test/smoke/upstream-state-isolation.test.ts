@@ -178,4 +178,34 @@ describe('upstream cache categories and state isolation (CPU)', () => {
         }
         // No main camera/GL capture was created; this is ownership logic, not rendering evidence.
     });
+
+    test('transmission commits render target size before deriving this frame’s sampling step', () => {
+        const node = new Node('capture');
+        const capture = node.addComponent(AirTransmissionCapture);
+        const size = { width: 1312, height: 816 };
+        const texture = { resize: jest.fn() };
+        const state = capture as any;
+        state._main = { camera: { window: size }, node: null, visibility: 0 };
+        state._off = {};
+        state._rt = texture;
+        state._w = 1280;
+        state._h = 800;
+        const renderer = {
+            get isValid() {
+                expect(texture.resize).toHaveBeenCalledWith(1312, 816);
+                expect([state._w, state._h]).toEqual([1312, 816]);
+                return false;
+            },
+        };
+        state._bound = [renderer];
+        try {
+            capture.lateUpdate();
+            expect(texture.resize).toHaveBeenCalledTimes(1);
+            capture.lateUpdate();
+            expect(texture.resize).toHaveBeenCalledTimes(1);
+        } finally {
+            state._main = state._off = state._rt = null;
+            node.destroy();
+        }
+    });
 });

@@ -69,3 +69,43 @@ node tools/verify/webgpu-backend.cjs --examples --custom
 当前实现、验证范围和复跑入口见 [验收说明](../reference/webgpu-acceptance.md)。
 
 多颜色附件、整数输出及 MSAA 格式边界见 [MRT 指南](mrt.md)；浮点多采样通过不能代替整数采样组合的验收。
+
+## Buffer limits
+
+When AIR is running with WebGPU, the backend device exposes `webgpuLimits`. Its
+`adapter` and `device` records report `maxBufferSize` and
+`maxStorageBufferBindingSize` in bytes. `requested` records the limits supplied
+during device admission. A missing key means AIR left that limit at the WebGPU
+default. Use the granted device limits to size buffer allocations and each
+storage binding independently. Split workloads that exceed the binding limit
+into smaller ranges. `device` is null after device loss or destruction.
+WebGPU checks the effective storage range when creating the bind group.
+[WebGPU supported limits](https://www.w3.org/TR/webgpu/#supported-limits) ·
+[Bind group validation](https://www.w3.org/TR/webgpu/#dom-gpudevice-createbindgroup)
+
+## Native WGSL in an Effect
+
+An Effect shader can include `wgsl: { vert, frag, vertexEntryPoint?, fragmentEntryPoint? }`.
+Both source strings are required. Each entry point defaults to `main`. Keep both
+`glsl3` and `glsl4` render sources in the same Effect. WebGL2 uses GLSL and
+WebGPU uses the WGSL variant when present. Without the variant, WebGPU still
+translates GLSL.
+
+Use concrete WGSL source with final GFX vertex locations and resource bindings.
+The Effect still supplies attribute and resource descriptors. Match those
+descriptors to the WGSL and use decimal literals in `@group` and `@binding`.
+A combined sampler-texture descriptor uses the texture's binding and a sampler
+at that binding plus 64. WGSL is submitted unchanged. Supply a compatible shader
+for the intended material defines and pipeline layout. The optional Effect field
+supports vertex and fragment stages.
+
+Native compiler errors are sent to `app.diagnostics` with code text
+`WEBGPU_SHADER_COMPILATION_FAILED`, the shader and stage names, and the browser's
+line and column.
+
+A buffer creation or resize larger than the granted allocation limit raises
+`WEBGPU_BUFFER_SIZE_LIMIT`. Binding a larger storage range raises
+`WEBGPU_STORAGE_BINDING_SIZE_LIMIT`. Create `gfx.BufferViewInfo` ranges with
+offsets aligned to the native device's `minStorageBufferOffsetAlignment` and
+sizes within the granted storage binding limit. Recreate views after replacing
+their owner allocation.

@@ -3,12 +3,26 @@
 > 原则：引擎主 bundle **永不内嵌** decoder（JS/WASM/worker 均不打包、不初始化）；decoder 是
 > 随包分发的**独立静态资产**，由应用注入 provider。缺文件/哈希/离线复现证据即阻断验收。
 
-> **Draco 浏览器边界（2026-09-30）**：随包的 `draco3d.js` 与 `draco_decoder_nodejs.js`
-> 是 CommonJS / Node 入口，不能直接作为浏览器 `<script>` 或 ESM 动态 import 的 factory。
-> 当前包没有提供浏览器版 `DracoDecoderModule` glue；需要 Draco 正向解码的应用必须另行取得
-> 兼容的浏览器 decoder，并向 `createDracoDecoder()` 注入其 factory。
-> 下文 `DracoDecoderModule` 表示应用提供的浏览器模块，不由随包 `draco3d.js` 创建。
-> `verify:decoders` 只证明发布资产及哈希完整、Meshopt 可加载，不证明 Draco 浏览器正向解码。
+> **Draco 浏览器部署**。随包的 `draco3d.js` 是 CommonJS 入口。固定版本的
+> `draco_decoder_nodejs.js` 也提供经典脚本全局工厂，推荐显式传入同源 WASM 字节。
+> 本地 Chromium、Firefox 和 WebKit 已用同一组普通、Draco 和 Meshopt 模型验证像素与释放。
+> `verify:decoders` 核对发布资产和哈希，浏览器像素和释放由独立探针验证。
+
+```html
+<script src="./build/gltf-decoders/draco/draco_decoder_nodejs.js"></script>
+<script type="module">
+    import { GLTFLoader, createDracoDecoder } from './build/cocosair.module.js';
+
+    const response = await fetch('./build/gltf-decoders/draco/draco_decoder.wasm');
+    if (!response.ok) throw new Error(`Draco WASM HTTP ${response.status}`);
+    const wasmBinary = await response.arrayBuffer();
+    const loader = new GLTFLoader().setDRACODecoder(
+        createDracoDecoder(() => window.DracoDecoderModule({ wasmBinary })),
+    );
+    const asset = await loader.loadAsync('./assets/compressed.glb');
+    // The caller owns the asset. Dispose its instances and release the asset when done.
+</script>
+```
 
 ## 1. 资产清单（权威 = MANIFEST）
 
@@ -42,11 +56,11 @@ loader.unregister?.(...)  // 可注销；未注入对应 provider 时：optional
 
 ## 3. 静态服务要求（MIME / CORS / 缓存 / worker）
 
-| 扩展名 | 必需 MIME | 说明 |
-|---|---|---|
-| `.js` `.mjs` `.cjs` | `text/javascript` | ESM `<script type=module>` 与动态 import 强校验 MIME |
-| `.wasm` | `application/wasm` | `WebAssembly.instantiateStreaming` 前置；错 MIME 直接失败 |
-| `.glb/.gltf` | `model/gltf-binary` `model/gltf+json` | 浏览器解码路径 |
+| 扩展名              | 必需 MIME                             | 说明                                                      |
+| ------------------- | ------------------------------------- | --------------------------------------------------------- |
+| `.js` `.mjs` `.cjs` | `text/javascript`                     | ESM `<script type=module>` 与动态 import 强校验 MIME      |
+| `.wasm`             | `application/wasm`                    | `WebAssembly.instantiateStreaming` 前置；错 MIME 直接失败 |
+| `.glb/.gltf`        | `model/gltf-binary` `model/gltf+json` | 浏览器解码路径                                            |
 
 - **同源部署**（本仓库示例均相对路径）；跨源需 `Access-Control-Allow-Origin`（wasm 流式编译
   同样受 CORS 限制）。
@@ -79,9 +93,9 @@ KTX-BasisU 变体（见性能基线文档 §2）。
 
 ## 6. 失败语义速查
 
-| 场景 | 结果 |
-|---|---|
-| required 压缩扩展 + 未注入 provider | `GLTFError{code:'GLTF_DECODER_MISSING'}`，整包拒绝 |
-| optional 压缩扩展 + 未注入 | `warnings[]` 记录，按未压缩核心数据继续 |
-| 容器/头非法、转码目标全失败 | `GLTF_DECODE_FAILED`（extension 字段定位扩展名） |
-| 设备缺纹理格式能力（KTX2） | 目标格式 rank 降级；无可用核心源且 required → `GLTF_DEVICE_UNSUPPORTED` |
+| 场景                                | 结果                                                                    |
+| ----------------------------------- | ----------------------------------------------------------------------- |
+| required 压缩扩展 + 未注入 provider | `GLTFError{code:'GLTF_DECODER_MISSING'}`，整包拒绝                      |
+| optional 压缩扩展 + 未注入          | `warnings[]` 记录，按未压缩核心数据继续                                 |
+| 容器/头非法、转码目标全失败         | `GLTF_DECODE_FAILED`（extension 字段定位扩展名）                        |
+| 设备缺纹理格式能力（KTX2）          | 目标格式 rank 降级；无可用核心源且 required → `GLTF_DEVICE_UNSUPPORTED` |

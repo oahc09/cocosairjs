@@ -133,7 +133,8 @@ const server = http.createServer((request, response) => {
         cases: [],
     };
     report.sourceSha256 = sourceFingerprint(root);
-    report.buildSources = checkBuildSources(root, bundleName);
+    const artifactPath = path.join(artifactDirectory, bundleName);
+    report.buildSources = checkBuildSources(root, bundleName, artifactPath);
     report.probeSha256 = crypto
         .createHash('sha256')
         .update(fs.readFileSync(__filename))
@@ -685,11 +686,14 @@ const server = http.createServer((request, response) => {
         }
         report.completed = true;
         report.sourceUnchanged = report.sourceSha256 === sourceFingerprint(root);
+        report.bundleUnchanged =
+            report.bundleSha256 === crypto.createHash('sha256').update(fs.readFileSync(artifactPath)).digest('hex');
         process.exitCode =
             !report.cases.length ||
             !report.sourceUnchanged ||
+            !report.bundleUnchanged ||
             !report.buildSources.compared ||
-            report.buildSources.mismatches.length > 0 ||
+            !report.buildSources.matches ||
             report.cases.some(
                 (item) =>
                     item.blocked ||

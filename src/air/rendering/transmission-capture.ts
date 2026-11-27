@@ -160,6 +160,13 @@ export class AirTransmissionCapture extends Component {
     public lateUpdate (): void {
         const main = this.mainCamera;
         if (!main || !this._off || !this._rt) { return; }
+        const mw = main.camera.window;
+        const w = mw ? mw.width : 0;
+        const h = mw ? mw.height : 0;
+        if (w > 0 && h > 0 && (w !== this._w || h !== this._h)) {
+            this._rt.resize(w, h);
+            this._w = w; this._h = h;
+        }
         // Bind the live scene color + inverse dimensions into every transmission renderer's
         // *rendered* material instance (renderer.getMaterialInstance) — the object actually
         // drawn — for the renderers this capture owns. Ownership prevents another capture from
@@ -188,13 +195,6 @@ export class AirTransmissionCapture extends Component {
         }
         this._bound = this._bound.filter((renderer) => renderer.isValid);
         this._rescan(main);
-        const mw = main.camera.window;
-        const w = mw ? mw.width : 0;
-        const h = mw ? mw.height : 0;
-        if (w > 0 && h > 0 && (w !== this._w || h !== this._h)) {
-            this._rt.resize(w, h);
-            this._w = w; this._h = h;
-        }
         const offNode = this._offNode;
         const mainNode = main.node;
         if (offNode && mainNode) {

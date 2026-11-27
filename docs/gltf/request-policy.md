@@ -46,6 +46,8 @@ This is deliberate isolation, not a new shared resource manager. Changing global
 
 Pre-abort rejects before work starts. Abort is observed across main fetch, response body, dependent buffers/images, decoder waits, object creation, and final asset handoff. A canceled parse does not publish progress or assets after cancellation, poison a retry cache, or mount a node. The application still uses its existing session token to prevent stale mounting after a successful handoff.
 
+On HTTP loads, the loader forwards the signal to Fetch. A rejected promise tells the application to stop using the result. The server may still finish sending a response. Record server-side disconnects separately when verifying traffic savings.
+
 Uncancellable third-party decoding can finish later. Its result is observed and discarded; this is logical consumer cancellation, not a claim that a worker or GPU physically stopped. Late owned image resources are closed/disposed. Parser cleanups and extension handler disposal run when the asset's existing deferred ownership contract finally releases it; repeated cleanup is safe. External decoder providers remain alive.
 
 CPU regression tests cover these ownership and policy rules. They do not establish actual HTTP cache hits, network priority scheduling, CORS deployment, or browser rendering; those require server logs and current browser evidence.

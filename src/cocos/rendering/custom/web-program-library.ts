@@ -28,6 +28,7 @@ import { EffectAsset } from '../../asset/assets';
 import { assert, error, errorID } from '../../core/platform/debug';
 import { Attribute, DESCRIPTOR_BUFFER_TYPE, DESCRIPTOR_SAMPLER_TYPE, DescriptorSetInfo, DescriptorSetLayout, DescriptorSetLayoutInfo, DescriptorType, Device, deviceManager, MemoryAccessBit, PipelineLayout, PipelineLayoutInfo, PipelineState, Shader, ShaderInfo, ShaderStage, ShaderStageFlagBit, Type, Uniform, UniformBlock, UniformInputAttachment, UniformSampler, UniformSamplerTexture, UniformStorageBuffer, UniformStorageImage, UniformTexture } from '../../gfx';
 import { getDeviceShaderVersion, MacroRecord } from '../../render-scene';
+import { selectNativeEffectWGSL } from '../../render-scene/core/program-lib';
 import { IProgramInfo } from '../../render-scene/core/program-lib';
 import { genHandles, getActiveAttributes, getCombinationDefines, getShaderInstanceName, getSize, getVariantKey, populateMacros, prepareDefines } from '../../render-scene/core/program-utils';
 import { IDescriptorSetLayoutInfo, localDescriptorSetLayout, UBOSkinning } from '../define';
@@ -1137,14 +1138,17 @@ export class WebProgramLibrary implements ProgramLibrary {
         }
 
         // prepare shader info
-        const shaderInfo = info.shaderInfo;
-        if (src.compute) {
-            shaderInfo.stages[0].source = prefix + src.compute;
-            shaderInfo.stages[0].stage = ShaderStageFlagBit.COMPUTE;
-            shaderInfo.stages.length = 1;
-        } else {
-            shaderInfo.stages[0].source = prefix + src.vert;
-            shaderInfo.stages[1].source = prefix + src.frag;
+        const shaderInfo = new ShaderInfo();
+        shaderInfo.copy(info.shaderInfo);
+        if (!selectNativeEffectWGSL(device, programInfo, shaderInfo)) {
+            if (src.compute) {
+                shaderInfo.stages[0].source = prefix + src.compute;
+                shaderInfo.stages[0].stage = ShaderStageFlagBit.COMPUTE;
+                shaderInfo.stages.length = 1;
+            } else {
+                shaderInfo.stages[0].source = prefix + src.vert;
+                shaderInfo.stages[1].source = prefix + src.frag;
+            }
         }
         shaderInfo.attributes = getActiveAttributes(programInfo, info.attributes, defines);
         shaderInfo.name = getShaderInstanceName(name, macroArray);

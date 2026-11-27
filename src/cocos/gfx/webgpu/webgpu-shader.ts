@@ -61,7 +61,7 @@ export class WebGPUShader extends Shader {
             const resources = [...info.blocks, ...info.buffers, ...info.samplerTextures,
                 ...info.samplers, ...info.textures, ...info.images, ...info.subpassInputs];
             // Legacy effects retain offline binding numbers; ShaderInfo contains AIR's actual GFX assignments.
-            const source = stage.source.replace(/layout\s*\(([^)]+)\)(\s*(?:(?:readonly|writeonly)\s+)?uniform\s+(?:(?:lowp|mediump|highp)\s+)?(?:[iu]?sampler\w+\s+)?|\s*(?:(?:readonly|writeonly)\s+)?buffer\s+)(\w+)(?=\s*[{;])/g,
+            const source = stage.wgslEntryPoint !== undefined ? stage.source : stage.source.replace(/layout\s*\(([^)]+)\)(\s*(?:(?:readonly|writeonly)\s+)?uniform\s+(?:(?:lowp|mediump|highp)\s+)?(?:[iu]?sampler\w+\s+)?|\s*(?:(?:readonly|writeonly)\s+)?buffer\s+)(\w+)(?=\s*[{;])/g,
                 (declaration, layout: string, middle: string, name: string) => {
                     const resource = resources.find((item) => item.name === name);
                     if (!resource) return declaration;
@@ -72,6 +72,7 @@ export class WebGPUShader extends Shader {
             this._gpuShader.gpuStages[i] = {
                 type: stage.stage,
                 source,
+                wgslEntryPoint: stage.wgslEntryPoint,
                 gpuShader: null,
                 bindings: [],
                 attrs: new Map(),

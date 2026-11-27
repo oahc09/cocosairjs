@@ -194,6 +194,7 @@ export interface IWebGPUGPUUniformSampler {
 export interface IWebGPUGPUShaderStage {
     type: ShaderStageFlagBit;
     source: string;
+    wgslEntryPoint?: string;
     gpuShader: GPUProgrammableStage | null;
     bindings: number[][];
     attrs: Map<number, string>;

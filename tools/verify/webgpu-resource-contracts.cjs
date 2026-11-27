@@ -249,6 +249,49 @@ module.exports = async function resourceContracts() {
             staging.destroy();
         }
 
+        const alignment = native.limits.minStorageBufferOffsetAlignment;
+        const offsets = [0, alignment, alignment * 2];
+        const partitioned = own(
+            device.createBuffer(
+                new g.BufferInfo(
+                    g.BufferUsageBit.STORAGE | g.BufferUsageBit.TRANSFER_SRC,
+                    g.MemoryUsageBit.DEVICE,
+                    offsets[2] + 16,
+                    4,
+                ),
+            ),
+        );
+        for (const offset of offsets) {
+            const view = own(device.createBuffer(new g.BufferViewInfo(partitioned, offset, 16)));
+            descriptor.bindBuffer(0, view);
+            descriptor.update();
+            command.begin();
+            command.bindPipelineState(pipeline);
+            command.bindDescriptorSet(0, descriptor);
+            command.dispatch(new g.DispatchInfo(4, 1, 1));
+            command.end();
+        }
+        descriptor.bindBuffer(0, buffer);
+        descriptor.update();
+        const chunkReadback = native.createBuffer({
+            size: 48,
+            usage: GPUBufferUsage.MAP_READ | GPUBufferUsage.COPY_DST,
+        });
+        try {
+            const encoder = native.createCommandEncoder();
+            offsets.forEach((offset, i) =>
+                encoder.copyBufferToBuffer(partitioned.gpuBuffer.gpuBuffer, offset, chunkReadback, i * 16, 16),
+            );
+            native.queue.submit([encoder.finish()]);
+            await chunkReadback.mapAsync(GPUMapMode.READ);
+            const values = Array.from(new Uint32Array(chunkReadback.getMappedRange()));
+            if (!values.every((value, index) => value === (index % 4) + 7))
+                throw new Error('Partitioned storage binding wrote incorrect ranges.');
+            result.partitionedStorage = { alignment, offsets, values };
+        } finally {
+            chunkReadback.destroy();
+        }
+
         const storageTexture = own(
             device.createTexture(
                 new g.TextureInfo(
@@ -362,21 +405,31 @@ module.exports = async function resourceContracts() {
         if (!result.computeToDraw) throw new Error('Compute storage output was not consumed by the render pass.');
         // Both projected sets reference the same texture object. A resize replaces its native resource;
         // refreshing the compute set must not hide that replacement from the sampled set.
-        storageTexture.resize(4, 4);
-        command.begin();
-        command.bindPipelineState(imagePipeline);
-        command.bindDescriptorSet(0, imageDescriptor);
-        command.dispatch(new g.DispatchInfo(4, 4, 1));
-        command.beginRenderPass(pass, drawFramebuffer, new g.Rect(0, 0, 3, 2), [new g.Color(0, 0, 0, 1)], 1, 0);
-        command.bindPipelineState(drawPipeline);
-        command.bindDescriptorSet(0, sampleDescriptor);
-        command.bindInputAssembler(assembler);
-        command.draw(assembler);
-        command.endRenderPass();
-        command.end();
-        await device.copyTextureToBuffersAsync(firstColor, [red], [region]);
-        result.resizeRebind = red[0] === 255 && Math.abs(red[1] - 128) <= 1 && Math.abs(red[2] - 64) <= 1;
-        if (!result.resizeRebind) throw new Error('Texture resize did not refresh all dependent descriptor sets.');
+        const resized = [];
+        const nativeTextures = new Set([storageTexture.gpuTexture.gpuTexture]);
+        for (const size of [4, 2]) {
+            storageTexture.resize(size, size);
+            const native = storageTexture.gpuTexture.gpuTexture;
+            if (!native || nativeTextures.has(native)) throw Error('Resize reused a retired native texture.');
+            nativeTextures.add(native);
+            command.begin();
+            command.bindPipelineState(imagePipeline);
+            command.bindDescriptorSet(0, imageDescriptor);
+            command.dispatch(new g.DispatchInfo(size, size, 1));
+            command.beginRenderPass(pass, drawFramebuffer, new g.Rect(0, 0, 3, 2), [new g.Color(0, 0, 0, 1)], 1, 0);
+            command.bindPipelineState(drawPipeline);
+            command.bindDescriptorSet(0, sampleDescriptor);
+            command.bindInputAssembler(assembler);
+            command.draw(assembler);
+            command.endRenderPass();
+            command.end();
+            await device.copyTextureToBuffersAsync(firstColor, [red], [region]);
+            if (red[0] !== 255 || Math.abs(red[1] - 128) > 1 || Math.abs(red[2] - 64) > 1)
+                throw Error('Texture resize did not refresh all dependent descriptor sets.');
+            resized.push({ size, pixel: Array.from(red.subarray(0, 4)) });
+        }
+        result.resizeRebind = true;
+        result.resizeRoundTrip = resized;
 
         const argumentsBuffer = own(
             device.createBuffer(new g.BufferInfo(g.BufferUsageBit.INDIRECT, g.MemoryUsageBit.DEVICE, 16, 4)),

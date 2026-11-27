@@ -7331,7 +7331,9 @@ export namespace gfx {
     export class ShaderStage {
         stage: ShaderStageFlagBit;
         source: string;
-        constructor(stage?: ShaderStageFlagBit, source?: string);
+        /** When defined, source is native WGSL and the named entry point is used directly. */
+        wgslEntryPoint?: string | undefined;
+        constructor(stage?: ShaderStageFlagBit, source?: string, /** When defined, source is native WGSL and the named entry point is used directly. */ wgslEntryPoint?: string | undefined);
         copy(info: Readonly<ShaderStage>): ShaderStage;
     }
     export class Attribute {
@@ -28836,6 +28838,13 @@ export namespace EffectAsset {
             vert: string;
             frag: string;
             compute?: string;
+        };
+        /** Optional pre-specialized WebGPU render stages in the final GFX binding layout. */
+        wgsl?: {
+            vert: string;
+            frag: string;
+            vertexEntryPoint?: string;
+            fragmentEntryPoint?: string;
         };
         glsl3: {
             vert: string;
@@ -61027,6 +61036,7 @@ export class GLTFLoader {
     getExtensionSupport(): readonly GLTFExtensionSupport[];
     loadAsync(url: string): Promise<GLTFAsset>;
     parseAsync(data: string | ArrayBuffer, baseUrl?: string): Promise<GLTFAsset>;
+    [__private._air_assets_gltf_loader__parseResolved](data: string | ArrayBuffer, baseUrl: string | undefined, resolved: GLTFLoaderOptions, sourceUrl?: string, policyOrigin?: string | null): Promise<GLTFAsset>;
 }
 export function registerGLTFLoader(): void;
 /** Sets process-wide fallback options; instance options take precedence over these. */
@@ -61450,9 +61460,9 @@ export interface AirAtlasLoadOptions {
     readonly bank: AssetBank;
     /** @en Subscriber-side cancellation (no network-level cancel — see AssetBank contract). @zh 订阅者取消（非网络级取消——见 AssetBank 合同）。 */
     readonly signal?: AbortSignal;
-    /** @en Explicit base for relative page URLs; defaults to the atlas URL, then document base. @zh 相对页 URL 的显式基址；缺省依次取 atlas URL 与 document base。 */
+    /** @en Explicit base for relative page URLs; defaults to the atlas response URL, then the request URL relative to the document. @zh 相对页 URL 的显式基址；缺省优先取最终响应 URL，再取基于文档解析的请求 URL。 */
     readonly baseURL?: string;
-    /** @en Ext for suffix-less page files (default 'png'); other formats rejected on the auto path. @zh 无后缀页文件的扩展名（默认 'png'）；其他格式在自动路径拒绝。 */
+    /** @en Required for suffix-less page files; only 'png' is accepted by the automatic loader. @zh 无后缀页文件必须显式指定；自动加载仅接受 'png'。 */
     readonly pageExt?: string;
 }
 /**
@@ -72659,7 +72669,7 @@ declare namespace __private {
     export function _cocos_asset_asset_manager_download_dom_image__default(url: string, options: Record<string, any>, onComplete: ((err: Error | null, data?: HTMLImageElement | null) => void)): HTMLImageElement;
     export type _cocos_asset_asset_manager_downloader__DownloadHandler = (url: string, options: Record<string, any>, onComplete: ((err: Error | null, data?: any) => void)) => void;
     export type _cocos_asset_asset_manager_download_file__FileProgressCallback = (loaded: number, total: number) => void;
-    export function _cocos_asset_asset_manager_download_file__default(url: string, options: Record<string, any>, onProgress: _cocos_asset_asset_manager_download_file__FileProgressCallback | null | undefined, onComplete: ((err: Error | null, data?: any) => void)): XMLHttpRequest;
+    export function _cocos_asset_asset_manager_download_file__default(url: string, options: Record<string, any>, onProgress: _cocos_asset_asset_manager_download_file__FileProgressCallback | null | undefined, onComplete: ((err: Error | null, data?: any, responseURL?: string) => void), includeResponseURL?: boolean): XMLHttpRequest;
     export function _cocos_asset_asset_manager_download_script__default(url: string, options: Record<string, any>, onComplete: ((err: Error | null, data?: any | null) => void)): HTMLScriptElement | null;
     export type _cocos_asset_asset_manager_deprecated__LoadProgressCallback = (completedCount: number, totalCount: number, item: any) => void;
     export type _cocos_asset_asset_manager_deprecated__LoadCompleteCallback<T> = (error: Error | null, asset: T) => void;
@@ -78419,7 +78429,7 @@ declare namespace __private {
         handlers: readonly GLTFExtensionHandler[];
         /** Handler-normalized material features, indexed by material. Set by the loader before mesh/material build. */
         materialFeatures: readonly GLTFMaterialFeatures[];
-        constructor(json: _air_assets_gltf_schema__GLTFDocument, baseUrl?: string | undefined, options?: GLTFLoaderOptions);
+        constructor(json: _air_assets_gltf_schema__GLTFDocument, baseUrl?: string | undefined, options?: GLTFLoaderOptions, policyOrigin?: string | null);
         get signal(): AbortSignal | undefined;
         /** True when the document declares the extension and a handler takes part in this parse. */
         extensionActive(name: string): boolean;
@@ -78465,6 +78475,7 @@ declare namespace __private {
             s: math.Vec3;
         }[];
     }
+    export const _air_assets_gltf_loader__parseResolved: unique symbol;
     /** Logical transcode targets, decoupled from any single engine/wasm enum. */
     export type _air_assets_gltf_decoder_types__KTX2TargetFormat = "BC7_SRGB" | "BC7" | "ETC2_SRGB8_ALPHA8" | "ETC2_RGBA8" | "ETC2_SRGB8" | "ETC2_RGB8" | "ASTC_4x4_SRGB" | "ASTC_4x4" | "RGBA8_SRGB" | "RGBA8";
     export interface _air_assets_gltf_decoder_ktx2__BasisLevelInfo {

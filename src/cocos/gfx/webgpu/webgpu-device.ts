@@ -187,6 +187,7 @@ export class WebGPUDevice extends Device {
 
     private _adapter: GPUAdapter | null | undefined = null;
     private _device: GPUDevice | null | undefined = null;
+    private _requestedLimits: Readonly<Record<string, number>> | undefined;
     private _context: GPUCanvasContext | null = null;
     private _swapchain: WebGPUSwapchain | null = null;
     private _glslang;
@@ -346,14 +347,14 @@ export class WebGPUDevice extends Device {
         for (const feature of ['texture-compression-bc', 'texture-compression-etc2', 'texture-compression-astc', 'indirect-first-instance'] as GPUFeatureName[]) {
             if (this._adapter.features.has(feature)) submitFeatures.push(feature);
         }
-        try { this._device = await this._adapter.requestDevice({
-            requiredLimits: {
-                // Must be changed, default support for 16 is not enough
-                maxVertexAttributes: maxVertAttrs,
-                maxSampledTexturesPerShaderStage: maxSampledTexPerShaderStage,
-            },
-            requiredFeatures: submitFeatures,
-        });
+        // Use the negotiated device limits for allocations. Adapter limits are only ceilings.
+        const requiredLimits = {
+            maxVertexAttributes: maxVertAttrs,
+            maxSampledTexturesPerShaderStage: maxSampledTexPerShaderStage,
+        };
+        this._requestedLimits = requiredLimits;
+        try {
+            this._device = await this._adapter.requestDevice({ requiredLimits, requiredFeatures: submitFeatures });
         } catch (cause) {
             throw Object.assign(new Error('WebGPU device request failed.'), { code: 'WEBGPU_DEVICE_REQUEST_FAILED', cause });
         }
@@ -567,6 +568,21 @@ export class WebGPUDevice extends Device {
 
     public acquire (): void {
         // noop
+    }
+
+    /** Adapter ceilings, limits requested at admission, and limits granted to this device. */
+    get webgpuLimits () {
+        const adapter = this._adapter?.limits;
+        const device = this.isLost ? undefined : this._device?.limits;
+        const bufferLimits = (limits: GPUSupportedLimits | undefined) => limits ? {
+            maxBufferSize: limits.maxBufferSize,
+            maxStorageBufferBindingSize: limits.maxStorageBufferBindingSize,
+        } : null;
+        return {
+            adapter: bufferLimits(adapter),
+            requested: this._requestedLimits ? { ...this._requestedLimits } : null,
+            device: bufferLimits(device),
+        };
     }
 
     get nativeDevice (): GPUDevice | null | undefined {

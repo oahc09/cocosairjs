@@ -44,12 +44,15 @@ async function contracts({ sdk }) {
     const m = await import(sdk);
     const { createWebGPUPassTimer, withWebGPUTimingFeature } = await import('/tools/debug/gpu-pass-timer.mjs');
     const app = await withWebGPUTimingFeature(() => m.createAirApp({ canvas: '#GameCanvas', renderer: 'webgpu' }));
-    const device = m.director.root.device.nativeDevice;
+    const gfxDevice = m.director.root.device;
+    const device = gfxDevice.nativeDevice;
+    const limits = gfxDevice.webgpuLimits;
     const environment = {
         backend: 'webgpu',
         vendor: m.director.root.device.vendor,
         renderer: m.director.root.device.renderer,
         enabledFeatures: [...device.features].sort(),
+        limits,
     };
     const errors = [];
     const controls = {};
@@ -62,6 +65,11 @@ async function contracts({ sdk }) {
     const owned = [];
     const own = (value) => (owned.push(value), value);
     try {
+        for (const name of ['maxBufferSize', 'maxStorageBufferBindingSize']) {
+            expect(limits.device[name] === device.limits[name], 'Granted limits must match the native GPUDevice');
+            expect(limits.adapter[name] >= limits.device[name], 'Adapter limits must cover granted device limits');
+            expect(!(name in limits.requested), 'Buffer diagnostics must preserve the default required limits');
+        }
         if (timer.state.status !== 'available') return { status: 'unsupported', reason: timer.state.reason };
         const source = own(
             device.createTexture({
@@ -155,6 +163,12 @@ async function contracts({ sdk }) {
             snapshot.regions[0].gpuElapsedSpanMs >= snapshot.regions[0].gpuPassSumMs,
             'Span cannot be smaller than sequential pass sum',
         );
+        const measured = snapshot.regions[0];
+        expect(
+            Math.abs(measured.gpuPassUnionMs - measured.gpuPassSumMs) <= 1e-9 &&
+                measured.gpuElapsedSpanMs >= measured.gpuPassUnionMs,
+            'Sequential render/compute pass union must match the sum and stay within the span',
+        );
         const limited = createWebGPUPassTimer(device, { capacity: 1 });
         try {
             const region = limited.begin({ regionId: 'capacity', frame: 8 });
@@ -185,6 +199,16 @@ async function contracts({ sdk }) {
         } finally {
             limited.dispose();
         }
+        const limitAdapter = await navigator.gpu.requestAdapter();
+        const excessiveSize = limitAdapter.limits.maxBufferSize + 4;
+        let limitRejection;
+        try {
+            (await limitAdapter.requestDevice({ requiredLimits: { maxBufferSize: excessiveSize } })).destroy();
+        } catch (error) {
+            limitRejection = { name: error.name, message: error.message };
+        }
+        expect(limitRejection, 'Adapter accepted a maxBufferSize request beyond its advertised limit');
+        controls.limitRequest = { requested: excessiveSize, ...limitRejection };
         const adapter = await navigator.gpu.requestAdapter();
         const ordinary = await adapter.requestDevice();
         const unsupported = createWebGPUPassTimer(ordinary);

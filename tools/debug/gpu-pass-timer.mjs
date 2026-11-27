@@ -17,9 +17,29 @@ export async function withWebGPUTimingFeature(initialize) {
     }
 }
 
+/** Aggregate completed pass intervals using integer nanoseconds until the final conversion. */
+export function summarizeCompletedGpuPasses(rows) {
+    const intervals = rows
+        .map((row) => [BigInt(row.beginTimestampNs), BigInt(row.endTimestampNs)])
+        .sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0));
+    const begin = intervals[0][0];
+    let end = begin;
+    let union = 0n;
+    for (const [start, finish] of intervals) {
+        const uncoveredStart = start > end ? start : end;
+        if (finish > uncoveredStart) union += finish - uncoveredStart;
+        if (finish > end) end = finish;
+    }
+    return {
+        gpuPassSumMs: rows.reduce((sum, row) => sum + row.ms, 0),
+        gpuPassUnionMs: Number(union) / 1e6,
+        gpuElapsedSpanMs: Number(end - begin) / 1e6,
+    };
+}
+
 /** Opt-in native WebGPU timing. Not imported by the engine/runtime bundle.
  * Use timer.createCommandEncoder()/submit() for measured work. No global patches.
- * Copy commands between timestamped passes contribute to span, never to pass sum.
+ * Copy commands between timestamped passes contribute to span, outside measured pass intervals.
  */
 export function createWebGPUPassTimer(device, { capacity = 32 } = {}) {
     if (!Number.isSafeInteger(capacity) || capacity < 1 || capacity > 128) throw Error('Invalid GPU timer capacity');
@@ -265,20 +285,7 @@ export function createWebGPUPassTimer(device, { capacity = 32 } = {}) {
                     if (reason || !rows.length)
                         return { ...result, ...unavailable(reason || state() || 'no-timestamped-passes') };
                     if (pending) return { ...result, status: 'pending', ms: null };
-                    const begin = rows.reduce(
-                        (value, row) => (BigInt(row.beginTimestampNs) < value ? BigInt(row.beginTimestampNs) : value),
-                        BigInt(rows[0].beginTimestampNs),
-                    );
-                    const end = rows.reduce(
-                        (value, row) => (BigInt(row.endTimestampNs) > value ? BigInt(row.endTimestampNs) : value),
-                        0n,
-                    );
-                    return {
-                        ...result,
-                        status: 'measured',
-                        gpuPassSumMs: rows.reduce((sum, row) => sum + row.ms, 0),
-                        gpuElapsedSpanMs: Number(end - begin) / 1e6,
-                    };
+                    return { ...result, status: 'measured', ...summarizeCompletedGpuPasses(rows) };
                 }),
             };
         },

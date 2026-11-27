@@ -42,6 +42,7 @@ timer.dispose();
 工具只观察经过自身 `createCommandEncoder()` 和 `submit()` 的原生命令，不自动截获默认 Forward 管线或普通 GFX CommandBuffer。`frame` 由采集方提供；Pass ID、submit ID 与实际编码和提交关联。嵌套/重叠逻辑区域复用同一组每 Pass 时间戳，不覆盖外层记录。
 
 - `gpuPassSumMs` 累加该区域各 render/compute Pass 的时间差。
+- `gpuPassUnionMs` 合并重叠的 Pass 时间区间后计算总时长，排除区间之间的空隙。
 - `gpuElapsedSpanMs` 是最早 Pass 起点到最晚 Pass 终点的跨度，包含其间的 copy、队列空档等；首 Pass 前和末 Pass 后的 copy 不包含在内。copy 没有伪造的独立 Pass 耗时。
 - 每个结果保留 query 类型、原始纳秒时间戳、区域/Pass/提交关联与结果被 CPU 观察到的时间。浏览器会量化时间戳；短 Pass 的真实差值可以为零，不能用它推出设备无限快。
 - 槽位默认 32、可配 1～128，仅在 map 完成且 unmap 后复用；容量耗尽的区域为 unavailable。最多登记 128 个逻辑区域，短范围采集结束后 dispose，再开启下一批。
