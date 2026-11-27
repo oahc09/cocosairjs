@@ -22,6 +22,7 @@
 /** Strict reader for the supported subset of Bone-2D Save Project v1. No editor or Spine dependency. */
 type Obj = Record<string, unknown>;
 export type Bone2dPose = readonly [number, number, number, number, number];
+type RGB = readonly [number, number, number];
 type RGBA = readonly [number, number, number, number];
 interface PictureSequence {
     readonly frames: readonly string[];
@@ -85,6 +86,7 @@ interface Bone {
 export type Bone2dBlend = 'normal' | 'additive' | 'multiply' | 'screen';
 interface Slot {
     blend: Bone2dBlend;
+    dark: RGB | null;
     id: string;
     bone: string;
     attachment: string | null;
@@ -115,7 +117,7 @@ interface Clip {
     name: string;
     duration: number;
     bones: ReadonlyMap<string, ReadonlyMap<string, ValueKey[]>>;
-    slots: ReadonlyMap<string, { attachment: Key<string | null>[]; rgba: ValueKey[] }>;
+    slots: ReadonlyMap<string, { attachment: Key<string | null>[]; rgba: ValueKey[]; rgba2: ValueKey[] }>;
     order: Key<string[]>[];
     folderOrder: ReadonlyMap<string, Key<string[]>[]>;
     deform: ReadonlyMap<VertexAttachment, ValueKey[]>;
@@ -148,6 +150,7 @@ export interface Bone2dProject {
 export interface Bone2dSlotPose {
     readonly attachment: string | null;
     readonly color: RGBA;
+    readonly dark: RGB | null;
 }
 export interface Bone2dSample {
     readonly bones: ReadonlyMap<string, Bone2dPose>;
@@ -344,8 +347,10 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
         const blend = o.blend;
         if (blend !== 'normal' && blend !== 'additive' && blend !== 'multiply' && blend !== 'screen')
             fail(`invalid slot blend: ${id}`);
-        if (o.dark != null) fail(`slot two-color tint: ${id}`, true);
-        return { id, bone, blend, attachment: optionalStr(o.attachment, 'setup attachment'), color: color(o.color, id) };
+        const darkValues = o.dark == null ? null : list(o.dark, 3, 'slot dark tint');
+        if (darkValues && darkValues.length !== 3) fail('slot dark tint');
+        const dark = darkValues?.map((v) => num(v, 'slot dark tint', 0, 1)) as unknown as RGB | undefined;
+        return { id, bone, blend, dark: dark ?? null, attachment: optionalStr(o.attachment, 'setup attachment'), color: color(o.color, id) };
     });
     const bySlot = index(slots, 'duplicate slot id');
     const slotIds = slots.map((s) => s.id);
@@ -463,13 +468,13 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
                 }
                 boneTracks.set(boneId, track);
             }
-            const slotTracks = new Map<string, { attachment: Key<string | null>[]; rgba: ValueKey[] }>();
+            const slotTracks = new Map<string, { attachment: Key<string | null>[]; rgba: ValueKey[]; rgba2: ValueKey[] }>();
             for (const [slotId, rawTrack] of entries(o.slots, 'slot timelines')) {
                 const slot = bySlot.get(slotId);
                 if (!slot) fail(`unknown animated slot: ${slotId}`);
                 const t = obj(rawTrack, 'slot timeline');
                 for (const k of Object.keys(t))
-                    if (k !== 'attachment' && k !== 'rgba') fail(`slot timeline: ${k}`, true);
+                    if (k !== 'attachment' && k !== 'rgba' && k !== 'rgba2') fail(`slot timeline: ${k}`, true);
                 slotTracks.set(slotId, {
                     attachment: keys(t.attachment, duration, 'attachment keys', (k) => {
                         const a = optionalStr(k.name, 'attachment key');
@@ -477,6 +482,7 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
                         return a;
                     }),
                     rgba: values(t.rgba, 4, duration, 'slot tint'),
+                    rgba2: values(t.rgba2, 7, duration, 'slot two-color tint'),
                 });
             }
             const order = keys(o.drawOrder, duration, 'draw order', (k) => arrangement(k.order, slotIds));
@@ -709,13 +715,17 @@ export function sampleBone2dProject(project: Bone2dProject, clipId: string | nul
         project.slots.map((s): [string, Bone2dSlotPose] => {
             const track = clip?.slots.get(s.id);
             const key = track ? last(track.attachment, time) : -1;
-            const tint = sampled(track?.rgba, time);
+            const clamp01 = (v: number): number => Math.max(0, Math.min(1, v));
+            const twoColor = sampled(track?.rgba2, time);
+            const tint = twoColor ?? sampled(track?.rgba, time);
+            const dark = twoColor && s.dark ? twoColor.slice(4).map(clamp01) as unknown as RGB : s.dark;
             const attachment = key >= 0 ? track!.attachment[key].value : s.attachment;
             return [
                 s.id,
                 {
                     attachment,
-                    color: tint ? (tint.map((v) => Math.max(0, Math.min(1, v))) as unknown as RGBA) : s.color,
+                    color: tint ? (tint.slice(0, 4).map(clamp01) as unknown as RGBA) : s.color,
+                    dark,
                 },
             ];
         }),

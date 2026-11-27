@@ -15,6 +15,7 @@ const files = [
     'test/fixtures/bone2d/clawbot.bone2d',
     'tools/verify/air-bone2d-browser.cjs',
     'src/air/bone2d/polygon.ts',
+    'src/air/bone2d/two-color.ts',
 ];
 async function main() {
     const [engine, output, ...extra] = process.argv.slice(2);
@@ -578,7 +579,7 @@ async function main() {
                 clipPlayer.dispose();
                 await clock.step(0);
             };
-            const blends = async (swap) => {
+            const blends = async (swap, tint = false) => {
                 const camera = parent.getComponent(air.Canvas).cameraComponent;
                 const saved = camera.clearColor.clone();
                 const target = new air.RenderTexture();
@@ -596,12 +597,40 @@ async function main() {
                 ctx.fillRect(0, 0, 16, 16);
                 file.images.body = drawing.toDataURL();
                 const source = Array.from(ctx.getImageData(8, 8, 1, 1).data);
-                rig.animations = [];
+                const animatedLight = [0.75, 0.5, 0.25, 0.5];
                 rig.slots = modes.map((blend, i) => ({
                     ...rig.slots[0],
                     id: blend,
                     blend,
+                    dark: tint ? [i / 8, (3 - i) / 8, 0.125] : null,
                 }));
+                const tintClip = {
+                    ...rig.animations[0],
+                    id: 'mix-colors',
+                    duration: 1,
+                    bones: {},
+                    drawOrder: [],
+                    deform: {},
+                    events: [],
+                    slots: Object.fromEntries(
+                        rig.slots.map(({ id, dark }, i) => [
+                            id,
+                            {
+                                rgba: [{ time: 0, value: [0, 0, 0, 0] }],
+                                rgba2: tint
+                                    ? [
+                                          { time: 0.25, value: [...animatedLight, ...dark] },
+                                          {
+                                              time: 0.75,
+                                              value: [...animatedLight, dark[0] + 0.25, dark[1], (i + 1) / 8],
+                                          },
+                                      ]
+                                    : [],
+                            },
+                        ]),
+                    ),
+                };
+                rig.animations = tint ? [tintClip] : [];
                 const setup = skin.attachments['body-slot'].body;
                 skin.attachments = Object.fromEntries(
                     modes.map((mode, i) => {
@@ -628,8 +657,13 @@ async function main() {
                     const clear = read(160);
                     player = await air.createAirBone2dPlayer(parent, JSON.stringify(file));
                     await clock.step(0);
-                    const rgba = modes.map((_, i) => read(64 + i * 64));
-                    return { clear, source, rgba, gap: read(96) };
+                    const capture = () => modes.map((_, i) => read(64 + i * 64));
+                    const rgba = capture();
+                    if (!tint) return { clear, source, rgba, gap: read(96) };
+                    player.play('mix-colors');
+                    player.seek(0.5);
+                    await clock.step(0);
+                    return { clear, source, rgba, animated: capture() };
                 } finally {
                     player?.dispose();
                     camera.targetTexture = null;
@@ -967,6 +1001,34 @@ async function main() {
                 [...rgb, a + d * (i === 1 ? 1 : 1 - a)].map((n) => Math.round(255 * n)),
             ),
         );
+        report.twoColor = await page.evaluate(() => window.bone2dTest.blends(false, true));
+        report.twoColorSwapped = await page.evaluate(() => window.bone2dTest.blends(true, true));
+        assert.deepEqual(
+            report.twoColorSwapped,
+            report.twoColor,
+            'two-color state stays with its slot on both renderers',
+        );
+        function composed(mode, dark, light) {
+            const lightBytes = light.map((x) => Math.round(x * 255) / 255);
+            const shader = src.map((x, i) => x * lightBytes[i] + (1 - x) * dark[i]);
+            const alpha = a * lightBytes[3];
+            return [
+                ...shader.map((x, i) => {
+                    if (mode === 0) return x * alpha + dst[i] * (1 - alpha);
+                    if (mode === 1) return x * alpha + dst[i];
+                    if (mode === 2) return x * dst[i] + dst[i] * (1 - alpha);
+                    return x + dst[i] * (1 - x);
+                }),
+                alpha + d * (mode === 1 ? 1 : 1 - alpha),
+            ].map((n) => Math.round(255 * n));
+        }
+        for (let i = 0; i < 4; ++i) {
+            compare(report.twoColor.rgba[i], composed(i, [i / 8, (3 - i) / 8, 0.125], [1, 1, 1, 1]));
+            compare(
+                report.twoColor.animated[i],
+                composed(i, [i / 8 + 0.125, (3 - i) / 8, (i + 2) / 16], [0.75, 0.5, 0.25, 0.5]),
+            );
+        }
         await page.evaluate(() => window.bone2dTest.close());
         assert.deepEqual(report.pageErrors, []);
         report.status = 'PASS';

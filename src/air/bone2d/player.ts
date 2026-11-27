@@ -25,10 +25,12 @@ import { Graphics } from '../../cocos/2d/components/graphics';
 import { SpriteFrame } from '../../cocos/2d/assets/sprite-frame';
 import { UITransform } from '../../cocos/2d/framework/ui-transform';
 import { Texture2D } from '../../cocos/asset/assets/texture-2d';
+import { createBone2dTintEffect } from './two-color';
+import type { EffectAsset } from '../../cocos/asset/assets/effect-asset';
 import { Material } from '../../cocos/asset/assets/material';
 import { BlendFactor, BlendOp } from '../../cocos/gfx';
 import { ImageAsset } from '../../cocos/asset/assets/image-asset';
-import { Color, Rect, Size } from '../../cocos/core/math';
+import { Color, Rect, Size, Vec4 } from '../../cocos/core/math';
 import { Filter } from '../../cocos/asset/assets/asset-enum';
 import { isValid } from '../../cocos/core/data/object';
 import { Layers } from '../../cocos/scene-graph/layers';
@@ -161,17 +163,25 @@ export async function createAirBone2dPlayer(
     const frames = new Map<string, SpriteFrame>();
     const retained = new Set<SpriteFrame>();
     const blendMaterials = new Map<Bone2dBlend, Material>();
-    const materialFor = (mode: Exclude<Bone2dBlend, 'normal'>): Material => {
-        const existing = blendMaterials.get(mode);
-        if (existing) return existing;
+    let tintEffect: EffectAsset | undefined;
+    const tintedSlots = new Map<string, { material: Material; values: Vec4 }>();
+    const materialFor = (mode: Bone2dBlend, darkSlot?: string): Material => {
+        if (darkSlot === undefined) {
+            const existing = blendMaterials.get(mode);
+            if (existing) return existing;
+        }
         const material = new Material();
-        blendMaterials.set(mode, material);
+        if (darkSlot === undefined) blendMaterials.set(mode, material);
+        else {
+            tintedSlots.set(darkSlot, { material, values: new Vec4(-1, -1, -1, 0) });
+            tintEffect ??= createBone2dTintEffect();
+        }
         const colorSrc = mode === 'multiply' ? BlendFactor.DST_COLOR :
             mode === 'screen' ? BlendFactor.ONE : BlendFactor.SRC_ALPHA;
         const colorDst = mode === 'additive' ? BlendFactor.ONE :
             mode === 'screen' ? BlendFactor.ONE_MINUS_SRC_COLOR : BlendFactor.ONE_MINUS_SRC_ALPHA;
         material.initialize({
-            effectName: 'builtin-sprite',
+            ...(darkSlot === undefined ? { effectName: 'builtin-sprite' } : { effectAsset: tintEffect }),
             defines: { USE_TEXTURE: true, USE_ALPHA_TEST: false, CC_USE_EMBEDDED_ALPHA: false },
             states: { blendState: { targets: [{
                 blend: true, blendEq: BlendOp.ADD, blendAlphaEq: BlendOp.ADD,
@@ -202,6 +212,9 @@ export async function createAirBone2dPlayer(
         masks.clear();
         for (const material of blendMaterials.values()) material.destroy();
         blendMaterials.clear();
+        for (const { material } of tintedSlots.values()) material.destroy();
+        tintedSlots.clear();
+        tintEffect?.destroy();
         if (destroyNode && isValid(root, true)) root.destroy();
         for (const f of retained) f.decRef(false);
         for (const f of adapted) f.destroy();
@@ -315,6 +328,13 @@ export async function createAirBone2dPlayer(
                 continue;
             }
             const newFrame = frames.get(bone2dPicture(region, sample))!;
+            if (p.dark) {
+                const { material, values } = tintedSlots.get(def.id)!;
+                if (p.dark[0] !== values.x || p.dark[1] !== values.y || p.dark[2] !== values.z) {
+                    values.set(p.dark[0], p.dark[1], p.dark[2], 0);
+                    material.setProperty('bone2dDark', values);
+                }
+            }
             const c = p.color.map((v, i) => Math.round(255 * v * region.color[i]));
             const tint = (renderer: Sprite | AirUIMesh): void => {
                 const { r, g, b, a } = renderer.color;
@@ -430,14 +450,16 @@ export async function createAirBone2dPlayer(
             const leaf = spriteNode(branch, 'Region', { layer });
             const sprite = leaf.getComponent(Sprite)!;
             sprite.trim = false;
-            if (slot.blend !== 'normal') sprite.customMaterial = materialFor(slot.blend);
+            const material = slot.dark ? materialFor(slot.blend, slot.id) :
+                slot.blend !== 'normal' ? materialFor(slot.blend) : null;
+            if (material) sprite.customMaterial = material;
             let mesh: AirUIMesh | undefined;
             if (meshSlots.has(slot.id)) {
                 const meshNode = new Node('Mesh');
                 meshNode.layer = layer;
                 slotRoot.addChild(meshNode);
                 mesh = meshNode.addComponent(AirUIMesh);
-                if (slot.blend !== 'normal') mesh.customMaterial = materialFor(slot.blend);
+                if (material) mesh.customMaterial = material;
                 meshNode.active = false;
             }
             slots.set(slot.id, {

@@ -372,3 +372,26 @@ test('preserves all four slots blend modes and rejects unknown values', () => {
     invalid.project.skeleton.slots[0].blend = 'overlay';
     expect(() => parse(invalid)).toThrow(/invalid slot blend/);
 });
+
+test('two-color keys override light after their first key and animate only explicitly enabled dark tint', () => {
+    const file = fixture(),
+        rig = file.project.skeleton;
+    rig.slots[0].dark = [0.125, 0.25, 0.5];
+    const track = {
+        rgba: [{ time: 0, value: [0.25, 0.25, 0.25, 0.25] }],
+        rgba2: [
+            { time: 0.25, value: [1, 0.5, 0.75, 1, 0, 0.5, 1] },
+            { time: 0.75, value: [0.5, 0.5, 0.25, 0.5, 0.5, 0.5, 0] },
+        ],
+    };
+    const clip = rig.animations[1];
+    clip.slots['body-slot'] = clip.slots['arm-slot'] = track;
+    const model = parse(file);
+    expect(sampleBone2dProject(model, 'attack', 0).slots.get('body-slot')).toMatchObject({
+        color: [0.25, 0.25, 0.25, 0.25],
+        dark: [0.125, 0.25, 0.5],
+    });
+    const midpoint = sampleBone2dProject(model, 'attack', 0.5);
+    expect(midpoint.slots.get('body-slot')).toMatchObject({ color: [0.75, 0.5, 0.5, 0.75], dark: [0.25, 0.5, 0.5] });
+    expect(midpoint.slots.get('arm-slot')).toMatchObject({ color: [0.75, 0.5, 0.5, 0.75], dark: null });
+});
