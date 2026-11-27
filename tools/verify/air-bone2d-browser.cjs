@@ -26,6 +26,9 @@ const files = [
     'src/air/bone2d/path.ts',
     'src/air/bone2d/physics.ts',
     'src/air/bone2d/playback.ts',
+    'src/air/bone2d/image.ts',
+    'test/fixtures/bone2d/web-game.json',
+    'test/fixtures/bone2d/raster-formats.json',
     'test/fixtures/bone2d/playback.bone2d',
     'test/fixtures/bone2d/physics.bone2d',
     'src/air/bone2d/transform.ts',
@@ -83,6 +86,10 @@ async function main() {
         if (req.url === '/physics.bone2d') {
             res.setHeader('Content-Type', 'application/json');
             return res.end(fs.readFileSync(path.join(root, 'test/fixtures/bone2d/physics.bone2d')));
+        }
+        if (req.url === '/web-game.json' || req.url === '/raster-formats.json') {
+            res.setHeader('Content-Type', 'application/json');
+            return res.end(fs.readFileSync(path.join(root, 'test/fixtures/bone2d', req.url.slice(1))));
         }
         if (req.url === '/') {
             res.setHeader('Content-Type', 'text/html');
@@ -968,6 +975,37 @@ async function main() {
                     markers,
                 };
             };
+            const gameMount = async ({ format = 'png', smooth = false, input = 'embedded' }) => {
+                const data = await fetch('/web-game.json').then((r) => r.json());
+                const images = await fetch('/raster-formats.json').then((r) => r.json());
+                data.smooth = smooth;
+                if (input === 'linked' || input === 'approved')
+                    data.images.arm = 'https://unexpected.invalid/picture.png';
+                else if (input === 'missing') data.images = {};
+                else data.images.arm = images[format];
+                try {
+                    ikPlayer = await air.createAirBone2dPlayer(
+                        parent,
+                        JSON.stringify(data),
+                        input === 'approved' ? { webGameImages: new Map([['arm', images[format]]]) } : undefined,
+                    );
+                    await clock.step(0);
+                    return { status: 'ready', point: ikPlayer.getAttachmentGeometry('point-slot') };
+                } catch (e) {
+                    return { status: 'rejected', message: String(e.message) };
+                }
+            };
+            const gamePixels = async (data) => {
+                const image = new Image();
+                image.src = 'data:image/png;base64,' + data;
+                await image.decode();
+                const canvas = document.createElement('canvas');
+                canvas.width = image.width;
+                canvas.height = image.height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(image, 0, 0);
+                return [100, 159, 160, 220].map((x) => [...ctx.getImageData(x, 120, 1, 1).data]);
+            };
             const ikClose = async () => {
                 ikPlayer.dispose();
                 await clock.step(0);
@@ -986,6 +1024,8 @@ async function main() {
                 physicsFrame,
                 previewMount,
                 previewFrame,
+                gameMount,
+                gamePixels,
                 ikClose,
                 frame,
                 requiredMount,
@@ -1681,6 +1721,51 @@ async function main() {
         assert.equal(preview.rangeStart.image, preview.rangeReturn.image);
         await page.evaluate(() => window.bone2dTest.ikClose());
         report.preview = preview;
+        const formats = {},
+            externalRequests = [];
+        const observeExternal = (request) => {
+            if (request.url().includes('unexpected.invalid')) externalRequests.push(request.url());
+        };
+        page.on('request', observeExternal);
+        for (const [key, options] of Object.entries({
+            nearest: {},
+            linear: { smooth: true },
+            gif: { format: 'gif' },
+            webp: { format: 'webp' },
+            jpeg: { format: 'jpeg' },
+            approved: { input: 'approved' },
+            missing: { input: 'missing' },
+            linked: { input: 'linked' },
+        })) {
+            const frame = await page.evaluate((opts) => window.bone2dTest.gameMount(opts), options);
+            if (key === 'missing' || key === 'linked') {
+                assert.equal(frame.status, 'rejected');
+                assert.match(frame.message, key === 'missing' ? /unknown image: arm/ : /host override: arm/);
+                formats[key] = frame;
+                continue;
+            }
+            assert.equal(frame.status, 'ready', JSON.stringify(frame));
+            assert.equal(frame.point.x, 0);
+            const png = await page.screenshot();
+            const pixels = await page.evaluate((data) => window.bone2dTest.gamePixels(data), png.toString('base64'));
+            const [left, before, after, right] = pixels;
+            if (key === 'linear') {
+                for (const middle of [before, after])
+                    assert.ok(middle[0] > 70 && middle[2] > 70, JSON.stringify(pixels));
+                assert.ok(left[0] > before[0] && before[0] > after[0] && after[0] > right[0], JSON.stringify(pixels));
+            } else {
+                assert.ok(left[0] > 245 && left[2] < 10 && right[2] > 245 && right[0] < 10, JSON.stringify(pixels));
+                assert.deepEqual(before, left);
+                assert.deepEqual(after, right);
+            }
+            formats[key] = { ...frame, pixels, screenshot: sha(png) };
+            await page.evaluate(() => window.bone2dTest.ikClose());
+        }
+        assert.deepEqual(externalRequests, []);
+        page.off('request', observeExternal);
+        assert.equal(formats.approved.screenshot, formats.nearest.screenshot);
+        assert.notEqual(formats.linear.screenshot, formats.nearest.screenshot);
+        report.webGame = formats;
         await page.evaluate(() => window.bone2dTest.close());
         assert.deepEqual(report.pageErrors, []);
         report.status = 'PASS';

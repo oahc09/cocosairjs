@@ -1,5 +1,6 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
+import { bone2dImageHeader } from '../../src/air/bone2d/image';
 import { bone2dKeysInWindow, makeBone2dPlayback, traverseBone2dPlayback } from '../../src/air/bone2d/playback';
 import { convexClipOutline } from '../../src/air/bone2d/polygon';
 import { factorBone2dBasis, multiplyBasis, poseBasis } from '../../src/air/bone2d/affine';
@@ -1220,4 +1221,54 @@ test('native rig reference scale sets translation force units', () => {
         sampleBone2dFrame(p, 'idle', 1 / 32, [], { state, seconds: 1 / 32, intervals: [] }),
     );
     expect(w.get('arm-bone')![4]).toBeCloseTo(-20.875, 7);
+});
+
+const gameText = readFileSync(resolve(__dirname, '../fixtures/bone2d/web-game.json'), 'utf8');
+const rasterFormats = JSON.parse(
+    readFileSync(resolve(__dirname, '../fixtures/bone2d/raster-formats.json'), 'utf8'),
+) as Record<string, string>;
+test.each(Object.keys(rasterFormats))('Web Game infers %s dimensions without browser decoding', (format) => {
+    const file = JSON.parse(gameText);
+    file.images.arm = rasterFormats[format];
+    file.smooth = true;
+    const project = parse(file);
+    expect(project.source).toBe('web-game');
+    expect(project.smooth).toBe(true);
+    expect(project.images.get('arm')).toMatchObject({ width: 2, height: 1, dataUrl: file.images.arm });
+    const sample = sampleBone2dProject(project, null, 0);
+    expect(sample.slots.get('arm-slot')?.attachment).toBe('arm');
+});
+
+test('Web Game rejects raw URLs and missing images unless a host supplies an embedded override', () => {
+    const file = JSON.parse(gameText);
+    file.images.arm = 'https://example.invalid/arm.png';
+    const options = { webGameImages: new Map([['arm', rasterFormats.png]]) };
+    expect(() => parse(file)).toThrow(/UNSUPPORTED.*host override.*arm/);
+    expect(parseBone2dProject(JSON.stringify(file), options).images.get('arm')?.dataUrl).toBe(rasterFormats.png);
+    delete file.images.arm;
+    expect(() => parse(file)).toThrow(/FORMAT.*unknown image.*arm/);
+    expect(parseBone2dProject(JSON.stringify(file), options).images.get('arm')?.width).toBe(2);
+    expect(parseBone2dProject(text).source).toBe('project');
+});
+
+test('raster validation checks actual header, dimensions and deterministic frame count', () => {
+    const fail = (message: string): never => {
+        throw Error(message);
+    };
+    const decode = (url: string) => Buffer.from(url.split(',')[1], 'base64');
+    const data = (mime: string, raw: Buffer) => `data:image/${mime};base64,${raw.toString('base64')}`;
+    expect(() => bone2dImageHeader(data('png', decode(rasterFormats.gif)), 'arm', fail)).toThrow(/invalid png/);
+    const png = decode(rasterFormats.png);
+    png.writeUInt32BE(65536, 16);
+    expect(() => bone2dImageHeader(data('png', png), 'arm', fail)).toThrow(/dimensions/);
+    const apng = Buffer.concat([
+        png.subarray(0, 33),
+        Buffer.from('000000086163544c000000020000000000000000', 'hex'),
+        png.subarray(33),
+    ]);
+    expect(() => bone2dImageHeader(data('png', apng), 'arm', fail)).toThrow(/picture sequence/);
+    const gif = decode(rasterFormats.gif);
+    const descriptor = gif.indexOf(44);
+    const animated = Buffer.concat([gif.subarray(0, -1), gif.subarray(descriptor)]);
+    expect(() => bone2dImageHeader(data('gif', animated), 'arm', fail)).toThrow(/picture sequence/);
 });

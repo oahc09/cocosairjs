@@ -26,6 +26,7 @@ import { SpriteFrame } from '../../cocos/2d/assets/sprite-frame';
 import { UITransform } from '../../cocos/2d/framework/ui-transform';
 import { Texture2D } from '../../cocos/asset/assets/texture-2d';
 import { createBone2dTintEffect } from './two-color';
+import { bone2dImageHeader, bone2dImageBudget } from './image';
 import type { EffectAsset } from '../../cocos/asset/assets/effect-asset';
 import { Material } from '../../cocos/asset/assets/material';
 import { BlendFactor, BlendOp } from '../../cocos/gfx';
@@ -47,7 +48,7 @@ import { parseBone2dProject, sampleBone2dFrame, bone2dWorldMatrices, bone2dMeshP
 import type { Bone2dAttachmentGeometry, Bone2dBlend, Bone2dClipAttachment, Bone2dImage, Bone2dMarker, Bone2dPose, Bone2dProjectOptions, Bone2dSample } from './project';
 
 export interface AirBone2dOptions extends Bone2dProjectOptions {
-    /** If specified, borrow exact-name frames instead of decoding embedded PNGs. The caller owns the atlas. */
+    /** If specified, borrow exact-name frames rather than decoding embedded pictures. The caller owns the atlas. */
     readonly atlas?: AirAtlasHandle;
     /** Source packing convention for rotated atlas entries; defaults to Bone-2D export. */
     readonly atlasRotation?: 'bone2d' | 'air';
@@ -115,23 +116,10 @@ function poseNode(node: Node, [x, y, r, sx, sy]: Bone2dPose): void {
     node.angle = r;
     node.setScale(sx, sy, 1);
 }
-function embeddedPng(name: string, source: Bone2dImage): string {
-    const url = source.dataUrl;
-    if (!url || !/^data:image\/png;base64,[A-Za-z0-9+/]+={0,2}$/.test(url)) error(`expected embedded PNG: ${name}`);
-    let prefix: string;
-    try {
-        prefix = window.atob(url.slice(22, 54));
-    } catch {
-        error(`invalid PNG header: ${name}`);
-    }
-    if (!prefix.startsWith('\x89PNG\r\n\x1a\n\0\0\0\rIHDR')) error(`invalid PNG header: ${name}`);
-    const word = (i: number): number =>
-        prefix.charCodeAt(i) * 16777216 +
-        prefix.charCodeAt(i + 1) * 65536 +
-        prefix.charCodeAt(i + 2) * 256 +
-        prefix.charCodeAt(i + 3);
-    if (word(16) !== source.width || word(20) !== source.height) error(`PNG dimensions differ from project: ${name}`);
-    return url;
+function embeddedPicture(name: string, source: Bone2dImage): string {
+    const [width, height] = bone2dImageHeader(source.dataUrl, name, error);
+    if (width !== source.width || height !== source.height) error(`embedded dimensions differ from project: ${name}`);
+    return source.dataUrl!;
 }
 function decode(url: string, name: string, signal?: AbortSignal): Promise<HTMLImageElement> {
     return new Promise((resolve, reject) => {
@@ -463,8 +451,8 @@ export async function createAirBone2dPlayer(
                 continue;
             }
             pixels += spec.width * spec.height;
-            if (pixels > 16 * 1024 * 1024) error('embedded image pixel budget exceeded');
-            const decoded = await decode(embeddedPng(name, spec), name, signal);
+            if (pixels > bone2dImageBudget) error('embedded image pixel budget exceeded');
+            const decoded = await decode(embeddedPicture(name, spec), name, signal);
             if (decoded.naturalWidth !== spec.width || decoded.naturalHeight !== spec.height)
                 error(`decoded dimensions differ: ${name}`);
             const image = new ImageAsset(),
@@ -474,7 +462,8 @@ export async function createAirBone2dPlayer(
             owned.push({ image, texture, frame });
             image.reset(decoded);
             texture.image = image;
-            texture.setFilters(Filter.NEAREST, Filter.NEAREST);
+            const filter = project.smooth ? Filter.LINEAR : Filter.NEAREST;
+            texture.setFilters(filter, filter);
             frame.packable = false;
             frame.reset({
                 texture,

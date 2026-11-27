@@ -27,6 +27,7 @@ import { transformApplied, transformProperties, transformReadLocal, transformRea
 import type { AppliedPose, Bone2dTransform, TransformProperty } from './transform';
 import { followBone2dPath, pathSetupLengths } from './path';
 import type { PathConstraint, PathState } from './path';
+import { bone2dImageHeader, bone2dImageBudget } from './image';
 import type { Bone2dSavedPlayback } from './playback';
 import { bone2dKeysInWindow } from './playback';
 import { physicsParams, solveBone2dPhysics } from './physics';
@@ -154,6 +155,8 @@ interface Skin {
 export interface Bone2dProjectOptions {
     /** Zero-based editor skeleton order. The saved active skeleton is the default. */
     readonly skeletonIndex?: number;
+    /** Host-approved data URIs for named pictures in a Web Game export. Raw linked URLs are never loaded. */
+    readonly webGameImages?: ReadonlyMap<string, string>;
 }
 interface Folder {
     id: string;
@@ -199,6 +202,8 @@ export interface Bone2dImage {
 }
 export interface Bone2dProject {
     readonly skeletonIndex: number;
+    readonly source: 'project' | 'web-game';
+    readonly smooth: boolean;
     readonly skeletonNames: readonly string[];
     readonly skins: ReadonlyMap<string, Skin>;
     readonly folders: ReadonlyMap<string, Folder>;
@@ -283,7 +288,7 @@ export function bone2dPicture(visual: Visual, sample: Bone2dSample, slot?: strin
 function optionalStr(x: unknown, label: string): string | null {
     return x == null ? null : str(x, label);
 }
-// Editor-only visibility, locks, play ranges and comments are intentionally not runtime state.
+// Editor-only visibility, locks and comments are intentionally not runtime state.
 function physicsValue(key: PhysicsParam, v: unknown): number {
     if (key === 'mass') return num(v, 'physics mass', minimumPhysicsMass);
     if (key === 'damping') return num(v, 'physics damping', 0, 1);
@@ -376,7 +381,37 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
     }
     const file = obj(data, 'project file');
     if (file.bone2d !== 1) fail('unsupported project signature', true);
-    const p = obj(file.project, 'project');
+    const game = file.project === undefined && file.skeleton !== undefined;
+    let project: unknown = file.project;
+    const pictures = new Map(entries(file.images, game ? 'Web Game pictures' : 'embedded images'));
+    let smooth = false;
+    if (game) {
+        const name = str(file.name, 'Web Game character name');
+        if (typeof file.smooth !== 'boolean') fail('invalid Web Game filter flag');
+        smooth = file.smooth;
+        if (options.webGameImages) {
+            for (const [key, uri] of options.webGameImages) {
+                str(key, 'Web Game picture name');
+                if (typeof uri !== 'string') fail('invalid Web Game image override');
+                pictures.set(key, uri);
+                if (pictures.size > 256) fail('too many Web Game pictures');
+            }
+        }
+        if (pictures.size > 256) fail('too many Web Game pictures');
+        let area = 0, bytes = 0;
+        const images = Array.from(pictures, ([name, uri]) => {
+            str(name, 'Web Game picture name');
+            if (typeof uri !== 'string' || !uri.startsWith('data:')) fail(`Web Game picture needs embedded data or host override: ${name}`, true);
+            bytes += uri.length;
+            if (bytes > bone2dImageBudget) fail('Web Game image data budget exceeded');
+            const [width, height] = bone2dImageHeader(uri, name, fail);
+            area += width * height;
+            if (area > bone2dImageBudget) fail('Web Game image pixel budget exceeded');
+            return { name, width, height };
+        });
+        project = { format: 'bone2d', version: 1, name, skeleton: file.skeleton, images };
+    }
+    const p = obj(project, 'project');
     if (p.format !== 'bone2d' || p.version !== 1) fail('unsupported project version', true);
     const docs = list(p.others ?? [], 63, 'additional skeletons').map((v) => obj(v, 'skeleton'));
     const active = num(p.activeAt ?? 0, 'active skeleton index', 0, docs.length);
@@ -510,7 +545,6 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
 
     }), 'duplicate constraint id');
     const images = new Map<string, Bone2dImage>();
-    const pictures = new Map(entries(file.images, 'embedded images'));
     for (const raw of list(p.images, 256, 'image references')) {
         const x = obj(raw, 'image');
         const name = str(x.name, 'image name');
@@ -832,7 +866,7 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
         Array.from(clips.values()).some((clip) => Array.from(clip.bones.values()).some(
             (track) => ['shear', 'shearx', 'sheary'].some((channel) => track.has(channel)),
         ));
-    return { skeletonIndex: selected, skeletonNames, bones, affineSprites, constraints, slots, clips, mixDefault, mixPairs, referenceScale, images, skins, folders };
+    return { skeletonIndex: selected, source: game ? 'web-game' : 'project', smooth, skeletonNames, bones, affineSprites, constraints, slots, clips, mixDefault, mixPairs, referenceScale, images, skins, folders };
 }
 function arrangement(raw: unknown, setup: readonly string[]): string[] {
     const desired = list(raw, setup.length, 'slot order').map((entry) => str(entry, 'slot id'));
