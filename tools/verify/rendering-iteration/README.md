@@ -67,3 +67,19 @@ assumed.
   temporal reference. The CPU diagnostic does not release them.
 - No default engine, package, historical evidence, Gallery catalog or hosted
   deployment changed.
+
+### Scoped W0 runtime baseline
+
+On the exact rebuilt baseline SDK, the existing interactive multipass collector
+and its verifier passed the selected WPE WebKit 26.5 scope: five configurations
+covering capture/native routes, RGBA8/RGBA16F, DPR 1/2 and 4× MSAA where supported,
+15 controlled cases and two native-pacer cases. The full three-browser matrix
+was not run. The recorded report SHA-256 is
+`e59388e9ce88c9c30ac677e884db6373e56e5f6b483f3dc2ef6b037c91797c11`.
+Verify the report with the exact rebuilt JS and declaration bytes; a different
+checkout's stale generated bundle fails the evidence identity check.
+
+The existing source/SDK baseline inventory observed 14 top-level exports and six
+member declarations, with no runtime pass assigned by default. In the v1.3
+workstream these support reuse investigations, not L5 claims. This is distinct
+from WA-07 hardware HDR, Agent tasks and formal scene approvals.
