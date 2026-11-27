@@ -8,6 +8,7 @@ const { join, resolve } = require('node:path');
 const { webkit } = require('playwright');
 const { verifySourceBinding } = require('../../build/source-binding.cjs');
 
+const motion = ['plain-off', 'plain-taa', 'fence-off', 'fence-taa', 'fence-zero', 'fence-current', 'fence-union'];
 const root = resolve(__dirname, '../../..');
 const files = {
     '/build/cocosair.module.js': ['text/javascript', join(root, 'build/cocosair.module.js')],
@@ -19,6 +20,7 @@ const files = {
         'application/octet-stream',
         join(root, 'vendor/builtin-source/generated/custom-layout.bin'),
     ],
+    '/motion.mjs': ['text/javascript', join(__dirname, 'taa-motion-page.mjs')],
     '/fixture.mjs': ['text/javascript', join(__dirname, 'taa-native-page.mjs')],
 };
 const html = `<!doctype html><meta charset="utf-8"><link rel="icon" href="data:,">
@@ -53,15 +55,94 @@ function inspect(track) {
     return { badHistory, wrongPreviousMatrix, changedMaterial, readbackErrors };
 }
 
+function inspectMotion(result) {
+    const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+    if (result.errors.length) throw new Error('Incomplete native motion capture');
+    for (const name of motion) {
+        const track = result.tracks[name];
+        if (
+            !track ||
+            track.transportErrors.length ||
+            track.consoleErrors.length ||
+            track.extent.join(',') !== '160,96' ||
+            track.scanFromX !== 69 ||
+            track.scanY !== 48
+        )
+            throw new Error('Invalid native motion capture: ' + name);
+        const frames = track.records;
+        const enabled = !name.endsWith('-off');
+        if (
+            frames.some(
+                (r, i) =>
+                    r.worldX !== -7 + 8 * i ||
+                    r.draws.length !== Number(enabled) ||
+                    r.scan.length !== 17 ||
+                    !/^[a-f0-9]{64}$/.test(r.rgbaSha256),
+            )
+        )
+            throw new Error('Invalid motion-frame controls: ' + name);
+        if (enabled) {
+            const [a, b] = frames.map((r) => r.draws[0]);
+            for (const draw of [a, b]) {
+                if (
+                    !same(draw.params, [0, 0, name === 'fence-zero' ? 0 : 0.9]) ||
+                    draw.width !== 160 ||
+                    draw.height !== 96 ||
+                    !draw.inputs.depthTex
+                )
+                    throw new Error('TAA was not exercised at the declared feedback and jitter: ' + name);
+            }
+            if (
+                !a.inputs.inputTexture ||
+                a.inputs.taaPrevTexture !== a.inputs.inputTexture ||
+                !a.output ||
+                b.inputs.taaPrevTexture !== a.output ||
+                b.output === a.output
+            )
+                throw new Error('Invalid seed/history binding: ' + name);
+        }
+    }
+    for (const name of ['fence-zero', 'fence-union']) {
+        if (
+            result.tracks[name].records.some(
+                (frame, i) => frame.rgbaSha256 !== result.tracks['fence-off'].records[i].rgbaSha256,
+            )
+        )
+            throw new Error('Full offscreen output does not match the clean control: ' + name);
+    }
+    const line = (name, i) => result.tracks[name].records[i].scan;
+    const p = (name, x, i = 1) => line(name, i)[x - 69][0];
+    const clean = line('fence-off', 1);
+    const noFence = line('plain-off', 1);
+    const bright = p('fence-off', 79);
+    if (
+        bright < 200 ||
+        p('fence-off', 74) !== 0 ||
+        p('fence-off', 75) !== bright ||
+        p('plain-off', 75) !== 0 ||
+        p('fence-off', 74, 0) !== bright ||
+        p('fence-off', 79, 0) !== 0 ||
+        p('plain-taa', 74) !== noFence[5][0] ||
+        p('fence-taa', 74) < bright * 0.65 ||
+        p('fence-taa', 75) !== bright ||
+        p('fence-taa', 79) > bright * 0.15 ||
+        p('fence-current', 74) !== p('fence-taa', 74) ||
+        p('fence-current', 79) !== bright ||
+        !same(line('fence-zero', 1), clean) ||
+        !same(line('fence-union', 1), clean)
+    )
+        throw new Error('Fence negative control or mask comparison did not reproduce');
+}
+
 async function main([executable, output, flag, ...rest]) {
     if (
         !executable ||
         !output ||
         rest.length ||
-        (flag && !['--expect-baseline', '--expect-isolation', '--expect-jitter'].includes(flag))
+        (flag && !['--expect-baseline', '--expect-isolation', '--expect-jitter', '--expect-motion'].includes(flag))
     )
         throw new Error(
-            'Usage: node taa-native-probe.cjs <WPE executable> <new-report.json> [--expect-baseline|--expect-isolation|--expect-jitter]',
+            'Usage: node taa-native-probe.cjs <WPE executable> <new-report.json> [--expect-baseline|--expect-isolation|--expect-jitter|--expect-motion]',
         );
     const binding = verifySourceBinding(root, files['/build/cocosair.module.js'][1]);
     if (!binding.matches) throw new Error('Native probe requires an SDK bound to the current src bytes');
@@ -72,7 +153,8 @@ async function main([executable, output, flag, ...rest]) {
     }
     const server = createServer((req, res) => {
         const route = new URL(req.url, 'http://localhost').pathname;
-        const asset = route === '/' ? ['text/html', html] : files[route];
+        const page = flag === '--expect-motion' ? html.replace('/fixture.mjs', '/motion.mjs') : html;
+        const asset = route === '/' ? ['text/html', page] : files[route];
         if (!asset) return res.writeHead(404).end();
         res.writeHead(200, { 'Content-Type': asset[0], 'Cache-Control': 'no-store' }).end(asset[1]);
     });
@@ -83,7 +165,7 @@ async function main([executable, output, flag, ...rest]) {
     try {
         browser = await webkit.launch({ executablePath: resolve(executable) });
         result.browserVersion = browser.version();
-        const modes = ['off', 'single', 'both'];
+        const modes = flag === '--expect-motion' ? motion.slice() : ['off', 'single', 'both'];
         if (flag === '--expect-jitter') modes.push('isolated-jitter');
         if (flag === '--expect-isolation') modes.push('isolated', 'isolated-control', 'isolated-b');
         for (const mode of modes) {
@@ -102,9 +184,19 @@ async function main([executable, output, flag, ...rest]) {
                 await page.goto(`http://127.0.0.1:${server.address().port}/?mode=${mode}`);
                 await page.waitForFunction(() => typeof window.__probe === 'function', null, { timeout: 15000 });
                 const data = await page.evaluate(() => window.__probe());
-                if (data.mode !== mode || !data.webgl2 || !data.rgba16f || data.records.length !== 5)
+                if (
+                    data.mode !== mode ||
+                    !data.webgl2 ||
+                    !data.rgba16f ||
+                    data.records.length !== (flag === '--expect-motion' ? 2 : 5)
+                )
                     throw new Error(`Incomplete or unsupported track: ${mode}`);
-                result.tracks[mode] = { ...data, check: inspect(data), consoleErrors, transportErrors };
+                result.tracks[mode] = {
+                    ...data,
+                    check: flag === '--expect-motion' ? null : inspect(data),
+                    consoleErrors,
+                    transportErrors,
+                };
             } catch (error) {
                 result.errors.push(`${mode}: ${error.message}`, ...transportErrors, ...consoleErrors);
             } finally {
@@ -118,6 +210,10 @@ async function main([executable, output, flag, ...rest]) {
             await new Promise((resolve) => server.close(resolve));
             writeFileSync(output, JSON.stringify(result, null, 2) + '\n', { flag: 'wx' });
         }
+    }
+    if (flag === '--expect-motion') {
+        inspectMotion(result);
+        return;
     }
     const { off, single, both } = result.tracks;
     if (

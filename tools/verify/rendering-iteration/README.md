@@ -206,3 +206,23 @@ frames the perspective A camera runs at 160×96 then 192×112; orthographic B ru
 (132×75 from its 176×100 target). The check verifies depth-2/depth-8 shifts and signed uploads on both axes. Native
 draws and readbacks complete without the negative control's GL error. This is still a browser fixture override,
 not an engine change, proof of overall TAA resolve quality, or WebGPU sign validation.
+
+### E12 moving-object fence and disocclusion negative control
+
+```sh
+node tools/verify/rendering-iteration/taa-native-probe.cjs <WPE-executable> <new-report.json> --expect-motion
+```
+
+Seven two-frame, native Custom-pipeline tracks use a fixed orthographic camera, zero jitter and an eight-target-pixel
+translation. The isolated rectangle is tested with and without an adjacent one-pixel stationary fence. The probe
+verifies seed and history bindings, actual material parameters, final RGBA readback hashes and a scanline crossing
+the old silhouette, the stationary fence and the new silhouette. This is an explicit negative control:
+the unmasked 0.90 feedback track is expected to demonstrate a defect, not pass a production E12 quality gate.
+
+In WPE WebKit 26.4, the newly uncovered pixel next to the fence read **185/255**, versus **0/255** with TAA off or no
+fence; the leading edge of the moving piece read **12/255** versus **224/255** with TAA off. Feedback zero matched
+the TAA-off RGBA bytes. A fixture-injected current-silhouette texture restored the moving edge but left the old
+trail; covering both old and new footprints matched TAA-off RGBA bytes for both frames. These are deliberately
+authored diagnostic masks that drive the real shader mask branch at zero jitter. They are not runtime motion
+vectors, automatic previous-depth rejection, a validation of the production mask camera, or a claim that the
+masked current-color lookup is correct under nonzero jitter.
