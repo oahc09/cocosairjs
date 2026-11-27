@@ -218,7 +218,12 @@ export async function createAirBone2dPlayer(
                 if (mesh.spriteFrame !== newFrame) mesh.spriteFrame = newFrame;
                 world ??= bone2dWorldMatrices(project, sample);
                 mesh.setGeometry({
-                    positions: bone2dMeshPositions(region, def.bone, world, sample.meshDeltas.get(region)),
+                    positions: bone2dMeshPositions(
+                        region,
+                        def.bone,
+                        world,
+                        sample.meshDeltas.get(region.deformParent ?? region),
+                    ),
                     uvs: region.uvs,
                     indices: region.indices,
                 });

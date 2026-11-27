@@ -197,3 +197,49 @@ test('rejects inconsistent influences, topology and deform dimensions before mou
     rig.animations[1].deform.skin['arm-slot'].arm[1].value.pop();
     expect(() => parse(d)).toThrow(/deform curve/);
 });
+
+test('linked meshes keep independent image and tint, reuse source topology and inherit its deform cursor when enabled', () => {
+    const d = meshRig(true),
+        rig = d.project.skeleton;
+    const base = rig.skins[0].attachments['arm-slot'].arm;
+    rig.skins.push({
+        id: 'link',
+        name: 'Linked glove',
+        bones: [],
+        constraints: [],
+        attachments: {
+            'arm-slot': {
+                arm: {
+                    ...base,
+                    path: 'body',
+                    link: { source: 'arm', slot: null, skin: null, deform: true },
+                    uvs: [0, 0, 1, 0, 1, 1],
+                },
+            },
+        },
+    });
+    const p = parse(d),
+        attached = p.skins.get('link')!.regions.get('arm-slot')!.get('arm')!;
+    if (attached.kind !== 'mesh') throw Error('expected mesh');
+    const source = p.skins.get('skin')!.regions.get('arm-slot')!.get('arm');
+    expect(attached.path).toBe('body');
+    expect(attached.uvs).toEqual([0, 0, 1, 0, 0, 1]);
+    expect(attached.deformParent).toBe(source);
+    const half = sampleBone2dProject(p, 'attack', 0.25);
+    expect(half.meshDeltas.get(attached.deformParent!)?.[11]).toBeCloseTo(4);
+    rig.skins[1].attachments['arm-slot'].arm.link.source = 'missing';
+    expect(() => parse(d)).toThrow(/invalid linked mesh/);
+});
+
+test('draw-order folder rearranges only its occupied seats after the full-track order', () => {
+    const d = fixture(),
+        rig = d.project.skeleton;
+    rig.slots.push({ ...rig.slots[0], id: 'between', attachment: null });
+    rig.drawOrderFolders = [{ id: 'fx', name: 'Effects', slots: ['body-slot', 'arm-slot'] }];
+    const clip = rig.animations[1];
+    clip.drawOrder = [{ time: 0, order: ['arm-slot', 'between', 'body-slot'] }];
+    clip.drawOrderFolder = { fx: [{ time: 0.5, order: ['arm-slot'] }] };
+    const p = parse(d);
+    expect(sampleBone2dProject(p, 'attack', 0.25).order).toEqual(['body-slot', 'between', 'arm-slot']);
+    expect(sampleBone2dProject(p, 'attack', 0.5).order).toEqual(['arm-slot', 'between', 'body-slot']);
+});

@@ -42,6 +42,13 @@ export interface Bone2dMesh {
     readonly indices: readonly number[];
     readonly weights: readonly (readonly Influence[])[] | null;
     readonly deformSize: number;
+    readonly link?: {
+        readonly source: string;
+        readonly slot: string | null;
+        readonly skin: string | null;
+        readonly deform: boolean;
+    };
+    readonly deformParent?: Bone2dMesh;
 }
 type Visual = Bone2dRegion | Bone2dMesh;
 interface Bone {
@@ -64,6 +71,10 @@ export interface Bone2dProjectOptions {
     /** Zero-based editor skeleton order. The saved active skeleton is the default. */
     readonly skeletonIndex?: number;
 }
+interface Folder {
+    id: string;
+    members: readonly string[];
+}
 interface Key<T> {
     time: number;
     value: T;
@@ -78,6 +89,7 @@ interface Clip {
     bones: ReadonlyMap<string, ReadonlyMap<string, ValueKey[]>>;
     slots: ReadonlyMap<string, { attachment: Key<string | null>[]; rgba: ValueKey[] }>;
     order: Key<string[]>[];
+    folderOrder: ReadonlyMap<string, Key<string[]>[]>;
     deform: ReadonlyMap<Bone2dMesh, ValueKey[]>;
     markers: Key<Bone2dMarker>[];
 }
@@ -98,6 +110,7 @@ export interface Bone2dProject {
     readonly skeletonIndex: number;
     readonly skeletonNames: readonly string[];
     readonly skins: ReadonlyMap<string, Skin>;
+    readonly folders: ReadonlyMap<string, Folder>;
     readonly bones: readonly Bone[];
     readonly slots: readonly Slot[];
     readonly clips: ReadonlyMap<string, Clip>;
@@ -239,7 +252,7 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
     const skeletonNames = docs.map((d) => str(d.name, 'skeleton name'));
     const sk = docs[selected];
     none(sk.constraints, 'constraints');
-    none(sk.drawOrderFolders, 'draw order folders');
+
     const bones = list(sk.bones, 128, 'bones').map((raw): Bone => {
         const b = obj(raw, 'bone');
         const id = str(b.id, 'bone id');
@@ -281,6 +294,18 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
         return { id, bone, attachment: optionalStr(o.attachment, 'setup attachment'), color: color(o.color, id) };
     });
     const bySlot = index(slots, 'duplicate slot id');
+    const slotIds = slots.map((s) => s.id);
+    const folders = index(
+        list(sk.drawOrderFolders ?? [], 128, 'draw order folders').map((raw): Folder => {
+            const folder = obj(raw, 'draw order folder');
+            const id = str(folder.id, 'folder id');
+            const members = list(folder.slots, slotIds.length, 'folder slots').map((v) => str(v, 'folder slot'));
+            if (new Set(members).size !== members.length || members.some((sid) => !bySlot.has(sid)))
+                fail('invalid folder membership');
+            return { id, members };
+        }),
+        'duplicate folder id',
+    );
     const skins = index(
         list(sk.skins, 128, 'skins').map((raw): Skin => {
             const o = obj(raw, 'skin');
@@ -318,6 +343,25 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
         'duplicate skin id',
     );
     if (!skins.size) fail('expected a default skin');
+    const firstSkin = skins.values().next().value!;
+    for (const skin of skins.values()) {
+        for (const [slotId, regions] of skin.regions)
+            for (const [key, mesh] of regions) {
+                if (mesh.kind !== 'mesh' || !mesh.link) continue;
+                const link = mesh.link;
+                const sourceSkin = link.skin === null ? firstSkin : skins.get(link.skin);
+                const source = sourceSkin?.regions.get(link.slot ?? slotId)?.get(link.source);
+                if (source?.kind !== 'mesh' || source.link || source === mesh)
+                    fail(`invalid linked mesh: ${skin.id}/${slotId}/${key}`);
+                (regions as Map<string, Visual>).set(key, {
+                    ...source,
+                    path: mesh.path,
+                    color: mesh.color,
+                    link,
+                    deformParent: link.deform ? source : undefined,
+                });
+            }
+    }
     const hasRegion = (slot: string, key: string): boolean =>
         Array.from(skins.values()).some((skin) => skin.regions.get(slot)?.has(key));
     for (const slot of slots) {
@@ -343,8 +387,7 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
             const id = str(o.id, 'animation id'),
                 name = str(o.name, 'animation name');
             const duration = num(o.duration, 'animation duration', 0, 3600);
-            for (const k of ['ik', 'transform', 'slider', 'path', 'physics', 'sequence', 'drawOrderFolder'])
-                none(o[k], k);
+            for (const k of ['ik', 'transform', 'slider', 'path', 'physics', 'sequence']) none(o[k], k);
             const boneTracks = new Map<string, Map<string, ValueKey[]>>();
             for (const [boneId, rawTrack] of entries(o.bones, 'bone timelines')) {
                 if (!byBone.has(boneId)) fail(`unknown animated bone: ${boneId}`);
@@ -372,12 +415,16 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
                     rgba: values(t.rgba, 4, duration, 'slot tint'),
                 });
             }
-            const order = keys(o.drawOrder, duration, 'draw order', (k) => {
-                const ids = list(k.order, slots.length, 'slot order').map((v) => str(v, 'slot id'));
-                const set = new Set(ids);
-                if (set.size !== ids.length || ids.some((slotId) => !bySlot.has(slotId))) fail('invalid draw order');
-                return ids.concat(slots.filter((s) => !set.has(s.id)).map((s) => s.id));
-            });
+            const order = keys(o.drawOrder, duration, 'draw order', (k) => arrangement(k.order, slotIds));
+            const folderOrder = new Map<string, Key<string[]>[]>();
+            for (const [id, raw] of entries(o.drawOrderFolder, 'folder order tracks')) {
+                const folder = folders.get(id);
+                if (!folder) fail(`unknown draw order folder: ${id}`);
+                folderOrder.set(
+                    id,
+                    keys(raw, duration, 'folder order', (k) => arrangement(k.order, folder.members)),
+                );
+            }
             const markers = keys(
                 o.events,
                 duration,
@@ -409,18 +456,36 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
                     for (const [key, rawKeys] of entries(rawMeshes, 'deform attachments')) {
                         const mesh = skin.regions.get(slotId)?.get(key);
                         if (mesh?.kind !== 'mesh') fail(`unknown deform mesh: ${skinId}/${slotId}/${key}`);
-                        deform.set(mesh, values(rawKeys, mesh.deformSize, duration, 'deform curve', true));
+                        const track = values(rawKeys, mesh.deformSize, duration, 'deform curve', true);
+                        if (!mesh.deformParent) deform.set(mesh, track);
                     }
                 }
             }
-            return { id, name, duration, order, markers, bones: boneTracks, slots: slotTracks, deform };
+            return { id, name, duration, order, folderOrder, markers, bones: boneTracks, slots: slotTracks, deform };
         }),
         'duplicate animation id',
     );
-    return { skeletonIndex: selected, skeletonNames, bones, slots, clips, images, skins };
+    return { skeletonIndex: selected, skeletonNames, bones, slots, clips, images, skins, folders };
+}
+function arrangement(raw: unknown, setup: readonly string[]): string[] {
+    const desired = list(raw, setup.length, 'slot order').map((entry) => str(entry, 'slot id'));
+    const seen = new Set(desired),
+        members = new Set(setup);
+    if (seen.size !== desired.length || desired.some((id) => !members.has(id))) fail('invalid draw order');
+    return desired.concat(setup.filter((id) => !seen.has(id)));
 }
 function parseMesh(r: Obj, path: string, byBone: ReadonlyMap<string, Bone>): Bone2dMesh {
-    if (r.link != null) fail(`linked mesh: ${path}`, true);
+    let link: Bone2dMesh['link'];
+    if (r.link != null) {
+        const o = obj(r.link, 'linked mesh');
+        if (typeof o.deform !== 'boolean') fail('linked mesh deform mode');
+        link = {
+            source: str(o.source, 'linked source'),
+            slot: optionalStr(o.slot, 'linked slot'),
+            skin: optionalStr(o.skin, 'linked skin'),
+            deform: o.deform,
+        };
+    }
     const uvs = list(r.uvs, 2048, 'mesh UVs').map((v, i) => {
         const uv = num(v, 'mesh UV', 0, 1);
         return i % 2 ? 1 - uv : uv;
@@ -454,7 +519,7 @@ function parseMesh(r: Obj, path: string, byBone: ReadonlyMap<string, Bone>): Bon
         });
         deformSize = 2 * weights.reduce((n, influence) => n + influence.length, 0);
     } else if (xy.length !== uvs.length) fail('one plain XY pair required for each UV');
-    return { kind: 'mesh', path, color: color(r.color, path), xy, uvs, indices, weights, deformSize };
+    return { kind: 'mesh', path, color: color(r.color, path), xy, uvs, indices, weights, deformSize, link };
 }
 function last<T>(track: readonly Key<T>[], time: number): number {
     let lo = 0,
@@ -534,7 +599,18 @@ export function sampleBone2dProject(project: Bone2dProject, clipId: string | nul
         const deltas = sampled(track, time);
         if (deltas) meshDeltas.set(mesh, deltas);
     }
-    return { bones, slots, meshDeltas, order: i >= 0 ? clip!.order[i].value : project.slots.map((s) => s.id) };
+    let order = i >= 0 ? clip!.order[i].value : project.slots.map((s) => s.id);
+    if (clip)
+        for (const [id, folder] of project.folders) {
+            const track = clip.folderOrder.get(id);
+            if (!track?.length) continue;
+            const j = last(track, time),
+                next = j < 0 ? folder.members : track[j].value;
+            const seats = new Set(folder.members);
+            let at = 0;
+            order = order.map((slot) => (seats.has(slot) ? next[at++] : slot));
+        }
+    return { bones, slots, meshDeltas, order };
 }
 
 /** Resolve ordered parent/local 2D affine products without decomposing shear. */

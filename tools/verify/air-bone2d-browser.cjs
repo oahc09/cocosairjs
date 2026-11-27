@@ -262,8 +262,26 @@ async function main() {
                 wardrobe.dispose();
                 await clock.step(0);
             };
+            let folderPlayer;
+            const folderMount = async () => {
+                const fixture = JSON.parse(text),
+                    rig = fixture.project.skeleton,
+                    clip = rig.animations[1];
+                rig.drawOrderFolders = [{ id: 'fx', name: 'Effects', slots: ['body-slot', 'arm-slot'] }];
+                clip.drawOrder = [];
+                clip.drawOrderFolder = { fx: [{ time: 0.5, order: ['arm-slot'] }] };
+                folderPlayer = await air.createAirBone2dPlayer(parent, JSON.stringify(fixture));
+                folderPlayer.play('attack');
+                folderPlayer.advance(0.625);
+                await clock.step(0);
+                return folderPlayer.node.children.map((node) => node.name);
+            };
+            const folderClose = async () => {
+                folderPlayer.dispose();
+                await clock.step(0);
+            };
             let meshInstance, meshView, meshTexture;
-            const setMesh = async (weighted) => {
+            const setMesh = async ({ weighted, linked }) => {
                 const fixture = JSON.parse(text),
                     rig = fixture.project.skeleton;
                 const points = [
@@ -291,6 +309,23 @@ async function main() {
                           ])
                         : null,
                 };
+                if (linked) {
+                    rig.skins.push({
+                        id: 'linked',
+                        name: 'Linked glove',
+                        bones: [],
+                        constraints: [],
+                        attachments: {
+                            'arm-slot': {
+                                arm: {
+                                    ...rig.skins[0].attachments['arm-slot'].arm,
+                                    path: 'body',
+                                    link: { source: 'arm', slot: null, skin: null, deform: true },
+                                },
+                            },
+                        },
+                    });
+                }
                 const clip = rig.animations[1];
                 delete clip.bones['arm-bone'].rotate;
                 const n = weighted ? 12 : 6,
@@ -306,6 +341,7 @@ async function main() {
                 };
                 meshInstance = await air.createAirBone2dPlayer(parent, JSON.stringify(fixture));
                 meshInstance.play('attack');
+                if (linked) meshInstance.setSkins(['linked']);
                 meshView = meshInstance.node
                     .getChildByName('arm-slot')
                     .getChildByName('Mesh')
@@ -325,6 +361,8 @@ async function main() {
             window.bone2dTest = {
                 frame,
                 negative,
+                folderMount,
+                folderClose,
                 setMesh,
                 meshStep,
                 meshClose,
@@ -337,6 +375,7 @@ async function main() {
                     player.dispose();
                     wardrobe?.dispose();
                     meshInstance?.dispose();
+                    folderPlayer?.dispose();
                     clock.end();
                     await app.close();
                 },
@@ -457,9 +496,23 @@ async function main() {
         assert.equal(sha(await page.screenshot()), baseSkin);
         report.wardrobe.screenshots = { base: baseSkin, red: redSkin };
         await page.evaluate(() => window.bone2dTest.wardrobeClose());
+        const folderOrder = await page.evaluate(() => window.bone2dTest.folderMount());
+        const folderShot = sha(await page.screenshot());
+        assert.deepEqual(folderOrder, ['arm-slot', 'body-slot']);
+        assert.equal(
+            folderShot,
+            s['attack-hitch'].screenshotSha256,
+            'folder-only track must render the same order as full-track control',
+        );
+        report.folder = { order: folderOrder, screenshot: folderShot };
+        await page.evaluate(() => window.bone2dTest.folderClose());
         report.mesh = [];
-        for (const weighted of [true, false]) {
-            await page.evaluate((v) => window.bone2dTest.setMesh(v), weighted);
+        for (const [weighted, linked] of [
+            [true, false],
+            [false, false],
+            [true, true],
+        ]) {
+            await page.evaluate((v) => window.bone2dTest.setMesh(v), { weighted, linked });
             const baseline = await page.evaluate(() => window.bone2dTest.meshStep(0));
             const before = sha(await page.screenshot());
             const end = await page.evaluate(() => window.bone2dTest.meshStep(0.5));
@@ -474,7 +527,7 @@ async function main() {
             assert.equal(sha(await page.screenshot()), s.dispose.screenshotSha256);
             const freed = await page.evaluate(() => window.bone2dTest.meshClose());
             assert.equal(freed, true);
-            report.mesh.push({ weighted, baseline, end, before, after, hidden, freed });
+            report.mesh.push({ weighted, linked, baseline, end, before, after, hidden, freed });
         }
         await page.evaluate(() => window.bone2dTest.close());
         assert.deepEqual(report.pageErrors, []);
