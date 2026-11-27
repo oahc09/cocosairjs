@@ -82,7 +82,9 @@ interface Bone {
     parent: string | null;
     pose: Bone2dPose;
 }
+export type Bone2dBlend = 'normal' | 'additive' | 'multiply' | 'screen';
 interface Slot {
+    blend: Bone2dBlend;
     id: string;
     bone: string;
     attachment: string | null;
@@ -339,8 +341,11 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
         const id = str(o.id, 'slot id'),
             bone = str(o.bone, 'slot bone');
         if (!byBone.has(bone)) fail(`unknown slot bone: ${id}`);
-        if (o.blend !== 'normal' || o.dark != null) fail(`slot blend or two-color tint: ${id}`, true);
-        return { id, bone, attachment: optionalStr(o.attachment, 'setup attachment'), color: color(o.color, id) };
+        const blend = o.blend;
+        if (blend !== 'normal' && blend !== 'additive' && blend !== 'multiply' && blend !== 'screen')
+            fail(`invalid slot blend: ${id}`);
+        if (o.dark != null) fail(`slot two-color tint: ${id}`, true);
+        return { id, bone, blend, attachment: optionalStr(o.attachment, 'setup attachment'), color: color(o.color, id) };
     });
     const bySlot = index(slots, 'duplicate slot id');
     const slotIds = slots.map((s) => s.id);

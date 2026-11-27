@@ -361,3 +361,14 @@ test('queries non-rendering markers and deformed polygons in player-root coordin
 test('convex clipping removes concave dents and duplicate vertices', () => {
     expect(convexClipOutline([-3, -4, 8, -4, 8, 5, 0, 0, -3, 5, -3, -4])).toEqual([-3, -4, 8, -4, 8, 5, -3, 5]);
 });
+
+test('preserves all four slots blend modes and rejects unknown values', () => {
+    for (const blend of ['normal', 'additive', 'multiply', 'screen']) {
+        const file = fixture();
+        file.project.skeleton.slots[0].blend = blend;
+        expect(parse(file).slots[0].blend).toBe(blend);
+    }
+    const invalid = fixture();
+    invalid.project.skeleton.slots[0].blend = 'overlay';
+    expect(() => parse(invalid)).toThrow(/invalid slot blend/);
+});

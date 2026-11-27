@@ -25,6 +25,8 @@ import { Graphics } from '../../cocos/2d/components/graphics';
 import { SpriteFrame } from '../../cocos/2d/assets/sprite-frame';
 import { UITransform } from '../../cocos/2d/framework/ui-transform';
 import { Texture2D } from '../../cocos/asset/assets/texture-2d';
+import { Material } from '../../cocos/asset/assets/material';
+import { BlendFactor, BlendOp } from '../../cocos/gfx';
 import { ImageAsset } from '../../cocos/asset/assets/image-asset';
 import { Color, Rect, Size } from '../../cocos/core/math';
 import { Filter } from '../../cocos/asset/assets/asset-enum';
@@ -36,13 +38,15 @@ import { AirUIMesh } from '../ui-mesh';
 import type { AirAtlasHandle } from '../assets/atlas/atlas-factory';
 import { convexClipOutline, hasNonCollinearPoints } from './polygon';
 import { parseBone2dProject, sampleBone2dProject, bone2dWorldMatrices, bone2dMeshPositions, bone2dPicture, resolveBone2dAttachment, bone2dShapeGeometry } from './project';
-import type { Bone2dAttachmentGeometry, Bone2dClipAttachment, Bone2dImage, Bone2dMarker, Bone2dPose, Bone2dProjectOptions, Bone2dSample } from './project';
+import type { Bone2dAttachmentGeometry, Bone2dBlend, Bone2dClipAttachment, Bone2dImage, Bone2dMarker, Bone2dPose, Bone2dProjectOptions, Bone2dSample } from './project';
 
 export interface AirBone2dOptions extends Bone2dProjectOptions {
     /** If specified, borrow exact-name frames instead of decoding embedded PNGs. The caller owns the atlas. */
     readonly atlas?: AirAtlasHandle;
     /** Source packing convention for rotated atlas entries; defaults to Bone-2D export. */
     readonly atlasRotation?: 'bone2d' | 'air';
+    /** AIR extension. Leave off to match Bone-2D's editor, which skins mask vertices but ignores their deform keys. */
+    readonly deformClipping?: boolean;
     readonly layer?: number;
     readonly signal?: AbortSignal;
 }
@@ -136,6 +140,8 @@ export async function createAirBone2dPlayer(
     if (options.atlasRotation !== undefined && options.atlasRotation !== 'air' && options.atlasRotation !== 'bone2d') {
         error('invalid atlas rotation convention');
     }
+    if (options.deformClipping !== undefined && typeof options.deformClipping !== 'boolean')
+        error('invalid clipping deformation option');
     const layer = options.layer ?? Layers.Enum.UI_2D;
     const used = new Set<string>();
     const meshImages = new Set<string>();
@@ -154,6 +160,27 @@ export async function createAirBone2dPlayer(
     if (signal?.aborted) throw new Error('AIR_E_BONE2D_ABORTED');
     const frames = new Map<string, SpriteFrame>();
     const retained = new Set<SpriteFrame>();
+    const blendMaterials = new Map<Bone2dBlend, Material>();
+    const materialFor = (mode: Exclude<Bone2dBlend, 'normal'>): Material => {
+        const existing = blendMaterials.get(mode);
+        if (existing) return existing;
+        const material = new Material();
+        blendMaterials.set(mode, material);
+        const colorSrc = mode === 'multiply' ? BlendFactor.DST_COLOR :
+            mode === 'screen' ? BlendFactor.ONE : BlendFactor.SRC_ALPHA;
+        const colorDst = mode === 'additive' ? BlendFactor.ONE :
+            mode === 'screen' ? BlendFactor.ONE_MINUS_SRC_COLOR : BlendFactor.ONE_MINUS_SRC_ALPHA;
+        material.initialize({
+            effectName: 'builtin-sprite',
+            defines: { USE_TEXTURE: true, USE_ALPHA_TEST: false, CC_USE_EMBEDDED_ALPHA: false },
+            states: { blendState: { targets: [{
+                blend: true, blendEq: BlendOp.ADD, blendAlphaEq: BlendOp.ADD,
+                blendSrc: colorSrc, blendDst: colorDst, blendSrcAlpha: BlendFactor.ONE,
+                blendDstAlpha: mode === 'additive' ? BlendFactor.ONE : BlendFactor.ONE_MINUS_SRC_ALPHA,
+            }] } },
+        });
+        return material;
+    };
     const adapted = new Set<SpriteFrame>();
     const owned: { image: ImageAsset; texture: Texture2D; frame: SpriteFrame }[] = [];
     const root = new Node('Bone2D');
@@ -173,6 +200,8 @@ export async function createAirBone2dPlayer(
         }
         for (const { node } of masks.values()) if (node.parent !== root && isValid(node, true)) node.destroy();
         masks.clear();
+        for (const material of blendMaterials.values()) material.destroy();
+        blendMaterials.clear();
         if (destroyNode && isValid(root, true)) root.destroy();
         for (const f of retained) f.decRef(false);
         for (const f of adapted) f.destroy();
@@ -245,7 +274,8 @@ export async function createAirBone2dPlayer(
                 world ??= bone2dWorldMatrices(project, sample);
                 const clip = attachment;
                 const bone = slotDefinitions.get(id)!.bone;
-                const vertices = bone2dMeshPositions(clip, bone, world, sample.shapeDeltas.get(clip));
+                const deltas = options.deformClipping ? sample.shapeDeltas.get(clip) : undefined;
+                const vertices = bone2dMeshPositions(clip, bone, world, deltas);
                 const outline = clip.convex || clip.inverse ? convexClipOutline(vertices) : vertices;
                 if (outline.length < 6 || !hasNonCollinearPoints(outline)) {
                     if (!clip.inverse) scope = { end: clip.end, parent: root, empty: true };
@@ -400,12 +430,14 @@ export async function createAirBone2dPlayer(
             const leaf = spriteNode(branch, 'Region', { layer });
             const sprite = leaf.getComponent(Sprite)!;
             sprite.trim = false;
+            if (slot.blend !== 'normal') sprite.customMaterial = materialFor(slot.blend);
             let mesh: AirUIMesh | undefined;
             if (meshSlots.has(slot.id)) {
                 const meshNode = new Node('Mesh');
                 meshNode.layer = layer;
                 slotRoot.addChild(meshNode);
                 mesh = meshNode.addComponent(AirUIMesh);
+                if (slot.blend !== 'normal') mesh.customMaterial = materialFor(slot.blend);
                 meshNode.active = false;
             }
             slots.set(slot.id, {

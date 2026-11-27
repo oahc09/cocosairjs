@@ -489,7 +489,7 @@ async function main() {
                 return result;
             };
             let clipPlayer;
-            const clipMount = async () => {
+            const clipMount = async (deformClipping = false) => {
                 const file = JSON.parse(text),
                     rig = file.project.skeleton,
                     clip = rig.animations[1];
@@ -556,7 +556,7 @@ async function main() {
                 clip.bones = {};
                 clip.drawOrder = [];
                 clip.slots = { 'clip-slot': { attachment: [{ time: 0.75, name: null }] } };
-                clipPlayer = await air.createAirBone2dPlayer(parent, JSON.stringify(file));
+                clipPlayer = await air.createAirBone2dPlayer(parent, JSON.stringify(file), { deformClipping });
                 clipPlayer.play('attack');
             };
             const clipStep = async (stage) => {
@@ -578,9 +578,70 @@ async function main() {
                 clipPlayer.dispose();
                 await clock.step(0);
             };
+            const blends = async (swap) => {
+                const camera = parent.getComponent(air.Canvas).cameraComponent;
+                const saved = camera.clearColor.clone();
+                const target = new air.RenderTexture();
+                target.reset({ width: 320, height: 240 });
+                camera.targetTexture = target;
+                camera.clearColor = new air.Color(26, 51, 64, 64);
+                const modes = ['normal', 'additive', 'multiply', 'screen'];
+                const file = JSON.parse(text),
+                    rig = file.project.skeleton,
+                    skin = rig.skins[0];
+                const drawing = document.createElement('canvas');
+                drawing.width = drawing.height = 16;
+                const ctx = drawing.getContext('2d');
+                ctx.fillStyle = 'rgba(153,64,51,0.5)';
+                ctx.fillRect(0, 0, 16, 16);
+                file.images.body = drawing.toDataURL();
+                const source = Array.from(ctx.getImageData(8, 8, 1, 1).data);
+                rig.animations = [];
+                rig.slots = modes.map((blend, i) => ({
+                    ...rig.slots[0],
+                    id: blend,
+                    blend,
+                }));
+                const setup = skin.attachments['body-slot'].body;
+                skin.attachments = Object.fromEntries(
+                    modes.map((mode, i) => {
+                        const x = (i * 64 - 96) / 1.5;
+                        const body =
+                            i % 2 !== Number(swap)
+                                ? {
+                                      type: 'mesh',
+                                      path: 'body',
+                                      color: [1, 1, 1, 1],
+                                      weights: null,
+                                      vertices: [x - 12, -18, x + 12, -18, x + 12, 18, x - 12, 18],
+                                      uvs: [0, 1, 1, 1, 1, 0, 0, 0],
+                                      triangles: [0, 1, 2, 0, 2, 3],
+                                  }
+                                : { ...setup, x, width: 24, height: 36 };
+                        return [mode, { body }];
+                    }),
+                );
+                const read = (x) => Array.from(target.readPixels(x, 120, 1, 1));
+                let player;
+                try {
+                    await clock.step(0);
+                    const clear = read(160);
+                    player = await air.createAirBone2dPlayer(parent, JSON.stringify(file));
+                    await clock.step(0);
+                    const rgba = modes.map((_, i) => read(64 + i * 64));
+                    return { clear, source, rgba, gap: read(96) };
+                } finally {
+                    player?.dispose();
+                    camera.targetTexture = null;
+                    camera.clearColor = saved;
+                    target.destroy();
+                    await clock.step(0);
+                }
+            };
             window.bone2dTest = {
                 frame,
                 clipMount,
+                blends,
                 clipStep,
                 clipClose,
                 shapes,
@@ -818,9 +879,8 @@ async function main() {
         assert.equal(hiddenShape, null);
         await page.evaluate(() => window.bone2dTest.clipMount());
         report.clipping = {};
-        for (const stage of ['normal', 'inverse', 'off', 'dent', 'dent-deformed', 'back']) {
-            const nodes = await page.evaluate((s) => window.bone2dTest.clipStep(s), stage);
-            const pixels = await page.evaluate(
+        const clipPixels = async () =>
+            page.evaluate(
                 async (data) => {
                     const image = new Image();
                     image.src = 'data:image/png;base64,' + data;
@@ -840,6 +900,9 @@ async function main() {
                 },
                 (await page.screenshot()).toString('base64'),
             );
+        for (const stage of ['normal', 'inverse', 'off', 'dent', 'dent-deformed', 'back']) {
+            const nodes = await page.evaluate((s) => window.bone2dTest.clipStep(s), stage);
+            const pixels = await clipPixels();
             report.clipping[stage] = { nodes, pixels };
         }
         const { normal, inverse, off, back } = report.clipping;
@@ -865,11 +928,45 @@ async function main() {
         );
         assert.deepEqual(
             report.clipping['dent-deformed'].pixels,
-            normal.pixels,
-            'deforming the weighted indentation exposes the left sample',
+            report.clipping.dent.pixels,
+            'default clipping follows the pinned editor and ignores deform keys',
         );
         assert.deepEqual(back, normal, 'seek and skin swap must recreate the original compositor state');
         await page.evaluate(() => window.bone2dTest.clipClose());
+        await page.evaluate(() => window.bone2dTest.clipMount(true));
+        await page.evaluate(() => window.bone2dTest.clipStep('dent'));
+        await page.evaluate(() => window.bone2dTest.clipStep('dent-deformed'));
+        report.clipDeformExtension = await clipPixels();
+        assert.deepEqual(report.clipDeformExtension, normal.pixels, 'opt-in deformed outline exposes the left sample');
+        await page.evaluate(() => window.bone2dTest.clipClose());
+        report.blends = await page.evaluate(() => window.bone2dTest.blends(false));
+        report.blendsSwapped = await page.evaluate(() => window.bone2dTest.blends(true));
+        assert.deepEqual(report.blendsSwapped, report.blends, 'sprites and meshes must give the same composited bytes');
+        const { clear, source, rgba, gap } = report.blends;
+        const compare = (actual, wanted) =>
+            assert.ok(
+                actual.length === wanted.length && actual.every((byte, i) => Math.abs(byte - wanted[i]) <= 2),
+                JSON.stringify({ actual, wanted }),
+            );
+        compare(clear, [26, 51, 64, 64]);
+        compare(source, [153, 64, 51, 128]);
+        compare(gap, clear);
+        const [r, g, b, a] = source.map((v) => v / 255);
+        const [u, v, w, d] = clear.map((n) => n / 255);
+        const src = [r, g, b],
+            dst = [u, v, w];
+        const color = [
+            src.map((x, i) => x * a + dst[i] * (1 - a)),
+            src.map((x, i) => x * a + dst[i]),
+            src.map((x, i) => x * dst[i] + dst[i] * (1 - a)),
+            src.map((x, i) => x + dst[i] * (1 - x)),
+        ];
+        color.forEach((rgb, i) =>
+            compare(
+                rgba[i],
+                [...rgb, a + d * (i === 1 ? 1 : 1 - a)].map((n) => Math.round(255 * n)),
+            ),
+        );
         await page.evaluate(() => window.bone2dTest.close());
         assert.deepEqual(report.pageErrors, []);
         report.status = 'PASS';
