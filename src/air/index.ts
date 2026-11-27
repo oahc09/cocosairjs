@@ -46,7 +46,7 @@ export * from './ui-pixel-perfect';
 export * from './dom-overlay';
 export * from './texture-sprite';
 export { parseBone2dProject, sampleBone2dProject } from './bone2d/project';
-export type { Bone2dProject, Bone2dProjectOptions, Bone2dMarker, Bone2dSample } from './bone2d/project';
+export type { Bone2dProject, Bone2dProjectOptions, Bone2dMarker, Bone2dSample, Bone2dAttachmentGeometry } from './bone2d/project';
 export { createAirBone2dPlayer } from './bone2d/player';
 export type { AirBone2dPlayer, AirBone2dOptions } from './bone2d/player';
 export * from './graphics-commands';

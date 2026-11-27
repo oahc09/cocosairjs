@@ -438,8 +438,58 @@ async function main() {
                 sequenceTextures.clear();
                 return released;
             };
+            const shapes = async () => {
+                const file = JSON.parse(text),
+                    rig = file.project.skeleton;
+                rig.slots[1].attachment = null;
+                rig.skins[0].attachments['body-slot'].body = { type: 'point', x: 3, y: 4, rotation: 45 };
+                const clip = rig.animations[1];
+                delete clip.slots['arm-slot'];
+                clip.slots['body-slot'] = { attachment: [{ time: 0.75, name: null }] };
+                const overlay = (id, body) => ({
+                    id,
+                    name: id,
+                    bones: [],
+                    constraints: [],
+                    attachments: { 'body-slot': { body } },
+                });
+                rig.skins.push(
+                    overlay('bounds', {
+                        type: 'boundingbox',
+                        vertices: [],
+                        weights: [[['root', 0, 0, 1]], [['root', 8, 0, 1]], [['root', 0, 8, 1]]],
+                    }),
+                    overlay('path', {
+                        type: 'path',
+                        vertices: [0, 0, 1, 0, 2, 3, 4, 3, 5, 0, 6, 0],
+                        closed: false,
+                        constantSpeed: true,
+                    }),
+                );
+                clip.deform.bounds = { 'body-slot': { body: [{ time: 0.5, value: [0, 0, 0, 6, 0, 0] }] } };
+                const player = await air.createAirBone2dPlayer(parent, JSON.stringify(file));
+                const result = [];
+                try {
+                    player.play('attack');
+                    player.seek(0.5);
+                    result.push(player.getAttachmentGeometry('body-slot'));
+                    player.setSkins(['bounds']);
+                    result.push(player.getAttachmentGeometry('body-slot'));
+                    player.setSkins(['bounds', 'path']);
+                    result.push(player.getAttachmentGeometry('body-slot'));
+                    await clock.step(0);
+                    result.push(player.node.children.every((node) => !node.active));
+                    player.seek(0.75);
+                    result.push(player.getAttachmentGeometry('body-slot'));
+                } finally {
+                    player.dispose();
+                    await clock.step(0);
+                }
+                return result;
+            };
             window.bone2dTest = {
                 frame,
+                shapes,
                 sequenceMount,
                 sequenceStep,
                 sequenceClose,
@@ -657,6 +707,20 @@ async function main() {
             assert.equal(released, true);
             report.sequences.push({ mesh, frames, released });
         }
+        report.shapes = await page.evaluate(() => window.bone2dTest.shapes());
+        const [point, bounds, curve, noDraw, hiddenShape] = report.shapes;
+        assert.equal(point.kind, 'point');
+        assert.deepEqual([point.x, point.y], [4.5, 4]);
+        assert.ok(Math.abs(point.rotation - 33.69006752598) < 1e-8);
+        assert.deepEqual(bounds, { kind: 'boundingbox', vertices: [0, 0, 12, 6, 0, 8] });
+        assert.deepEqual(curve, {
+            kind: 'path',
+            vertices: [0, 0, 1.5, 0, 3, 3, 6, 3, 7.5, 0, 9, 0],
+            closed: false,
+            constantSpeed: true,
+        });
+        assert.equal(noDraw, true);
+        assert.equal(hiddenShape, null);
         await page.evaluate(() => window.bone2dTest.close());
         assert.deepEqual(report.pageErrors, []);
         report.status = 'PASS';

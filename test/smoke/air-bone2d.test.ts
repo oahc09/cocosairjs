@@ -6,6 +6,7 @@ import {
     bone2dWorldMatrices,
     bone2dMeshPositions,
     bone2dPicture,
+    bone2dShapeGeometry,
 } from '../../src/air/bone2d/project';
 
 const text = readFileSync(resolve(__dirname, '../fixtures/bone2d/clawbot.bone2d'), 'utf8');
@@ -318,4 +319,39 @@ test('handles one picture, zero delay and fails on missing frame or unbound sequ
     expect(picture).toThrow(/unknown sequence image: body007/);
     delete attachment.sequence;
     expect(picture).toThrow(/unknown sequenced attachment/);
+});
+
+test('queries non-rendering markers and deformed polygons in player-root coordinates', () => {
+    const file = fixture(),
+        rig = file.project.skeleton;
+    const body = rig.skins[0].attachments['body-slot'];
+    body.body = { type: 'point', x: 3, y: 4, rotation: 45 };
+    body.hit = {
+        type: 'boundingbox',
+        vertices: [],
+        weights: [[['root', 0, 0, 1]], [['root', 8, 0, 1]], [['root', 0, 8, 1]]],
+    };
+    body.path = { type: 'path', vertices: [0, 0, 1, 0, 2, 3, 4, 3, 5, 0, 6, 0], closed: false, constantSpeed: true };
+    rig.animations[1].deform.skin = { 'body-slot': { hit: [{ time: 0.5, value: [0, 0, 0, 6, 0, 0] }] } };
+    const model = parse(file),
+        sample = sampleBone2dProject(model, 'attack', 0.5);
+    const world = bone2dWorldMatrices(model, sample);
+    function query(key: string) {
+        const a = model.skins.get('skin')!.regions.get('body-slot')!.get(key)!;
+        if (a.kind === 'mesh' || a.kind === 'region') throw new Error('expected a non-rendering shape');
+        return bone2dShapeGeometry(a, 'root', sample, world);
+    }
+    const point = query('body');
+    expect(point).toMatchObject({ kind: 'point', x: 4.5, y: 4 });
+    if (point.kind !== 'point') throw new Error('expected a point');
+    expect(point.rotation).toBeCloseTo(33.69006752598);
+    expect(query('hit')).toEqual({ kind: 'boundingbox', vertices: [0, 0, 12, 6, 0, 8] });
+    expect(query('path')).toEqual({
+        kind: 'path',
+        vertices: [0, 0, 1.5, 0, 3, 3, 6, 3, 7.5, 0, 9, 0],
+        closed: false,
+        constantSpeed: true,
+    });
+    body.path.vertices.pop();
+    expect(() => parse(file)).toThrow(/shape needs at least three XY pairs/);
 });

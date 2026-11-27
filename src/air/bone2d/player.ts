@@ -32,8 +32,8 @@ import { Node } from '../../cocos/scene-graph/node';
 import { spriteNode } from '../ui-kit';
 import { AirUIMesh } from '../ui-mesh';
 import type { AirAtlasHandle } from '../assets/atlas/atlas-factory';
-import { parseBone2dProject, sampleBone2dProject, bone2dWorldMatrices, bone2dMeshPositions, bone2dPicture } from './project';
-import type { Bone2dImage, Bone2dMarker, Bone2dPose, Bone2dProjectOptions, Bone2dSample } from './project';
+import { parseBone2dProject, sampleBone2dProject, bone2dWorldMatrices, bone2dMeshPositions, bone2dPicture, resolveBone2dAttachment, bone2dShapeGeometry } from './project';
+import type { Bone2dAttachmentGeometry, Bone2dImage, Bone2dMarker, Bone2dPose, Bone2dProjectOptions, Bone2dSample } from './project';
 
 export interface AirBone2dOptions extends Bone2dProjectOptions {
     /** If specified, borrow exact-name frames instead of decoding embedded PNGs. The caller owns the atlas. */
@@ -62,6 +62,8 @@ export interface AirBone2dPlayer {
     seek(seconds: number): void;
     /** Advances using caller-owned scene time and returns inert marker records, not method calls. */
     advance(deltaSeconds: number): readonly Bone2dMarker[];
+    /** Current active point, bounding box or path in player-root coordinates; null for sprites, meshes and empty slots. */
+    getAttachmentGeometry(slotId: string): Bone2dAttachmentGeometry | null;
     dispose(): void;
 }
 
@@ -138,6 +140,7 @@ export async function createAirBone2dPlayer(
     for (const skin of project.skins.values()) {
         for (const [slot, regions] of skin.regions)
             for (const region of regions.values()) {
+                if (region.kind !== 'mesh' && region.kind !== 'region') continue;
                 for (const name of region.sequence?.frames ?? [region.path]) {
                     used.add(name);
                     if (region.kind === 'mesh') meshImages.add(name);
@@ -182,6 +185,7 @@ export async function createAirBone2dPlayer(
     const lookup = new Map(project.bones.map((bone) => [bone.id, bone] as const));
     const defaultSkin = project.skins.values().next().value!;
     let selectedSkins = [defaultSkin];
+    let currentSample: Bone2dSample;
     const apply = (sample: Bone2dSample): void => {
         let world: ReturnType<typeof bone2dWorldMatrices> | null = null;
         for (let index = 0; index < sample.order.length; index++) {
@@ -192,14 +196,10 @@ export async function createAirBone2dPlayer(
         for (const def of project.slots) {
             const s = slots.get(def.id)!,
                 p = sample.slots.get(def.id)!;
-            let region;
-            if (p.attachment !== null) {
-                for (let i = selectedSkins.length - 1; i >= 0 && !region; i--) {
-                    region = selectedSkins[i].regions.get(def.id)?.get(p.attachment);
-                }
-            }
-            s.root.active = !!region;
-            if (!region) {
+            const region = resolveBone2dAttachment(selectedSkins, def.id, p.attachment);
+            const drawable = region?.kind === 'region' || region?.kind === 'mesh';
+            s.root.active = drawable;
+            if (!drawable) {
                 s.sprite.spriteFrame = null;
                 if (s.mesh) s.mesh.spriteFrame = null;
                 continue;
@@ -240,6 +240,7 @@ export async function createAirBone2dPlayer(
             if (s.sprite.spriteFrame !== newFrame) s.sprite.spriteFrame = newFrame;
             tint(s.sprite);
         }
+        currentSample = sample;
     };
     try {
         let pixels = 0;
@@ -370,6 +371,14 @@ export async function createAirBone2dPlayer(
             }
             selectedSkins = Array.from(next);
             apply(sampleBone2dProject(project, selected, time));
+        },
+        getAttachmentGeometry(slotId): Bone2dAttachmentGeometry | null {
+            ensure();
+            const slot = project.slots.find((value) => value.id === slotId);
+            if (!slot) error(`unknown slot: ${slotId}`);
+            const attachment = resolveBone2dAttachment(selectedSkins, slotId, currentSample.slots.get(slotId)!.attachment);
+            if (!attachment || attachment.kind === 'mesh' || attachment.kind === 'region') return null;
+            return bone2dShapeGeometry(attachment, slot.bone, currentSample, bone2dWorldMatrices(project, currentSample));
         },
         animations,
         get time() {

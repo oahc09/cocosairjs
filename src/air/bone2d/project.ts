@@ -60,6 +60,19 @@ export interface Bone2dMesh {
     readonly deformParent?: Bone2dMesh;
 }
 type Visual = Bone2dRegion | Bone2dMesh;
+type Positioned = Pick<Bone2dMesh, 'xy' | 'weights' | 'deformSize'>;
+type PointAttachment = { kind: 'point'; x: number; y: number; rotation: number };
+type BoundsAttachment = Positioned & { kind: 'boundingbox' };
+type PathAttachment = Positioned & { kind: 'path'; closed: boolean; constantSpeed: boolean };
+type Shape = PointAttachment | BoundsAttachment | PathAttachment;
+type VertexAttachment = Bone2dMesh | BoundsAttachment | PathAttachment;
+type Attachment = Visual | Shape;
+/** The active non-rendering attachment in player-root coordinates. XY lists are packed. */
+export type Bone2dAttachmentGeometry =
+    | { readonly kind: 'point'; readonly x: number; readonly y: number; readonly rotation: number }
+    | { readonly kind: 'boundingbox'; readonly vertices: readonly number[] }
+    | { readonly kind: 'path'; readonly vertices: readonly number[]; readonly closed: boolean; readonly constantSpeed: boolean };
+
 interface Bone {
     id: string;
     parent: string | null;
@@ -74,7 +87,7 @@ interface Slot {
 interface Skin {
     id: string;
     name: string;
-    regions: ReadonlyMap<string, ReadonlyMap<string, Visual>>;
+    regions: ReadonlyMap<string, ReadonlyMap<string, Attachment>>;
 }
 export interface Bone2dProjectOptions {
     /** Zero-based editor skeleton order. The saved active skeleton is the default. */
@@ -99,7 +112,7 @@ interface Clip {
     slots: ReadonlyMap<string, { attachment: Key<string | null>[]; rgba: ValueKey[] }>;
     order: Key<string[]>[];
     folderOrder: ReadonlyMap<string, Key<string[]>[]>;
-    deform: ReadonlyMap<Bone2dMesh, ValueKey[]>;
+    deform: ReadonlyMap<VertexAttachment, ValueKey[]>;
     sequences: ReadonlyMap<Visual, Key<SequenceKey>[]>;
     markers: Key<Bone2dMarker>[];
 }
@@ -135,6 +148,7 @@ export interface Bone2dSample {
     readonly slots: ReadonlyMap<string, Bone2dSlotPose>;
     readonly order: readonly string[];
     readonly sequenceFrames: ReadonlyMap<Visual, number>;
+    readonly shapeDeltas: ReadonlyMap<BoundsAttachment | PathAttachment, readonly number[]>;
     readonly meshDeltas: ReadonlyMap<Bone2dMesh, readonly number[]>;
 }
 
@@ -344,12 +358,16 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
                 name = str(o.name, 'skin name');
             none(o.bones, 'skin-required bones');
             none(o.constraints, 'skin-required constraints');
-            const bySlotRegion = new Map<string, Map<string, Visual>>();
+            const bySlotRegion = new Map<string, Map<string, Attachment>>();
             for (const [slotId, rawRegions] of entries(o.attachments, 'skin attachments')) {
                 if (!bySlot.has(slotId)) fail(`unknown skin slot: ${slotId}`);
-                const regions = new Map<string, Visual>();
+                const regions = new Map<string, Attachment>();
                 for (const [attachment, rawRegion] of entries(rawRegions, 'regions')) {
                     const r = obj(rawRegion, 'attachment');
+                    if (r.type === 'point' || r.type === 'boundingbox' || r.type === 'path') {
+                        regions.set(attachment, parseShape(r, byBone));
+                        continue;
+                    }
                     if (r.type !== 'region' && r.type !== 'mesh')
                         fail(`unsupported attachment: ${slotId}/${attachment}`, true);
                     const path = str(r.path, 'attachment image name');
@@ -386,7 +404,7 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
                 const source = sourceSkin?.regions.get(link.slot ?? slotId)?.get(link.source);
                 if (source?.kind !== 'mesh' || source.link || source === mesh)
                     fail(`invalid linked mesh: ${skin.id}/${slotId}/${key}`);
-                (regions as Map<string, Visual>).set(key, {
+                (regions as Map<string, Attachment>).set(key, {
                     ...source,
                     path: mesh.path,
                     sequence: mesh.sequence,
@@ -481,17 +499,18 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
                 },
                 true,
             );
-            const deform = new Map<Bone2dMesh, ValueKey[]>();
+            const deform = new Map<VertexAttachment, ValueKey[]>();
             for (const [skinId, rawSlots] of entries(o.deform, 'deform skins')) {
                 const skin = skins.get(skinId);
                 if (!skin) fail(`unknown deform skin: ${skinId}`);
                 for (const [slotId, rawMeshes] of entries(rawSlots, 'deform slots')) {
                     if (!bySlot.has(slotId)) fail(`unknown deform slot: ${slotId}`);
                     for (const [key, rawKeys] of entries(rawMeshes, 'deform attachments')) {
-                        const mesh = skin.regions.get(slotId)?.get(key);
-                        if (mesh?.kind !== 'mesh') fail(`unknown deform mesh: ${skinId}/${slotId}/${key}`);
-                        const track = values(rawKeys, mesh.deformSize, duration, 'deform curve', true);
-                        if (!mesh.deformParent) deform.set(mesh, track);
+                        const target = skin.regions.get(slotId)?.get(key);
+                        if (!target || target.kind === 'region' || target.kind === 'point')
+                            fail(`unknown deform attachment: ${skinId}/${slotId}/${key}`);
+                        const track = values(rawKeys, target.deformSize, duration, 'deform curve', true);
+                        if (target.kind !== 'mesh' || !target.deformParent) deform.set(target, track);
                     }
                 }
             }
@@ -503,7 +522,7 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
                     if (!bySlot.has(slotId)) fail(`unknown sequence slot: ${slotId}`);
                     for (const [name, rawKeys] of entries(rawAttachments, 'sequence attachments')) {
                         const visual = skin.regions.get(slotId)?.get(name);
-                        if (!visual?.sequence) fail(`unknown sequenced attachment: ${skinId}/${slotId}/${name}`);
+                        if (!visual || (visual.kind !== 'region' && visual.kind !== 'mesh') || !visual.sequence) fail(`unknown sequenced attachment: ${skinId}/${slotId}/${name}`);
                         sequences.set(visual, keys(rawKeys, duration, 'sequence key', (key): SequenceKey => {
                             const mode = key.mode as SequenceKey['mode'];
                             if (!sequenceModes.includes(mode)) fail('invalid sequence mode');
@@ -553,9 +572,27 @@ function parseMesh(r: Obj, path: string, byBone: ReadonlyMap<string, Bone>): Bon
         return index;
     });
     if (indices.length < 3 || indices.length % 3) fail('invalid triangle index count');
-    const xy = list(r.vertices, uvs.length, 'mesh vertices').map((v) => num(v, 'mesh coordinate'));
+    return { kind: 'mesh', path, color: color(r.color, path), ...parsePositions(r, vertexCount, byBone), uvs, indices, link };
+}
+function parseShape(r: Obj, byBone: ReadonlyMap<string, Bone>): Shape {
+    if (r.sequence != null) fail('picture sequence requires a visual attachment');
+    if (r.type === 'point') {
+        return { kind: 'point', x: num(r.x, 'point x'), y: num(r.y, 'point y'), rotation: num(r.rotation, 'point rotation') };
+    }
+    const count = r.weights == null
+        ? list(r.vertices, 2048, 'shape vertices').length / 2
+        : list(r.weights, 1024, 'shape weights').length;
+    if (!Number.isInteger(count) || count < 3) fail('shape needs at least three XY pairs');
+    const positions = parsePositions(r, count, byBone);
+    if (r.type === 'boundingbox') return { kind: 'boundingbox', ...positions };
+    if (typeof r.closed !== 'boolean' || typeof r.constantSpeed !== 'boolean' || count % 3 || (!r.closed && count < 6))
+        fail('path needs complete in-handle, anchor and out-handle triplets');
+    return { kind: 'path', ...positions, closed: r.closed, constantSpeed: r.constantSpeed };
+}
+function parsePositions(r: Obj, vertexCount: number, byBone: ReadonlyMap<string, Bone>): Positioned {
+    const xy = list(r.vertices, vertexCount * 2, 'attachment vertices').map((v) => num(v, 'attachment coordinate'));
     let weights: Influence[][] | null = null;
-    let deformSize = uvs.length;
+    let deformSize = vertexCount * 2;
     if (r.weights != null) {
         const values = list(r.weights, vertexCount, 'weighted vertices');
         if (values.length !== vertexCount || xy.length)
@@ -573,8 +610,8 @@ function parseMesh(r: Obj, path: string, byBone: ReadonlyMap<string, Bone>): Bon
             return influences;
         });
         deformSize = 2 * weights.reduce((n, influence) => n + influence.length, 0);
-    } else if (xy.length !== uvs.length) fail('one plain XY pair required for each UV');
-    return { kind: 'mesh', path, color: color(r.color, path), xy, uvs, indices, weights, deformSize, link };
+    } else if (xy.length !== vertexCount * 2) fail('incorrect number of plain XY pairs');
+    return { xy, weights, deformSize };
 }
 function last<T>(track: readonly Key<T>[], time: number): number {
     let lo = 0,
@@ -669,9 +706,12 @@ export function sampleBone2dProject(project: Bone2dProject, clipId: string | nul
     );
     const i = clip ? last(clip.order, time) : -1;
     const meshDeltas = new Map<Bone2dMesh, readonly number[]>();
-    for (const [mesh, track] of clip?.deform ?? []) {
+    const shapeDeltas = new Map<BoundsAttachment | PathAttachment, readonly number[]>();
+    for (const [target, track] of clip?.deform ?? []) {
         const deltas = sampled(track, time);
-        if (deltas) meshDeltas.set(mesh, deltas);
+        if (!deltas) continue;
+        if (target.kind === 'mesh') meshDeltas.set(target, deltas);
+        else shapeDeltas.set(target, deltas);
     }
     let order = i >= 0 ? clip!.order[i].value : project.slots.map((s) => s.id);
     if (clip)
@@ -693,7 +733,7 @@ export function sampleBone2dProject(project: Bone2dProject, clipId: string | nul
         const frame = sequenceFrame(key.value, time - key.time, sequence.frames.length);
         sequenceFrames.set(visual, frame === -1 ? sequence.setup : frame);
     }
-    return { bones, slots, meshDeltas, order, sequenceFrames };
+    return { bones, slots, meshDeltas, shapeDeltas, order, sequenceFrames };
 }
 
 /** Resolve ordered parent/local 2D affine products without decomposing shear. */
@@ -733,7 +773,7 @@ export function bone2dWorldMatrices(project: Bone2dProject, sample: Bone2dSample
 
 /** Build a mesh in player-root coordinates. Weighted deform offsets are per influence, not per final vertex. */
 export function bone2dMeshPositions(
-    mesh: Bone2dMesh,
+    mesh: Positioned,
     slotBone: string,
     world: ReadonlyMap<string, Matrix2D>,
     delta: readonly number[] = [],
@@ -760,4 +800,34 @@ export function bone2dMeshPositions(
             out.push(...transform(slotBone, mesh.xy[i] + (delta[i] ?? 0), mesh.xy[i + 1] + (delta[i + 1] ?? 0)));
         }
     return out;
+}
+
+export function resolveBone2dAttachment(skins: readonly Skin[], slot: string, name: string | null): Attachment | undefined {
+    if (name === null) return undefined;
+    for (let i = skins.length - 1; i >= 0; --i) {
+        const attachment = skins[i].regions.get(slot)?.get(name);
+        if (attachment) return attachment;
+    }
+    return undefined;
+}
+
+export function bone2dShapeGeometry(
+    attachment: Shape,
+    slotBone: string,
+    sample: Bone2dSample,
+    world: ReadonlyMap<string, Matrix2D>,
+): Bone2dAttachmentGeometry {
+    if (attachment.kind === 'point') {
+        const [a, b, c, d, tx, ty] = world.get(slotBone)!;
+        const r = attachment.rotation * Math.PI / 180, x = Math.cos(r), y = Math.sin(r);
+        return {
+            kind: 'point',
+            x: a * attachment.x + b * attachment.y + tx,
+            y: c * attachment.x + d * attachment.y + ty,
+            rotation: Math.atan2(c * x + d * y, a * x + b * y) * 180 / Math.PI,
+        };
+    }
+    const vertices = bone2dMeshPositions(attachment, slotBone, world, sample.shapeDeltas.get(attachment));
+    if (attachment.kind === 'boundingbox') return { kind: 'boundingbox', vertices };
+    return { kind: 'path', vertices, closed: attachment.closed, constantSpeed: attachment.constantSpeed };
 }
