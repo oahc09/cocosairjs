@@ -24,6 +24,8 @@ const files = [
     'test/fixtures/bone2d/slider.bone2d',
     'test/fixtures/bone2d/path-follow.bone2d',
     'src/air/bone2d/path.ts',
+    'src/air/bone2d/physics.ts',
+    'test/fixtures/bone2d/physics.bone2d',
     'src/air/bone2d/transform.ts',
 ];
 async function main() {
@@ -71,6 +73,10 @@ async function main() {
         if (req.url === '/path-follow.bone2d') {
             res.setHeader('Content-Type', 'application/json');
             return res.end(fs.readFileSync(path.join(root, 'test/fixtures/bone2d/path-follow.bone2d')));
+        }
+        if (req.url === '/physics.bone2d') {
+            res.setHeader('Content-Type', 'application/json');
+            return res.end(fs.readFileSync(path.join(root, 'test/fixtures/bone2d/physics.bone2d')));
         }
         if (req.url === '/') {
             res.setHeader('Content-Type', 'text/html');
@@ -909,6 +915,27 @@ async function main() {
                 const root = ikPlayer.node.worldMatrix;
                 return { point, sprite: [sprite.m12 - root.m12, sprite.m13 - root.m13], time: ikPlayer.time };
             };
+            const physicsMount = async (repeat) => {
+                const file = await fetch('/physics.bone2d').then((r) => r.text());
+                ikPlayer = await air.createAirBone2dPlayer(parent, file);
+                ikPlayer.play('idle', repeat);
+            };
+            const physicsFrame = async ({ steps = [], seek, skin, paused } = {}) => {
+                if (seek !== undefined) ikPlayer.seek(seek);
+                if (skin !== undefined) ikPlayer.setSkins(skin ? ['enable-c'] : []);
+                if (paused === true) ikPlayer.pause();
+                if (paused === false) ikPlayer.resume();
+                const markers = steps.flatMap((step) => ikPlayer.advance(step).map((m) => m.id));
+                await clock.step(0);
+                const root = ikPlayer.node.worldMatrix;
+                const values = ['A', 'B', 'C'].map((id) => {
+                    const point = ikPlayer.getAttachmentGeometry(id + '-point');
+                    if (point === null) return null;
+                    const sprite = leaves(ikPlayer.node.getChildByName(id + '-sprite'))[0].node.worldMatrix;
+                    return { point, sprite: [sprite.m12 - root.m12, sprite.m13 - root.m13] };
+                });
+                return { time: ikPlayer.time, markers, values };
+            };
             const ikClose = async () => {
                 ikPlayer.dispose();
                 await clock.step(0);
@@ -923,6 +950,8 @@ async function main() {
                 sliderStep,
                 pathMount,
                 pathState,
+                physicsMount,
+                physicsFrame,
                 ikClose,
                 frame,
                 requiredMount,
@@ -1533,6 +1562,51 @@ async function main() {
             await page.evaluate(() => window.bone2dTest.ikClose());
         }
         report.pathConstraint = path;
+        const physics = {};
+        const tick = 1 / 64;
+        async function springCase(label, input, time, want, expectedMarkers = []) {
+            const state = await page.evaluate((v) => window.bone2dTest.physicsFrame(v), input);
+            assert.equal(state.time, time);
+            assert.deepEqual(state.markers, expectedMarkers);
+            state.values.forEach((observed, i) => {
+                const x = want[i];
+                if (x === null) return assert.equal(observed, null);
+                assert.ok(Math.abs(observed.point.x - x) < 2e-6, JSON.stringify(state));
+                assert.ok(Math.abs(observed.sprite[0] - x) < 2e-6, JSON.stringify(state));
+                assert.ok(Math.abs(observed.sprite[1] - observed.point.y) < 2e-6, JSON.stringify(state));
+            });
+            physics[label] = { ...state, image: sha(await page.screenshot()) };
+        }
+        await page.evaluate(() => window.bone2dTest.physicsMount(true));
+        await springCase('rest', {}, 0, [-24, -24, null]);
+        await springCase('separateWind', { steps: [tick, tick] }, 2 * tick, [-20.4375, -23.5625, null], ['ev-start']);
+        await springCase('paused', { paused: true, steps: [tick] }, 2 * tick, [-20.4375, -23.5625, null]);
+        await springCase(
+            'globalReset',
+            { paused: false, steps: Array(6).fill(tick) },
+            0.125,
+            [-8, -8, null],
+            ['ev-impact'],
+        );
+        await springCase('exclusiveBoundary', { steps: [tick] }, 0.140625, [-7, -7, null]);
+        await springCase('namedReset', { steps: Array(3).fill(tick) }, 0.1875, [5.375, 0, null]);
+        await springCase('activate', { skin: true }, 0.1875, [5.375, 0, 0]);
+        // After a seek both springs pull back from the wrap discontinuity,
+        // while tail and head markers are delivered once each.
+        await springCase('preWrap', { seek: 0.234375 }, 0.234375, [6, 6, 6]);
+        await springCase(
+            'shortWrap',
+            { steps: [0.03125] },
+            0.015625,
+            [-6.4375, -9.5625, -6.4375],
+            ['ev-end', 'ev-start'],
+        );
+        await springCase('hitch', { steps: [0.296875] }, 0.0625, [-16, -16, -16], ['ev-impact', 'ev-end', 'ev-start']);
+        await springCase('seek', { seek: 0.03125, skin: false }, 0.03125, [-20, -20, null]);
+        assert.notEqual(physics.separateWind.image, physics.seek.image);
+        assert.equal(physics.separateWind.image, physics.paused.image);
+        await page.evaluate(() => window.bone2dTest.ikClose());
+        report.physics = physics;
         await page.evaluate(() => window.bone2dTest.close());
         assert.deepEqual(report.pageErrors, []);
         report.status = 'PASS';

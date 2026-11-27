@@ -5,6 +5,7 @@ import { factorBone2dBasis, multiplyBasis, poseBasis } from '../../src/air/bone2
 import {
     parseBone2dProject,
     sampleBone2dProject,
+    sampleBone2dFrame,
     bone2dWorldMatrices,
     bone2dMeshPositions,
     bone2dPicture,
@@ -78,7 +79,7 @@ test.each([
     [
         'unsupported constraints',
         (d) => {
-            d.project.skeleton.constraints.push({ type: 'physics' });
+            d.project.skeleton.constraints.push({ type: 'unsupported-constraint' });
         },
         /UNSUPPORTED/,
     ],
@@ -942,4 +943,170 @@ test('slider edits to path position only affect constraints later in authored or
     xyzClose(ikWorld(f, [], 0).get('arm-bone')!.slice(4), [8, 0]);
     rig.constraints.reverse();
     xyzClose(ikWorld(f, [], 0).get('arm-bone')!.slice(4), [1.75, 0]);
+});
+
+const physicsText = readFileSync(resolve(__dirname, '../fixtures/bone2d/physics.bone2d'), 'utf8');
+const physicsFixture = (): any => JSON.parse(physicsText);
+
+test('physics separates global opt-in parameters from global and named reset routing', () => {
+    const project = parseBone2dProject(physicsText);
+    const spring = new Map();
+    let prev = 0;
+    function read(t: number, skin: string[] = []) {
+        const pose = sampleBone2dFrame(project, 'idle', t, skin, {
+            state: spring,
+            seconds: t - prev,
+            intervals: [[prev, t]],
+        });
+        const matrices = bone2dWorldMatrices(project, pose);
+        prev = t;
+        return { pose, x: ['arm-bone', 'B', 'C'].map((id) => matrices.get(id)![4]) };
+    }
+    const setup = read(0);
+    expect(setup.x).toEqual([-24, -24, 0]);
+    expect(setup.pose.physics.get('spring-A')?.wind).toBe(64);
+    expect(setup.pose.physics.get('spring-B')?.wind).toBe(-64);
+    expect(setup.pose.physics.has('spring-C')).toBe(false);
+    read(1 / 64);
+    xyzClose(read(2 / 64).x, [-20.4375, -23.5625, 0]);
+    for (let i = 3; i < 8; i++) read(i / 64);
+    expect(read(0.125).x).toEqual([-8, -8, 0]);
+    expect(read(0.125).x).toEqual([-8, -8, 0]);
+    expect(read(0.140625).x).toEqual([-7, -7, 0]);
+    read(0.15625);
+    read(0.171875);
+    xyzClose(read(0.1875).x, [5.375, 0, 0]);
+    const shown = read(0.1875, ['enable-c']);
+    expect(shown.x[2]).toBe(0);
+    expect(shown.pose.physics.get('spring-C')?.wind).toBe(64);
+    expect(read(0.203125, ['enable-c']).x[2]).toBe(1);
+    expect(read(0.21875, ['enable-c']).x[2]).toBeCloseTo(3.5625, 7);
+    read(0.21875);
+    expect(spring.has('spring-C')).toBe(false);
+    expect(read(0.21875, ['enable-c']).x[2]).toBe(4);
+});
+
+test('physics fixed step conserves partial time, isolates players and leaves random access at rest', () => {
+    const f = physicsFixture();
+    const rig = f.project.skeleton;
+    const clip = rig.animations[0];
+    clip.bones = {};
+    clip.physics = {};
+    Object.assign(rig.constraints[0], { wind: 64, y: 1, gravity: 64 });
+    const project = parse(f);
+    const a = new Map(),
+        b = new Map();
+    function read(state: Map<string, any>, t: number, dt: number) {
+        const pose = sampleBone2dFrame(project, 'idle', t, [], { state, seconds: dt, intervals: [[t - dt, t]] });
+        return bone2dWorldMatrices(project, pose).get('arm-bone')!.slice(4);
+    }
+    xyzClose(read(a, 0, 0), [-24, -16]);
+    xyzClose(read(b, 0, 0), [-24, -16]);
+    xyzClose(read(a, 1 / 128, 1 / 128), [-24, -16]);
+    xyzClose(read(a, 1 / 64, 1 / 128), [-24, -16]);
+    xyzClose(read(a, 2 / 64, 1 / 64), [-22.4375, -17.5625]);
+    xyzClose(read(b, 2 / 64, 2 / 64), [-22.4375, -17.5625]);
+    xyzClose(read(a, 2 / 64, 0), [-22.4375, -17.5625]);
+    const seek = sampleBone2dProject(project, 'idle', 2 / 64);
+    xyzClose(bone2dWorldMatrices(project, seek).get('arm-bone')!.slice(4), [-24, -16]);
+    expect(read(a, 0.25, 0.25)[0]).toBeGreaterThan(-24);
+    xyzClose(read(a, 0.25, 0.25001), [-24, -16]);
+});
+
+test.each(['none', 'uniform', 'volume'])(
+    'physics tip drives signed scale and angular channels with %s scale-Y policy',
+    (scaleY) => {
+        const f = physicsFixture();
+        const rig = f.project.skeleton;
+        const clip = rig.animations[0];
+        clip.bones = {};
+        clip.physics = {};
+        Object.assign(rig.constraints[0], {
+            x: 0,
+            rotate: 0.5,
+            shearX: 0.25,
+            scaleX: 1,
+            scaleY,
+            wind: -64,
+            gravity: 64,
+        });
+        rig.bones[0].scaleX = -1;
+        const p = parse(f),
+            state = new Map();
+        sampleBone2dFrame(p, 'idle', 0, [], { state, seconds: 0, intervals: [] });
+        const w = bone2dWorldMatrices(
+            p,
+            sampleBone2dFrame(p, 'idle', 1 / 32, [], { state, seconds: 1 / 32, intervals: [] }),
+        ).get('arm-bone')!;
+        expect(w[0]).toBeLessThan(-1);
+        expect(w[1]).toBeLessThan(0);
+        expect(w[2]).toBeLessThan(0);
+        const xScale = Math.hypot(w[0], w[2]);
+        const yScale = Math.hypot(w[1], w[3]);
+        expect(yScale).toBeCloseTo(scaleY === 'none' ? 1 : scaleY === 'uniform' ? xScale : 1 / xScale, 7);
+        expect(w[0] * w[3] - w[1] * w[2]).toBeLessThan(0);
+    },
+);
+
+test('rejects invalid physics domains, references, and track names before playback', () => {
+    const d = physicsFixture(),
+        rig = d.project.skeleton;
+    rig.constraints[0].fps = 0;
+    expect(() => parse(d)).toThrow(/FORMAT.*FPS/);
+    rig.constraints[0].fps = 64;
+    rig.constraints[0].mass = 0;
+    expect(() => parse(d)).toThrow(/FORMAT.*mass/);
+    rig.constraints[0].mass = 1;
+    rig.constraints[0].bone = 'missing';
+    expect(() => parse(d)).toThrow(/FORMAT.*physics/);
+    rig.constraints[0].bone = 'arm-bone';
+    rig.animations[0].physics['*'].mystery = [];
+    expect(() => parse(d)).toThrow(/FORMAT.*unknown physics track/);
+});
+
+test('an earlier additive slider adds force but blends mass for a driven spring', () => {
+    const f = physicsFixture(),
+        rig = f.project.skeleton;
+    const main = rig.animations[0];
+    main.bones = {};
+    main.physics = {};
+    rig.constraints[0].wind = 64;
+    rig.animations.push({
+        ...main,
+        id: 'force',
+        name: 'Force overlay',
+        physics: { 'spring-A': { wind: [{ time: 0, value: [16] }], mass: [{ time: 0, value: [2] }] } },
+    });
+    const slider = {
+        id: 'driver',
+        name: 'Force driver',
+        type: 'slider',
+        animation: 'force',
+        bone: null,
+        property: 'x',
+        local: true,
+        additive: true,
+        loop: false,
+        skinRequired: false,
+        time: 0,
+        mix: 0.5,
+        from: 0,
+        to: 0,
+        scale: 1,
+    };
+    const read = () => {
+        const project = parse(f),
+            state = new Map();
+        sampleBone2dFrame(project, 'idle', 0, [], { state, seconds: 0, intervals: [] });
+        const next = sampleBone2dFrame(project, 'idle', 1 / 32, [], { state, seconds: 1 / 32, intervals: [] });
+        return [next.physics.get('spring-A'), bone2dWorldMatrices(project, next).get('arm-bone')![4]] as const;
+    };
+    rig.constraints.unshift(slider);
+    let [params, x] = read();
+    expect(params).toMatchObject({ wind: 72, mass: 1.5 });
+    expect(x).toBeCloseTo(-22.828125, 7);
+    rig.constraints.push(rig.constraints.shift());
+    [params, x] = read();
+    expect(params).toMatchObject({ wind: 72, mass: 1.5 });
+    expect(x).toBeCloseTo(-22.4375, 7);
 });

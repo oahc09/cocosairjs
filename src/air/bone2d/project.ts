@@ -27,6 +27,8 @@ import { transformApplied, transformProperties, transformReadLocal, transformRea
 import type { AppliedPose, Bone2dTransform, TransformProperty } from './transform';
 import { followBone2dPath, pathSetupLengths } from './path';
 import type { PathConstraint, PathState } from './path';
+import { physicsParams, solveBone2dPhysics } from './physics';
+import type { PhysicsConstraint, PhysicsParam, PhysicsParams, PhysicsStep } from './physics';
 
 /** Strict reader for the supported subset of Bone-2D Save Project v1. No editor or Spine dependency. */
 type Obj = Record<string, unknown>;
@@ -135,6 +137,10 @@ interface SliderTracks {
     mix: ValueKey[];
 }
 interface PathTracks { position: ValueKey[]; spacing: ValueKey[]; mix: ValueKey[] }
+type PhysicsTracks = Partial<Record<PhysicsParam, ValueKey[]>> & { reset: Key<null>[] };
+type Constraint = AimConstraint | Bone2dTransform | SliderConstraint | PathConstraint | PhysicsConstraint;
+const globalPhysics = '*';
+const minimumPhysicsMass = 1e-4;
 type AimKey = ValueKey & Pick<Bone2dAimOptions, 'compress' | 'stretch' | 'bendPositive'>;
 interface Skin {
     id: string;
@@ -173,6 +179,7 @@ interface Clip {
     transform: ReadonlyMap<string, ValueKey[]>;
     slider: ReadonlyMap<string, SliderTracks>;
     path: ReadonlyMap<string, PathTracks>;
+    physics: ReadonlyMap<string, PhysicsTracks>;
 }
 export interface Bone2dMarker {
     readonly id: string;
@@ -194,7 +201,7 @@ export interface Bone2dProject {
     readonly folders: ReadonlyMap<string, Folder>;
     readonly bones: readonly Bone[];
     readonly affineSprites: boolean;
-    readonly constraints: ReadonlyMap<string, AimConstraint | Bone2dTransform | SliderConstraint | PathConstraint>;
+    readonly constraints: ReadonlyMap<string, Constraint>;
     readonly slots: readonly Slot[];
     readonly clips: ReadonlyMap<string, Clip>;
     readonly images: ReadonlyMap<string, Bone2dImage>;
@@ -212,6 +219,7 @@ export interface Bone2dSample {
     readonly transforms: ReadonlyMap<string, readonly number[]>;
     readonly sliders: ReadonlyMap<string, SliderState>;
     readonly paths: ReadonlyMap<string, PathState>;
+    readonly physics: ReadonlyMap<string, PhysicsParams>;
     readonly solvedWorld?: ReadonlyMap<string, Matrix2D>;
     readonly slotFrames?: ReadonlyMap<string, number>;
     readonly slotDeform?: ReadonlyMap<string, readonly number[]>;
@@ -270,8 +278,11 @@ function optionalStr(x: unknown, label: string): string | null {
     return x == null ? null : str(x, label);
 }
 // Editor-only visibility, locks, play ranges and comments are intentionally not runtime state.
-function none(x: unknown, label: string): void {
-    if (x != null && (Array.isArray(x) ? x.length > 0 : entries(x, label).length > 0)) fail(label, true);
+function physicsValue(key: PhysicsParam, v: unknown): number {
+    if (key === 'mass') return num(v, 'physics mass', minimumPhysicsMass);
+    if (key === 'damping') return num(v, 'physics damping', 0, 1);
+    if (key === 'mix') return num(v, 'physics mix', 0);
+    return num(v, `physics ${key}`);
 }
 function pose(o: Obj, label: string): Bone2dPose {
     return [
@@ -397,8 +408,28 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
         }
     }
     let mappingWrites = 0;
-    const constraints = index(list(sk.constraints ?? [], 128, 'constraints').map((raw): AimConstraint | Bone2dTransform | SliderConstraint | PathConstraint => {
+    const constraints = index(list(sk.constraints ?? [], 128, 'constraints').map((raw): Constraint => {
         const o = obj(raw, 'constraint');
+        if (o.type === 'physics') {
+            const id = str(o.id, 'physics constraint id'), bone = str(o.bone, 'physics bone');
+            if (id === globalPhysics || !byBone.has(bone)) fail('invalid physics constraint id or bone');
+            const { skinRequired, scaleY } = o;
+            if (typeof skinRequired !== 'boolean' || (scaleY !== 'none' && scaleY !== 'uniform' && scaleY !== 'volume')) {
+                fail('invalid physics flags');
+            }
+            const flags = obj(o.global, 'physics global flags');
+            const setup = {} as PhysicsParams, global = {} as PhysicsConstraint['global'];
+            for (const p of physicsParams) {
+                if (typeof flags[p] !== 'boolean') fail(`invalid physics global flag: ${p}`);
+                global[p] = flags[p] as boolean;
+                setup[p] = physicsValue(p, o[p]);
+            }
+            return { kind: 'physics', id, bone, skinRequired, scaleY, setup, global,
+                x: num(o.x, 'physics x'), y: num(o.y, 'physics y'), rotate: num(o.rotate, 'physics rotation'),
+                scaleX: num(o.scaleX, 'physics scale X'), shearX: num(o.shearX, 'physics shear X'),
+                limit: num(o.limit, 'physics limit', 0), fps: num(o.fps, 'physics FPS', 0.01, 240),
+            };
+        }
         if (o.type === 'path') {
             const id = str(o.id, 'path constraint id'), target = str(o.target, 'path target slot');
             const targets = list(o.bones, bones.length, 'path bones').map((b) => str(b, 'path bone'));
@@ -607,7 +638,23 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
             const id = str(o.id, 'animation id'),
                 name = str(o.name, 'animation name');
             const duration = num(o.duration, 'animation duration', 0, 3600);
-            none(o.physics, 'physics');
+            const physics = new Map<string, PhysicsTracks>();
+            for (const [id, raw] of entries(o.physics, 'physics timelines')) {
+                if (id !== globalPhysics && constraints.get(id)?.kind !== 'physics') fail(`unknown physics timeline: ${id}`);
+                const t = obj(raw, 'physics tracks');
+                for (const name of Object.keys(t)) {
+                    if (name !== 'reset' && !physicsParams.includes(name as PhysicsParam)) fail(`unknown physics track: ${name}`);
+                }
+                const tracks: PhysicsTracks = {
+                    reset: values(t.reset, 1, duration, 'physics reset').map(({ time }) => ({time, value: null})),
+                };
+                for (const p of physicsParams) {
+                    const track = values(t[p], 1, duration, `physics ${p} key`);
+                    for (const frame of track) physicsValue(p, frame.value[0]);
+                    if (track.length) tracks[p] = track;
+                }
+                physics.set(id, tracks);
+            }
             const path = new Map<string, PathTracks>();
             for (const [id, raw] of entries(o.path, 'path constraint timelines')) {
                 if (constraints.get(id)?.kind !== 'path') fail(`unknown path timeline: ${id}`);
@@ -744,7 +791,7 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
                     }
                 }
             }
-            return { id, name, duration, order, folderOrder, markers, bones: boneTracks, slots: slotTracks, deform, sequences, ik, transform, slider, path };
+            return { id, name, duration, order, folderOrder, markers, bones: boneTracks, slots: slotTracks, deform, sequences, ik, transform, slider, path, physics };
         }),
         'duplicate animation id',
     );
@@ -884,8 +931,36 @@ function sequenceFrame({ mode, index, delay }: SequenceKey, elapsed: number, cou
     }
     return frame === -1 ? -1 : Math.max(0, Math.min(end, frame));
 }
+function applyPhysicsTracks(
+    project: Bone2dProject, state: Map<string, PhysicsParams>, clip: Clip | undefined, time: number,
+    mix: (from: number, to: number, param: PhysicsParam) => number,
+): void {
+    for (const [target, tracks] of clip?.physics ?? []) {
+        const targets = target === globalPhysics ? state.keys() : [target];
+        for (const id of targets) {
+            const p = state.get(id), c = project.constraints.get(id);
+            if (!p || c?.kind !== 'physics') continue;
+            for (const param of physicsParams) {
+                if (target === globalPhysics && !c.global[param]) continue;
+                const v = sampled(tracks[param], time)?.[0];
+                if (v === undefined) continue;
+                const blended = mix(p[param], v, param);
+                p[param] = param === 'mass' ? Math.max(minimumPhysicsMass, blended) : param === 'damping' ? Math.max(0, Math.min(1, blended)) :
+                    param === 'mix' ? Math.max(0, blended) : blended;
+            }
+        }
+    }
+}
+
 export function sampleBone2dProject(
     project: Bone2dProject, clipId: string | null, seconds: number, overlays: readonly string[] = [],
+): Bone2dSample {
+    return sampleBone2dFrame(project, clipId, seconds, overlays);
+}
+
+/** Internal stateful sampling entry; public random access does not touch spring history. */
+export function sampleBone2dFrame(
+    project: Bone2dProject, clipId: string | null, seconds: number, overlays: readonly string[], physicsStep?: PhysicsStep,
 ): Bone2dSample {
     const clip = clipId === null ? undefined : project.clips.get(clipId);
     if (clipId !== null && !clip) fail(`unknown animation: ${clipId}`);
@@ -988,10 +1063,14 @@ export function sampleBone2dProject(
         const frame = sequenceFrame(key.value, time - key.time, sequence.frames.length);
         sequenceFrames.set(visual, frame === -1 ? sequence.setup : frame);
     }
-    const paths = new Map<string, PathState>();
+    const paths = new Map<string, PathState>(), physics = new Map<string, PhysicsParams>();
     const ik = new Map<string, Bone2dAimOptions>(), transforms = new Map<string, readonly number[]>(), sliders = new Map<string, SliderState>();
     for (const [id, c] of project.constraints) {
         if (c.skinRequired && !skinConstraints.has(id)) continue;
+        if (c.kind === 'physics') {
+            if (activeBones.has(c.bone)) physics.set(id, { ...c.setup });
+            continue;
+        }
         if (c.kind === 'path') {
             const target = project.slots.find((slot) => slot.id === c.target)!;
             if (activeBones.has(target.bone)) {
@@ -1022,8 +1101,16 @@ export function sampleBone2dProject(
             ik.set(id, { mix, softness, scaleY: c.scaleY, compress, stretch, bendPositive });
         }
     }
-    const sample: Bone2dSample = { bones, shears, activeBones, ik, transforms, sliders, paths, slots, meshDeltas, shapeDeltas, order, sequenceFrames };
-    return sliders.size || paths.size ? solvePose(project, sample, selectedSkins) : sample;
+    applyPhysicsTracks(project, physics, clip, time, (_from, to) => to);
+    const resets = new Set<string>();
+    if (physicsStep) {
+        for (const id of physicsStep.state.keys()) if (!physics.has(id)) physicsStep.state.delete(id);
+        for (const [id, tracks] of clip?.physics ?? []) {
+            if (physicsStep.intervals.some(([from,to]) => last(tracks.reset, to) > last(tracks.reset, from))) resets.add(id);
+        }
+    }
+    const sample: Bone2dSample = { bones, shears, activeBones, ik, transforms, sliders, paths, physics, slots, meshDeltas, shapeDeltas, order, sequenceFrames };
+    return sliders.size || paths.size || (physicsStep && physics.size) ? solvePose(project, sample, selectedSkins, physicsStep, resets) : sample;
 }
 
 /** Resolve ordered parent/local 2D affine products without decomposing shear. */
@@ -1057,7 +1144,9 @@ function setupLengthsOf(a: PathAttachment, slotBone: string, byId: ReadonlyMap<s
     return answer;
 }
 
-function solvePose(project: Bone2dProject, sample: Bone2dSample, skins: readonly Skin[]): Bone2dSample {
+function solvePose(
+    project: Bone2dProject, sample: Bone2dSample, skins: readonly Skin[], physicsStep?: PhysicsStep, resets?: ReadonlySet<string>,
+): Bone2dSample {
     const out = new Map<string, Matrix2D>();
     const solved = new Map<string, AppliedPose>();
     const explicitWorld = new Set<string>();
@@ -1088,6 +1177,7 @@ function solvePose(project: Bone2dProject, sample: Bone2dSample, skins: readonly
     };
     let order = sample.order;
     const paths = new Map(sample.paths);
+    const physics = new Map(Array.from(sample.physics, ([id, p]) => [id, { ...p }] as const));
     const ik = new Map(sample.ik), transforms = new Map(sample.transforms), sliders = new Map(sample.sliders);
     const slots = new Map(sample.slots);
     const slotFrames = new Map<string, number>(), slotDeform = new Map<string, readonly number[]>();
@@ -1107,7 +1197,7 @@ function solvePose(project: Bone2dProject, sample: Bone2dSample, skins: readonly
             if (deform !== undefined) slotDeform.set(id, deform);
         }
     }
-    if (ik.size || transforms.size || sliders.size || paths.size) {
+    if (ik.size || transforms.size || sliders.size || paths.size || (physicsStep && physics.size)) {
         const children = new Map<string, string[]>();
         for (const { id, parent } of project.bones) {
             if (parent === null) continue;
@@ -1141,6 +1231,16 @@ function solvePose(project: Bone2dProject, sample: Bone2dSample, skins: readonly
             explicitWorld.add(id);
         };
         for (const [id, c] of project.constraints) {
+            if (c.kind === 'physics') {
+                const p = physics.get(id);
+                if (p && physicsStep) {
+                    const world = compute(c.bone);
+                    const next = solveBone2dPhysics(c, p, world, byId.get(c.bone)!.length, physicsStep,
+                        resets?.has(globalPhysics) || resets?.has(id) || false);
+                    if (next !== world) writeWorld(c.bone, next);
+                }
+                continue;
+            }
             if (c.kind === 'path') {
                 const state = paths.get(id), a = attachment(c.target);
                 if (!state?.mix.some((n) => n !== 0) || a?.kind !== 'path') continue;
@@ -1274,6 +1374,7 @@ function solvePose(project: Bone2dProject, sample: Bone2dSample, skins: readonly
                         mix: m === undefined ? cur.mix : cur.mix.map((v, i) => blend(v, m[i])),
                     });
                 }
+                applyPhysicsTracks(project, physics, clip, time, (from, to, p) => blend(from, to, c.additive && (p === 'wind' || p === 'gravity')));
                 for (const [idOfSlider, keys] of clip.slider) {
                     const cur = sliders.get(idOfSlider);
                     if (!cur) continue;
@@ -1344,7 +1445,7 @@ function solvePose(project: Bone2dProject, sample: Bone2dSample, skins: readonly
         }
     }
     for (const bone of project.bones) compute(bone.id);
-    return { ...sample, solvedWorld: out, slots, order, ik, transforms, sliders, paths,
+    return { ...sample, solvedWorld: out, slots, order, ik, transforms, sliders, paths, physics,
         ...(sliders.size ? { slotFrames, slotDeform } : {}),
     };
 }

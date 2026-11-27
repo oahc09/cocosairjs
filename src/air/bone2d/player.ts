@@ -40,7 +40,8 @@ import { AirUIMesh } from '../ui-mesh';
 import type { AirAtlasHandle } from '../assets/atlas/atlas-factory';
 import { factorBone2dBasis } from './affine';
 import { convexClipOutline, hasNonCollinearPoints } from './polygon';
-import { parseBone2dProject, sampleBone2dProject, bone2dWorldMatrices, bone2dMeshPositions, bone2dPicture, resolveBone2dAttachment, bone2dShapeGeometry } from './project';
+import type { Bone2dPhysicsState, PhysicsStep } from './physics';
+import { parseBone2dProject, sampleBone2dFrame, bone2dWorldMatrices, bone2dMeshPositions, bone2dPicture, resolveBone2dAttachment, bone2dShapeGeometry } from './project';
 import type { Bone2dAttachmentGeometry, Bone2dBlend, Bone2dClipAttachment, Bone2dImage, Bone2dMarker, Bone2dPose, Bone2dProjectOptions, Bone2dSample } from './project';
 
 export interface AirBone2dOptions extends Bone2dProjectOptions {
@@ -258,8 +259,10 @@ export async function createAirBone2dPlayer(
     const defaultSkin = project.skins.values().next().value!;
     let selectedSkins = [defaultSkin];
     let activeOverlays: string[] = [];
-    const sampleFor = (clip: string | null, time: number): Bone2dSample =>
-        sampleBone2dProject(project, clip, time, activeOverlays);
+    const physics: Bone2dPhysicsState = new Map();
+    const hasPhysics = [...project.constraints.values()].some((c) => c.kind === 'physics');
+    const sampleFor = (clip: string | null, time: number, seconds = 0, intervals: PhysicsStep['intervals'] = []): Bone2dSample =>
+        sampleBone2dFrame(project, clip, time, activeOverlays, hasPhysics ? { state: physics, seconds, intervals } : undefined);
     let currentSample: Bone2dSample;
     const apply = (sample: Bone2dSample): void => {
         let world: ReturnType<typeof bone2dWorldMatrices> | null = null;
@@ -552,6 +555,7 @@ export async function createAirBone2dPlayer(
         play(id, repeat = false): void {
             ensure();
             if (!project.clips.has(id)) error(`unknown animation: ${id}`);
+            physics.clear();
             apply(sampleFor(id, 0));
             selected = id;
             time = 0;
@@ -571,6 +575,7 @@ export async function createAirBone2dPlayer(
             ensure();
             if (!Number.isFinite(seconds)) error('invalid seek time');
             time = Math.max(0, Math.min(seconds, selected === null ? 0 : project.clips.get(selected)!.duration));
+            physics.clear();
             apply(sampleFor(selected, time));
             first = false;
         },
@@ -596,7 +601,9 @@ export async function createAirBone2dPlayer(
                 for (let i = 1; i < wraps; ++i) emit(-1, d);
                 emit(-1, to);
             } else emit(start, to);
-            apply(sampleFor(selected, to));
+            const intervals: PhysicsStep['intervals'] = wraps === 0 ? [[start, to]] :
+                wraps === 1 ? [[start, d], [-1, to]] : [[start, d], [-1, d], [-1, to]];
+            apply(sampleFor(selected, to, wraps ? delta : to - time, intervals));
             first = false;
             time = to;
             if (d === 0 || (!loop && time >= d)) playing = false;
