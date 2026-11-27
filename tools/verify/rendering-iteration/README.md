@@ -150,3 +150,22 @@ history bindings, **5** wrong previous matrices at enqueue, **6** same-frame jit
 bindings at simulated recording time. Exit status 1 means one or more invariants failed; the baseline is not a passing
 test. Actual browser custom-pipeline draw, isolated camera cut, target replacement, and device validation are separate
 gates, not implied by the CPU result.
+
+A second collector runs the real Custom pipeline in WPE WebKit, using the repository's source-bound development SDK
+and frozen effect/layout assets, with no engine edits. Set `NODE_PATH` if Playwright is installed outside this checkout:
+
+```sh
+node tools/verify/rendering-iteration/taa-native-probe.cjs <WPE-executable> <new-report.json> --expect-baseline
+```
+
+The script starts fresh pages for three tracks (TAA off, A only, A+B) with two differently colored, different-sized
+render textures. It uses the engine's single step clock, captures real bindings, and hashes offscreen GPU readbacks.
+The first three frames are the history-ownership oracle. The last two record an A-only camera move and then resize;
+these are diagnostic observations, not passing cut/resize acceptance. `--expect-baseline` explicitly expects the
+known graph failure; omit it to require clean dual-camera continuous-history checks. Neither mode marks E12 complete.
+
+On WPE WebKit 26.4 with WebGL2 and `EXT_color_buffer_float`, the off/A-only controls had clean readbacks and correct
+available history. With A+B, five of six continuous-frame history bindings were absent or incorrect, five previous
+matrices were wrong, and A's uploaded material state changed after queueing in all three frames. The A-only resize in
+that track also produced a GL texture/framebuffer feedback-loop error and one blocked readback. The five-frame
+report was produced with a development SDK whose source receipt matched 1,030 files.
