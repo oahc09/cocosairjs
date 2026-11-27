@@ -83,3 +83,26 @@ The existing source/SDK baseline inventory observed 14 top-level exports and six
 member declarations, with no runtime pass assigned by default. In the v1.3
 workstream these support reuse investigations, not L5 claims. This is distinct
 from WA-07 hardware HDR, Agent tasks and formal scene approvals.
+
+### E12 temporal preflight
+
+```sh
+python3 tools/verify/rendering-iteration/temporal_reference.py generate --out <new-reference-dir>
+python3 tools/verify/rendering-iteration/temporal_reference.py audit \
+  --candidate <linear-RGB32F-frame-dir> --out <new-audit.json>
+```
+
+The CPU micro-fixture uses a fixed 16-frame sequence: a moving foreground disc,
+a subpixel fence and a tiled backdrop, with a camera cut on frame 8. The checker
+generates its own reference, requires every frame exactly once, and measures
+newly revealed background separately from whole-image error. At the camera cut
+it checks the 95th percentile of absolute channel errors across the frame.
+The linear RGB32F format and thresholds apply only to this preflight.
+
+All 16 reference frames passed. A deliberately localized history leak on
+frame 4 produced 0.11787 disocclusion error even though whole-frame mean error
+was below budget. A held frame across the cut produced 0.31 at the cut's 95th
+percentile, also rejected. The reference manifest SHA-256 is
+`e0fade54c7c187181a94889db66454f4e00131fa6af47727fc09ed8aa7a3762a`.
+This is separate from the static Cornell transport truth. An AIR capture
+adapter, approved temporal E12 scene and hardware validation are still open.
