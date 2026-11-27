@@ -106,3 +106,45 @@ Prioritize isolating an explicit render-only dependency graph and separating the
 shader payload from eager startup assembly, with per-profile API and asset
 identity checks. Keep the full runtime unchanged. This round does not establish
 a production speedup.
+
+### Four-effect startup probe
+
+The generated builtin drift gate remains intact. A normal source build with
+hand-edited generated tables failed that gate, as expected. Instead, this
+reproducible diagnostic reads the full development ESM after verifying its
+compiler receipt, finds the two exact original JSON initializers, and creates
+an isolated copy that excludes four effects in matching metadata/shader pairs.
+It does not change sources at runtime, alter the default package, or keep a
+source map that no longer matches the transformed copy.
+
+```sh
+DIR=tools/benchmark/runtime-performance
+node "$DIR/cli.cjs" plan --campaign shader-scope-001 --out <manifest.json>
+node "$DIR/profile-probe.cjs" src/air/builtin <new-probe-dir> build/cocosair.module.js
+node "$DIR/probe-consumer.cjs" <manifest.json> build/cocosair.module.js <new-control-dir>
+node "$DIR/probe-consumer.cjs" <manifest.json> <new-probe-dir>/runtime-probe.mjs <new-profile-dir>
+# Run cli.cjs run separately with each directory as --artifacts, --arm air,
+# first --mode correctness and then alternate order for diagnostic samples.
+node --test "$DIR"/*.test.cjs
+```
+
+The removed effects are terrain, bloom, deferred lighting and the built-in glTF
+template. This deliberately decreases feature coverage; no unsupported app may
+use this transformed runtime. Eighteen other effect rows remained, including
+standard, unlit, stencil and sprite; presence does not prove every retained
+effect renders correctly. The diagnostic only checks S01 and S02.
+
+Using the same minified consumer build, gzip payload fell from 1,171,424 to
+1,064,450 bytes (-106,974, -9.13%); Brotli fell from 933,162 to 919,852 bytes
+(-1.43%). The browser independently reported the same gzip byte delta for all
+six S02 pairs. WPE WebKit 26.5 passed four visual attempts; all three corresponding
+screenshots matched byte for byte. The exploratory paired medians were -20.5 ms
+to load the module (import duration), -28 ms in initialization, and -82.5 ms
+to the first draw callback (range -128 to +11 ms). These are fresh per-attempt
+software loopback measurements, not an attested device, a first-present
+improvement, or same-feature victory. The experiment receipt SHA-256 is
+`6d3666f4c57f63d7e55e001c3b6af4fdccf799a553b3d998ef0dbf3f0754e3a4`.
+
+Next: replace omission with explicit, compatible on-demand registration and
+prove the full first-frame import graph. Keep this narrower diagnostic distinct
+from a supported profile and validate any future profile against same behavior.
