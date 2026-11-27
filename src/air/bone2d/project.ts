@@ -19,17 +19,31 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
 */
-/** Strict reader for the rigid subset of Bone-2D Save Project v1. No editor or Spine dependency. */
+/** Strict reader for the supported subset of Bone-2D Save Project v1. No editor or Spine dependency. */
 type Obj = Record<string, unknown>;
 export type Bone2dPose = readonly [number, number, number, number, number];
 type RGBA = readonly [number, number, number, number];
-interface Region {
+export interface Bone2dRegion {
+    kind: 'region';
     path: string;
     pose: Bone2dPose;
     width: number;
     height: number;
     color: RGBA;
 }
+type Influence = readonly [bone: string, x: number, y: number, weight: number];
+type Matrix2D = readonly [a: number, b: number, c: number, d: number, tx: number, ty: number];
+export interface Bone2dMesh {
+    kind: 'mesh';
+    path: string;
+    color: RGBA;
+    readonly xy: readonly number[];
+    readonly uvs: readonly number[];
+    readonly indices: readonly number[];
+    readonly weights: readonly (readonly Influence[])[] | null;
+    readonly deformSize: number;
+}
+type Visual = Bone2dRegion | Bone2dMesh;
 interface Bone {
     id: string;
     parent: string | null;
@@ -44,7 +58,7 @@ interface Slot {
 interface Skin {
     id: string;
     name: string;
-    regions: ReadonlyMap<string, ReadonlyMap<string, Region>>;
+    regions: ReadonlyMap<string, ReadonlyMap<string, Visual>>;
 }
 export interface Bone2dProjectOptions {
     /** Zero-based editor skeleton order. The saved active skeleton is the default. */
@@ -64,6 +78,7 @@ interface Clip {
     bones: ReadonlyMap<string, ReadonlyMap<string, ValueKey[]>>;
     slots: ReadonlyMap<string, { attachment: Key<string | null>[]; rgba: ValueKey[] }>;
     order: Key<string[]>[];
+    deform: ReadonlyMap<Bone2dMesh, ValueKey[]>;
     markers: Key<Bone2dMarker>[];
 }
 export interface Bone2dMarker {
@@ -96,6 +111,7 @@ export interface Bone2dSample {
     readonly bones: ReadonlyMap<string, Bone2dPose>;
     readonly slots: ReadonlyMap<string, Bone2dSlotPose>;
     readonly order: readonly string[];
+    readonly meshDeltas: ReadonlyMap<Bone2dMesh, readonly number[]>;
 }
 
 function fail(detail: string, unsupported = false): never {
@@ -160,7 +176,7 @@ function keys<T>(x: unknown, maxTime: number, label: string, fn: (o: Obj, time: 
         return { time, value: fn(o, time) };
     });
 }
-function values(x: unknown, count: number, end: number, label: string): ValueKey[] {
+function values(x: unknown, count: number, end: number, label: string, shared = false): ValueKey[] {
     // Evaluate the same ten t-intervals as the editor. Store the sampled
     // polyline per channel once; playback inverts the x-axis in that table.
     return keys(x, end, label, (o) => {
@@ -169,9 +185,10 @@ function values(x: unknown, count: number, end: number, label: string): ValueKey
         let curve: ValueKey['curve'] = 'linear';
         if (o.curve === 'stepped') curve = 'stepped';
         else if (o.curve !== undefined) {
-            const control = list(o.curve, 4 * count, label);
-            if (control.length !== 4 * count) fail(label);
-            curve = Array.from({ length: count }, (_, channel) => {
+            const groups = shared ? 1 : count;
+            const control = list(o.curve, 4 * groups, label);
+            if (control.length !== 4 * groups) fail(label);
+            curve = Array.from({ length: groups }, (_, channel) => {
                 const [x1, y1, x2, y2] = control
                     .slice(channel * 4, channel * 4 + 4)
                     .map((n, i) => num(n, label, i % 2 ? -10 : 0, i % 2 ? 10 : 1));
@@ -271,17 +288,22 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
                 name = str(o.name, 'skin name');
             none(o.bones, 'skin-required bones');
             none(o.constraints, 'skin-required constraints');
-            const bySlotRegion = new Map<string, Map<string, Region>>();
+            const bySlotRegion = new Map<string, Map<string, Visual>>();
             for (const [slotId, rawRegions] of entries(o.attachments, 'skin attachments')) {
                 if (!bySlot.has(slotId)) fail(`unknown skin slot: ${slotId}`);
-                const regions = new Map<string, Region>();
+                const regions = new Map<string, Visual>();
                 for (const [attachment, rawRegion] of entries(rawRegions, 'regions')) {
                     const r = obj(rawRegion, 'attachment');
-                    if (r.type !== 'region' || r.sequence != null)
-                        fail(`non-rigid or sequence attachment: ${slotId}/${attachment}`, true);
-                    const path = str(r.path, 'region image name');
+                    if ((r.type !== 'region' && r.type !== 'mesh') || r.sequence != null)
+                        fail(`unsupported or sequence attachment: ${slotId}/${attachment}`, true);
+                    const path = str(r.path, 'attachment image name');
                     if (!images.has(path)) fail(`unknown image: ${path}`);
+                    if (r.type === 'mesh') {
+                        regions.set(attachment, parseMesh(r, path, byBone));
+                        continue;
+                    }
                     regions.set(attachment, {
+                        kind: 'region',
                         path,
                         pose: pose(r, path),
                         width: num(r.width, path, 0.001, 32768),
@@ -321,7 +343,7 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
             const id = str(o.id, 'animation id'),
                 name = str(o.name, 'animation name');
             const duration = num(o.duration, 'animation duration', 0, 3600);
-            for (const k of ['ik', 'transform', 'slider', 'path', 'physics', 'deform', 'sequence', 'drawOrderFolder'])
+            for (const k of ['ik', 'transform', 'slider', 'path', 'physics', 'sequence', 'drawOrderFolder'])
                 none(o[k], k);
             const boneTracks = new Map<string, Map<string, ValueKey[]>>();
             for (const [boneId, rawTrack] of entries(o.bones, 'bone timelines')) {
@@ -378,11 +400,61 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
                 },
                 true,
             );
-            return { id, name, duration, order, markers, bones: boneTracks, slots: slotTracks };
+            const deform = new Map<Bone2dMesh, ValueKey[]>();
+            for (const [skinId, rawSlots] of entries(o.deform, 'deform skins')) {
+                const skin = skins.get(skinId);
+                if (!skin) fail(`unknown deform skin: ${skinId}`);
+                for (const [slotId, rawMeshes] of entries(rawSlots, 'deform slots')) {
+                    if (!bySlot.has(slotId)) fail(`unknown deform slot: ${slotId}`);
+                    for (const [key, rawKeys] of entries(rawMeshes, 'deform attachments')) {
+                        const mesh = skin.regions.get(slotId)?.get(key);
+                        if (mesh?.kind !== 'mesh') fail(`unknown deform mesh: ${skinId}/${slotId}/${key}`);
+                        deform.set(mesh, values(rawKeys, mesh.deformSize, duration, 'deform curve', true));
+                    }
+                }
+            }
+            return { id, name, duration, order, markers, bones: boneTracks, slots: slotTracks, deform };
         }),
         'duplicate animation id',
     );
     return { skeletonIndex: selected, skeletonNames, bones, slots, clips, images, skins };
+}
+function parseMesh(r: Obj, path: string, byBone: ReadonlyMap<string, Bone>): Bone2dMesh {
+    if (r.link != null) fail(`linked mesh: ${path}`, true);
+    const uvs = list(r.uvs, 2048, 'mesh UVs').map((v, i) => {
+        const uv = num(v, 'mesh UV', 0, 1);
+        return i % 2 ? 1 - uv : uv;
+    });
+    const vertexCount = uvs.length / 2;
+    if (!Number.isInteger(vertexCount) || vertexCount < 3) fail('mesh needs at least three XY/UV pairs');
+    const indices = list(r.triangles, 4095, 'mesh triangles').map((v) => {
+        const index = num(v, 'triangle index', 0, vertexCount - 1);
+        if (!Number.isInteger(index)) fail('non-integer triangle index');
+        return index;
+    });
+    if (indices.length < 3 || indices.length % 3) fail('invalid triangle index count');
+    const xy = list(r.vertices, uvs.length, 'mesh vertices').map((v) => num(v, 'mesh coordinate'));
+    let weights: Influence[][] | null = null;
+    let deformSize = uvs.length;
+    if (r.weights != null) {
+        const values = list(r.weights, vertexCount, 'weighted vertices');
+        if (values.length !== vertexCount || xy.length)
+            fail('provide one weight list per vertex and no plain vertices');
+        weights = values.map((raw) => {
+            const influences = list(raw, 16, 'vertex influences').map((tuple): Influence => {
+                const a = list(tuple, 4, 'influence');
+                if (a.length !== 4) fail('influence requires [bone, x, y, weight]');
+                const bone = str(a[0], 'influence bone');
+                if (!byBone.has(bone)) fail(`unknown influence bone: ${bone}`);
+                return [bone, num(a[1], 'bind x'), num(a[2], 'bind y'), num(a[3], 'influence weight', 0, 1)];
+            });
+            if (!influences.length || Math.abs(influences.reduce((sum, a) => sum + a[3], 0) - 1) > 1e-4)
+                fail('invalid influence weights');
+            return influences;
+        });
+        deformSize = 2 * weights.reduce((n, influence) => n + influence.length, 0);
+    } else if (xy.length !== uvs.length) fail('one plain XY pair required for each UV');
+    return { kind: 'mesh', path, color: color(r.color, path), xy, uvs, indices, weights, deformSize };
 }
 function last<T>(track: readonly Key<T>[], time: number): number {
     let lo = 0,
@@ -405,7 +477,7 @@ function sampled(track: ValueKey[] = [], time: number): number[] | undefined {
     return a.value.map((v, j) => {
         let progress = u;
         if (curve !== 'linear') {
-            const p = (curve as number[][])[j];
+            const p = curve[curve.length === 1 ? 0 : j];
             for (let k = 2; k < p.length; k += 2)
                 if (p[k] >= u) {
                     const fraction = (u - p[k - 2]) / (p[k] - p[k - 2]);
@@ -457,5 +529,76 @@ export function sampleBone2dProject(project: Bone2dProject, clipId: string | nul
         }),
     );
     const i = clip ? last(clip.order, time) : -1;
-    return { bones, slots, order: i >= 0 ? clip!.order[i].value : project.slots.map((s) => s.id) };
+    const meshDeltas = new Map<Bone2dMesh, readonly number[]>();
+    for (const [mesh, track] of clip?.deform ?? []) {
+        const deltas = sampled(track, time);
+        if (deltas) meshDeltas.set(mesh, deltas);
+    }
+    return { bones, slots, meshDeltas, order: i >= 0 ? clip!.order[i].value : project.slots.map((s) => s.id) };
+}
+
+/** Resolve ordered parent/local 2D affine products without decomposing shear. */
+export function bone2dWorldMatrices(project: Bone2dProject, sample: Bone2dSample): ReadonlyMap<string, Matrix2D> {
+    const out = new Map<string, Matrix2D>(),
+        parents = new Map(project.bones.map((b) => [b.id, b.parent] as const));
+    const compute = (id: string): Matrix2D => {
+        const known = out.get(id);
+        if (known) return known;
+        const [x, y, degrees, sx, sy] = sample.bones.get(id)!;
+        const r = (degrees * Math.PI) / 180,
+            cos = Math.cos(r),
+            sin = Math.sin(r);
+        const a = cos * sx,
+            b = -sin * sy,
+            c = sin * sx,
+            d = cos * sy;
+        const parent = parents.get(id);
+        let m: Matrix2D = [a, b, c, d, x, y];
+        if (parent != null) {
+            const [pa, pb, pc, pd, px, py] = compute(parent);
+            m = [
+                pa * a + pb * c,
+                pa * b + pb * d,
+                pc * a + pd * c,
+                pc * b + pd * d,
+                pa * x + pb * y + px,
+                pc * x + pd * y + py,
+            ];
+        }
+        out.set(id, m);
+        return m;
+    };
+    for (const bone of project.bones) compute(bone.id);
+    return out;
+}
+
+/** Build a mesh in player-root coordinates. Weighted deform offsets are per influence, not per final vertex. */
+export function bone2dMeshPositions(
+    mesh: Bone2dMesh,
+    slotBone: string,
+    world: ReadonlyMap<string, Matrix2D>,
+    delta: readonly number[] = [],
+): number[] {
+    const transform = (id: string, x: number, y: number): [number, number] => {
+        const [a, b, c, d, tx, ty] = world.get(id)!;
+        return [a * x + b * y + tx, c * x + d * y + ty];
+    };
+    const out: number[] = [];
+    if (mesh.weights) {
+        let index = 0;
+        for (const row of mesh.weights) {
+            let x = 0,
+                y = 0;
+            for (const [bone, bx, by, weight] of row) {
+                const [px, py] = transform(bone, bx + (delta[index++] ?? 0), by + (delta[index++] ?? 0));
+                x += px * weight;
+                y += py * weight;
+            }
+            out.push(x, y);
+        }
+    } else
+        for (let i = 0; i < mesh.xy.length; i += 2) {
+            out.push(...transform(slotBone, mesh.xy[i] + (delta[i] ?? 0), mesh.xy[i + 1] + (delta[i + 1] ?? 0)));
+        }
+    return out;
 }

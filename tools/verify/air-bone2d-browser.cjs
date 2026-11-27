@@ -258,16 +258,85 @@ async function main() {
                 await clock.step(0);
                 return { time: wardrobe.time, invalid };
             };
+            const wardrobeClose = async () => {
+                wardrobe.dispose();
+                await clock.step(0);
+            };
+            let meshInstance, meshView, meshTexture;
+            const setMesh = async (weighted) => {
+                const fixture = JSON.parse(text),
+                    rig = fixture.project.skeleton;
+                const points = [
+                    [0, 0],
+                    [16, 0],
+                    [0, 16],
+                ];
+                rig.slots[0].attachment = null;
+                rig.skins[0].attachments['arm-slot'].arm = {
+                    type: 'mesh',
+                    name: 'arm',
+                    path: 'arm',
+                    color: [1, 1, 1, 1],
+                    width: 8,
+                    height: 8,
+                    uvs: [0, 1, 1, 1, 0, 0],
+                    triangles: [0, 1, 2],
+                    hull: 3,
+                    edges: [],
+                    vertices: weighted ? [] : points.flat(),
+                    weights: weighted
+                        ? points.map(([x, y]) => [
+                              ['root', x, y, 0.25],
+                              ['arm-bone', x - 6, y, 0.75],
+                          ])
+                        : null,
+                };
+                const clip = rig.animations[1];
+                delete clip.bones['arm-bone'].rotate;
+                const n = weighted ? 12 : 6,
+                    delta = Array(n).fill(0);
+                delta[n - 1] = 8;
+                clip.deform.skin = {
+                    'arm-slot': {
+                        arm: [
+                            { time: 0, value: Array(n).fill(0) },
+                            { time: 0.5, value: delta },
+                        ],
+                    },
+                };
+                meshInstance = await air.createAirBone2dPlayer(parent, JSON.stringify(fixture));
+                meshInstance.play('attack');
+                meshView = meshInstance.node
+                    .getChildByName('arm-slot')
+                    .getChildByName('Mesh')
+                    .getComponent(air.AirUIMesh);
+                meshTexture = meshView.spriteFrame.texture;
+            };
+            const meshStep = async (dt) => {
+                const events = meshInstance.advance(dt).map((e) => e.id);
+                await clock.step(0);
+                return { positions: meshView.geometry.positions, frame: !!meshView.spriteFrame, events };
+            };
+            const meshClose = async () => {
+                meshInstance.dispose();
+                await clock.step(0);
+                return !meshTexture.getGFXTexture();
+            };
             window.bone2dTest = {
                 frame,
                 negative,
+                setMesh,
+                meshStep,
+                meshClose,
                 skinsMount,
                 skinsChange,
+                wardrobeClose,
                 atlasMount,
                 atlasRelease,
                 close: async () => {
                     player.dispose();
                     wardrobe?.dispose();
+                    meshInstance?.dispose();
                     clock.end();
                     await app.close();
                 },
@@ -387,6 +456,26 @@ async function main() {
         await page.evaluate(() => window.bone2dTest.skinsChange([]));
         assert.equal(sha(await page.screenshot()), baseSkin);
         report.wardrobe.screenshots = { base: baseSkin, red: redSkin };
+        await page.evaluate(() => window.bone2dTest.wardrobeClose());
+        report.mesh = [];
+        for (const weighted of [true, false]) {
+            await page.evaluate((v) => window.bone2dTest.setMesh(v), weighted);
+            const baseline = await page.evaluate(() => window.bone2dTest.meshStep(0));
+            const before = sha(await page.screenshot());
+            const end = await page.evaluate(() => window.bone2dTest.meshStep(0.5));
+            const after = sha(await page.screenshot());
+            assert.deepEqual(end.positions, weighted ? [22.5, 0, 46.5, 0, 22.5, 22] : [39, 0, 63, 0, 39, 24]);
+            assert.notEqual(before, s.dispose.screenshotSha256, 'there must be a visible native mesh at setup');
+            assert.notEqual(before, after, 'skinning and deformation must change visible pixels');
+            assert.notEqual(after, s.dispose.screenshotSha256, 'attack must still have a visible mesh');
+            assert.deepEqual(end.events, ['ev-start', 'ev-impact']);
+            const hidden = await page.evaluate(() => window.bone2dTest.meshStep(0.375));
+            assert.equal(hidden.frame, false);
+            assert.equal(sha(await page.screenshot()), s.dispose.screenshotSha256);
+            const freed = await page.evaluate(() => window.bone2dTest.meshClose());
+            assert.equal(freed, true);
+            report.mesh.push({ weighted, baseline, end, before, after, hidden, freed });
+        }
         await page.evaluate(() => window.bone2dTest.close());
         assert.deepEqual(report.pageErrors, []);
         report.status = 'PASS';

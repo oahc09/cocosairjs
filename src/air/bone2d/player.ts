@@ -30,8 +30,9 @@ import { isValid } from '../../cocos/core/data/object';
 import { Layers } from '../../cocos/scene-graph/layers';
 import { Node } from '../../cocos/scene-graph/node';
 import { spriteNode } from '../ui-kit';
+import { AirUIMesh } from '../ui-mesh';
 import type { AirAtlasHandle } from '../assets/atlas/atlas-factory';
-import { parseBone2dProject, sampleBone2dProject } from './project';
+import { parseBone2dProject, sampleBone2dProject, bone2dWorldMatrices, bone2dMeshPositions } from './project';
 import type { Bone2dImage, Bone2dMarker, Bone2dPose, Bone2dProjectOptions, Bone2dSample } from './project';
 
 export interface AirBone2dOptions extends Bone2dProjectOptions {
@@ -132,8 +133,17 @@ export async function createAirBone2dPlayer(
     }
     const layer = options.layer ?? Layers.Enum.UI_2D;
     const used = new Set<string>();
+    const meshImages = new Set<string>();
+    const meshSlots = new Set<string>();
     for (const skin of project.skins.values()) {
-        for (const regions of skin.regions.values()) for (const region of regions.values()) used.add(region.path);
+        for (const [slot, regions] of skin.regions)
+            for (const region of regions.values()) {
+                used.add(region.path);
+                if (region.kind === 'mesh') {
+                    meshImages.add(region.path);
+                    meshSlots.add(slot);
+                }
+            }
     }
     if (signal?.aborted) throw new Error('AIR_E_BONE2D_ABORTED');
     const frames = new Map<string, SpriteFrame>();
@@ -144,18 +154,22 @@ export async function createAirBone2dPlayer(
     root.layer = layer;
     const slots = new Map<
         string,
-        { root: Node; bones: Map<string, Node>; leaf: Node; sprite: Sprite; transform: UITransform }
+        { root: Node; bones: Map<string, Node>; leaf: Node; sprite: Sprite; transform: UITransform; mesh?: AirUIMesh }
     >();
     let disposed = false;
     const release = (destroyNode: boolean): void => {
         if (disposed) return;
         disposed = true;
-        for (const s of slots.values()) if (s.sprite.isValid) s.sprite.spriteFrame = null;
+        for (const s of slots.values()) {
+            if (s.sprite.isValid) s.sprite.spriteFrame = null;
+            if (s.mesh?.isValid) s.mesh.dispose();
+        }
         if (destroyNode && isValid(root, true)) root.destroy();
         for (const f of retained) f.decRef(false);
         for (const f of adapted) f.destroy();
         for (const o of owned) {
             o.frame.destroy();
+            o.texture.decRef(false);
             o.texture.destroy();
             o.image.destroy();
         }
@@ -169,6 +183,7 @@ export async function createAirBone2dPlayer(
     const defaultSkin = project.skins.values().next().value!;
     let selectedSkins = [defaultSkin];
     const apply = (sample: Bone2dSample): void => {
+        let world: ReturnType<typeof bone2dWorldMatrices> | null = null;
         for (let index = 0; index < sample.order.length; index++) {
             const id = sample.order[index],
                 s = slots.get(id)!;
@@ -186,22 +201,39 @@ export async function createAirBone2dPlayer(
             s.root.active = !!region;
             if (!region) {
                 s.sprite.spriteFrame = null;
+                if (s.mesh) s.mesh.spriteFrame = null;
                 continue;
+            }
+            const newFrame = frames.get(region.path)!;
+            const c = p.color.map((v, i) => Math.round(255 * v * region.color[i]));
+            const tint = (renderer: Sprite | AirUIMesh): void => {
+                const { r, g, b, a } = renderer.color;
+                if (r !== c[0] || g !== c[1] || b !== c[2] || a !== c[3])
+                    renderer.color = new Color(c[0], c[1], c[2], c[3]);
+            };
+            if (region.kind === 'mesh') {
+                s.sprite.spriteFrame = null;
+                const mesh = s.mesh!;
+                mesh.node.active = true;
+                if (mesh.spriteFrame !== newFrame) mesh.spriteFrame = newFrame;
+                world ??= bone2dWorldMatrices(project, sample);
+                mesh.setGeometry({
+                    positions: bone2dMeshPositions(region, def.bone, world, sample.meshDeltas.get(region)),
+                    uvs: region.uvs,
+                    indices: region.indices,
+                });
+                tint(mesh);
+                continue;
+            }
+            if (s.mesh) {
+                s.mesh.spriteFrame = null;
+                s.mesh.node.active = false;
             }
             for (const [id, node] of s.bones) poseNode(node, sample.bones.get(id)!);
             poseNode(s.leaf, region.pose);
             s.transform.setContentSize(region.width, region.height);
-            const newFrame = frames.get(region.path)!;
             if (s.sprite.spriteFrame !== newFrame) s.sprite.spriteFrame = newFrame;
-            const c = p.color.map((v, i) => Math.round(255 * v * region.color[i]));
-            if (
-                s.sprite.color.r !== c[0] ||
-                s.sprite.color.g !== c[1] ||
-                s.sprite.color.b !== c[2] ||
-                s.sprite.color.a !== c[3]
-            ) {
-                s.sprite.color = new Color(c[0], c[1], c[2], c[3]);
-            }
+            tint(s.sprite);
         }
     };
     try {
@@ -218,6 +250,8 @@ export async function createAirBone2dPlayer(
                 ) {
                     error(`missing atlas frame or mismatched original dimensions: ${name}`);
                 }
+                if (meshImages.has(name) && (frame.rect.width !== spec.width || frame.rect.height !== spec.height))
+                    error(`mesh needs untrimmed atlas UVs: ${name}`);
                 if (!retained.has(frame)) {
                     frame.addRef();
                     retained.add(frame);
@@ -243,6 +277,7 @@ export async function createAirBone2dPlayer(
             const image = new ImageAsset(),
                 texture = new Texture2D(),
                 frame = new SpriteFrame();
+            texture.addRef();
             owned.push({ image, texture, frame });
             image.reset(decoded);
             texture.image = image;
@@ -279,7 +314,16 @@ export async function createAirBone2dPlayer(
             const leaf = spriteNode(branch, 'Region', { layer });
             const sprite = leaf.getComponent(Sprite)!;
             sprite.trim = false;
+            let mesh: AirUIMesh | undefined;
+            if (meshSlots.has(slot.id)) {
+                const meshNode = new Node('Mesh');
+                meshNode.layer = layer;
+                slotRoot.addChild(meshNode);
+                mesh = meshNode.addComponent(AirUIMesh);
+                meshNode.active = false;
+            }
             slots.set(slot.id, {
+                mesh,
                 root: slotRoot,
                 bones: nodes,
                 leaf,
