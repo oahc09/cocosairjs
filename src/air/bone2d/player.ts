@@ -32,7 +32,7 @@ import { Node } from '../../cocos/scene-graph/node';
 import { spriteNode } from '../ui-kit';
 import { AirUIMesh } from '../ui-mesh';
 import type { AirAtlasHandle } from '../assets/atlas/atlas-factory';
-import { parseBone2dProject, sampleBone2dProject, bone2dWorldMatrices, bone2dMeshPositions } from './project';
+import { parseBone2dProject, sampleBone2dProject, bone2dWorldMatrices, bone2dMeshPositions, bone2dPicture } from './project';
 import type { Bone2dImage, Bone2dMarker, Bone2dPose, Bone2dProjectOptions, Bone2dSample } from './project';
 
 export interface AirBone2dOptions extends Bone2dProjectOptions {
@@ -138,11 +138,11 @@ export async function createAirBone2dPlayer(
     for (const skin of project.skins.values()) {
         for (const [slot, regions] of skin.regions)
             for (const region of regions.values()) {
-                used.add(region.path);
-                if (region.kind === 'mesh') {
-                    meshImages.add(region.path);
-                    meshSlots.add(slot);
+                for (const name of region.sequence?.frames ?? [region.path]) {
+                    used.add(name);
+                    if (region.kind === 'mesh') meshImages.add(name);
                 }
+                if (region.kind === 'mesh') meshSlots.add(slot);
             }
     }
     if (signal?.aborted) throw new Error('AIR_E_BONE2D_ABORTED');
@@ -204,7 +204,7 @@ export async function createAirBone2dPlayer(
                 if (s.mesh) s.mesh.spriteFrame = null;
                 continue;
             }
-            const newFrame = frames.get(region.path)!;
+            const newFrame = frames.get(bone2dPicture(region, sample))!;
             const c = p.color.map((v, i) => Math.round(255 * v * region.color[i]));
             const tint = (renderer: Sprite | AirUIMesh): void => {
                 const { r, g, b, a } = renderer.color;

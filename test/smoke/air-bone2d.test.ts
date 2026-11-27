@@ -5,6 +5,7 @@ import {
     sampleBone2dProject,
     bone2dWorldMatrices,
     bone2dMeshPositions,
+    bone2dPicture,
 } from '../../src/air/bone2d/project';
 
 const text = readFileSync(resolve(__dirname, '../fixtures/bone2d/clawbot.bone2d'), 'utf8');
@@ -242,4 +243,79 @@ test('draw-order folder rearranges only its occupied seats after the full-track 
     const p = parse(d);
     expect(sampleBone2dProject(p, 'attack', 0.25).order).toEqual(['body-slot', 'between', 'arm-slot']);
     expect(sampleBone2dProject(p, 'attack', 0.5).order).toEqual(['arm-slot', 'between', 'body-slot']);
+});
+
+function sequenceFixture() {
+    const file = fixture(),
+        rig = file.project.skeleton;
+    const attachment = rig.skins[0].attachments['body-slot'].body;
+    attachment.sequence = { count: 3, start: 7, digits: 3, setupIndex: 1 };
+    for (const prefix of ['body', 'overlay']) {
+        for (const suffix of ['007', '008', '009']) {
+            file.project.images.push({ ...file.project.images[0], name: prefix + suffix });
+        }
+    }
+    rig.skins.push({
+        ...rig.skins[0],
+        id: 'overlay',
+        attachments: {
+            'body-slot': { body: { ...attachment, path: 'overlay' } },
+        },
+    });
+    const clip = rig.animations[1];
+    clip.sequence = {
+        skin: { 'body-slot': { body: [{ time: 0.25, index: 0, delay: 0.125, mode: 'pingpong' }] } },
+        overlay: { 'body-slot': { body: [{ time: 0.75, index: 0, delay: 0.125, mode: 'onceReverse' }] } },
+    };
+    return { file, clip, attachment };
+}
+test.each([
+    ['hold', [8, 7, 7, 7, 7, 7, 7]],
+    ['once', [8, 7, 8, 9, 9, 9, 9]],
+    ['loop', [8, 7, 8, 9, 7, 8, 9]],
+    ['pingpong', [8, 7, 8, 9, 8, 7, 8]],
+    ['onceReverse', [8, 9, 8, 7, 7, 7, 7]],
+    ['loopReverse', [8, 9, 8, 7, 9, 8, 7]],
+    ['pingpongReverse', [8, 9, 8, 7, 8, 9, 8]],
+])('samples %s across frame boundaries including the setup frame', (mode, expected) => {
+    const { file, clip } = sequenceFixture();
+    clip.sequence.skin['body-slot'].body[0].mode = mode;
+    const model = parse(file);
+    const body = model.skins.get('skin')!.regions.get('body-slot')!.get('body')!;
+    const pictures = [0, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875].map((t) =>
+        bone2dPicture(body, sampleBone2dProject(model, 'attack', t)),
+    );
+    expect(pictures).toEqual(expected.map((n) => 'body00' + n));
+});
+test('picture tracks are keyed by exact attachment and keep setup until their own first key', () => {
+    const model = parse(sequenceFixture().file);
+    const selected = (skin: string, t: number) =>
+        bone2dPicture(
+            model.skins.get(skin)!.regions.get('body-slot')!.get('body')!,
+            sampleBone2dProject(model, 'attack', t),
+        );
+    expect([
+        selected('skin', 0.5),
+        selected('overlay', 0.5),
+        selected('overlay', 0.75),
+        selected('skin', 0.75),
+    ]).toEqual(['body009', 'overlay008', 'overlay009', 'body007']);
+});
+test('handles one picture, zero delay and fails on missing frame or unbound sequence keys', () => {
+    const { file, clip, attachment } = sequenceFixture();
+    const key = clip.sequence.skin['body-slot'].body[0];
+    function picture() {
+        const model = parse(file);
+        const body = model.skins.get('skin')!.regions.get('body-slot')!.get('body')!;
+        return bone2dPicture(body, sampleBone2dProject(model, 'attack', 0.875));
+    }
+    Object.assign(key, { delay: 0, index: 1, mode: 'loop' });
+    expect(picture()).toBe('body008');
+    Object.assign(attachment.sequence, { count: 1, setupIndex: 0 });
+    Object.assign(key, { delay: 0.125, mode: 'pingpongReverse' });
+    expect(picture()).toBe('body007');
+    file.project.images = file.project.images.filter((i: { name: string }) => i.name !== 'body007');
+    expect(picture).toThrow(/unknown sequence image: body007/);
+    delete attachment.sequence;
+    expect(picture).toThrow(/unknown sequenced attachment/);
 });

@@ -23,9 +23,17 @@
 type Obj = Record<string, unknown>;
 export type Bone2dPose = readonly [number, number, number, number, number];
 type RGBA = readonly [number, number, number, number];
+interface PictureSequence {
+    readonly frames: readonly string[];
+    readonly setup: number;
+}
+const sequenceModes = ['hold', 'once', 'loop', 'pingpong', 'onceReverse', 'loopReverse', 'pingpongReverse'] as const;
+type SequenceKey = { mode: typeof sequenceModes[number]; index: number; delay: number };
+
 export interface Bone2dRegion {
     kind: 'region';
     path: string;
+    sequence?: PictureSequence;
     pose: Bone2dPose;
     width: number;
     height: number;
@@ -36,6 +44,7 @@ type Matrix2D = readonly [a: number, b: number, c: number, d: number, tx: number
 export interface Bone2dMesh {
     kind: 'mesh';
     path: string;
+    sequence?: PictureSequence;
     color: RGBA;
     readonly xy: readonly number[];
     readonly uvs: readonly number[];
@@ -91,6 +100,7 @@ interface Clip {
     order: Key<string[]>[];
     folderOrder: ReadonlyMap<string, Key<string[]>[]>;
     deform: ReadonlyMap<Bone2dMesh, ValueKey[]>;
+    sequences: ReadonlyMap<Visual, Key<SequenceKey>[]>;
     markers: Key<Bone2dMarker>[];
 }
 export interface Bone2dMarker {
@@ -124,6 +134,7 @@ export interface Bone2dSample {
     readonly bones: ReadonlyMap<string, Bone2dPose>;
     readonly slots: ReadonlyMap<string, Bone2dSlotPose>;
     readonly order: readonly string[];
+    readonly sequenceFrames: ReadonlyMap<Visual, number>;
     readonly meshDeltas: ReadonlyMap<Bone2dMesh, readonly number[]>;
 }
 
@@ -149,6 +160,26 @@ function str(x: unknown, label: string): string {
 function num(x: unknown, label: string, min = -1000000, max = 1000000): number {
     if (typeof x !== 'number' || !Number.isFinite(x) || x < min || x > max) fail(label);
     return x;
+}
+function integer(x: unknown, label: string, min: number, max: number): number {
+    const v = num(x, label, min, max);
+    if (!Number.isInteger(v)) fail(label);
+    return v;
+}
+function pictureSequence(raw: unknown, path: string, images: ReadonlyMap<string, Bone2dImage>): PictureSequence | undefined {
+    if (raw == null) return undefined;
+    const sequence = obj(raw, 'picture sequence');
+    const count = integer(sequence.count, 'sequence count', 1, images.size);
+    const start = integer(sequence.start, 'sequence start', 0, 1000000);
+    const digits = integer(sequence.digits, 'sequence digits', 0, 9);
+    const setup = integer(sequence.setupIndex, 'sequence setup', 0, count - 1);
+    const frames = Array.from({ length: count }, (_, i) => path + String(start + i).padStart(digits, '0'));
+    for (const name of frames) if (!images.has(name)) fail(`unknown sequence image: ${name}`);
+    return { frames, setup };
+}
+export function bone2dPicture(visual: Visual, sample: Bone2dSample): string {
+    const sequence = visual.sequence;
+    return sequence ? sequence.frames[sample.sequenceFrames.get(visual) ?? sequence.setup] : visual.path;
 }
 function optionalStr(x: unknown, label: string): string | null {
     return x == null ? null : str(x, label);
@@ -319,17 +350,19 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
                 const regions = new Map<string, Visual>();
                 for (const [attachment, rawRegion] of entries(rawRegions, 'regions')) {
                     const r = obj(rawRegion, 'attachment');
-                    if ((r.type !== 'region' && r.type !== 'mesh') || r.sequence != null)
-                        fail(`unsupported or sequence attachment: ${slotId}/${attachment}`, true);
+                    if (r.type !== 'region' && r.type !== 'mesh')
+                        fail(`unsupported attachment: ${slotId}/${attachment}`, true);
                     const path = str(r.path, 'attachment image name');
-                    if (!images.has(path)) fail(`unknown image: ${path}`);
+                    const sequence = pictureSequence(r.sequence, path, images);
+                    if (!sequence && !images.has(path)) fail(`unknown image: ${path}`);
                     if (r.type === 'mesh') {
-                        regions.set(attachment, parseMesh(r, path, byBone));
+                        regions.set(attachment, { ...parseMesh(r, path, byBone), sequence });
                         continue;
                     }
                     regions.set(attachment, {
                         kind: 'region',
                         path,
+                        sequence,
                         pose: pose(r, path),
                         width: num(r.width, path, 0.001, 32768),
                         height: num(r.height, path, 0.001, 32768),
@@ -356,6 +389,7 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
                 (regions as Map<string, Visual>).set(key, {
                     ...source,
                     path: mesh.path,
+                    sequence: mesh.sequence,
                     color: mesh.color,
                     link,
                     deformParent: link.deform ? source : undefined,
@@ -387,7 +421,7 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
             const id = str(o.id, 'animation id'),
                 name = str(o.name, 'animation name');
             const duration = num(o.duration, 'animation duration', 0, 3600);
-            for (const k of ['ik', 'transform', 'slider', 'path', 'physics', 'sequence']) none(o[k], k);
+            for (const k of ['ik', 'transform', 'slider', 'path', 'physics']) none(o[k], k);
             const boneTracks = new Map<string, Map<string, ValueKey[]>>();
             for (const [boneId, rawTrack] of entries(o.bones, 'bone timelines')) {
                 if (!byBone.has(boneId)) fail(`unknown animated bone: ${boneId}`);
@@ -461,7 +495,28 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
                     }
                 }
             }
-            return { id, name, duration, order, folderOrder, markers, bones: boneTracks, slots: slotTracks, deform };
+            const sequences = new Map<Visual, Key<SequenceKey>[]>();
+            for (const [skinId, rawSlots] of entries(o.sequence, 'sequence skins')) {
+                const skin = skins.get(skinId);
+                if (!skin) fail(`unknown sequence skin: ${skinId}`);
+                for (const [slotId, rawAttachments] of entries(rawSlots, 'sequence slots')) {
+                    if (!bySlot.has(slotId)) fail(`unknown sequence slot: ${slotId}`);
+                    for (const [name, rawKeys] of entries(rawAttachments, 'sequence attachments')) {
+                        const visual = skin.regions.get(slotId)?.get(name);
+                        if (!visual?.sequence) fail(`unknown sequenced attachment: ${skinId}/${slotId}/${name}`);
+                        sequences.set(visual, keys(rawKeys, duration, 'sequence key', (key): SequenceKey => {
+                            const mode = key.mode as SequenceKey['mode'];
+                            if (!sequenceModes.includes(mode)) fail('invalid sequence mode');
+                            return {
+                                mode,
+                                index: integer(key.index, 'sequence key index', 0, Number.MAX_SAFE_INTEGER),
+                                delay: num(key.delay, 'sequence delay', 0),
+                            };
+                        }));
+                    }
+                }
+            }
+            return { id, name, duration, order, folderOrder, markers, bones: boneTracks, slots: slotTracks, deform, sequences };
         }),
         'duplicate animation id',
     );
@@ -553,6 +608,25 @@ function sampled(track: ValueKey[] = [], time: number): number[] | undefined {
         return v + progress * (b.value[j] - v);
     });
 }
+// Model picture selection as travel along a line, a ring or a reflected line.
+function sequenceFrame({ mode, index, delay }: SequenceKey, elapsed: number, count: number): number {
+    if (mode === 'hold') return Math.min(count - 1, index);
+    if (count === 1) return 0;
+    // The editor uses a 32-bit step counter with a small tolerance at a frame boundary.
+    const steps = delay === 0 ? 0 : (elapsed / delay + 1e-5) | 0;
+    const position = index + steps;
+    const end = count - 1;
+    let frame: number;
+    if (mode === 'once' || mode === 'onceReverse') frame = mode === 'once' ? position : Math.max(0, end - position);
+    else if (mode === 'loop' || mode === 'loopReverse') {
+        const phase = position % count;
+        frame = mode === 'loop' ? phase : end - phase;
+    } else {
+        const phase = (position + (mode === 'pingpongReverse' ? end : 0)) % (2 * end);
+        frame = phase <= end ? phase : 2 * end - phase;
+    }
+    return frame === -1 ? -1 : Math.max(0, Math.min(end, frame));
+}
 export function sampleBone2dProject(project: Bone2dProject, clipId: string | null, seconds: number): Bone2dSample {
     const clip = clipId === null ? undefined : project.clips.get(clipId);
     if (clipId !== null && !clip) fail(`unknown animation: ${clipId}`);
@@ -610,7 +684,16 @@ export function sampleBone2dProject(project: Bone2dProject, clipId: string | nul
             let at = 0;
             order = order.map((slot) => (seats.has(slot) ? next[at++] : slot));
         }
-    return { bones, slots, meshDeltas, order };
+    const sequenceFrames = new Map<Visual, number>();
+    for (const [visual, track] of clip?.sequences ?? []) {
+        const j = last(track, time);
+        if (j < 0) continue;
+        const key = track[j];
+        const sequence = visual.sequence!;
+        const frame = sequenceFrame(key.value, time - key.time, sequence.frames.length);
+        sequenceFrames.set(visual, frame === -1 ? sequence.setup : frame);
+    }
+    return { bones, slots, meshDeltas, order, sequenceFrames };
 }
 
 /** Resolve ordered parent/local 2D affine products without decomposing shear. */

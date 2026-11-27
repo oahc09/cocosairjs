@@ -32,6 +32,8 @@ For multi-skeleton files, omit `skeletonIndex` to select the saved active rig, o
 
 Meshes use the AIR UI mesh renderer and can coexist with sprites in the same draw order. Weighted offsets are per influence. Use embedded PNGs or untrimmed atlas regions for meshes. This stage accepts at most 1,024 vertices and 1,365 triangles per attachment; trimmed mesh atlases and chunking larger meshes remain open. Linked meshes select their own image and tint while reusing source topology, with either shared or independent deform.
 
+Numbered picture sequences select the setup frame until their first key, then use the authored hold, once, loop or ping-pong mode (including reverse modes). Supply every numbered image under its exact name as an embedded PNG or atlas frame. A skin override does not inherit a sequence timeline merely by sharing the attachment name. A linked mesh owns its own picture sequence even when it inherits deformation.
+
 ## Full runtime acceptance matrix
 
 A native project must either play with its intended semantics or report a specific unsupported feature. Silently dropping a runtime feature is not compatibility. Editor-only fields (selection, locks, guides, notes, viewport) do not affect exported runtime state.
@@ -42,7 +44,8 @@ A native project must either play with its intended semantics or report a specif
 | Hierarchical normal-inheritance TRS, rigid attachments, slot swaps and RGBA, draw order, timeline easing         | R0 rigid                 | Setup and multiple sampled poses; rendered overlap order; nonuniform-scale affine control                      |
 | Playback, pause, seek, loop, typed events                                                                        | R0 rigid                 | Boundary/hitch/wrap order; seek silent; renamed label keeps host binding                                       |
 | Multi-skeleton selection, rigid skin composition                                                                 | R0 extension             | Select saved/indexed skeleton; verify fallback, overlay order and skin swap during playback                    |
-| Skin-required bones and constraints, picture sequences                                                           | R1 attachment parity     | Animate each legal selection; exact slot/texture/sequence frames                                               |
+| Skin-required bones and constraints                                                                              | R1 attachment parity     | Animate each legal selection and verify active bones/constraints                                               |
+| Picture sequences                                                                                                | R1 sequence slice        | Exact frames in all seven modes; skin swaps; linked mesh alongside shared deform                               |
 | Weighted and unweighted meshes, linked meshes, vertex and influence deform                                       | R1 geometry slice        | Compare root-space positions to independent controls, and pixels before/after deformation                      |
 | Clipping, point/path/bounding-box attachment queries                                                             | R1 geometry parity       | Editor-reference vertices and indices; clipping outside pixels; absence of unintended draws                    |
 | Draw-order folders                                                                                               | R1 pose slice            | Demonstrate folder swaps that preserve surrounding slot seats                                                  |
@@ -52,7 +55,7 @@ A native project must either play with its intended semantics or report a specif
 | Crossfades, mixed tracks, playback range and ping-pong, lifecycle across several instances                       | R2 playback parity       | Blend/interrupt/control cases; isolated events and resources; real-browser performance and lifecycle tests     |
 | Latest compatible editor project corpus and real workloads                                                       | R3 sign-off              | Browser/device matrix and editor-reference results for every supported field; documented format/version limits |
 
-To extend past R0, compare the reusable MIT authoring solver against AIR output before adding a second independent full solver. Keep it separate from React and editor WebGL, and verify any imported notice and dependency provenance. The lightweight R0 UI nodes are not a performance representation of weighted/cropped meshes. No full-parity or Spine license claim is made by this milestone.
+Compare AIR results against the pinned authoring runtime with independent fixtures. Keep the implementation independent of editor/Spine code and verify file-level provenance before adopting any third-party implementation. The lightweight R0 UI nodes are not a performance representation of weighted/cropped meshes. No full-parity or Spine license claim is made by this milestone.
 
 ## Focused verification
 

@@ -27,7 +27,7 @@ async function main() {
     const report = {
         status: 'FAIL',
         engine,
-        scope: 'Rigid Bone-2D native project, AIR WebGL2 UI sprites, pixel and lifecycle checks',
+        scope: 'Bone-2D native project: AIR WebGL2 sprites, meshes, sequences, pixels and lifecycle',
         fingerprints: Object.fromEntries(files.map((file) => [file, sha(fs.readFileSync(path.join(root, file)))])),
         pageErrors: [],
         snapshots: {},
@@ -358,8 +358,91 @@ async function main() {
                 await clock.step(0);
                 return !meshTexture.getGFXTexture();
             };
+            let sequencePlayer, sequenceVisual;
+            const sequenceTextures = new Set();
+            const sequenceMount = async (asMesh) => {
+                const value = JSON.parse(text),
+                    rig = value.project.skeleton;
+                const colorFrame = (name, color) => {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = canvas.height = 16;
+                    const context = canvas.getContext('2d');
+                    context.fillStyle = 'rgb(' + color.join(',') + ')';
+                    context.fillRect(0, 0, 16, 16);
+                    context.fillStyle = '#fff';
+                    context.fillRect(1, 1, 3, 5);
+                    value.project.images.push({ name, width: 16, height: 16 });
+                    value.images[name] = canvas.toDataURL();
+                };
+                [
+                    [208, 20, 40],
+                    [30, 160, 50],
+                    [45, 70, 215],
+                    [70, 125, 145],
+                    [220, 145, 40],
+                    [165, 35, 170],
+                ].forEach((rgb, i) => colorFrame((i < 3 ? 'base' : 'overlay') + '00' + (7 + (i % 3)), rgb));
+                const original = rig.skins[0].attachments['body-slot'].body;
+                const sequence = { count: 3, start: 7, digits: 3, setupIndex: 1 };
+                const base = { ...original, path: 'base', sequence };
+                rig.slots[1].attachment = null;
+                const clip = rig.animations[1];
+                delete clip.slots['arm-slot'];
+                if (asMesh) {
+                    Object.assign(base, {
+                        type: 'mesh',
+                        vertices: [-8, -8, 8, -8, -8, 8],
+                        weights: null,
+                        uvs: [0, 1, 1, 1, 0, 0],
+                        triangles: [0, 1, 2],
+                    });
+                    clip.deform.skin = {
+                        'body-slot': {
+                            body: [
+                                { time: 0, value: [0, 0, 0, 0, 0, 0] },
+                                { time: 0.5, value: [0, 0, 0, 0, 0, 5] },
+                            ],
+                        },
+                    };
+                }
+                rig.skins[0].attachments['body-slot'].body = base;
+                const overlay = { ...base, path: 'overlay' };
+                if (asMesh) overlay.link = { source: 'body', slot: null, skin: null, deform: true };
+                rig.skins.push({
+                    id: 'overlay',
+                    name: 'Overlay',
+                    bones: [],
+                    constraints: [],
+                    attachments: { 'body-slot': { body: overlay } },
+                });
+                clip.sequence = {
+                    skin: { 'body-slot': { body: [{ time: 0.25, index: 0, delay: 0.125, mode: 'pingpong' }] } },
+                    overlay: { 'body-slot': { body: [{ time: 0.75, index: 0, delay: 0.125, mode: 'onceReverse' }] } },
+                };
+                sequencePlayer = await air.createAirBone2dPlayer(parent, JSON.stringify(value));
+                sequencePlayer.play('attack');
+                const body = sequencePlayer.node.getChildByName('body-slot');
+                sequenceVisual = asMesh ? body.getChildByName('Mesh').getComponent(air.AirUIMesh) : leaves(body)[0];
+            };
+            const sequenceStep = async (step) => {
+                if (step.seek !== undefined) sequencePlayer.seek(step.seek);
+                if (step.skin !== undefined) sequencePlayer.setSkins(step.skin ? ['overlay'] : []);
+                await clock.step(0);
+                sequenceTextures.add(sequenceVisual.spriteFrame.texture);
+                return { time: sequencePlayer.time, positions: sequenceVisual.geometry?.positions ?? null };
+            };
+            const sequenceClose = async () => {
+                sequencePlayer.dispose();
+                await clock.step(0);
+                const released = [...sequenceTextures].every((t) => !t.getGFXTexture());
+                sequenceTextures.clear();
+                return released;
+            };
             window.bone2dTest = {
                 frame,
+                sequenceMount,
+                sequenceStep,
+                sequenceClose,
                 negative,
                 folderMount,
                 folderClose,
@@ -373,6 +456,7 @@ async function main() {
                 atlasRelease,
                 close: async () => {
                     player.dispose();
+                    sequencePlayer?.dispose();
                     wardrobe?.dispose();
                     meshInstance?.dispose();
                     folderPlayer?.dispose();
@@ -528,6 +612,50 @@ async function main() {
             const freed = await page.evaluate(() => window.bone2dTest.meshClose());
             assert.equal(freed, true);
             report.mesh.push({ weighted, linked, baseline, end, before, after, hidden, freed });
+        }
+        report.sequences = [];
+        for (const mesh of [false, true]) {
+            await page.evaluate((flag) => window.bone2dTest.sequenceMount(flag), mesh);
+            const frames = [];
+            for (const [step, time, rgb] of [
+                [{ seek: 0.5 }, 0.5, [45, 70, 215]],
+                [{ skin: true }, 0.5, [220, 145, 40]],
+                [{ seek: 0.75 }, 0.75, [165, 35, 170]],
+                [{ skin: false }, 0.75, [208, 20, 40]],
+            ]) {
+                const state = await page.evaluate((value) => window.bone2dTest.sequenceStep(value), step);
+                assert.equal(state.time, time);
+                const png = await page.screenshot();
+                const matchingPixels = await page.evaluate(
+                    async ([data, color]) => {
+                        const image = new Image();
+                        image.src = 'data:image/png;base64,' + data;
+                        await image.decode();
+                        const canvas = document.createElement('canvas');
+                        canvas.width = image.width;
+                        canvas.height = image.height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(image, 0, 0);
+                        const { data: rgba } = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                        let matches = 0;
+                        for (let i = 0; i < rgba.length; i += 4) {
+                            if (color.every((value, j) => Math.abs(value - rgba[i + j]) <= 2) && rgba[i + 3] === 255)
+                                matches++;
+                        }
+                        return matches;
+                    },
+                    [png.toString('base64'), rgb],
+                );
+                assert.ok(matchingPixels > 10, 'selected picture must produce expected composited color: ' + rgb);
+                frames.push({ ...state, rgb, matchingPixels, screenshot: sha(png) });
+            }
+            if (mesh) {
+                const expected = [-12, -8, 12, -8, -12, 13];
+                frames.forEach((frame) => assert.deepEqual(frame.positions, expected));
+            }
+            const released = await page.evaluate(() => window.bone2dTest.sequenceClose());
+            assert.equal(released, true);
+            report.sequences.push({ mesh, frames, released });
         }
         await page.evaluate(() => window.bone2dTest.close());
         assert.deepEqual(report.pageErrors, []);
