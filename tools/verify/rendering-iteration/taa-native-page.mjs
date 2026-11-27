@@ -1,6 +1,7 @@
 import * as m from '/build/cocosair.module.js';
 const mode = new URL(location.href).searchParams.get('mode') || 'both';
-if (!['off', 'single', 'both'].includes(mode)) throw new Error('Invalid TAA probe mode');
+if (!['off', 'single', 'both', 'isolated', 'isolated-b', 'isolated-control'].includes(mode))
+    throw new Error('Invalid TAA probe mode');
 const response = await fetch('/vendor/builtin-source/generated/custom-effects.json');
 if (!response.ok) throw new Error('Could not load the frozen custom effects');
 const effects = await response.json();
@@ -21,6 +22,34 @@ if (!m.director.root.usesCustomPipeline) throw new Error('Native custom pipeline
 const builder = m.rendering.getCustomPipeline('Custom');
 const scene = new m.Scene('TAA two cameras');
 const tags = new Map();
+// Diagnostic only: use one copy of the existing pass per camera and advance the sample before projection.
+// These copies live only for one browser page. This is not a runtime ownership or disposal design.
+const isolate = mode.startsWith('isolated');
+const forward = builder.pipelines.get('forward');
+const slot = forward.findIndex((pass) => pass.name === 'TAAPass');
+const originalPass = forward[slot];
+const experiments = new WeakMap();
+function experiment(camera) {
+    let pass = experiments.get(camera);
+    if (!pass) {
+        pass = new originalPass.constructor();
+        const advance = pass.updateSample;
+        const apply = pass.applyCameraJitter;
+        pass.updateSample = () => {};
+        pass.applyCameraJitter = function (target) {
+            advance.call(this);
+            return apply.call(this, target);
+        };
+        experiments.set(camera, pass);
+    }
+    return pass;
+}
+function seed(camera) {
+    const pass = experiment(camera);
+    pass.firstRender = true;
+    pass.taaTextureIndex = -2;
+    pass.sampleIndex = -1;
+}
 const mesh = m.utils.createMesh(m.primitives.box());
 function lane(name, priority, layer, width, height, tone) {
     const node = new m.Node(name);
@@ -40,7 +69,12 @@ function lane(name, priority, layer, width, height, tone) {
     pp.global = false;
     camera.postProcess = pp;
     const taa = node.addComponent(m.postProcess.TAA);
-    taa.enabled = mode === 'both' || (mode === 'single' && name === 'A');
+    taa.enabled =
+        mode === 'both' ||
+        mode === 'isolated' ||
+        mode === 'isolated-control' ||
+        (mode === 'single' && name === 'A') ||
+        (mode === 'isolated-b' && name === 'B');
     taa.feedback = priority ? 0.75 : 0.95;
     const object = new m.Node('Color and edges ' + name);
     scene.addChild(object);
@@ -79,6 +113,7 @@ const originalRender = builder.renderCamera;
 builder.renderCamera = function (camera, pipeline) {
     const name = tags.get(camera);
     if (!name) return originalRender.call(this, camera, pipeline);
+    if (isolate) forward[slot] = experiment(camera);
     const undo = [];
     const install = (obj, key, patch) => {
         const own = Object.hasOwn(obj, key);
@@ -139,6 +174,7 @@ builder.renderCamera = function (camera, pipeline) {
     try {
         return originalRender.call(this, camera, pipeline);
     } finally {
+        if (isolate) forward[slot] = originalPass;
         while (undo.length) undo.pop()();
         if (ownAdd) pipeline.addRenderPass = add;
         else delete pipeline.addRenderPass;
@@ -167,11 +203,12 @@ window.__probe = async () => {
     try {
         for (let i = 0; i < 5; i++) {
             draw.length = 0;
-            A.node.setPosition(i >= 3 ? 1.4 : i * 0.07, 0, 5);
+            A.node.setPosition(i >= 3 && mode !== 'isolated-control' ? 1.4 : i * 0.07, 0, 5);
             B.node.setPosition(-i * 0.09, 0, 5);
-            if (i === 4) A.target.resize(192, 112);
+            if (mode === 'isolated' && i >= 3) seed(A.camera.camera);
+            if (i === 4 && mode !== 'isolated-control') A.target.resize(192, 112);
             const frame = await clock.step();
-            const expected = { both: 2, single: 1, off: 0 }[mode];
+            const expected = { both: 2, single: 1, off: 0, isolated: 2, 'isolated-b': 1, 'isolated-control': 2 }[mode];
             if (draw.length !== expected) throw new Error('Wrong native TAA draw count: ' + draw.length);
             const read = async (target) => {
                 try {

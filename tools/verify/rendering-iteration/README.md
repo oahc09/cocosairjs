@@ -169,3 +169,12 @@ available history. With A+B, five of six continuous-frame history bindings were 
 matrices were wrong, and A's uploaded material state changed after queueing in all three frames. The A-only resize in
 that track also produced a GL texture/framebuffer feedback-loop error and one blocked readback. The five-frame
 report was produced with a development SDK whose source receipt matched 1,030 files.
+
+`--expect-isolation` additionally compares a diagnostic page that gives each camera its own pass and material and
+advances the jitter before projection. It explicitly seeds A after the camera cut and at resize, with no reset on B.
+A separate isolated track leaves A's motion and target continuous while B does the same work. Across five frames
+B's entire offscreen RGBA readback matches that control byte-for-byte, including through A's cut and resize. The
+prototype has no baseline graph or GL errors. A B-only TAA track is captured separately: its pixels differ from
+the two-enabled graph, so the result does not yet establish invariance when a different camera toggles TAA.
+These browser-page overrides are not an engine fix. Camera/pass resource lifecycle, real reset integration,
+masked paths and full product-scene quality are still open.

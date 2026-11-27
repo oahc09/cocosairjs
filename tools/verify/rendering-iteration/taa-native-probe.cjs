@@ -54,8 +54,10 @@ function inspect(track) {
 }
 
 async function main([executable, output, flag, ...rest]) {
-    if (!executable || !output || rest.length || (flag && flag !== '--expect-baseline'))
-        throw new Error('Usage: node taa-native-probe.cjs <WPE executable> <new-report.json> [--expect-baseline]');
+    if (!executable || !output || rest.length || (flag && !['--expect-baseline', '--expect-isolation'].includes(flag)))
+        throw new Error(
+            'Usage: node taa-native-probe.cjs <WPE executable> <new-report.json> [--expect-baseline|--expect-isolation]',
+        );
     const binding = verifySourceBinding(root, files['/build/cocosair.module.js'][1]);
     if (!binding.matches) throw new Error('Native probe requires an SDK bound to the current src bytes');
     const hashes = {};
@@ -76,7 +78,9 @@ async function main([executable, output, flag, ...rest]) {
     try {
         browser = await webkit.launch({ executablePath: resolve(executable) });
         result.browserVersion = browser.version();
-        for (const mode of ['off', 'single', 'both']) {
+        const modes = ['off', 'single', 'both'];
+        if (flag === '--expect-isolation') modes.push('isolated', 'isolated-control', 'isolated-b');
+        for (const mode of modes) {
             const page = await browser.newPage({ viewport: { width: 384, height: 256 }, deviceScaleFactor: 1 });
             const consoleErrors = [];
             const transportErrors = [];
@@ -129,11 +133,45 @@ async function main([executable, output, flag, ...rest]) {
     ) {
         throw new Error('TAA-off/single-camera controls failed');
     }
-    if (flag === '--expect-baseline') {
+    if (flag === '--expect-baseline' || flag === '--expect-isolation') {
         if (both.check.badHistory !== 5 || both.check.wrongPreviousMatrix !== 5 || both.check.changedMaterial !== 3)
             throw new Error('Expected contamination did not reproduce');
     } else if (Object.values(both.check).some(Boolean) || both.consoleErrors.length)
         throw new Error('Dual-camera native TAA invariant failed: see report');
+
+    if (flag === '--expect-isolation') {
+        const isolated = result.tracks.isolated;
+        const bControl = result.tracks['isolated-control'];
+        const bOnly = result.tracks['isolated-b'];
+        if (
+            [isolated, bControl, bOnly].some(
+                (t) => !t || Object.values(t.check).some(Boolean) || t.consoleErrors.length,
+            )
+        )
+            throw new Error('The isolation or control tracks is not clean');
+        for (const [i, f] of isolated.records.entries()) {
+            const [a, b] = ['A', 'B'].map((name) => f.captures.find((d) => d.name === name));
+            if (!a || !b) throw new Error(`Missing camera draw in isolation frame ${i}`);
+            const priorB = isolated.records[i - 1]?.captures.find((d) => d.name === 'B');
+            const expectedBHistory = priorB?.output ?? b.inputs.inputTexture;
+            if (
+                f.alias ||
+                b.inputs.taaPrevTexture !== expectedBHistory ||
+                JSON.stringify(b.atQueue.previous) !== JSON.stringify(priorB?.current ?? b.current) ||
+                JSON.stringify(b.atQueue) !== JSON.stringify(b.afterFrame) ||
+                JSON.stringify(a.atQueue) !== JSON.stringify(a.afterFrame) ||
+                !f.pixels.B.sha256 ||
+                b.atQueue.params[2] !== 0.75 ||
+                a.atQueue.params[2] !== 0.95 ||
+                f.pixels.B.sha256 !== bControl.records[i].pixels.B.sha256 ||
+                (i >= 3 &&
+                    (a.inputs.taaPrevTexture !== a.inputs.inputTexture ||
+                        JSON.stringify(a.atQueue.previous) !== JSON.stringify(a.current))) ||
+                (i === 4 && (f.pixels.A.width !== 192 || f.pixels.A.height !== 112))
+            )
+                throw new Error(`Camera-local cut/resize or B pixel isolation failed in frame ${i}`);
+        }
+    }
 }
 
 main(process.argv.slice(2)).catch((error) => {
