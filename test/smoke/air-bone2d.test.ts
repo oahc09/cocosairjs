@@ -85,3 +85,38 @@ test.each([
     mutate(data);
     expect(() => parse(data)).toThrow(pattern);
 });
+
+test('restores editor skeleton order, defaults to saved active rig, and accepts indexed selection', () => {
+    const d = fixture();
+    const p = d.project;
+    p.others = [
+        { ...p.skeleton, name: 'Earlier rig' },
+        { ...p.skeleton, name: 'Later rig' },
+    ];
+    p.activeAt = 1;
+    p.others[0].animations = [{ ...p.skeleton.animations[0], id: 'different' }];
+    const text = JSON.stringify(d);
+    const active = parseBone2dProject(text);
+    expect(active.skeletonNames).toEqual(['Earlier rig', 'Clawbot', 'Later rig']);
+    expect(active.skeletonIndex).toBe(1);
+    expect([...active.clips.keys()]).toEqual(['idle', 'attack']);
+    expect([...parseBone2dProject(text, { skeletonIndex: 0 }).clips.keys()]).toEqual(['different']);
+    expect(() => parseBone2dProject(text, { skeletonIndex: 3 })).toThrow(/FORMAT/);
+});
+
+test('validates skin member references and retains overlay attachment names, not just default-skin names', () => {
+    const d = fixture();
+    const rig = d.project.skeleton;
+    const arm = rig.skins[0].attachments['arm-slot'].arm;
+    rig.skins.push({
+        id: 'glove',
+        name: 'Glove',
+        bones: [],
+        constraints: [],
+        attachments: { 'arm-slot': { glove: { ...arm, path: 'body' } } },
+    });
+    rig.animations[0].slots['arm-slot'] = { attachment: [{ time: 0, name: 'glove' }] };
+    expect(sampleBone2dProject(parse(d), 'idle', 0).slots.get('arm-slot')?.attachment).toBe('glove');
+    rig.skins[1].attachments.invalid = {};
+    expect(() => parse(d)).toThrow(/unknown skin slot/);
+});

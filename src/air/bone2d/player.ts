@@ -32,9 +32,9 @@ import { Node } from '../../cocos/scene-graph/node';
 import { spriteNode } from '../ui-kit';
 import type { AirAtlasHandle } from '../assets/atlas/atlas-factory';
 import { parseBone2dProject, sampleBone2dProject } from './project';
-import type { Bone2dImage, Bone2dMarker, Bone2dPose, Bone2dSample } from './project';
+import type { Bone2dImage, Bone2dMarker, Bone2dPose, Bone2dProjectOptions, Bone2dSample } from './project';
 
-export interface AirBone2dOptions {
+export interface AirBone2dOptions extends Bone2dProjectOptions {
     /** If specified, borrow exact-name frames instead of decoding embedded PNGs. The caller owns the atlas. */
     readonly atlas?: AirAtlasHandle;
     /** Source packing convention for rotated atlas entries; defaults to Bone-2D export. */
@@ -44,6 +44,11 @@ export interface AirBone2dOptions {
 }
 export interface AirBone2dPlayer {
     readonly node: Node;
+    readonly skeletonIndex: number;
+    readonly skeletonNames: readonly string[];
+    readonly skins: readonly { readonly id: string; readonly name: string }[];
+    /** Ordered overlays on the project's default skin (last overlay wins). */
+    setSkins(ids: readonly string[]): void;
     readonly animations: readonly { readonly id: string; readonly name: string; readonly duration: number }[];
     readonly time: number;
     readonly animation: string | null;
@@ -120,14 +125,16 @@ export async function createAirBone2dPlayer(
     text: string,
     options: AirBone2dOptions = {},
 ): Promise<AirBone2dPlayer> {
-    const project = parseBone2dProject(text);
+    const project = parseBone2dProject(text, options);
     const { atlas, signal } = options;
     if (options.atlasRotation !== undefined && options.atlasRotation !== 'air' && options.atlasRotation !== 'bone2d') {
         error('invalid atlas rotation convention');
     }
     const layer = options.layer ?? Layers.Enum.UI_2D;
     const used = new Set<string>();
-    for (const slot of project.slots) for (const region of slot.regions.values()) used.add(region.path);
+    for (const skin of project.skins.values()) {
+        for (const regions of skin.regions.values()) for (const region of regions.values()) used.add(region.path);
+    }
     if (signal?.aborted) throw new Error('AIR_E_BONE2D_ABORTED');
     const frames = new Map<string, SpriteFrame>();
     const retained = new Set<SpriteFrame>();
@@ -159,6 +166,8 @@ export async function createAirBone2dPlayer(
         owned.length = 0;
     };
     const lookup = new Map(project.bones.map((bone) => [bone.id, bone] as const));
+    const defaultSkin = project.skins.values().next().value!;
+    let selectedSkins = [defaultSkin];
     const apply = (sample: Bone2dSample): void => {
         for (let index = 0; index < sample.order.length; index++) {
             const id = sample.order[index],
@@ -168,7 +177,12 @@ export async function createAirBone2dPlayer(
         for (const def of project.slots) {
             const s = slots.get(def.id)!,
                 p = sample.slots.get(def.id)!;
-            const region = p.attachment === null ? undefined : def.regions.get(p.attachment)!;
+            let region;
+            if (p.attachment !== null) {
+                for (let i = selectedSkins.length - 1; i >= 0 && !region; i--) {
+                    region = selectedSkins[i].regions.get(def.id)?.get(p.attachment);
+                }
+            }
             s.root.active = !!region;
             if (!region) {
                 s.sprite.spriteFrame = null;
@@ -293,6 +307,21 @@ export async function createAirBone2dPlayer(
     );
     return {
         node: root,
+        skeletonIndex: project.skeletonIndex,
+        skeletonNames: Object.freeze(project.skeletonNames.slice()),
+        skins: Object.freeze(Array.from(project.skins.values(), ({ id, name }) => Object.freeze({ id, name }))),
+        setSkins(ids): void {
+            ensure();
+            if (!Array.isArray(ids) || ids.length > project.skins.size) error('invalid skin list');
+            const next = new Set([defaultSkin]);
+            for (const id of ids) {
+                const skin = project.skins.get(id);
+                if (!skin) error(`unknown skin: ${id}`);
+                next.add(skin);
+            }
+            selectedSkins = Array.from(next);
+            apply(sampleBone2dProject(project, selected, time));
+        },
         animations,
         get time() {
             return time;

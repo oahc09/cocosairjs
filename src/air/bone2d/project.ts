@@ -40,7 +40,15 @@ interface Slot {
     bone: string;
     attachment: string | null;
     color: RGBA;
-    regions: ReadonlyMap<string, Region>;
+}
+interface Skin {
+    id: string;
+    name: string;
+    regions: ReadonlyMap<string, ReadonlyMap<string, Region>>;
+}
+export interface Bone2dProjectOptions {
+    /** Zero-based editor skeleton order. The saved active skeleton is the default. */
+    readonly skeletonIndex?: number;
 }
 interface Key<T> {
     time: number;
@@ -72,6 +80,9 @@ export interface Bone2dImage {
     readonly dataUrl?: string;
 }
 export interface Bone2dProject {
+    readonly skeletonIndex: number;
+    readonly skeletonNames: readonly string[];
+    readonly skins: ReadonlyMap<string, Skin>;
     readonly bones: readonly Bone[];
     readonly slots: readonly Slot[];
     readonly clips: ReadonlyMap<string, Clip>;
@@ -191,7 +202,7 @@ const channels = new Map([
 ]);
 
 /** Parse the native editor file (JSON, not the optional ZIP container). Reject unsupported rendering semantics. */
-export function parseBone2dProject(text: string): Bone2dProject {
+export function parseBone2dProject(text: string, options: Bone2dProjectOptions = {}): Bone2dProject {
     if (typeof text !== 'string' || text.length > 16 * 1024 * 1024) fail('project exceeds 16 Mi characters');
     let data: unknown;
     try {
@@ -203,8 +214,13 @@ export function parseBone2dProject(text: string): Bone2dProject {
     if (file.bone2d !== 1) fail('unsupported project signature', true);
     const p = obj(file.project, 'project');
     if (p.format !== 'bone2d' || p.version !== 1) fail('unsupported project version', true);
-    none(p.others, 'multiple skeletons');
-    const sk = obj(p.skeleton, 'skeleton');
+    const docs = list(p.others ?? [], 63, 'additional skeletons').map((v) => obj(v, 'skeleton'));
+    const active = num(p.activeAt ?? 0, 'active skeleton index', 0, docs.length);
+    const selected = num(options.skeletonIndex ?? active, 'skeleton index', 0, docs.length);
+    if (!Number.isInteger(active) || !Number.isInteger(selected)) fail('skeleton index must be an integer');
+    docs.splice(active, 0, obj(p.skeleton, 'skeleton'));
+    const skeletonNames = docs.map((d) => str(d.name, 'skeleton name'));
+    const sk = docs[selected];
     none(sk.constraints, 'constraints');
     none(sk.drawOrderFolders, 'draw order folders');
     const bones = list(sk.bones, 128, 'bones').map((raw): Bone => {
@@ -239,39 +255,53 @@ export function parseBone2dProject(text: string): Bone2dProject {
         if (dataUrl != null && typeof dataUrl !== 'string') fail(`invalid embedded image: ${name}`);
         images.set(name, { width, height, dataUrl: dataUrl as string | undefined });
     }
-    const skins = list(sk.skins, 128, 'only one skin is currently supported');
-    if (skins.length !== 1) fail('expected exactly one default skin', true);
-    const skin = obj(skins[0], 'skin');
-    none(skin.bones, 'skin bones');
-    none(skin.constraints, 'skin constraints');
-    const perSlot = new Map(entries(skin.attachments, 'skin attachments'));
     const slots = list(sk.slots, 128, 'slots').map((raw): Slot => {
         const o = obj(raw, 'slot');
         const id = str(o.id, 'slot id'),
             bone = str(o.bone, 'slot bone');
         if (!byBone.has(bone)) fail(`unknown slot bone: ${id}`);
         if (o.blend !== 'normal' || o.dark != null) fail(`slot blend or two-color tint: ${id}`, true);
-        const regions = new Map<string, Region>();
-        for (const [name, rawRegion] of entries(perSlot.get(id), 'regions')) {
-            const r = obj(rawRegion, 'attachment');
-            if (r.type !== 'region' || r.sequence != null)
-                fail(`non-rigid or sequence attachment: ${id}/${name}`, true);
-            const path = str(r.path, 'region image name');
-            if (!images.has(path)) fail(`unknown image: ${path}`);
-            regions.set(name, {
-                path,
-                pose: pose(r, path),
-                width: num(r.width, path, 0.001, 32768),
-                height: num(r.height, path, 0.001, 32768),
-                color: color(r.color, path),
-            });
-        }
-        const attachment = optionalStr(o.attachment, 'setup attachment');
-        if (attachment !== null && !regions.has(attachment)) fail(`unknown setup attachment: ${id}/${attachment}`);
-        return { id, bone, attachment, regions, color: color(o.color, id) };
+        return { id, bone, attachment: optionalStr(o.attachment, 'setup attachment'), color: color(o.color, id) };
     });
     const bySlot = index(slots, 'duplicate slot id');
-    for (const id of perSlot.keys()) if (!bySlot.has(id)) fail(`unknown skin slot: ${id}`);
+    const skins = index(
+        list(sk.skins, 128, 'skins').map((raw): Skin => {
+            const o = obj(raw, 'skin');
+            const id = str(o.id, 'skin id'),
+                name = str(o.name, 'skin name');
+            none(o.bones, 'skin-required bones');
+            none(o.constraints, 'skin-required constraints');
+            const bySlotRegion = new Map<string, Map<string, Region>>();
+            for (const [slotId, rawRegions] of entries(o.attachments, 'skin attachments')) {
+                if (!bySlot.has(slotId)) fail(`unknown skin slot: ${slotId}`);
+                const regions = new Map<string, Region>();
+                for (const [attachment, rawRegion] of entries(rawRegions, 'regions')) {
+                    const r = obj(rawRegion, 'attachment');
+                    if (r.type !== 'region' || r.sequence != null)
+                        fail(`non-rigid or sequence attachment: ${slotId}/${attachment}`, true);
+                    const path = str(r.path, 'region image name');
+                    if (!images.has(path)) fail(`unknown image: ${path}`);
+                    regions.set(attachment, {
+                        path,
+                        pose: pose(r, path),
+                        width: num(r.width, path, 0.001, 32768),
+                        height: num(r.height, path, 0.001, 32768),
+                        color: color(r.color, path),
+                    });
+                }
+                bySlotRegion.set(slotId, regions);
+            }
+            return { id, name, regions: bySlotRegion };
+        }),
+        'duplicate skin id',
+    );
+    if (!skins.size) fail('expected a default skin');
+    const hasRegion = (slot: string, key: string): boolean =>
+        Array.from(skins.values()).some((skin) => skin.regions.get(slot)?.has(key));
+    for (const slot of slots) {
+        if (slot.attachment !== null && !hasRegion(slot.id, slot.attachment))
+            fail(`unknown setup attachment: ${slot.id}/${slot.attachment}`);
+    }
     const defs = index(
         list(sk.events ?? [], 256, 'events').map((raw) => {
             const o = obj(raw, 'event definition');
@@ -314,7 +344,7 @@ export function parseBone2dProject(text: string): Bone2dProject {
                 slotTracks.set(slotId, {
                     attachment: keys(t.attachment, duration, 'attachment keys', (k) => {
                         const a = optionalStr(k.name, 'attachment key');
-                        if (a !== null && !slot.regions.has(a)) fail(`unknown attachment key: ${slotId}/${a}`);
+                        if (a !== null && !hasRegion(slotId, a)) fail(`unknown attachment key: ${slotId}/${a}`);
                         return a;
                     }),
                     rgba: values(t.rgba, 4, duration, 'slot tint'),
@@ -352,7 +382,7 @@ export function parseBone2dProject(text: string): Bone2dProject {
         }),
         'duplicate animation id',
     );
-    return { bones, slots, clips, images };
+    return { skeletonIndex: selected, skeletonNames, bones, slots, clips, images, skins };
 }
 function last<T>(track: readonly Key<T>[], time: number): number {
     let lo = 0,

@@ -212,13 +212,62 @@ async function main() {
                     mounts: parent.children.filter((node) => node.name === 'Bone2D').length,
                 };
             };
+            let wardrobe;
+            const skinsMount = async () => {
+                const value = JSON.parse(text),
+                    model = value.project;
+                const rig = model.skeleton;
+                const arm = rig.skins[0].attachments['arm-slot'].arm;
+                rig.skins.push(
+                    {
+                        id: 'red',
+                        name: 'Red glove',
+                        bones: [],
+                        constraints: [],
+                        attachments: { 'arm-slot': { arm: { ...arm, path: 'body' } } },
+                    },
+                    {
+                        id: 'cyan',
+                        name: 'Cyan glove',
+                        bones: [],
+                        constraints: [],
+                        attachments: { 'arm-slot': { arm } },
+                    },
+                );
+                model.others = [
+                    { ...rig, name: 'Alternate skeleton', animations: [{ ...rig.animations[0], id: 'alt-idle' }] },
+                ];
+                model.activeAt = 1;
+                wardrobe = await air.createAirBone2dPlayer(parent, JSON.stringify(value), { skeletonIndex: 0 });
+                wardrobe.play('alt-idle', true);
+                wardrobe.advance(0.125);
+                await clock.step(0);
+                return {
+                    rigs: wardrobe.skeletonNames,
+                    index: wardrobe.skeletonIndex,
+                    skins: wardrobe.skins.map((s) => s.id),
+                };
+            };
+            const skinsChange = async (ids) => {
+                let invalid;
+                try {
+                    wardrobe.setSkins(ids);
+                } catch (e) {
+                    invalid = e.message;
+                }
+                await clock.step(0);
+                return { time: wardrobe.time, invalid };
+            };
             window.bone2dTest = {
                 frame,
                 negative,
+                skinsMount,
+                skinsChange,
                 atlasMount,
                 atlasRelease,
                 close: async () => {
                     player.dispose();
+                    wardrobe?.dispose();
                     clock.end();
                     await app.close();
                 },
@@ -316,6 +365,28 @@ async function main() {
         );
         report.atlas.release = await page.evaluate(() => window.bone2dTest.atlasRelease());
         assert.deepEqual(report.atlas.release, { borrowedStillLive: true, atlasDisposed: true, mounts: 0 });
+        report.wardrobe = await page.evaluate(() => window.bone2dTest.skinsMount());
+        assert.deepEqual(report.wardrobe, {
+            rigs: ['Alternate skeleton', 'Clawbot'],
+            index: 0,
+            skins: ['skin', 'red', 'cyan'],
+        });
+        const baseSkin = sha(await page.screenshot());
+        const red = await page.evaluate(() => window.bone2dTest.skinsChange(['red']));
+        assert.equal(red.time, 0.125);
+        assert.equal(red.invalid, undefined);
+        const redSkin = sha(await page.screenshot());
+        assert.notEqual(redSkin, baseSkin);
+        const invalidSkin = await page.evaluate(() => window.bone2dTest.skinsChange(['invalid']));
+        assert.match(invalidSkin.invalid, /unknown skin/);
+        assert.equal(sha(await page.screenshot()), redSkin, 'invalid skin must leave the existing display unchanged');
+        await page.evaluate(() => window.bone2dTest.skinsChange(['red', 'cyan']));
+        assert.equal(sha(await page.screenshot()), baseSkin, 'last overlay wins, preserving default body');
+        await page.evaluate(() => window.bone2dTest.skinsChange(['cyan', 'red']));
+        assert.equal(sha(await page.screenshot()), redSkin);
+        await page.evaluate(() => window.bone2dTest.skinsChange([]));
+        assert.equal(sha(await page.screenshot()), baseSkin);
+        report.wardrobe.screenshots = { base: baseSkin, red: redSkin };
         await page.evaluate(() => window.bone2dTest.close());
         assert.deepEqual(report.pageErrors, []);
         report.status = 'PASS';
