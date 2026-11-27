@@ -60,7 +60,7 @@ export type Bone2dPhysicsState = Map<string, Spring>;
 export interface PhysicsStep {
     state: Bone2dPhysicsState;
     seconds: number;
-    intervals: readonly (readonly [number, number])[];
+    intervals: readonly (readonly [number, number, boolean?])[];
 }
 function point(x: number, y: number): SpringPoint {
     return { x: 0, y: 0, vx: 0, vy: 0, anchorX: x, anchorY: y };
@@ -72,6 +72,7 @@ export function solveBone2dPhysics(
     p: PhysicsParams,
     matrix: Matrix2D,
     length: number,
+    referenceScale: number,
     tick: PhysicsStep,
     reset: boolean,
 ): Matrix2D {
@@ -111,7 +112,7 @@ export function solveBone2dPhysics(
     const steps = Math.floor((spring.remainder + dt + 1e-12) / h);
     spring.remainder = Math.max(0, spring.remainder + dt - h * steps);
     // Drift/kick integration of m*q'' = F - k*q, with per-step
-    // velocity retention. The native authoring force unit is 100 AIR units.
+    // velocity retention. The rig reference scale defines native translation force units.
     const stiffness = p.strength / p.mass;
     const damping = Math.pow(p.damping, 60 * h);
     const wind = p.wind / p.mass,
@@ -131,8 +132,8 @@ export function solveBone2dPhysics(
         const safe = (n: number): number => Math.max(-1e6, Math.min(1e6, n));
         return [safe(value), safe(speed)];
     };
-    [spring.root.x, spring.root.vx] = integrate(spring.root.x, spring.root.vx, 100 * wind);
-    [spring.root.y, spring.root.vy] = integrate(spring.root.y, spring.root.vy, 100 * gravity);
+    [spring.root.x, spring.root.vx] = integrate(spring.root.x, spring.root.vx, referenceScale * wind);
+    [spring.root.y, spring.root.vy] = integrate(spring.root.y, spring.root.vy, referenceScale * gravity);
     const px = x + c.x * p.mix * spring.root.x;
     const py = y + c.y * p.mix * spring.root.y;
     const span = Math.hypot(tipX - x, tipY - y);
@@ -146,7 +147,7 @@ export function solveBone2dPhysics(
     const ux = (tipX - x) / span,
         uy = (tipY - y) / span;
     const axial = ux * wind + uy * gravity;
-    const torque = ((ux * gravity - uy * wind) * length) / 100;
+    const torque = ((ux * gravity - uy * wind) * length) / referenceScale;
     [spring.stretch.value, spring.stretch.speed] = integrate(spring.stretch.value, spring.stretch.speed, axial);
     [spring.torque.value, spring.torque.speed] = integrate(spring.torque.value, spring.torque.speed, torque);
     const dx = spring.tip.x - (px - x),

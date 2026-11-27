@@ -41,6 +41,8 @@ import type { AirAtlasHandle } from '../assets/atlas/atlas-factory';
 import { factorBone2dBasis } from './affine';
 import { convexClipOutline, hasNonCollinearPoints } from './polygon';
 import type { Bone2dPhysicsState, PhysicsStep } from './physics';
+import { bone2dKeysInWindow, makeBone2dPlayback, playbackBudget, traverseBone2dPlayback } from './playback';
+import type { Bone2dPlaybackOptions, Bone2dSavedPlayback, Playback, PlaybackCursor } from './playback';
 import { parseBone2dProject, sampleBone2dFrame, bone2dWorldMatrices, bone2dMeshPositions, bone2dPicture, resolveBone2dAttachment, bone2dShapeGeometry } from './project';
 import type { Bone2dAttachmentGeometry, Bone2dBlend, Bone2dClipAttachment, Bone2dImage, Bone2dMarker, Bone2dPose, Bone2dProjectOptions, Bone2dSample } from './project';
 
@@ -54,6 +56,28 @@ export interface AirBone2dOptions extends Bone2dProjectOptions {
     readonly layer?: number;
     readonly signal?: AbortSignal;
 }
+export interface Bone2dCrossfadeOptions {
+    /** Defaults to the saved pair or default mix duration, in real seconds. */
+    readonly duration?: number;
+    readonly holdPrevious?: boolean;
+    readonly playback?: boolean | Bone2dPlaybackOptions;
+}
+export interface Bone2dLayerOptions {
+    readonly id: string;
+    /** Initial local time. Extra layers advance with the main player's speed and do not emit markers. */
+    readonly time?: number;
+    readonly weight?: number;
+    readonly additive?: boolean;
+    readonly loop?: boolean;
+}
+type Layer = Required<Bone2dLayerOptions> & { length: number };
+type LocalPose = Pick<Bone2dSample, 'bones' | 'shears'>;
+type Transition = {
+    source: { id: string; time: number; direction: 1 | -1; lo: number; hi: number } | { frozen: LocalPose };
+    duration: number;
+    elapsed: number;
+    holdPrevious: boolean;
+};
 export interface AirBone2dPlayer {
     readonly node: Node;
     readonly skeletonIndex: number;
@@ -61,12 +85,17 @@ export interface AirBone2dPlayer {
     readonly skins: readonly { readonly id: string; readonly name: string }[];
     /** Ordered overlays on the project's default skin (last overlay wins). */
     setSkins(ids: readonly string[]): void;
-    readonly animations: readonly { readonly id: string; readonly name: string; readonly duration: number }[];
+    readonly animations: readonly { readonly id: string; readonly name: string; readonly duration: number; readonly play: Bone2dSavedPlayback }[];
     readonly time: number;
     readonly animation: string | null;
     readonly playing: boolean;
-    /** Starts a clip at zero. It will emit time-zero markers on the first positive advance. */
-    play(id: string, loop?: boolean): void;
+    readonly direction: 1 | -1;
+    /** A boolean preserves legacy full-span forward playback; an options object can select saved settings. */
+    play(id: string, options?: boolean | Bone2dPlaybackOptions): void;
+    /** Crossfade main bone channels, switching non-bone timelines to the destination immediately. */
+    crossfade(id: string, options?: Bone2dCrossfadeOptions): void;
+    /** Replaces the ordered preview layers and resets their clocks to the supplied times. */
+    setLayers(layers: readonly Bone2dLayerOptions[]): void;
     pause(): void;
     resume(): void;
     /** Updates the pose without emitting or replaying markers. */
@@ -261,8 +290,20 @@ export async function createAirBone2dPlayer(
     let activeOverlays: string[] = [];
     const physics: Bone2dPhysicsState = new Map();
     const hasPhysics = [...project.constraints.values()].some((c) => c.kind === 'physics');
-    const sampleFor = (clip: string | null, time: number, seconds = 0, intervals: PhysicsStep['intervals'] = []): Bone2dSample =>
-        sampleBone2dFrame(project, clip, time, activeOverlays, hasPhysics ? { state: physics, seconds, intervals } : undefined);
+    let transition: Transition | null = null;
+    let layers: readonly Layer[] = [];
+    const transitionFrame = (value: Transition | null) => {
+        if (!value) return undefined;
+        const source = value.source;
+        const from = 'frozen' in source ? source.frozen :
+            sampleBone2dFrame(project, source.id, source.time, activeOverlays, undefined, undefined, true);
+        return { from, alpha: value.elapsed / value.duration, holdPrevious: value.holdPrevious };
+    };
+    const sampleFor = (clip: string | null, time: number, seconds = 0, intervals: PhysicsStep['intervals'] = [],
+        mixing = transition, overlays = layers): Bone2dSample =>
+        sampleBone2dFrame(project, clip, time, activeOverlays, hasPhysics ? { state: physics, seconds, intervals } : undefined,
+            mixing || overlays.length ? { transition: transitionFrame(mixing), layers: overlays } : undefined,
+        );
     let currentSample: Bone2dSample;
     const apply = (sample: Bone2dSample): void => {
         let world: ReturnType<typeof bone2dWorldMatrices> | null = null;
@@ -505,16 +546,33 @@ export async function createAirBone2dPlayer(
         release(true);
         throw failure;
     }
-    let selected: string | null = null,
-        time = 0,
-        playing = false,
-        loop = false,
-        first = false;
+    let selected: string | null = null;
+    let playback: Playback | null = null;
+    let cursor: PlaybackCursor = { time: 0, direction: 1, first: false };
+    let playing = false;
     const ensure = (): void => {
         if (disposed || !isValid(root, true)) error('player is disposed');
     };
+    const begin = (id: string, options: boolean | Bone2dPlaybackOptions, fade: Transition | null): void => {
+        const clip = project.clips.get(id);
+        if (!clip) error(`unknown animation: ${id}`);
+        const mode = makeBone2dPlayback(clip.duration, clip.play, options, error);
+        const time = mode.initialDirection > 0 ? mode.lo : mode.hi;
+        physics.clear();
+        apply(sampleFor(id, time, 0, [], fade));
+        selected = id;
+        playback = mode;
+        cursor = { time, direction: mode.initialDirection, first: true };
+        transition = fade;
+        playing = true;
+    };
+    const clamp = (x: number, lo: number, hi: number): number => Math.max(lo, Math.min(hi, x));
     const animations = Object.freeze(
-        Array.from(project.clips.values(), ({ id, name, duration }) => Object.freeze({ id, name, duration })),
+        Array.from(project.clips.values(), ({ id, name, duration, play }) => Object.freeze({
+            id, name, duration, play: Object.freeze({
+                ...play, range: play.range ? Object.freeze([play.range[0], play.range[1]] as const) : null,
+            }),
+        })),
     );
     return {
         node: root,
@@ -532,7 +590,7 @@ export async function createAirBone2dPlayer(
             }
             selectedSkins = Array.from(next);
             activeOverlays = selectedSkins.slice(1).map((skin) => skin.id);
-            apply(sampleFor(selected, time));
+            apply(sampleFor(selected, cursor.time));
         },
         getAttachmentGeometry(slotId): Bone2dAttachmentGeometry | null {
             ensure();
@@ -544,7 +602,10 @@ export async function createAirBone2dPlayer(
         },
         animations,
         get time() {
-            return time;
+            return cursor.time;
+        },
+        get direction() {
+            return cursor.direction;
         },
         get animation() {
             return selected;
@@ -552,16 +613,47 @@ export async function createAirBone2dPlayer(
         get playing() {
             return !disposed && playing;
         },
-        play(id, repeat = false): void {
+        play(id, options = false): void {
             ensure();
-            if (!project.clips.has(id)) error(`unknown animation: ${id}`);
-            physics.clear();
-            apply(sampleFor(id, 0));
-            selected = id;
-            time = 0;
-            playing = true;
-            loop = repeat;
-            first = true;
+            begin(id, options, null);
+        },
+        crossfade(id, options = {}): void {
+            ensure();
+            if (!options || typeof options !== 'object' || Array.isArray(options)) error('invalid crossfade options');
+            if (options.holdPrevious !== undefined && typeof options.holdPrevious !== 'boolean') error('invalid hold option');
+            const saved = selected === null || selected === id ? 0 :
+                project.mixPairs.get(selected)?.get(id) ?? project.mixDefault;
+            const duration = options.duration === undefined ? saved : options.duration;
+            if (!Number.isFinite(duration) || duration < 0 || duration > 10) error('invalid crossfade duration');
+            let fade: Transition | null = null;
+            if (duration > 0) {
+                const source: Transition['source'] = transition !== null || selected === null || playback === null
+                    ? { frozen: sampleBone2dFrame(project, selected, cursor.time, activeOverlays, undefined,
+                        { transition: transitionFrame(transition) }, true) }
+                    : { id: selected, time: cursor.time, direction: cursor.direction, lo: playback.lo, hi: playback.hi };
+                fade = { source, duration, elapsed: 0, holdPrevious: options.holdPrevious ?? false };
+            }
+            begin(id, options.playback ?? false, fade);
+        },
+        setLayers(next): void {
+            ensure();
+            if (!Array.isArray(next) || next.length > 8) error('invalid layer list');
+            const checked: Layer[] = Array.from(next, (def: Bone2dLayerOptions) => {
+                if (def == null || typeof def !== 'object') error('invalid layer');
+                const clip = project.clips.get(def.id);
+                if (!clip) error(`unknown layer animation: ${def.id}`);
+                const { weight = 1, additive = false, loop = true, time = 0 } = def;
+                if (!Number.isFinite(weight) || weight < 0 || weight > 1 ||
+                    typeof additive !== 'boolean' || typeof loop !== 'boolean' || !Number.isFinite(time) || time < 0) {
+                    error('invalid layer options');
+                }
+                const length = clip.duration;
+                return { id: def.id, weight, additive, loop, length,
+                    time: length > 0 && loop ? time % length : Math.min(time, length),
+                };
+            });
+            apply(sampleFor(selected, cursor.time, 0, [], transition, checked));
+            layers = checked;
         },
         pause(): void {
             ensure();
@@ -574,39 +666,47 @@ export async function createAirBone2dPlayer(
         seek(seconds): void {
             ensure();
             if (!Number.isFinite(seconds)) error('invalid seek time');
-            time = Math.max(0, Math.min(seconds, selected === null ? 0 : project.clips.get(selected)!.duration));
+            const time = Math.max(playback?.lo ?? 0, Math.min(seconds, playback?.hi ?? 0));
             physics.clear();
-            apply(sampleFor(selected, time));
-            first = false;
+            apply(sampleFor(selected, time, 0, [], null));
+            transition = null;
+            cursor = { ...cursor, time, first: false };
         },
         advance(delta): readonly Bone2dMarker[] {
             ensure();
             if (!Number.isFinite(delta) || delta < 0) error('advance requires a finite nonnegative delta');
-            if (!playing || selected === null || delta === 0) return [];
+            if (!playing || selected === null || playback === null || delta === 0) return [];
             const clip = project.clips.get(selected)!;
-            const end = time + delta,
-                d = clip.duration;
-            const wraps = loop && d > 0 ? Math.floor(end / d) : 0;
-            if (!Number.isSafeInteger(wraps) || (clip.markers.length > 0 && wraps > 8192 / clip.markers.length)) {
-                error('advance crosses too many marker loops');
-            }
-            const to = wraps > 0 ? Math.max(0, end - wraps * d) : Math.min(d, end);
+            const next = traverseBone2dPlayback(playback, cursor, delta, error);
             const out: Bone2dMarker[] = [];
-            const emit = (from: number, through: number): void => {
-                for (const k of clip.markers) if (k.time > from && k.time <= through) out.push(k.value);
-            };
-            const start = first ? -1 : time;
-            if (wraps > 0 && clip.markers.length > 0) {
-                emit(start, d);
-                for (let i = 1; i < wraps; ++i) emit(-1, d);
-                emit(-1, to);
-            } else emit(start, to);
-            const intervals: PhysicsStep['intervals'] = wraps === 0 ? [[start, to]] :
-                wraps === 1 ? [[start, d], [-1, to]] : [[start, d], [-1, d], [-1, to]];
-            apply(sampleFor(selected, to, wraps ? delta : to - time, intervals));
-            first = false;
-            time = to;
-            if (d === 0 || (!loop && time >= d)) playing = false;
+            for (const window of next.windows) {
+                const hits = bone2dKeysInWindow(clip.markers, window);
+                if (out.length + hits.length > playbackBudget) error('advance crosses too many markers');
+                for (const k of hits) out.push(k.value);
+            }
+            if (next.windows.some(([from, to]) => to < from)) physics.clear();
+            const spent = delta * playback.speed;
+            let fade = transition;
+            if (fade) {
+                const elapsed = fade.elapsed + delta;
+                if (elapsed >= fade.duration) fade = null;
+                else {
+                    const { source } = fade;
+                    fade = { ...fade, elapsed, source: 'frozen' in source ? source :
+                        { ...source, time: clamp(source.time + source.direction * spent, source.lo, source.hi) },
+                    };
+                }
+            }
+            const overlays = layers.map((layer) => {
+                const time = layer.length === 0 ? 0 : layer.loop ?
+                    (layer.time + spent % layer.length) % layer.length : Math.min(layer.time + spent, layer.length);
+                return { ...layer, time };
+            });
+            apply(sampleFor(selected, next.cursor.time, next.elapsed, next.windows, fade, overlays));
+            cursor = next.cursor;
+            transition = fade;
+            layers = overlays;
+            if (next.stopped && !transition) playing = false;
             return out;
         },
         dispose: () => release(true),

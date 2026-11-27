@@ -25,6 +25,8 @@ const files = [
     'test/fixtures/bone2d/path-follow.bone2d',
     'src/air/bone2d/path.ts',
     'src/air/bone2d/physics.ts',
+    'src/air/bone2d/playback.ts',
+    'test/fixtures/bone2d/playback.bone2d',
     'test/fixtures/bone2d/physics.bone2d',
     'src/air/bone2d/transform.ts',
 ];
@@ -73,6 +75,10 @@ async function main() {
         if (req.url === '/path-follow.bone2d') {
             res.setHeader('Content-Type', 'application/json');
             return res.end(fs.readFileSync(path.join(root, 'test/fixtures/bone2d/path-follow.bone2d')));
+        }
+        if (req.url === '/playback.bone2d') {
+            res.setHeader('Content-Type', 'application/json');
+            return res.end(fs.readFileSync(path.join(root, 'test/fixtures/bone2d/playback.bone2d')));
         }
         if (req.url === '/physics.bone2d') {
             res.setHeader('Content-Type', 'application/json');
@@ -936,6 +942,32 @@ async function main() {
                 });
                 return { time: ikPlayer.time, markers, values };
             };
+            const previewMount = async () => {
+                const file = await fetch('/playback.bone2d').then((r) => r.text());
+                ikPlayer = await air.createAirBone2dPlayer(parent, file);
+                ikPlayer.play('idle');
+            };
+            const previewFrame = async ({ play, fade, layers, delta, seek } = {}) => {
+                if (play) ikPlayer.play(...play);
+                if (fade) ikPlayer.crossfade(...fade);
+                if (layers) ikPlayer.setLayers(layers);
+                if (seek !== undefined) ikPlayer.seek(seek);
+                const markers = delta === undefined ? [] : ikPlayer.advance(delta).map((m) => m.id);
+                await clock.step(0);
+                const point = ikPlayer.getAttachmentGeometry('point-slot');
+                const sprite = leaves(ikPlayer.node.getChildByName('arm-slot'))[0];
+                const mat = sprite.node.worldMatrix,
+                    root = ikPlayer.node.worldMatrix;
+                return {
+                    time: ikPlayer.time,
+                    direction: ikPlayer.direction,
+                    playing: ikPlayer.playing,
+                    pose: [point.y, point.rotation],
+                    visible: [mat.m13 - root.m13, (Math.atan2(mat.m01, mat.m00) * 180) / Math.PI],
+                    width: sprite.spriteFrame.originalSize.width,
+                    markers,
+                };
+            };
             const ikClose = async () => {
                 ikPlayer.dispose();
                 await clock.step(0);
@@ -952,6 +984,8 @@ async function main() {
                 pathState,
                 physicsMount,
                 physicsFrame,
+                previewMount,
+                previewFrame,
                 ikClose,
                 frame,
                 requiredMount,
@@ -1607,6 +1641,46 @@ async function main() {
         assert.equal(physics.separateWind.image, physics.paused.image);
         await page.evaluate(() => window.bone2dTest.ikClose());
         report.physics = physics;
+        const preview = {};
+        async function poseCase(label, input, time, y, angle, width, markers = [], direction = 1) {
+            const frame = await page.evaluate((v) => window.bone2dTest.previewFrame(v), input);
+            assert.ok(Math.abs(frame.time - time) < 1e-9, JSON.stringify(frame));
+            assert.equal(frame.direction, direction);
+            assert.equal(frame.width, width);
+            assert.deepEqual(frame.markers, markers);
+            for (const [dy, rotation] of [frame.pose, frame.visible]) {
+                assert.ok(Math.abs(dy - y) < 1e-5, JSON.stringify(frame));
+                assert.ok(Math.abs(((rotation - angle + 540) % 360) - 180) < 1e-4, JSON.stringify(frame));
+            }
+            preview[label] = { ...frame, image: sha(await page.screenshot()) };
+        }
+        await page.evaluate(() => window.bone2dTest.previewMount());
+        await poseCase('single', {}, 0, 20, 170, 8);
+        await poseCase('destinationAtZero', { fade: ['attack'] }, 0, 20, 170, 16);
+        await poseCase('half', { delta: 0.5 }, 0.5, 12, 180, 16, ['ev-start', 'ev-impact']);
+        await poseCase('interrupted', { fade: ['idle', { duration: 1 }] }, 0, 12, 180, 8);
+        await poseCase('holdFirst', { play: ['idle'], fade: ['attack', { holdPrevious: true }] }, 0, 20, 170, 16);
+        await poseCase('holdNearly', { delta: 0.999 }, 0.999, 20, 189.98, 16, ['ev-start', 'ev-impact', 'ev-end']);
+        await poseCase('holdTerminal', { delta: 0.001 }, 1, 4, -170, 16);
+        await poseCase('replaceBelow', { play: ['idle'], layers: [{ id: 'attack', weight: 0.49 }] }, 0, 20, 179.8, 8);
+        await poseCase('replaceAt', { layers: [{ id: 'attack', weight: 0.5 }] }, 0, 20, 180, 16);
+        await poseCase('add', { layers: [{ id: 'attack', additive: true }], delta: 0.5 }, 0.5, 20, 0, 8, ['ev-start']);
+        await poseCase(
+            'rangeStart',
+            { layers: [], play: ['attack', { useSavedSettings: true, speed: 2 }] },
+            0.25,
+            4,
+            -170,
+            16,
+        );
+        await poseCase('rangeTurn', { delta: 0.25 }, 0.75, 4, -170, 16, ['ev-start', 'ev-impact', 'ev-end'], -1);
+        await poseCase('rangeReturn', { delta: 0.25 }, 0.25, 4, -170, 16, ['ev-impact', 'ev-start']);
+        assert.notEqual(preview.single.image, preview.destinationAtZero.image);
+        assert.notEqual(preview.replaceBelow.image, preview.replaceAt.image);
+        assert.notEqual(preview.holdNearly.image, preview.holdTerminal.image);
+        assert.equal(preview.rangeStart.image, preview.rangeReturn.image);
+        await page.evaluate(() => window.bone2dTest.ikClose());
+        report.preview = preview;
         await page.evaluate(() => window.bone2dTest.close());
         assert.deepEqual(report.pageErrors, []);
         report.status = 'PASS';

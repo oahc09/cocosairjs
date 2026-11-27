@@ -1,5 +1,6 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
+import { bone2dKeysInWindow, makeBone2dPlayback, traverseBone2dPlayback } from '../../src/air/bone2d/playback';
 import { convexClipOutline } from '../../src/air/bone2d/polygon';
 import { factorBone2dBasis, multiplyBasis, poseBasis } from '../../src/air/bone2d/affine';
 import {
@@ -1109,4 +1110,114 @@ test('an earlier additive slider adds force but blends mass for a driven spring'
     [params, x] = read();
     expect(params).toMatchObject({ wind: 72, mass: 1.5 });
     expect(x).toBeCloseTo(-22.4375, 7);
+});
+
+const playbackText = readFileSync(resolve(__dirname, '../fixtures/bone2d/playback.bone2d'), 'utf8');
+test('saved playback covers range, speed and reversed ping-pong markers with no repeated turn key', () => {
+    const p = parseBone2dProject(playbackText);
+    const clip = p.clips.get('attack')!;
+    const fail = (m: string): never => {
+        throw Error(m);
+    };
+    const mode = makeBone2dPlayback(clip.duration, clip.play, { useSavedSettings: true, speed: 2 }, fail);
+    const a = traverseBone2dPlayback(mode, { time: mode.lo, direction: 1, first: true }, 0.25, fail);
+    expect(a.cursor).toEqual({ time: 0.75, direction: -1, first: false });
+    expect(a.windows.flatMap((w) => bone2dKeysInWindow(clip.markers, w).map((m) => m.value.id))).toEqual([
+        'ev-start',
+        'ev-impact',
+        'ev-end',
+    ]);
+    const b = traverseBone2dPlayback(mode, a.cursor, 0.25, fail);
+    expect(b.cursor).toEqual({ time: 0.25, direction: 1, first: false });
+    expect(b.windows.flatMap((w) => bone2dKeysInWindow(clip.markers, w).map((m) => m.value.id))).toEqual([
+        'ev-impact',
+        'ev-start',
+    ]);
+    const legacy = makeBone2dPlayback(clip.duration, clip.play, false, fail);
+    expect(legacy).toMatchObject({ lo: 0, hi: 1, loop: false, pingPong: false });
+    expect(() => traverseBone2dPlayback(mode, b.cursor, 1e9, fail)).toThrow(/boundaries/);
+});
+
+test('one-shot reverse ping-pong, exact loop seams, and degenerate clips use directed marker windows', () => {
+    const fail = (m: string): never => {
+        throw Error(m);
+    };
+    const saved = { loop: true, pingPong: false, range: null };
+    const once = makeBone2dPlayback(1, saved, { direction: -1, range: [0.25, 0.75], pingPong: true }, fail);
+    const a = traverseBone2dPlayback(once, { time: 0.75, direction: -1, first: true }, 1.25, fail);
+    expect(a).toEqual({
+        cursor: { time: 0.75, direction: 1, first: false },
+        elapsed: 1,
+        stopped: true,
+        windows: [
+            [0.75, 0.25, true],
+            [0.25, 0.75, false],
+        ],
+    });
+    expect(
+        bone2dKeysInWindow(
+            [
+                { time: 0.25, id: 1 },
+                { time: 0.5, id: 2 },
+                { time: 0.5, id: 3 },
+                { time: 0.75, id: 4 },
+            ],
+            a.windows[0],
+        ).map((k) => k.id),
+    ).toEqual([4, 2, 3, 1]);
+    const cyclic = makeBone2dPlayback(1, saved, { range: [0.25, 0.75], loop: true }, fail);
+    expect(traverseBone2dPlayback(cyclic, { time: 0.25, direction: 1, first: true }, 1, fail).windows).toEqual([
+        [0.25, 0.75, true],
+        [0.25, 0.75, true],
+        [0.25, 0.25, true],
+    ]);
+    const empty = makeBone2dPlayback(0, saved, true, fail);
+    expect(traverseBone2dPlayback(empty, { time: 0, direction: 1, first: true }, 10, fail)).toEqual({
+        cursor: { time: 0, direction: 1, first: false },
+        elapsed: 0,
+        stopped: true,
+        windows: [[0, 0, true]],
+    });
+});
+
+test('preview crossfades local transforms but immediately follows destination slot and Hold Previous is terminal', () => {
+    const p = parseBone2dProject(playbackText);
+    expect(p.mixPairs.get('idle')!.get('attack')).toBe(1);
+    expect(p.mixDefault).toBe(0.25);
+    const from = sampleBone2dFrame(p, 'idle', 0, [], undefined, undefined, true);
+    const sample = (alpha: number, holdPrevious: boolean) =>
+        sampleBone2dFrame(p, 'attack', 0, [], undefined, { transition: { from, alpha, holdPrevious } });
+    expect(sample(0, false).slots.get('arm-slot')?.attachment).toBe('alt');
+    expect(sample(0, false).bones.get('arm-bone')?.slice(1, 3)).toEqual([20, 170]);
+    expect(sample(0.5, false).bones.get('arm-bone')?.slice(1, 3)).toEqual([12, 180]);
+    expect(sample(0.5, true).bones.get('arm-bone')?.slice(1, 3)).toEqual([20, 180]);
+    expect(sample(0.999, true).bones.get('arm-bone')?.[1]).toBe(20);
+    expect(sample(1, true).bones.get('arm-bone')?.slice(1, 3)).toEqual([4, -170]);
+});
+
+test('preview layers switch attachment at half weight only in replace mode', () => {
+    const p = parseBone2dProject(playbackText);
+    const sample = (weight: number, additive: boolean) =>
+        sampleBone2dFrame(p, 'idle', 0, [], undefined, { layers: [{ id: 'attack', time: 0, weight, additive }] });
+    expect(sample(0.49, false).slots.get('arm-slot')!.attachment).toBe('arm');
+    expect(sample(0.5, false).slots.get('arm-slot')!.attachment).toBe('alt');
+    expect(sample(0.5, false).slotFrames?.has('arm-slot')).toBe(false);
+    expect(sample(1, true).slots.get('arm-slot')!.attachment).toBe('arm');
+    expect(sample(0.5, false).bones.get('arm-bone')?.slice(1, 3)).toEqual([20, 180]);
+    expect(sample(1, true).bones.get('arm-bone')?.slice(1, 3)).toEqual([20, 0]);
+});
+
+test('native rig reference scale sets translation force units', () => {
+    const f = physicsFixture(),
+        rig = f.project.skeleton;
+    rig.referenceScale = 200;
+    rig.animations[0].bones = {};
+    const p = parse(f),
+        state = new Map();
+    sampleBone2dFrame(p, 'idle', 0, [], { state, seconds: 0, intervals: [] });
+    const w = bone2dWorldMatrices(
+        p,
+        sampleBone2dFrame(p, 'idle', 1 / 32, [], { state, seconds: 1 / 32, intervals: [] }),
+    );
+    expect(w.get('arm-bone')![4]).toBeCloseTo(-20.875, 7);
 });
