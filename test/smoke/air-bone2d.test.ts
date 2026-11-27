@@ -446,3 +446,28 @@ test('signed two-node affine factorization reconstructs deterministic matrices i
     const [o, i, sx, sy] = factorBone2dBasis([0, 0, 0, 0, 0, 0]);
     expect([o, i, sx, sy]).toEqual([0, 0, 0, 0]);
 });
+
+test('skin membership activates required ancestors without activating the default fallback skin', () => {
+    const file = fixture(),
+        rig = file.project.skeleton;
+    const arm = rig.bones.find((bone: { id: string }) => bone.id === 'arm-bone');
+    arm.skinRequired = true;
+    rig.bones.push({ ...arm, id: 'arm-grip', parent: 'arm-bone' });
+    rig.skins[0].bones = ['arm-bone'];
+    rig.skins.push({ id: 'armor', name: 'Armor', bones: ['arm-grip'], constraints: [], attachments: {} });
+    const model = parse(file);
+    for (const overlays of [[], ['skin']]) {
+        const off = sampleBone2dProject(model, 'attack', 0.5, overlays);
+        expect(off.activeBones.has('arm-bone')).toBe(false);
+        expect(off.slots.get('arm-slot')?.attachment).toBeNull();
+        expect(off.bones.get('arm-bone')?.[0]).toBe(6);
+    }
+    const on = sampleBone2dProject(model, 'attack', 0.5, ['armor']);
+    expect(on.activeBones.has('arm-grip')).toBe(true);
+    expect(on.activeBones.has('arm-bone')).toBe(true);
+    expect(on.slots.get('arm-slot')?.attachment).toBe('arm');
+    expect(on.bones.get('arm-bone')?.[0]).toBe(26);
+    expect(() => sampleBone2dProject(model, 'attack', 0.5, ['missing'])).toThrow(/unknown skin/);
+    rig.skins[1].bones = ['missing'];
+    expect(() => parse(file)).toThrow(/invalid skin bones/);
+});

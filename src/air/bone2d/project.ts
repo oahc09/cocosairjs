@@ -86,6 +86,7 @@ interface Bone {
     pose: Bone2dPose;
     shear: Shears;
     inherit: Bone2dInheritance;
+    skinRequired: boolean;
 }
 export type Bone2dBlend = 'normal' | 'additive' | 'multiply' | 'screen';
 interface Slot {
@@ -99,6 +100,7 @@ interface Slot {
 interface Skin {
     id: string;
     name: string;
+    bones: readonly string[];
     regions: ReadonlyMap<string, ReadonlyMap<string, Attachment>>;
 }
 export interface Bone2dProjectOptions {
@@ -160,6 +162,7 @@ export interface Bone2dSlotPose {
 export interface Bone2dSample {
     readonly bones: ReadonlyMap<string, Bone2dPose>;
     readonly shears: ReadonlyMap<string, Shears>;
+    readonly activeBones: ReadonlySet<string>;
     readonly slots: ReadonlyMap<string, Bone2dSlotPose>;
     readonly order: readonly string[];
     readonly sequenceFrames: ReadonlyMap<Visual, number>;
@@ -320,9 +323,9 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
         const mode = b.inherit;
         if (mode !== 'normal' && mode !== 'onlyTranslation' && mode !== 'noRotationOrReflection' &&
             mode !== 'noScale' && mode !== 'noScaleOrReflection') fail(`invalid inheritance: ${id}`);
-        if (b.skinRequired) fail(`skin-required bone: ${id}`, true);
+        if (b.skinRequired != null && typeof b.skinRequired !== 'boolean') fail(`invalid skin-required flag: ${id}`);
         return {
-            id, parent: optionalStr(b.parent, 'parent'), pose: pose(b, id), inherit: mode,
+            id, parent: optionalStr(b.parent, 'parent'), pose: pose(b, id), inherit: mode, skinRequired: b.skinRequired === true,
             shear: [num(b.shearX, 'bone shearX'), num(b.shearY, 'bone shearY')],
         };
     });
@@ -382,7 +385,9 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
             const o = obj(raw, 'skin');
             const id = str(o.id, 'skin id'),
                 name = str(o.name, 'skin name');
-            none(o.bones, 'skin-required bones');
+            const skinBones = list(o.bones ?? [], bones.length, 'skin bones').map((b) => str(b, 'skin bone'));
+            if (new Set(skinBones).size !== skinBones.length || skinBones.some((b) => !byBone.has(b)))
+                fail(`invalid skin bones: ${id}`);
             none(o.constraints, 'skin-required constraints');
             const bySlotRegion = new Map<string, Map<string, Attachment>>();
             for (const [slotId, rawRegions] of entries(o.attachments, 'skin attachments')) {
@@ -418,7 +423,7 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
                 }
                 bySlotRegion.set(slotId, regions);
             }
-            return { id, name, regions: bySlotRegion };
+            return { id, name, bones: skinBones, regions: bySlotRegion };
         }),
         'duplicate skin id',
     );
@@ -569,7 +574,7 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
         }),
         'duplicate animation id',
     );
-    const affineSprites = bones.some((bone) => bone.inherit !== 'normal' || bone.shear[0] !== 0 || bone.shear[1] !== 0) ||
+    const affineSprites = bones.some((bone) => bone.skinRequired || bone.inherit !== 'normal' || bone.shear[0] !== 0 || bone.shear[1] !== 0) ||
         Array.from(clips.values()).some((clip) => Array.from(clip.bones.values()).some(
             (track) => ['shear', 'shearx', 'sheary'].some((channel) => track.has(channel)),
         ));
@@ -702,14 +707,31 @@ function sequenceFrame({ mode, index, delay }: SequenceKey, elapsed: number, cou
     }
     return frame === -1 ? -1 : Math.max(0, Math.min(end, frame));
 }
-export function sampleBone2dProject(project: Bone2dProject, clipId: string | null, seconds: number): Bone2dSample {
+export function sampleBone2dProject(
+    project: Bone2dProject, clipId: string | null, seconds: number, overlays: readonly string[] = [],
+): Bone2dSample {
     const clip = clipId === null ? undefined : project.clips.get(clipId);
     if (clipId !== null && !clip) fail(`unknown animation: ${clipId}`);
     if (!Number.isFinite(seconds)) fail('invalid sample time');
     const time = Math.max(0, Math.min(seconds, clip?.duration ?? 0));
+    const activeBones = new Set(project.bones.filter((bone) => !bone.skinRequired).map((bone) => bone.id));
+    if (overlays.length) {
+        const byId = new Map(project.bones.map((bone) => [bone.id, bone] as const));
+        const fallback = project.skins.values().next().value!;
+        for (const id of overlays) {
+            const skin = project.skins.get(id);
+            if (!skin) fail(`unknown skin: ${id}`);
+            if (skin === fallback) continue;
+            for (const listed of skin.bones) {
+                for (let current: string | null = listed; current !== null; current = byId.get(current)!.parent) {
+                    activeBones.add(current);
+                }
+            }
+        }
+    }
     const bones = new Map(
         project.bones.map((b): [string, Bone2dPose] => {
-            const track = clip?.bones.get(b.id);
+            const track = activeBones.has(b.id) ? clip?.bones.get(b.id) : undefined;
             if (!track) return [b.id, b.pose];
             const [x, y, rotation, sx, sy] = b.pose;
             const v = (name: string): number[] | undefined => sampled(track.get(name), time);
@@ -730,7 +752,7 @@ export function sampleBone2dProject(project: Bone2dProject, clipId: string | nul
     const shears = new Map<string, Shears>();
     for (const bone of project.bones) {
         const [x, y] = bone.shear;
-        const track = clip?.bones.get(bone.id);
+        const track = activeBones.has(bone.id) ? clip?.bones.get(bone.id) : undefined;
         const pair = sampled(track?.get('shear'), time);
         shears.set(bone.id, [
             x + (sampled(track?.get('shearx'), time)?.[0] ?? pair?.[0] ?? 0),
@@ -745,7 +767,7 @@ export function sampleBone2dProject(project: Bone2dProject, clipId: string | nul
             const twoColor = sampled(track?.rgba2, time);
             const tint = twoColor ?? sampled(track?.rgba, time);
             const dark = twoColor && s.dark ? twoColor.slice(4).map(clamp01) as unknown as RGB : s.dark;
-            const attachment = key >= 0 ? track!.attachment[key].value : s.attachment;
+            const attachment = activeBones.has(s.bone) ? (key >= 0 ? track!.attachment[key].value : s.attachment) : null;
             return [
                 s.id,
                 {
@@ -785,7 +807,7 @@ export function sampleBone2dProject(project: Bone2dProject, clipId: string | nul
         const frame = sequenceFrame(key.value, time - key.time, sequence.frames.length);
         sequenceFrames.set(visual, frame === -1 ? sequence.setup : frame);
     }
-    return { bones, shears, slots, meshDeltas, shapeDeltas, order, sequenceFrames };
+    return { bones, shears, activeBones, slots, meshDeltas, shapeDeltas, order, sequenceFrames };
 }
 
 /** Resolve ordered parent/local 2D affine products without decomposing shear. */
@@ -795,6 +817,11 @@ export function bone2dWorldMatrices(project: Bone2dProject, sample: Bone2dSample
     const compute = (id: string): Matrix2D => {
         const cached = out.get(id);
         if (cached) return cached;
+        if (!sample.activeBones.has(id)) {
+            const identity: Matrix2D = [1, 0, 0, 1, 0, 0];
+            out.set(id, identity);
+            return identity;
+        }
         const bone = byId.get(id)!;
         const [x, y, degrees, sx, sy] = sample.bones.get(id)!;
         const shear = sample.shears.get(id)!;

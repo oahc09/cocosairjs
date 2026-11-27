@@ -763,8 +763,37 @@ async function main() {
                 } else affineAtlasControl.dispose();
                 await clock.step(0);
             };
+            let requiredPlayer;
+            const requiredMount = async () => {
+                const file = JSON.parse(text),
+                    rig = file.project.skeleton;
+                const arm = rig.bones.find((bone) => bone.id === 'arm-bone');
+                arm.skinRequired = true;
+                rig.bones.push({ ...arm, id: 'arm-grip', parent: 'arm-bone' });
+                rig.skins[0].bones = ['arm-bone'];
+                rig.skins.push({ id: 'armor', name: 'Armor', bones: ['arm-grip'], constraints: [], attachments: {} });
+                requiredPlayer = await air.createAirBone2dPlayer(parent, JSON.stringify(file));
+                requiredPlayer.play('attack');
+                const markers = requiredPlayer.advance(0.625).map((event) => event.id);
+                await clock.step(0);
+                return markers;
+            };
+            const requiredSkin = async (id) => {
+                requiredPlayer.setSkins(id ? [id] : []);
+                await clock.step(0);
+                return { time: requiredPlayer.time, arm: requiredPlayer.node.getChildByName('arm-slot').active };
+            };
+            const requiredClose = async () => {
+                const markers = requiredPlayer.advance(0.125).map((event) => event.id);
+                requiredPlayer.dispose();
+                await clock.step(0);
+                return markers;
+            };
             window.bone2dTest = {
                 frame,
+                requiredMount,
+                requiredSkin,
+                requiredClose,
                 affineMount,
                 affineSkin,
                 affineClose,
@@ -792,6 +821,7 @@ async function main() {
                     player.dispose();
                     sequencePlayer?.dispose();
                     clipPlayer?.dispose();
+                    requiredPlayer?.dispose();
                     affinePlayer?.dispose();
                     wardrobe?.dispose();
                     meshInstance?.dispose();
@@ -1235,6 +1265,27 @@ async function main() {
         assert.ok(coverage.ink > 2000 && coverage.different <= coverage.ink * 0.05, JSON.stringify(coverage));
         assert.equal(coverage.interiorDifferences, 0);
         await page.evaluate(() => window.bone2dTest.atlasRelease());
+        const startMarkers = await page.evaluate(() => window.bone2dTest.requiredMount());
+        assert.deepEqual(startMarkers, ['ev-start', 'ev-impact']);
+        const hiddenHash = sha(await page.screenshot());
+        const fallback = await page.evaluate(() => window.bone2dTest.requiredSkin('skin'));
+        assert.deepEqual(fallback, { time: 0.625, arm: false });
+        assert.equal(sha(await page.screenshot()), hiddenHash);
+        const mounted = await page.evaluate(() => window.bone2dTest.requiredSkin('armor'));
+        assert.deepEqual(mounted, { time: 0.625, arm: true });
+        const shownHash = sha(await page.screenshot());
+        assert.notEqual(shownHash, hiddenHash);
+        assert.equal(
+            shownHash,
+            s['attack-hitch'].screenshotSha256,
+            'required ancestor evaluates at the unchanged clip time',
+        );
+        const unworn = await page.evaluate(() => window.bone2dTest.requiredSkin(null));
+        assert.deepEqual(unworn, { time: 0.625, arm: false });
+        assert.equal(sha(await page.screenshot()), hiddenHash);
+        const laterMarkers = await page.evaluate(() => window.bone2dTest.requiredClose());
+        assert.deepEqual(laterMarkers, []);
+        report.skinRequirements = { hiddenHash, shownHash, startMarkers, laterMarkers };
         await page.evaluate(() => window.bone2dTest.close());
         assert.deepEqual(report.pageErrors, []);
         report.status = 'PASS';

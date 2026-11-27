@@ -257,6 +257,9 @@ export async function createAirBone2dPlayer(
     const lookup = new Map(project.bones.map((bone) => [bone.id, bone] as const));
     const defaultSkin = project.skins.values().next().value!;
     let selectedSkins = [defaultSkin];
+    let activeOverlays: string[] = [];
+    const sampleFor = (clip: string | null, time: number): Bone2dSample =>
+        sampleBone2dProject(project, clip, time, activeOverlays);
     let currentSample: Bone2dSample;
     const apply = (sample: Bone2dSample): void => {
         let world: ReturnType<typeof bone2dWorldMatrices> | null = null;
@@ -492,7 +495,7 @@ export async function createAirBone2dPlayer(
                 transform: leaf.getComponent(UITransform)!,
             });
         }
-        apply(sampleBone2dProject(project, null, 0));
+        apply(sampleFor(null, 0));
         root.once(Node.EventType.NODE_DESTROYED, () => release(false));
         parent.addChild(root);
     } catch (failure) {
@@ -525,7 +528,8 @@ export async function createAirBone2dPlayer(
                 next.add(skin);
             }
             selectedSkins = Array.from(next);
-            apply(sampleBone2dProject(project, selected, time));
+            activeOverlays = selectedSkins.slice(1).map((skin) => skin.id);
+            apply(sampleFor(selected, time));
         },
         getAttachmentGeometry(slotId): Bone2dAttachmentGeometry | null {
             ensure();
@@ -548,7 +552,7 @@ export async function createAirBone2dPlayer(
         play(id, repeat = false): void {
             ensure();
             if (!project.clips.has(id)) error(`unknown animation: ${id}`);
-            apply(sampleBone2dProject(project, id, 0));
+            apply(sampleFor(id, 0));
             selected = id;
             time = 0;
             playing = true;
@@ -567,7 +571,7 @@ export async function createAirBone2dPlayer(
             ensure();
             if (!Number.isFinite(seconds)) error('invalid seek time');
             time = Math.max(0, Math.min(seconds, selected === null ? 0 : project.clips.get(selected)!.duration));
-            apply(sampleBone2dProject(project, selected, time));
+            apply(sampleFor(selected, time));
             first = false;
         },
         advance(delta): readonly Bone2dMarker[] {
@@ -592,7 +596,7 @@ export async function createAirBone2dPlayer(
                 for (let i = 1; i < wraps; ++i) emit(-1, d);
                 emit(-1, to);
             } else emit(start, to);
-            apply(sampleBone2dProject(project, selected, to));
+            apply(sampleFor(selected, to));
             first = false;
             time = to;
             if (d === 0 || (!loop && time >= d)) playing = false;
