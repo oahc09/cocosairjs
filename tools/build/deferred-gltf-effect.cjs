@@ -53,7 +53,10 @@ function deferredGltfEffect(root) {
                     const [symbol, expected] = edit;
                     const { start, end, data } = table(code, symbol);
                     if (JSON.stringify(data) !== JSON.stringify(expected)) throw Error(`Stale input for ${symbol}`);
-                    source.overwrite(start, end, JSON.stringify(data.filter((_, i) => i !== index)));
+                    // Preserve the generated table's multiline representation. Feeding Babel a
+                    // compact sub-500 KB source can switch its output to pretty-printing,
+                    // making the development SDK larger before compression.
+                    source.overwrite(start, end, JSON.stringify(data.filter((_, i) => i !== index), null, 2));
                 } else {
                     const at = code.indexOf(marker);
                     if (at < 0 || at !== code.lastIndexOf(marker)) throw Error('Missing deferred glTF marker');

@@ -53,6 +53,11 @@ async function main([fullPath, probeDir, executable, out, ...extra]) {
         const root = path.resolve(__dirname, '../../..');
         for (const file of [fullPath, variantPath]) assert.ok(verifySourceBinding(root, file).matches);
         assert.equal(sidecars[0], 'air-gltf-effect-' + digest(sidecar) + '.json');
+        assert.ok(reduced.length < full.length, 'optional profile increased uncompressed startup bytes');
+        assert.ok(
+            gzipSync(reduced, { level: 9 }).length < gzipSync(full, { level: 9 }).length,
+            'optional profile increased gzip startup bytes',
+        );
     } else {
         const declared = JSON.parse(fs.readFileSync(path.join(probeDir, 'receipt.json'), 'utf8'));
         assert.equal(digest(reduced), declared.runtime.sha256);
@@ -107,6 +112,7 @@ async function main([fullPath, probeDir, executable, out, ...extra]) {
             return send(res, req.url);
         });
         let browser;
+        let port;
         const record = {
             id,
             errors: [],
@@ -123,6 +129,7 @@ async function main([fullPath, probeDir, executable, out, ...extra]) {
                 server.once('error', reject);
                 server.listen(0, '127.0.0.1', resolve);
             });
+            port = server.address().port;
             browser = await (chrome ? chromium : webkit).launch({
                 executablePath: path.resolve(executable),
                 ...(chrome ? { chromiumSandbox: true } : {}),
@@ -135,13 +142,13 @@ async function main([fullPath, probeDir, executable, out, ...extra]) {
                 if (msg.type() !== 'error') return;
                 const text = msg.text();
                 const corruptUrl = `http://127.0.0.1:${server.address().port}${effectPath}`;
-                const expected =
-                    compiled &&
-                    corrupt &&
-                    effectRequests === 1 &&
+                const firstCorruptRequest = compiled && corrupt && effectRequests === 1;
+                const rejected =
                     text.includes(corruptUrl) &&
                     (/Failed to find a valid digest in the 'integrity' attribute/.test(text) ||
-                        /SRI's integrity checks failed/.test(text));
+                        /SRI's integrity checks failed/.test(text) ||
+                        /^Failed integrity metadata check\./.test(text));
+                const expected = firstCorruptRequest && rejected;
                 (expected ? record.expectedIntegrityDiagnostics : record.errors).push(text);
             });
             page.on('response', (res) => {
@@ -228,6 +235,19 @@ async function main([fullPath, probeDir, executable, out, ...extra]) {
                 }
             }
             await new Promise((resolve) => server.close(resolve));
+            if (
+                compiled &&
+                corrupt &&
+                !chrome &&
+                effectRequests === 2 &&
+                record.rejectedPayload?.error &&
+                record.expectedIntegrityDiagnostics.some((text) => text.startsWith('Failed integrity metadata check.'))
+            ) {
+                const diagnostic = `/127.0.0.1:${port}${effectPath} due to access control checks.`;
+                // WebKit can deliver this second console event before the integrity detail.
+                const at = record.errors.indexOf(diagnostic);
+                if (at >= 0) record.expectedIntegrityDiagnostics.push(...record.errors.splice(at, 1));
+            }
             record.effectRequests = effectRequests;
             writeNew(path.join(out, id + '.json'), record);
             results.push(record);
