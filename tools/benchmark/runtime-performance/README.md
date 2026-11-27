@@ -148,3 +148,42 @@ improvement, or same-feature victory. The experiment receipt SHA-256 is
 Next: replace omission with explicit, compatible on-demand registration and
 prove the full first-frame import graph. Keep this narrower diagnostic distinct
 from a supported profile and validate any future profile against same behavior.
+
+### Deferred glTF template, without deleting model support
+
+```sh
+DIR=tools/benchmark/runtime-performance
+node "$DIR/lazy-gltf-probe.cjs" build/cocosair.module.js <new-probe-dir>
+node "$DIR/lazy-gltf-browser.cjs" build/cocosair.module.js <new-probe-dir> \
+  <installed-WPE-wrapper> <new-browser-dir>
+```
+
+This is a **separate one-effect** diagnostic starting with the complete
+source-bound ESM (not the preceding four-effect experiment). It leaves other
+effects eager. It removes matching `air-gltf-template` metadata and GLSL rows,
+then inserts an asynchronous readiness step between primitive preparation and
+synchronous material building. The runtime pins its own data-only payload by
+SHA-256 and uses the existing renderer's lowering and registration. A single
+request/registration is shared, not tied to the model's abort signal; rejected
+payload preparation can be retried. The normal generated-source validation and
+default package remain untouched. Neither output is a published SDK.
+
+Software WebKit checked the default-material primitive without a material
+slot, physical clearcoat requested before the first startup draw, a held shared
+request with two concurrent parses and one abort, and hash-mismatch rejection
+followed by a valid retry. The equivalent control/profile PNGs matched exactly,
+with 11,654 non-background pixels each. The surviving model and its mesh
+were destroyed on release without destroying the registered template. The
+abort check proves the cancelled caller returned no asset before shared
+registration; this fixture has no textures and does not certify arbitrary
+texture cleanup.
+
+The direct full SDK transferred 1,568,277 gzip bytes. The deferred SDK
+transferred 1,545,370 bytes before the cube (22,907 fewer), then made one
+25,726-byte gzip request when it needed the effect. For a page that needs the
+model immediately, these bodies total 1,571,096 bytes, **2,819 more than full**,
+plus a request. Resource Timing confirms the bytes and delivery order; the
+single software-browser timings in the raw attempts are not a speed
+conclusion. Default package support, caching policy, real hardware, terrain,
+and the exact `pipeline/bloom` and `pipeline/deferred-lighting` consumers
+remain outside this probe.
