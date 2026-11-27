@@ -178,3 +178,23 @@ prototype has no baseline graph or GL errors. A B-only TAA track is captured sep
 the two-enabled graph, so the result does not yet establish invariance when a different camera toggles TAA.
 These browser-page overrides are not an engine fix. Camera/pass resource lifecycle, real reset integration,
 masked paths and full product-scene quality are still open.
+
+### E12 target-pixel jitter control
+
+```sh
+node tools/verify/rendering-iteration/taa-jitter-probe.cjs <WPE-executable> <new-report.json>
+```
+
+This WebGL2 probe uses the source-bound SDK's Cocos perspective and orthographic matrices. It renders actual near/far
+geometry at eye depths 2 and 8 over 64 subpixel phases, measuring both axes in offscreen readbacks. It compares
+the main-canvas-normalized translation with a clip-W translation normalized to the target viewport. It also
+exercises the frozen TAA current-color UV expression, using a WebGL2 full-viewport render-texture mapping.
+Inputs are 160×96 and 176×100 with a modeled 0.75 shading scale (132×75 actual probe viewport); the canvas stays
+384×256. This uses real GL draw/readback, but not the native camera builder, native shader history resolve, or
+backend-specific UV conversion. The native history isolation fixture above does not exercise this new projection.
+
+WPE WebKit 26.4: for a requested (+0.5, −0.5) pixels, the old perspective projection at 160×96 measured +0.046875
+and +0.015625 pixels in X at the two depths (64-phase quantization). Clip-W translation measured (+0.5, −0.5)
+at both depths across all four cases. Sending the negative of that NDC delta into the original subtracting sampler
+returned measured displacement (0, 0) in all four cases; using the same sign doubled it to (+1, −1).
+This isolates a separate defect from history ownership and does not explain cross-mode B pixels.
