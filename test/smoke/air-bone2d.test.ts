@@ -1313,3 +1313,99 @@ test('atlas trim expansion partitions contiguous triangles within UI buffer limi
         expect(Math.max(...chunk.indices)).toBeLessThan(chunk.positions.length / 2);
     }
 });
+
+test('Web Game mixes slot tints, same-picture deform and continuous constraint inputs without overriding destination attachments', () => {
+    const data = fixture();
+    const rig = data.project.skeleton;
+    const slot = rig.slots.find((s) => s.id === 'arm-slot');
+    slot.dark = [0, 0, 0];
+    const mesh = {
+        type: 'mesh',
+        path: 'arm',
+        color: [1, 1, 1, 1],
+        weights: null,
+        vertices: [0, 0, 16, 0, 0, 16],
+        uvs: [0, 1, 1, 1, 0, 0],
+        triangles: [0, 1, 2],
+    };
+    rig.skins[0].attachments['arm-slot'].arm = mesh;
+    rig.skins[0].attachments['arm-slot'].alt = { ...mesh };
+    rig.constraints = [
+        {
+            id: 'aim',
+            name: 'Aim',
+            type: 'ik',
+            bones: ['arm-bone'],
+            target: 'root',
+            mix: 1,
+            softness: 0,
+            bendPositive: true,
+            compress: false,
+            stretch: false,
+            scaleY: 'none',
+            skinRequired: false,
+        },
+    ];
+    for (const clip of rig.animations) {
+        const first = clip.id === 'idle';
+        clip.slots = {
+            'arm-slot': {
+                attachment: [{ time: 0, name: 'arm' }],
+                rgba2: [{ time: 0, value: first ? [1, 0, 0, 1, 0.2, 0.4, 0.6] : [0, 0, 1, 0.5, 0.6, 0.4, 0.2] }],
+            },
+        };
+        clip.deform = {
+            skin: {
+                'arm-slot': {
+                    arm: [{ time: 0, value: first ? [8, 0, 0, 0, 0, 0] : [0, 4, 0, 0, 0, 0] }],
+                    alt: [{ time: 0, value: [0, 4, 0, 0, 0, 0] }],
+                },
+            },
+        };
+        clip.ik = {
+            aim: [
+                {
+                    time: 0,
+                    value: first ? [0.2, 6] : [0.8, 2],
+                    bendPositive: first,
+                    compress: first,
+                    stretch: false,
+                },
+            ],
+        };
+    }
+    const game = { bone2d: 1, name: 'Fade', skeleton: rig, images: data.images, smooth: false };
+    const fromTo = (
+        project: ReturnType<typeof parse>,
+        alpha: number,
+        previous?: ReturnType<typeof sampleBone2dFrame>,
+    ) => {
+        const from = previous ?? sampleBone2dFrame(project, 'idle', 0, [], undefined, undefined, true);
+        return sampleBone2dFrame(
+            project,
+            'attack',
+            0,
+            [],
+            undefined,
+            { transition: { from, alpha, holdPrevious: false, game: from } },
+            true,
+        );
+    };
+    let project = parse(game);
+    const half = fromTo(project, 0.5);
+    expect(half.slots.get('arm-slot')).toEqual({
+        attachment: 'arm',
+        color: [0.5, 0, 0.5, 0.75],
+        dark: expect.arrayContaining([expect.closeTo(0.4, 12), expect.closeTo(0.4, 12), expect.closeTo(0.4, 12)]),
+    });
+    expect(half.slotDeform?.get('arm-slot')).toEqual([4, 2, 0, 0, 0, 0]);
+    expect(half.ik.get('aim')).toMatchObject({ mix: 0.5, softness: 4, bendPositive: false, compress: false });
+    expect(fromTo(project, 0.49).ik.get('aim')).toMatchObject({ bendPositive: true, compress: true });
+    expect(fromTo(project, 0, half).slotDeform?.get('arm-slot')).toEqual([4, 2, 0, 0, 0, 0]);
+    const target = rig.animations.find((c) => c.id === 'attack');
+    target.slots['arm-slot'].attachment[0].name = 'alt';
+    project = parse(game);
+    const different = fromTo(project, 0.5);
+    expect(different.slots.get('arm-slot')?.attachment).toBe('alt');
+    expect(different.slotDeform?.get('arm-slot')).toEqual([0, 4, 0, 0, 0, 0]);
+});

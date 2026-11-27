@@ -1018,7 +1018,7 @@ function applyPhysicsTracks(
 
 type Bone2dLocalPose = Pick<Bone2dSample, 'bones' | 'shears'>;
 export interface Bone2dMixFrame {
-    readonly transition?: { from: Bone2dLocalPose; alpha: number; holdPrevious: boolean };
+    readonly transition?: { from: Bone2dLocalPose; alpha: number; holdPrevious: boolean; game?: Bone2dSample };
     readonly layers?: readonly { id: string; time: number; weight: number; additive: boolean }[];
 }
 const keyedBoneAxes = [
@@ -1035,14 +1035,64 @@ function blendPreviewBone(
     bones.set(id, [put(p[0],0),put(p[1],1),put(p[2],2),put(p[3],3),put(p[4],4)]);
     shears.set(id, [put(sh[0],5),put(sh[1],6)]);
 }
+/** Mix Web Game tracks before solving constraints. Incoming discrete attachments stay authoritative. */
+function mixWebGameChannels(
+    from: Bone2dSample, to: Bone2dSample, skins: readonly Skin[], t: number,
+): Bone2dSample {
+    const lerp = (a: number, b: number): number => a + (b - a) * t;
+    const vector = (a: readonly number[], b: readonly number[]): number[] => b.map((v, i) => lerp(a[i], v));
+    const map = <Value>(a: ReadonlyMap<string, Value>, b: ReadonlyMap<string, Value>,
+        mix: (before: Value, after: Value) => Value): Map<string, Value> =>
+        new Map([...b].map(([key, value]) => {
+            const prior = a.get(key);
+            return [key, prior === undefined ? value : mix(prior, value)];
+        }));
+    const slots = map(from.slots, to.slots, (a, b) => ({
+        ...b, color: vector(a.color, b.color) as unknown as RGBA,
+        dark: a.dark && b.dark ? vector(a.dark, b.dark) as unknown as RGB : b.dark,
+    }));
+    const slotFrames = new Map<string, number>();
+    const slotDeform = new Map<string, readonly number[]>();
+    const deform = (sample: Bone2dSample, slot: string, a: Bone2dMesh | PolygonAttachment): readonly number[] | undefined =>
+        sample.slotDeform ? sample.slotDeform.get(slot) :
+            a.kind === 'mesh' ? sample.meshDeltas.get(a.deformParent ?? a) : sample.shapeDeltas.get(a);
+    for (const [id, current] of slots) {
+        const attachment = resolveBone2dAttachment(skins, id, current.attachment);
+        if (!attachment || attachment.kind === 'point') continue;
+        if (attachment.kind === 'mesh' || attachment.kind === 'region') {
+            const frame = to.slotFrames ? to.slotFrames.get(id) : to.sequenceFrames.get(attachment);
+            if (frame !== undefined) slotFrames.set(id, frame);
+        }
+        if (attachment.kind === 'region') continue;
+        const b = deform(to, id, attachment);
+        const a = from.slots.get(id)?.attachment === current.attachment ? deform(from, id, attachment) : undefined;
+        if (a) slotDeform.set(id, a.map((v, i) => lerp(v, b?.[i] ?? 0)));
+        else if (b) slotDeform.set(id, from.slots.get(id)?.attachment === current.attachment ?
+            b.map((v) => v * t) : b);
+    }
+    return {
+        ...to, slots, slotFrames, slotDeform,
+        ik: map(from.ik, to.ik, (a, b) => ({
+            ...(t < 0.5 ? a : b), mix: lerp(a.mix, b.mix), softness: lerp(a.softness, b.softness),
+        })),
+        transforms: map(from.transforms, to.transforms, vector),
+        sliders: map(from.sliders, to.sliders, (a, b) => ({ time: lerp(a.time, b.time), mix: lerp(a.mix, b.mix) })),
+        paths: map(from.paths, to.paths, (a, b) => ({
+            position: lerp(a.position, b.position), spacing: lerp(a.spacing, b.spacing), mix: vector(a.mix, b.mix),
+        })),
+        physics: map(from.physics, to.physics, (a, b) => ({ ...b, mix: lerp(a.mix, b.mix) })),
+    };
+}
+
 function mixPreview(
     project: Bone2dProject, clip: Clip | undefined, current: Bone2dSample, selectedSkins: readonly Skin[],
     overlays: readonly string[], mix: Bone2dMixFrame,
 ): Bone2dSample {
+    const xfade = mix.transition;
+    if (xfade?.game && xfade.alpha < 1) current = mixWebGameChannels(xfade.game, current, selectedSkins, xfade.alpha);
     const bones = new Map(current.bones), shears = new Map(current.shears);
     const slots = new Map(current.slots);
     const replaced = new Set<string>();
-    const xfade = mix.transition;
     if (xfade && xfade.alpha < 1) {
         for (const id of current.activeBones) {
             const prev = [...xfade.from.bones.get(id)!, ...xfade.from.shears.get(id)!];
@@ -1050,7 +1100,7 @@ function mixPreview(
             blendPreviewBone(current, id, (now, j) => {
                 if (xfade.holdPrevious && !keyedBoneAxes[j].some(k => track?.get(k)?.length)) return prev[j];
                 const delta = now - prev[j];
-                return prev[j] + (j === 2 ? shortestAngle(delta) : delta) * xfade.alpha;
+                return prev[j] + (j === 2 || (xfade.game && j >= 5) ? shortestAngle(delta) : delta) * xfade.alpha;
             }, bones, shears);
         }
     }
@@ -1092,10 +1142,10 @@ function mixPreview(
         const a = resolveBone2dAttachment(selectedSkins, id, slots.get(id)!.attachment);
         if (!a) continue;
         if (a.kind === 'mesh' || a.kind === 'region') {
-            const frame = current.sequenceFrames.get(a);
+            const frame = current.slotFrames ? current.slotFrames.get(id) : current.sequenceFrames.get(a);
             if (frame !== undefined) slotFrames.set(id, frame);
         }
-        const deform = a.kind === 'mesh' ? current.meshDeltas.get(a.deformParent ?? a) :
+        const deform = current.slotDeform ? current.slotDeform.get(id) : a.kind === 'mesh' ? current.meshDeltas.get(a.deformParent ?? a) :
             a.kind === 'point' || a.kind === 'region' ? undefined : current.shapeDeltas.get(a);
         if (deform !== undefined) slotDeform.set(id,deform);
     }

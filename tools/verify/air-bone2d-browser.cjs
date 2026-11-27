@@ -1045,8 +1045,17 @@ async function main() {
                 });
                 return { time: ikPlayer.time, markers, values };
             };
-            const previewMount = async () => {
-                const file = await fetch('/playback.bone2d').then((r) => r.text());
+            const previewMount = async (game = false) => {
+                let file = await fetch('/playback.bone2d').then((r) => r.text());
+                if (game) {
+                    const { project, images } = JSON.parse(file);
+                    const skeleton = project.skeleton;
+                    const from = skeleton.animations.find((c) => c.id === 'idle');
+                    const to = skeleton.animations.find((c) => c.id === 'attack');
+                    from.slots['arm-slot'] = { rgba: [{ time: 0, value: [1, 0, 0, 1] }] };
+                    to.slots['arm-slot'].rgba = [{ time: 0, value: [0, 0, 1, 0.5] }];
+                    file = JSON.stringify({ bone2d: 1, name: 'Fade', skeleton, images, smooth: false });
+                }
                 ikPlayer = await air.createAirBone2dPlayer(parent, file);
                 ikPlayer.play('idle');
             };
@@ -1068,6 +1077,7 @@ async function main() {
                     pose: [point.y, point.rotation],
                     visible: [mat.m13 - root.m13, (Math.atan2(mat.m01, mat.m00) * 180) / Math.PI],
                     width: sprite.spriteFrame.originalSize.width,
+                    color: [sprite.color.r, sprite.color.g, sprite.color.b, sprite.color.a],
                     markers,
                 };
             };
@@ -1924,6 +1934,21 @@ async function main() {
         assert.equal(preview.rangeStart.image, preview.rangeReturn.image);
         await page.evaluate(() => window.bone2dTest.ikClose());
         report.preview = preview;
+        await page.evaluate(() => window.bone2dTest.previewMount(true));
+        report.webGameFade = {};
+        for (const [label, input, time, color] of [
+            ['zero', { fade: ['attack'] }, 0.25, [255, 0, 0, 255]],
+            ['half', { delta: 0.1 }, 0.35, [128, 0, 128, 191]],
+            ['interrupt', { fade: ['idle'] }, 0, [128, 0, 128, 191]],
+            ['finish', { delta: 0.2 }, 0.2, [255, 0, 0, 255]],
+        ]) {
+            const sample = await page.evaluate((arg) => window.bone2dTest.previewFrame(arg), input);
+            assert.ok(Math.abs(sample.time - time) < 1e-10, JSON.stringify(sample));
+            assert.deepEqual(sample.color, color);
+            report.webGameFade[label] = { ...sample, image: sha(await page.screenshot()) };
+        }
+        assert.notEqual(report.webGameFade.zero.image, report.webGameFade.half.image);
+        await page.evaluate(() => window.bone2dTest.ikClose());
         const formats = {},
             externalRequests = [];
         const observeExternal = (request) => {

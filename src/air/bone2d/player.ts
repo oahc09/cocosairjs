@@ -74,9 +74,8 @@ export interface Bone2dLayerOptions {
     readonly loop?: boolean;
 }
 type Layer = Required<Bone2dLayerOptions> & { length: number };
-type LocalPose = Pick<Bone2dSample, 'bones' | 'shears'>;
 type Transition = {
-    source: { id: string; time: number; direction: 1 | -1; lo: number; hi: number } | { frozen: LocalPose };
+    source: { id: string; time: number; direction: 1 | -1; lo: number; hi: number; playback?: Playback; cursor?: PlaybackCursor } | { frozen: Bone2dSample };
     duration: number;
     elapsed: number;
     holdPrevious: boolean;
@@ -95,7 +94,7 @@ export interface AirBone2dPlayer {
     readonly direction: 1 | -1;
     /** A boolean preserves legacy full-span forward playback; an options object can select saved settings. */
     play(id: string, options?: boolean | Bone2dPlaybackOptions): void;
-    /** Crossfade main bone channels, switching non-bone timelines to the destination immediately. */
+    /** Crossfade the native preview bones, or the full continuous pose for Web Game data. */
     crossfade(id: string, options?: Bone2dCrossfadeOptions): void;
     /** Replaces the ordered preview layers and resets their clocks to the supplied times. */
     setLayers(layers: readonly Bone2dLayerOptions[]): void;
@@ -323,7 +322,8 @@ export async function createAirBone2dPlayer(
         const source = value.source;
         const from = 'frozen' in source ? source.frozen :
             sampleBone2dFrame(project, source.id, source.time, activeOverlays, undefined, undefined, true);
-        return { from, alpha: value.elapsed / value.duration, holdPrevious: value.holdPrevious };
+        return { from, alpha: value.elapsed / value.duration, holdPrevious: value.holdPrevious,
+            ...(project.source === 'web-game' ? { game: from } : {}) };
     };
     const sampleFor = (clip: string | null, time: number, seconds = 0, intervals: PhysicsStep['intervals'] = [],
         mixing = transition, overlays = layers): Bone2dSample =>
@@ -694,8 +694,9 @@ export async function createAirBone2dPlayer(
             ensure();
             if (!options || typeof options !== 'object' || Array.isArray(options)) error('invalid crossfade options');
             if (options.holdPrevious !== undefined && typeof options.holdPrevious !== 'boolean') error('invalid hold option');
-            const saved = selected === null || selected === id ? 0 :
-                project.mixPairs.get(selected)?.get(id) ?? project.mixDefault;
+            const saved = selected === null ? 0 :
+                project.source === 'web-game' ? 0.2 :
+                    selected === id ? 0 : project.mixPairs.get(selected)?.get(id) ?? project.mixDefault;
             const duration = options.duration === undefined ? saved : options.duration;
             if (!Number.isFinite(duration) || duration < 0 || duration > 10) error('invalid crossfade duration');
             let fade: Transition | null = null;
@@ -703,10 +704,11 @@ export async function createAirBone2dPlayer(
                 const source: Transition['source'] = transition !== null || selected === null || playback === null
                     ? { frozen: sampleBone2dFrame(project, selected, cursor.time, activeOverlays, undefined,
                         { transition: transitionFrame(transition) }, true) }
-                    : { id: selected, time: cursor.time, direction: cursor.direction, lo: playback.lo, hi: playback.hi };
+                    : { id: selected, time: cursor.time, direction: cursor.direction, lo: playback.lo, hi: playback.hi,
+                        ...(project.source === 'web-game' ? { playback, cursor } : {}) };
                 fade = { source, duration, elapsed: 0, holdPrevious: options.holdPrevious ?? false };
             }
-            begin(id, options.playback ?? false, fade);
+            begin(id, options.playback ?? (project.source === 'web-game' ? { useSavedSettings: true } : false), fade);
         },
         setLayers(next): void {
             ensure();
@@ -765,9 +767,15 @@ export async function createAirBone2dPlayer(
                 if (elapsed >= fade.duration) fade = null;
                 else {
                     const { source } = fade;
-                    fade = { ...fade, elapsed, source: 'frozen' in source ? source :
-                        { ...source, time: clamp(source.time + source.direction * spent, source.lo, source.hi) },
-                    };
+                    if ('frozen' in source) fade = { ...fade, elapsed };
+                    else if (source.playback && source.cursor) {
+                        const { cursor } = traverseBone2dPlayback(source.playback, source.cursor, delta, error);
+                        fade = { ...fade, elapsed, source: { ...source, time: cursor.time, cursor } };
+                    } else {
+                        fade = { ...fade, elapsed, source: {
+                            ...source, time: clamp(source.time + source.direction * spent, source.lo, source.hi),
+                        } };
+                    }
                 }
             }
             const overlays = layers.map((layer) => {
