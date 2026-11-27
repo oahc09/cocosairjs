@@ -27,7 +27,7 @@ import { Type, Uniform, ShaderStageFlagBit } from '../../cocos/gfx';
 let serial = 0;
 
 /** Use the native sprite vertex format/stencil path with a per-material dark color. */
-export function createBone2dTintEffect(): EffectAsset {
+export function createBone2dTintEffect(crop = false): EffectAsset {
     const template = EffectAsset.get('builtin-sprite');
     if (!template) throw new Error('AIR_E_BONE2D_TWO_COLOR: sprite effect unavailable');
     const effect = new EffectAsset();
@@ -43,15 +43,21 @@ export function createBone2dTintEffect(): EffectAsset {
                 name: 'Bone2dTint', binding, stageFlags: ShaderStageFlagBit.FRAGMENT,
                 members: [new Uniform('bone2dDark', Type.FLOAT4, 1)],
             });
+            if (crop) shader.blocks[shader.blocks.length - 1].members.push(new Uniform('bone2dCrop', Type.FLOAT4, 1));
             for (const variant of ['glsl3', 'glsl4'] as const) {
                 const code = shader[variant];
                 const precision = 'precision highp float;';
                 const multiply = 'o *= color;';
                 if (!code?.frag.includes(precision) || !code.frag.includes(multiply))
                     throw new Error(`AIR_E_BONE2D_TWO_COLOR: unexpected ${variant} sprite fragment`);
+                const sample = 'CCSampleWithAlphaSeparated(cc_spriteTexture, uv0)';
+                if (crop && !code.frag.includes(sample))
+                    throw new Error(`AIR_E_BONE2D_TWO_COLOR: unexpected ${variant} sprite sampler`);
                 const qualifier = variant === 'glsl4' ? `layout(set = 1, binding = ${binding}) ` : '';
-                code.frag = code.frag.replace(precision, `${precision}\n${qualifier}uniform Bone2dTint { vec4 bone2dDark; };`)
+                code.frag = code.frag.replace(precision, `${precision}\n${qualifier}uniform Bone2dTint { vec4 bone2dDark; ${crop ? 'vec4 bone2dCrop; ' : ''}};`)
                     .replace(multiply, 'vec3 bone2dDarkContribution = (vec3(1.0) - o.rgb) * bone2dDark.rgb;\no *= color;\no.rgb += bone2dDarkContribution;');
+                if (crop) code.frag = code.frag.replace(sample,
+                    'CCSampleWithAlphaSeparated(cc_spriteTexture, clamp(uv0, bone2dCrop.xy, bone2dCrop.zw))');
             }
             let hash = 2166136261;
             const source = shader.glsl3.frag + shader.glsl4.frag;
@@ -61,7 +67,9 @@ export function createBone2dTintEffect(): EffectAsset {
             for (const technique of effect.techniques) for (const pass of technique.passes) {
                 if (pass.program !== original) continue;
                 pass.program = shader.name;
-                pass.properties = { ...pass.properties, bone2dDark: { value: [0, 0, 0, 0], type: Type.FLOAT4 } };
+                pass.properties = { ...pass.properties, bone2dDark: { value: [0, 0, 0, 0], type: Type.FLOAT4 },
+                    ...(crop ? { bone2dCrop: { value: [0, 0, 1, 1], type: Type.FLOAT4 } } : {}),
+                };
             }
         }
         effect.onLoaded();

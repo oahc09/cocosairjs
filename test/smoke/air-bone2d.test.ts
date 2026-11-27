@@ -1,5 +1,6 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
+import { buildBone2dAtlasMesh, projectBone2dAtlasMesh } from '../../src/air/bone2d/mesh-atlas';
 import { bone2dImageHeader } from '../../src/air/bone2d/image';
 import { bone2dKeysInWindow, makeBone2dPlayback, traverseBone2dPlayback } from '../../src/air/bone2d/playback';
 import { convexClipOutline } from '../../src/air/bone2d/polygon';
@@ -1271,4 +1272,44 @@ test('raster validation checks actual header, dimensions and deterministic frame
     const descriptor = gif.indexOf(44);
     const animated = Buffer.concat([gif.subarray(0, -1), gif.subarray(descriptor)]);
     expect(() => bone2dImageHeader(data('gif', animated), 'arm', fail)).toThrow(/picture sequence/);
+});
+
+test('atlas trim clips on each UV edge without clamping or changing the deformed affine surface', () => {
+    const [chunk] = buildBone2dAtlasMesh([0, 0, 1, 0, 0, 1], [0, 1, 2], [0.25, 0.125, 0.75, 0.625]);
+    const clipped = projectBone2dAtlasMesh(chunk, [7, 11, 25, 7, 3, 27]);
+    expect(clipped.indices.length).toBeGreaterThan(3);
+    for (let i = 0; i < clipped.uvs.length; i += 2) {
+        const u = 0.25 + 0.5 * clipped.uvs[i],
+            v = 0.125 + 0.5 * clipped.uvs[i + 1];
+        expect(u + v).toBeLessThanOrEqual(1);
+        expect(clipped.positions[i]).toBeCloseTo(7 + 18 * u - 4 * v, 12);
+        expect(clipped.positions[i + 1]).toBeCloseTo(11 - 4 * u + 16 * v, 12);
+    }
+    expect(buildBone2dAtlasMesh([0, 0, 0, 0.1, 0.1, 0], [0, 1, 2], [0.25, 0.25, 0.75, 0.75])).toEqual([]);
+});
+
+test('retains XY area when the source triangle UVs are all on the crop boundary', () => {
+    const [chunk] = buildBone2dAtlasMesh([0.25, 0.5, 0.25, 0.5, 0.25, 0.5], [0, 1, 2], [0.25, 0.25, 0.75, 0.75]);
+    expect(projectBone2dAtlasMesh(chunk, [2, 3, 6, 3, 2, 10])).toEqual({
+        positions: [2, 3, 6, 3, 2, 10],
+        uvs: [0, 0.5, 0, 0.5, 0, 0.5],
+        indices: [0, 1, 2],
+    });
+});
+
+test('atlas trim expansion partitions contiguous triangles within UI buffer limits', () => {
+    const uvs = [0, 0, 1, 0, 0, 1],
+        crop = [0.125, 0.125, 0.875, 0.875] as const;
+    const triangles = Array.from({ length: 4095 }, (_, i) => i % 3);
+    const [single] = buildBone2dAtlasMesh(uvs, [0, 1, 2], crop);
+    const chunks = buildBone2dAtlasMesh(uvs, triangles, crop).map((chunk) =>
+        projectBone2dAtlasMesh(chunk, [0, 0, 1, 0, 0, 1]),
+    );
+    expect(chunks.length).toBeGreaterThan(1);
+    expect(chunks.reduce((n, c) => n + c.indices.length, 0)).toBe(single.indices.length * 1365);
+    for (const chunk of chunks) {
+        expect(chunk.positions.length / 2).toBeLessThanOrEqual(1024);
+        expect(chunk.indices.length).toBeLessThanOrEqual(4095);
+        expect(Math.max(...chunk.indices)).toBeLessThan(chunk.positions.length / 2);
+    }
 });

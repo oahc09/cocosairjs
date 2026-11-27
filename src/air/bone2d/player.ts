@@ -38,6 +38,8 @@ import { Layers } from '../../cocos/scene-graph/layers';
 import { Node } from '../../cocos/scene-graph/node';
 import { spriteNode } from '../ui-kit';
 import { AirUIMesh } from '../ui-mesh';
+import { buildBone2dAtlasMesh, projectBone2dAtlasMesh } from './mesh-atlas';
+import type { Bone2dAtlasCrop } from './mesh-atlas';
 import type { AirAtlasHandle } from '../assets/atlas/atlas-factory';
 import { factorBone2dBasis } from './affine';
 import { convexClipOutline, hasNonCollinearPoints } from './polygon';
@@ -45,7 +47,7 @@ import type { Bone2dPhysicsState, PhysicsStep } from './physics';
 import { bone2dKeysInWindow, makeBone2dPlayback, playbackBudget, traverseBone2dPlayback } from './playback';
 import type { Bone2dPlaybackOptions, Bone2dSavedPlayback, Playback, PlaybackCursor } from './playback';
 import { parseBone2dProject, sampleBone2dFrame, bone2dWorldMatrices, bone2dMeshPositions, bone2dPicture, resolveBone2dAttachment, bone2dShapeGeometry } from './project';
-import type { Bone2dAttachmentGeometry, Bone2dBlend, Bone2dClipAttachment, Bone2dImage, Bone2dMarker, Bone2dPose, Bone2dProjectOptions, Bone2dSample } from './project';
+import type { Bone2dAttachmentGeometry, Bone2dBlend, Bone2dClipAttachment, Bone2dImage, Bone2dMarker, Bone2dMesh, Bone2dPose, Bone2dProjectOptions, Bone2dSample } from './project';
 
 export interface AirBone2dOptions extends Bone2dProjectOptions {
     /** If specified, borrow exact-name frames rather than decoding embedded pictures. The caller owns the atlas. */
@@ -165,32 +167,45 @@ export async function createAirBone2dPlayer(
         error('invalid clipping deformation option');
     const layer = options.layer ?? Layers.Enum.UI_2D;
     const used = new Set<string>();
-    const meshImages = new Set<string>();
-    const meshSlots = new Set<string>();
     for (const skin of project.skins.values()) {
-        for (const [slot, regions] of skin.regions)
+        for (const regions of skin.regions.values())
             for (const region of regions.values()) {
                 if (region.kind !== 'mesh' && region.kind !== 'region') continue;
                 for (const name of region.sequence?.frames ?? [region.path]) {
                     used.add(name);
-                    if (region.kind === 'mesh') meshImages.add(name);
                 }
-                if (region.kind === 'mesh') meshSlots.add(slot);
             }
     }
     if (signal?.aborted) throw new Error('AIR_E_BONE2D_ABORTED');
     const frames = new Map<string, SpriteFrame>();
+    const crops = new Map<SpriteFrame, { polygon: Bone2dAtlasCrop; uvClamp: Vec4 }>();
+    const meshPlans = new WeakMap<Bone2dMesh, WeakMap<SpriteFrame, ReturnType<typeof buildBone2dAtlasMesh>>>();
+    const disableMesh = (mesh: AirUIMesh): void => {
+        if (!mesh.node.active) return;
+        mesh.node.active = false;
+        mesh.spriteFrame = null;
+        mesh.clear();
+    };
     const retained = new Set<SpriteFrame>();
     const blendMaterials = new Map<Bone2dBlend, Material>();
     let tintEffect: EffectAsset | undefined;
+    let cropEffect: EffectAsset | undefined;
+    const cropMaterials = new Map<string, Material>();
     const tintedSlots = new Map<string, { material: Material; values: Vec4 }>();
-    const materialFor = (mode: Bone2dBlend, darkSlot?: string): Material => {
-        if (darkSlot === undefined) {
+    const materialFor = (mode: Bone2dBlend, darkSlot?: string, cropSlot?: string): Material => {
+        if (cropSlot !== undefined) {
+            const existing = cropMaterials.get(cropSlot);
+            if (existing) return existing;
+        }
+        if (darkSlot === undefined && cropSlot === undefined) {
             const existing = blendMaterials.get(mode);
             if (existing) return existing;
         }
         const material = new Material();
-        if (darkSlot === undefined) blendMaterials.set(mode, material);
+        if (cropSlot !== undefined) {
+            cropMaterials.set(cropSlot, material);
+            cropEffect ??= createBone2dTintEffect(true);
+        } else if (darkSlot === undefined) blendMaterials.set(mode, material);
         else {
             tintedSlots.set(darkSlot, { material, values: new Vec4(-1, -1, -1, 0) });
             tintEffect ??= createBone2dTintEffect();
@@ -200,7 +215,8 @@ export async function createAirBone2dPlayer(
         const colorDst = mode === 'additive' ? BlendFactor.ONE :
             mode === 'screen' ? BlendFactor.ONE_MINUS_SRC_COLOR : BlendFactor.ONE_MINUS_SRC_ALPHA;
         material.initialize({
-            ...(darkSlot === undefined ? { effectName: 'builtin-sprite' } : { effectAsset: tintEffect }),
+            ...(cropSlot !== undefined ? { effectAsset: cropEffect } :
+                darkSlot === undefined ? { effectName: 'builtin-sprite' } : { effectAsset: tintEffect }),
             defines: { USE_TEXTURE: true, USE_ALPHA_TEST: false, CC_USE_EMBEDDED_ALPHA: false },
             states: { blendState: { targets: [{
                 blend: true, blendEq: BlendOp.ADD, blendAlphaEq: BlendOp.ADD,
@@ -216,7 +232,7 @@ export async function createAirBone2dPlayer(
     root.layer = layer;
     const slots = new Map<
         string,
-        { root: Node; bones: Map<string, Node>; affine?: readonly [Node, Node]; leaf: Node; sprite: Sprite; transform: UITransform; mesh?: AirUIMesh }
+        { root: Node; bones: Map<string, Node>; affine?: readonly [Node, Node]; leaf: Node; sprite: Sprite; transform: UITransform; meshes: AirUIMesh[]; meshMaterial: Material | null }
     >();
     const masks = new Map<string, { node: Node; mask: Mask; graphics: Graphics; outline: number[] }>();
     let disposed = false;
@@ -225,7 +241,7 @@ export async function createAirBone2dPlayer(
         disposed = true;
         for (const s of slots.values()) {
             if (s.sprite.isValid) s.sprite.spriteFrame = null;
-            if (s.mesh?.isValid) s.mesh.dispose();
+            for (const mesh of s.meshes) if (mesh.isValid) mesh.dispose();
         }
         for (const { node } of masks.values()) if (node.parent !== root && isValid(node, true)) node.destroy();
         masks.clear();
@@ -234,6 +250,9 @@ export async function createAirBone2dPlayer(
         for (const { material } of tintedSlots.values()) material.destroy();
         tintedSlots.clear();
         tintEffect?.destroy();
+        for (const material of cropMaterials.values()) material.destroy();
+        cropMaterials.clear();
+        cropEffect?.destroy();
         if (destroyNode && isValid(root, true)) root.destroy();
         for (const f of retained) f.decRef(false);
         for (const f of adapted) f.destroy();
@@ -245,6 +264,7 @@ export async function createAirBone2dPlayer(
         }
         slots.clear();
         frames.clear();
+        crops.clear();
         retained.clear();
         adapted.clear();
         owned.length = 0;
@@ -360,7 +380,7 @@ export async function createAirBone2dPlayer(
             s.root.active = drawable;
             if (!drawable) {
                 s.sprite.spriteFrame = null;
-                if (s.mesh) s.mesh.spriteFrame = null;
+                for (const mesh of s.meshes) disableMesh(mesh);
                 continue;
             }
             const newFrame = frames.get(bone2dPicture(region, sample, def.id))!;
@@ -379,27 +399,52 @@ export async function createAirBone2dPlayer(
             };
             if (region.kind === 'mesh') {
                 s.sprite.spriteFrame = null;
-                const mesh = s.mesh!;
-                mesh.node.active = true;
-                if (mesh.spriteFrame !== newFrame) mesh.spriteFrame = newFrame;
                 world ??= bone2dWorldMatrices(project, sample);
-                mesh.setGeometry({
-                    positions: bone2dMeshPositions(
-                        region,
-                        def.bone,
-                        world,
+                const crop = crops.get(newFrame);
+                let chunks: ReturnType<typeof buildBone2dAtlasMesh> | undefined;
+                if (crop) {
+                    let byFrame = meshPlans.get(region);
+                    if (!byFrame) meshPlans.set(region, byFrame = new WeakMap());
+                    chunks = byFrame.get(newFrame);
+                    if (!chunks) {
+                        chunks = buildBone2dAtlasMesh(region.uvs, region.indices, crop.polygon);
+                        byFrame.set(newFrame, chunks);
+                    }
+                }
+                const count = chunks?.length ?? 1;
+                if (count) {
+                    const material = crop ? materialFor(def.blend, undefined, def.id) : s.meshMaterial;
+                    if (crop && material) {
+                        material.setProperty('bone2dCrop', crop.uvClamp);
+                        if (p.dark) material.setProperty('bone2dDark', tintedSlots.get(def.id)!.values);
+                    }
+                    const positions = bone2dMeshPositions(
+                        region, def.bone, world,
                         sample.slotDeform ? sample.slotDeform.get(def.id) : sample.meshDeltas.get(region.deformParent ?? region),
-                    ),
-                    uvs: region.uvs,
-                    indices: region.indices,
-                });
-                tint(mesh);
+                    );
+                    for (let i = 0; i < count; i++) {
+                        let mesh = s.meshes[i];
+                        if (!mesh) {
+                            const node = new Node('Mesh');
+                            node.layer = layer;
+                            node.active = false;
+                            s.root.addChild(node);
+                            mesh = node.addComponent(AirUIMesh);
+                            s.meshes.push(mesh);
+                        }
+                        if (mesh.customMaterial !== material) mesh.customMaterial = material;
+                        if (mesh.spriteFrame !== newFrame) mesh.spriteFrame = newFrame;
+                        mesh.setGeometry(chunks ? projectBone2dAtlasMesh(chunks[i], positions) : {
+                            positions, uvs: region.uvs, indices: region.indices,
+                        });
+                        tint(mesh);
+                        mesh.node.active = true;
+                    }
+                }
+                for (let i = count; i < s.meshes.length; i++) disableMesh(s.meshes[i]);
                 continue;
             }
-            if (s.mesh) {
-                s.mesh.spriteFrame = null;
-                s.mesh.node.active = false;
-            }
+            for (const mesh of s.meshes) disableMesh(mesh);
             if (s.affine) {
                 world ??= bone2dWorldMatrices(project, sample);
                 const frame = world.get(def.bone)!;
@@ -431,23 +476,43 @@ export async function createAirBone2dPlayer(
                 ) {
                     error(`missing atlas frame or mismatched original dimensions: ${name}`);
                 }
-                if (meshImages.has(name) && (frame.rect.width !== spec.width || frame.rect.height !== spec.height))
-                    error(`mesh needs untrimmed atlas UVs: ${name}`);
+                const { width, height } = frame.rect;
+                const left = frame.offset.x + (spec.width - width) / 2;
+                const bottom = frame.offset.y + (spec.height - height) / 2;
+                if (width <= 0 || height <= 0 || left < 0 || bottom < 0 || left + width > spec.width || bottom + height > spec.height)
+                    error(`atlas trim lies outside the original image: ${name}`);
                 if (!retained.has(frame)) {
                     frame.addRef();
                     retained.add(frame);
                 }
-                if (frame.rotated && (options.atlasRotation ?? 'bone2d') === 'bone2d') {
-                    // Bone-2D writes the opposite quarter-turn from AIR's native
-                    // rotated frame. A local copy flips both UV axes while the
-                    // original handle remains unchanged and pinned.
-                    const rotated = frame.clone();
-                    rotated.packable = false;
-                    rotated.flipUVX = !frame.flipUVX;
-                    rotated.flipUVY = !frame.flipUVY;
-                    adapted.add(rotated);
-                    frames.set(name, rotated);
-                } else frames.set(name, frame);
+                const trim = width !== spec.width || height !== spec.height;
+                const reverse = frame.rotated && (options.atlasRotation ?? 'bone2d') === 'bone2d';
+                const selected = reverse || trim ? frame.clone() : frame;
+                if (selected !== frame) {
+                    // Crop shader bounds address this fixed atlas page. Do not
+                    // dynamically repack the clone or mutate the borrowed frame.
+                    selected.packable = false;
+                    if (reverse) {
+                        selected.flipUVX = !frame.flipUVX;
+                        selected.flipUVY = !frame.flipUVY;
+                    }
+                    adapted.add(selected);
+                }
+                frames.set(name, selected);
+                if (trim) {
+                    const { x, y } = frame.rect;
+                    const packedW = frame.rotated ? height : width, packedH = frame.rotated ? width : height;
+                    const tw = frame.texture.width, th = frame.texture.height;
+                    crops.set(selected, {
+                        polygon: [left / spec.width, bottom / spec.height,
+                            (left + width) / spec.width, (bottom + height) / spec.height],
+                        // A multisampled edge can shade at a pixel center outside
+                        // its triangle. Clamp at texel centers in the fragment,
+                        // not at vertices where interpolation can extrapolate.
+                        uvClamp: new Vec4((x + 0.5) / tw, (y + 0.5) / th,
+                            (x + packedW - 0.5) / tw, (y + packedH - 0.5) / th),
+                    });
+                }
                 continue;
             }
             pixels += spec.width * spec.height;
@@ -509,17 +574,9 @@ export async function createAirBone2dPlayer(
             const material = slot.dark ? materialFor(slot.blend, slot.id) :
                 slot.blend !== 'normal' ? materialFor(slot.blend) : null;
             if (material) sprite.customMaterial = material;
-            let mesh: AirUIMesh | undefined;
-            if (meshSlots.has(slot.id)) {
-                const meshNode = new Node('Mesh');
-                meshNode.layer = layer;
-                slotRoot.addChild(meshNode);
-                mesh = meshNode.addComponent(AirUIMesh);
-                if (material) mesh.customMaterial = material;
-                meshNode.active = false;
-            }
             slots.set(slot.id, {
-                mesh,
+                meshes: [],
+                meshMaterial: material,
                 root: slotRoot,
                 bones: nodes,
                 affine,

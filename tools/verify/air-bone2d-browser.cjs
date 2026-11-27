@@ -27,6 +27,7 @@ const files = [
     'src/air/bone2d/physics.ts',
     'src/air/bone2d/playback.ts',
     'src/air/bone2d/image.ts',
+    'src/air/bone2d/mesh-atlas.ts',
     'test/fixtures/bone2d/web-game.json',
     'test/fixtures/bone2d/raster-formats.json',
     'test/fixtures/bone2d/playback.bone2d',
@@ -343,8 +344,8 @@ async function main() {
                 folderPlayer.dispose();
                 await clock.step(0);
             };
-            let meshInstance, meshView, meshTexture;
-            const setMesh = async ({ weighted, linked }) => {
+            let meshInstance, meshView, meshTexture, meshAtlas, meshAtlasImage;
+            const setMesh = async ({ weighted, linked, trim }) => {
                 const fixture = JSON.parse(text),
                     rig = fixture.project.skeleton;
                 const points = [
@@ -402,7 +403,59 @@ async function main() {
                         ],
                     },
                 };
-                meshInstance = await air.createAirBone2dPlayer(parent, JSON.stringify(fixture));
+                meshAtlas = null;
+                if (trim) {
+                    const original = document.createElement('canvas');
+                    original.width = original.height = 8;
+                    const ctx = original.getContext('2d');
+                    ctx.fillStyle = '#fc2048';
+                    ctx.fillRect(2, 1, 5, 6);
+                    ctx.fillStyle = '#3ae1a0';
+                    ctx.fillRect(2, 1, 2, 3);
+                    ctx.fillStyle = '#45a1f0';
+                    ctx.fillRect(4, 4, 3, 3);
+                    fixture.images.arm = original.toDataURL();
+                    if (trim === 'atlas') {
+                        const page = document.createElement('canvas');
+                        page.width = 24;
+                        page.height = 16;
+                        const packed = page.getContext('2d');
+                        const body = new Image();
+                        body.src = fixture.images.body;
+                        await body.decode();
+                        packed.drawImage(body, 0, 0);
+                        packed.fillStyle = '#ffff00';
+                        packed.fillRect(16, 0, 8, 16);
+                        packed.translate(17, 7);
+                        packed.rotate(-Math.PI / 2);
+                        packed.drawImage(original, 2, 1, 5, 6, 0, 0, 5, 6);
+                        const tex = new air.Texture2D();
+                        meshAtlasImage = new air.ImageAsset();
+                        meshAtlasImage.reset(page);
+                        tex.image = meshAtlasImage;
+                        tex.setFilters(air.Texture2D.Filter.NEAREST, air.Texture2D.Filter.NEAREST);
+                        meshAtlas = air.createAtlasHandle(
+                            air.parseAtlasText(
+                                [
+                                    'packed.png',
+                                    'size: 24,16',
+                                    'filter: Nearest,Nearest',
+                                    'pma: false',
+                                    'body',
+                                    'bounds: 0,0,16,16',
+                                    'arm',
+                                    'bounds: 17,2,5,6',
+                                    'offsets: 2,1,8,8',
+                                    'rotate: 90',
+                                ].join('\n'),
+                            ),
+                            [tex],
+                        );
+                    }
+                }
+                meshInstance = await air.createAirBone2dPlayer(parent, JSON.stringify(fixture), {
+                    atlas: meshAtlas ?? undefined,
+                });
                 meshInstance.play('attack');
                 if (linked) meshInstance.setSkins(['linked']);
                 meshView = meshInstance.node
@@ -411,7 +464,9 @@ async function main() {
                     .getComponent(air.AirUIMesh);
                 meshTexture = meshView.spriteFrame.texture;
             };
-            const meshStep = async (dt) => {
+            const meshStep = async (arg) => {
+                const { dt, subpixel } = typeof arg === 'number' ? { dt: arg } : arg;
+                if (subpixel) meshInstance.node.setPosition(0.25, 0.125, 0);
                 const events = meshInstance.advance(dt).map((e) => e.id);
                 await clock.step(0);
                 return { positions: meshView.geometry.positions, frame: !!meshView.spriteFrame, events };
@@ -419,7 +474,12 @@ async function main() {
             const meshClose = async () => {
                 meshInstance.dispose();
                 await clock.step(0);
-                return !meshTexture.getGFXTexture();
+                if (!meshAtlas) return !meshTexture.getGFXTexture();
+                const borrowed = !!meshTexture.getGFXTexture();
+                meshAtlas.dispose();
+                meshAtlasImage.destroy();
+                await clock.step(0);
+                return { borrowed, disposed: meshAtlas.disposed };
             };
             let sequencePlayer, sequenceVisual;
             const sequenceTextures = new Set();
@@ -1217,6 +1277,100 @@ async function main() {
             assert.equal(freed, true);
             report.mesh.push({ weighted, linked, baseline, end, before, after, hidden, freed });
         }
+        report.trimmedMesh = {};
+        const trimScreens = { tied: [], offset: [] };
+        for (const trim of ['embedded', 'atlas']) {
+            await page.evaluate((trim) => window.bone2dTest.setMesh({ weighted: true, trim }), trim);
+            const start = await page.evaluate(() => window.bone2dTest.meshStep(0));
+            const before = sha(await page.screenshot());
+            const end = await page.evaluate(() => window.bone2dTest.meshStep(0.5));
+            const tied = await page.screenshot();
+            trimScreens.tied.push(tied);
+            await page.evaluate(() => window.bone2dTest.meshStep({ dt: 0, subpixel: true }));
+            const shot = await page.screenshot();
+            trimScreens.offset.push(shot);
+            const after = sha(shot);
+            const hidden = await page.evaluate(() => window.bone2dTest.meshStep(0.375));
+            assert.equal(hidden.frame, false);
+            assert.equal(sha(await page.screenshot()), s.dispose.screenshotSha256);
+            const release = await page.evaluate(() => window.bone2dTest.meshClose());
+            report.trimmedMesh[trim] = { start, end, before, tied: sha(tied), after, release };
+        }
+        const { embedded: meshEmbedded, atlas: meshPacked } = report.trimmedMesh;
+        assert.notEqual(meshEmbedded.before, meshEmbedded.after);
+        assert.notEqual(meshPacked.after, s.dispose.screenshotSha256);
+        assert.equal(meshPacked.before, meshEmbedded.before, 'rotated trimmed mesh setup pixels');
+        assert.deepEqual(meshPacked.end.positions, [28.5, 2.75, 43.5, 2.75, 28.5, 16.5]);
+        const compareTrim = (shots) =>
+            page.evaluate(
+                async (images) => {
+                    const read = async (data) => {
+                        const image = new Image();
+                        image.src = 'data:image/png;base64,' + data;
+                        await image.decode();
+                        const canvas = document.createElement('canvas');
+                        canvas.width = image.width;
+                        canvas.height = image.height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(image, 0, 0);
+                        return { rgba: ctx.getImageData(0, 0, canvas.width, canvas.height).data, width: canvas.width };
+                    };
+                    const [{ rgba: a, width }, { rgba: b }] = await Promise.all(images.map(read));
+                    const row = 4 * width;
+                    const around = [-row - 4, -row, -row + 4, -4, 4, row - 4, row, row + 4];
+                    const foreground = (rgba, i) =>
+                        rgba[i] !== rgba[0] || rgba[i + 1] !== rgba[1] || rgba[i + 2] !== rgba[2];
+                    let ink = 0,
+                        different = 0,
+                        packedNeighbor = 0,
+                        silhouette = 0,
+                        detached = 0;
+                    const pairs = {};
+                    for (let i = 0; i < a.length; i += 4) {
+                        const aa = a[i] !== a[0] || a[i + 1] !== a[1] || a[i + 2] !== a[2];
+                        const bb = b[i] !== b[0] || b[i + 1] !== b[1] || b[i + 2] !== b[2];
+                        if (aa || bb) ink++;
+                        if (aa !== bb) {
+                            silhouette++;
+                            const other = aa ? b : a;
+                            if (
+                                !around.some(
+                                    (offset) =>
+                                        i + offset >= 0 && i + offset < a.length && foreground(other, i + offset),
+                                )
+                            )
+                                detached++;
+                        }
+                        // All authored RGB colors have blue >= the clear color. Yellow
+                        // bleed from the page sentinel drops it below that value, even with MSAA.
+                        if (b[i + 2] < b[2]) packedNeighbor++;
+                        if ([0, 1, 2, 3].some((c) => a[i + c] !== b[i + c])) {
+                            different++;
+                            const pair = a.slice(i, i + 3).join(',') + ' => ' + b.slice(i, i + 3).join(',');
+                            pairs[pair] = (pairs[pair] ?? 0) + 1;
+                        }
+                    }
+                    return { ink, different, silhouette, detached, packedNeighbor, pairs };
+                },
+                shots.map((shot) => shot.toString('base64')),
+            );
+        const tied = await compareTrim(trimScreens.tied);
+        const offset = await compareTrim(trimScreens.offset);
+        report.trimmedMesh.coverage = { tied, offset };
+        // The full texture encodes a binary alpha edge; a clipped primitive
+        // has subpixel MSAA coverage. Their common ink must still match exactly,
+        // and any added coverage must stay within one pixel of the source edge.
+        for (const frame of [tied, offset]) {
+            assert.ok(
+                frame.ink > 80 &&
+                    frame.different === frame.silhouette &&
+                    frame.silhouette <= frame.ink / 4 &&
+                    frame.detached === 0 &&
+                    frame.packedNeighbor === 0,
+                JSON.stringify(frame),
+            );
+        }
+        assert.deepEqual(meshPacked.release, { borrowed: true, disposed: true });
         report.sequences = [];
         for (const mesh of [false, true]) {
             await page.evaluate((flag) => window.bone2dTest.sequenceMount(flag), mesh);
