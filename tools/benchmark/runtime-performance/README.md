@@ -187,3 +187,45 @@ single software-browser timings in the raw attempts are not a speed
 conclusion. Default package support, caching policy, real hardware, terrain,
 and the exact `pipeline/bloom` and `pipeline/deferred-lighting` consumers
 remain outside this probe.
+
+## Optional Chromium visual calibration
+
+Callbacks and standard FCP do not identify the first recognizable scene. Keep this **separate** from regular
+diagnostic, correctness, and comparison runs. With sandboxed Chromium and resolvable Playwright, pngjs and
+jpeg-js, run the loopback fixture first:
+
+```sh
+node tools/benchmark/runtime-performance/visual-trace-calibrate.cjs CHROMIUM NEW_DIR headless
+```
+
+It traces actual compositor snapshots in fresh browsers for an orange shape plus either a delayed teal
+stand-in or no stand-in. The shell and canvas clear must not count as content. The recognizer must bracket
+the delayed draw marker and never count the absent marker. This is a **synthetic** calibration, not a glTF
+load or an engine benchmark. Same-device headed calibration and an instrumented/uninstrumented A/A overhead
+check are still needed for a hardware campaign.
+
+For a benchmark page already served at HTTP loopback, collect and analyze independently:
+
+```sh
+node tools/benchmark/runtime-performance/visual-trace-collect.cjs CHROMIUM URL NEW_TRACE.json 1800 headed
+node tools/benchmark/runtime-performance/visual-trace.cjs NEW_TRACE.json ABSENT.png PRESENT.png 0.34,0.23,0.66,0.77 NEW_REPORT.json
+```
+
+Use independently captured, aligned reference frames from the intended workload at the same viewport aspect.
+For S02 use an S01 grey clear and the settled orange cube, with the initial camera pose and no input.
+For glTF, choose a distinct model ROI with cube-only and model-ready reference frames, then verify real
+delayed and absent controls. Use a normalized ROI containing both stable foreground and stable background
+points. Verify references and hold geometry/aspect fixed; this is not general object recognition.
+The trace starts before navigation but times are relative to the injected main-document user timing mark,
+**not** to navigation start or an existing callback. Unknown screenshots never become an absent bound.
+A left-censored result (no absent snapshot), unstable result, or missing content is not a usable interval.
+Report the endpoints and width rather than interpolating a point. No `displayPresentMs` is inferred:
+hardware presentation would require joining the content-bearing frame to trustworthy compositor
+presentation feedback on that same frame. The normal startup runner's metrics are untouched.
+
+Initial headless software check (Chrome for Testing 148.0.7778.96, sandbox enabled): three synthetic control pairs
+recognized the delayed marker only after its draw, and never recognized it in the absent arm. Delayed-marker
+brackets were about 160–163 ms wide, so they cannot resolve smaller differences. An extra software check using
+the actual AIR S01 and S02 scene setup and bound development SDK rejected S01 and recognized S02. The S02 trace
+had no calibrated negative snapshot before the first cube snapshot and correctly returned `left-censored`.
+No physical presentation timing, package ranking, or instrumented startup speed claim follows from these checks.
