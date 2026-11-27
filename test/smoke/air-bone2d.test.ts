@@ -1,6 +1,7 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { convexClipOutline } from '../../src/air/bone2d/polygon';
+import { factorBone2dBasis, multiplyBasis, poseBasis } from '../../src/air/bone2d/affine';
 import {
     parseBone2dProject,
     sampleBone2dProject,
@@ -394,4 +395,54 @@ test('two-color keys override light after their first key and animate only expli
     const midpoint = sampleBone2dProject(model, 'attack', 0.5);
     expect(midpoint.slots.get('body-slot')).toMatchObject({ color: [0.75, 0.5, 0.5, 0.75], dark: [0.25, 0.5, 0.5] });
     expect(midpoint.slots.get('arm-slot')).toMatchObject({ color: [0.75, 0.5, 0.5, 0.75], dark: null });
+});
+
+const inheritOracle = [
+    ['normal', [-2.025449, 0.041812, 0.4228, 1.279957]],
+    ['onlyTranslation', [0.771345, -0.338095, 0.919253, 0.725046]],
+    ['noRotationOrReflection', [1.645296, -0.47695, 1.660788, 1.105]],
+    ['noScale', [-1.172973, -0.177467, 0.253246, 0.780068]],
+    ['noScaleOrReflection', [-1.18885, -0.236343, -0.163207, -0.764292]],
+] as const;
+
+test.each(inheritOracle)('mirrored parent and animated shear: %s', (inherit, expected) => {
+    const file = fixture(),
+        rig = file.project.skeleton;
+    const root = rig.bones.find((b: { id: string }) => b.id === 'root'),
+        child = rig.bones[0];
+    Object.assign(root, { x: 10, y: 20, rotation: 30, scaleX: -2, scaleY: 1.5 });
+    Object.assign(child, { x: 3, y: 4, rotation: 40, scaleX: 1.2, scaleY: 0.8, shearX: 4, shearY: -12, inherit });
+    rig.animations[1].bones['arm-bone'] = {
+        shear: [{ time: 0.5, value: [24, -3] }],
+        shearx: [{ time: 0.5, value: [6] }],
+    };
+    function matrix() {
+        const model = parse(file),
+            sample = sampleBone2dProject(model, 'attack', 0.5);
+        expect(model.affineSprites).toBe(true);
+        expect(sample.shears.get('arm-bone')).toEqual([10, -15]);
+        return bone2dWorldMatrices(model, sample).get('arm-bone')!;
+    }
+    const m = matrix();
+    [...expected, 1.803847, 22.196152].forEach((v, i) => expect(m[i]).toBeCloseTo(v, 5));
+    Object.assign(root, { scaleX: 0, scaleY: 0 });
+    const collapsed = matrix();
+    expect(collapsed.slice(4)).toEqual([10, 20]);
+    expect(collapsed.slice(0, 4).every(Number.isFinite)).toBe(true);
+    if (inherit !== 'onlyTranslation') expect(Math.hypot(...collapsed.slice(0, 4))).toBe(0);
+});
+test('signed two-node affine factorization reconstructs deterministic matrices including collapsed axes', () => {
+    let rng = 0x4206970;
+    const next = () => ((rng = (Math.imul(1664525, rng) + 1013904223) >>> 0) / 4294967296 - 0.5) * 12;
+    for (let i = 0; i < 512; ++i) {
+        const a = next(),
+            b = next(),
+            c = i % 16 === 0 ? a : next(),
+            d = i % 16 === 0 ? b : next();
+        const [outer, inner, x, y] = factorBone2dBasis([a, b, c, d, 0, 0]);
+        const m = multiplyBasis(poseBasis(outer, x, y, [0, 0]), poseBasis(inner, 1, 1, [0, 0]));
+        [a, b, c, d].forEach((value, k) => expect(m[k]).toBeCloseTo(value, 11));
+    }
+    const [o, i, sx, sy] = factorBone2dBasis([0, 0, 0, 0, 0, 0]);
+    expect([o, i, sx, sy]).toEqual([0, 0, 0, 0]);
 });

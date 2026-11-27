@@ -40,6 +40,8 @@ Clipping attachments are rendered with the AIR stencil mask. The mask starts aft
 
 Slots support normal, additive, multiply and screen blending on both sprites and meshes with straight-alpha images. Additive blending accumulates destination alpha; the other modes attenuate it. Two-color tint uses the slot's setup dark RGB and keyed `rgba2` values, with independent state per slot. A sampled `rgba2` key takes precedence over the ordinary light `rgba` channels. Its dark channels apply only to slots with a setup dark color.
 
+All five Bone-2D bone inheritance modes and setup/keyed shear are supported. Combined shear keys can be overridden on each axis by the corresponding split timeline. Rigid sprites retain their atlas UVs and trimming, even with a reflected or sheared basis. Sprites, mesh and clipping vertices, and attachment queries use the same root-relative transform for these rigs.
+
 ## Full runtime acceptance matrix
 
 A native project must either play with its intended semantics or report a specific unsupported feature. Silently dropping a runtime feature is not compatibility. Editor-only fields (selection, locks, guides, notes, viewport) do not affect exported runtime state.

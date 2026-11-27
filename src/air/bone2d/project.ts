@@ -19,6 +19,9 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
 */
+import { inheritBasis, poseBasis } from './affine';
+import type { Bone2dInheritance, Matrix2D, Shears } from './affine';
+
 /** Strict reader for the supported subset of Bone-2D Save Project v1. No editor or Spine dependency. */
 type Obj = Record<string, unknown>;
 export type Bone2dPose = readonly [number, number, number, number, number];
@@ -41,7 +44,6 @@ export interface Bone2dRegion {
     color: RGBA;
 }
 type Influence = readonly [bone: string, x: number, y: number, weight: number];
-type Matrix2D = readonly [a: number, b: number, c: number, d: number, tx: number, ty: number];
 export interface Bone2dMesh {
     kind: 'mesh';
     path: string;
@@ -82,6 +84,8 @@ interface Bone {
     id: string;
     parent: string | null;
     pose: Bone2dPose;
+    shear: Shears;
+    inherit: Bone2dInheritance;
 }
 export type Bone2dBlend = 'normal' | 'additive' | 'multiply' | 'screen';
 interface Slot {
@@ -143,6 +147,7 @@ export interface Bone2dProject {
     readonly skins: ReadonlyMap<string, Skin>;
     readonly folders: ReadonlyMap<string, Folder>;
     readonly bones: readonly Bone[];
+    readonly affineSprites: boolean;
     readonly slots: readonly Slot[];
     readonly clips: ReadonlyMap<string, Clip>;
     readonly images: ReadonlyMap<string, Bone2dImage>;
@@ -154,6 +159,7 @@ export interface Bone2dSlotPose {
 }
 export interface Bone2dSample {
     readonly bones: ReadonlyMap<string, Bone2dPose>;
+    readonly shears: ReadonlyMap<string, Shears>;
     readonly slots: ReadonlyMap<string, Bone2dSlotPose>;
     readonly order: readonly string[];
     readonly sequenceFrames: ReadonlyMap<Visual, number>;
@@ -276,6 +282,7 @@ function values(x: unknown, count: number, end: number, label: string, shared = 
 }
 
 const channels = new Map([
+    ['shear', 2], ['shearx', 1], ['sheary', 1],
     ['rotate', 1],
     ['translate', 2],
     ['translatex', 1],
@@ -310,9 +317,14 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
     const bones = list(sk.bones, 128, 'bones').map((raw): Bone => {
         const b = obj(raw, 'bone');
         const id = str(b.id, 'bone id');
-        if (b.inherit !== 'normal' || b.shearX !== 0 || b.shearY !== 0 || b.skinRequired)
-            fail(`inheritance or shear: ${id}`, true);
-        return { id, parent: optionalStr(b.parent, 'parent'), pose: pose(b, id) };
+        const mode = b.inherit;
+        if (mode !== 'normal' && mode !== 'onlyTranslation' && mode !== 'noRotationOrReflection' &&
+            mode !== 'noScale' && mode !== 'noScaleOrReflection') fail(`invalid inheritance: ${id}`);
+        if (b.skinRequired) fail(`skin-required bone: ${id}`, true);
+        return {
+            id, parent: optionalStr(b.parent, 'parent'), pose: pose(b, id), inherit: mode,
+            shear: [num(b.shearX, 'bone shearX'), num(b.shearY, 'bone shearY')],
+        };
     });
     if (!bones.length) fail('no bones');
     const byBone = index(bones, 'duplicate bone id');
@@ -557,7 +569,11 @@ export function parseBone2dProject(text: string, options: Bone2dProjectOptions =
         }),
         'duplicate animation id',
     );
-    return { skeletonIndex: selected, skeletonNames, bones, slots, clips, images, skins, folders };
+    const affineSprites = bones.some((bone) => bone.inherit !== 'normal' || bone.shear[0] !== 0 || bone.shear[1] !== 0) ||
+        Array.from(clips.values()).some((clip) => Array.from(clip.bones.values()).some(
+            (track) => ['shear', 'shearx', 'sheary'].some((channel) => track.has(channel)),
+        ));
+    return { skeletonIndex: selected, skeletonNames, bones, affineSprites, slots, clips, images, skins, folders };
 }
 function arrangement(raw: unknown, setup: readonly string[]): string[] {
     const desired = list(raw, setup.length, 'slot order').map((entry) => str(entry, 'slot id'));
@@ -711,6 +727,16 @@ export function sampleBone2dProject(project: Bone2dProject, clipId: string | nul
             ];
         }),
     );
+    const shears = new Map<string, Shears>();
+    for (const bone of project.bones) {
+        const [x, y] = bone.shear;
+        const track = clip?.bones.get(bone.id);
+        const pair = sampled(track?.get('shear'), time);
+        shears.set(bone.id, [
+            x + (sampled(track?.get('shearx'), time)?.[0] ?? pair?.[0] ?? 0),
+            y + (sampled(track?.get('sheary'), time)?.[0] ?? pair?.[1] ?? 0),
+        ]);
+    }
     const slots = new Map(
         project.slots.map((s): [string, Bone2dSlotPose] => {
             const track = clip?.slots.get(s.id);
@@ -759,36 +785,26 @@ export function sampleBone2dProject(project: Bone2dProject, clipId: string | nul
         const frame = sequenceFrame(key.value, time - key.time, sequence.frames.length);
         sequenceFrames.set(visual, frame === -1 ? sequence.setup : frame);
     }
-    return { bones, slots, meshDeltas, shapeDeltas, order, sequenceFrames };
+    return { bones, shears, slots, meshDeltas, shapeDeltas, order, sequenceFrames };
 }
 
 /** Resolve ordered parent/local 2D affine products without decomposing shear. */
 export function bone2dWorldMatrices(project: Bone2dProject, sample: Bone2dSample): ReadonlyMap<string, Matrix2D> {
-    const out = new Map<string, Matrix2D>(),
-        parents = new Map(project.bones.map((b) => [b.id, b.parent] as const));
+    const out = new Map<string, Matrix2D>();
+    const byId = new Map(project.bones.map((b) => [b.id, b] as const));
     const compute = (id: string): Matrix2D => {
-        const known = out.get(id);
-        if (known) return known;
+        const cached = out.get(id);
+        if (cached) return cached;
+        const bone = byId.get(id)!;
         const [x, y, degrees, sx, sy] = sample.bones.get(id)!;
-        const r = (degrees * Math.PI) / 180,
-            cos = Math.cos(r),
-            sin = Math.sin(r);
-        const a = cos * sx,
-            b = -sin * sy,
-            c = sin * sx,
-            d = cos * sy;
-        const parent = parents.get(id);
-        let m: Matrix2D = [a, b, c, d, x, y];
-        if (parent != null) {
-            const [pa, pb, pc, pd, px, py] = compute(parent);
-            m = [
-                pa * a + pb * c,
-                pa * b + pb * d,
-                pc * a + pd * c,
-                pc * b + pd * d,
-                pa * x + pb * y + px,
-                pc * x + pd * y + py,
-            ];
+        const shear = sample.shears.get(id)!;
+        let m: Matrix2D;
+        if (bone.parent === null) {
+            m = [...poseBasis(degrees, sx, sy, shear), x, y];
+        } else {
+            const parent = compute(bone.parent);
+            const [pa, pb, pc, pd, px, py] = parent;
+            m = [...inheritBasis(parent, bone.inherit, degrees, sx, sy, shear), pa*x+pb*y+px, pc*x+pd*y+py];
         }
         out.set(id, m);
         return m;

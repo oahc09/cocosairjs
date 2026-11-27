@@ -38,6 +38,7 @@ import { Node } from '../../cocos/scene-graph/node';
 import { spriteNode } from '../ui-kit';
 import { AirUIMesh } from '../ui-mesh';
 import type { AirAtlasHandle } from '../assets/atlas/atlas-factory';
+import { factorBone2dBasis } from './affine';
 import { convexClipOutline, hasNonCollinearPoints } from './polygon';
 import { parseBone2dProject, sampleBone2dProject, bone2dWorldMatrices, bone2dMeshPositions, bone2dPicture, resolveBone2dAttachment, bone2dShapeGeometry } from './project';
 import type { Bone2dAttachmentGeometry, Bone2dBlend, Bone2dClipAttachment, Bone2dImage, Bone2dMarker, Bone2dPose, Bone2dProjectOptions, Bone2dSample } from './project';
@@ -197,7 +198,7 @@ export async function createAirBone2dPlayer(
     root.layer = layer;
     const slots = new Map<
         string,
-        { root: Node; bones: Map<string, Node>; leaf: Node; sprite: Sprite; transform: UITransform; mesh?: AirUIMesh }
+        { root: Node; bones: Map<string, Node>; affine?: readonly [Node, Node]; leaf: Node; sprite: Sprite; transform: UITransform; mesh?: AirUIMesh }
     >();
     const masks = new Map<string, { node: Node; mask: Mask; graphics: Graphics; outline: number[] }>();
     let disposed = false;
@@ -364,7 +365,16 @@ export async function createAirBone2dPlayer(
                 s.mesh.spriteFrame = null;
                 s.mesh.node.active = false;
             }
-            for (const [id, node] of s.bones) poseNode(node, sample.bones.get(id)!);
+            if (s.affine) {
+                world ??= bone2dWorldMatrices(project, sample);
+                const frame = world.get(def.bone)!;
+                const [outer, inner] = s.affine;
+                const [a, b, sx, sy] = factorBone2dBasis(frame);
+                poseNode(outer, [frame[4], frame[5], a, sx, sy]);
+                inner.angle = b;
+            } else {
+                for (const [id, node] of s.bones) poseNode(node, sample.bones.get(id)!);
+            }
             poseNode(s.leaf, region.pose);
             s.transform.setContentSize(region.width, region.height);
             if (s.sprite.spriteFrame !== newFrame) s.sprite.spriteFrame = newFrame;
@@ -436,16 +446,26 @@ export async function createAirBone2dPlayer(
             const slotRoot = new Node(slot.id);
             slotRoot.layer = layer;
             root.addChild(slotRoot);
-            const chain: string[] = [];
-            for (let id: string | null = slot.bone; id !== null; id = lookup.get(id)!.parent) chain.unshift(id);
             let branch = slotRoot;
             const nodes = new Map<string, Node>();
-            for (const id of chain) {
-                const bone = new Node(id);
-                bone.layer = layer;
-                branch.addChild(bone);
-                branch = bone;
-                nodes.set(id, bone);
+            let affine: readonly [Node, Node] | undefined;
+            const childOf = (parentNode: Node, name: string): Node => {
+                const node = new Node(name);
+                node.layer = layer;
+                parentNode.addChild(node);
+                return node;
+            };
+            if (project.affineSprites) {
+                const outer = childOf(slotRoot, 'Affine');
+                branch = childOf(outer, slot.bone);
+                affine = [outer, branch];
+            } else {
+                const chain: string[] = [];
+                for (let id: string | null = slot.bone; id !== null; id = lookup.get(id)!.parent) chain.unshift(id);
+                for (const id of chain) {
+                    branch = childOf(branch, id);
+                    nodes.set(id, branch);
+                }
             }
             const leaf = spriteNode(branch, 'Region', { layer });
             const sprite = leaf.getComponent(Sprite)!;
@@ -466,6 +486,7 @@ export async function createAirBone2dPlayer(
                 mesh,
                 root: slotRoot,
                 bones: nodes,
+                affine,
                 leaf,
                 sprite,
                 transform: leaf.getComponent(UITransform)!,

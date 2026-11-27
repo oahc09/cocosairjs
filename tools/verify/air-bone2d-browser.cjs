@@ -16,6 +16,7 @@ const files = [
     'tools/verify/air-bone2d-browser.cjs',
     'src/air/bone2d/polygon.ts',
     'src/air/bone2d/two-color.ts',
+    'src/air/bone2d/affine.ts',
 ];
 async function main() {
     const [engine, output, ...extra] = process.argv.slice(2);
@@ -116,9 +117,22 @@ async function main() {
                     mounts: parent.children.filter((node) => node.name === 'Bone2D').length,
                 };
             };
-            let atlasState;
-            const atlasMount = async () => {
+            let atlasState, affineAtlasControl;
+            const advancedAtlasFixture = (file) => {
+                const bones = file.project.skeleton.bones;
+                Object.assign(
+                    bones.find((b) => b.id === 'arm-bone'),
+                    { inherit: 'noScaleOrReflection', shearX: 18, shearY: -12 },
+                );
+                Object.assign(
+                    bones.find((b) => b.id === 'root'),
+                    { scaleX: -1.5, rotation: 18 },
+                );
+                return file;
+            };
+            const atlasMount = async (advanced = false) => {
                 const project = JSON.parse(text);
+                if (advanced) advancedAtlasFixture(project);
                 const page = document.createElement('canvas');
                 page.width = 24;
                 page.height = 16;
@@ -156,7 +170,7 @@ async function main() {
                     ),
                     [tex],
                 );
-                const candidate = await air.createAirBone2dPlayer(parent, text, { atlas });
+                const candidate = await air.createAirBone2dPlayer(parent, JSON.stringify(project), { atlas });
                 let guarded = false;
                 try {
                     atlas.dispose();
@@ -672,8 +686,88 @@ async function main() {
                     await clock.step(0);
                 }
             };
+            let affinePlayer;
+            const affineMount = async (inherit) => {
+                const file = JSON.parse(text),
+                    rig = file.project.skeleton;
+                const root = rig.bones.find((b) => b.id === 'root');
+                const child = rig.bones.find((b) => b.id === 'arm-bone');
+                Object.assign(root, { x: 10, y: 20, rotation: 30, scaleX: -2, scaleY: 1.5 });
+                Object.assign(child, {
+                    x: 3,
+                    y: 4,
+                    rotation: 40,
+                    scaleX: 1.2,
+                    scaleY: 0.8,
+                    shearX: 4,
+                    shearY: -12,
+                    inherit,
+                });
+                rig.slots[0].attachment = null;
+                const clip = rig.animations[1];
+                clip.bones = {
+                    'arm-bone': {
+                        shear: [{ time: 0.5, value: [24, -3] }],
+                        shearx: [{ time: 0.5, value: [6] }],
+                    },
+                };
+                const canvas = document.createElement('canvas');
+                canvas.width = canvas.height = 8;
+                const ctx = canvas.getContext('2d');
+                ['#ff3322', '#12ccee', '#44ee11', '#cc44ff'].forEach((color, i) => {
+                    ctx.fillStyle = color;
+                    ctx.fillRect(4 * (i % 2), 4 * Math.floor(i / 2), 4, 4);
+                });
+                file.images.arm = canvas.toDataURL();
+                function overlay(id, arm) {
+                    return { id, name: id, bones: [], constraints: [], attachments: { 'arm-slot': { arm } } };
+                }
+                rig.skins.push(
+                    overlay('mesh', {
+                        type: 'mesh',
+                        path: 'arm',
+                        weights: null,
+                        color: [1, 1, 1, 1],
+                        vertices: [-16, -8, 16, -8, 16, 8, -16, 8],
+                        uvs: [0, 1, 1, 1, 1, 0, 0, 0],
+                        triangles: [0, 1, 2, 0, 2, 3],
+                    }),
+                    overlay('point', { type: 'point', x: 5, y: 2, rotation: 0 }),
+                );
+                affinePlayer = await air.createAirBone2dPlayer(parent, JSON.stringify(file));
+                affinePlayer.play('attack');
+                affinePlayer.seek(0.5);
+                await clock.step(0);
+                const arm = affinePlayer.node.getChildByName('arm-slot');
+                const m = leaves(arm)[0].node.worldMatrix;
+                const o = affinePlayer.node.worldMatrix;
+                return [m.m00, m.m04, m.m01, m.m05, m.m12 - o.m12, m.m13 - o.m13];
+            };
+            const affineSkin = async (skin) => {
+                affinePlayer.setSkins([skin]);
+                await clock.step(0);
+                if (skin === 'point') return affinePlayer.getAttachmentGeometry('arm-slot');
+                return affinePlayer.node.getChildByName('arm-slot').getChildByName('Mesh').getComponent(air.AirUIMesh)
+                    .geometry.positions;
+            };
+            const affineClose = async () => {
+                affinePlayer.dispose();
+                await clock.step(0);
+            };
+            const affineAtlas = async (mount) => {
+                if (mount) {
+                    affineAtlasControl = await air.createAirBone2dPlayer(
+                        parent,
+                        JSON.stringify(advancedAtlasFixture(JSON.parse(text))),
+                    );
+                } else affineAtlasControl.dispose();
+                await clock.step(0);
+            };
             window.bone2dTest = {
                 frame,
+                affineMount,
+                affineSkin,
+                affineClose,
                 clipMount,
                 blends,
                 clipStep,
@@ -692,11 +786,13 @@ async function main() {
                 skinsChange,
                 wardrobeClose,
                 atlasMount,
+                affineAtlas,
                 atlasRelease,
                 close: async () => {
                     player.dispose();
                     sequencePlayer?.dispose();
                     clipPlayer?.dispose();
+                    affinePlayer?.dispose();
                     wardrobe?.dispose();
                     meshInstance?.dispose();
                     folderPlayer?.dispose();
@@ -1029,6 +1125,116 @@ async function main() {
                 composed(i, [i / 8 + 0.125, (3 - i) / 8, (i + 2) / 16], [0.75, 0.5, 0.25, 0.5]),
             );
         }
+        report.inherit = [];
+        for (const [mode, basis] of [
+            ['normal', [-2.025449, 0.041812, 0.4228, 1.279957]],
+            ['onlyTranslation', [0.771345, -0.338095, 0.919253, 0.725046]],
+            ['noRotationOrReflection', [1.645296, -0.47695, 1.660788, 1.105]],
+            ['noScale', [-1.172973, -0.177467, 0.253246, 0.780068]],
+            ['noScaleOrReflection', [-1.18885, -0.236343, -0.163207, -0.764292]],
+        ]) {
+            const sprite = await page.evaluate((m) => window.bone2dTest.affineMount(m), mode);
+            const close = (actual, expected) => {
+                assert.equal(actual.length, expected.length);
+                actual.forEach((value, i) =>
+                    assert.ok(Math.abs(value - expected[i]) < 3e-5, JSON.stringify({ mode, actual, expected })),
+                );
+            };
+            close(sprite, [...basis, 1.803847, 22.196152]);
+            const transform = ([x, y]) => [
+                basis[0] * x + basis[1] * y + 1.803847,
+                basis[2] * x + basis[3] * y + 22.196152,
+            ];
+            const probes = [
+                [-8, 4],
+                [8, 4],
+                [-8, -4],
+                [8, -4],
+            ]
+                .map(transform)
+                .map(([x, y]) => [Math.round(160 + x), Math.round(120 - y)]);
+            const capture = async () =>
+                page.evaluate(
+                    async ([pixels, data]) => {
+                        const image = new Image();
+                        image.src = 'data:image/png;base64,' + data;
+                        await image.decode();
+                        const canvas = document.createElement('canvas');
+                        canvas.width = image.width;
+                        canvas.height = image.height;
+                        const context = canvas.getContext('2d');
+                        context.drawImage(image, 0, 0);
+                        return pixels.map(([x, y]) => [...context.getImageData(x, y, 1, 1).data]);
+                    },
+                    [probes, (await page.screenshot()).toString('base64')],
+                );
+            const spritePixels = await capture();
+            assert.deepEqual(spritePixels, [
+                [255, 51, 34, 255],
+                [18, 204, 238, 255],
+                [68, 238, 17, 255],
+                [204, 68, 255, 255],
+            ]);
+            const mesh = await page.evaluate(() => window.bone2dTest.affineSkin('mesh'));
+            close(
+                mesh,
+                [
+                    [-16, -8],
+                    [16, -8],
+                    [16, 8],
+                    [-16, 8],
+                ].flatMap(transform),
+            );
+            const meshPixels = await capture();
+            assert.deepEqual(meshPixels, spritePixels);
+            const point = await page.evaluate(() => window.bone2dTest.affineSkin('point'));
+            const degrees = (Math.atan2(basis[2], basis[0]) * 180) / Math.PI;
+            close([point.x, point.y, point.rotation], [...transform([5, 2]), degrees]);
+            await page.evaluate(() => window.bone2dTest.affineClose());
+            report.inherit.push({ mode, sprite, mesh, point, probes, spritePixels, meshPixels });
+        }
+        await page.evaluate(() => window.bone2dTest.affineAtlas(true));
+        const embedded = await page.screenshot();
+        await page.evaluate(() => window.bone2dTest.affineAtlas(false));
+        await page.evaluate(() => window.bone2dTest.atlasMount(true));
+        const packed = await page.screenshot();
+        const coverage = await page.evaluate(
+            async (pages) => {
+                const read = async (data) => {
+                    const image = new Image();
+                    image.src = 'data:image/png;base64,' + data;
+                    await image.decode();
+                    const canvas = document.createElement('canvas');
+                    canvas.width = image.width;
+                    canvas.height = image.height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(image, 0, 0);
+                    return { pixels: ctx.getImageData(0, 0, canvas.width, canvas.height).data, width: canvas.width };
+                };
+                const [left, right] = await Promise.all(pages.map(read));
+                const same = (a, i, b, j) => [0, 1, 2, 3].every((c) => a[i + c] === b[j + c]);
+                const interior = (a, i, width) =>
+                    [4, -4, 4 * width, -4 * width].every((offset) => same(a, i, a, i + offset));
+                let ink = 0,
+                    different = 0,
+                    interiorDifferences = 0;
+                for (let i = 0; i < left.pixels.length; i += 4) {
+                    if (!same(left.pixels, i, left.pixels, 0) || !same(right.pixels, i, right.pixels, 0)) ink++;
+                    if (same(left.pixels, i, right.pixels, i)) continue;
+                    different++;
+                    if (interior(left.pixels, i, left.width) && interior(right.pixels, i, right.width))
+                        interiorDifferences++;
+                }
+                return { ink, different, interiorDifferences };
+            },
+            [embedded.toString('base64'), packed.toString('base64')],
+        );
+        report.affineAtlas = { embedded: sha(embedded), packed: sha(packed), ...coverage };
+        // The rotated/trimmed and full textures can use different coverage at a rotated edge.
+        // Interior colors must remain exact, and the bounded fixture cannot lose its silhouette.
+        assert.ok(coverage.ink > 2000 && coverage.different <= coverage.ink * 0.05, JSON.stringify(coverage));
+        assert.equal(coverage.interiorDifferences, 0);
+        await page.evaluate(() => window.bone2dTest.atlasRelease());
         await page.evaluate(() => window.bone2dTest.close());
         assert.deepEqual(report.pageErrors, []);
         report.status = 'PASS';
