@@ -106,3 +106,26 @@ percentile, also rejected. The reference manifest SHA-256 is
 `e0fade54c7c187181a94889db66454f4e00131fa6af47727fc09ed8aa7a3762a`.
 This is separate from the static Cornell transport truth. An AIR capture
 adapter, approved temporal E12 scene and hardware validation are still open.
+
+### AIR temporal capture adapter
+
+```sh
+node tools/verify/rendering-iteration/temporal-air-capture.cjs \
+  <source-bound-full-sdk.js> <installed-WPE-wrapper> <new-capture-dir>
+python3 tools/verify/rendering-iteration/temporal_reference.py audit \
+  --candidate <capture-dir> --out <new-acceptance.json>
+```
+
+The adapter draws the orthographic scene with real AIR meshes, materials and
+depth testing. No Python reference pixels are sent to the app. It requests a
+specific scene state, waits for the engine's draw event and browser compositor,
+then captures 640×384 without MSAA at DPR 1. It resolves 4×4 subpixels in
+linear light and retains the raw PNG, linear pixels and SHA-256 per frame.
+
+The source-bound full WebGL2 SDK passed all 16 captures on WPE WebKit 26.5,
+with no page, console or network errors. Maximum whole-image mean error was
+0.00112; maximum disocclusion mean error was 0.00108; camera-cut P95 channel
+error was 0.00222. The unchanged micro-fixture budget is 0.035. Capture receipt
+SHA-256: `d792eb67e9cf68ee2fbf9ddc21442aab6b3f0507981f9b59add690e1bdba5c13`.
+The capture intentionally has no temporal filter; it validates the scene and
+measurement route, not an implementation of TAA or full E12 acceptance.
