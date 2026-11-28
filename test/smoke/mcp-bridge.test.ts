@@ -64,6 +64,7 @@ test('read-only, closed and replaced scenes reject without a write or clock leas
     expect((await bridge.call('createNode', {}))?.error?.code).toBe('OUT_OF_SCOPE');
     app.getScene.mockReturnValue({});
     expect((await bridge.call('capture', {}))?.error?.code).toBe('STALE_TARGET');
+    expect((await bridge.call('reviewIdentity', {}))?.error?.code).toBe('STALE_TARGET');
     bridge.close();
     bridge.close();
     expect((await bridge.call('capture', {}))?.error?.code).toBe('SESSION_CLOSED');

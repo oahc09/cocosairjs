@@ -1,0 +1,545 @@
+{
+  "bone2d": 1,
+  "project": {
+    "format": "bone2d",
+    "version": 1,
+    "name": "AIR independent spring routing",
+    "skeleton": {
+      "name": "Clawbot",
+      "fps": 30,
+      "bones": [
+        {
+          "id": "arm-bone",
+          "name": "arm-bone",
+          "parent": "root",
+          "length": 12,
+          "x": -24,
+          "y": -16,
+          "rotation": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "shearX": 0,
+          "shearY": 0,
+          "inherit": "normal",
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "skinRequired": false,
+          "hidden": false,
+          "locked": false
+        },
+        {
+          "id": "root",
+          "name": "root",
+          "parent": null,
+          "length": 0,
+          "x": 0,
+          "y": 0,
+          "rotation": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "shearX": 0,
+          "shearY": 0,
+          "inherit": "normal",
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "skinRequired": false,
+          "hidden": false,
+          "locked": false
+        },
+        {
+          "id": "B",
+          "name": "B",
+          "parent": "root",
+          "length": 12,
+          "x": -24,
+          "y": 0,
+          "rotation": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "shearX": 0,
+          "shearY": 0,
+          "inherit": "normal",
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "skinRequired": false,
+          "hidden": false,
+          "locked": false
+        },
+        {
+          "id": "C",
+          "name": "C",
+          "parent": "root",
+          "length": 12,
+          "x": -24,
+          "y": 16,
+          "rotation": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "shearX": 0,
+          "shearY": 0,
+          "inherit": "normal",
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "skinRequired": true,
+          "hidden": false,
+          "locked": false
+        }
+      ],
+      "slots": [
+        {
+          "id": "A-sprite",
+          "name": "A-sprite",
+          "bone": "arm-bone",
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "dark": null,
+          "attachment": "arm",
+          "blend": "normal",
+          "hidden": false
+        },
+        {
+          "id": "A-point",
+          "name": "A-point",
+          "bone": "arm-bone",
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "dark": null,
+          "attachment": "pin",
+          "blend": "normal",
+          "hidden": false
+        },
+        {
+          "id": "B-sprite",
+          "name": "B-sprite",
+          "bone": "B",
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "dark": null,
+          "attachment": "arm",
+          "blend": "normal",
+          "hidden": false
+        },
+        {
+          "id": "B-point",
+          "name": "B-point",
+          "bone": "B",
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "dark": null,
+          "attachment": "pin",
+          "blend": "normal",
+          "hidden": false
+        },
+        {
+          "id": "C-sprite",
+          "name": "C-sprite",
+          "bone": "C",
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "dark": null,
+          "attachment": "arm",
+          "blend": "normal",
+          "hidden": false
+        },
+        {
+          "id": "C-point",
+          "name": "C-point",
+          "bone": "C",
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "dark": null,
+          "attachment": "pin",
+          "blend": "normal",
+          "hidden": false
+        }
+      ],
+      "skins": [
+        {
+          "id": "skin",
+          "name": "default",
+          "bones": [],
+          "constraints": [],
+          "attachments": {
+            "A-sprite": {
+              "arm": {
+                "type": "region",
+                "name": "arm",
+                "path": "arm",
+                "x": 0,
+                "y": 0,
+                "rotation": 0,
+                "scaleX": 1,
+                "scaleY": 1,
+                "width": 32,
+                "height": 16,
+                "color": [
+                  1,
+                  1,
+                  1,
+                  1
+                ]
+              }
+            },
+            "A-point": {
+              "pin": {
+                "type": "point",
+                "name": "pin",
+                "x": 0,
+                "y": 0,
+                "rotation": 0,
+                "color": [
+                  1,
+                  1,
+                  1,
+                  1
+                ]
+              }
+            },
+            "B-sprite": {
+              "arm": {
+                "type": "region",
+                "name": "arm",
+                "path": "arm",
+                "x": 0,
+                "y": 0,
+                "rotation": 0,
+                "scaleX": 1,
+                "scaleY": 1,
+                "width": 32,
+                "height": 16,
+                "color": [
+                  1,
+                  1,
+                  1,
+                  1
+                ]
+              }
+            },
+            "B-point": {
+              "pin": {
+                "type": "point",
+                "name": "pin",
+                "x": 0,
+                "y": 0,
+                "rotation": 0,
+                "color": [
+                  1,
+                  1,
+                  1,
+                  1
+                ]
+              }
+            },
+            "C-sprite": {
+              "arm": {
+                "type": "region",
+                "name": "arm",
+                "path": "arm",
+                "x": 0,
+                "y": 0,
+                "rotation": 0,
+                "scaleX": 1,
+                "scaleY": 1,
+                "width": 32,
+                "height": 16,
+                "color": [
+                  1,
+                  1,
+                  1,
+                  1
+                ]
+              }
+            },
+            "C-point": {
+              "pin": {
+                "type": "point",
+                "name": "pin",
+                "x": 0,
+                "y": 0,
+                "rotation": 0,
+                "color": [
+                  1,
+                  1,
+                  1,
+                  1
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "enable-c",
+          "name": "Enable C",
+          "bones": [
+            "C"
+          ],
+          "constraints": [
+            "spring-C"
+          ],
+          "attachments": {}
+        }
+      ],
+      "constraints": [
+        {
+          "type": "physics",
+          "id": "spring-A",
+          "name": "Spring A",
+          "bone": "arm-bone",
+          "x": 1,
+          "y": 0,
+          "rotate": 0,
+          "scaleX": 0,
+          "shearX": 0,
+          "scaleY": "none",
+          "limit": 5000,
+          "fps": 64,
+          "inertia": 0.5,
+          "strength": 0,
+          "damping": 1,
+          "mass": 1,
+          "wind": 0,
+          "gravity": 0,
+          "mix": 1,
+          "skinRequired": false,
+          "global": {
+            "inertia": false,
+            "strength": false,
+            "damping": false,
+            "mass": false,
+            "wind": true,
+            "gravity": false,
+            "mix": false
+          }
+        },
+        {
+          "type": "physics",
+          "id": "spring-B",
+          "name": "Spring B",
+          "bone": "B",
+          "x": 1,
+          "y": 0,
+          "rotate": 0,
+          "scaleX": 0,
+          "shearX": 0,
+          "scaleY": "none",
+          "limit": 5000,
+          "fps": 64,
+          "inertia": 0.5,
+          "strength": 0,
+          "damping": 1,
+          "mass": 1,
+          "wind": 0,
+          "gravity": 0,
+          "mix": 1,
+          "skinRequired": false,
+          "global": {
+            "inertia": false,
+            "strength": false,
+            "damping": false,
+            "mass": false,
+            "wind": false,
+            "gravity": false,
+            "mix": false
+          }
+        },
+        {
+          "type": "physics",
+          "id": "spring-C",
+          "name": "Spring C",
+          "bone": "C",
+          "x": 1,
+          "y": 0,
+          "rotate": 0,
+          "scaleX": 0,
+          "shearX": 0,
+          "scaleY": "none",
+          "limit": 5000,
+          "fps": 64,
+          "inertia": 0.5,
+          "strength": 0,
+          "damping": 1,
+          "mass": 1,
+          "wind": 0,
+          "gravity": 0,
+          "mix": 1,
+          "skinRequired": true,
+          "global": {
+            "inertia": false,
+            "strength": false,
+            "damping": false,
+            "mass": false,
+            "wind": true,
+            "gravity": false,
+            "mix": false
+          }
+        }
+      ],
+      "events": [
+        {
+          "id": "ev-start",
+          "name": "Start",
+          "int": 0,
+          "float": 0,
+          "string": ""
+        },
+        {
+          "id": "ev-impact",
+          "name": "Impact",
+          "int": 0,
+          "float": 0,
+          "string": "",
+          "audio": "authoring-only.wav"
+        },
+        {
+          "id": "ev-end",
+          "name": "End",
+          "int": 0,
+          "float": 0,
+          "string": ""
+        }
+      ],
+      "animations": [
+        {
+          "id": "idle",
+          "name": "Idle",
+          "duration": 0.25,
+          "bones": {
+            "root": {
+              "translatex": [
+                {
+                  "time": 0,
+                  "value": [
+                    0
+                  ]
+                },
+                {
+                  "time": 0.25,
+                  "value": [
+                    32
+                  ]
+                }
+              ]
+            }
+          },
+          "slots": {},
+          "ik": {},
+          "transform": {},
+          "slider": {},
+          "path": {},
+          "physics": {
+            "*": {
+              "wind": [
+                {
+                  "time": 0,
+                  "value": [
+                    64
+                  ]
+                }
+              ],
+              "reset": [
+                {
+                  "time": 0.125,
+                  "value": [
+                    1
+                  ]
+                }
+              ]
+            },
+            "spring-B": {
+              "wind": [
+                {
+                  "time": 0,
+                  "value": [
+                    -64
+                  ]
+                }
+              ],
+              "reset": [
+                {
+                  "time": 0.1875,
+                  "value": [
+                    1
+                  ]
+                }
+              ]
+            }
+          },
+          "deform": {},
+          "drawOrder": [],
+          "events": [
+            {
+              "time": 0,
+              "event": "ev-start"
+            },
+            {
+              "time": 0.125,
+              "event": "ev-impact"
+            },
+            {
+              "time": 0.25,
+              "event": "ev-end"
+            }
+          ]
+        }
+      ]
+    },
+    "images": [
+      {
+        "id": "arm-image",
+        "name": "arm",
+        "width": 8,
+        "height": 8
+      }
+    ]
+  },
+  "images": {
+    "arm": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAGUlEQVR42mNgQAL8T979R8cMBBVgExxyCgBVqKbBcYjt5wAAAABJRU5ErkJggg=="
+  },
+  "ui": {
+    "camera": {
+      "x": 0,
+      "y": 0,
+      "zoom": 1
+    }
+  }
+}

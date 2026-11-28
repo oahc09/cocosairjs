@@ -1,0 +1,355 @@
+{
+  "bone2d": 1,
+  "project": {
+    "format": "bone2d",
+    "version": 1,
+    "name": "Clawbot",
+    "skeleton": {
+      "name": "Clawbot",
+      "fps": 30,
+      "bones": [
+        {
+          "id": "root",
+          "name": "root",
+          "parent": null,
+          "length": 0,
+          "x": 0,
+          "y": 0,
+          "rotation": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "shearX": 0,
+          "shearY": 0,
+          "inherit": "normal",
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "skinRequired": false,
+          "hidden": false,
+          "locked": false
+        },
+        {
+          "id": "holder",
+          "name": "holder",
+          "parent": "root",
+          "length": 0,
+          "x": 0,
+          "y": 0,
+          "rotation": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "shearX": 0,
+          "shearY": 0,
+          "inherit": "normal",
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "skinRequired": false,
+          "hidden": false,
+          "locked": false
+        },
+        {
+          "id": "arm-bone",
+          "name": "arm-bone",
+          "parent": "root",
+          "length": 4,
+          "x": 40,
+          "y": 10,
+          "rotation": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "shearX": 0,
+          "shearY": 0,
+          "inherit": "normal",
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "skinRequired": false,
+          "hidden": false,
+          "locked": false
+        },
+        {
+          "id": "second",
+          "name": "second",
+          "parent": "root",
+          "length": 4,
+          "x": 43,
+          "y": 10,
+          "rotation": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "shearX": 0,
+          "shearY": 0,
+          "inherit": "normal",
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "skinRequired": false,
+          "hidden": false,
+          "locked": false
+        }
+      ],
+      "slots": [
+        {
+          "id": "track",
+          "name": "track",
+          "bone": "holder",
+          "attachment": "line",
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "blend": "normal"
+        },
+        {
+          "id": "arm-slot",
+          "name": "arm-slot",
+          "bone": "arm-bone",
+          "attachment": "arm",
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "blend": "normal"
+        },
+        {
+          "id": "point",
+          "name": "point",
+          "bone": "arm-bone",
+          "attachment": "pin",
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "blend": "normal"
+        },
+        {
+          "id": "second-point",
+          "name": "second-point",
+          "bone": "second",
+          "attachment": "pin",
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "blend": "normal"
+        }
+      ],
+      "skins": [
+        {
+          "id": "skin",
+          "name": "default",
+          "bones": [],
+          "constraints": [],
+          "attachments": {
+            "track": {
+              "line": {
+                "type": "path",
+                "name": "line",
+                "constantSpeed": false,
+                "closed": false,
+                "vertices": [
+                  -1,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  1,
+                  0,
+                  8,
+                  0,
+                  9,
+                  0
+                ],
+                "weights": null
+              }
+            },
+            "arm-slot": {
+              "arm": {
+                "type": "region",
+                "name": "arm",
+                "path": "arm",
+                "x": 0,
+                "y": 0,
+                "rotation": 0,
+                "scaleX": 1,
+                "scaleY": 1,
+                "width": 32,
+                "height": 16,
+                "color": [
+                  1,
+                  1,
+                  1,
+                  1
+                ]
+              }
+            },
+            "point": {
+              "pin": {
+                "type": "point",
+                "name": "pin",
+                "x": 0,
+                "y": 0,
+                "rotation": 0
+              }
+            },
+            "second-point": {
+              "pin": {
+                "type": "point",
+                "name": "pin",
+                "x": 0,
+                "y": 0,
+                "rotation": 0
+              }
+            }
+          }
+        },
+        {
+          "id": "distance",
+          "name": "distance",
+          "bones": [],
+          "constraints": [],
+          "attachments": {
+            "track": {
+              "line": {
+                "type": "path",
+                "name": "line",
+                "constantSpeed": true,
+                "closed": false,
+                "vertices": [
+                  -1,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  1,
+                  0,
+                  8,
+                  0,
+                  9,
+                  0
+                ],
+                "weights": null
+              }
+            }
+          }
+        },
+        {
+          "id": "nonpath",
+          "name": "nonpath",
+          "bones": [],
+          "constraints": [],
+          "attachments": {
+            "track": {
+              "line": {
+                "type": "point",
+                "name": "pin",
+                "x": 0,
+                "y": 0,
+                "rotation": 0
+              }
+            }
+          }
+        }
+      ],
+      "constraints": [
+        {
+          "id": "follow",
+          "name": "Follow",
+          "type": "path",
+          "bones": [
+            "arm-bone"
+          ],
+          "target": "track",
+          "positionMode": "percent",
+          "spacingMode": "fixed",
+          "rotateMode": "tangent",
+          "position": 0.5,
+          "spacing": 0,
+          "offsetRotation": 0,
+          "mix": {
+            "rotate": 1,
+            "x": 1,
+            "y": 1
+          },
+          "skinRequired": false
+        }
+      ],
+      "events": [],
+      "animations": [
+        {
+          "id": "idle",
+          "name": "Idle",
+          "duration": 1,
+          "bones": {
+            "holder": {
+              "scalex": [
+                {
+                  "time": 0,
+                  "value": [
+                    1
+                  ]
+                },
+                {
+                  "time": 1,
+                  "value": [
+                    2
+                  ]
+                }
+              ]
+            }
+          },
+          "slots": {},
+          "ik": {},
+          "transform": {},
+          "slider": {},
+          "path": {},
+          "physics": {},
+          "deform": {},
+          "drawOrder": [],
+          "events": []
+        }
+      ]
+    },
+    "images": [
+      {
+        "id": "arm-image",
+        "name": "arm",
+        "width": 8,
+        "height": 8
+      }
+    ]
+  },
+  "images": {
+    "arm": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAGUlEQVR42mNgQAL8T979R8cMBBVgExxyCgBVqKbBcYjt5wAAAABJRU5ErkJggg=="
+  },
+  "ui": {
+    "camera": {
+      "x": 0,
+      "y": 0,
+      "zoom": 1
+    }
+  }
+}

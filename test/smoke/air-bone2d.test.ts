@@ -1,0 +1,1482 @@
+import { readFileSync } from 'fs';
+import { resolve } from 'path';
+import { buildBone2dAtlasMesh, projectBone2dAtlasMesh } from '../../src/air/bone2d/mesh-atlas';
+import { bone2dImageHeader } from '../../src/air/bone2d/image';
+import { bone2dKeysInWindow, makeBone2dPlayback, traverseBone2dPlayback } from '../../src/air/bone2d/playback';
+import { convexClipOutline } from '../../src/air/bone2d/polygon';
+import { factorBone2dBasis, multiplyBasis, poseBasis } from '../../src/air/bone2d/affine';
+import {
+    parseBone2dProject,
+    sampleBone2dProject,
+    sampleBone2dFrame,
+    bone2dWorldMatrices,
+    bone2dMeshPositions,
+    bone2dPicture,
+    bone2dShapeGeometry,
+} from '../../src/air/bone2d/project';
+
+const text = readFileSync(resolve(__dirname, '../fixtures/bone2d/clawbot.bone2d'), 'utf8');
+const fixture = (): any => JSON.parse(text);
+const parse = (value: unknown) => parseBone2dProject(JSON.stringify(value));
+
+test('samples native projects without DOM and respects setup, stepped, eased and discrete channels', () => {
+    const model = parseBone2dProject(text);
+    expect(sampleBone2dProject(model, 'attack', 0.125).bones.get('arm-bone')).toEqual([6, 0, 0, 1, 1]);
+    expect(sampleBone2dProject(model, 'attack', 0.375).bones.get('arm-bone')).toEqual([16, 0, 0, 1, 1]);
+    expect(sampleBone2dProject(model, 'attack', 0.5).bones.get('arm-bone')).toEqual([26, 0, 45, 1, 1]);
+    expect(sampleBone2dProject(model, 'attack', 0.5).order).toEqual(['arm-slot', 'body-slot']);
+    expect(sampleBone2dProject(model, 'attack', 0.875).slots.get('arm-slot')?.attachment).toBeNull();
+    expect(sampleBone2dProject(model, 'idle', 0.25).bones.get('arm-bone')?.[2]).toBeCloseTo(4);
+    expect(sampleBone2dProject(model, 'idle', 0.125).bones.get('arm-bone')?.[2]).toBeLessThan(2);
+    expect(sampleBone2dProject(model, 'idle', 1).slots.get('arm-slot')?.attachment).toBe('arm');
+});
+test('preserves event identity through a label rename; preserves typed overrides but not authoring audio', () => {
+    const data = fixture();
+    data.project.skeleton.events[1].name = 'Strike';
+    const markers = parse(data).clips.get('attack')!.markers;
+    expect(markers[1].value).toEqual({ id: 'ev-impact', name: 'Strike', int: 2, float: 0, string: '', time: 0.5 });
+});
+test.each([
+    [
+        'dangling parent',
+        (d) => {
+            d.project.skeleton.bones[0].parent = 'absent';
+        },
+        /FORMAT/,
+    ],
+    [
+        'cyclic parent',
+        (d) => {
+            d.project.skeleton.bones[1].parent = 'arm-bone';
+        },
+        /FORMAT/,
+    ],
+    [
+        'unsupported version',
+        (d) => {
+            d.project.version = 2;
+        },
+        /UNSUPPORTED/,
+    ],
+    [
+        'malformed clipping shape',
+        (d) => {
+            d.project.skeleton.skins[0].attachments['body-slot'].body.type = 'clipping';
+        },
+        /FORMAT/,
+    ],
+    [
+        'unknown image',
+        (d) => {
+            d.project.images.pop();
+        },
+        /FORMAT/,
+    ],
+    [
+        'duplicate key time',
+        (d) => {
+            d.project.skeleton.animations[0].bones['arm-bone'].rotate[1].time = 0;
+        },
+        /FORMAT/,
+    ],
+    [
+        'unsupported constraints',
+        (d) => {
+            d.project.skeleton.constraints.push({ type: 'unsupported-constraint' });
+        },
+        /UNSUPPORTED/,
+    ],
+    [
+        'malformed draw order',
+        (d) => {
+            d.project.skeleton.animations[1].drawOrder[0].order = ['arm-slot', 'arm-slot'];
+        },
+        /FORMAT/,
+    ],
+] as const)('rejects %s without producing a partial project', (_case, mutate, pattern) => {
+    const data = fixture();
+    mutate(data);
+    expect(() => parse(data)).toThrow(pattern);
+});
+
+test('restores editor skeleton order, defaults to saved active rig, and accepts indexed selection', () => {
+    const d = fixture();
+    const p = d.project;
+    p.others = [
+        { ...p.skeleton, name: 'Earlier rig' },
+        { ...p.skeleton, name: 'Later rig' },
+    ];
+    p.activeAt = 1;
+    p.others[0].animations = [{ ...p.skeleton.animations[0], id: 'different' }];
+    const text = JSON.stringify(d);
+    const active = parseBone2dProject(text);
+    expect(active.skeletonNames).toEqual(['Earlier rig', 'Clawbot', 'Later rig']);
+    expect(active.skeletonIndex).toBe(1);
+    expect([...active.clips.keys()]).toEqual(['idle', 'attack']);
+    expect([...parseBone2dProject(text, { skeletonIndex: 0 }).clips.keys()]).toEqual(['different']);
+    expect(() => parseBone2dProject(text, { skeletonIndex: 3 })).toThrow(/FORMAT/);
+});
+
+test('validates skin member references and retains overlay attachment names, not just default-skin names', () => {
+    const d = fixture();
+    const rig = d.project.skeleton;
+    const arm = rig.skins[0].attachments['arm-slot'].arm;
+    rig.skins.push({
+        id: 'glove',
+        name: 'Glove',
+        bones: [],
+        constraints: [],
+        attachments: { 'arm-slot': { glove: { ...arm, path: 'body' } } },
+    });
+    rig.animations[0].slots['arm-slot'] = { attachment: [{ time: 0, name: 'glove' }] };
+    expect(sampleBone2dProject(parse(d), 'idle', 0).slots.get('arm-slot')?.attachment).toBe('glove');
+    rig.skins[1].attachments.invalid = {};
+    expect(() => parse(d)).toThrow(/unknown skin slot/);
+});
+
+function meshRig(weighted: boolean): any {
+    const d = fixture(),
+        rig = d.project.skeleton;
+    const points = [
+        [0, 0],
+        [16, 0],
+        [0, 16],
+    ];
+    const slot = rig.skins[0].attachments['arm-slot'];
+    const mesh = {
+        type: 'mesh',
+        name: 'arm',
+        path: 'arm',
+        color: [1, 1, 1, 1],
+        width: 8,
+        height: 8,
+        uvs: [0, 1, 1, 1, 0, 0],
+        triangles: [0, 1, 2],
+        hull: 3,
+        edges: [],
+        vertices: weighted ? [] : points.flat(),
+        weights: weighted
+            ? points.map(([x, y]) => [
+                  ['root', x, y, 0.25],
+                  ['arm-bone', x - 6, y, 0.75],
+              ])
+            : null,
+    };
+    slot.arm = mesh;
+    const clip = rig.animations[1];
+    delete clip.bones['arm-bone'].rotate;
+    const n = weighted ? 12 : 6,
+        delta = Array(n).fill(0);
+    delta[n - 1] = 8;
+    clip.deform.skin = {
+        'arm-slot': {
+            arm: [
+                { time: 0, value: Array(n).fill(0), curve: [0.25, 0, 0.75, 1] },
+                { time: 0.5, value: delta },
+            ],
+        },
+    };
+    return d;
+}
+
+test.each([true, false])('builds native mesh positions with shared deform curves (weighted=%s)', (weighted) => {
+    const d = meshRig(weighted);
+    const p = parse(d);
+    const mesh = p.skins.get('skin')!.regions.get('arm-slot')!.get('arm')!;
+    if (mesh.kind !== 'mesh') throw new Error('not a mesh');
+    const sample = sampleBone2dProject(p, 'attack', 0.5);
+    expect(mesh.uvs).toEqual([0, 0, 1, 0, 0, 1]);
+    const full = bone2dMeshPositions(mesh, 'arm-bone', bone2dWorldMatrices(p, sample), sample.meshDeltas.get(mesh));
+    expect(full).toEqual(weighted ? [22.5, 0, 46.5, 0, 22.5, 22] : [39, 0, 63, 0, 39, 24]);
+    const half = sampleBone2dProject(p, 'attack', 0.25);
+    expect(half.meshDeltas.get(mesh)?.[mesh.deformSize - 1]).toBeCloseTo(4);
+});
+
+test('rejects inconsistent influences, topology and deform dimensions before mounting', () => {
+    const d = meshRig(true),
+        rig = d.project.skeleton;
+    const mesh = rig.skins[0].attachments['arm-slot'].arm;
+    mesh.weights[0][0][0] = 'ghost';
+    expect(() => parse(d)).toThrow(/unknown influence bone/);
+    mesh.weights[0][0][0] = 'root';
+    mesh.triangles[2] = 9;
+    expect(() => parse(d)).toThrow(/triangle index/);
+    mesh.triangles[2] = 2;
+    rig.animations[1].deform.skin['arm-slot'].arm[1].value.pop();
+    expect(() => parse(d)).toThrow(/deform curve/);
+});
+
+test('linked meshes keep independent image and tint, reuse source topology and inherit its deform cursor when enabled', () => {
+    const d = meshRig(true),
+        rig = d.project.skeleton;
+    const base = rig.skins[0].attachments['arm-slot'].arm;
+    rig.skins.push({
+        id: 'link',
+        name: 'Linked glove',
+        bones: [],
+        constraints: [],
+        attachments: {
+            'arm-slot': {
+                arm: {
+                    ...base,
+                    path: 'body',
+                    link: { source: 'arm', slot: null, skin: null, deform: true },
+                    uvs: [0, 0, 1, 0, 1, 1],
+                },
+            },
+        },
+    });
+    const p = parse(d),
+        attached = p.skins.get('link')!.regions.get('arm-slot')!.get('arm')!;
+    if (attached.kind !== 'mesh') throw Error('expected mesh');
+    const source = p.skins.get('skin')!.regions.get('arm-slot')!.get('arm');
+    expect(attached.path).toBe('body');
+    expect(attached.uvs).toEqual([0, 0, 1, 0, 0, 1]);
+    expect(attached.deformParent).toBe(source);
+    const half = sampleBone2dProject(p, 'attack', 0.25);
+    expect(half.meshDeltas.get(attached.deformParent!)?.[11]).toBeCloseTo(4);
+    rig.skins[1].attachments['arm-slot'].arm.link.source = 'missing';
+    expect(() => parse(d)).toThrow(/invalid linked mesh/);
+});
+
+test('draw-order folder rearranges only its occupied seats after the full-track order', () => {
+    const d = fixture(),
+        rig = d.project.skeleton;
+    rig.slots.push({ ...rig.slots[0], id: 'between', attachment: null });
+    rig.drawOrderFolders = [{ id: 'fx', name: 'Effects', slots: ['body-slot', 'arm-slot'] }];
+    const clip = rig.animations[1];
+    clip.drawOrder = [{ time: 0, order: ['arm-slot', 'between', 'body-slot'] }];
+    clip.drawOrderFolder = { fx: [{ time: 0.5, order: ['arm-slot'] }] };
+    const p = parse(d);
+    expect(sampleBone2dProject(p, 'attack', 0.25).order).toEqual(['body-slot', 'between', 'arm-slot']);
+    expect(sampleBone2dProject(p, 'attack', 0.5).order).toEqual(['arm-slot', 'between', 'body-slot']);
+});
+
+function sequenceFixture() {
+    const file = fixture(),
+        rig = file.project.skeleton;
+    const attachment = rig.skins[0].attachments['body-slot'].body;
+    attachment.sequence = { count: 3, start: 7, digits: 3, setupIndex: 1 };
+    for (const prefix of ['body', 'overlay']) {
+        for (const suffix of ['007', '008', '009']) {
+            file.project.images.push({ ...file.project.images[0], name: prefix + suffix });
+        }
+    }
+    rig.skins.push({
+        ...rig.skins[0],
+        id: 'overlay',
+        attachments: {
+            'body-slot': { body: { ...attachment, path: 'overlay' } },
+        },
+    });
+    const clip = rig.animations[1];
+    clip.sequence = {
+        skin: { 'body-slot': { body: [{ time: 0.25, index: 0, delay: 0.125, mode: 'pingpong' }] } },
+        overlay: { 'body-slot': { body: [{ time: 0.75, index: 0, delay: 0.125, mode: 'onceReverse' }] } },
+    };
+    return { file, clip, attachment };
+}
+test.each([
+    ['hold', [8, 7, 7, 7, 7, 7, 7]],
+    ['once', [8, 7, 8, 9, 9, 9, 9]],
+    ['loop', [8, 7, 8, 9, 7, 8, 9]],
+    ['pingpong', [8, 7, 8, 9, 8, 7, 8]],
+    ['onceReverse', [8, 9, 8, 7, 7, 7, 7]],
+    ['loopReverse', [8, 9, 8, 7, 9, 8, 7]],
+    ['pingpongReverse', [8, 9, 8, 7, 8, 9, 8]],
+])('samples %s across frame boundaries including the setup frame', (mode, expected) => {
+    const { file, clip } = sequenceFixture();
+    clip.sequence.skin['body-slot'].body[0].mode = mode;
+    const model = parse(file);
+    const body = model.skins.get('skin')!.regions.get('body-slot')!.get('body')!;
+    const pictures = [0, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875].map((t) =>
+        bone2dPicture(body, sampleBone2dProject(model, 'attack', t)),
+    );
+    expect(pictures).toEqual(expected.map((n) => 'body00' + n));
+});
+test('picture tracks are keyed by exact attachment and keep setup until their own first key', () => {
+    const model = parse(sequenceFixture().file);
+    const selected = (skin: string, t: number) =>
+        bone2dPicture(
+            model.skins.get(skin)!.regions.get('body-slot')!.get('body')!,
+            sampleBone2dProject(model, 'attack', t),
+        );
+    expect([
+        selected('skin', 0.5),
+        selected('overlay', 0.5),
+        selected('overlay', 0.75),
+        selected('skin', 0.75),
+    ]).toEqual(['body009', 'overlay008', 'overlay009', 'body007']);
+});
+test('handles one picture, zero delay and fails on missing frame or unbound sequence keys', () => {
+    const { file, clip, attachment } = sequenceFixture();
+    const key = clip.sequence.skin['body-slot'].body[0];
+    function picture() {
+        const model = parse(file);
+        const body = model.skins.get('skin')!.regions.get('body-slot')!.get('body')!;
+        return bone2dPicture(body, sampleBone2dProject(model, 'attack', 0.875));
+    }
+    Object.assign(key, { delay: 0, index: 1, mode: 'loop' });
+    expect(picture()).toBe('body008');
+    Object.assign(attachment.sequence, { count: 1, setupIndex: 0 });
+    Object.assign(key, { delay: 0.125, mode: 'pingpongReverse' });
+    expect(picture()).toBe('body007');
+    file.project.images = file.project.images.filter((i: { name: string }) => i.name !== 'body007');
+    expect(picture).toThrow(/unknown sequence image: body007/);
+    delete attachment.sequence;
+    expect(picture).toThrow(/unknown sequenced attachment/);
+});
+
+test('queries non-rendering markers and deformed polygons in player-root coordinates', () => {
+    const file = fixture(),
+        rig = file.project.skeleton;
+    const body = rig.skins[0].attachments['body-slot'];
+    body.body = { type: 'point', x: 3, y: 4, rotation: 45 };
+    body.hit = {
+        type: 'boundingbox',
+        vertices: [],
+        weights: [[['root', 0, 0, 1]], [['root', 8, 0, 1]], [['root', 0, 8, 1]]],
+    };
+    body.path = { type: 'path', vertices: [0, 0, 1, 0, 2, 3, 4, 3, 5, 0, 6, 0], closed: false, constantSpeed: true };
+    rig.animations[1].deform.skin = { 'body-slot': { hit: [{ time: 0.5, value: [0, 0, 0, 6, 0, 0] }] } };
+    const model = parse(file),
+        sample = sampleBone2dProject(model, 'attack', 0.5);
+    const world = bone2dWorldMatrices(model, sample);
+    function query(key: string) {
+        const a = model.skins.get('skin')!.regions.get('body-slot')!.get(key)!;
+        if (a.kind === 'mesh' || a.kind === 'region' || a.kind === 'clipping')
+            throw new Error('expected a non-rendering shape');
+        return bone2dShapeGeometry(a, 'root', sample, world);
+    }
+    const point = query('body');
+    expect(point).toMatchObject({ kind: 'point', x: 4.5, y: 4 });
+    if (point.kind !== 'point') throw new Error('expected a point');
+    expect(point.rotation).toBeCloseTo(33.69006752598);
+    expect(query('hit')).toEqual({ kind: 'boundingbox', vertices: [0, 0, 12, 6, 0, 8] });
+    expect(query('path')).toEqual({
+        kind: 'path',
+        vertices: [0, 0, 1.5, 0, 3, 3, 6, 3, 7.5, 0, 9, 0],
+        closed: false,
+        constantSpeed: true,
+    });
+    body.path.vertices.pop();
+    expect(() => parse(file)).toThrow(/shape needs at least three XY pairs/);
+});
+
+test('convex clipping removes concave dents and duplicate vertices', () => {
+    expect(convexClipOutline([-3, -4, 8, -4, 8, 5, 0, 0, -3, 5, -3, -4])).toEqual([-3, -4, 8, -4, 8, 5, -3, 5]);
+});
+
+test('preserves all four slots blend modes and rejects unknown values', () => {
+    for (const blend of ['normal', 'additive', 'multiply', 'screen']) {
+        const file = fixture();
+        file.project.skeleton.slots[0].blend = blend;
+        expect(parse(file).slots[0].blend).toBe(blend);
+    }
+    const invalid = fixture();
+    invalid.project.skeleton.slots[0].blend = 'overlay';
+    expect(() => parse(invalid)).toThrow(/invalid slot blend/);
+});
+
+test('two-color keys override light after their first key and animate only explicitly enabled dark tint', () => {
+    const file = fixture(),
+        rig = file.project.skeleton;
+    rig.slots[0].dark = [0.125, 0.25, 0.5];
+    const track = {
+        rgba: [{ time: 0, value: [0.25, 0.25, 0.25, 0.25] }],
+        rgba2: [
+            { time: 0.25, value: [1, 0.5, 0.75, 1, 0, 0.5, 1] },
+            { time: 0.75, value: [0.5, 0.5, 0.25, 0.5, 0.5, 0.5, 0] },
+        ],
+    };
+    const clip = rig.animations[1];
+    clip.slots['body-slot'] = clip.slots['arm-slot'] = track;
+    const model = parse(file);
+    expect(sampleBone2dProject(model, 'attack', 0).slots.get('body-slot')).toMatchObject({
+        color: [0.25, 0.25, 0.25, 0.25],
+        dark: [0.125, 0.25, 0.5],
+    });
+    const midpoint = sampleBone2dProject(model, 'attack', 0.5);
+    expect(midpoint.slots.get('body-slot')).toMatchObject({ color: [0.75, 0.5, 0.5, 0.75], dark: [0.25, 0.5, 0.5] });
+    expect(midpoint.slots.get('arm-slot')).toMatchObject({ color: [0.75, 0.5, 0.5, 0.75], dark: null });
+});
+
+const inheritOracle = [
+    ['normal', [-2.025449, 0.041812, 0.4228, 1.279957]],
+    ['onlyTranslation', [0.771345, -0.338095, 0.919253, 0.725046]],
+    ['noRotationOrReflection', [1.645296, -0.47695, 1.660788, 1.105]],
+    ['noScale', [-1.172973, -0.177467, 0.253246, 0.780068]],
+    ['noScaleOrReflection', [-1.18885, -0.236343, -0.163207, -0.764292]],
+] as const;
+
+test.each(inheritOracle)('mirrored parent and animated shear: %s', (inherit, expected) => {
+    const file = fixture(),
+        rig = file.project.skeleton;
+    const root = rig.bones.find((b: { id: string }) => b.id === 'root'),
+        child = rig.bones[0];
+    Object.assign(root, { x: 10, y: 20, rotation: 30, scaleX: -2, scaleY: 1.5 });
+    Object.assign(child, { x: 3, y: 4, rotation: 40, scaleX: 1.2, scaleY: 0.8, shearX: 4, shearY: -12, inherit });
+    rig.animations[1].bones['arm-bone'] = {
+        shear: [{ time: 0.5, value: [24, -3] }],
+        shearx: [{ time: 0.5, value: [6] }],
+    };
+    function matrix() {
+        const model = parse(file),
+            sample = sampleBone2dProject(model, 'attack', 0.5);
+        expect(model.affineSprites).toBe(true);
+        expect(sample.shears.get('arm-bone')).toEqual([10, -15]);
+        return bone2dWorldMatrices(model, sample).get('arm-bone')!;
+    }
+    const m = matrix();
+    [...expected, 1.803847, 22.196152].forEach((v, i) => expect(m[i]).toBeCloseTo(v, 5));
+    Object.assign(root, { scaleX: 0, scaleY: 0 });
+    const collapsed = matrix();
+    expect(collapsed.slice(4)).toEqual([10, 20]);
+    expect(collapsed.slice(0, 4).every(Number.isFinite)).toBe(true);
+    if (inherit !== 'onlyTranslation') expect(Math.hypot(...collapsed.slice(0, 4))).toBe(0);
+});
+test('signed two-node affine factorization reconstructs deterministic matrices including collapsed axes', () => {
+    let rng = 0x4206970;
+    const next = () => ((rng = (Math.imul(1664525, rng) + 1013904223) >>> 0) / 4294967296 - 0.5) * 12;
+    for (let i = 0; i < 512; ++i) {
+        const a = next(),
+            b = next(),
+            c = i % 16 === 0 ? a : next(),
+            d = i % 16 === 0 ? b : next();
+        const [outer, inner, x, y] = factorBone2dBasis([a, b, c, d, 0, 0]);
+        const m = multiplyBasis(poseBasis(outer, x, y, [0, 0]), poseBasis(inner, 1, 1, [0, 0]));
+        [a, b, c, d].forEach((value, k) => expect(m[k]).toBeCloseTo(value, 11));
+    }
+    const [o, i, sx, sy] = factorBone2dBasis([0, 0, 0, 0, 0, 0]);
+    expect([o, i, sx, sy]).toEqual([0, 0, 0, 0]);
+});
+
+test('skin membership activates required ancestors without activating the default fallback skin', () => {
+    const file = fixture(),
+        rig = file.project.skeleton;
+    const arm = rig.bones.find((bone: { id: string }) => bone.id === 'arm-bone');
+    arm.skinRequired = true;
+    rig.bones.push({ ...arm, id: 'arm-grip', parent: 'arm-bone' });
+    rig.skins[0].bones = ['arm-bone'];
+    rig.skins.push({ id: 'armor', name: 'Armor', bones: ['arm-grip'], constraints: [], attachments: {} });
+    const model = parse(file);
+    for (const overlays of [[], ['skin']]) {
+        const off = sampleBone2dProject(model, 'attack', 0.5, overlays);
+        expect(off.activeBones.has('arm-bone')).toBe(false);
+        expect(off.slots.get('arm-slot')?.attachment).toBeNull();
+        expect(off.bones.get('arm-bone')?.[0]).toBe(6);
+    }
+    const on = sampleBone2dProject(model, 'attack', 0.5, ['armor']);
+    expect(on.activeBones.has('arm-grip')).toBe(true);
+    expect(on.activeBones.has('arm-bone')).toBe(true);
+    expect(on.slots.get('arm-slot')?.attachment).toBe('arm');
+    expect(on.bones.get('arm-bone')?.[0]).toBe(26);
+    expect(() => sampleBone2dProject(model, 'attack', 0.5, ['missing'])).toThrow(/unknown skin/);
+    rig.skins[1].bones = ['missing'];
+    expect(() => parse(file)).toThrow(/invalid skin bones/);
+});
+
+const ikFixtureText = readFileSync(resolve(__dirname, '../fixtures/bone2d/ordered-ik.bone2d'), 'utf8');
+const ikFixture = (): any => JSON.parse(ikFixtureText);
+const ikWorld = (file: unknown, skins: readonly string[] = ['engaged'], time = 0) => {
+    const model = parse(file);
+    return bone2dWorldMatrices(model, sampleBone2dProject(model, 'idle', time, skins));
+};
+
+test('IK reads the latest target matrix in authored order; a skin sample cannot reuse a previous pose', () => {
+    const file = ikFixture();
+    const aim = (world: ReturnType<typeof ikWorld>) => {
+        const [a, , c] = world.get('arm-bone')!;
+        return (Math.atan2(c, a) * 180) / Math.PI;
+    };
+    const off = ikWorld(file, ['skin']);
+    expect(aim(off)).toBeCloseTo(36.86989765, 7);
+    expect(off.get('tip')!.slice(4)).toEqual([4, 0]);
+    const on = ikWorld(file);
+    expect(aim(on)).toBeCloseTo(90, 7);
+    expect(on.get('tip')![4]).toBeCloseTo(0, 7);
+    expect(on.get('tip')![5]).toBeCloseTo(4, 7);
+    expect(ikWorld(file, [])).toEqual(off);
+    file.project.skeleton.constraints.reverse();
+    const reverse = ikWorld(file);
+    expect(reverse.get('tip')).toEqual(on.get('tip'));
+    expect(aim(reverse)).toBeCloseTo(36.86989765, 7);
+});
+
+test('IK interpolates mix, steps per-key flags and evaluates scaleY modes at the sample time', () => {
+    for (const scaleY of ['none', 'uniform', 'volume']) {
+        const file = ikFixture();
+        const rig = file.project.skeleton;
+        rig.constraints[0].scaleY = scaleY;
+        const key = (time: number, mix: number, stretch: boolean, compress = false) => ({
+            time,
+            value: [mix, 0],
+            stretch,
+            compress,
+            bendPositive: true,
+        });
+        rig.animations[0].ik = { first: [key(0.25, 0, true), key(0.75, 1, false)] };
+        const [a, b, c, d] = ikWorld(file, ['engaged'], 0.5).get('driver')!;
+        expect(Math.atan2(c, a)).toBeCloseTo(Math.PI / 4, 7);
+        expect(Math.hypot(a, c)).toBeCloseTo(1.75, 7);
+        expect(Math.hypot(b, d)).toBeCloseTo(scaleY === 'none' ? 1 : scaleY === 'uniform' ? 1.75 : 1 / 1.75, 7);
+        expect(Math.hypot(...ikWorld(file, ['engaged'], 0.75).get('tip')!.slice(4))).toBeCloseTo(4, 7);
+        expect(ikWorld(file, ['engaged'], 0.125).get('tip')![5]).toBeCloseTo(4, 7);
+        rig.bones[3].y = 1;
+        rig.animations[0].ik = { first: [key(0, 1, false, true)] };
+        const [aa, bb, cc, dd] = ikWorld(file).get('driver')!;
+        expect(Math.hypot(aa, cc)).toBeCloseTo(0.25, 7);
+        expect(Math.hypot(bb, dd)).toBeCloseTo(scaleY === 'none' ? 1 : scaleY === 'uniform' ? 0.25 : 1 / 0.41071425, 7);
+    }
+});
+
+test('IK skin membership does not activate a skin-required target bone by itself', () => {
+    const file = ikFixture();
+    const rig = file.project.skeleton;
+    rig.bones[3].skinRequired = true;
+    rig.skins.push({ id: 'target-skin', name: 'Target', bones: ['target'], constraints: [], attachments: {} });
+    expect(ikWorld(file).get('tip')!.slice(4)).toEqual([4, 0]);
+    expect(ikWorld(file, ['target-skin']).get('tip')!.slice(4)).toEqual([4, 0]);
+    expect(ikWorld(file, ['engaged', 'target-skin']).get('tip')![5]).toBeCloseTo(4, 7);
+});
+
+test('an IK target below a skin-required bone is disabled until that target or its descendant is listed', () => {
+    const file = ikFixture();
+    const rig = file.project.skeleton;
+    rig.bones[1].skinRequired = true;
+    rig.skins[1].bones = ['driver'];
+    rig.skins.push({ id: 'tip-skin', name: 'Tip', bones: ['tip'], constraints: [], attachments: {} });
+    const driverOnly = ikWorld(file);
+    expect(driverOnly.get('tip')).toEqual([1, 0, 0, 1, 0, 0]);
+    expect(driverOnly.get('arm-bone')![2]).toBeCloseTo(0, 7);
+    const both = ikWorld(file, ['engaged', 'tip-skin']);
+    expect(both.get('tip')![5]).toBeCloseTo(4, 7);
+    expect(both.get('arm-bone')![2]).toBeCloseTo(1, 7);
+});
+
+test('rejects unknown IK references and non-contiguous two-bone chains', () => {
+    const file = ikFixture();
+    file.project.skeleton.constraints[0].target = 'missing';
+    expect(() => parse(file)).toThrow(/FORMAT.*unknown IK/);
+    file.project.skeleton.constraints[0].target = 'target';
+    file.project.skeleton.constraints[0].bones.push('arm-bone');
+    expect(() => parse(file)).toThrow(/FORMAT.*direct child/);
+});
+
+const twoBoneIkText = readFileSync(resolve(__dirname, '../fixtures/bone2d/two-bone-ik.bone2d'), 'utf8');
+const twoBoneFixture = (): any => JSON.parse(twoBoneIkText);
+function anglesForPair(world: ReturnType<typeof ikWorld>): [number, number] {
+    const [a, b, c, d] = world.get('driver')!;
+    const [e, , g] = world.get('elbow')!;
+    return [(Math.atan2(c, a) * 180) / Math.PI, (Math.atan2(a * g - c * e, d * e - b * g) * 180) / Math.PI];
+}
+const xyzClose = (actual: readonly number[], expected: readonly number[], precision = 5): void => {
+    expect(actual).toHaveLength(expected.length);
+    expect(actual.every(Number.isFinite)).toBe(true);
+    actual.forEach((v, i) => expect(v).toBeCloseTo(expected[i], precision));
+};
+test('two-bone reachable stretch changes the elbow without stretching or moving the tip', () => {
+    const file = twoBoneFixture();
+    const rest = ikWorld(file, []);
+    xyzClose(anglesForPair(rest), [-36.869897, 90]);
+    xyzClose(rest.get('elbow')!.slice(4), [2.2, -0.4]);
+    xyzClose(rest.get('tip')!.slice(4), [4, 2]);
+    file.project.skeleton.constraints[0].stretch = true;
+    const stretch = ikWorld(file, []);
+    xyzClose(anglesForPair(stretch), [-6.450208, 54.314664]);
+    xyzClose(stretch.get('tip')!.slice(4), [4, 2]);
+    xyzClose([Math.hypot(stretch.get('driver')![0], stretch.get('driver')![2])], [1]);
+    expect(stretch.get('elbow')!.slice(4)).not.toEqual(rest.get('elbow')!.slice(4));
+});
+
+test('the anisotropic IK ellipse gives two distinct joint poses to the same reachable point', () => {
+    const file = twoBoneFixture();
+    const rig = file.project.skeleton;
+    rig.bones[1].scaleX = 2;
+    Object.assign(rig.bones[4], { x: 5, y: 3 });
+    let world = ikWorld(file, []);
+    xyzClose(anglesForPair(world), [0.505274, 80.1515]);
+    xyzClose(world.get('tip')!.slice(4), [5, 3]);
+    rig.constraints[0].bendPositive = false;
+    world = ikWorld(file, []);
+    xyzClose(anglesForPair(world), [61.422238, -80.1515], 4);
+    xyzClose(world.get('tip')!.slice(4), [5, 3]);
+    rig.constraints[0].bendPositive = true;
+    rig.constraints[0].mix = 0.25;
+    world = ikWorld(file, []);
+    xyzClose(world.get('tip')!.slice(4), [9.634508, 1.049167]);
+    xyzClose(anglesForPair(world), [0.126319, 20.037875]);
+});
+
+test('two-bone IK keys interpolate softness, step bend, and do not solve non-normal inheritance', () => {
+    const file = twoBoneFixture();
+    const rig = file.project.skeleton;
+    Object.assign(rig.bones[4], { x: 5.4, y: 0 });
+    const key = (time: number, soft: number, bendPositive: boolean) => ({
+        time,
+        value: [1, soft],
+        stretch: false,
+        compress: false,
+        bendPositive,
+    });
+    rig.animations[0].ik = { first: [key(0, 0, true), key(1, 1, false)] };
+    xyzClose(ikWorld(file, [], 0).get('tip')!.slice(4), [5.236068, 0]);
+    const middle = ikWorld(file, [], 0.5);
+    expect(middle.get('tip')![4]).toBeLessThan(5.236068);
+    expect(anglesForPair(middle)[1]).toBeGreaterThan(0);
+    const last = ikWorld(file, [], 1);
+    xyzClose(last.get('tip')!.slice(4), [5.061316, 0]);
+    expect(anglesForPair(last)[1]).toBeLessThan(0);
+    rig.bones[2].inherit = 'onlyTranslation';
+    const unsolved = ikWorld(file, [], 1);
+    xyzClose(unsolved.get('tip')!.slice(4), [5, 1]);
+});
+
+test('two-bone fallback stays finite for a collapsed elbow, distal length or grandparent basis', () => {
+    const file = twoBoneFixture();
+    const rig = file.project.skeleton;
+    const assertFinite = () => {
+        for (const matrix of ikWorld(file, []).values()) expect(matrix.every(Number.isFinite)).toBe(true);
+    };
+    Object.assign(rig.bones[2], { x: 0, y: 0 });
+    assertFinite();
+    Object.assign(rig.bones[2], { x: 2, y: 0, length: 0 });
+    Object.assign(rig.bones[4], { x: 2, y: 0 });
+    assertFinite();
+    rig.bones[0].scaleX = 0;
+    assertFinite();
+});
+
+test('mixed one- and two-bone constraints respect authored order and keep inactive child slots hidden', () => {
+    const file = twoBoneFixture();
+    const rig = file.project.skeleton;
+    rig.bones.push({ ...rig.bones[1], id: 'follower', x: 0, y: -3 });
+    rig.constraints.push({ ...rig.constraints[0], id: 'follow', bones: ['follower'], target: 'tip' });
+    const read = () => {
+        const matrices = ikWorld(file, []);
+        const [a, , c] = matrices.get('follower')!;
+        return [Math.atan2(c, a), ...matrices.get('tip')!.slice(4)];
+    };
+    xyzClose(read(), [Math.atan2(5, 4), 4, 2]);
+    rig.constraints.reverse();
+    xyzClose(read(), [Math.atan2(4, 5), 4, 2]);
+    rig.bones[2].skinRequired = true;
+    const parsed = parse(file);
+    const sample = sampleBone2dProject(parsed, 'idle', 0.25);
+    expect(sample.slots.get('elbow-slot')!.attachment).toBeNull();
+    expect(sample.slots.get('tip-slot')!.attachment).toBeNull();
+    xyzClose(anglesForPair(bone2dWorldMatrices(parsed, sample)).slice(0, 1), [-36.869897]);
+});
+
+const transformText = readFileSync(resolve(__dirname, '../fixtures/bone2d/transform.bone2d'), 'utf8');
+const transformFixture = (): any => JSON.parse(transformText);
+test('transform maps wrapped world rotation into translation with descending clamp endpoints', () => {
+    const file = transformFixture();
+    const atStart = ikWorld(file, [], 0),
+        atEnd = ikWorld(file, [], 1);
+    xyzClose(atStart.get('local')!.slice(4), [10, 14]);
+    xyzClose(atStart.get('world')!.slice(4), [-20, -14]);
+    xyzClose(atEnd.get('local')!.slice(4), [9, 14]);
+    xyzClose(atEnd.get('world')!.slice(4), [9, -14]);
+});
+
+test('world-source mappings transform both position offsets before taking a channel, unlike local reads', () => {
+    const file = transformFixture(),
+        rig = file.project.skeleton;
+    Object.assign(rig.bones[1], { x: 10, y: 20, rotation: 90 });
+    for (const c of rig.constraints) {
+        Object.assign(c.offsets, { x: 2, y: 3 });
+        c.clamp = false;
+        c.mix.y = 1;
+        c.properties = ['x', 'y'].map((prop) => ({ prop, offset: 0, to: [{ prop, offset: 0, max: 0, scale: 1 }] }));
+    }
+    const world = ikWorld(file, [], 0);
+    xyzClose(world.get('local')!.slice(4), [12, 23]);
+    xyzClose(world.get('world')!.slice(4), [7, 22]);
+});
+
+test('world transform edits are converted back to the current local pose before ordered IK', () => {
+    const file = transformFixture(),
+        rig = file.project.skeleton;
+    const [c] = rig.constraints;
+    Object.assign(c, {
+        localTarget: false,
+        clamp: false,
+        properties: [{ prop: 'x', offset: 0, to: [{ prop: 'x', offset: 8, max: 0, scale: 0 }] }],
+    });
+    rig.bones[0].scaleX = 2;
+    rig.bones[1].x = 2;
+    rig.bones[1].y = 22;
+    rig.constraints = [
+        c,
+        {
+            id: 'aim',
+            type: 'ik',
+            bones: ['local'],
+            target: 'source',
+            mix: 1,
+            softness: 0,
+            bendPositive: true,
+            compress: false,
+            stretch: false,
+            scaleY: 'none',
+            skinRequired: false,
+        },
+    ];
+    const matrix = ikWorld(file, [], 0).get('local')!;
+    xyzClose(matrix.slice(4), [8, 14]);
+    expect(matrix[0] / matrix[2]).toBeCloseTo(-0.5);
+});
+
+test('transform skin activation and mix tracks are sampled without retaining a previous world override', () => {
+    const file = transformFixture(),
+        rig = file.project.skeleton,
+        c = rig.constraints[1];
+    c.skinRequired = true;
+    rig.skins.push({ id: 'map', name: 'Map', bones: [], constraints: [c.id], attachments: {} });
+    rig.animations[0].transform = {
+        [c.id]: [
+            { time: 0, value: [0, 0, 0, 0, 0, 0] },
+            { time: 1, value: [0, 1, 0, 0, 0, 0] },
+        ],
+    };
+    xyzClose(ikWorld(file, [], 0.25).get('world')!.slice(4), [0, -14]);
+    xyzClose(ikWorld(file, ['map'], 0.25).get('world')!.slice(4), [-5, -14]);
+    xyzClose(ikWorld(file, [], 0.25).get('world')!.slice(4), [0, -14]);
+    c.properties[0].to[0].prop = 'bad';
+    expect(() => parse(file)).toThrow(/FORMAT.*transform property/);
+});
+
+test('an edited world child retains its applied offset when a later constraint moves its parent', () => {
+    const file = transformFixture(),
+        rig = file.project.skeleton;
+    rig.bones[3].parent = 'local';
+    rig.bones[2].x = 4;
+    const [a, b] = rig.constraints;
+    const placeX = (c: any, targetX: number, localTarget: boolean): void => {
+        Object.assign(c, {
+            localTarget,
+            clamp: false,
+            properties: [{ prop: 'x', offset: 0, to: [{ prop: 'x', offset: targetX, max: 0, scale: 0 }] }],
+        });
+    };
+    placeX(a, 7, true);
+    placeX(b, 20, false);
+    rig.constraints.reverse();
+    const matrices = ikWorld(file, [], 0);
+    xyzClose(matrices.get('local')!.slice(4), [7, 14]);
+    xyzClose(matrices.get('world')!.slice(4), [23, 0]);
+    rig.constraints.reverse();
+    xyzClose(ikWorld(file, [], 0).get('world')!.slice(4), [20, 0]);
+});
+
+test('transform parsing bounds the number of mapping writes per sample', () => {
+    const file = transformFixture(),
+        rig = file.project.skeleton;
+    const c = rig.constraints[0],
+        channel = c.properties[0].to[0];
+    c.bones = rig.bones.map((b: any) => b.id);
+    c.properties = Array.from({ length: 64 }, () => ({ prop: 'rotate', offset: 0, to: Array(64).fill(channel) }));
+    expect(() => parse(file)).toThrow(/UNSUPPORTED.*mapping budget/);
+});
+
+const sliderText = readFileSync(resolve(__dirname, '../fixtures/bone2d/slider.bone2d'), 'utf8');
+const sliderFixture = (): any => JSON.parse(sliderText);
+test('fractional slider overlays change signed scale and immediately switch to their linked mesh', () => {
+    const controls = [
+        { additive: false, mix: 0.25, name: 'linked', x: 11, sx: -2.75, owner: true },
+        { additive: true, mix: 0.25, name: 'linked', x: 13, sx: 2, owner: true },
+        { additive: false, mix: 0, name: 'source', x: 12, sx: 3, owner: true },
+        { additive: false, mix: 0.25, name: 'independent', x: 11, sx: -2.75, owner: false },
+    ];
+    for (const expected of controls) {
+        const file = sliderFixture(),
+            rig = file.project.skeleton;
+        Object.assign(rig.constraints[1], { additive: expected.additive, mix: expected.mix });
+        rig.animations[1].slots['arm-slot'].attachment[0].name =
+            expected.name === 'independent' ? 'independent' : 'linked';
+        const project = parse(file);
+        const read = (time: number) => sampleBone2dProject(project, 'idle', time);
+        const incoming = read(0.25),
+            evaluated = read(0.75);
+        const middle = bone2dWorldMatrices(project, incoming).get('arm-bone')!;
+        const end = bone2dWorldMatrices(project, evaluated).get('arm-bone')!;
+        expect([middle[4], middle[0]]).toEqual([12, 3]);
+        expect([end[4], end[0]]).toEqual([expected.x, expected.sx]);
+        expect(incoming.slots.get('arm-slot')!.attachment).toBe('source');
+        expect(evaluated.slots.get('arm-slot')!.attachment).toBe(expected.name);
+        expect(incoming.slotFrames!.get('arm-slot')).toBe(1);
+        expect(evaluated.slotFrames!.get('arm-slot')).toBe(expected.mix === 0 ? 1 : undefined);
+        expect(evaluated.slotDeform!.get('arm-slot')).toEqual(expected.owner ? [0, 0, 0, 0, 2, 0] : undefined);
+    }
+});
+
+test('a later driver reads the current constrained property, and a looping negative driven time wraps', () => {
+    const file = sliderFixture(),
+        rig = file.project.skeleton,
+        slider = rig.constraints[1];
+    Object.assign(slider, { bone: 'arm-bone', local: true, property: 'x', from: 12, to: -0.25, loop: true });
+    const read = () => {
+        const project = parse(file),
+            sample = sampleBone2dProject(project, 'idle', 0.2);
+        return { pose: bone2dWorldMatrices(project, sample).get('arm-bone')!, slot: sample.slots.get('arm-slot')! };
+    };
+    expect(read().pose[4]).toBe(11);
+    expect(read().slot.attachment).toBe('linked');
+    rig.constraints.reverse();
+    expect(read().pose[4]).toBe(12);
+    expect(read().slot.attachment).toBe('linked'); // setup driver x=4 wraps the same remainder
+    slider.loop = false;
+    expect(read().slot.attachment).toBe('source');
+    slider.animation = 'missing';
+    expect(() => parse(file)).toThrow(/FORMAT.*slider animation/);
+});
+
+const pathFollowText = readFileSync(resolve(__dirname, '../fixtures/bone2d/path-follow.bone2d'), 'utf8');
+const pathFollowFixture = (): any => JSON.parse(pathFollowText);
+test('path parameter and responsive arc distance differ under identical uneven handles', () => {
+    const f = pathFollowFixture();
+    const read = (skins: string[], t: number) => ikWorld(f, skins, t).get('arm-bone')!.slice(4);
+    xyzClose(read([], 0), [1.75, 0]);
+    xyzClose(read([], 1), [3.5, 0]);
+    const [mid, y] = read(['distance'], 0);
+    expect(mid).toBeCloseTo(3.9625233619290583, 7);
+    xyzClose(read(['distance'], 1), [mid * 2, y * 2]);
+    xyzClose(read(['nonpath'], 0), [40, 10]);
+    const c = f.project.skeleton.constraints[0];
+    c.positionMode = 'fixed';
+    c.position = -2;
+    xyzClose(read(['distance'], 0), [-2, 0]);
+    c.position = 10;
+    xyzClose(read(['distance'], 0), [10, 0]);
+});
+
+test('path spacing, chain tip translation, and chainScale update consecutive roots', () => {
+    const f = pathFollowFixture(),
+        c = f.project.skeleton.constraints[0];
+    c.bones.push('second');
+    c.position = 0;
+    c.spacing = 2;
+    c.rotateMode = 'chainScale';
+    let w = ikWorld(f, ['distance'], 0);
+    const distance = w.get('second')![4];
+    expect(distance).toBeCloseTo(2, 1);
+    expect(w.get('arm-bone')![0] * 4).toBeCloseTo(distance, 7);
+    c.rotateMode = 'chain';
+    w = ikWorld(f, ['distance'], 0);
+    expect(w.get('second')![4]).toBeCloseTo(4);
+    c.rotateMode = 'tangent';
+    c.spacingMode = 'length';
+    w = ikWorld(f, ['distance'], 0);
+    expect(w.get('second')![4]).toBeCloseTo(6, 1);
+    c.spacingMode = 'percent';
+    c.spacing = 0.75;
+    expect(ikWorld(f, ['distance'], 0).get('second')![4]).toBeCloseTo(6, 1);
+    c.spacingMode = 'proportional';
+    expect(ikWorld(f, ['distance'], 0).get('second')![4]).toBeCloseTo(6, 1);
+});
+
+test('path shape deform, weight motion, and animated path mix drive the same follower', () => {
+    const f = pathFollowFixture(),
+        rig = f.project.skeleton;
+    const a = rig.skins[0].attachments.track.line;
+    a.weights = Array.from({ length: 6 }, (_, i) => [['holder', a.vertices[i * 2], 0, 1]]);
+    a.vertices = [];
+    rig.animations[0].deform = {
+        skin: { track: { line: [{ time: 0, value: [0, 4, 0, 4, 0, 4, 0, 4, 0, 4, 0, 4] }] } },
+    };
+    rig.animations[0].path = {
+        follow: {
+            mix: [
+                { time: 0, value: [1, 1, 0] },
+                { time: 1, value: [1, 1, 1] },
+            ],
+        },
+    };
+    xyzClose(ikWorld(f, [], 0).get('arm-bone')!.slice(4), [1.75, 10]);
+    xyzClose(ikWorld(f, [], 1).get('arm-bone')!.slice(4), [3.5, 4]);
+    rig.constraints[0].offsetRotation = 20;
+    rig.bones[1].scaleX = -1;
+    const [a0, , a2] = ikWorld(f, [], 0).get('arm-bone')!;
+    expect((Math.atan2(a2, a0) * 180) / Math.PI).toBeCloseTo(160, 5);
+});
+
+test('closed paths wrap signed fixed positions and repeatedly sample the same station', () => {
+    const f = pathFollowFixture(),
+        rig = f.project.skeleton,
+        shape = rig.skins[0].attachments.track.line,
+        path = rig.constraints[0];
+    Object.assign(shape, { vertices: [1, 0, 0, 0, 1, 0, 1, 0, 8, 0, 7, 0], closed: true, constantSpeed: true });
+    path.positionMode = 'fixed';
+    path.position = 14;
+    const a = ikWorld(f, [], 0).get('arm-bone')!;
+    path.position = -2;
+    xyzClose(ikWorld(f, [], 0).get('arm-bone')!, a, 7);
+    expect(a[0]).toBeCloseTo(-1, 7);
+});
+
+test('slider edits to path position only affect constraints later in authored order', () => {
+    const f = pathFollowFixture(),
+        rig = f.project.skeleton,
+        main = rig.animations[0];
+    rig.animations.push({
+        ...main,
+        id: 'bend',
+        name: 'Bend',
+        bones: {},
+        path: { follow: { position: [{ time: 0, value: [1] }] } },
+    });
+    rig.constraints.unshift({
+        type: 'slider',
+        id: 'driver',
+        name: 'Path driver',
+        animation: 'bend',
+        bone: null,
+        property: 'x',
+        local: true,
+        additive: false,
+        loop: false,
+        skinRequired: false,
+        time: 0.25,
+        mix: 1,
+        from: 0,
+        to: 0,
+        scale: 1,
+    });
+    xyzClose(ikWorld(f, [], 0).get('arm-bone')!.slice(4), [8, 0]);
+    rig.constraints.reverse();
+    xyzClose(ikWorld(f, [], 0).get('arm-bone')!.slice(4), [1.75, 0]);
+});
+
+const physicsText = readFileSync(resolve(__dirname, '../fixtures/bone2d/physics.bone2d'), 'utf8');
+const physicsFixture = (): any => JSON.parse(physicsText);
+
+test('physics separates global opt-in parameters from global and named reset routing', () => {
+    const project = parseBone2dProject(physicsText);
+    const spring = new Map();
+    let prev = 0;
+    function read(t: number, skin: string[] = []) {
+        const pose = sampleBone2dFrame(project, 'idle', t, skin, {
+            state: spring,
+            seconds: t - prev,
+            intervals: [[prev, t]],
+        });
+        const matrices = bone2dWorldMatrices(project, pose);
+        prev = t;
+        return { pose, x: ['arm-bone', 'B', 'C'].map((id) => matrices.get(id)![4]) };
+    }
+    const setup = read(0);
+    expect(setup.x).toEqual([-24, -24, 0]);
+    expect(setup.pose.physics.get('spring-A')?.wind).toBe(64);
+    expect(setup.pose.physics.get('spring-B')?.wind).toBe(-64);
+    expect(setup.pose.physics.has('spring-C')).toBe(false);
+    read(1 / 64);
+    xyzClose(read(2 / 64).x, [-20.4375, -23.5625, 0]);
+    for (let i = 3; i < 8; i++) read(i / 64);
+    expect(read(0.125).x).toEqual([-8, -8, 0]);
+    expect(read(0.125).x).toEqual([-8, -8, 0]);
+    expect(read(0.140625).x).toEqual([-7, -7, 0]);
+    read(0.15625);
+    read(0.171875);
+    xyzClose(read(0.1875).x, [5.375, 0, 0]);
+    const shown = read(0.1875, ['enable-c']);
+    expect(shown.x[2]).toBe(0);
+    expect(shown.pose.physics.get('spring-C')?.wind).toBe(64);
+    expect(read(0.203125, ['enable-c']).x[2]).toBe(1);
+    expect(read(0.21875, ['enable-c']).x[2]).toBeCloseTo(3.5625, 7);
+    read(0.21875);
+    expect(spring.has('spring-C')).toBe(false);
+    expect(read(0.21875, ['enable-c']).x[2]).toBe(4);
+});
+
+test('physics fixed step conserves partial time, isolates players and leaves random access at rest', () => {
+    const f = physicsFixture();
+    const rig = f.project.skeleton;
+    const clip = rig.animations[0];
+    clip.bones = {};
+    clip.physics = {};
+    Object.assign(rig.constraints[0], { wind: 64, y: 1, gravity: 64 });
+    const project = parse(f);
+    const a = new Map(),
+        b = new Map();
+    function read(state: Map<string, any>, t: number, dt: number) {
+        const pose = sampleBone2dFrame(project, 'idle', t, [], { state, seconds: dt, intervals: [[t - dt, t]] });
+        return bone2dWorldMatrices(project, pose).get('arm-bone')!.slice(4);
+    }
+    xyzClose(read(a, 0, 0), [-24, -16]);
+    xyzClose(read(b, 0, 0), [-24, -16]);
+    xyzClose(read(a, 1 / 128, 1 / 128), [-24, -16]);
+    xyzClose(read(a, 1 / 64, 1 / 128), [-24, -16]);
+    xyzClose(read(a, 2 / 64, 1 / 64), [-22.4375, -17.5625]);
+    xyzClose(read(b, 2 / 64, 2 / 64), [-22.4375, -17.5625]);
+    xyzClose(read(a, 2 / 64, 0), [-22.4375, -17.5625]);
+    const seek = sampleBone2dProject(project, 'idle', 2 / 64);
+    xyzClose(bone2dWorldMatrices(project, seek).get('arm-bone')!.slice(4), [-24, -16]);
+    expect(read(a, 0.25, 0.25)[0]).toBeGreaterThan(-24);
+    xyzClose(read(a, 0.25, 0.25001), [-24, -16]);
+});
+
+test.each(['none', 'uniform', 'volume'])(
+    'physics tip drives signed scale and angular channels with %s scale-Y policy',
+    (scaleY) => {
+        const f = physicsFixture();
+        const rig = f.project.skeleton;
+        const clip = rig.animations[0];
+        clip.bones = {};
+        clip.physics = {};
+        Object.assign(rig.constraints[0], {
+            x: 0,
+            rotate: 0.5,
+            shearX: 0.25,
+            scaleX: 1,
+            scaleY,
+            wind: -64,
+            gravity: 64,
+        });
+        rig.bones[0].scaleX = -1;
+        const p = parse(f),
+            state = new Map();
+        sampleBone2dFrame(p, 'idle', 0, [], { state, seconds: 0, intervals: [] });
+        const w = bone2dWorldMatrices(
+            p,
+            sampleBone2dFrame(p, 'idle', 1 / 32, [], { state, seconds: 1 / 32, intervals: [] }),
+        ).get('arm-bone')!;
+        expect(w[0]).toBeLessThan(-1);
+        expect(w[1]).toBeLessThan(0);
+        expect(w[2]).toBeLessThan(0);
+        const xScale = Math.hypot(w[0], w[2]);
+        const yScale = Math.hypot(w[1], w[3]);
+        expect(yScale).toBeCloseTo(scaleY === 'none' ? 1 : scaleY === 'uniform' ? xScale : 1 / xScale, 7);
+        expect(w[0] * w[3] - w[1] * w[2]).toBeLessThan(0);
+    },
+);
+
+test('rejects invalid physics domains, references, and track names before playback', () => {
+    const d = physicsFixture(),
+        rig = d.project.skeleton;
+    rig.constraints[0].fps = 0;
+    expect(() => parse(d)).toThrow(/FORMAT.*FPS/);
+    rig.constraints[0].fps = 64;
+    rig.constraints[0].mass = 0;
+    expect(() => parse(d)).toThrow(/FORMAT.*mass/);
+    rig.constraints[0].mass = 1;
+    rig.constraints[0].bone = 'missing';
+    expect(() => parse(d)).toThrow(/FORMAT.*physics/);
+    rig.constraints[0].bone = 'arm-bone';
+    rig.animations[0].physics['*'].mystery = [];
+    expect(() => parse(d)).toThrow(/FORMAT.*unknown physics track/);
+});
+
+test('an earlier additive slider adds force but blends mass for a driven spring', () => {
+    const f = physicsFixture(),
+        rig = f.project.skeleton;
+    const main = rig.animations[0];
+    main.bones = {};
+    main.physics = {};
+    rig.constraints[0].wind = 64;
+    rig.animations.push({
+        ...main,
+        id: 'force',
+        name: 'Force overlay',
+        physics: { 'spring-A': { wind: [{ time: 0, value: [16] }], mass: [{ time: 0, value: [2] }] } },
+    });
+    const slider = {
+        id: 'driver',
+        name: 'Force driver',
+        type: 'slider',
+        animation: 'force',
+        bone: null,
+        property: 'x',
+        local: true,
+        additive: true,
+        loop: false,
+        skinRequired: false,
+        time: 0,
+        mix: 0.5,
+        from: 0,
+        to: 0,
+        scale: 1,
+    };
+    const read = () => {
+        const project = parse(f),
+            state = new Map();
+        sampleBone2dFrame(project, 'idle', 0, [], { state, seconds: 0, intervals: [] });
+        const next = sampleBone2dFrame(project, 'idle', 1 / 32, [], { state, seconds: 1 / 32, intervals: [] });
+        return [next.physics.get('spring-A'), bone2dWorldMatrices(project, next).get('arm-bone')![4]] as const;
+    };
+    rig.constraints.unshift(slider);
+    let [params, x] = read();
+    expect(params).toMatchObject({ wind: 72, mass: 1.5 });
+    expect(x).toBeCloseTo(-22.828125, 7);
+    rig.constraints.push(rig.constraints.shift());
+    [params, x] = read();
+    expect(params).toMatchObject({ wind: 72, mass: 1.5 });
+    expect(x).toBeCloseTo(-22.4375, 7);
+});
+
+const playbackText = readFileSync(resolve(__dirname, '../fixtures/bone2d/playback.bone2d'), 'utf8');
+test('saved playback covers range, speed and reversed ping-pong markers with no repeated turn key', () => {
+    const p = parseBone2dProject(playbackText);
+    const clip = p.clips.get('attack')!;
+    const fail = (m: string): never => {
+        throw Error(m);
+    };
+    const mode = makeBone2dPlayback(clip.duration, clip.play, { useSavedSettings: true, speed: 2 }, fail);
+    const a = traverseBone2dPlayback(mode, { time: mode.lo, direction: 1, first: true }, 0.25, fail);
+    expect(a.cursor).toEqual({ time: 0.75, direction: -1, first: false });
+    expect(a.windows.flatMap((w) => bone2dKeysInWindow(clip.markers, w).map((m) => m.value.id))).toEqual([
+        'ev-start',
+        'ev-impact',
+        'ev-end',
+    ]);
+    const b = traverseBone2dPlayback(mode, a.cursor, 0.25, fail);
+    expect(b.cursor).toEqual({ time: 0.25, direction: 1, first: false });
+    expect(b.windows.flatMap((w) => bone2dKeysInWindow(clip.markers, w).map((m) => m.value.id))).toEqual([
+        'ev-impact',
+        'ev-start',
+    ]);
+    const legacy = makeBone2dPlayback(clip.duration, clip.play, false, fail);
+    expect(legacy).toMatchObject({ lo: 0, hi: 1, loop: false, pingPong: false });
+    expect(() => traverseBone2dPlayback(mode, b.cursor, 1e9, fail)).toThrow(/boundaries/);
+});
+
+test('one-shot reverse ping-pong, exact loop seams, and degenerate clips use directed marker windows', () => {
+    const fail = (m: string): never => {
+        throw Error(m);
+    };
+    const saved = { loop: true, pingPong: false, range: null };
+    const once = makeBone2dPlayback(1, saved, { direction: -1, range: [0.25, 0.75], pingPong: true }, fail);
+    const a = traverseBone2dPlayback(once, { time: 0.75, direction: -1, first: true }, 1.25, fail);
+    expect(a).toEqual({
+        cursor: { time: 0.75, direction: 1, first: false },
+        elapsed: 1,
+        stopped: true,
+        roundEnded: true,
+        windows: [
+            [0.75, 0.25, true],
+            [0.25, 0.75, false],
+        ],
+    });
+    expect(
+        bone2dKeysInWindow(
+            [
+                { time: 0.25, id: 1 },
+                { time: 0.5, id: 2 },
+                { time: 0.5, id: 3 },
+                { time: 0.75, id: 4 },
+            ],
+            a.windows[0],
+        ).map((k) => k.id),
+    ).toEqual([4, 2, 3, 1]);
+    const cyclic = makeBone2dPlayback(1, saved, { range: [0.25, 0.75], loop: true }, fail);
+    expect(traverseBone2dPlayback(cyclic, { time: 0.25, direction: 1, first: true }, 1, fail).windows).toEqual([
+        [0.25, 0.75, true],
+        [0.25, 0.75, true],
+        [0.25, 0.25, true],
+    ]);
+    const empty = makeBone2dPlayback(0, saved, true, fail);
+    expect(traverseBone2dPlayback(empty, { time: 0, direction: 1, first: true }, 10, fail)).toEqual({
+        cursor: { time: 0, direction: 1, first: false },
+        elapsed: 0,
+        stopped: true,
+        roundEnded: true,
+        windows: [[0, 0, true]],
+    });
+});
+
+test('preview crossfades local transforms but immediately follows destination slot and Hold Previous is terminal', () => {
+    const p = parseBone2dProject(playbackText);
+    expect(p.mixPairs.get('idle')!.get('attack')).toBe(1);
+    expect(p.mixDefault).toBe(0.25);
+    const from = sampleBone2dFrame(p, 'idle', 0, [], undefined, undefined, true);
+    const sample = (alpha: number, holdPrevious: boolean) =>
+        sampleBone2dFrame(p, 'attack', 0, [], undefined, { transition: { from, alpha, holdPrevious } });
+    expect(sample(0, false).slots.get('arm-slot')?.attachment).toBe('alt');
+    expect(sample(0, false).bones.get('arm-bone')?.slice(1, 3)).toEqual([20, 170]);
+    expect(sample(0.5, false).bones.get('arm-bone')?.slice(1, 3)).toEqual([12, 180]);
+    expect(sample(0.5, true).bones.get('arm-bone')?.slice(1, 3)).toEqual([20, 180]);
+    expect(sample(0.999, true).bones.get('arm-bone')?.[1]).toBe(20);
+    expect(sample(1, true).bones.get('arm-bone')?.slice(1, 3)).toEqual([4, -170]);
+});
+
+test('preview layers switch attachment at half weight only in replace mode', () => {
+    const p = parseBone2dProject(playbackText);
+    const sample = (weight: number, additive: boolean) =>
+        sampleBone2dFrame(p, 'idle', 0, [], undefined, { layers: [{ id: 'attack', time: 0, weight, additive }] });
+    expect(sample(0.49, false).slots.get('arm-slot')!.attachment).toBe('arm');
+    expect(sample(0.5, false).slots.get('arm-slot')!.attachment).toBe('alt');
+    expect(sample(0.5, false).slotFrames?.has('arm-slot')).toBe(false);
+    expect(sample(1, true).slots.get('arm-slot')!.attachment).toBe('arm');
+    expect(sample(0.5, false).bones.get('arm-bone')?.slice(1, 3)).toEqual([20, 180]);
+    expect(sample(1, true).bones.get('arm-bone')?.slice(1, 3)).toEqual([20, 0]);
+});
+
+test('native rig reference scale sets translation force units', () => {
+    const f = physicsFixture(),
+        rig = f.project.skeleton;
+    rig.referenceScale = 200;
+    rig.animations[0].bones = {};
+    const p = parse(f),
+        state = new Map();
+    sampleBone2dFrame(p, 'idle', 0, [], { state, seconds: 0, intervals: [] });
+    const w = bone2dWorldMatrices(
+        p,
+        sampleBone2dFrame(p, 'idle', 1 / 32, [], { state, seconds: 1 / 32, intervals: [] }),
+    );
+    expect(w.get('arm-bone')![4]).toBeCloseTo(-20.875, 7);
+});
+
+const gameText = readFileSync(resolve(__dirname, '../fixtures/bone2d/web-game.json'), 'utf8');
+const rasterFormats = JSON.parse(
+    readFileSync(resolve(__dirname, '../fixtures/bone2d/raster-formats.json'), 'utf8'),
+) as Record<string, string>;
+test.each(Object.keys(rasterFormats))('Web Game infers %s dimensions without browser decoding', (format) => {
+    const file = JSON.parse(gameText);
+    file.images.arm = rasterFormats[format];
+    file.smooth = true;
+    const project = parse(file);
+    expect(project.source).toBe('web-game');
+    expect(project.smooth).toBe(true);
+    expect(project.images.get('arm')).toMatchObject({ width: 2, height: 1, dataUrl: file.images.arm });
+    const sample = sampleBone2dProject(project, null, 0);
+    expect(sample.slots.get('arm-slot')?.attachment).toBe('arm');
+});
+
+test('Web Game rejects raw URLs and missing images unless a host supplies an embedded override', () => {
+    const file = JSON.parse(gameText);
+    file.images.arm = 'https://example.invalid/arm.png';
+    const options = { webGameImages: new Map([['arm', rasterFormats.png]]) };
+    expect(() => parse(file)).toThrow(/UNSUPPORTED.*host override.*arm/);
+    expect(parseBone2dProject(JSON.stringify(file), options).images.get('arm')?.dataUrl).toBe(rasterFormats.png);
+    delete file.images.arm;
+    expect(() => parse(file)).toThrow(/FORMAT.*unknown image.*arm/);
+    expect(parseBone2dProject(JSON.stringify(file), options).images.get('arm')?.width).toBe(2);
+    expect(parseBone2dProject(text).source).toBe('project');
+});
+
+test('raster validation checks actual header, dimensions and deterministic frame count', () => {
+    const fail = (message: string): never => {
+        throw Error(message);
+    };
+    const decode = (url: string) => Buffer.from(url.split(',')[1], 'base64');
+    const data = (mime: string, raw: Buffer) => `data:image/${mime};base64,${raw.toString('base64')}`;
+    expect(() => bone2dImageHeader(data('png', decode(rasterFormats.gif)), 'arm', fail)).toThrow(/invalid png/);
+    const png = decode(rasterFormats.png);
+    png.writeUInt32BE(65536, 16);
+    expect(() => bone2dImageHeader(data('png', png), 'arm', fail)).toThrow(/dimensions/);
+    const apng = Buffer.concat([
+        png.subarray(0, 33),
+        Buffer.from('000000086163544c000000020000000000000000', 'hex'),
+        png.subarray(33),
+    ]);
+    expect(() => bone2dImageHeader(data('png', apng), 'arm', fail)).toThrow(/picture sequence/);
+    const gif = decode(rasterFormats.gif);
+    const descriptor = gif.indexOf(44);
+    const animated = Buffer.concat([gif.subarray(0, -1), gif.subarray(descriptor)]);
+    expect(() => bone2dImageHeader(data('gif', animated), 'arm', fail)).toThrow(/picture sequence/);
+});
+
+test('atlas trim clips on each UV edge without clamping or changing the deformed affine surface', () => {
+    const [chunk] = buildBone2dAtlasMesh([0, 0, 1, 0, 0, 1], [0, 1, 2], [0.25, 0.125, 0.75, 0.625]);
+    const clipped = projectBone2dAtlasMesh(chunk, [7, 11, 25, 7, 3, 27]);
+    expect(clipped.indices.length).toBeGreaterThan(3);
+    for (let i = 0; i < clipped.uvs.length; i += 2) {
+        const u = 0.25 + 0.5 * clipped.uvs[i],
+            v = 0.125 + 0.5 * clipped.uvs[i + 1];
+        expect(u + v).toBeLessThanOrEqual(1);
+        expect(clipped.positions[i]).toBeCloseTo(7 + 18 * u - 4 * v, 12);
+        expect(clipped.positions[i + 1]).toBeCloseTo(11 - 4 * u + 16 * v, 12);
+    }
+    expect(buildBone2dAtlasMesh([0, 0, 0, 0.1, 0.1, 0], [0, 1, 2], [0.25, 0.25, 0.75, 0.75])).toEqual([]);
+});
+
+test('retains XY area when the source triangle UVs are all on the crop boundary', () => {
+    const [chunk] = buildBone2dAtlasMesh([0.25, 0.5, 0.25, 0.5, 0.25, 0.5], [0, 1, 2], [0.25, 0.25, 0.75, 0.75]);
+    expect(projectBone2dAtlasMesh(chunk, [2, 3, 6, 3, 2, 10])).toEqual({
+        positions: [2, 3, 6, 3, 2, 10],
+        uvs: [0, 0.5, 0, 0.5, 0, 0.5],
+        indices: [0, 1, 2],
+    });
+});
+
+test('atlas trim expansion partitions contiguous triangles within UI buffer limits', () => {
+    const uvs = [0, 0, 1, 0, 0, 1],
+        crop = [0.125, 0.125, 0.875, 0.875] as const;
+    const triangles = Array.from({ length: 4095 }, (_, i) => i % 3);
+    const [single] = buildBone2dAtlasMesh(uvs, [0, 1, 2], crop);
+    const chunks = buildBone2dAtlasMesh(uvs, triangles, crop).map((chunk) =>
+        projectBone2dAtlasMesh(chunk, [0, 0, 1, 0, 0, 1]),
+    );
+    expect(chunks.length).toBeGreaterThan(1);
+    expect(chunks.reduce((n, c) => n + c.indices.length, 0)).toBe(single.indices.length * 1365);
+    for (const chunk of chunks) {
+        expect(chunk.positions.length / 2).toBeLessThanOrEqual(1024);
+        expect(chunk.indices.length).toBeLessThanOrEqual(4095);
+        expect(Math.max(...chunk.indices)).toBeLessThan(chunk.positions.length / 2);
+    }
+});
+
+test('Web Game mixes slot tints, same-picture deform and continuous constraint inputs without overriding destination attachments', () => {
+    const data = fixture();
+    const rig = data.project.skeleton;
+    const slot = rig.slots.find((s) => s.id === 'arm-slot');
+    slot.dark = [0, 0, 0];
+    const mesh = {
+        type: 'mesh',
+        path: 'arm',
+        color: [1, 1, 1, 1],
+        weights: null,
+        vertices: [0, 0, 16, 0, 0, 16],
+        uvs: [0, 1, 1, 1, 0, 0],
+        triangles: [0, 1, 2],
+    };
+    rig.skins[0].attachments['arm-slot'].arm = mesh;
+    rig.skins[0].attachments['arm-slot'].alt = { ...mesh };
+    rig.constraints = [
+        {
+            id: 'aim',
+            name: 'Aim',
+            type: 'ik',
+            bones: ['arm-bone'],
+            target: 'root',
+            mix: 1,
+            softness: 0,
+            bendPositive: true,
+            compress: false,
+            stretch: false,
+            scaleY: 'none',
+            skinRequired: false,
+        },
+    ];
+    for (const clip of rig.animations) {
+        const first = clip.id === 'idle';
+        clip.slots = {
+            'arm-slot': {
+                attachment: [{ time: 0, name: 'arm' }],
+                rgba2: [{ time: 0, value: first ? [1, 0, 0, 1, 0.2, 0.4, 0.6] : [0, 0, 1, 0.5, 0.6, 0.4, 0.2] }],
+            },
+        };
+        clip.deform = {
+            skin: {
+                'arm-slot': {
+                    arm: [{ time: 0, value: first ? [8, 0, 0, 0, 0, 0] : [0, 4, 0, 0, 0, 0] }],
+                    alt: [{ time: 0, value: [0, 4, 0, 0, 0, 0] }],
+                },
+            },
+        };
+        clip.ik = {
+            aim: [
+                {
+                    time: 0,
+                    value: first ? [0.2, 6] : [0.8, 2],
+                    bendPositive: first,
+                    compress: first,
+                    stretch: false,
+                },
+            ],
+        };
+    }
+    const game = { bone2d: 1, name: 'Fade', skeleton: rig, images: data.images, smooth: false };
+    const fromTo = (
+        project: ReturnType<typeof parse>,
+        alpha: number,
+        previous?: ReturnType<typeof sampleBone2dFrame>,
+    ) => {
+        const from = previous ?? sampleBone2dFrame(project, 'idle', 0, [], undefined, undefined, true);
+        return sampleBone2dFrame(
+            project,
+            'attack',
+            0,
+            [],
+            undefined,
+            { transition: { from, alpha, holdPrevious: false, game: from } },
+            true,
+        );
+    };
+    let project = parse(game);
+    const half = fromTo(project, 0.5);
+    expect(half.slots.get('arm-slot')).toEqual({
+        attachment: 'arm',
+        color: [0.5, 0, 0.5, 0.75],
+        dark: expect.arrayContaining([expect.closeTo(0.4, 12), expect.closeTo(0.4, 12), expect.closeTo(0.4, 12)]),
+    });
+    expect(half.slotDeform?.get('arm-slot')).toEqual([4, 2, 0, 0, 0, 0]);
+    expect(half.ik.get('aim')).toMatchObject({ mix: 0.5, softness: 4, bendPositive: false, compress: false });
+    expect(fromTo(project, 0.49).ik.get('aim')).toMatchObject({ bendPositive: true, compress: true });
+    expect(fromTo(project, 0, half).slotDeform?.get('arm-slot')).toEqual([4, 2, 0, 0, 0, 0]);
+    const target = rig.animations.find((c) => c.id === 'attack');
+    target.slots['arm-slot'].attachment[0].name = 'alt';
+    project = parse(game);
+    const different = fromTo(project, 0.5);
+    expect(different.slots.get('arm-slot')?.attachment).toBe('alt');
+    expect(different.slotDeform?.get('arm-slot')).toEqual([0, 4, 0, 0, 0, 0]);
+});
+
+test('queued transport stops at the natural round even for exact, coarse and reverse ping-pong updates', () => {
+    const fail = (message: string): never => {
+        throw new Error(message);
+    };
+    const saved = { loop: true, pingPong: false, range: null };
+    const mode = makeBone2dPlayback(1, saved, { useSavedSettings: true, speed: 2 }, fail);
+    const start = { time: 0, direction: 1 as const, first: true };
+    for (const delta of [0.5, 0.625]) {
+        expect(traverseBone2dPlayback(mode, start, delta, fail, true)).toEqual({
+            cursor: { time: 1, direction: 1, first: false },
+            elapsed: 1,
+            stopped: false,
+            roundEnded: true,
+            windows: [[0, 1, true]],
+        });
+    }
+    const split = traverseBone2dPlayback(mode, start, 0.25, fail, true);
+    expect(split.roundEnded).toBe(false);
+    expect(traverseBone2dPlayback(mode, split.cursor, 0.25, fail, true).windows).toEqual([[0.5, 1, false]]);
+    const reverse = makeBone2dPlayback(
+        1,
+        saved,
+        { loop: true, pingPong: true, direction: -1, range: [0.25, 0.75] },
+        fail,
+    );
+    expect(traverseBone2dPlayback(reverse, { time: 0.75, direction: -1, first: true }, 2, fail, true)).toMatchObject({
+        windows: [
+            [0.75, 0.25, true],
+            [0.25, 0.75, false],
+        ],
+        elapsed: 1,
+        stopped: false,
+        roundEnded: true,
+    });
+});
+
+test('a held Web Game target still feeds later IK constraints after upstream world edits', () => {
+    const input = ikFixture();
+    const data = { bone2d: 1, name: 'Hold', skeleton: input.project.skeleton, images: input.images, smooth: false };
+    const model = parse(data);
+    const control = { attachments: new Map(), heldPositions: new Map([['tip', [8, 4] as const]]) };
+    const frame = sampleBone2dFrame(model, 'idle', 0, ['engaged'], undefined, undefined, false, control);
+    const world = bone2dWorldMatrices(model, frame);
+    expect(world.get('tip')!.slice(4)).toEqual([8, 4]);
+    const [a, , c, , x, y] = world.get('arm-bone')!;
+    expect(Math.atan2(c, a)).toBeCloseTo(Math.atan2(4 - y, 8 - x), 8);
+});
+
+test('fixed render cadence reaches discrete attachment and marker keys without a one-frame delay', () => {
+    const fail = (message: string): never => {
+        throw new Error(message);
+    };
+    const mode = makeBone2dPlayback(2, { loop: false, pingPong: false, range: null }, false, fail);
+    const keys = [0.2, 0.5, 1].map((time) => ({ time }));
+    let cursor = { time: 0, direction: 1 as 1 | -1, first: true };
+    const hits: number[] = [];
+    for (let i = 1; i <= 31; i++) {
+        const next = traverseBone2dPlayback(mode, cursor, 1 / 30, fail);
+        cursor = next.cursor;
+        for (const window of next.windows) {
+            for (const { time } of bone2dKeysInWindow(keys, window)) {
+                expect(time).toBe(i / 30);
+                hits.push(time);
+            }
+        }
+    }
+    expect(hits).toEqual([0.2, 0.5, 1]);
+});

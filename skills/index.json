@@ -92,7 +92,8 @@
       "refs": [
         { "file": "references/agent-session.md", "answers": "Protocol and writable scope" },
         { "file": "references/runtime-control.md", "answers": "IDs and diagnostics" },
-        { "file": "references/visual-probes.md", "answers": "Capture and origins" }
+        { "file": "references/visual-probes.md", "answers": "Capture and origins" },
+        { "file": "references/agent-review.md", "answers": "CLI evidence and acceptance boundaries" }
       ],
       "last_updated": "2026-10-13"
     },
