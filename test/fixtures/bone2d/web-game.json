@@ -1,0 +1,109 @@
+{
+  "bone2d": 1,
+  "name": "Raster filter control",
+  "skeleton": {
+    "name": "Clawbot",
+    "fps": 30,
+    "bones": [
+      {
+        "id": "arm-bone",
+        "name": "arm-bone",
+        "parent": "root",
+        "length": 0,
+        "x": 0,
+        "y": 0,
+        "rotation": 0,
+        "scaleX": 1,
+        "scaleY": 1,
+        "shearX": 0,
+        "shearY": 0,
+        "inherit": "normal",
+        "color": [1, 1, 1, 1],
+        "skinRequired": false,
+        "hidden": false,
+        "locked": false
+      },
+      {
+        "id": "root",
+        "name": "root",
+        "parent": null,
+        "length": 0,
+        "x": 0,
+        "y": 0,
+        "rotation": 0,
+        "scaleX": 1,
+        "scaleY": 1,
+        "shearX": 0,
+        "shearY": 0,
+        "inherit": "normal",
+        "color": [1, 1, 1, 1],
+        "skinRequired": false,
+        "hidden": false,
+        "locked": false
+      }
+    ],
+    "slots": [
+      {
+        "id": "arm-slot",
+        "name": "arm-slot",
+        "bone": "arm-bone",
+        "color": [1, 1, 1, 1],
+        "dark": null,
+        "attachment": "arm",
+        "blend": "normal",
+        "hidden": false
+      },
+      {
+        "id": "point-slot",
+        "name": "Point",
+        "bone": "arm-bone",
+        "color": [1, 1, 1, 1],
+        "dark": null,
+        "attachment": "pin",
+        "blend": "normal"
+      }
+    ],
+    "skins": [
+      {
+        "id": "skin",
+        "name": "default",
+        "bones": [],
+        "constraints": [],
+        "attachments": {
+          "arm-slot": {
+            "arm": {
+              "type": "region",
+              "name": "arm",
+              "path": "arm",
+              "x": 0,
+              "y": 0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1,
+              "width": 128,
+              "height": 48,
+              "color": [1, 1, 1, 1]
+            }
+          },
+          "point-slot": {
+            "pin": {
+              "type": "point",
+              "name": "pin",
+              "x": 0,
+              "y": 0,
+              "rotation": 0,
+              "color": [1, 1, 1, 1]
+            }
+          }
+        }
+      }
+    ],
+    "constraints": [],
+    "events": [],
+    "animations": []
+  },
+  "images": {
+    "arm": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAABCAIAAAB7QOjdAAAAD0lEQVR4nGP4z8DAwPAfAAcAAf9+CLHQAAAAAElFTkSuQmCC"
+  },
+  "smooth": false
+}

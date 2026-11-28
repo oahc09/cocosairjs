@@ -332,6 +332,7 @@ cocosair.js/
 - [独立数学入口](docs/guides/math-entry.md) · [WebGPU](docs/guides/webgpu.md) · [Box2D 3.2 WASM](docs/guides/box2d3.md) · [Box3D 实验变体](docs/physics/box3d/integration-20261031.md)
 - [输入动作与状态](docs/manual/input-action-state.md) · [场景切换](docs/manual/scene-switching.md) · [音频就绪与所有权](docs/manual/audio-readiness-ownership.md)
 - [图集加载](docs/manual/atlas-loading.md) · [位图字体](docs/manual/bitmap-font-loading.md) · [SDK 生命周期配方](docs/manual/sdk-lifecycle-recipes.md)
+- [Bone-2D 播放器（刚性贴片首阶段）](docs/guides/bone2d-runtime.md)
 - [Code First 入门](docs/guides/code-first.md) — 启动与画布约定
 - [资源加载](docs/guides/asset-loading.md) · [骨骼工具](docs/guides/skinned-model.md) · [开发循环](docs/guides/engine-development.md)
 - [运行时资源检查](docs/guides/runtime-inspection.md) · [Agent 调试会话](docs/guides/agent-development.md)

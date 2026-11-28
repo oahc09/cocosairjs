@@ -332,6 +332,7 @@ Most linked guides are currently written in Chinese.
 - [Separate math entry](docs/guides/math-entry.md) · [WebGPU](docs/guides/webgpu.md) · [Box2D 3.2 WASM](docs/guides/box2d3.md) · [Experimental Box3D variant](docs/physics/box3d/integration-20261031.md)
 - [Input actions and state](docs/manual/input-action-state.md) · [Scene switching](docs/manual/scene-switching.md) · [Audio readiness and ownership](docs/manual/audio-readiness-ownership.md)
 - [Atlas loading](docs/manual/atlas-loading.md) · [Bitmap fonts](docs/manual/bitmap-font-loading.md) · [SDK lifecycle recipes](docs/manual/sdk-lifecycle-recipes.md)
+- [Bone-2D player (rigid milestone)](docs/guides/bone2d-runtime.md)
 - [Code First introduction](docs/guides/code-first.md) — startup and canvas conventions
 - [Asset loading](docs/guides/asset-loading.md) · [Skinning tools](docs/guides/skinned-model.md) · [Development loop](docs/guides/engine-development.md)
 - [Runtime inspection](docs/guides/runtime-inspection.md) · [Agent debugging sessions](docs/guides/agent-development.md)

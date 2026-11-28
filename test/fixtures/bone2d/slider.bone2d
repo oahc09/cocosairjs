@@ -1,0 +1,505 @@
+{
+  "bone2d": 1,
+  "project": {
+    "format": "bone2d",
+    "version": 1,
+    "name": "Clawbot",
+    "skeleton": {
+      "name": "Clawbot",
+      "fps": 30,
+      "bones": [
+        {
+          "id": "arm-bone",
+          "name": "arm-bone",
+          "parent": "root",
+          "length": 0,
+          "x": 4,
+          "y": 0,
+          "rotation": 0,
+          "scaleX": 2,
+          "scaleY": 1,
+          "shearX": 0,
+          "shearY": 0,
+          "inherit": "normal",
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "skinRequired": false,
+          "hidden": false,
+          "locked": false
+        },
+        {
+          "id": "root",
+          "name": "root",
+          "parent": null,
+          "length": 0,
+          "x": 0,
+          "y": 0,
+          "rotation": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "shearX": 0,
+          "shearY": 0,
+          "inherit": "normal",
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "skinRequired": false,
+          "hidden": false,
+          "locked": false
+        }
+      ],
+      "slots": [
+        {
+          "id": "arm-slot",
+          "name": "arm-slot",
+          "bone": "arm-bone",
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "dark": null,
+          "attachment": "source",
+          "blend": "normal",
+          "hidden": false
+        }
+      ],
+      "skins": [
+        {
+          "id": "skin",
+          "name": "default",
+          "bones": [],
+          "constraints": [],
+          "attachments": {
+            "arm-slot": {
+              "source": {
+                "type": "mesh",
+                "name": "source",
+                "path": "source",
+                "color": [
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "width": 8,
+                "height": 8,
+                "uvs": [
+                  0,
+                  1,
+                  1,
+                  1,
+                  0,
+                  0
+                ],
+                "vertices": [
+                  0,
+                  0,
+                  16,
+                  0,
+                  0,
+                  8
+                ],
+                "triangles": [
+                  0,
+                  1,
+                  2
+                ],
+                "weights": null,
+                "edges": [],
+                "hull": 3,
+                "sequence": {
+                  "count": 2,
+                  "start": 1,
+                  "digits": 0,
+                  "setupIndex": 0
+                }
+              },
+              "linked": {
+                "type": "mesh",
+                "name": "linked",
+                "path": "linked",
+                "color": [
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "width": 8,
+                "height": 8,
+                "uvs": [
+                  0,
+                  1,
+                  1,
+                  1,
+                  0,
+                  0
+                ],
+                "vertices": [
+                  0,
+                  0,
+                  16,
+                  0,
+                  0,
+                  8
+                ],
+                "triangles": [
+                  0,
+                  1,
+                  2
+                ],
+                "weights": null,
+                "edges": [],
+                "hull": 3,
+                "sequence": {
+                  "count": 2,
+                  "start": 1,
+                  "digits": 0,
+                  "setupIndex": 0
+                },
+                "link": {
+                  "source": "source",
+                  "slot": null,
+                  "skin": null,
+                  "deform": true
+                }
+              },
+              "independent": {
+                "type": "mesh",
+                "name": "independent",
+                "path": "linked",
+                "color": [
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "width": 8,
+                "height": 8,
+                "uvs": [
+                  0,
+                  1,
+                  1,
+                  1,
+                  0,
+                  0
+                ],
+                "vertices": [
+                  0,
+                  0,
+                  16,
+                  0,
+                  0,
+                  8
+                ],
+                "triangles": [
+                  0,
+                  1,
+                  2
+                ],
+                "weights": null,
+                "edges": [],
+                "hull": 3,
+                "sequence": {
+                  "count": 2,
+                  "start": 1,
+                  "digits": 0,
+                  "setupIndex": 0
+                },
+                "link": {
+                  "source": "source",
+                  "slot": null,
+                  "skin": null,
+                  "deform": false
+                }
+              }
+            }
+          }
+        }
+      ],
+      "constraints": [
+        {
+          "type": "transform",
+          "name": "Incoming",
+          "id": "incoming",
+          "bones": [
+            "arm-bone"
+          ],
+          "source": "root",
+          "localSource": true,
+          "localTarget": true,
+          "clamp": false,
+          "additive": false,
+          "skinRequired": false,
+          "offsets": {
+            "rotation": 0,
+            "x": 0,
+            "y": 0,
+            "scaleX": 0,
+            "scaleY": 0,
+            "shearY": 0
+          },
+          "mix": {
+            "rotate": 0,
+            "x": 1,
+            "y": 0,
+            "scaleX": 1,
+            "scaleY": 0,
+            "shearY": 0
+          },
+          "properties": [
+            {
+              "prop": "x",
+              "offset": 0,
+              "to": [
+                {
+                  "prop": "x",
+                  "offset": 12,
+                  "max": 0,
+                  "scale": 0
+                },
+                {
+                  "prop": "scaleX",
+                  "offset": 3,
+                  "max": 0,
+                  "scale": 0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "slider",
+          "name": "Face pose",
+          "id": "face",
+          "animation": "overlay",
+          "bone": null,
+          "property": "x",
+          "local": true,
+          "additive": false,
+          "loop": false,
+          "skinRequired": false,
+          "time": 0,
+          "mix": 0.25,
+          "to": 0,
+          "scale": 1,
+          "max": 1,
+          "from": 0
+        }
+      ],
+      "events": [
+        {
+          "id": "ev-start",
+          "name": "Start",
+          "int": 0,
+          "float": 0,
+          "string": ""
+        },
+        {
+          "id": "ev-impact",
+          "name": "Impact",
+          "int": 0,
+          "float": 0,
+          "string": "",
+          "audio": "authoring-only.wav"
+        },
+        {
+          "id": "ev-end",
+          "name": "End",
+          "int": 0,
+          "float": 0,
+          "string": ""
+        }
+      ],
+      "animations": [
+        {
+          "id": "idle",
+          "name": "Idle",
+          "duration": 1,
+          "bones": {},
+          "slots": {},
+          "ik": {},
+          "transform": {},
+          "slider": {
+            "face": {
+              "time": [
+                {
+                  "time": 0,
+                  "value": [
+                    0
+                  ]
+                },
+                {
+                  "time": 1,
+                  "value": [
+                    1
+                  ]
+                }
+              ]
+            }
+          },
+          "path": {},
+          "physics": {},
+          "deform": {
+            "skin": {
+              "arm-slot": {
+                "source": [
+                  {
+                    "time": 0,
+                    "value": [
+                      0,
+                      0,
+                      0,
+                      0,
+                      2,
+                      0
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "drawOrder": [],
+          "events": [
+            {
+              "time": 0.6,
+              "event": "ev-start"
+            }
+          ],
+          "sequence": {
+            "skin": {
+              "arm-slot": {
+                "source": [
+                  {
+                    "time": 0,
+                    "index": 1,
+                    "mode": "hold",
+                    "delay": 0
+                  }
+                ],
+                "linked": [
+                  {
+                    "time": 0,
+                    "index": 1,
+                    "mode": "hold",
+                    "delay": 0
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "overlay",
+          "name": "Overlay",
+          "duration": 1,
+          "bones": {
+            "arm-bone": {
+              "translatex": [
+                {
+                  "time": 0.5,
+                  "value": [
+                    4
+                  ]
+                }
+              ],
+              "scalex": [
+                {
+                  "time": 0.5,
+                  "value": [
+                    -1
+                  ]
+                }
+              ]
+            }
+          },
+          "slots": {
+            "arm-slot": {
+              "attachment": [
+                {
+                  "time": 0.5,
+                  "name": "linked"
+                }
+              ]
+            }
+          },
+          "ik": {},
+          "transform": {},
+          "slider": {},
+          "path": {},
+          "physics": {},
+          "deform": {},
+          "drawOrder": [],
+          "events": [
+            {
+              "time": 0.5,
+              "event": "ev-impact"
+            }
+          ],
+          "sequence": {}
+        }
+      ]
+    },
+    "images": [
+      {
+        "id": "source",
+        "name": "source",
+        "width": 8,
+        "height": 8
+      },
+      {
+        "id": "source1",
+        "name": "source1",
+        "width": 8,
+        "height": 8
+      },
+      {
+        "id": "source2",
+        "name": "source2",
+        "width": 16,
+        "height": 16
+      },
+      {
+        "id": "linked",
+        "name": "linked",
+        "width": 8,
+        "height": 8
+      },
+      {
+        "id": "linked1",
+        "name": "linked1",
+        "width": 8,
+        "height": 8
+      },
+      {
+        "id": "linked2",
+        "name": "linked2",
+        "width": 16,
+        "height": 16
+      }
+    ]
+  },
+  "images": {
+    "source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAGUlEQVR42mNgQAL8T979R8cMBBVgExxyCgBVqKbBcYjt5wAAAABJRU5ErkJggg==",
+    "source1": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAGUlEQVR42mNgQAL8T979R8cMBBVgExxyCgBVqKbBcYjt5wAAAABJRU5ErkJggg==",
+    "source2": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAHUlEQVR42mNgoAb4b6j/nxw8asCoAaMGUNsASgAAq8bQCNLTXLIAAAAASUVORK5CYII=",
+    "linked": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAGUlEQVR42mNgQAL8T979R8cMBBVgExxyCgBVqKbBcYjt5wAAAABJRU5ErkJggg==",
+    "linked1": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAGUlEQVR42mNgQAL8T979R8cMBBVgExxyCgBVqKbBcYjt5wAAAABJRU5ErkJggg==",
+    "linked2": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAHUlEQVR42mNgoAb4b6j/nxw8asCoAaMGUNsASgAAq8bQCNLTXLIAAAAASUVORK5CYII="
+  },
+  "ui": {
+    "camera": {
+      "x": 0,
+      "y": 0,
+      "zoom": 1
+    }
+  }
+}
