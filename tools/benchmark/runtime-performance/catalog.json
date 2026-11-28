@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "seed": 20261127,
+  "desktop": { "width": 1280, "height": 720, "dpr": 1, "msaa": false },
+  "references": {
+    "three-frozen": "0.186.1",
+    "three-current": "0.187.0"
+  },
+  "cases": [
+    ["S01", "empty renderer and clear", "Q0", "diagnostic"],
+    ["S02", "one unlit unit cube; click rotates it 15 degrees", "Q1", "diagnostic"],
+    ["S03", "PBR sphere, environment, 1024 shadow and light rotation", "Q2", "not-run"],
+    ["S04", "BoxTextured.glb and 20 degree camera drag", "Q1", "not-run"],
+    ["S05", "Fox.glb playback and pause/resume", "Q3", "not-run"],
+    ["S06", "six-model material grid, full and common PBR profiles", "Q2", "not-run"],
+    ["S07", "128/512/1024 distinct shader variants and repeat switches", "Q1", "not-run"],
+    ["R01", "1k/5k/10k independent cubes, static or 10% updates", "Q1", "not-run"],
+    ["R02", "10k meshes, 100 materials, shadow off/on", "Q2", "not-run"],
+    ["R03", "1k/10k/50k instances, static or 10% updates", "Q1", "not-run"],
+    ["R04", "1k/5k heterogeneous meshes, independent and batched", "Q1", "not-run"],
+    ["R05", "1k/10k hierarchy, 0/10/100% local changes", "Q1", "not-run"],
+    ["R06", "10k meshes, 10/50/100% visible, frustum re-entry", "Q1", "not-run"],
+    ["R07", "20k triangles at 360p/720p/1080p, unlit and PBR", "Q2", "not-run"],
+    ["R08", "4/16/32 full-screen translucent layers", "Q2", "not-run"],
+    ["R09", "100 cubes and 1/5/10 lights with shadow control", "Q2", "not-run"],
+    ["R10", "100 emissive spheres, four-level HDR bloom and control", "Q2", "not-run"],
+    ["R11", "25/100/225 independently animated Fox models", "Q3", "not-run"],
+    ["R12", "1k/10k/100k deterministic particles, CPU and GPU", "Q3", "not-run"],
+    ["R13", "1k/8k/20k animated sprites, 1 atlas or 16 textures", "Q1", "not-run"],
+    ["R14", "200 labels, 3200 glyphs, 20/100% text updates", "Q1", "not-run"],
+    ["R15", "100 3D meshes, 200 HUD sprites, 20 labels, drag and pick", "Q3", "not-run"],
+    ["L01", "20 alternating texture/instancing cycles and separate soak", "Q3", "not-run"],
+    ["L02", "water multipass, liquid metal and 3D particles; separate site replay", "Q3", "not-run"]
+  ]
+}

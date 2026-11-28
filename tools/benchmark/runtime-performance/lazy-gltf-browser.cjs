@@ -1,0 +1,280 @@
+/* Software WebKit correctness/transport diagnostic for the deferred model effect. */
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
+const http = require('node:http');
+const { gzipSync } = require('node:zlib');
+const { chromium, webkit } = require('playwright');
+const { PNG } = require('pngjs');
+const { digest, writeNew } = require('./evidence.cjs');
+const { stripRuntimeSourceMap } = require('../../build/runtime-layout.cjs');
+
+const html = `<!DOCTYPE html><html><head><link rel="icon" href="data:,">
+<style>html,body{margin:0}canvas{display:block;width:480px;height:270px}</style></head>
+<body><div id="GameDiv"><div id="Cocos3dGameContainer"><canvas id="GameCanvas" width="480" height="270"></canvas></div></div>
+<script type="module" src="/page.mjs"></script></body></html>`;
+
+function countVisible(data) {
+    const png = PNG.sync.read(data);
+    let visible = 0;
+    const background = png.data.subarray(0, 3);
+    for (let i = 0; i < png.data.length; i += 4) {
+        if ([0, 1, 2].some((c) => Math.abs(png.data[i + c] - background[c]) > 5)) visible++;
+    }
+    return visible;
+}
+
+async function main([fullPath, probeDir, executable, out, ...extra]) {
+    const compiled = extra.includes('--compiled-profile');
+    const chrome = extra.includes('--chromium');
+    if (
+        !fullPath ||
+        !probeDir ||
+        !executable ||
+        !out ||
+        extra.some((flag) => !['--compiled-profile', '--chromium'].includes(flag))
+    )
+        throw new Error(
+            'Usage: node lazy-gltf-browser.cjs <full-sdk> <probe-dir> <executable> <new-out> [--compiled-profile] [--chromium]',
+        );
+    const full = Buffer.from(stripRuntimeSourceMap(fs.readFileSync(fullPath, 'utf8')));
+    const variantPath = path.join(probeDir, compiled ? path.basename(fullPath) : 'runtime.mjs');
+    const reduced = Buffer.from(stripRuntimeSourceMap(fs.readFileSync(variantPath, 'utf8')));
+    const sidecars = compiled
+        ? fs
+              .readdirSync(probeDir)
+              .filter((name) => /^air-gltf-effect-[0-9a-f]{64}\.json$/.test(name) && reduced.includes(name))
+        : ['optional-gltf-effect.json'];
+    assert.equal(sidecars.length, 1);
+    const effectPath = '/' + sidecars[0];
+    const sidecar = fs.readFileSync(path.join(probeDir, sidecars[0]));
+    if (compiled) {
+        const { verifySourceBinding } = require('../../build/source-binding.cjs');
+        const root = path.resolve(__dirname, '../../..');
+        for (const file of [fullPath, variantPath]) assert.ok(verifySourceBinding(root, file).matches);
+        assert.equal(sidecars[0], 'air-gltf-effect-' + digest(sidecar) + '.json');
+        assert.ok(reduced.length < full.length, 'optional profile increased uncompressed startup bytes');
+        assert.ok(
+            gzipSync(reduced, { level: 9 }).length < gzipSync(full, { level: 9 }).length,
+            'optional profile increased gzip startup bytes',
+        );
+    } else {
+        const declared = JSON.parse(fs.readFileSync(path.join(probeDir, 'receipt.json'), 'utf8'));
+        assert.equal(digest(reduced), declared.runtime.sha256);
+        assert.equal(digest(sidecar), declared.payload.sha256);
+    }
+    const pageJs = fs.readFileSync(path.join(__dirname, 'lazy-gltf-page.mjs'));
+    fs.mkdirSync(out);
+    const results = [];
+    const cases = [
+        ['full-delayed-default', false, false, false, false],
+        ['probe-delayed-default', true, false, false, false],
+        ['full-cold-physical', false, true, true, false],
+        ['probe-cold-physical', true, true, true, false],
+        ['probe-two-loads-cancel-one', true, false, false, true],
+        ['probe-corrupt-effect-then-retry', true, false, false, false, true],
+    ];
+    for (const [id, lazy, cold, physical, pair, corrupt] of cases) {
+        let held;
+        let effectRequests = 0;
+        const body = lazy ? reduced : full;
+        const data = new Map([
+            ['/', ['text/html', Buffer.from(html)]],
+            ['/page.mjs', ['text/javascript', pageJs]],
+            ['/runtime.mjs', ['text/javascript', body]],
+            [effectPath, ['application/json', sidecar]],
+        ]);
+        const zipped = new Map([...data].map(([p, [type, bytes]]) => [p, [type, gzipSync(bytes, { level: 9 })]]));
+        const send = (res, route) => {
+            if (!zipped.has(route)) return res.writeHead(404).end();
+            const [type, bytes] = zipped.get(route);
+            res.writeHead(200, {
+                'Content-Type': type,
+                'Content-Encoding': 'gzip',
+                'Cache-Control': 'no-store',
+                'Content-Length': bytes.length,
+            });
+            return res.end(bytes);
+        };
+        const server = http.createServer((req, res) => {
+            if (req.url === effectPath) {
+                effectRequests++;
+                if (corrupt && effectRequests === 1) {
+                    res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' });
+                    return res.end('{}');
+                }
+                if (pair) {
+                    if (held) return res.writeHead(500).end();
+                    held = res;
+                    return;
+                }
+            }
+            return send(res, req.url);
+        });
+        let browser;
+        let port;
+        const record = {
+            id,
+            errors: [],
+            expectedIntegrityDiagnostics: [],
+            fullRuntimeSha256: digest(full),
+            runtimeSha256: digest(body),
+            assetsGzipBytes: {
+                runtime: zipped.get('/runtime.mjs')[1].length,
+                optionalEffect: lazy ? zipped.get(effectPath)[1].length : 0,
+            },
+        };
+        try {
+            await new Promise((resolve, reject) => {
+                server.once('error', reject);
+                server.listen(0, '127.0.0.1', resolve);
+            });
+            port = server.address().port;
+            browser = await (chrome ? chromium : webkit).launch({
+                executablePath: path.resolve(executable),
+                ...(chrome ? { chromiumSandbox: true } : {}),
+            });
+            record.browser = browser.version();
+            const page = await browser.newPage({ viewport: { width: 480, height: 270 }, deviceScaleFactor: 1 });
+            page.setDefaultTimeout(15000);
+            page.on('pageerror', (error) => record.errors.push(error.message));
+            page.on('console', (msg) => {
+                if (msg.type() !== 'error') return;
+                const text = msg.text();
+                const corruptUrl = `http://127.0.0.1:${server.address().port}${effectPath}`;
+                const firstCorruptRequest = compiled && corrupt && effectRequests === 1;
+                const rejected =
+                    text.includes(corruptUrl) &&
+                    (/Failed to find a valid digest in the 'integrity' attribute/.test(text) ||
+                        /SRI's integrity checks failed/.test(text) ||
+                        /^Failed integrity metadata check\./.test(text));
+                const expected = firstCorruptRequest && rejected;
+                (expected ? record.expectedIntegrityDiagnostics : record.errors).push(text);
+            });
+            page.on('response', (res) => {
+                if (res.status() >= 400) record.errors.push(`HTTP ${res.status()}`);
+            });
+            await page.goto(`http://127.0.0.1:${server.address().port}/`, { waitUntil: 'commit' });
+            await page.waitForFunction(() => Boolean(window.probe));
+            record.before = await page.evaluate(
+                ([cold, physical]) => window.probe.run(cold, physical),
+                [cold, physical],
+            );
+            assert.equal(record.before.template, !lazy);
+            assert.equal(effectRequests, 0);
+            if (!cold) {
+                const image = await page.screenshot({ type: 'png' });
+                assert.ok(countVisible(image) > 500, 'no initial cube pixels confirmed');
+                record.initialImageSha256 = digest(image);
+                assert.equal(effectRequests, 0);
+            }
+
+            await page.evaluate((pair) => window.probe.begin(pair), pair);
+            if (pair) {
+                await page.waitForFunction(() => window.probe.snapshot().states.texturePhases >= 2);
+                assert.ok(held, 'effect request never reached the gate');
+                record.cancelled = await page.evaluate(() => window.probe.cancel());
+                assert.equal(record.cancelled.aborted, true);
+                assert.equal(record.cancelled.unexpectedlyAllocated, false);
+                assert.equal(record.cancelled.registrations, 0);
+                send(held, effectPath);
+                held = null;
+            }
+            if (corrupt) {
+                record.rejectedPayload = await page.evaluate(() => window.probe.finish(false));
+                assert.match(
+                    record.rejectedPayload.error,
+                    compiled ? /failed to fetch|load failed|networkerror/i : /Optional glTF effect identity mismatch/,
+                );
+                assert.equal(record.rejectedPayload.registrations, 0);
+                await page.evaluate(() => window.probe.begin(false));
+            }
+            record.after = await page.evaluate((pair) => window.probe.finish(pair), pair);
+            assert.equal(record.after.error, undefined);
+            assert.equal(record.after.registrations, 1);
+            assert.equal(record.after.physicalEffect, physical);
+            assert.equal(effectRequests, corrupt ? 2 : Number(lazy));
+            const arrivals = record.after.resources.filter(({ path }) => path === effectPath);
+            if (compiled && corrupt) {
+                assert.equal(
+                    arrivals.filter((arrival) => arrival.encoded === record.assetsGzipBytes.optionalEffect).length,
+                    1,
+                );
+            } else {
+                assert.equal(arrivals.length, effectRequests);
+            }
+            if (lazy) {
+                const arrival = arrivals.at(-1);
+                assert.equal(arrival.encoded, record.assetsGzipBytes.optionalEffect);
+                assert.ok(arrival.responseEnd <= record.after.states.modelDraw);
+                if (!cold) assert.ok(record.before.states.cubeDraw < arrival.responseEnd);
+            }
+            assert.equal(
+                record.after.resources.find(({ path }) => path === '/runtime.mjs')?.encoded,
+                record.assetsGzipBytes.runtime,
+            );
+
+            const image = await page.screenshot({ type: 'png' });
+            record.foregroundPixels = countVisible(image);
+            assert.ok(record.foregroundPixels > 500, 'no model pixels confirmed');
+            record.imageSha256 = digest(image);
+            fs.writeFileSync(path.join(out, id + '.png'), image, { flag: 'wx' });
+            record.release = await page.evaluate(() => window.probe.cleanup());
+            assert.equal(record.release.template, true);
+            assert.equal(record.release.modelValid, false);
+            assert.equal(record.release.anyMeshValid, false);
+        } catch (error) {
+            record.errors.push(error.message);
+        } finally {
+            if (held) held.destroy();
+            if (browser) {
+                try {
+                    await browser.close();
+                } catch (error) {
+                    record.errors.push(error.message);
+                }
+            }
+            await new Promise((resolve) => server.close(resolve));
+            if (
+                compiled &&
+                corrupt &&
+                !chrome &&
+                effectRequests === 2 &&
+                record.rejectedPayload?.error &&
+                record.expectedIntegrityDiagnostics.some((text) => text.startsWith('Failed integrity metadata check.'))
+            ) {
+                const diagnostic = `/127.0.0.1:${port}${effectPath} due to access control checks.`;
+                // WebKit can deliver this second console event before the integrity detail.
+                const at = record.errors.indexOf(diagnostic);
+                if (at >= 0) record.expectedIntegrityDiagnostics.push(...record.errors.splice(at, 1));
+            }
+            record.effectRequests = effectRequests;
+            writeNew(path.join(out, id + '.json'), record);
+            results.push(record);
+        }
+    }
+    const [a, b, c, d, e, f] = results;
+    const visualEqual = Boolean(
+        a.initialImageSha256 &&
+        a.initialImageSha256 === b.initialImageSha256 &&
+        a.imageSha256 &&
+        a.imageSha256 === b.imageSha256 &&
+        a.imageSha256 === e.imageSha256 &&
+        a.imageSha256 === f.imageSha256 &&
+        c.imageSha256 &&
+        c.imageSha256 === d.imageSha256,
+    );
+    const passed = visualEqual && results.every((record) => !record.errors.length);
+    writeNew(path.join(out, 'summary.json'), {
+        scope: `loopback ${chrome ? 'Chromium' : 'WebKit'}; ${compiled ? 'compiler-built profile' : 'post-build diagnostic'}; not npm or device certification`,
+        passed,
+        visualEqual,
+        cases: results.map(({ id, errors, foregroundPixels }) => ({ id, errors, foregroundPixels })),
+    });
+    if (!passed) throw new Error('glTF deferred diagnostic failed; see retained receipts');
+}
+
+main(process.argv.slice(2)).catch((error) => {
+    console.error(error.message);
+    process.exitCode = 1;
+});
