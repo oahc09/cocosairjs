@@ -284,6 +284,10 @@ The probe asserts trusted pointer drag and mid-flight interruption, identical no
 material and pixel values at the same time when scrubbing in both directions,
 a material-only pixel change without editing the shared material, keyboard slider
 input, reduced motion and no writes or completion callbacks after scene release.
+A separate WebGL2 check holds the lens and background still, scrubs a real Sprite
+under a RenderRoot2D through native UIOpacity values 255/128/0 and back, compares
+zero opacity against the independently hidden sprite, and checks the lens region
+did not change. UIOpacity is not used to fade the 3D glass mesh.
 The reduced-motion and ordinary runs use separate pages. This is an E11 interaction
 and native-rendering proof, not visual approval of the final E11 concept or
 physical-GPU performance evidence.

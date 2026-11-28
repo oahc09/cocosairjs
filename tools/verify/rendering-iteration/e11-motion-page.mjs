@@ -36,6 +36,29 @@ function camera(layer, priority) {
 }
 const sourceCamera = camera(sourceLayer, 0);
 camera(mainLayer, 1);
+const hudCamera = camera(m.Layers.Enum.UI_2D, 2);
+hudCamera.clearFlags = m.Camera.ClearFlag.DEPTH_ONLY;
+const hud = new m.Node('E11 HUD');
+hud.layer = m.Layers.Enum.UI_2D;
+hud.addComponent(m.RenderRoot2D);
+scene.addChild(hud);
+
+const hudSwatch = document.createElement('canvas');
+hudSwatch.width = hudSwatch.height = 8;
+const swatchContext = hudSwatch.getContext('2d');
+swatchContext.fillStyle = '#ff4dd2';
+swatchContext.fillRect(0, 0, 8, 8);
+const swatchImage = new m.ImageAsset(hudSwatch);
+const swatchTexture = new m.Texture2D();
+swatchImage.addRef();
+swatchTexture.addRef();
+swatchTexture.image = swatchImage;
+const badge = m.createAirTextureSprite(hud, swatchTexture, {
+    name: 'E11 opacity badge',
+    size: [0.38, 0.15],
+    position: [-0.82, 0.719],
+});
+const opacity = badge.node.addComponent(m.UIOpacity);
 const target = m.createAirRenderTarget({
     name: 'E11-motion-background',
     width: 384,
@@ -94,7 +117,6 @@ quad('visible pattern', pattern.material, mainLayer, 0, 1.5, 1);
 const glass = makeMaterial(glassEffectDefinition, true);
 const lens = quad('interactive glass', glass.material, mainLayer, 0.1, 1.5, 1);
 const node = lens.node;
-const opacity = node.addComponent(m.UIOpacity);
 const parent = glass.material;
 function initialize(mat) {
     const params = [
@@ -235,6 +257,18 @@ app.session.own(() => listeners.abort(), 'E11-input');
 const clock = m.createStepClock();
 if (fixed) clock.begin();
 const gl = canvas.getContext('webgl2');
+const badgeTimeline = m.createAirMotionTimeline([{ channel: 'alpha', to: 0, duration: 1 }], channels);
+function region(pixels, x, y) {
+    if (x < 3 || y < 3 || x + 3 >= gl.drawingBufferWidth || y + 3 >= gl.drawingBufferHeight) {
+        throw new Error('E11 readback region outside the backing buffer');
+    }
+    const output = [];
+    for (let row = y - 3; row <= y + 3; row++) {
+        const start = 4 * (row * gl.drawingBufferWidth + x - 3);
+        output.push(...pixels.subarray(start, start + 7 * 4));
+    }
+    return output;
+}
 async function draw(dt) {
     let pixels;
     const read = () => {
@@ -252,6 +286,13 @@ async function draw(dt) {
     const sha = await crypto.subtle.digest('SHA-256', pixels);
     return {
         state: timeline?.disposed ? null : state(),
+        extent: [gl.drawingBufferWidth, gl.drawingBufferHeight],
+        badge: region(
+            pixels,
+            Math.round(gl.drawingBufferWidth / 2 - (0.82 * gl.drawingBufferHeight) / 2),
+            Math.round(((1 + 0.719) * gl.drawingBufferHeight) / 2),
+        ),
+        lens: region(pixels, Math.round(gl.drawingBufferWidth / 2), Math.round(gl.drawingBufferHeight / 2)),
         sha: Array.from(new Uint8Array(sha), (byte) => byte.toString(16).padStart(2, '0')).join(''),
     };
 }
@@ -265,9 +306,17 @@ if (fixed)
             timeline.seek(t);
         },
         refraction: (value) => channels.refraction.write(value),
+        seekBadge: (seconds) => badgeTimeline.seek(seconds),
+        hideBadge: (hidden) => {
+            badge.node.active = !hidden;
+        },
         revert: () => timeline.revert(),
         renderer: () => gl.getParameter(gl.getExtension('WEBGL_debug_renderer_info').UNMASKED_RENDERER_WEBGL),
         async exit() {
+            badgeTimeline.dispose();
+            badge.dispose();
+            swatchTexture.decRef();
+            swatchImage.decRef();
             unbind();
             detach();
             target.dispose();

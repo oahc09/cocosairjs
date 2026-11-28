@@ -40,6 +40,55 @@ const routes = {
 const select = (s) => [s.x, s.y, s.alpha, s.refraction, s.shared];
 const v = (page, fn, value) => page.evaluate(fn, value);
 
+async function verifyOpacity(page, draw, baseline) {
+    await v(page, () => e11.seekBadge(127 / 255));
+    const partial = await draw();
+    await v(page, () => e11.seekBadge(1));
+    const transparent = await draw();
+    await v(page, () => e11.hideBadge(true));
+    const background = await draw();
+    await v(page, () => {
+        e11.hideBadge(false);
+        e11.seekBadge(127 / 255);
+    });
+    const reversePartial = await draw();
+    await v(page, () => e11.seekBadge(0));
+    const restored = await draw();
+    assert.equal(partial.state.alpha, 128);
+    assert.equal(transparent.state.alpha, 0);
+    assert.equal(restored.state.alpha, 255);
+    for (const frame of [partial, transparent, background, reversePartial, restored]) {
+        assert.deepEqual(
+            [frame.state.x, frame.state.y, frame.state.refraction],
+            [baseline.state.x, baseline.state.y, baseline.state.refraction],
+        );
+        assert.deepEqual(frame.extent, baseline.extent);
+        assert.deepEqual(frame.lens, baseline.lens);
+    }
+    assert.equal(transparent.sha, background.sha);
+    assert.equal(partial.sha, reversePartial.sha);
+    assert.equal(restored.sha, baseline.sha);
+    assert.equal(baseline.badge.length, 7 * 7 * 4);
+    assert.equal(baseline.lens.length, 7 * 7 * 4);
+    let blendedChannels = 0;
+    for (const [i, visible] of baseline.badge.entries()) {
+        if (i % 4 === 3) continue;
+        const clear = background.badge[i];
+        if (Math.abs(visible - clear) < 40) continue;
+        const blend = (partial.badge[i] - clear) / (visible - clear);
+        assert.ok(blend > 0.25 && blend < 0.75, 'the UI pixel must blend between the visible sprite and background');
+        blendedChannels++;
+    }
+    assert.ok(blendedChannels >= 49, 'the opacity control region must cover the visible 7×7 sprite sample');
+    return {
+        blendedChannels,
+        full: baseline.sha,
+        partial: partial.sha,
+        clear: transparent.sha,
+        restored: restored.sha,
+    };
+}
+
 async function verify(browser, origin, reducedMotion) {
     const page = await browser.newPage({ viewport: { width: 520, height: 470 }, deviceScaleFactor: 1, reducedMotion });
     const errors = [];
@@ -57,6 +106,7 @@ async function verify(browser, origin, reducedMotion) {
         const draw = (dt = 0) => v(page, (delta) => e11.draw(delta), dt);
         const st = () => v(page, () => e11.state());
         const baseline = await draw();
+        const opacity = await verifyOpacity(page, draw, baseline);
         await page.mouse.move(x, y);
         await page.mouse.down();
         await page.mouse.move(x + 53, y - 21);
@@ -66,7 +116,7 @@ async function verify(browser, origin, reducedMotion) {
         assert.ok(drag.state.refraction > 0.6);
         await page.mouse.up();
         const returned = await st();
-        const result = { renderer: await v(page, () => e11.renderer()), baseline, drag, returned };
+        const result = { renderer: await v(page, () => e11.renderer()), baseline, opacity, drag, returned };
         if (reducedMotion === 'reduce') {
             assert.deepEqual(select(returned), select(baseline.state));
             assert.equal(returned.playing, false);
@@ -165,6 +215,7 @@ async function main() {
                 renderer: normal.renderer,
                 identicalSeekHash: normal.forward.sha,
                 uniformChangesPixels: true,
+                opacityBlendedChannels: normal.opacity.blendedChannels,
                 normalExit: normal.exit.receipt.status,
                 reducedExit: reduced.exit.receipt.status,
             }),
