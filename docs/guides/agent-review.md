@@ -27,3 +27,19 @@ node tools/mcp/agent-review.mjs verify --url http://127.0.0.1:7454/glass-refract
 - 通用像素断言按相对第一个 RGBA 像素有明显差异的像素计数，不证明节点可见、指定材质正确或图像与产品图一致。错误计数限于当前会话观察窗口。实交互、局部像素或多 Pass 结论需要另做针对性断言；详见 [Agent MCP](agent-mcp.md) 和 [视觉探针](../../skills/cocosair-agent-session/references/visual-probes.md)。
 
 对应端到端回归：`node tools/mcp/agent-review-browser.mjs`（通过 `AIR_REVIEW_BASE` 指定已启动的 dev server）。正例取两张真帧；负例使用临时 loopback 页面检查均匀帧和错误 bundle，保留独立收据，不改动场景源码。
+
+## 玻璃折射：区分背景捕获与合成故障
+
+```sh
+node tools/mcp/agent-review.mjs glass-passes --url http://127.0.0.1:7454/glass-refraction/ --out /tmp/air-review-passes
+node tools/mcp/glass-pass-browser.mjs
+```
+
+只适用于当前玻璃示例的 WebGL 2 路径。临时使用现有 transmission 控件，在同一会话固定时间步比较 0 和 0.95，结束恢复控件值并关闭浏览器。在各自的 AFTER_DRAW 读取真实 RGBA8 背景附件和最终帧；报告附相机排序、读写纹理绑定、材质实际参数及 PNG 哈希。相机排序来自原生 priority，不是 GPU 指令追踪。
+
+- `BACKGROUND_NOT_CAPTURED`：没有启用的背景捕获。
+- `COMPOSITE_INPUT_INVALID` / `COMPOSITE_NO_EFFECT`：背景有真实像素，但输入绑定、先后关系或最终合成响应不成立。没有响应不等于定位到 shader，几何可见性也可能是原因。
+- `READBACK_UNVERIFIED` / `BACKGROUND_EMPTY` / `BACKGROUND_CHANGED`：不以缺失证据判定成功。
+- `TRANSMISSION_OBSERVED`：两帧背景内容一致且非均匀，真实材质参数变化，最终图像有相应变化。这不是通用 RenderGraph 回放、物理正确性或视觉对标。
+
+端到端测试使用同一示例、同一引擎，另外在隔离页面注入两个故障：关闭背景相机对应的捕获组件，以及仅把玻璃模型移出画面以让合成失效。

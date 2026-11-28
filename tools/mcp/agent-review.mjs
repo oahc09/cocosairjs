@@ -6,6 +6,7 @@ import { createRequire } from 'node:module';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
+import { glassPassReport } from './glass-pass-report.mjs';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
 const require = createRequire(import.meta.url);
@@ -15,6 +16,7 @@ const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const usage = [
     'node tools/mcp/agent-review.mjs doctor',
     'node tools/mcp/agent-review.mjs <inspect|capture|verify> --url http://127.0.0.1:7454/example/',
+    'node tools/mcp/agent-review.mjs glass-passes --url http://127.0.0.1:7454/glass-refraction/ --out NEW_DIRECTORY',
     'capture / verify require --out NEW_DIRECTORY; verify requires --min-pixels N and --node NAME',
 ].join('\n');
 function fail(code, message) {
@@ -69,7 +71,7 @@ export function inspectPng(frame, PNG) {
 async function main(args) {
     const [command, ...argv] = args;
     if (!command || command === '--help' || command === 'help') return { usage };
-    if (!['doctor', 'inspect', 'capture', 'verify'].includes(command)) fail('ARGUMENT_INVALID', usage);
+    if (!['doctor', 'inspect', 'capture', 'verify', 'glass-passes'].includes(command)) fail('ARGUMENT_INVALID', usage);
     const { values } = parseArgs({
         args: argv,
         options: {
@@ -82,7 +84,10 @@ async function main(args) {
     if (command === 'doctor' && argv.length) fail('ARGUMENT_INVALID', usage);
     if (command === 'inspect' && (!values.url || values.out || values.node || values['min-pixels']))
         fail('ARGUMENT_INVALID', usage);
-    if (command === 'capture' && (!values.url || !values.out || values.node || values['min-pixels']))
+    if (
+        ['capture', 'glass-passes'].includes(command) &&
+        (!values.url || !values.out || values.node || values['min-pixels'])
+    )
         fail('ARGUMENT_INVALID', usage);
     const minPixels = Number(values['min-pixels']);
     if (
@@ -103,9 +108,15 @@ async function main(args) {
     if (command === 'doctor') return { build, browserExecutableFound: true, browserLaunched: false };
 
     const { openBrowser } = await import('./browser.mjs');
-    const adapter = await openBrowser({ url: values.url, executablePath, expectedBundleSha256: build.bundleSha256 });
+    const adapter = await openBrowser({
+        url: values.url,
+        executablePath,
+        expectedBundleSha256: build.bundleSha256,
+        glassReview: command === 'glass-passes',
+    });
     let report;
     let pixels;
+    let passImages;
     try {
         const identity = result(await adapter.call('reviewIdentity', {}));
         if (identity.backend !== 'webgl2') fail('BACKEND_UNVERIFIED', 'Pilot requires an observed WebGL 2 device.');
@@ -119,7 +130,36 @@ async function main(args) {
             sceneId: scene.sceneId,
         };
         if (command === 'inspect') report.scene = scene;
-        else {
+        else if (command === 'glass-passes') {
+            const { control, active } = result(await adapter.call('glassPassReview', {}));
+            if (
+                [control.final, active.final].some(
+                    (frame) =>
+                        frame.sceneId !== scene.sceneId ||
+                        !Number.isSafeInteger(frame.frameIndex) ||
+                        frame.frameIndex < 1 ||
+                        !Number.isFinite(Date.parse(frame.sampledAt)),
+                ) ||
+                active.final.frameIndex !== control.final.frameIndex + 1
+            )
+                fail('STALE_TARGET', 'The two controlled frames are not consecutive in the same scene.');
+            const errors = result(await adapter.call('inspect', { kind: 'errors' }));
+            const after = result(await adapter.call('reviewIdentity', {}));
+            if (
+                after.sceneId !== identity.sceneId ||
+                after.backend !== identity.backend ||
+                localBuild().receiptSha256 !== build.receiptSha256
+            )
+                fail('STALE_TARGET', 'Scene, backend, or build changed.');
+            const pair = glassPassReport(control, active, inspectPng, require('pngjs').PNG);
+            passImages = pair.pngs;
+            report.passes = pair.report;
+            report.checks = {
+                transmissionObserved: pair.report.diagnosis === 'TRANSMISSION_OBSERVED',
+                observedRuntimeErrorsEmpty: errors.errors.length === 0 && errors.dropped === 0,
+            };
+            report.observedRuntimeErrors = errors;
+        } else {
             const frame = result(await adapter.call('capture', {}));
             if (
                 frame.sceneId !== scene.sceneId ||
@@ -162,6 +202,11 @@ async function main(args) {
     if (pixels) {
         mkdirSync(values.out);
         writeFileSync(join(values.out, 'frame.png'), pixels.bytes, { flag: 'wx' });
+    }
+    if (passImages) {
+        mkdirSync(values.out);
+        for (const [file, bytes] of Object.entries(passImages))
+            writeFileSync(join(values.out, file), bytes, { flag: 'wx' });
     }
     return report;
 }

@@ -1,10 +1,11 @@
 /** Explicitly loaded development-only bridge; never exported by the runtime. */
 import { createStepClock, director, gfx } from 'cocosair';
 import type { AirApp } from 'cocosair';
+import { reviewGlassPasses } from './glass-pass-review';
 import { createAgentSession } from './agent-session';
 import { captureControlled, reviewCamera, ReviewRequest } from './mcp-review';
 
-export function attachMcpBridge(app: AirApp, writable: boolean) {
+export function attachMcpBridge(app: AirApp, writable: boolean, glassReview = false) {
     const scene = app.getScene();
     if (!scene) {
         throw new Error('No running scene; expose window.__airApp after app.run().');
@@ -36,6 +37,9 @@ export function attachMcpBridge(app: AirApp, writable: boolean) {
                     sceneId: session.inspectScene().sceneId,
                     backend: api === gfx.API.WEBGL2 ? 'webgl2' : api === gfx.API.WEBGPU ? 'webgpu' : 'unknown',
                 };
+            }
+            if (method === 'glassPassReview' && glassReview) {
+                return reviewGlassPasses(app, session, clock);
             }
             if (method === 'inspect') {
                 switch (args.kind) {

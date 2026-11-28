@@ -8,3 +8,5 @@ Use this when deciding whether a browser change works, not when only reviewing a
 4. Interpret the negative control. A uniform-frame check is useful, but a nonblank image and a node name do not prove that node was drawn, that interactivity works, or that the result matches a reference. For a behavioral claim, exercise the actual control and verify state and/or the expected pixel region before and after. Report observations you could not make separately.
 
 Keep debug tooling out of the default bundle. For a bounded interactive review, use the existing MCP session and its scoped writes and cleanup; do not add generic browser execution or publish local screenshots implicitly.
+
+For the repository's glass-refraction fixture, prefer the localized `glass-passes` check from the guide when the question is capture versus composition. Compare the real intermediate attachment first, then confirm it is bound to the consumer and the final frame responds to the controlled material input. If readback is unavailable do not infer a captured background from the final screenshot. The pilot does not inspect arbitrary effects.

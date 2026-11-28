@@ -18,8 +18,18 @@ export function localPage(value) {
     }
     return url;
 }
-export async function openBrowser({ url, writable = false, executablePath, expectedBundleSha256 }) {
+export async function openBrowser({
+    url,
+    writable = false,
+    executablePath,
+    expectedBundleSha256,
+    glassReview = false,
+}) {
     const target = localPage(url);
+    if (glassReview && (!expectedBundleSha256 || target.pathname !== '/glass-refraction/'))
+        throw Object.assign(new Error('Glass review requires the pinned /glass-refraction/ example.'), {
+            code: 'ARGUMENT_INVALID',
+        });
     const browser = await chromium.launch({
         headless: true,
         executablePath,
@@ -104,10 +114,17 @@ export async function openBrowser({ url, writable = false, executablePath, expec
             });
         }
         await page.waitForFunction(() => window.__airApp?.getScene(), null, { timeout: 15000 });
-        handle = await page.evaluateHandle(async (allowWrites) => {
-            const { attachMcpBridge } = await import('/__debug/mcp-bridge.js');
-            return attachMcpBridge(window.__airApp, allowWrites);
-        }, writable);
+        if (glassReview)
+            await page.waitForFunction(() => window.__glassNative && window.__airApp?.getScene(), null, {
+                timeout: 10000,
+            });
+        handle = await page.evaluateHandle(
+            async ({ allowWrites, glassReview }) => {
+                const { attachMcpBridge } = await import('/__debug/mcp-bridge.js');
+                return attachMcpBridge(window.__airApp, allowWrites, glassReview);
+            },
+            { allowWrites: writable, glassReview },
+        );
         if (expectedBundleSha256) {
             const matchesEngine = await handle.evaluate(
                 async (bridge, pinnedUrl) => bridge.isEngine((await import(pinnedUrl)).director),
