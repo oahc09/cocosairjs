@@ -54,6 +54,14 @@ interface Spring {
     torque: { value: number; speed: number };
     stretch: { value: number; speed: number };
     remainder: number;
+    angular?: {
+        base: readonly [number, number];
+        axis: readonly [number, number];
+        displacement: number;
+        momentum: number;
+        lastBatch: number;
+        clock: number;
+    };
 }
 export const bone2dPhysicsHorizon = 0.25;
 export type Bone2dPhysicsState = Map<string, Spring>;
@@ -75,12 +83,18 @@ export function solveBone2dPhysics(
     referenceScale: number,
     tick: PhysicsStep,
     reset: boolean,
+    webGame = false,
 ): Matrix2D {
     const [a, b, d, e, x, y] = matrix;
     const tipX = x + a * length,
         tipY = y + d * length;
     const dt = tick.seconds;
     const spring = tick.state.get(c.id);
+    const angularOnly = webGame && c.x === 0 && c.y === 0 && c.scaleX === 0 && c.rotate + c.shearX > 0 &&
+        length > 0 && p.strength / p.mass <= c.fps * c.fps;
+    if (angularOnly) {
+        return solveBone2dAngular(c, p, matrix, length, referenceScale, tick, reset, spring);
+    }
     if (reset || !spring || dt > bone2dPhysicsHorizon || p.mix === 0) {
         tick.state.set(c.id, {
             root: point(x, y),
@@ -171,4 +185,75 @@ export function solveBone2dPhysics(
         px,
         py,
     ];
+}
+
+// Angular-only exported springs track the last displayed tip direction. A new
+// animated anchor catches up to that direction by inertia, then a fixed-step
+// damped oscillator returns the angular displacement toward its resting pose.
+// Interpolating the last batch over the residual time avoids a visible tick.
+function solveBone2dAngular(
+    c: PhysicsConstraint,
+    p: PhysicsParams,
+    input: Matrix2D,
+    length: number,
+    referenceScale: number,
+    tick: PhysicsStep,
+    reset: boolean,
+    existing?: Spring,
+): Matrix2D {
+    const [ax, bx, ay, by, x, y] = input;
+    if (p.mix === 0) return input;
+    if (!existing?.angular || reset || tick.seconds > bone2dPhysicsHorizon) {
+        tick.state.set(c.id, {
+            root: point(x, y),
+            tip: point(x + length * ax, y + length * ay),
+            torque: { value: 0, speed: 0 },
+            stretch: { value: 0, speed: 0 },
+            remainder: 0,
+            angular: { base: [x, y], axis: [ax, ay], displacement: 0, momentum: 0, lastBatch: 0, clock: 0 },
+        });
+        return input;
+    }
+    const s = existing.angular;
+    const h = 1 / c.fps;
+    const heading = Math.atan2(ay, ax);
+    const coupling = (c.rotate + c.shearX) * p.mix;
+    const interp = (remaining: number): number => Math.max(0, 1 - remaining / h);
+    if (tick.seconds > 0) {
+        const prior = s.clock;
+        s.clock += tick.seconds;
+        const elapsed = s.clock - prior;
+        const cap = elapsed * c.limit;
+        const limit = (v: number): number => Math.max(-cap, Math.min(cap, v));
+        const priorTip = Math.atan2(limit(s.base[1] - y) + length * s.axis[1], limit(s.base[0] - x) + length * s.axis[0]);
+        const priorDisplay = s.displacement - s.lastBatch * interp(existing.remainder);
+        const error = priorTip - (heading + coupling * priorDisplay);
+        const shortest = ((error + Math.PI) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI) - Math.PI;
+        s.displacement += p.inertia * shortest;
+        existing.remainder += elapsed;
+        if (existing.remainder >= h) {
+            const start = s.displacement;
+            const damping = p.damping ** (60 * h);
+            let angle = heading + coupling * (s.displacement - s.lastBatch * interp(existing.remainder - elapsed));
+            while (existing.remainder >= h) {
+                const tangent = -(p.wind * Math.sin(angle) + p.gravity * Math.cos(angle)) * (length / referenceScale);
+                s.momentum += (tangent - p.strength * s.displacement) * h / p.mass;
+                s.displacement += s.momentum * h;
+                s.momentum *= damping;
+                existing.remainder -= h;
+                angle = heading + coupling * s.displacement;
+            }
+            s.lastBatch = s.displacement - start;
+        }
+        s.base = [x, y];
+    }
+    const offset = (s.displacement - s.lastBatch * interp(existing.remainder)) * p.mix;
+    const rotated = (x: number, y: number, angle: number): readonly [number, number] => {
+        const cos = Math.cos(angle), sin = Math.sin(angle);
+        return [x * cos - y * sin, x * sin + y * cos];
+    };
+    const a = rotated(ax, ay, offset * (c.rotate + c.shearX));
+    const b = rotated(bx, by, offset * c.rotate);
+    if (tick.seconds > 0) s.axis = a;
+    return [a[0], b[0], a[1], b[1], x, y];
 }

@@ -73,6 +73,7 @@ export interface Bone2dLayerOptions {
     readonly additive?: boolean;
     readonly loop?: boolean;
 }
+type QueuedClip = { id: string; options: Bone2dCrossfadeOptions };
 type Layer = Required<Bone2dLayerOptions> & { length: number };
 type Transition = {
     source: { id: string; time: number; direction: 1 | -1; lo: number; hi: number; playback?: Playback; cursor?: PlaybackCursor } | { frozen: Bone2dSample };
@@ -96,6 +97,10 @@ export interface AirBone2dPlayer {
     play(id: string, options?: boolean | Bone2dPlaybackOptions): void;
     /** Crossfade the native preview bones, or the full continuous pose for Web Game data. */
     crossfade(id: string, options?: Bone2dCrossfadeOptions): void;
+    /** Queue a transition at the next natural end or loop-round boundary. */
+    playNext(id: string, options?: Bone2dCrossfadeOptions): void;
+    /** Invoked after pose application, once per natural non-looping end. */
+    onEnd: ((id: string) => void) | null;
     /** Replaces the ordered preview layers and resets their clocks to the supplied times. */
     setLayers(layers: readonly Bone2dLayerOptions[]): void;
     pause(): void;
@@ -104,6 +109,16 @@ export interface AirBone2dPlayer {
     seek(seconds: number): void;
     /** Advances using caller-owned scene time and returns inert marker records, not method calls. */
     advance(deltaSeconds: number): readonly Bone2dMarker[];
+    /** Override this slot by attachment ID; null hides it and undefined restores animation. */
+    setAttachment(slotId: string, attachment: string | null | undefined): void;
+    /** Solved bone placement in player-root coordinates, or null for missing/inactive bones. */
+    bone(id: string): { x: number; y: number; rotation: number; length: number } | null;
+    /** Hold a Web Game bone's position in player-root coordinates while still solving constraints. */
+    moveBone(id: string, x: number, y: number): void;
+    releaseBone(id: string): void;
+    /** Current picture geometry bounds in player-root coordinates, before clipping and tint. */
+    bounds(): { x: number; y: number; width: number; height: number } | null;
+    resetPhysics(): void;
     /** Current active point, bounding box or path in player-root coordinates; null for sprites, meshes and empty slots. */
     getAttachmentGeometry(slotId: string): Bone2dAttachmentGeometry | null;
     dispose(): void;
@@ -314,6 +329,9 @@ export async function createAirBone2dPlayer(
     let selectedSkins = [defaultSkin];
     let activeOverlays: string[] = [];
     const physics: Bone2dPhysicsState = new Map();
+    const attachments = new Map<string, string | null>();
+    const heldPositions = new Map<string, readonly [number, number]>();
+    const controls = { attachments, heldPositions };
     const hasPhysics = [...project.constraints.values()].some((c) => c.kind === 'physics');
     let transition: Transition | null = null;
     let layers: readonly Layer[] = [];
@@ -329,6 +347,7 @@ export async function createAirBone2dPlayer(
         mixing = transition, overlays = layers): Bone2dSample =>
         sampleBone2dFrame(project, clip, time, activeOverlays, hasPhysics ? { state: physics, seconds, intervals } : undefined,
             mixing || overlays.length ? { transition: transitionFrame(mixing), layers: overlays } : undefined,
+            false, attachments.size || heldPositions.size ? controls : undefined,
         );
     let currentSample: Bone2dSample;
     const apply = (sample: Bone2dSample): void => {
@@ -547,9 +566,10 @@ export async function createAirBone2dPlayer(
             texture.addRef();
             owned.push({ image, texture, frame });
             image.reset(decoded);
-            texture.image = image;
             const filter = project.smooth ? Filter.LINEAR : Filter.NEAREST;
             texture.setFilters(filter, filter);
+            if (project.source === 'web-game' && project.smooth) texture.setMipFilter(Filter.LINEAR);
+            texture.image = image;
             frame.packable = false;
             frame.reset({
                 texture,
@@ -577,7 +597,7 @@ export async function createAirBone2dPlayer(
                 parentNode.addChild(node);
                 return node;
             };
-            if (project.affineSprites) {
+            if (project.affineSprites || project.source === 'web-game') {
                 const outer = childOf(slotRoot, 'Affine');
                 branch = childOf(outer, slot.bone);
                 affine = [outer, branch];
@@ -623,6 +643,8 @@ export async function createAirBone2dPlayer(
     let playback: Playback | null = null;
     let cursor: PlaybackCursor = { time: 0, direction: 1, first: false };
     let playing = false;
+    let finished = false;
+    const queue: QueuedClip[] = [];
     const ensure = (): void => {
         if (disposed || !isValid(root, true)) error('player is disposed');
     };
@@ -638,6 +660,7 @@ export async function createAirBone2dPlayer(
         cursor = { time, direction: mode.initialDirection, first: true };
         transition = fade;
         playing = true;
+        finished = false;
     };
     const clamp = (x: number, lo: number, hi: number): number => Math.max(lo, Math.min(hi, x));
     const animations = Object.freeze(
@@ -647,7 +670,34 @@ export async function createAirBone2dPlayer(
             }),
         })),
     );
-    return {
+    const fadeOptions = (id: string, options: Bone2dCrossfadeOptions) => {
+        if (!options || typeof options !== 'object' || Array.isArray(options)) error('invalid crossfade options');
+        if (options.holdPrevious !== undefined && typeof options.holdPrevious !== 'boolean') error('invalid hold option');
+        const clip = project.clips.get(id);
+        if (!clip) error(`unknown animation: ${id}`);
+        const mode = options.playback ?? (project.source === 'web-game' ? { useSavedSettings: true } : false);
+        makeBone2dPlayback(clip.duration, clip.play, mode, error);
+        const saved = selected === null ? 0 :
+            project.source === 'web-game' ? 0.2 :
+                selected === id ? 0 : project.mixPairs.get(selected)?.get(id) ?? project.mixDefault;
+        const duration = options.duration === undefined ? saved : options.duration;
+        if (!Number.isFinite(duration) || duration < 0 || duration > 10) error('invalid crossfade duration');
+        return { mode, duration };
+    };
+    const crossfadeTo = (id: string, options: Bone2dCrossfadeOptions): void => {
+        const { mode, duration } = fadeOptions(id, options);
+        let fade: Transition | null = null;
+        if (duration > 0) {
+            const source: Transition['source'] = transition !== null || selected === null || playback === null
+                ? { frozen: sampleBone2dFrame(project, selected, cursor.time, activeOverlays, undefined,
+                    { transition: transitionFrame(transition) }, true) }
+                : { id: selected, time: cursor.time, direction: cursor.direction, lo: playback.lo, hi: playback.hi,
+                    ...(project.source === 'web-game' ? { playback, cursor } : {}) };
+            fade = { source, duration, elapsed: 0, holdPrevious: options.holdPrevious ?? false };
+        }
+        begin(id, mode, fade);
+    };
+    const player: AirBone2dPlayer = {
         node: root,
         skeletonIndex: project.skeletonIndex,
         skeletonNames: Object.freeze(project.skeletonNames.slice()),
@@ -664,6 +714,72 @@ export async function createAirBone2dPlayer(
             selectedSkins = Array.from(next);
             activeOverlays = selectedSkins.slice(1).map((skin) => skin.id);
             apply(sampleFor(selected, cursor.time));
+        },
+        setAttachment(slotId, name): void {
+            ensure();
+            if (!slotDefinitions.has(slotId)) error(`unknown slot: ${slotId}`);
+            if (name !== undefined && name !== null &&
+                (typeof name !== 'string' || ![...project.skins.values()].some((skin) =>
+                    resolveBone2dAttachment([skin], slotId, name)))) error(`unknown attachment: ${name}`);
+            if (name === undefined) attachments.delete(slotId);
+            else attachments.set(slotId, name);
+            apply(sampleFor(selected, cursor.time));
+        },
+        bone(id) {
+            ensure();
+            if (!currentSample.activeBones.has(id)) return null;
+            const [a, , c, , x, y] = bone2dWorldMatrices(project, currentSample).get(id)!;
+            return { x, y, rotation: Math.atan2(c, a) * 180 / Math.PI, length: Math.hypot(a, c) * lookup.get(id)!.length };
+        },
+        moveBone(id, x, y): void {
+            ensure();
+            if (project.source !== 'web-game') error('bone holds require Web Game data');
+            if (!lookup.has(id)) error(`unknown bone: ${id}`);
+            if (!Number.isFinite(x) || !Number.isFinite(y)) error('invalid bone position');
+            heldPositions.set(id, [x, y]);
+            apply(sampleFor(selected, cursor.time));
+        },
+        releaseBone(id): void {
+            ensure();
+            if (heldPositions.delete(id)) apply(sampleFor(selected, cursor.time));
+        },
+        resetPhysics(): void {
+            ensure();
+            physics.clear();
+            apply(sampleFor(selected, cursor.time));
+        },
+        bounds() {
+            ensure();
+            const world = bone2dWorldMatrices(project, currentSample);
+            let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+            const include = (x: number, y: number): void => {
+                minX = Math.min(minX, x);
+                minY = Math.min(minY, y);
+                maxX = Math.max(maxX, x);
+                maxY = Math.max(maxY, y);
+            };
+            for (const def of project.slots) {
+                if (!currentSample.activeBones.has(def.bone)) continue;
+                const name = currentSample.slots.get(def.id)!.attachment;
+                const art = resolveBone2dAttachment(selectedSkins, def.id, name);
+                if (art?.kind === 'mesh') {
+                    const points = bone2dMeshPositions(art, def.bone, world,
+                        currentSample.slotDeform ? currentSample.slotDeform.get(def.id) :
+                            currentSample.meshDeltas.get(art.deformParent ?? art));
+                    for (let i = 0; i < points.length; i += 2) include(points[i], points[i + 1]);
+                } else if (art?.kind === 'region') {
+                    const [x, y, rotation, sx, sy] = art.pose;
+                    const t = rotation * Math.PI / 180, cos = Math.cos(t), sin = Math.sin(t);
+                    const [a, b, c, d, ox, oy] = world.get(def.bone)!;
+                    for (const dx of [-art.width * sx / 2, art.width * sx / 2]) {
+                        for (const dy of [-art.height * sy / 2, art.height * sy / 2]) {
+                            const px = x + cos * dx - sin * dy, py = y + sin * dx + cos * dy;
+                            include(a * px + b * py + ox, c * px + d * py + oy);
+                        }
+                    }
+                }
+            }
+            return Number.isFinite(minX) ? { x: minX, y: minY, width: maxX - minX, height: maxY - minY } : null;
         },
         getAttachmentGeometry(slotId): Bone2dAttachmentGeometry | null {
             ensure();
@@ -689,27 +805,28 @@ export async function createAirBone2dPlayer(
         play(id, options = false): void {
             ensure();
             begin(id, options, null);
+            queue.length = 0;
         },
         crossfade(id, options = {}): void {
             ensure();
-            if (!options || typeof options !== 'object' || Array.isArray(options)) error('invalid crossfade options');
-            if (options.holdPrevious !== undefined && typeof options.holdPrevious !== 'boolean') error('invalid hold option');
-            const saved = selected === null ? 0 :
-                project.source === 'web-game' ? 0.2 :
-                    selected === id ? 0 : project.mixPairs.get(selected)?.get(id) ?? project.mixDefault;
-            const duration = options.duration === undefined ? saved : options.duration;
-            if (!Number.isFinite(duration) || duration < 0 || duration > 10) error('invalid crossfade duration');
-            let fade: Transition | null = null;
-            if (duration > 0) {
-                const source: Transition['source'] = transition !== null || selected === null || playback === null
-                    ? { frozen: sampleBone2dFrame(project, selected, cursor.time, activeOverlays, undefined,
-                        { transition: transitionFrame(transition) }, true) }
-                    : { id: selected, time: cursor.time, direction: cursor.direction, lo: playback.lo, hi: playback.hi,
-                        ...(project.source === 'web-game' ? { playback, cursor } : {}) };
-                fade = { source, duration, elapsed: 0, holdPrevious: options.holdPrevious ?? false };
-            }
-            begin(id, options.playback ?? (project.source === 'web-game' ? { useSavedSettings: true } : false), fade);
+            crossfadeTo(id, options);
+            queue.length = 0;
         },
+        playNext(id, options = {}): void {
+            ensure();
+            fadeOptions(id, options);
+            if (selected === null || finished) {
+                crossfadeTo(id, options);
+                return;
+            }
+            if (queue.length >= 32) error('playback queue is full');
+            const { playback, ...settings } = options;
+            const snapshot = typeof playback !== 'object' || playback === null
+                ? playback
+                : { ...playback, range: playback.range ? [playback.range[0], playback.range[1]] as const : playback.range };
+            queue.push({ id, options: { ...settings, playback: snapshot } });
+        },
+        onEnd: null,
         setLayers(next): void {
             ensure();
             if (!Array.isArray(next) || next.length > 8) error('invalid layer list');
@@ -736,7 +853,7 @@ export async function createAirBone2dPlayer(
         },
         resume(): void {
             ensure();
-            if (selected !== null) playing = true;
+            if (selected !== null && !finished) playing = true;
         },
         seek(seconds): void {
             ensure();
@@ -745,51 +862,78 @@ export async function createAirBone2dPlayer(
             physics.clear();
             apply(sampleFor(selected, time, 0, [], null));
             transition = null;
-            cursor = { ...cursor, time, first: false };
+            cursor = { time, direction: cursor.direction, first: false };
+            if (finished && playback && time !== (cursor.direction > 0 ? playback.hi : playback.lo)) finished = false;
         },
         advance(delta): readonly Bone2dMarker[] {
             ensure();
             if (!Number.isFinite(delta) || delta < 0) error('advance requires a finite nonnegative delta');
             if (!playing || selected === null || playback === null || delta === 0) return [];
-            const clip = project.clips.get(selected)!;
-            const next = traverseBone2dPlayback(playback, cursor, delta, error);
             const out: Bone2dMarker[] = [];
-            for (const window of next.windows) {
-                const hits = bone2dKeysInWindow(clip.markers, window);
+            const ended: string[] = [];
+            const collect = (id: string, window: Parameters<typeof bone2dKeysInWindow>[1]): void => {
+                const hits = bone2dKeysInWindow(project.clips.get(id)!.markers, window);
                 if (out.length + hits.length > playbackBudget) error('advance crosses too many markers');
                 for (const k of hits) out.push(k.value);
-            }
-            if (next.windows.some(([from, to]) => to < from)) physics.clear();
-            const spent = delta * playback.speed;
-            let fade = transition;
-            if (fade) {
-                const elapsed = fade.elapsed + delta;
-                if (elapsed >= fade.duration) fade = null;
-                else {
-                    const { source } = fade;
-                    if ('frozen' in source) fade = { ...fade, elapsed };
-                    else if (source.playback && source.cursor) {
-                        const { cursor } = traverseBone2dPlayback(source.playback, source.cursor, delta, error);
-                        fade = { ...fade, elapsed, source: { ...source, time: cursor.time, cursor } };
-                    } else {
-                        fade = { ...fade, elapsed, source: {
-                            ...source, time: clamp(source.time + source.direction * spent, source.lo, source.hi),
-                        } };
+            };
+            let remaining = delta;
+            // Each immediate handoff removes one bounded queue entry.
+            while (playing && selected !== null && playback !== null && remaining > 0) {
+                const next = traverseBone2dPlayback(playback, cursor, remaining, error, queue.length > 0);
+                for (const window of next.windows) collect(selected, window);
+                if (next.windows.some(([from, to]) => to < from)) physics.clear();
+                const handoff = next.roundEnded && queue.length > 0;
+                const tick = handoff ? Math.min(remaining, next.elapsed / playback.speed) : remaining;
+                const spent = tick * playback.speed;
+                let fade = transition;
+                if (fade) {
+                    const elapsed = fade.elapsed + tick;
+                    if (elapsed >= fade.duration) fade = null;
+                    else {
+                        const { source } = fade;
+                        if ('frozen' in source) fade = { ...fade, elapsed };
+                        else if (source.playback && source.cursor) {
+                            const { cursor } = traverseBone2dPlayback(source.playback, source.cursor, tick, error);
+                            fade = { ...fade, elapsed, source: { ...source, time: cursor.time, cursor } };
+                        } else {
+                            fade = { ...fade, elapsed, source: {
+                                ...source, time: clamp(source.time + source.direction * spent, source.lo, source.hi),
+                            } };
+                        }
                     }
                 }
+                const overlays = layers.map((layer) => {
+                    const time = layer.length === 0 ? 0 : layer.loop ?
+                        (layer.time + spent % layer.length) % layer.length : Math.min(layer.time + spent, layer.length);
+                    return { ...layer, time };
+                });
+                apply(sampleFor(selected, next.cursor.time, next.elapsed, next.windows, fade, overlays));
+                cursor = next.cursor;
+                transition = fade;
+                layers = overlays;
+                if (next.stopped && !finished) {
+                    if (!playback.loop) ended.push(selected);
+                    finished = true;
+                }
+                if (handoff) {
+                    const upcoming = queue.shift()!;
+                    crossfadeTo(upcoming.id, upcoming.options);
+                    remaining = Math.max(0, remaining - tick);
+                    if (remaining <= Number.EPSILON * 8 * Math.max(1, delta)) {
+                        collect(upcoming.id, [cursor.time, cursor.time, true]);
+                        cursor = { ...cursor, first: false };
+                        break;
+                    }
+                } else {
+                    if (next.stopped && !transition) playing = false;
+                    break;
+                }
             }
-            const overlays = layers.map((layer) => {
-                const time = layer.length === 0 ? 0 : layer.loop ?
-                    (layer.time + spent % layer.length) % layer.length : Math.min(layer.time + spent, layer.length);
-                return { ...layer, time };
-            });
-            apply(sampleFor(selected, next.cursor.time, next.elapsed, next.windows, fade, overlays));
-            cursor = next.cursor;
-            transition = fade;
-            layers = overlays;
-            if (next.stopped && !transition) playing = false;
+            const end = player.onEnd;
+            for (const id of ended) end?.(id);
             return out;
         },
         dispose: () => release(true),
     };
+    return player;
 }

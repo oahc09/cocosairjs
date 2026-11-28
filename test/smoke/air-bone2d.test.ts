@@ -1151,6 +1151,7 @@ test('one-shot reverse ping-pong, exact loop seams, and degenerate clips use dir
         cursor: { time: 0.75, direction: 1, first: false },
         elapsed: 1,
         stopped: true,
+        roundEnded: true,
         windows: [
             [0.75, 0.25, true],
             [0.25, 0.75, false],
@@ -1178,6 +1179,7 @@ test('one-shot reverse ping-pong, exact loop seams, and degenerate clips use dir
         cursor: { time: 0, direction: 1, first: false },
         elapsed: 0,
         stopped: true,
+        roundEnded: true,
         windows: [[0, 0, true]],
     });
 });
@@ -1408,4 +1410,73 @@ test('Web Game mixes slot tints, same-picture deform and continuous constraint i
     const different = fromTo(project, 0.5);
     expect(different.slots.get('arm-slot')?.attachment).toBe('alt');
     expect(different.slotDeform?.get('arm-slot')).toEqual([0, 4, 0, 0, 0, 0]);
+});
+
+test('queued transport stops at the natural round even for exact, coarse and reverse ping-pong updates', () => {
+    const fail = (message: string): never => {
+        throw new Error(message);
+    };
+    const saved = { loop: true, pingPong: false, range: null };
+    const mode = makeBone2dPlayback(1, saved, { useSavedSettings: true, speed: 2 }, fail);
+    const start = { time: 0, direction: 1 as const, first: true };
+    for (const delta of [0.5, 0.625]) {
+        expect(traverseBone2dPlayback(mode, start, delta, fail, true)).toEqual({
+            cursor: { time: 1, direction: 1, first: false },
+            elapsed: 1,
+            stopped: false,
+            roundEnded: true,
+            windows: [[0, 1, true]],
+        });
+    }
+    const split = traverseBone2dPlayback(mode, start, 0.25, fail, true);
+    expect(split.roundEnded).toBe(false);
+    expect(traverseBone2dPlayback(mode, split.cursor, 0.25, fail, true).windows).toEqual([[0.5, 1, false]]);
+    const reverse = makeBone2dPlayback(
+        1,
+        saved,
+        { loop: true, pingPong: true, direction: -1, range: [0.25, 0.75] },
+        fail,
+    );
+    expect(traverseBone2dPlayback(reverse, { time: 0.75, direction: -1, first: true }, 2, fail, true)).toMatchObject({
+        windows: [
+            [0.75, 0.25, true],
+            [0.25, 0.75, false],
+        ],
+        elapsed: 1,
+        stopped: false,
+        roundEnded: true,
+    });
+});
+
+test('a held Web Game target still feeds later IK constraints after upstream world edits', () => {
+    const input = ikFixture();
+    const data = { bone2d: 1, name: 'Hold', skeleton: input.project.skeleton, images: input.images, smooth: false };
+    const model = parse(data);
+    const control = { attachments: new Map(), heldPositions: new Map([['tip', [8, 4] as const]]) };
+    const frame = sampleBone2dFrame(model, 'idle', 0, ['engaged'], undefined, undefined, false, control);
+    const world = bone2dWorldMatrices(model, frame);
+    expect(world.get('tip')!.slice(4)).toEqual([8, 4]);
+    const [a, , c, , x, y] = world.get('arm-bone')!;
+    expect(Math.atan2(c, a)).toBeCloseTo(Math.atan2(4 - y, 8 - x), 8);
+});
+
+test('fixed render cadence reaches discrete attachment and marker keys without a one-frame delay', () => {
+    const fail = (message: string): never => {
+        throw new Error(message);
+    };
+    const mode = makeBone2dPlayback(2, { loop: false, pingPong: false, range: null }, false, fail);
+    const keys = [0.2, 0.5, 1].map((time) => ({ time }));
+    let cursor = { time: 0, direction: 1 as 1 | -1, first: true };
+    const hits: number[] = [];
+    for (let i = 1; i <= 31; i++) {
+        const next = traverseBone2dPlayback(mode, cursor, 1 / 30, fail);
+        cursor = next.cursor;
+        for (const window of next.windows) {
+            for (const { time } of bone2dKeysInWindow(keys, window)) {
+                expect(time).toBe(i / 30);
+                hits.push(time);
+            }
+        }
+    }
+    expect(hits).toEqual([0.2, 0.5, 1]);
 });

@@ -45,6 +45,7 @@ export interface PlaybackCursor {
     readonly time: number;
     readonly direction: 1 | -1;
     readonly first: boolean;
+    readonly timeError?: number;
 }
 export type PlaybackWindow = readonly [from: number, to: number, includeStart: boolean];
 export const playbackBudget = 8192;
@@ -95,20 +96,23 @@ export function traverseBone2dPlayback(
     cursor: PlaybackCursor,
     deltaSeconds: number,
     fail: (message: string) => never,
-): { cursor: PlaybackCursor; windows: readonly PlaybackWindow[]; stopped: boolean; elapsed: number } {
+    stopAtRoundEnd = false,
+): { cursor: PlaybackCursor; windows: readonly PlaybackWindow[]; stopped: boolean; elapsed: number; roundEnded: boolean } {
     const { lo, hi, loop, pingPong, initialDirection } = playback;
     const span = hi - lo;
     let remaining = deltaSeconds * playback.speed;
     if (!Number.isFinite(remaining)) return fail('invalid playback delta');
-    if (remaining === 0) return { cursor, windows: [], stopped: false, elapsed: 0 };
+    if (remaining === 0) return { cursor, windows: [], stopped: false, elapsed: 0, roundEnded: false };
     let time = cursor.time,
         direction = cursor.direction,
-        include = cursor.first;
-    const result = (stopped: boolean, windows: PlaybackWindow[], elapsed: number) => ({
-        cursor: { time, direction, first: false },
+        include = cursor.first,
+        timeError = cursor.timeError ?? 0;
+    const result = (stopped: boolean, windows: PlaybackWindow[], elapsed: number, roundEnded = stopped) => ({
+        cursor: { time, direction, first: false, ...(timeError ? { timeError } : {}) },
         windows,
         stopped,
         elapsed,
+        roundEnded,
     });
     if (span === 0) return result(true, [[lo, lo, include]], 0);
     const windows: PlaybackWindow[] = [];
@@ -120,7 +124,10 @@ export function traverseBone2dPlayback(
         // Snap only errors at the scale of the arithmetic used to compute a boundary.
         const tolerance = Number.EPSILON * 8 * Math.max(1, Math.abs(time), Math.abs(end), distance, remaining);
         if (remaining < distance - tolerance) {
-            const next = time + direction * remaining;
+            // Accumulated frame deltas must land on exact authored keys (e.g. 15 × 1/30 = 0.5).
+            const increment = direction * remaining - timeError;
+            const next = time + increment;
+            timeError = (next - time) - increment;
             windows.push([time, next, include]);
             time = next;
             elapsed += remaining;
@@ -128,10 +135,11 @@ export function traverseBone2dPlayback(
         }
         if (distance > 0 || include) windows.push([time, end, include]);
         time = end;
+        timeError = 0;
         elapsed += distance;
         remaining = Math.max(0, remaining - distance);
         if (!pingPong) {
-            if (!loop) return result(true, windows, elapsed);
+            if (!loop || stopAtRoundEnd) return result(!loop, windows, elapsed, true);
             time = direction > 0 ? lo : hi;
             include = true;
             if (remaining <= tolerance) {
@@ -139,7 +147,8 @@ export function traverseBone2dPlayback(
                 return result(false, windows, elapsed);
             }
         } else {
-            if (!loop && direction !== initialDirection) return result(true, windows, elapsed);
+            if ((!loop || stopAtRoundEnd) && direction !== initialDirection)
+                return result(!loop, windows, elapsed, true);
             direction = direction > 0 ? -1 : 1;
             include = false;
             if (remaining <= tolerance) return result(false, windows, elapsed);

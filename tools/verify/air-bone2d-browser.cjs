@@ -36,9 +36,10 @@ const files = [
 ];
 async function main() {
     const [engine, output, ...extra] = process.argv.slice(2);
+    const controlsOnly = extra.length === 1 && extra[0] === '--web-game-controls';
     assert(
-        ['chromium', 'firefox', 'webkit'].includes(engine) && output && !extra.length,
-        'usage: <engine> <fresh report.json>',
+        ['chromium', 'firefox', 'webkit'].includes(engine) && output && (!extra.length || controlsOnly),
+        'usage: <engine> <fresh report.json> [--web-game-controls]',
     );
     assert(!fs.existsSync(output), 'choose a fresh report path');
     const runtime = fs.readFileSync(path.join(root, files[2]));
@@ -46,7 +47,9 @@ async function main() {
     const report = {
         status: 'FAIL',
         engine,
-        scope: 'Bone-2D native project: AIR WebGL2 sprites, meshes, sequences, pixels and lifecycle',
+        scope: controlsOnly
+            ? 'Bone-2D Web Game playback queue, end callback, live controls and bounds'
+            : 'Bone-2D native project: AIR WebGL2 sprites, meshes, sequences, pixels and lifecycle',
         fingerprints: Object.fromEntries(files.map((file) => [file, sha(fs.readFileSync(path.join(root, file)))])),
         pageErrors: [],
         snapshots: {},
@@ -1081,6 +1084,52 @@ async function main() {
                     markers,
                 };
             };
+            const gameControls = async () => {
+                const ended = [];
+                ikPlayer.onEnd = (id) => ended.push([id, ikPlayer.animation]);
+                ikPlayer.play('idle', { range: [0, 0.25], speed: 2 });
+                ikPlayer.playNext('attack', { duration: 0, playback: { useSavedSettings: true, speed: 2 } });
+                const coarse = ikPlayer.advance(0.25).map((m) => m.id);
+                const advanced = ikPlayer.time;
+                ikPlayer.advance(0);
+                const once = ended.slice();
+
+                ikPlayer.play('attack', { useSavedSettings: true });
+                ikPlayer.playNext('idle', { duration: 0 });
+                ikPlayer.advance(1);
+                const pingPong = { id: ikPlayer.animation, time: ikPlayer.time, ends: ended.length };
+
+                const start = ikPlayer.bone('arm-bone');
+                const original = ikPlayer.bounds();
+                ikPlayer.moveBone('arm-bone', start.x + 24, start.y + 17);
+                await clock.step(0);
+                const held = ikPlayer.bone('arm-bone');
+                const moved = ikPlayer.bounds();
+                ikPlayer.resetPhysics();
+                const reset = ikPlayer.bone('arm-bone');
+                ikPlayer.releaseBone('arm-bone');
+                const released = ikPlayer.bone('arm-bone');
+                ikPlayer.setAttachment('arm-slot', null);
+                await clock.step(0);
+                const hidden = ikPlayer.bounds();
+                ikPlayer.setAttachment('arm-slot', undefined);
+                await clock.step(0);
+                return {
+                    coarse,
+                    advanced,
+                    once,
+                    pingPong,
+                    start,
+                    original,
+                    held,
+                    moved,
+                    reset,
+                    released,
+                    hidden,
+                    restored: ikPlayer.bounds(),
+                    missing: ikPlayer.bone('missing'),
+                };
+            };
             const gameMount = async ({ format = 'png', smooth = false, input = 'embedded' }) => {
                 const data = await fetch('/web-game.json').then((r) => r.json());
                 const images = await fetch('/raster-formats.json').then((r) => r.json());
@@ -1130,6 +1179,7 @@ async function main() {
                 physicsFrame,
                 previewMount,
                 previewFrame,
+                gameControls,
                 gameMount,
                 gamePixels,
                 ikClose,
@@ -1180,6 +1230,29 @@ async function main() {
             };
         });
         assert.deepEqual(report.initial, { gl2: true, available: ['idle', 'attack'] });
+        await page.evaluate(() => window.bone2dTest.previewMount(true));
+        const controls = await page.evaluate(() => window.bone2dTest.gameControls());
+        assert.equal(controls.advanced, 0.5);
+        assert.deepEqual(controls.coarse, ['ev-start', 'ev-start', 'ev-impact']);
+        assert.deepEqual(controls.once, [['idle', 'attack']]);
+        assert.deepEqual(controls.pingPong, { id: 'idle', time: 0, ends: 1 });
+        assert.equal(controls.held.x, controls.start.x + 24);
+        assert.equal(controls.held.y, controls.start.y + 17);
+        assert.equal(controls.moved.x, controls.original.x + 24);
+        assert.equal(controls.moved.y, controls.original.y + 17);
+        assert.deepEqual(controls.reset, controls.held);
+        assert.deepEqual(controls.released, controls.start);
+        assert.equal(controls.hidden, null);
+        assert.equal(controls.missing, null);
+        assert.deepEqual(controls.restored, controls.original);
+        report.webGameControls = controls;
+        await page.evaluate(() => window.bone2dTest.ikClose());
+        if (controlsOnly) {
+            assert.deepEqual(report.pageErrors, []);
+            report.status = 'PASS';
+            await page.evaluate(() => window.bone2dTest.close());
+            return;
+        }
         for (const stage of ['idle', 'attack-start', 'attack-hitch', 'pause', 'seek', 'finish', 'loop', 'dispose']) {
             const state = await page.evaluate((name) => window.bone2dTest.frame(name), stage);
             const screenshot = await page.screenshot();
@@ -1948,6 +2021,7 @@ async function main() {
             report.webGameFade[label] = { ...sample, image: sha(await page.screenshot()) };
         }
         assert.notEqual(report.webGameFade.zero.image, report.webGameFade.half.image);
+
         await page.evaluate(() => window.bone2dTest.ikClose());
         const formats = {},
             externalRequests = [];

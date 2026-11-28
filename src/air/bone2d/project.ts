@@ -1017,6 +1017,10 @@ function applyPhysicsTracks(
 }
 
 type Bone2dLocalPose = Pick<Bone2dSample, 'bones' | 'shears'>;
+export interface Bone2dPoseControls {
+    readonly attachments: ReadonlyMap<string, string | null>;
+    readonly heldPositions: ReadonlyMap<string, readonly [number, number]>;
+}
 export interface Bone2dMixFrame {
     readonly transition?: { from: Bone2dLocalPose; alpha: number; holdPrevious: boolean; game?: Bone2dSample };
     readonly layers?: readonly { id: string; time: number; weight: number; additive: boolean }[];
@@ -1161,7 +1165,7 @@ export function sampleBone2dProject(
 /** Internal stateful sampling entry; public random access does not touch spring history. */
 export function sampleBone2dFrame(
     project: Bone2dProject, clipId: string | null, seconds: number, overlays: readonly string[], physicsStep?: PhysicsStep,
-    mix?: Bone2dMixFrame, unsolved = false,
+    mix?: Bone2dMixFrame, unsolved = false, controls?: Bone2dPoseControls,
 ): Bone2dSample {
     const clip = clipId === null ? undefined : project.clips.get(clipId);
     if (clipId !== null && !clip) fail(`unknown animation: ${clipId}`);
@@ -1313,7 +1317,9 @@ export function sampleBone2dFrame(
     const raw: Bone2dSample = { bones, shears, activeBones, ik, transforms, sliders, paths, physics, slots, meshDeltas, shapeDeltas, order, sequenceFrames };
     const sample = mix ? mixPreview(project, clip, raw, selectedSkins, overlays, mix) : raw;
     if (unsolved) return sample;
-    return sliders.size || paths.size || (physicsStep && physics.size) ? solvePose(project, sample, selectedSkins, physicsStep, resets) : sample;
+    return sliders.size || paths.size || (physicsStep && physics.size) || controls
+        ? solvePose(project, sample, selectedSkins, physicsStep, resets, controls)
+        : sample;
 }
 
 /** Resolve ordered parent/local 2D affine products without decomposing shear. */
@@ -1348,7 +1354,7 @@ function setupLengthsOf(a: PathAttachment, slotBone: string, byId: ReadonlyMap<s
 }
 
 function solvePose(
-    project: Bone2dProject, sample: Bone2dSample, skins: readonly Skin[], physicsStep?: PhysicsStep, resets?: ReadonlySet<string>,
+    project: Bone2dProject, sample: Bone2dSample, skins: readonly Skin[], physicsStep?: PhysicsStep, resets?: ReadonlySet<string>, controls?: Bone2dPoseControls,
 ): Bone2dSample {
     const out = new Map<string, Matrix2D>();
     const solved = new Map<string, AppliedPose>();
@@ -1374,6 +1380,8 @@ function solvePose(
             const [pa, pb, pc, pd, px, py] = parent;
             m = [...inheritBasis(parent, bone.inherit, degrees, sx, sy, shear), pa*x+pb*y+px, pc*x+pd*y+py];
         }
+        const held = controls?.heldPositions.get(id);
+        if (held) m = [m[0], m[1], m[2], m[3], held[0], held[1]];
         if (!m.every(Number.isFinite)) fail(`non-finite solved bone: ${id}`);
         out.set(id, m);
         return m;
@@ -1384,10 +1392,20 @@ function solvePose(
     const ik = new Map(sample.ik), transforms = new Map(sample.transforms), sliders = new Map(sample.sliders);
     const slots = new Map(sample.slots);
     const slotFrames = new Map(sample.slotFrames), slotDeform = new Map(sample.slotDeform);
+    const applyOverride = (id: string): void => {
+        if (!controls?.attachments.has(id)) return;
+        const current = slots.get(id)!;
+        const name = controls.attachments.get(id)!;
+        if (name === current.attachment) return;
+        slots.set(id, { ...current, attachment: name });
+        slotFrames.delete(id);
+        slotDeform.delete(id);
+    };
+    for (const id of controls?.attachments.keys() ?? []) applyOverride(id);
     const bySlot = new Map(project.slots.map((s) => [s.id, s] as const));
     const attachment = (id: string): Attachment | undefined => resolveBone2dAttachment(skins, id, slots.get(id)!.attachment);
     const owner = (a: Attachment | undefined): Attachment | undefined => a?.kind === 'mesh' ? a.deformParent ?? a : a;
-    if (sliders.size && !sample.slotFrames) {
+    if ((sliders.size || controls?.attachments.size) && !sample.slotFrames) {
         for (const { id } of project.slots) {
             const a = attachment(id);
             if (!a) continue;
@@ -1439,7 +1457,7 @@ function solvePose(
                 if (p && physicsStep) {
                     const world = compute(c.bone);
                     const next = solveBone2dPhysics(c, p, world, byId.get(c.bone)!.length, project.referenceScale, physicsStep,
-                        resets?.has(globalPhysics) || resets?.has(id) || false);
+                        resets?.has(globalPhysics) || resets?.has(id) || false, project.source === 'web-game');
                     if (next !== world) writeWorld(c.bone, next);
                 }
                 continue;
@@ -1507,7 +1525,7 @@ function solvePose(
                     if (!sample.activeBones.has(bySlot.get(slot)!.bone)) continue;
                     let current = slots.get(slot)!;
                     const index = last(track.attachment, time);
-                    const name = index < 0 ? current.attachment : track.attachment[index].value;
+                    const name = index < 0 || controls?.attachments.has(slot) ? current.attachment : track.attachment[index].value;
                     if (name !== current.attachment) {
                         const before = attachment(slot);
                         current = { ...current, attachment: name };
@@ -1649,7 +1667,7 @@ function solvePose(
     }
     for (const bone of project.bones) compute(bone.id);
     return { ...sample, solvedWorld: out, slots, order, ik, transforms, sliders, paths, physics,
-        ...(sliders.size ? { slotFrames, slotDeform } : {}),
+        ...(sliders.size || controls?.attachments.size ? { slotFrames, slotDeform } : {}),
     };
 }
 
