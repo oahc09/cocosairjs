@@ -13,12 +13,17 @@ const apply = (frag: string, name = effectName, program = shader.name, hash = sh
 
 test('the frozen WebGL2 TAA variant adds current-depth clipping without changing its shader interface', () => {
     const changed = apply(source);
-    const a = source.indexOf('void minmax(');
-    const z = source.indexOf('float HdrWeightY(');
+    const a = source.indexOf('vec2 getVelocity(');
+    const z = source.indexOf('vec4 colorMin, colorMax;');
     expect(changed.startsWith(source.slice(0, a))).toBe(true);
     expect(changed.endsWith(source.slice(z))).toBe(true);
     expect(changed).toContain('texelFetch(depthTex');
     expect(changed).toContain('cc_matProjInv');
+    expect(changed).not.toContain('abs(worldPos.x)');
+    expect(changed).not.toContain('getVelocity(');
+    expect(changed).toContain('taaHistoryUV(scaledUnjittedUV, uv, historyUV)');
+    expect(changed).toContain('taaSampleTex(taaPrevTexture, historyUV)');
+    expect(changed).not.toContain('depth >= 1.');
     expect(changed).toContain('return vec4(resultColor, color.a)');
     expect(changed.match(/uniform [^;]+;/g)).toEqual(source.match(/uniform [^;]+;/g));
 });
@@ -29,4 +34,8 @@ test('application replacements and unknown stock compiler fragments retain their
     expect(apply(source, effectName, shader.name, shader.hash + 1)).toBe(source);
     const unknown = source.replace('void minmax(', 'void range(');
     expect(apply(unknown)).toBe(unknown);
+    const changedLookup = source.replace('uv + velocity', 'uv + velocity * 2.');
+    expect(apply(changedLookup)).toBe(changedLookup);
+    const changedVelocity = source.replace('vec2 getVelocity(', 'vec2 velocityOverride(');
+    expect(apply(changedVelocity)).toBe(changedVelocity);
 });

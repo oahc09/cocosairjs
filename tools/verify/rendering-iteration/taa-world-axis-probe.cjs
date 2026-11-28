@@ -1,12 +1,13 @@
 'use strict';
 
-// Isolate the production getVelocity and history lookup at zero jitter.
+// Compare the frozen lookup against the real AIR shader adapter at zero jitter.
 // This is not a native TAA scene test or a WebGPU result.
 const assert = require('node:assert/strict');
 const { createHash } = require('node:crypto');
 const { readFileSync, writeFileSync } = require('node:fs');
 const { resolve } = require('node:path');
-const { chromium } = require('playwright');
+const { chromium, webkit } = require('playwright');
+const ts = require('typescript');
 
 const shaderFile = resolve(__dirname, '../../../vendor/builtin-source/generated/custom-effects.json');
 const fovScale = Math.sqrt(3);
@@ -19,7 +20,17 @@ async function main(executablePath, output) {
     assert(executablePath && output, 'Usage: node taa-world-axis-probe.cjs <Chromium executable> <new-report.json>');
     const bytes = readFileSync(shaderFile);
     const taa = JSON.parse(bytes).find(({ name }) => name === 'pipeline/post-process/taa');
-    const fragment = taa.shaders[0].glsl3.frag;
+    const shader = taa.shaders[0];
+    const fragment = shader.glsl3.frag;
+    const adapterFile = resolve(__dirname, '../../../src/air/builtin/taa-depth-clamp.ts');
+    const adapterBytes = readFileSync(adapterFile);
+    const adapter = { exports: {} };
+    const compiled = ts.transpileModule(adapterBytes.toString(), {
+        compilerOptions: { module: ts.ModuleKind.CommonJS },
+    });
+    new Function('exports', compiled.outputText)(adapter.exports);
+    const production = adapter.exports.airWebGL2TAAFragment(taa.name, shader.name, shader.hash, fragment);
+    assert.notEqual(production, fragment, 'Production shader adapter did not activate');
     const get = (name) => {
         const match = fragment.match(
             new RegExp('^(\\s*(?:vec2|vec3) ' + name + '\\([^\\n]+\\{\\n[\\s\\S]*?^\\})', 'm'),
@@ -31,12 +42,13 @@ async function main(executablePath, output) {
     const axisGuard =
         /if \(abs\(worldPos\.x\) < 0\.0001 && abs\(worldPos\.y\) < 0\.0001\)\s*\{\s*return vec2\(0\.\);\s*\}/;
     const hasAxisGuard = axisGuard.test(velocity);
-    const hasDepthGuard = /if \(depth >= 1\.\)/.test(velocity);
-    assert(hasAxisGuard || hasDepthGuard, 'Frozen fallback changed; review fixture expectations');
-    const candidate = hasAxisGuard ? velocity.replace(axisGuard, 'if (depth >= 1.) { return vec2(0.); }') : velocity;
-    const browser = await chromium.launch({
+    assert(hasAxisGuard, 'Frozen regression control changed; review fixture expectations');
+    const productionHelper = production.match(/^bool taaHistoryUV\([^\n]+\{\n[\s\S]*?^\}/m)?.[0];
+    assert(productionHelper, 'Missing actual AIR history helper');
+    const isChrome = executablePath.includes('chrome-headless-shell');
+    const browser = await (isChrome ? chromium : webkit).launch({
         executablePath: resolve(executablePath),
-        args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'],
+        ...(isChrome ? { args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'] } : {}),
     });
     let report;
     try {
@@ -46,7 +58,12 @@ async function main(executablePath, output) {
             { distance, x: 0, y: 0.00011, previousX: 1 },
             { distance, x: 0, y: 0, previousX: 0 },
         ]);
-        samples.push({ distance: far, x: 0, y: 0.5, previousX: 1, clear: true });
+        samples.push(
+            { distance: far, x: 0, y: 0, previousX: 1, farPlane: true },
+            { distance: 4, x: 0.1, y: 0, previousX: 10, rejected: 'offscreen' },
+            { distance: 4, x: 0.1, y: 0, previousX: 1, previousZ: -6, rejected: 'behind-camera' },
+            { distance: 4, x: 0.1, y: 0, previousX: 0, previousZ: -3.5, rejected: 'before-near-plane' },
+        );
         const result = await page.evaluate(
             ({ common, variants, f, aspect, near, far, width, samples }) => {
                 const canvas = document.createElement('canvas');
@@ -110,9 +127,14 @@ async function main(executablePath, output) {
                         ${common}
                         ${fn}
                         void main() {
-                            float d;
-                            vec2 prior = uv + getVelocity(uv, uv, d);
-                            result = vec4(prior, texture(history, prior).r, d);
+                            vec2 prior;
+                            bool valid = true;
+                            ${
+                                mode === 'production'
+                                    ? 'valid = taaHistoryUV(uv, uv, prior);'
+                                    : 'float d; prior = uv + getVelocity(uv, uv, d);'
+                            }
+                            result = valid ? vec4(prior, texture(history, prior).r, 1.) : vec4(0.);
                         }`,
                         ),
                     );
@@ -125,8 +147,8 @@ async function main(executablePath, output) {
                     gl.uniform1i(loc('depthTex'), 0);
                     gl.uniform1i(loc('history'), 1);
                     for (const sample of samples) {
-                        const { distance: d, x, y, previousX } = sample;
-                        const depth = sample.clear ? 1 : (-a + b / d) / 2 + 0.5;
+                        const { distance: d, x, y, previousX, previousZ = 0 } = sample;
+                        const depth = sample.farPlane ? 1 : (-a + b / d) / 2 + 0.5;
                         gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, 0, 1, 1, gl.RED, gl.FLOAT, new Float32Array([depth]));
                         gl.uniformMatrix4fv(loc('taaPrevViewProj'), false, [
                             sx,
@@ -143,8 +165,8 @@ async function main(executablePath, output) {
                             -1,
                             -sx * previousX,
                             0,
-                            b,
-                            0,
+                            b - a * previousZ,
+                            previousZ,
                         ]);
                         gl.uniform2f(loc('uv'), 0.5 + (x * sx) / (2 * d), 0.5 + (y * f) / (2 * d));
                         gl.drawArrays(gl.POINTS, 0, 1);
@@ -157,7 +179,7 @@ async function main(executablePath, output) {
                             sampledU: read[0],
                             sampledV: read[1],
                             texel: Math.round(read[2] * 255),
-                            sampledDepth: read[3],
+                            valid: read[3] === 1,
                         });
                     }
                 }
@@ -165,7 +187,7 @@ async function main(executablePath, output) {
             },
             {
                 common: [get('screen2WS'), get('NDCScToUV')].join('\n'),
-                variants: { frozen: velocity, clearDepthControl: candidate },
+                variants: { frozen: velocity, production: productionHelper },
                 f: fovScale,
                 aspect,
                 near,
@@ -179,21 +201,24 @@ async function main(executablePath, output) {
             frozenEffectsSHA256: createHash('sha256').update(bytes).digest('hex'),
             probeSHA256: createHash('sha256').update(readFileSync(__filename)).digest('hex'),
             hasAxisGuard,
-            hasDepthGuard,
+            adapterSHA256: createHash('sha256').update(adapterBytes).digest('hex'),
             passed: false,
             ...result,
         };
         for (const row of report.rows) {
+            if (row.rejected) {
+                if (row.mode === 'production') assert.equal(row.valid, false, JSON.stringify(row));
+                continue;
+            }
             const { x, y, distance: d, previousX } = row;
             const currentU = 0.5 + (x * fovScale) / (aspect * 2 * d);
             const expectedU = currentU - (previousX * fovScale) / (aspect * 2 * d);
             const expectedV = 0.5 + (y * fovScale) / (2 * d);
-            const oldSkip = row.mode === 'frozen' && hasAxisGuard && Math.abs(x) < 0.0001 && Math.abs(y) < 0.0001;
-            const clearSkip = row.clear && (row.mode === 'clearDepthControl' || hasDepthGuard);
+            const oldSkip = row.mode === 'frozen' && Math.abs(x) < 0.0001 && Math.abs(y) < 0.0001;
             row.geometricU = expectedU;
             row.lookupErrorPx = Math.abs(row.sampledU - expectedU) * historyWidth;
-            const actualU = oldSkip || clearSkip ? currentU : expectedU;
-            assert(Math.abs(row.sampledU - actualU) < 0.000003, JSON.stringify(row));
+            assert.equal(row.valid, true, JSON.stringify(row));
+            assert(Math.abs(row.sampledU - (oldSkip ? currentU : expectedU)) < 0.000003, JSON.stringify(row));
             assert(Math.abs(row.sampledV - expectedV) < 0.000003, JSON.stringify(row));
             assert(Math.abs(historyWidth * row.sampledU - row.texel - 0.5) <= 0.50002, JSON.stringify(row));
         }

@@ -331,12 +331,18 @@ async function main([executable, output, flag, ...rest]) {
             )
         )
             throw new Error('Runtime history control failed');
+        const jitterAxes = new Set();
         for (const [i, frame] of runtime.records.entries()) {
             if (frame.alias || frame.pixels.B.sha256 !== control.records[i].pixels.B.sha256)
                 throw new Error('Second camera changed across the first camera cut or resize');
             for (const draw of frame.captures) {
                 const previous = runtime.records[i - 1]?.captures.find((d) => d.name === draw.name);
                 const seed = !previous || (draw.name === 'A' && i >= 3);
+                if (!seed) {
+                    for (const [axis, offset] of draw.atQueue.params.slice(0, 2).entries()) {
+                        if (Number.isFinite(offset) && Math.abs(offset) > 0.00001) jitterAxes.add(draw.name + axis);
+                    }
+                }
                 if (
                     draw.output === draw.inputs.taaPrevTexture ||
                     draw.inputs.taaPrevTexture !== (seed ? draw.inputs.inputTexture : previous.output) ||
@@ -347,6 +353,7 @@ async function main([executable, output, flag, ...rest]) {
                     throw new Error(`Runtime TAA boundary failed: ${draw.name}/${i}`);
             }
         }
+        if (jitterAxes.size !== 4) throw new Error('Runtime history was not exercised with jitter on both camera axes');
         if (runtime.records[4].pixels.A.width !== 192 || runtime.records[4].pixels.A.height !== 112)
             throw new Error('Missing runtime resize readback');
     }
