@@ -102,3 +102,7 @@ export type {
 } from './box3d-controls';
 
 export * from './box3d-queries';
+
+export * from './motion/timeline';
+export * from './motion/targets';
+export * from './motion/stagger';

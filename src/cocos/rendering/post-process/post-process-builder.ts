@@ -165,6 +165,15 @@ export class PostProcessBuilder implements PipelineBuilder  {
         passContext.isFinalCamera = false;
         passContext.isFinalPass = false;
 
+        const activeCameras = new Set(cameras.filter((camera) => !!camera.scene));
+        const taaPasses = new Set<TAAPass>();
+        for (const passes of this.pipelines.values()) {
+            for (const pass of passes) {
+                if (pass instanceof TAAPass) taaPasses.add(pass);
+            }
+        }
+        for (const pass of taaPasses) pass.beginFrame(activeCameras);
+
         let globalPP: PostProcess | undefined;
         for (let i = 0; i < PostProcess.all.length; i++) {
             const pp = PostProcess.all[i];
@@ -220,11 +229,24 @@ export class PostProcessBuilder implements PipelineBuilder  {
         const passes = this.getCameraPasses(camera);
 
         const taaPass = passes.find((p): boolean => p instanceof TAAPass) as TAAPass;
-        if (taaPass && taaPass.checkEnable(camera)) {
-            taaPass.applyCameraJitter(camera);
-            taaPass.updateSample();
+        const taaEnabled = !!taaPass && taaPass.checkEnable(camera);
+        const transparencyIndex = taaEnabled && taaPass.setting.isolateTransparentHistory
+            ? passes.findIndex((pass) => pass instanceof ForwardTransparencyPass)
+            : -1;
+        const transparency = passes[transparencyIndex];
+        // Isolation requires the original blended color, not a DOF or extension pass's transformed input.
+        const allowsIsolation = transparencyIndex >= 0 && transparency.checkEnable(camera)
+            && passes.slice(transparencyIndex + 1).find((pass) => pass.checkEnable(camera)) === taaPass;
+        if (taaEnabled) {
+            taaPass.prepareCamera(camera, ppl, allowsIsolation);
             this._jitteredCameras.add(camera);
-        } else if (this._jitteredCameras.delete(camera)) {
+        }
+        for (const group of this.pipelines.values()) {
+            for (const pass of group) {
+                if (pass instanceof TAAPass && (pass !== taaPass || !taaEnabled)) pass.disableCamera(camera);
+            }
+        }
+        if (!taaEnabled && this._jitteredCameras.delete(camera)) {
             // Native fov assignment invalidates projection without changing the application's field of view.
             camera.fov = camera.fov;
             camera.update(true);
@@ -249,6 +271,9 @@ export class PostProcessBuilder implements PipelineBuilder  {
                     ? '' :  floatOutputPass.getHDRInputName();
             }
 
+            if (pass === transparency && lastPass && taaEnabled && allowsIsolation) {
+                taaPass.captureOpaqueColor(camera, ppl, lastPass.slotName(camera, 0));
+            }
             pass.lastPass = lastPass;
             pass.render(camera, ppl);
 

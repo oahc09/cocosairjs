@@ -5713,7 +5713,7 @@
       "upstreamPath": "cocos/rendering/custom/web-program-library.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "extraction copy Carry optional native WGSL render stages while preserving GLSL defaults."
+      "reason": "AIR: carry optional native WGSL render stages; derive depth-aware color clipping only for the registered stock WebGL2 TAA fragment."
     },
     {
       "airPath": "src/cocos/rendering/custom/web-types.ts",
@@ -7952,8 +7952,8 @@
       "airPath": "src/cocos/rendering/post-process/components/taa.ts",
       "upstreamPath": "cocos/rendering/post-process/components/taa.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 post-process 回归抽取，官方原文"
+      "modified": true,
+      "reason": "AIR: explicit TAA history invalidation after a camera cut."
     },
     {
       "airPath": "src/cocos/rendering/post-process/index.ts",
@@ -8092,15 +8092,15 @@
       "airPath": "src/cocos/rendering/post-process/passes/taa-pass.ts",
       "upstreamPath": "cocos/rendering/post-process/passes/taa-pass.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 post-process 回归抽取，官方原文"
+      "modified": true,
+      "reason": "AIR: isolate camera history, material bindings and WebGL2 projection jitter; reuse slots on camera churn."
     },
     {
       "airPath": "src/cocos/rendering/post-process/post-process-builder.ts",
       "upstreamPath": "cocos/rendering/post-process/post-process-builder.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
       "modified": true,
-      "reason": "AIR: restore camera projection when TAA transitions from enabled to disabled; remove residual jitter on both Web backends"
+      "reason": "AIR: schedule and retire camera-local TAA history, and restore unjittered projection on disable."
     },
     {
       "airPath": "src/cocos/rendering/post-process/utils/pass-context.ts",
