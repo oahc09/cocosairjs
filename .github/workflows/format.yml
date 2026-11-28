@@ -3,11 +3,12 @@ name: Code quality
   workflow_dispatch:
     inputs:
       mode:
-        description: Full retained coverage or isolated Skills P1
+        description: Full retained coverage, isolated Skills P1, or Agent Review
         type: choice
         options:
           - full
           - skills
+          - agent-review
         default: full
         required: true
   workflow_call:
@@ -23,6 +24,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   quality:
+    if: inputs.mode != 'agent-review'
     runs-on: ubuntu-24.04
     timeout-minutes: 35
     env:
@@ -451,3 +453,49 @@ jobs:
             ${{ runner.temp }}/skills-p1/
             ${{ runner.temp }}/skills-route-reports/
           if-no-files-found: error
+  agent-review:
+    if: inputs.mode == 'agent-review'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      AIR_CI_SOFTWARE_GL: "1"
+      LIBGL_ALWAYS_SOFTWARE: "1"
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22.23.3
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            tools/mcp/package-lock.json
+      - name: Install independently locked tooling and its Chromium
+        run: |
+          npm ci --ignore-scripts
+          npm ci --prefix tools/mcp --ignore-scripts
+          node tools/mcp/node_modules/playwright/cli.js install-deps chromium
+          version=158.0.8127.18
+          node -e 'const assert=require("node:assert/strict");const {browsers}=require("./tools/mcp/node_modules/playwright-core/browsers.json");assert.equal(browsers.find(b=>b.name==="chromium-headless-shell").browserVersion,process.argv[1]);' "$version"
+          chrome="$RUNNER_TEMP/air-review-chrome"
+          mkdir "$chrome"
+          curl --fail --silent --show-error --location --retry 2 --max-time 90 \
+            "https://storage.googleapis.com/chrome-for-testing-public/$version/linux64/chrome-headless-shell-linux64.zip" \
+            --output "$chrome/chromium.zip"
+          echo "18352d22cb0cdf520cbff2ad8c41391f0e02a72886cb53b0fde4bdfc4bd075d6  $chrome/chromium.zip" | sha256sum --check
+          unzip -q "$chrome/chromium.zip" -d "$chrome"
+          echo "AIR_CHROMIUM=$chrome/chrome-headless-shell-linux64/chrome-headless-shell" >> "$GITHUB_ENV"
+      - name: Build development SDK and run focused review proofs
+        run: |
+          npm run build
+          bash tools/mcp/review-ci.sh "$RUNNER_TEMP/air-agent-review"
+      - name: Keep focused review originals
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: air-agent-review-${{ github.sha }}
+          path: ${{ runner.temp }}/air-agent-review/
+          if-no-files-found: ignore
+          retention-days: 14

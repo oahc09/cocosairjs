@@ -55,3 +55,9 @@ node tools/mcp/seeded-panel-browser.mjs
 这是 AIR 的小型验证夹具，不是新资源格式或通用资产构建器。生成器把固定几何、seed 驱动的 64×64 瓷砖 PNG 和标准 PBR 材质写入常规 GLB，另存原始 PNG 与收据。收据固定生成器 SHA-256、参数、编码工具链版本和两个文件的 SHA-256，不记录生成时刻或目录。复验时按指定 seed 独立重建并逐字节核对，不能只改收据来接受被替换的文件；目标是同工具链复现，不承诺跨编码器版本的字节一致。
 
 测试用三份独立浏览器上下文运行原生 glTF Viewer。两次独立生成的同 seed PNG／GLB／收据字节一致，浏览器画面也一致；改 seed 必须产生可见差异。篡改的 GLB 在提供给 Viewer 前就被拒绝。通用资产构建和登记规范不在此试点内。
+
+## 一起复跑三条验收
+
+仓库的 Code quality 提供独立的 `agent-review` 模式，不改变常规检查的范围。它使用 `tools/mcp` 锁定的 Playwright 和配套 Chromium，在一个新构建、一个 loopback 服务器上顺序运行三条验收，保留对应 SHA、日志和原始证据。这个模式不代表全浏览器验收或发布审批。
+
+本地按前文装好依赖和 Chromium，然后运行 `npm run build`，再执行 `bash tools/mcp/review-ci.sh /tmp/air-agent-review-new`。输出目录必须是绝对路径且尚不存在；复用已安装 Chromium 时可设 `AIR_CHROMIUM`。
