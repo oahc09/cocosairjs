@@ -1,11 +1,17 @@
 import * as m from '/build/cocosair.module.js';
 
-const mode = new URL(location.href).searchParams.get('mode');
+const args = new URL(location.href).searchParams;
+const mode = args.get('mode');
 if (!['plain-off', 'plain-taa', 'fence-off', 'fence-taa', 'fence-zero', 'fence-current', 'fence-union'].includes(mode))
     throw new Error('Invalid motion track');
 const response = await fetch('/vendor/builtin-source/generated/custom-effects.json');
 if (!response.ok) throw new Error('Missing custom effects');
 const effects = await response.json();
+if (args.get('stock') === '1') {
+    // Keep the exact stock fragment but identify it as a test replacement, not AIR's built-in variant.
+    const stock = effects.find(({ name }) => name === 'pipeline/post-process/taa').shaders[0];
+    stock.hash ^= 0x40000000;
+}
 m.settings.overrideSettings('rendering', 'customPipeline', true);
 m.settings.overrideSettings('rendering', 'effectSettingsPath', '/vendor/builtin-source/generated/custom-layout.bin');
 m.macro.CUSTOM_PIPELINE_NAME = 'Custom';
@@ -89,6 +95,15 @@ m.Material.prototype.setProperty = function (name, value, ...rest) {
     return setProperty.call(this, name, value, ...rest);
 };
 
+const stable =
+    args.get('stable') === '1'
+        ? rect('Stable depth animated color', 30, 24, -0.5, 24, 12, 236)
+              .getComponent(m.MeshRenderer)
+              .getMaterialInstance(0)
+        : null;
+if (stable) rect('Same-depth bright reference', 42.5, 24, -0.5, 1, 12, 236);
+const cut = args.get('cut') === '1';
+
 let active;
 const original = builder.renderCamera;
 builder.renderCamera = function (targetCamera, pipeline) {
@@ -165,6 +180,8 @@ window.__probe = async () => {
         for (let i = 0; i < 2; i++) {
             mover.setPosition(-7 + i * 8, 0, 0);
             setMask(i);
+            if (stable && i === 1) stable.setProperty('mainColor', new m.Color(116, 116, 116, 255));
+            if (cut && i === 1) taa.resetHistory();
             active = [];
             const frame = await clock.step();
             const rgba = target.readPixels();
@@ -176,7 +193,8 @@ window.__probe = async () => {
             });
             const digest = new Uint8Array(await crypto.subtle.digest('SHA-256', rgba));
             const rgbaSha256 = Array.from(digest, (b) => b.toString(16).padStart(2, '0')).join('');
-            records.push({ frame, draws: active, worldX: mover.position.x, scan, rgbaSha256 });
+            const stableScan = Array.from({ length: 5 }, (_, j) => rgba[(72 * width + 119 + j) * 4]);
+            records.push({ frame, draws: active, worldX: mover.position.x, scan, rgbaSha256, stableScan });
         }
         const gl = document.getElementById('GameCanvas').getContext('webgl2');
         return {

@@ -5713,7 +5713,7 @@
       "upstreamPath": "cocos/rendering/custom/web-program-library.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "extraction copy Carry optional native WGSL render stages while preserving GLSL defaults."
+      "reason": "AIR: carry optional native WGSL render stages; derive depth-aware color clipping only for the registered stock WebGL2 TAA fragment."
     },
     {
       "airPath": "src/cocos/rendering/custom/web-types.ts",

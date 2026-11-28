@@ -325,3 +325,26 @@ unchanged.
 The reduced-motion and ordinary runs use separate pages. This is an E11 interaction
 and native-rendering proof, not visual approval of the final E11 concept or
 physical-GPU performance evidence.
+
+### E12 depth-aware neighborhood regression (WebGL2)
+
+```sh
+node tools/verify/rendering-iteration/taa-native-probe.cjs \
+  <WPE-or-chrome-headless-shell> <new-report.json> --expect-depth-clamp
+```
+
+AIR's stock WebGL2 TAA program excludes current-frame neighbors across a depth
+edge from the color-clipping range. It uses the existing depth input, keeps the
+original current alpha and still applies history on a stable surface. No effect
+layout changes, new textures or history allocations are involved. The runtime
+selects this for the frozen built-in fragment only. WebGPU and custom replacement
+effects retain the original program.
+
+The native regression requires the unmodified stock fragment to reproduce the
+old trail and dim leading edge, then requires both frames of the built-in
+depth-aware program to match TAA-off pixels exactly in this fixture. A separate
+same-depth control requires history to remain nonzero; an explicit cut must
+match the TAA-off control. The old `--expect-motion` probe still selects the
+unmodified stock fragment explicitly. This covers the fixed camera, zero-jitter,
+depth-separated geometry case; it is not previous-depth rejection, motion
+vectors, a same-depth/transparent motion fix, or a device performance result.

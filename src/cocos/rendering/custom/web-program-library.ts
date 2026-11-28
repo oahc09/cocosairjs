@@ -24,9 +24,10 @@
 ****************************************************************************/
 
 /* eslint-disable max-len */
+import { airWebGL2TAAFragment } from '../../../air/builtin/taa-depth-clamp';
 import { EffectAsset } from '../../asset/assets';
 import { assert, error, errorID } from '../../core/platform/debug';
-import { Attribute, DESCRIPTOR_BUFFER_TYPE, DESCRIPTOR_SAMPLER_TYPE, DescriptorSetInfo, DescriptorSetLayout, DescriptorSetLayoutInfo, DescriptorType, Device, deviceManager, MemoryAccessBit, PipelineLayout, PipelineLayoutInfo, PipelineState, Shader, ShaderInfo, ShaderStage, ShaderStageFlagBit, Type, Uniform, UniformBlock, UniformInputAttachment, UniformSampler, UniformSamplerTexture, UniformStorageBuffer, UniformStorageImage, UniformTexture } from '../../gfx';
+import { API, Attribute, DESCRIPTOR_BUFFER_TYPE, DESCRIPTOR_SAMPLER_TYPE, DescriptorSetInfo, DescriptorSetLayout, DescriptorSetLayoutInfo, DescriptorType, Device, deviceManager, MemoryAccessBit, PipelineLayout, PipelineLayoutInfo, PipelineState, Shader, ShaderInfo, ShaderStage, ShaderStageFlagBit, Type, Uniform, UniformBlock, UniformInputAttachment, UniformSampler, UniformSamplerTexture, UniformStorageBuffer, UniformStorageImage, UniformTexture } from '../../gfx';
 import { getDeviceShaderVersion, MacroRecord } from '../../render-scene';
 import { selectNativeEffectWGSL } from '../../render-scene/core/program-lib';
 import { IProgramInfo } from '../../render-scene/core/program-lib';
@@ -1147,7 +1148,10 @@ export class WebProgramLibrary implements ProgramLibrary {
                 shaderInfo.stages.length = 1;
             } else {
                 shaderInfo.stages[0].source = prefix + src.vert;
-                shaderInfo.stages[1].source = prefix + src.frag;
+                const fragment = device.gfxAPI === API.WEBGL2 && deviceShaderVersion === 'glsl3'
+                    ? airWebGL2TAAFragment(programInfo.effectName, name, programInfo.hash, src.frag)
+                    : src.frag;
+                shaderInfo.stages[1].source = prefix + fragment;
             }
         }
         shaderInfo.attributes = getActiveAttributes(programInfo, info.attributes, defines);

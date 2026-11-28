@@ -9,6 +9,14 @@ const { chromium, webkit } = require('playwright');
 const { verifySourceBinding } = require('../../build/source-binding.cjs');
 
 const motion = ['plain-off', 'plain-taa', 'fence-off', 'fence-taa', 'fence-zero', 'fence-current', 'fence-union'];
+const depthCases = {
+    off: { mode: 'fence-off' },
+    stock: { mode: 'fence-taa', stock: '1' },
+    depth: { mode: 'fence-taa' },
+    'stable-off': { mode: 'fence-off', stable: '1' },
+    'stable-depth': { mode: 'fence-taa', stable: '1' },
+    'stable-cut': { mode: 'fence-taa', stable: '1', cut: '1' },
+};
 const root = resolve(__dirname, '../../..');
 const files = {
     '/build/cocosair.module.js': ['text/javascript', join(root, 'build/cocosair.module.js')],
@@ -138,6 +146,55 @@ function inspectMotion(result) {
         throw new Error('Fence negative control or mask comparison did not reproduce');
 }
 
+function inspectDepthClamp(result) {
+    const tracks = result.tracks;
+    if (result.errors.length || Object.keys(tracks).length !== Object.keys(depthCases).length)
+        throw Error('Incomplete native depth-clamp capture');
+    for (const name of Object.keys(depthCases)) {
+        const track = tracks[name];
+        const draws = track.records.map((r) => r.draws);
+        if (
+            track.transportErrors.length ||
+            track.consoleErrors.length ||
+            track.extent.join(',') !== '160,96' ||
+            track.scanFromX !== 69 ||
+            track.scanY !== 48 ||
+            track.records.some((r, i) => r.worldX !== -7 + 8 * i || r.scan.length !== 17 || r.stableScan.length !== 5)
+        )
+            throw Error('Invalid depth-clamp fixture: ' + name);
+        if (name.endsWith('off')) {
+            if (draws.flat().length) throw Error('TAA was not disabled: ' + name);
+            continue;
+        }
+        const a = draws[0][0],
+            b = draws[1][0];
+        const cut = name.endsWith('cut');
+        if (
+            draws.some((d) => d.length !== 1 || !d[0].inputs.depthTex || d[0].params.slice(0, 2).some(Boolean)) ||
+            a.params[2] !== 0 ||
+            b.params[2] !== (cut ? 0 : 0.9) ||
+            a.inputs.taaPrevTexture !== a.inputs.inputTexture ||
+            b.inputs.taaPrevTexture !== (cut ? b.inputs.inputTexture : a.output)
+        )
+            throw Error('TAA history controls not exercised: ' + name);
+    }
+    const pixel = (name, x) => tracks[name].records[1].scan[x - 69][0];
+    const clean = pixel('off', 79);
+    const stable = (name) => tracks[name].records[1].stableScan[2];
+    const sameFrames = (a, b) => tracks[a].records.every((f, i) => f.rgbaSha256 === tracks[b].records[i].rgbaSha256);
+    if (
+        clean < 200 ||
+        pixel('off', 74) !== 0 ||
+        pixel('stock', 74) < clean * 0.65 ||
+        pixel('stock', 79) > clean * 0.15 ||
+        !sameFrames('depth', 'off') ||
+        stable('stable-off') < 100 ||
+        stable('stable-depth') <= stable('stable-off') + 30 ||
+        !sameFrames('stable-cut', 'stable-off')
+    )
+        throw Error('Depth edge, stable accumulation or camera cut acceptance failed');
+}
+
 async function main([executable, output, flag, ...rest]) {
     if (
         !executable ||
@@ -149,12 +206,15 @@ async function main([executable, output, flag, ...rest]) {
                 '--expect-isolation',
                 '--expect-jitter',
                 '--expect-motion',
+                '--expect-depth-clamp',
                 '--expect-runtime',
             ].includes(flag))
     )
         throw new Error(
-            'Usage: node taa-native-probe.cjs <WPE or Chrome headless shell executable> <new-report.json> [--expect-baseline|--expect-isolation|--expect-jitter|--expect-motion|--expect-runtime]',
+            'Usage: node taa-native-probe.cjs <WPE or Chrome headless shell executable> <new-report.json> [--expect-baseline|--expect-isolation|--expect-jitter|--expect-motion|--expect-depth-clamp|--expect-runtime]',
         );
+    const depthClamp = flag === '--expect-depth-clamp';
+    const motionProbe = depthClamp || flag === '--expect-motion';
     const binding = verifySourceBinding(root, files['/build/cocosair.module.js'][1]);
     if (!binding.matches) throw new Error('Native probe requires an SDK bound to the current src bytes');
     const hashes = {};
@@ -164,7 +224,7 @@ async function main([executable, output, flag, ...rest]) {
     }
     const server = createServer((req, res) => {
         const route = new URL(req.url, 'http://localhost').pathname;
-        const page = flag === '--expect-motion' ? html.replace('/fixture.mjs', '/motion.mjs') : html;
+        const page = motionProbe ? html.replace('/fixture.mjs', '/motion.mjs') : html;
         const asset = route === '/' ? ['text/html', page] : files[route];
         if (!asset) return res.writeHead(404).end();
         res.writeHead(200, { 'Content-Type': asset[0], 'Cache-Control': 'no-store' }).end(asset[1]);
@@ -180,7 +240,7 @@ async function main([executable, output, flag, ...rest]) {
             ...(chrome ? { chromiumSandbox: true } : {}),
         });
         result.browserVersion = browser.version();
-        const modes = flag === '--expect-motion' ? motion.slice() : ['off', 'single', 'both'];
+        const modes = depthClamp ? Object.keys(depthCases) : motionProbe ? motion.slice() : ['off', 'single', 'both'];
         if (flag === '--expect-runtime') modes.push('runtime', 'runtime-control');
         if (flag === '--expect-jitter') modes.push('isolated-jitter');
         if (flag === '--expect-isolation') modes.push('isolated', 'isolated-control', 'isolated-b');
@@ -197,19 +257,20 @@ async function main([executable, output, flag, ...rest]) {
                 if (event.type() === 'error') consoleErrors.push(event.text());
             });
             try {
-                await page.goto(`http://127.0.0.1:${server.address().port}/?mode=${mode}`);
+                const query = depthClamp ? depthCases[mode] : motionProbe ? { mode, stock: '1' } : { mode };
+                await page.goto(`http://127.0.0.1:${server.address().port}/?${new URLSearchParams(query)}`);
                 await page.waitForFunction(() => typeof window.__probe === 'function', null, { timeout: 15000 });
                 const data = await page.evaluate(() => window.__probe());
                 if (
-                    data.mode !== mode ||
+                    data.mode !== query.mode ||
                     !data.webgl2 ||
                     !data.rgba16f ||
-                    data.records.length !== (flag === '--expect-motion' ? 2 : 5)
+                    data.records.length !== (motionProbe ? 2 : 5)
                 )
                     throw new Error(`Incomplete or unsupported track: ${mode}`);
                 result.tracks[mode] = {
                     ...data,
-                    check: flag === '--expect-motion' ? null : inspect(data),
+                    check: motionProbe ? null : inspect(data),
                     consoleErrors,
                     transportErrors,
                 };
@@ -226,6 +287,10 @@ async function main([executable, output, flag, ...rest]) {
             await new Promise((resolve) => server.close(resolve));
             writeFileSync(output, JSON.stringify(result, null, 2) + '\n', { flag: 'wx' });
         }
+    }
+    if (depthClamp) {
+        inspectDepthClamp(result);
+        return;
     }
     if (flag === '--expect-motion') {
         inspectMotion(result);

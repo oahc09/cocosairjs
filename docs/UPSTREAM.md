@@ -688,3 +688,5 @@ The WebGPU backend validates allocation size and storage binding range against t
 Effects may supply pre-specialized WGSL render stages with explicit entry points. The WebGPU backend compiles those stages directly using their GFX layout, while the existing GLSL path continues to handle effects without the variant and WebGL2.
 
 2026-11-28 AIR TAA: keep history and material bindings per active camera in the native post-process builder, recycle persistent resource slots, and reset on target/scene changes or explicit `TAA.resetHistory()`. The viewport-relative clip-W jitter correction is WebGL2-only; this is not WebGPU or motion-vector acceptance.
+
+2026-11-28 E12：仅 WebGL2 Custom pipeline 的冻结 TAA shader 使用深度感知的当前颜色范围。AIR 在 WebProgramLibrary 编译阶段按内置 effect 名、program 名和 shader hash 选择该变体；不改冻结的 effect/layout 文件，也不添加历史资源。其他 effect、WebGPU 和应用自带 shader 走原路径。
