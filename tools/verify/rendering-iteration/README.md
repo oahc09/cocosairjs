@@ -246,6 +246,29 @@ history rows because the frozen output helper negates an already normalized coor
 clip-depth and both Y mappings recovers the expected world coordinates and rows. This is not a WebGPU adapter,
 full native TAA resolve, or motion-vector validation.
 
+### E12 frozen shader: valid geometry on the world Z axis
+
+```sh
+NODE_PATH=<playwright-node_modules> node tools/verify/rendering-iteration/taa-world-axis-probe.cjs \
+  <chrome-headless-shell> <new-report.json>
+```
+
+This isolates the full `getVelocity` helper and nearest history lookup directly
+from the frozen WebGL2 fragment in `custom-effects.json`; it does not use a
+runtime bundle or rewrite the production shader. In zero-jitter Chromium
+158.0.8127.18 (SwiftShader), a one-unit lateral camera move across valid
+world-axis geometry samples texel 80 instead of 58 at distance 4, and instead
+of 69 at distance 8. The corresponding continuous UV errors are 21.65 and
+10.83 pixels at a width of 160. Just outside the world-XY threshold both lookups
+match the independent projection. Stationary samples retain their previous UV.
+
+A fixture-only replacement illustrates a different policy: treating fixture
+depth 1 as clear retains current UV for an off-axis background sample while
+preserving motion on valid axis samples. This is not a production fix or a
+claim that custom depth clears, far-plane geometry, orthographic cameras or
+other GPU backends should use that policy. The runtime camera-cut control
+below remains separate from this continuous-camera probe.
+
 ### Runtime camera-local TAA regression
 
 After a fresh source-bound ESM build, run:
