@@ -23,6 +23,24 @@
 // Frozen WebGL2 TAA ABI. Leave application replacements and other backends untouched.
 const EFFECT = 'pipeline/post-process/taa';
 const PROGRAM = EFFECT + '|vs|fs';
+const MAIN = 'void main () {';
+// Mode 1 uses the same three frozen sampler slots: blended, opaque, and resolved opaque.
+const COMPOSITE_ENTRY = `void main () {
+    // Same-format snapshot at the input raster's own pixel phase.
+    if (taaParams1.w > 1.5) {
+        fragColor = texelFetch(inputTexture, ivec2(gl_FragCoord.xy), 0);
+        return;
+    }
+    if (taaParams1.w > 0.5) {
+        vec2 currentUV = v_uv - taaParams1.xy * 0.5;
+        vec4 blended = texture(inputTexture, currentUV);
+        vec4 opaque = texture(depthTex, currentUV);
+        // The frozen color and depth samplers need not use identical precision.
+        vec4 tolerance = max(vec4(1.0), max(abs(blended), abs(opaque))) * (1.0 / 1024.0);
+        bool changed = any(greaterThan(abs(blended - opaque), tolerance));
+        fragColor = changed ? blended : texture(taaPrevTexture, v_uv);
+        return;
+    }`;
 const STOCK_HASH = 905303758;
 const START = 'void minmax(sampler2D mainTex, in vec2 uv, out vec4 colorMin, out vec4 colorMax) {';
 const END = 'float HdrWeightY(float Color, float Exposure) {';
@@ -95,9 +113,10 @@ export function airWebGL2TAAFragment(effect: string, program: string, hash: numb
     const start = fragment.indexOf(START);
     const end = fragment.indexOf(END, start + START.length);
     const lookup = fragment.indexOf(HISTORY_LOOKUP);
+    const main = fragment.indexOf(MAIN, lookup + HISTORY_LOOKUP.length);
     if (
-        !(velocity >= 0 && velocity < rgb && rgb < start && start < end && end < lookup) ||
-        [VELOCITY_START, VELOCITY_END, START, END, HISTORY_LOOKUP].some(
+        !(velocity >= 0 && velocity < rgb && rgb < start && start < end && end < lookup && lookup < main) ||
+        [VELOCITY_START, VELOCITY_END, START, END, HISTORY_LOOKUP, MAIN].some(
             (anchor) => fragment.indexOf(anchor) !== fragment.lastIndexOf(anchor),
         )
     ) return fragment;
@@ -108,6 +127,8 @@ export function airWebGL2TAAFragment(effect: string, program: string, hash: numb
         DEPTH_CLAMP +
         fragment.slice(end, lookup) +
         VALIDATED_LOOKUP +
-        fragment.slice(lookup + HISTORY_LOOKUP.length)
+        fragment.slice(lookup + HISTORY_LOOKUP.length, main) +
+        COMPOSITE_ENTRY +
+        fragment.slice(main + MAIN.length)
     );
 }

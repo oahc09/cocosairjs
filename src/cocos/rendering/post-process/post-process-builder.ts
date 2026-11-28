@@ -230,8 +230,15 @@ export class PostProcessBuilder implements PipelineBuilder  {
 
         const taaPass = passes.find((p): boolean => p instanceof TAAPass) as TAAPass;
         const taaEnabled = !!taaPass && taaPass.checkEnable(camera);
+        const transparencyIndex = taaEnabled && taaPass.setting.isolateTransparentHistory
+            ? passes.findIndex((pass) => pass instanceof ForwardTransparencyPass)
+            : -1;
+        const transparency = passes[transparencyIndex];
+        // Isolation requires the original blended color, not a DOF or extension pass's transformed input.
+        const allowsIsolation = transparencyIndex >= 0 && transparency.checkEnable(camera)
+            && passes.slice(transparencyIndex + 1).find((pass) => pass.checkEnable(camera)) === taaPass;
         if (taaEnabled) {
-            taaPass.prepareCamera(camera, ppl);
+            taaPass.prepareCamera(camera, ppl, allowsIsolation);
             this._jitteredCameras.add(camera);
         }
         for (const group of this.pipelines.values()) {
@@ -264,6 +271,9 @@ export class PostProcessBuilder implements PipelineBuilder  {
                     ? '' :  floatOutputPass.getHDRInputName();
             }
 
+            if (pass === transparency && lastPass && taaEnabled && allowsIsolation) {
+                taaPass.captureOpaqueColor(camera, ppl, lastPass.slotName(camera, 0));
+            }
             pass.lastPass = lastPass;
             pass.render(camera, ppl);
 

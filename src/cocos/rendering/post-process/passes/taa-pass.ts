@@ -8,11 +8,12 @@ import { getCameraUniqueID } from '../../custom/define';
 import { TAA } from '../components/taa';
 import { TAAMask } from '../components/taa-mask';
 import { passContext } from '../utils/pass-context';
-import { disablePostProcessForDebugView } from './base-pass';
+import { disablePostProcessForDebugView, getRTFormatBeforeToneMapping } from './base-pass';
 import { getSetting, SettingPass } from './setting-pass';
 import { builtinResMgr } from '../../../asset/asset-manager';
 import { Material, Texture2D } from '../../../asset/assets';
 import { MaterialInstance } from '../../../render-scene';
+import { airWebGL2TAAFragment } from '../../../../air/builtin/taa-depth-clamp';
 
 const halton8 = [
     new Vec2(0.5, 1.0 / 3),
@@ -97,6 +98,9 @@ class CameraHistory {
     revision = 0;
     material: MaterialInstance | undefined;
     maskMaterial: MaterialInstance | undefined;
+    snapshotMaterial: MaterialInstance | undefined;
+    compositeMaterial: MaterialInstance | undefined;
+    isolateTransparent = false;
 
     reset (): void {
         this.valid = false;
@@ -143,13 +147,42 @@ export class TAAPass extends SettingPass {
         return `${this.outputNames[index]}${this.name}_${this._id}_${state.slot}`;
     }
 
+    private opaqueSnapshot (state: CameraHistory): string {
+        return `TAA_OpaqueSource_${this._id}_${state.slot}`;
+    }
+
+    private compositeName (state: CameraHistory): string {
+        return `TAA_Composited_${this._id}_${state.slot}`;
+    }
+
+    captureOpaqueColor (camera: Camera, ppl: Pipeline, source: string): void {
+        const state = this.histories.get(camera);
+        if (!state?.isolateTransparent) return;
+        const target = this.opaqueSnapshot(state);
+        if (!state.snapshotMaterial) state.snapshotMaterial = new MaterialInstance({ parent: this.material });
+        const snapshot = state.snapshotMaterial;
+        snapshot.setProperty('taaParams1', new Vec4(0, 0, 0, 2));
+        passContext.clearFlag = ClearFlagBit.COLOR;
+        Vec4.set(passContext.clearColor, 0, 0, 0, 1);
+        passContext.material = snapshot;
+        passContext
+            .updatePassViewPort()
+            .addRenderPass('DeferredTAA0', `CameraTAASnapshot${getCameraUniqueID(camera)}`)
+            .setPassInput(source, 'inputTexture')
+            .setPassInput(passContext.depthSlotName, 'depthTex')
+            .setPassInput(source, 'taaPrevTexture')
+            .addRasterView(target, getRTFormatBeforeToneMapping(ppl))
+            .blitScreen(0)
+            .version();
+    }
+
     slotName (camera: Camera, index = 0): string {
         const state = this.histories.get(camera);
         if (!state || !this.checkEnable(camera)) return this.lastPass!.slotName(camera, index);
-        return this.historyName(state, state.output);
+        return state.isolateTransparent ? this.compositeName(state) : this.historyName(state, state.output);
     }
 
-    prepareCamera (camera: Camera, ppl: Pipeline): void {
+    prepareCamera (camera: Camera, ppl: Pipeline, allowsIsolation = false): void {
         let state = this.histories.get(camera);
         if (!state) {
             state = this.idle.pop() ?? new CameraHistory(this.nextSlot++);
@@ -157,6 +190,17 @@ export class TAAPass extends SettingPass {
         }
         const { width, height } = passContext.viewport;
         const setting = this.setting;
+        let isolateTransparent = false;
+        if (allowsIsolation && setting.isolateTransparentHistory && ppl.device.gfxAPI === API.WEBGL2
+            && !EDITOR && !camera.node.getComponent(TAAMask)?.mask) {
+            const effect = this.material.effectAsset;
+            const shader = effect?.shaders.find((entry) => entry.name === `${this.effectName}|vs|fs`);
+            const fragment = shader?.glsl3.frag;
+            isolateTransparent = !!(effect && shader && fragment
+                && airWebGL2TAAFragment(effect.name, shader.name, shader.hash, fragment) !== fragment);
+        }
+        if (state.isolateTransparent !== isolateTransparent) state.reset();
+        state.isolateTransparent = isolateTransparent;
         if (state.width !== width || state.height !== height || state.window !== camera.window
             || state.scene !== camera.scene || state.setting !== setting || state.revision !== setting.historyRevision) {
             state.reset();
@@ -226,7 +270,8 @@ export class TAAPass extends SettingPass {
         material.setProperty('taaPrevViewProj', state.valid ? state.previous.clone() : camera.matViewProj.clone());
 
         passContext.material = material;
-        const input = this.lastPass!.slotName(camera, 0);
+        const blendedInput = this.lastPass!.slotName(camera, 0);
+        const input = state.isolateTransparent ? this.opaqueSnapshot(state) : blendedInput;
         const history = state.valid ? this.historyName(state, state.output) : input;
         state.output = state.valid ? 1 - state.output : 0;
         passContext
@@ -237,6 +282,20 @@ export class TAAPass extends SettingPass {
             .addRasterView(this.historyName(state, state.output), Format.RGBA16F, true, ResourceResidency.PERSISTENT)
             .blitScreen(0)
             .version();
+        if (state.isolateTransparent) {
+            if (!state.compositeMaterial) state.compositeMaterial = new MaterialInstance({ parent: this.material });
+            const composite = state.compositeMaterial;
+            composite.setProperty('taaParams1', new Vec4(state.offset.x, state.offset.y, 0, 1));
+            passContext.material = composite;
+            passContext
+                .addRenderPass('DeferredTAA0', `CameraTAAComposite${cameraID}`)
+                .setPassInput(blendedInput, 'inputTexture')
+                .setPassInput(input, 'depthTex')
+                .setPassInput(this.historyName(state, state.output), 'taaPrevTexture')
+                .addRasterView(this.compositeName(state), Format.RGBA16F)
+                .blitScreen(0)
+                .version();
+        }
         state.previous.set(camera.matViewProj);
         state.valid = true;
     }

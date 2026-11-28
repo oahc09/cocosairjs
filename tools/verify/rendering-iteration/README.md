@@ -244,6 +244,35 @@ disabling a separate opaque history control. This is not a production fix,
 does not exercise the production mask camera, and does not validate jitter,
 resize, transparent sorting or physical GPUs.
 
+### E12 opt-in blended motion isolation
+
+```ts
+const taa = cameraNode.addComponent(postProcess.TAA);
+taa.isolateTransparentHistory = true;
+```
+
+With the stock WebGL2 Custom forward pipeline, the engine snapshots pre-blend
+color and resolves TAA using opaque-only history. The final pass selects the
+current blended sample where transparency changed scene color; elsewhere it
+uses the resolved opaque sample. No authored mask, alpha repurposing, or
+automatic rejection of opaque object motion is involved. The effect is opt-in
+because it adds two per-camera fullscreen draws and two transient color targets.
+DOF, other intervening post-process passes, authored TAAMask and non-stock
+shader/backends keep their existing resolve behavior.
+
+```sh
+node tools/verify/rendering-iteration/taa-native-probe.cjs \
+  <WPE-or-chrome-headless-shell> <new-report.json> --expect-transparent-isolation
+```
+
+The positive control observes actual snapshot, opaque resolve and composite
+bindings in the native graph. It checks baseline failure, zero-jitter pixels
+against TAA-off, preservation of useful opaque history, nonzero jitter against
+opaque-only history at the vacated edge and a no-history reference at the
+new edge, and a resize that reseeds history.
+This control does not claim universal coverage of transparent materials or
+physical GPU performance.
+
 ### E12 camera-only reprojection coordinates
 
 ```sh

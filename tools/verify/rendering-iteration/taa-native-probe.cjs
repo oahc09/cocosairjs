@@ -249,6 +249,67 @@ function inspectTransparentControl({ tracks, errors }) {
         throw new Error('Transparent negative control, mask comparison or opaque feedback did not reproduce');
 }
 
+const isolationCases = {
+    off: { mode: 'fence-off' },
+    baseline: { mode: 'fence-taa' },
+    isolated: { mode: 'fence-taa', isolate: '1' },
+    jitterZero: { mode: 'fence-zero', jitter: '1', resize: '1' },
+    jitterOpaque: { mode: 'fence-taa', jitter: '1', opaqueOnly: '1' },
+    jitterIsolated: { mode: 'fence-taa', isolate: '1', jitter: '1', resize: '1' },
+};
+
+function inspectTransparentIsolation({ tracks, errors }) {
+    if (errors.length || Object.keys(tracks).length !== Object.keys(isolationCases).length)
+        throw new Error('Incomplete transparent isolation capture');
+    for (const [name, options] of Object.entries(isolationCases)) {
+        const track = tracks[name];
+        if (track.consoleErrors.length || track.transportErrors.length)
+            throw new Error('Unexpected browser error in ' + name);
+        if (!options.isolate) {
+            if (track.records.some(({ draws }) => draws.some((draw) => draw.composite)))
+                throw new Error('Unexpected isolation in ' + name);
+            continue;
+        }
+        for (const [i, frame] of track.records.entries()) {
+            const [snapshot, resolve, composite] = frame.draws;
+            const seed = i !== 1;
+            if (
+                frame.draws.length !== 3 ||
+                !snapshot.snapshot ||
+                snapshot.output !== resolve.inputs.inputTexture ||
+                (i === 2 && (resolve.width !== 192 || resolve.height !== 112)) ||
+                resolve.inputs.taaPrevTexture !==
+                    (seed ? resolve.inputs.inputTexture : track.records[i - 1].draws[1].output) ||
+                resolve.composite ||
+                !composite.composite ||
+                composite.inputs.depthTex !== resolve.inputs.inputTexture ||
+                resolve.inputs.inputTexture === composite.inputs.inputTexture ||
+                composite.inputs.taaPrevTexture !== resolve.output ||
+                resolve.params[2] !== (seed ? 0 : 0.9) ||
+                (options.jitter && !resolve.params.slice(0, 2).some(Boolean))
+            )
+                throw new Error('Invalid opaque resolve/composite chain: ' + name);
+        }
+    }
+    const oldEdge = 74 - 69;
+    const newEdge = 79 - 69;
+    const scan = (name, frame = 1) => tracks[name].records[frame].scan;
+    const stable = (name) => tracks[name].records[1].stableScan[2];
+    const match = (a, b) => a.every((value, channel) => Math.abs(value - b[channel]) <= 1);
+    if (
+        scan('baseline')[oldEdge][0] < 70 ||
+        JSON.stringify(scan('isolated')) !== JSON.stringify(scan('off')) ||
+        stable('isolated') < stable('off') + 30 ||
+        !match(scan('jitterIsolated')[oldEdge], scan('jitterOpaque')[oldEdge]) ||
+        !match(scan('jitterIsolated')[newEdge], scan('jitterZero')[newEdge]) ||
+        stable('jitterIsolated') !== stable('jitterOpaque') ||
+        scan('jitterZero', 2)[newEdge][0] < 60 ||
+        !match(scan('jitterIsolated', 2)[oldEdge], scan('jitterZero', 2)[oldEdge]) ||
+        !match(scan('jitterIsolated', 2)[newEdge], scan('jitterZero', 2)[newEdge])
+    )
+        throw new Error('Automatic transparent history isolation did not match controls');
+}
+
 async function main([executable, output, flag, ...rest]) {
     if (
         !executable ||
@@ -261,16 +322,18 @@ async function main([executable, output, flag, ...rest]) {
                 '--expect-jitter',
                 '--expect-motion',
                 '--expect-transparent',
+                '--expect-transparent-isolation',
                 '--expect-depth-clamp',
                 '--expect-runtime',
             ].includes(flag))
     )
         throw new Error(
-            'Usage: node taa-native-probe.cjs <WPE or Chrome headless shell executable> <new-report.json> [--expect-baseline|--expect-isolation|--expect-jitter|--expect-motion|--expect-depth-clamp|--expect-transparent|--expect-runtime]',
+            'Usage: node taa-native-probe.cjs <WPE or Chrome headless shell executable> <new-report.json> [--expect-baseline|--expect-isolation|--expect-jitter|--expect-motion|--expect-depth-clamp|--expect-transparent|--expect-transparent-isolation|--expect-runtime]',
         );
     const depthClamp = flag === '--expect-depth-clamp';
     const transparent = flag === '--expect-transparent';
-    const motionProbe = depthClamp || transparent || flag === '--expect-motion';
+    const isolation = flag === '--expect-transparent-isolation';
+    const motionProbe = depthClamp || transparent || isolation || flag === '--expect-motion';
     const binding = verifySourceBinding(root, files['/build/cocosair.module.js'][1]);
     if (!binding.matches) throw new Error('Native probe requires an SDK bound to the current src bytes');
     const hashes = {};
@@ -296,13 +359,15 @@ async function main([executable, output, flag, ...rest]) {
             ...(chrome ? { chromiumSandbox: true } : {}),
         });
         result.browserVersion = browser.version();
-        const modes = depthClamp
-            ? Object.keys(depthCases)
-            : transparent
-              ? motion.filter((name) => name.startsWith('fence'))
-              : motionProbe
-                ? motion.slice()
-                : ['off', 'single', 'both'];
+        const modes = isolation
+            ? Object.keys(isolationCases)
+            : depthClamp
+              ? Object.keys(depthCases)
+              : transparent
+                ? motion.filter((name) => name.startsWith('fence'))
+                : motionProbe
+                  ? motion.slice()
+                  : ['off', 'single', 'both'];
         if (flag === '--expect-runtime') modes.push('runtime', 'runtime-control');
         if (flag === '--expect-jitter') modes.push('isolated-jitter');
         if (flag === '--expect-isolation') modes.push('isolated', 'isolated-control', 'isolated-b');
@@ -319,13 +384,15 @@ async function main([executable, output, flag, ...rest]) {
                 if (event.type() === 'error') consoleErrors.push(event.text());
             });
             try {
-                const query = depthClamp
-                    ? depthCases[mode]
-                    : transparent
-                      ? { mode, transparent: '1', stable: '1' }
-                      : motionProbe
-                        ? { mode, stock: '1' }
-                        : { mode };
+                const query = isolation
+                    ? { ...isolationCases[mode], transparent: '1', stable: '1' }
+                    : depthClamp
+                      ? depthCases[mode]
+                      : transparent
+                        ? { mode, transparent: '1', stable: '1' }
+                        : motionProbe
+                          ? { mode, stock: '1' }
+                          : { mode };
                 await page.goto(`http://127.0.0.1:${server.address().port}/?${new URLSearchParams(query)}`);
                 await page.waitForFunction(() => typeof window.__probe === 'function', null, { timeout: 15000 });
                 const data = await page.evaluate(() => window.__probe());
@@ -333,7 +400,7 @@ async function main([executable, output, flag, ...rest]) {
                     data.mode !== query.mode ||
                     !data.webgl2 ||
                     !data.rgba16f ||
-                    data.records.length !== (motionProbe ? 2 : 5)
+                    data.records.length !== (motionProbe ? (query.resize === '1' ? 3 : 2) : 5)
                 )
                     throw new Error(`Incomplete or unsupported track: ${mode}`);
                 result.tracks[mode] = {
@@ -355,6 +422,10 @@ async function main([executable, output, flag, ...rest]) {
             await new Promise((resolve) => server.close(resolve));
             writeFileSync(output, JSON.stringify(result, null, 2) + '\n', { flag: 'wx' });
         }
+    }
+    if (isolation) {
+        inspectTransparentIsolation(result);
+        return;
     }
     if (transparent) {
         inspectTransparentControl(result);

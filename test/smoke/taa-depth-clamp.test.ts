@@ -16,7 +16,12 @@ test('the frozen WebGL2 TAA variant adds current-depth clipping without changing
     const a = source.indexOf('vec2 getVelocity(');
     const z = source.indexOf('vec4 colorMin, colorMax;');
     expect(changed.startsWith(source.slice(0, a))).toBe(true);
-    expect(changed.endsWith(source.slice(z))).toBe(true);
+    const main = source.indexOf('void main () {');
+    expect(changed).toContain(source.slice(z, main));
+    expect(changed.endsWith(source.slice(main + 'void main () {'.length))).toBe(true);
+    expect(changed).toContain('taaParams1.w > 0.5');
+    expect(changed).toContain('texelFetch(inputTexture, ivec2(gl_FragCoord.xy), 0)');
+    expect(changed).toContain('changed ? blended : texture(taaPrevTexture, v_uv)');
     expect(changed).toContain('texelFetch(depthTex');
     expect(changed).toContain('cc_matProjInv');
     expect(changed).not.toContain('abs(worldPos.x)');
@@ -38,4 +43,6 @@ test('application replacements and unknown stock compiler fragments retain their
     expect(apply(changedLookup)).toBe(changedLookup);
     const changedVelocity = source.replace('vec2 getVelocity(', 'vec2 velocityOverride(');
     expect(apply(changedVelocity)).toBe(changedVelocity);
+    const changedMain = source.replace('void main ()', 'void main()');
+    expect(apply(changedMain)).toBe(changedMain);
 });

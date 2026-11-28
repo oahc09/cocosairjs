@@ -15,6 +15,12 @@ export class TAA extends PostProcessSetting {
     /** Discard accumulated samples after a camera cut or scene discontinuity. */
     resetHistory (): void { ++this._historyRevision; }
 
+    /** WebGL2 Custom forward pipeline: keep blended color out of TAA history.
+     * Adds two fullscreen passes. Has no effect with DOF or an active authored TAAMask.
+     */
+    @property
+    isolateTransparentHistory = false;
+
     @serializable
     protected _sampleScale = 1;
 

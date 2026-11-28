@@ -49,7 +49,8 @@ pp.global = false;
 camera.postProcess = pp;
 const taa = node.addComponent(m.postProcess.TAA);
 taa.enabled = !mode.endsWith('-off');
-taa.sampleScale = 0;
+taa.sampleScale = args.get('jitter') === '1' ? 1 : 0;
+taa.isolateTransparentHistory = args.get('isolate') === '1';
 taa.feedback = mode === 'fence-zero' ? 0 : 0.9;
 const mesh = m.utils.createMesh(m.primitives.box());
 function rect(name, x, y, z, w, h, tone, alpha = 255) {
@@ -74,6 +75,7 @@ else {
 }
 const mover = rect('Moving bright piece', -7, 0, 0, 4, 20, 236, transparent ? 128 : 255);
 if (!transparent && mode.startsWith('fence')) rect('Stationary fence', -4.5, 0, 0, 1, 24, 236);
+mover.active = args.get('opaqueOnly') !== '1';
 const masked = ['fence-current', 'fence-union'].includes(mode);
 let maskTexture;
 if (masked) {
@@ -110,6 +112,7 @@ const stable =
         : null;
 if (stable) rect('Same-depth bright reference', 42.5, 24, -0.5, 1, 12, 236);
 const cut = args.get('cut') === '1';
+const resize = args.get('resize') === '1';
 
 let active;
 const original = builder.renderCamera;
@@ -162,6 +165,8 @@ builder.renderCamera = function (targetCamera, pipeline) {
                         (old) =>
                             function (owner, material, ...args) {
                                 record.params = uploads.get(material);
+                                record.composite = job.name.startsWith('CameraTAAComposite');
+                                record.snapshot = job.name.startsWith('CameraTAASnapshot');
                                 return old.call(this, owner, material, ...args);
                             },
                     );
@@ -184,24 +189,42 @@ clock.begin();
 window.__probe = async () => {
     const records = [];
     try {
-        for (let i = 0; i < 2; i++) {
-            mover.setPosition(-7 + i * 8, 0, 0);
+        for (let i = 0; i < (resize ? 3 : 2); i++) {
+            const resized = resize && i === 2;
+            const readWidth = resized ? 192 : width;
+            const readHeight = resized ? 112 : height;
+            if (resized) {
+                target.resize(readWidth, readHeight);
+                camera.orthoHeight = readHeight / 2;
+            }
+            mover.setPosition(-7 + Math.min(i, 1) * 8, 0, 0);
             setMask(i);
             if (stable && i === 1) stable.setProperty('mainColor', new m.Color(116, 116, 116, 255));
             if (cut && i === 1) taa.resetHistory();
             active = [];
             const frame = await clock.step();
             const rgba = target.readPixels();
-            if (rgba?.length !== width * height * 4) throw new Error('Wrong motion readback size');
+            if (rgba?.length !== readWidth * readHeight * 4) throw new Error('Wrong motion readback size');
             const scan = Array.from({ length: 17 }, (_, n) => {
-                const x = 69 + n;
-                const offset = (48 * width + x) * 4;
+                const x = (readWidth - width) / 2 + 69 + n;
+                const offset = ((readHeight / 2) * readWidth + x) * 4;
                 return Array.from(rgba.subarray(offset, offset + 4));
             });
             const digest = new Uint8Array(await crypto.subtle.digest('SHA-256', rgba));
             const rgbaSha256 = Array.from(digest, (b) => b.toString(16).padStart(2, '0')).join('');
-            const stableScan = Array.from({ length: 5 }, (_, j) => rgba[(72 * width + 119 + j) * 4]);
-            records.push({ frame, draws: active, worldX: mover.position.x, scan, rgbaSha256, stableScan });
+            const stableScan = Array.from(
+                { length: 5 },
+                (_, j) => rgba[((readHeight / 2 + 24) * readWidth + (readWidth - width) / 2 + 119 + j) * 4],
+            );
+            records.push({
+                frame,
+                draws: active,
+                worldX: mover.position.x,
+                scan,
+                rgbaSha256,
+                stableScan,
+                extent: [readWidth, readHeight],
+            });
         }
         const gl = document.getElementById('GameCanvas').getContext('webgl2');
         return {
