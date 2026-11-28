@@ -1,0 +1,1735 @@
+/*
+ Copyright (c) 2026-2027 oahc09@gmail.com
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+*/
+import { inheritBasis, poseBasis } from './affine';
+import type { Bone2dInheritance, Matrix2D, Shears } from './affine';
+import { aimBone2d, aimBone2dPair } from './ik';
+import type { Bone2dAimOptions } from './ik';
+import { transformApplied, transformProperties, transformReadLocal, transformReadWorld, transformWriteLocal, transformWriteWorld } from './transform';
+import type { AppliedPose, Bone2dTransform, TransformProperty } from './transform';
+import { followBone2dPath, pathSetupLengths } from './path';
+import type { PathConstraint, PathState } from './path';
+import { bone2dImageHeader, bone2dImageBudget } from './image';
+import type { Bone2dSavedPlayback } from './playback';
+import { bone2dKeysInWindow } from './playback';
+import { physicsParams, solveBone2dPhysics } from './physics';
+import type { PhysicsConstraint, PhysicsParam, PhysicsParams, PhysicsStep } from './physics';
+
+/** Strict reader for the supported subset of Bone-2D Save Project v1. No editor or Spine dependency. */
+type Obj = Record<string, unknown>;
+export type Bone2dPose = readonly [number, number, number, number, number];
+type RGB = readonly [number, number, number];
+type RGBA = readonly [number, number, number, number];
+interface PictureSequence {
+    readonly frames: readonly string[];
+    readonly setup: number;
+}
+const sequenceModes = ['hold', 'once', 'loop', 'pingpong', 'onceReverse', 'loopReverse', 'pingpongReverse'] as const;
+type SequenceKey = { mode: typeof sequenceModes[number]; index: number; delay: number };
+
+export interface Bone2dRegion {
+    kind: 'region';
+    path: string;
+    sequence?: PictureSequence;
+    pose: Bone2dPose;
+    width: number;
+    height: number;
+    color: RGBA;
+}
+type Influence = readonly [bone: string, x: number, y: number, weight: number];
+export interface Bone2dMesh {
+    kind: 'mesh';
+    path: string;
+    sequence?: PictureSequence;
+    color: RGBA;
+    readonly xy: readonly number[];
+    readonly uvs: readonly number[];
+    readonly indices: readonly number[];
+    readonly weights: readonly (readonly Influence[])[] | null;
+    readonly deformSize: number;
+    readonly link?: {
+        readonly source: string;
+        readonly slot: string | null;
+        readonly skin: string | null;
+        readonly deform: boolean;
+    };
+    readonly deformParent?: Bone2dMesh;
+}
+type Visual = Bone2dRegion | Bone2dMesh;
+type Positioned = Pick<Bone2dMesh, 'xy' | 'weights' | 'deformSize'>;
+type PointAttachment = { kind: 'point'; x: number; y: number; rotation: number };
+type BoundsAttachment = Positioned & { kind: 'boundingbox' };
+type PathAttachment = Positioned & { kind: 'path'; closed: boolean; constantSpeed: boolean };
+export type Bone2dClipAttachment = Positioned & {
+    kind: 'clipping'; end: string | null; convex: boolean; inverse: boolean;
+};
+type Shape = PointAttachment | BoundsAttachment | PathAttachment;
+type PolygonAttachment = BoundsAttachment | PathAttachment | Bone2dClipAttachment;
+type VertexAttachment = Bone2dMesh | PolygonAttachment;
+type Attachment = Visual | Shape | Bone2dClipAttachment;
+/** The active non-rendering attachment in player-root coordinates. XY lists are packed. */
+export type Bone2dAttachmentGeometry =
+    | { readonly kind: 'point'; readonly x: number; readonly y: number; readonly rotation: number }
+    | { readonly kind: 'boundingbox'; readonly vertices: readonly number[] }
+    | { readonly kind: 'path'; readonly vertices: readonly number[]; readonly closed: boolean; readonly constantSpeed: boolean };
+
+interface Bone {
+    id: string;
+    parent: string | null;
+    pose: Bone2dPose;
+    shear: Shears;
+    inherit: Bone2dInheritance;
+    skinRequired: boolean;
+    length: number;
+}
+export type Bone2dBlend = 'normal' | 'additive' | 'multiply' | 'screen';
+interface Slot {
+    blend: Bone2dBlend;
+    dark: RGB | null;
+    id: string;
+    bone: string;
+    attachment: string | null;
+    color: RGBA;
+}
+interface AimConstraint extends Bone2dAimOptions {
+    kind: 'ik';
+    id: string;
+    bone: string;
+    child: string | null;
+    target: string;
+    skinRequired: boolean;
+}
+interface SliderState {
+    time: number;
+    mix: number;
+}
+interface SliderConstraint extends SliderState {
+    kind: 'slider';
+    id: string;
+    animation: string | null;
+    bone: string | null;
+    property: TransformProperty;
+    local: boolean;
+    additive: boolean;
+    loop: boolean;
+    from: number;
+    to: number;
+    scale: number;
+    skinRequired: boolean;
+}
+interface SliderTracks {
+    time: ValueKey[];
+    mix: ValueKey[];
+}
+interface PathTracks { position: ValueKey[]; spacing: ValueKey[]; mix: ValueKey[] }
+type PhysicsTracks = Partial<Record<PhysicsParam, ValueKey[]>> & { reset: Key<null>[] };
+type Constraint = AimConstraint | Bone2dTransform | SliderConstraint | PathConstraint | PhysicsConstraint;
+const globalPhysics = '*';
+const minimumPhysicsMass = 1e-4;
+type AimKey = ValueKey & Pick<Bone2dAimOptions, 'compress' | 'stretch' | 'bendPositive'>;
+interface Skin {
+    id: string;
+    name: string;
+    bones: readonly string[];
+    constraints: readonly string[];
+    regions: ReadonlyMap<string, ReadonlyMap<string, Attachment>>;
+}
+export interface Bone2dProjectOptions {
+    /** Zero-based editor skeleton order. The saved active skeleton is the default. */
+    readonly skeletonIndex?: number;
+    /** Host-approved data URIs for named pictures in a Web Game export. Raw linked URLs are never loaded. */
+    readonly webGameImages?: ReadonlyMap<string, string>;
+}
+interface Folder {
+    id: string;
+    members: readonly string[];
+}
+interface Key<T> {
+    time: number;
+    value: T;
+}
+interface ValueKey extends Key<number[]> {
+    curve: 'linear' | 'stepped' | number[][];
+}
+interface Clip {
+    id: string;
+    name: string;
+    duration: number;
+    play: Bone2dSavedPlayback;
+    bones: ReadonlyMap<string, ReadonlyMap<string, ValueKey[]>>;
+    slots: ReadonlyMap<string, { attachment: Key<string | null>[]; rgba: ValueKey[]; rgba2: ValueKey[] }>;
+    order: Key<string[]>[];
+    folderOrder: ReadonlyMap<string, Key<string[]>[]>;
+    deform: ReadonlyMap<VertexAttachment, ValueKey[]>;
+    sequences: ReadonlyMap<Visual, Key<SequenceKey>[]>;
+    markers: Key<Bone2dMarker>[];
+    ik: ReadonlyMap<string, AimKey[]>;
+    transform: ReadonlyMap<string, ValueKey[]>;
+    slider: ReadonlyMap<string, SliderTracks>;
+    path: ReadonlyMap<string, PathTracks>;
+    physics: ReadonlyMap<string, PhysicsTracks>;
+}
+export interface Bone2dMarker {
+    readonly id: string;
+    readonly name: string;
+    readonly time: number;
+    readonly int: number;
+    readonly float: number;
+    readonly string: string;
+}
+export interface Bone2dImage {
+    readonly width: number;
+    readonly height: number;
+    readonly dataUrl?: string;
+}
+export interface Bone2dProject {
+    readonly skeletonIndex: number;
+    readonly source: 'project' | 'web-game';
+    readonly smooth: boolean;
+    readonly skeletonNames: readonly string[];
+    readonly skins: ReadonlyMap<string, Skin>;
+    readonly folders: ReadonlyMap<string, Folder>;
+    readonly bones: readonly Bone[];
+    readonly affineSprites: boolean;
+    readonly constraints: ReadonlyMap<string, Constraint>;
+    readonly slots: readonly Slot[];
+    readonly clips: ReadonlyMap<string, Clip>;
+    readonly mixDefault: number;
+    readonly mixPairs: ReadonlyMap<string, ReadonlyMap<string, number>>;
+    readonly referenceScale: number;
+    readonly images: ReadonlyMap<string, Bone2dImage>;
+}
+export interface Bone2dSlotPose {
+    readonly attachment: string | null;
+    readonly color: RGBA;
+    readonly dark: RGB | null;
+}
+export interface Bone2dSample {
+    readonly bones: ReadonlyMap<string, Bone2dPose>;
+    readonly shears: ReadonlyMap<string, Shears>;
+    readonly activeBones: ReadonlySet<string>;
+    readonly ik: ReadonlyMap<string, Bone2dAimOptions>;
+    readonly transforms: ReadonlyMap<string, readonly number[]>;
+    readonly sliders: ReadonlyMap<string, SliderState>;
+    readonly paths: ReadonlyMap<string, PathState>;
+    readonly physics: ReadonlyMap<string, PhysicsParams>;
+    readonly solvedWorld?: ReadonlyMap<string, Matrix2D>;
+    readonly slotFrames?: ReadonlyMap<string, number>;
+    readonly slotDeform?: ReadonlyMap<string, readonly number[]>;
+    readonly slots: ReadonlyMap<string, Bone2dSlotPose>;
+    readonly order: readonly string[];
+    readonly sequenceFrames: ReadonlyMap<Visual, number>;
+    readonly shapeDeltas: ReadonlyMap<PolygonAttachment, readonly number[]>;
+    readonly meshDeltas: ReadonlyMap<Bone2dMesh, readonly number[]>;
+}
+
+function fail(detail: string, unsupported = false): never {
+    const code = unsupported ? 'AIR_E_BONE2D_UNSUPPORTED' : 'AIR_E_BONE2D_FORMAT';
+    throw Object.assign(new Error(`${code}: ${detail}`), { code });
+}
+function obj(x: unknown, label: string): Obj {
+    if (!x || typeof x !== 'object' || Array.isArray(x)) fail(label);
+    return x as Obj;
+}
+function entries(x: unknown, label: string): [string, unknown][] {
+    return Object.entries(obj(x ?? {}, label));
+}
+function list(x: unknown, max: number, label: string): unknown[] {
+    if (!Array.isArray(x) || x.length > max) fail(label);
+    return x;
+}
+function str(x: unknown, label: string): string {
+    if (typeof x !== 'string' || !x || x.length > 512) fail(label);
+    return x;
+}
+function num(x: unknown, label: string, min = -1000000, max = 1000000): number {
+    if (typeof x !== 'number' || !Number.isFinite(x) || x < min || x > max) fail(label);
+    return x;
+}
+function integer(x: unknown, label: string, min: number, max: number): number {
+    const v = num(x, label, min, max);
+    if (!Number.isInteger(v)) fail(label);
+    return v;
+}
+function pictureSequence(raw: unknown, path: string, images: ReadonlyMap<string, Bone2dImage>): PictureSequence | undefined {
+    if (raw == null) return undefined;
+    const sequence = obj(raw, 'picture sequence');
+    const count = integer(sequence.count, 'sequence count', 1, images.size);
+    const start = integer(sequence.start, 'sequence start', 0, 1000000);
+    const digits = integer(sequence.digits, 'sequence digits', 0, 9);
+    const setup = integer(sequence.setupIndex, 'sequence setup', 0, count - 1);
+    const frames = Array.from({ length: count }, (_, i) => path + String(start + i).padStart(digits, '0'));
+    for (const name of frames) if (!images.has(name)) fail(`unknown sequence image: ${name}`);
+    return { frames, setup };
+}
+export function bone2dPicture(visual: Visual, sample: Bone2dSample, slot?: string): string {
+    const sequence = visual.sequence;
+    const frame = slot !== undefined && sample.slotFrames ? sample.slotFrames.get(slot) : sample.sequenceFrames.get(visual);
+    return sequence ? sequence.frames[frame ?? sequence.setup] : visual.path;
+}
+function optionalStr(x: unknown, label: string): string | null {
+    return x == null ? null : str(x, label);
+}
+// Editor-only visibility, locks and comments are intentionally not runtime state.
+function physicsValue(key: PhysicsParam, v: unknown): number {
+    if (key === 'mass') return num(v, 'physics mass', minimumPhysicsMass);
+    if (key === 'damping') return num(v, 'physics damping', 0, 1);
+    if (key === 'mix') return num(v, 'physics mix', 0);
+    return num(v, `physics ${key}`);
+}
+function pose(o: Obj, label: string): Bone2dPose {
+    return [
+        num(o.x, label),
+        num(o.y, label),
+        num(o.rotation, label),
+        num(o.scaleX, label, -32, 32),
+        num(o.scaleY, label, -32, 32),
+    ];
+}
+function color(x: unknown, label: string): RGBA {
+    const a = list(x, 4, label);
+    if (a.length !== 4) fail(label);
+    return a.map((v) => num(v, label, 0, 1)) as unknown as RGBA;
+}
+function index<T extends { id: string }>(items: readonly T[], label: string): Map<string, T> {
+    const out = new Map<string, T>();
+    for (const i of items) {
+        if (out.has(i.id)) fail(label);
+        out.set(i.id, i);
+    }
+    return out;
+}
+function keys<T>(x: unknown, maxTime: number, label: string, fn: (o: Obj, time: number) => T, ties = false): Key<T>[] {
+    let previous = -1;
+    return list(x ?? [], 4096, label).map((raw) => {
+        const o = obj(raw, label);
+        const time = num(o.time, label, 0, maxTime);
+        if (time < previous || (!ties && time === previous)) fail(`${label}: non-increasing time`);
+        previous = time;
+        return { time, value: fn(o, time) };
+    });
+}
+function values(x: unknown, count: number, end: number, label: string, shared = false): ValueKey[] {
+    // Evaluate the same ten t-intervals as the editor. Store the sampled
+    // polyline per channel once; playback inverts the x-axis in that table.
+    return keys(x, end, label, (o) => {
+        const v = list(o.value, count, label);
+        if (v.length !== count) fail(label);
+        let curve: ValueKey['curve'] = 'linear';
+        if (o.curve === 'stepped') curve = 'stepped';
+        else if (o.curve !== undefined) {
+            const groups = shared ? 1 : count;
+            const control = list(o.curve, 4 * groups, label);
+            if (control.length !== 4 * groups) fail(label);
+            curve = Array.from({ length: groups }, (_, channel) => {
+                const [x1, y1, x2, y2] = control
+                    .slice(channel * 4, channel * 4 + 4)
+                    .map((n, i) => num(n, label, i % 2 ? -10 : 0, i % 2 ? 10 : 1));
+                const poly = [0, 0];
+                for (let i = 1; i < 10; ++i) {
+                    const t = i / 10;
+                    const a = 3 * t * (1 - t) * (1 - t),
+                        b = 3 * t * t * (1 - t),
+                        c = t * t * t;
+                    poly.push(a * x1 + b * x2 + c, a * y1 + b * y2 + c);
+                }
+                poly.push(1, 1);
+                return poly;
+            });
+        }
+        return { value: v.map((n) => num(n, label)), curve };
+    }).map(({ time, value }) => ({ time, ...value }));
+}
+
+const channels = new Map([
+    ['shear', 2], ['shearx', 1], ['sheary', 1],
+    ['rotate', 1],
+    ['translate', 2],
+    ['translatex', 1],
+    ['translatey', 1],
+    ['scale', 2],
+    ['scalex', 1],
+    ['scaley', 1],
+]);
+
+/** Parse the native editor file (JSON, not the optional ZIP container). Reject unsupported rendering semantics. */
+export function parseBone2dProject(text: string, options: Bone2dProjectOptions = {}): Bone2dProject {
+    if (typeof text !== 'string' || text.length > 16 * 1024 * 1024) fail('project exceeds 16 Mi characters');
+    let data: unknown;
+    try {
+        data = JSON.parse(text);
+    } catch {
+        fail('invalid native .bone2d JSON');
+    }
+    const file = obj(data, 'project file');
+    if (file.bone2d !== 1) fail('unsupported project signature', true);
+    const game = file.project === undefined && file.skeleton !== undefined;
+    let project: unknown = file.project;
+    const pictures = new Map(entries(file.images, game ? 'Web Game pictures' : 'embedded images'));
+    let smooth = false;
+    if (game) {
+        const name = str(file.name, 'Web Game character name');
+        if (typeof file.smooth !== 'boolean') fail('invalid Web Game filter flag');
+        smooth = file.smooth;
+        if (options.webGameImages) {
+            for (const [key, uri] of options.webGameImages) {
+                str(key, 'Web Game picture name');
+                if (typeof uri !== 'string') fail('invalid Web Game image override');
+                pictures.set(key, uri);
+                if (pictures.size > 256) fail('too many Web Game pictures');
+            }
+        }
+        if (pictures.size > 256) fail('too many Web Game pictures');
+        let area = 0, bytes = 0;
+        const images = Array.from(pictures, ([name, uri]) => {
+            str(name, 'Web Game picture name');
+            if (typeof uri !== 'string' || !uri.startsWith('data:')) fail(`Web Game picture needs embedded data or host override: ${name}`, true);
+            bytes += uri.length;
+            if (bytes > bone2dImageBudget) fail('Web Game image data budget exceeded');
+            const [width, height] = bone2dImageHeader(uri, name, fail);
+            area += width * height;
+            if (area > bone2dImageBudget) fail('Web Game image pixel budget exceeded');
+            return { name, width, height };
+        });
+        project = { format: 'bone2d', version: 1, name, skeleton: file.skeleton, images };
+    }
+    const p = obj(project, 'project');
+    if (p.format !== 'bone2d' || p.version !== 1) fail('unsupported project version', true);
+    const docs = list(p.others ?? [], 63, 'additional skeletons').map((v) => obj(v, 'skeleton'));
+    const active = num(p.activeAt ?? 0, 'active skeleton index', 0, docs.length);
+    const selected = num(options.skeletonIndex ?? active, 'skeleton index', 0, docs.length);
+    if (!Number.isInteger(active) || !Number.isInteger(selected)) fail('skeleton index must be an integer');
+    docs.splice(active, 0, obj(p.skeleton, 'skeleton'));
+    const skeletonNames = docs.map((d) => str(d.name, 'skeleton name'));
+    const sk = docs[selected];
+    const referenceScale = num(sk.referenceScale ?? 100, 'physics reference scale', 0.0001);
+
+    const bones = list(sk.bones, 128, 'bones').map((raw): Bone => {
+        const b = obj(raw, 'bone');
+        const id = str(b.id, 'bone id');
+        const mode = b.inherit;
+        if (mode !== 'normal' && mode !== 'onlyTranslation' && mode !== 'noRotationOrReflection' &&
+            mode !== 'noScale' && mode !== 'noScaleOrReflection') fail(`invalid inheritance: ${id}`);
+        if (b.skinRequired != null && typeof b.skinRequired !== 'boolean') fail(`invalid skin-required flag: ${id}`);
+        return {
+            id, parent: optionalStr(b.parent, 'parent'), pose: pose(b, id), inherit: mode, skinRequired: b.skinRequired === true,
+            length: num(b.length ?? 0, 'bone length', 0),
+            shear: [num(b.shearX, 'bone shearX'), num(b.shearY, 'bone shearY')],
+        };
+    });
+    if (!bones.length) fail('no bones');
+    const byBone = index(bones, 'duplicate bone id');
+    for (const bone of bones) {
+        const seen = new Set<string>([bone.id]);
+        for (let id = bone.parent; id !== null;) {
+            const parent = byBone.get(id);
+            if (!parent || seen.has(id)) fail(`invalid parent chain: ${bone.id}`);
+            if (seen.size >= 32) fail(`bone depth exceeds 32: ${bone.id}`, true);
+            seen.add(id);
+            // A descendant cannot be sampled before the skin enables its parent chain.
+            bone.skinRequired ||= parent.skinRequired;
+            id = parent.parent;
+        }
+    }
+    let mappingWrites = 0;
+    const constraints = index(list(sk.constraints ?? [], 128, 'constraints').map((raw): Constraint => {
+        const o = obj(raw, 'constraint');
+        if (o.type === 'physics') {
+            const id = str(o.id, 'physics constraint id'), bone = str(o.bone, 'physics bone');
+            if (id === globalPhysics || !byBone.has(bone)) fail('invalid physics constraint id or bone');
+            const { skinRequired, scaleY } = o;
+            if (typeof skinRequired !== 'boolean' || (scaleY !== 'none' && scaleY !== 'uniform' && scaleY !== 'volume')) {
+                fail('invalid physics flags');
+            }
+            const flags = obj(o.global, 'physics global flags');
+            const setup = {} as PhysicsParams, global = {} as PhysicsConstraint['global'];
+            for (const p of physicsParams) {
+                if (typeof flags[p] !== 'boolean') fail(`invalid physics global flag: ${p}`);
+                global[p] = flags[p] as boolean;
+                setup[p] = physicsValue(p, o[p]);
+            }
+            return { kind: 'physics', id, bone, skinRequired, scaleY, setup, global,
+                x: num(o.x, 'physics x'), y: num(o.y, 'physics y'), rotate: num(o.rotate, 'physics rotation'),
+                scaleX: num(o.scaleX, 'physics scale X'), shearX: num(o.shearX, 'physics shear X'),
+                limit: num(o.limit, 'physics limit', 0), fps: num(o.fps, 'physics FPS', 0.01, 240),
+            };
+        }
+        if (o.type === 'path') {
+            const id = str(o.id, 'path constraint id'), target = str(o.target, 'path target slot');
+            const targets = list(o.bones, bones.length, 'path bones').map((b) => str(b, 'path bone'));
+            if (!targets.length || targets.some((b) => !byBone.has(b)) || new Set(targets).size !== targets.length) fail('invalid path bones');
+            const { positionMode, spacingMode, rotateMode, skinRequired } = o;
+            if (positionMode !== 'fixed' && positionMode !== 'percent') fail('invalid path position mode');
+            if (spacingMode !== 'fixed' && spacingMode !== 'length' && spacingMode !== 'percent' && spacingMode !== 'proportional') fail('invalid path spacing mode');
+            if (rotateMode !== 'tangent' && rotateMode !== 'chain' && rotateMode !== 'chainScale') fail('invalid path rotation mode');
+            if (typeof skinRequired !== 'boolean') fail('invalid path skin flag');
+            const mix = obj(o.mix, 'path mix');
+            return { kind: 'path', id, bones: targets, target, positionMode, spacingMode, rotateMode, skinRequired,
+                offsetRotation: num(o.offsetRotation, 'path rotation offset'), position: num(o.position, 'path position'),
+                spacing: num(o.spacing, 'path spacing'), mix: ['rotate', 'x', 'y'].map((axis) => num(mix[axis], 'path mix', 0, 1)),
+            };
+        }
+        if (o.type === 'slider') {
+            const id = str(o.id, 'slider id'), animation = optionalStr(o.animation, 'slider animation'), bone = optionalStr(o.bone, 'slider driver');
+            if (bone !== null && !byBone.has(bone)) fail('invalid slider driver');
+            const { local, additive, loop, skinRequired } = o;
+            if (typeof local !== 'boolean' || typeof additive !== 'boolean' || typeof loop !== 'boolean' ||
+                typeof skinRequired !== 'boolean') fail('invalid slider flags');
+            const property = o.property as TransformProperty;
+            if (!transformProperties.includes(property)) fail('invalid slider property');
+            return { kind: 'slider', id, animation, bone, property, local, additive, loop, skinRequired,
+                time: num(o.time, 'slider time'), mix: num(o.mix, 'slider mix', 0, 1), from: num(o.from, 'slider from'),
+                to: num(o.to, 'slider to'), scale: num(o.scale, 'slider scale'),
+            };
+        }
+        if (o.type === 'transform') {
+            const id = str(o.id, 'transform id'), source = str(o.source, 'transform source');
+            const targets = list(o.bones, bones.length, 'transform bones').map((v) => str(v, 'transform bone'));
+            if (!byBone.has(source) || !targets.length || targets.some((b) => !byBone.has(b)) ||
+                new Set(targets).size !== targets.length) fail('invalid transform bone reference');
+            const { localSource, localTarget, additive, clamp, skinRequired } = o;
+            if (typeof localSource !== 'boolean' || typeof localTarget !== 'boolean' || typeof additive !== 'boolean' ||
+                typeof clamp !== 'boolean' || typeof skinRequired !== 'boolean') fail('invalid transform flags');
+            const prop = (v: unknown): TransformProperty => {
+                if (!transformProperties.includes(v as TransformProperty)) fail('invalid transform property');
+                return v as TransformProperty;
+            };
+            const offsets = obj(o.offsets, 'transform offsets'), mix = obj(o.mix, 'transform mix');
+            const mappings = list(o.properties, 64, 'transform mappings').map((item) => {
+                const from = obj(item, 'transform from');
+                return { prop: prop(from.prop), offset: num(from.offset, 'transform from offset'),
+                    to: list(from.to, 64, 'transform targets').map((entry) => {
+                        const to = obj(entry, 'transform to');
+                        return { prop: prop(to.prop), offset: num(to.offset, 'transform to offset'),
+                            max: num(to.max, 'transform max'), scale: num(to.scale, 'transform multiplier') };
+                    }),
+                };
+            });
+            mappingWrites += targets.length * mappings.reduce((sum, map) => sum + map.to.length, 0);
+            if (mappingWrites > 8192) fail('transform mapping budget exceeded', true);
+            return { kind: 'transform', id, source, bones: targets, localSource, localTarget, additive, clamp, skinRequired, mappings,
+                offsets: transformProperties.map((p) => num(offsets[p === 'rotate' ? 'rotation' : p], 'transform source offset')),
+                mix: transformProperties.map((p) => num(mix[p], 'transform mix', 0, 1)),
+            };
+        }
+        if (o.type !== 'ik') fail('unsupported constraint type', true);
+        const [idOfBone, idOfChild] = list(o.bones, 2, 'IK bones');
+        const child = idOfChild === undefined ? null : str(idOfChild, 'IK child bone');
+        const id = str(o.id, 'IK constraint id'), bone = str(idOfBone, 'IK bone'), target = str(o.target, 'IK target');
+        const scaleY = o.scaleY;
+        if (!byBone.has(bone) || !byBone.has(target)) fail('unknown IK bone or target');
+        if (child !== null && byBone.get(child)?.parent !== bone) fail('IK chain needs a direct child');
+        if (scaleY !== 'none' && scaleY !== 'uniform' && scaleY !== 'volume') fail('invalid IK scaleY mode');
+        if (typeof o.bendPositive !== 'boolean' || typeof o.compress !== 'boolean' || typeof o.stretch !== 'boolean' ||
+            typeof o.skinRequired !== 'boolean') fail('invalid IK flags');
+        return { kind: 'ik', id, bone, child, target, mix: num(o.mix, 'IK mix', 0, 1), scaleY, compress: o.compress, stretch: o.stretch,
+            skinRequired: o.skinRequired, softness: num(o.softness, 'IK softness', 0), bendPositive: o.bendPositive };
+
+    }), 'duplicate constraint id');
+    const images = new Map<string, Bone2dImage>();
+    for (const raw of list(p.images, 256, 'image references')) {
+        const x = obj(raw, 'image');
+        const name = str(x.name, 'image name');
+        const width = num(x.width, name, 1, 4096),
+            height = num(x.height, name, 1, 4096);
+        if (images.has(name) || !Number.isInteger(width) || !Number.isInteger(height))
+            fail(`invalid/duplicate image: ${name}`);
+        const dataUrl = pictures.get(name);
+        if (dataUrl != null && typeof dataUrl !== 'string') fail(`invalid embedded image: ${name}`);
+        images.set(name, { width, height, dataUrl: dataUrl as string | undefined });
+    }
+    const slots = list(sk.slots, 128, 'slots').map((raw): Slot => {
+        const o = obj(raw, 'slot');
+        const id = str(o.id, 'slot id'),
+            bone = str(o.bone, 'slot bone');
+        if (!byBone.has(bone)) fail(`unknown slot bone: ${id}`);
+        const blend = o.blend;
+        if (blend !== 'normal' && blend !== 'additive' && blend !== 'multiply' && blend !== 'screen')
+            fail(`invalid slot blend: ${id}`);
+        const darkValues = o.dark == null ? null : list(o.dark, 3, 'slot dark tint');
+        if (darkValues && darkValues.length !== 3) fail('slot dark tint');
+        const dark = darkValues?.map((v) => num(v, 'slot dark tint', 0, 1)) as unknown as RGB | undefined;
+        return { id, bone, blend, dark: dark ?? null, attachment: optionalStr(o.attachment, 'setup attachment'), color: color(o.color, id) };
+    });
+    const bySlot = index(slots, 'duplicate slot id');
+    for (const c of constraints.values()) if (c.kind === 'path' && !bySlot.has(c.target)) fail('unknown path target slot');
+    const slotIds = slots.map((s) => s.id);
+    const folders = index(
+        list(sk.drawOrderFolders ?? [], 128, 'draw order folders').map((raw): Folder => {
+            const folder = obj(raw, 'draw order folder');
+            const id = str(folder.id, 'folder id');
+            const members = list(folder.slots, slotIds.length, 'folder slots').map((v) => str(v, 'folder slot'));
+            if (new Set(members).size !== members.length || members.some((sid) => !bySlot.has(sid)))
+                fail('invalid folder membership');
+            return { id, members };
+        }),
+        'duplicate folder id',
+    );
+    const skins = index(
+        list(sk.skins, 128, 'skins').map((raw): Skin => {
+            const o = obj(raw, 'skin');
+            const id = str(o.id, 'skin id'),
+                name = str(o.name, 'skin name');
+            const skinBones = list(o.bones ?? [], bones.length, 'skin bones').map((b) => str(b, 'skin bone'));
+            if (new Set(skinBones).size !== skinBones.length || skinBones.some((b) => !byBone.has(b)))
+                fail(`invalid skin bones: ${id}`);
+            const skinConstraints = list(o.constraints ?? [], constraints.size, 'skin constraints').map((c) => str(c, 'skin constraint'));
+            if (new Set(skinConstraints).size !== skinConstraints.length || skinConstraints.some((c) => !constraints.has(c))) {
+                fail(`invalid skin constraints: ${id}`);
+            }
+            const bySlotRegion = new Map<string, Map<string, Attachment>>();
+            for (const [slotId, rawRegions] of entries(o.attachments, 'skin attachments')) {
+                if (!bySlot.has(slotId)) fail(`unknown skin slot: ${slotId}`);
+                const regions = new Map<string, Attachment>();
+                for (const [attachment, rawRegion] of entries(rawRegions, 'regions')) {
+                    const r = obj(rawRegion, 'attachment');
+                    if (r.type === 'point' || r.type === 'boundingbox' || r.type === 'path' || r.type === 'clipping') {
+                        const shape = parseShape(r, byBone);
+                        if (shape.kind === 'clipping' && shape.end !== null && !bySlot.has(shape.end))
+                            fail(`unknown clipping end slot: ${shape.end}`);
+                        regions.set(attachment, shape);
+                        continue;
+                    }
+                    if (r.type !== 'region' && r.type !== 'mesh')
+                        fail(`unsupported attachment: ${slotId}/${attachment}`, true);
+                    const path = str(r.path, 'attachment image name');
+                    const sequence = pictureSequence(r.sequence, path, images);
+                    if (!sequence && !images.has(path)) fail(`unknown image: ${path}`);
+                    if (r.type === 'mesh') {
+                        regions.set(attachment, { ...parseMesh(r, path, byBone), sequence });
+                        continue;
+                    }
+                    regions.set(attachment, {
+                        kind: 'region',
+                        path,
+                        sequence,
+                        pose: pose(r, path),
+                        width: num(r.width, path, 0.001, 32768),
+                        height: num(r.height, path, 0.001, 32768),
+                        color: color(r.color, path),
+                    });
+                }
+                bySlotRegion.set(slotId, regions);
+            }
+            return { id, name, bones: skinBones, constraints: skinConstraints, regions: bySlotRegion };
+        }),
+        'duplicate skin id',
+    );
+    if (!skins.size) fail('expected a default skin');
+    const firstSkin = skins.values().next().value!;
+    for (const skin of skins.values()) {
+        for (const [slotId, regions] of skin.regions)
+            for (const [key, mesh] of regions) {
+                if (mesh.kind !== 'mesh' || !mesh.link) continue;
+                const link = mesh.link;
+                const sourceSkin = link.skin === null ? firstSkin : skins.get(link.skin);
+                const source = sourceSkin?.regions.get(link.slot ?? slotId)?.get(link.source);
+                if (source?.kind !== 'mesh' || source.link || source === mesh)
+                    fail(`invalid linked mesh: ${skin.id}/${slotId}/${key}`);
+                (regions as Map<string, Attachment>).set(key, {
+                    ...source,
+                    path: mesh.path,
+                    sequence: mesh.sequence,
+                    color: mesh.color,
+                    link,
+                    deformParent: link.deform ? source : undefined,
+                });
+            }
+    }
+    const hasRegion = (slot: string, key: string): boolean =>
+        Array.from(skins.values()).some((skin) => skin.regions.get(slot)?.has(key));
+    for (const slot of slots) {
+        if (slot.attachment !== null && !hasRegion(slot.id, slot.attachment))
+            fail(`unknown setup attachment: ${slot.id}/${slot.attachment}`);
+    }
+    const defs = index(
+        list(sk.events ?? [], 256, 'events').map((raw) => {
+            const o = obj(raw, 'event definition');
+            return {
+                id: str(o.id, 'event id'),
+                name: str(o.name, 'event name'),
+                int: num(o.int ?? 0, 'event int'),
+                float: num(o.float ?? 0, 'event float'),
+                string: o.string ?? '',
+            };
+        }),
+        'duplicate event id',
+    );
+    const clips = index(
+        list(sk.animations, 128, 'animations').map((raw): Clip => {
+            const o = obj(raw, 'animation');
+            const id = str(o.id, 'animation id'),
+                name = str(o.name, 'animation name');
+            const duration = num(o.duration, 'animation duration', 0, 3600);
+            const rawPlay = obj(o.play ?? {}, 'animation playback settings');
+            const { loop = true, pingPong = false } = rawPlay;
+            if (typeof loop !== 'boolean' || typeof pingPong !== 'boolean') fail('invalid saved playback flags');
+            let range: Bone2dSavedPlayback['range'] = null;
+            if (rawPlay.range != null) {
+                const pair = list(rawPlay.range, 2, 'animation playback range');
+                if (pair.length !== 2) fail('invalid saved playback range');
+                const [lo, hi] = pair.map((v) => Math.max(0, Math.min(duration, num(v, 'playback range endpoint'))));
+                if (hi - lo >= 0.001) range = [lo, hi];
+            }
+            const play: Bone2dSavedPlayback = { loop, pingPong, range };
+            const physics = new Map<string, PhysicsTracks>();
+            for (const [id, raw] of entries(o.physics, 'physics timelines')) {
+                if (id !== globalPhysics && constraints.get(id)?.kind !== 'physics') fail(`unknown physics timeline: ${id}`);
+                const t = obj(raw, 'physics tracks');
+                for (const name of Object.keys(t)) {
+                    if (name !== 'reset' && !physicsParams.includes(name as PhysicsParam)) fail(`unknown physics track: ${name}`);
+                }
+                const tracks: PhysicsTracks = {
+                    reset: values(t.reset, 1, duration, 'physics reset').map(({ time }) => ({time, value: null})),
+                };
+                for (const p of physicsParams) {
+                    const track = values(t[p], 1, duration, `physics ${p} key`);
+                    for (const frame of track) physicsValue(p, frame.value[0]);
+                    if (track.length) tracks[p] = track;
+                }
+                physics.set(id, tracks);
+            }
+            const path = new Map<string, PathTracks>();
+            for (const [id, raw] of entries(o.path, 'path constraint timelines')) {
+                if (constraints.get(id)?.kind !== 'path') fail(`unknown path timeline: ${id}`);
+                const t = obj(raw, 'path tracks');
+                const mix = values(t.mix, 3, duration, 'path mix key');
+                for (const key of mix) key.value.forEach((v) => num(v, 'path mix key', 0, 1));
+                path.set(id, { position: values(t.position, 1, duration, 'path position key'),
+                    spacing: values(t.spacing, 1, duration, 'path spacing key'), mix });
+            }
+            const slider = new Map<string, SliderTracks>();
+            for (const [id, raw] of entries(o.slider, 'slider timelines')) {
+                if (constraints.get(id)?.kind !== 'slider') fail(`unknown slider timeline: ${id}`);
+                const tracks = obj(raw, 'slider tracks');
+                const time = values(tracks.time, 1, duration, 'slider time key'), mix = values(tracks.mix, 1, duration, 'slider mix key');
+                for (const key of mix) num(key.value[0], 'slider mix key', 0, 1);
+                slider.set(id, { time, mix });
+            }
+            const transform = new Map<string, ValueKey[]>();
+            for (const [id, raw] of entries(o.transform, 'transform timelines')) {
+                if (constraints.get(id)?.kind !== 'transform') fail(`unknown transform timeline: ${id}`);
+                const track = values(raw, 6, duration, 'transform key');
+                for (const key of track) key.value.forEach((mix) => num(mix, 'transform key mix', 0, 1));
+                transform.set(id, track);
+            }
+            const ik = new Map<string, AimKey[]>();
+            for (const [id, raw] of entries(o.ik, 'IK timelines')) {
+                if (constraints.get(id)?.kind !== 'ik') fail(`unknown IK timeline: ${id}`);
+                const numbers = values(raw, 2, duration, 'IK key');
+                const flags = keys(raw, duration, 'IK key', (k) => {
+                    if (typeof k.bendPositive !== 'boolean' || typeof k.compress !== 'boolean' || typeof k.stretch !== 'boolean') {
+                        fail('invalid IK key flags');
+                    }
+                    return { compress: k.compress, stretch: k.stretch, bendPositive: k.bendPositive };
+                });
+                ik.set(id, numbers.map((key, j) => {
+                    num(key.value[0], 'IK key mix', 0, 1);
+                    num(key.value[1], 'IK key softness', 0);
+                    return { ...key, ...flags[j].value };
+                }));
+            }
+            const boneTracks = new Map<string, Map<string, ValueKey[]>>();
+            for (const [boneId, rawTrack] of entries(o.bones, 'bone timelines')) {
+                if (!byBone.has(boneId)) fail(`unknown animated bone: ${boneId}`);
+                const track = new Map<string, ValueKey[]>();
+                for (const [k, v] of entries(rawTrack, 'bone timeline')) {
+                    const n = channels.get(k);
+                    if (!n) fail(`bone timeline: ${k}`, true);
+                    track.set(k, values(v, n, duration, k));
+                }
+                boneTracks.set(boneId, track);
+            }
+            const slotTracks = new Map<string, { attachment: Key<string | null>[]; rgba: ValueKey[]; rgba2: ValueKey[] }>();
+            for (const [slotId, rawTrack] of entries(o.slots, 'slot timelines')) {
+                const slot = bySlot.get(slotId);
+                if (!slot) fail(`unknown animated slot: ${slotId}`);
+                const t = obj(rawTrack, 'slot timeline');
+                for (const k of Object.keys(t))
+                    if (k !== 'attachment' && k !== 'rgba' && k !== 'rgba2') fail(`slot timeline: ${k}`, true);
+                slotTracks.set(slotId, {
+                    attachment: keys(t.attachment, duration, 'attachment keys', (k) => {
+                        const a = optionalStr(k.name, 'attachment key');
+                        if (a !== null && !hasRegion(slotId, a)) fail(`unknown attachment key: ${slotId}/${a}`);
+                        return a;
+                    }),
+                    rgba: values(t.rgba, 4, duration, 'slot tint'),
+                    rgba2: values(t.rgba2, 7, duration, 'slot two-color tint'),
+                });
+            }
+            const order = keys(o.drawOrder, duration, 'draw order', (k) => arrangement(k.order, slotIds));
+            const folderOrder = new Map<string, Key<string[]>[]>();
+            for (const [id, raw] of entries(o.drawOrderFolder, 'folder order tracks')) {
+                const folder = folders.get(id);
+                if (!folder) fail(`unknown draw order folder: ${id}`);
+                folderOrder.set(
+                    id,
+                    keys(raw, duration, 'folder order', (k) => arrangement(k.order, folder.members)),
+                );
+            }
+            const markers = keys(
+                o.events,
+                duration,
+                'event keys',
+                (k, time): Bone2dMarker => {
+                    const def = defs.get(str(k.event, 'event id'));
+                    if (!def) fail('unknown event id');
+                    const string = k.string ?? def.string;
+                    if (typeof string !== 'string' || string.length > 4096) fail('event string');
+                    const int = num(k.int ?? def.int, 'event int');
+                    if (!Number.isInteger(int)) fail('event int must be an integer');
+                    return Object.freeze({
+                        id: def.id,
+                        name: def.name,
+                        time,
+                        int,
+                        float: num(k.float ?? def.float, 'event float'),
+                        string,
+                    });
+                },
+                true,
+            );
+            const deform = new Map<VertexAttachment, ValueKey[]>();
+            for (const [skinId, rawSlots] of entries(o.deform, 'deform skins')) {
+                const skin = skins.get(skinId);
+                if (!skin) fail(`unknown deform skin: ${skinId}`);
+                for (const [slotId, rawMeshes] of entries(rawSlots, 'deform slots')) {
+                    if (!bySlot.has(slotId)) fail(`unknown deform slot: ${slotId}`);
+                    for (const [key, rawKeys] of entries(rawMeshes, 'deform attachments')) {
+                        const target = skin.regions.get(slotId)?.get(key);
+                        if (!target || target.kind === 'region' || target.kind === 'point')
+                            fail(`unknown deform attachment: ${skinId}/${slotId}/${key}`);
+                        const track = values(rawKeys, target.deformSize, duration, 'deform curve', true);
+                        if (target.kind !== 'mesh' || !target.deformParent) deform.set(target, track);
+                    }
+                }
+            }
+            const sequences = new Map<Visual, Key<SequenceKey>[]>();
+            for (const [skinId, rawSlots] of entries(o.sequence, 'sequence skins')) {
+                const skin = skins.get(skinId);
+                if (!skin) fail(`unknown sequence skin: ${skinId}`);
+                for (const [slotId, rawAttachments] of entries(rawSlots, 'sequence slots')) {
+                    if (!bySlot.has(slotId)) fail(`unknown sequence slot: ${slotId}`);
+                    for (const [name, rawKeys] of entries(rawAttachments, 'sequence attachments')) {
+                        const visual = skin.regions.get(slotId)?.get(name);
+                        if (!visual || (visual.kind !== 'region' && visual.kind !== 'mesh') || !visual.sequence) fail(`unknown sequenced attachment: ${skinId}/${slotId}/${name}`);
+                        sequences.set(visual, keys(rawKeys, duration, 'sequence key', (key): SequenceKey => {
+                            const mode = key.mode as SequenceKey['mode'];
+                            if (!sequenceModes.includes(mode)) fail('invalid sequence mode');
+                            return {
+                                mode,
+                                index: integer(key.index, 'sequence key index', 0, Number.MAX_SAFE_INTEGER),
+                                delay: num(key.delay, 'sequence delay', 0),
+                            };
+                        }));
+                    }
+                }
+            }
+            return { id, name, duration, play, order, folderOrder, markers, bones: boneTracks, slots: slotTracks, deform, sequences, ik, transform, slider, path, physics };
+        }),
+        'duplicate animation id',
+    );
+    for (const c of constraints.values()) {
+        if (c.kind === 'slider' && c.animation !== null && !clips.has(c.animation)) fail('unknown slider animation');
+    }
+    const rawMix = obj((selected === active ? p.mixes : obj(sk.aside ?? {}, 'inactive skeleton editor data').mixes) ?? {}, 'mix table');
+    const mixDefault = num(rawMix.default ?? 0, 'default mix duration', 0, 10);
+    const mixPairs = new Map<string, Map<string, number>>();
+    for (const raw of list(rawMix.pairs ?? [], 16384, 'mix pairs')) {
+        const pair = obj(raw, 'mix pair');
+        const from = str(pair.from, 'mix source'), to = str(pair.to, 'mix destination');
+        if (!clips.has(from) || !clips.has(to)) fail('unknown mix animation');
+        let m = mixPairs.get(from);
+        if (!m) mixPairs.set(from, m = new Map());
+        if (m.has(to)) fail('duplicate mix pair');
+        m.set(to, num(pair.time, 'mix duration', 0, 10));
+    }
+    const affineSprites = constraints.size > 0 || bones.some((bone) => bone.skinRequired || bone.inherit !== 'normal' || bone.shear[0] !== 0 || bone.shear[1] !== 0) ||
+        Array.from(clips.values()).some((clip) => Array.from(clip.bones.values()).some(
+            (track) => ['shear', 'shearx', 'sheary'].some((channel) => track.has(channel)),
+        ));
+    return { skeletonIndex: selected, source: game ? 'web-game' : 'project', smooth, skeletonNames, bones, affineSprites, constraints, slots, clips, mixDefault, mixPairs, referenceScale, images, skins, folders };
+}
+function arrangement(raw: unknown, setup: readonly string[]): string[] {
+    const desired = list(raw, setup.length, 'slot order').map((entry) => str(entry, 'slot id'));
+    const seen = new Set(desired),
+        members = new Set(setup);
+    if (seen.size !== desired.length || desired.some((id) => !members.has(id))) fail('invalid draw order');
+    return desired.concat(setup.filter((id) => !seen.has(id)));
+}
+function parseMesh(r: Obj, path: string, byBone: ReadonlyMap<string, Bone>): Bone2dMesh {
+    let link: Bone2dMesh['link'];
+    if (r.link != null) {
+        const o = obj(r.link, 'linked mesh');
+        if (typeof o.deform !== 'boolean') fail('linked mesh deform mode');
+        link = {
+            source: str(o.source, 'linked source'),
+            slot: optionalStr(o.slot, 'linked slot'),
+            skin: optionalStr(o.skin, 'linked skin'),
+            deform: o.deform,
+        };
+    }
+    const uvs = list(r.uvs, 2048, 'mesh UVs').map((v, i) => {
+        const uv = num(v, 'mesh UV', 0, 1);
+        return i % 2 ? 1 - uv : uv;
+    });
+    const vertexCount = uvs.length / 2;
+    if (!Number.isInteger(vertexCount) || vertexCount < 3) fail('mesh needs at least three XY/UV pairs');
+    const indices = list(r.triangles, 4095, 'mesh triangles').map((v) => {
+        const index = num(v, 'triangle index', 0, vertexCount - 1);
+        if (!Number.isInteger(index)) fail('non-integer triangle index');
+        return index;
+    });
+    if (indices.length < 3 || indices.length % 3) fail('invalid triangle index count');
+    return { kind: 'mesh', path, color: color(r.color, path), ...parsePositions(r, vertexCount, byBone), uvs, indices, link };
+}
+function parseShape(r: Obj, byBone: ReadonlyMap<string, Bone>): Shape | Bone2dClipAttachment {
+    if (r.sequence != null) fail('picture sequence requires a visual attachment');
+    if (r.type === 'point') {
+        return { kind: 'point', x: num(r.x, 'point x'), y: num(r.y, 'point y'), rotation: num(r.rotation, 'point rotation') };
+    }
+    const count = r.weights == null
+        ? list(r.vertices, 2048, 'shape vertices').length / 2
+        : list(r.weights, 1024, 'shape weights').length;
+    if (!Number.isInteger(count) || count < 3) fail('shape needs at least three XY pairs');
+    const positions = parsePositions(r, count, byBone);
+    if (r.type === 'boundingbox') return { kind: 'boundingbox', ...positions };
+    if (r.type === 'clipping') {
+        if (typeof r.convex !== 'boolean' || typeof r.inverse !== 'boolean') fail('invalid clipping mode');
+        return { kind: 'clipping', ...positions, end: optionalStr(r.end, 'clipping end'), convex: r.convex, inverse: r.inverse };
+    }
+    if (typeof r.closed !== 'boolean' || typeof r.constantSpeed !== 'boolean' || count % 3 || (!r.closed && count < 6))
+        fail('path needs complete in-handle, anchor and out-handle triplets');
+    return { kind: 'path', ...positions, closed: r.closed, constantSpeed: r.constantSpeed };
+}
+function parsePositions(r: Obj, vertexCount: number, byBone: ReadonlyMap<string, Bone>): Positioned {
+    const xy = list(r.vertices, vertexCount * 2, 'attachment vertices').map((v) => num(v, 'attachment coordinate'));
+    let weights: Influence[][] | null = null;
+    let deformSize = vertexCount * 2;
+    if (r.weights != null) {
+        const values = list(r.weights, vertexCount, 'weighted vertices');
+        if (values.length !== vertexCount || xy.length)
+            fail('provide one weight list per vertex and no plain vertices');
+        weights = values.map((raw) => {
+            const influences = list(raw, 16, 'vertex influences').map((tuple): Influence => {
+                const a = list(tuple, 4, 'influence');
+                if (a.length !== 4) fail('influence requires [bone, x, y, weight]');
+                const bone = str(a[0], 'influence bone');
+                if (!byBone.has(bone)) fail(`unknown influence bone: ${bone}`);
+                return [bone, num(a[1], 'bind x'), num(a[2], 'bind y'), num(a[3], 'influence weight', 0, 1)];
+            });
+            if (!influences.length || Math.abs(influences.reduce((sum, a) => sum + a[3], 0) - 1) > 1e-4)
+                fail('invalid influence weights');
+            return influences;
+        });
+        deformSize = 2 * weights.reduce((n, influence) => n + influence.length, 0);
+    } else if (xy.length !== vertexCount * 2) fail('incorrect number of plain XY pairs');
+    return { xy, weights, deformSize };
+}
+function last<T>(track: readonly Key<T>[], time: number): number {
+    let lo = 0,
+        hi = track.length;
+    while (lo < hi) {
+        const mid = (lo + hi) >>> 1;
+        if (track[mid].time <= time) lo = mid + 1;
+        else hi = mid;
+    }
+    return lo - 1;
+}
+function sampled(track: ValueKey[] = [], time: number): number[] | undefined {
+    const i = last(track, time);
+    if (i < 0) return undefined;
+    const a = track[i],
+        b = track[i + 1];
+    if (!b || a.curve === 'stepped') return a.value;
+    const u = (time - a.time) / (b.time - a.time);
+    const curve = a.curve;
+    return a.value.map((v, j) => {
+        let progress = u;
+        if (curve !== 'linear') {
+            const p = curve[curve.length === 1 ? 0 : j];
+            for (let k = 2; k < p.length; k += 2)
+                if (p[k] >= u) {
+                    const fraction = (u - p[k - 2]) / (p[k] - p[k - 2]);
+                    progress = p[k - 1] + fraction * (p[k + 1] - p[k - 1]);
+                    break;
+                }
+        }
+        return v + progress * (b.value[j] - v);
+    });
+}
+// Model picture selection as travel along a line, a ring or a reflected line.
+function sequenceFrame({ mode, index, delay }: SequenceKey, elapsed: number, count: number): number {
+    if (mode === 'hold') return Math.min(count - 1, index);
+    if (count === 1) return 0;
+    // The editor uses a 32-bit step counter with a small tolerance at a frame boundary.
+    const steps = delay === 0 ? 0 : (elapsed / delay + 1e-5) | 0;
+    const position = index + steps;
+    const end = count - 1;
+    let frame: number;
+    if (mode === 'once' || mode === 'onceReverse') frame = mode === 'once' ? position : Math.max(0, end - position);
+    else if (mode === 'loop' || mode === 'loopReverse') {
+        const phase = position % count;
+        frame = mode === 'loop' ? phase : end - phase;
+    } else {
+        const phase = (position + (mode === 'pingpongReverse' ? end : 0)) % (2 * end);
+        frame = phase <= end ? phase : 2 * end - phase;
+    }
+    return frame === -1 ? -1 : Math.max(0, Math.min(end, frame));
+}
+function applyPhysicsTracks(
+    project: Bone2dProject, state: Map<string, PhysicsParams>, clip: Clip | undefined, time: number,
+    mix: (from: number, to: number, param: PhysicsParam) => number,
+): void {
+    for (const [target, tracks] of clip?.physics ?? []) {
+        const targets = target === globalPhysics ? state.keys() : [target];
+        for (const id of targets) {
+            const p = state.get(id), c = project.constraints.get(id);
+            if (!p || c?.kind !== 'physics') continue;
+            for (const param of physicsParams) {
+                if (target === globalPhysics && !c.global[param]) continue;
+                const v = sampled(tracks[param], time)?.[0];
+                if (v === undefined) continue;
+                const blended = mix(p[param], v, param);
+                p[param] = param === 'mass' ? Math.max(minimumPhysicsMass, blended) : param === 'damping' ? Math.max(0, Math.min(1, blended)) :
+                    param === 'mix' ? Math.max(0, blended) : blended;
+            }
+        }
+    }
+}
+
+type Bone2dLocalPose = Pick<Bone2dSample, 'bones' | 'shears'>;
+export interface Bone2dPoseControls {
+    readonly attachments: ReadonlyMap<string, string | null>;
+    readonly heldPositions: ReadonlyMap<string, readonly [number, number]>;
+}
+export interface Bone2dMixFrame {
+    readonly transition?: { from: Bone2dLocalPose; alpha: number; holdPrevious: boolean; game?: Bone2dSample };
+    readonly layers?: readonly { id: string; time: number; weight: number; additive: boolean }[];
+}
+const keyedBoneAxes = [
+    ['translate', 'translatex'], ['translate', 'translatey'], ['rotate'],
+    ['scale', 'scalex'], ['scale', 'scaley'], ['shear', 'shearx'], ['shear', 'sheary'],
+] as const;
+const shortestAngle = (delta: number): number => ((delta % 360 + 540) % 360) - 180;
+function blendPreviewBone(
+    local: Bone2dLocalPose, id: string, put: (current: number, index: number) => number,
+    bones: Map<string, Bone2dPose>, shears: Map<string, Shears>,
+): void {
+    const p = local.bones.get(id)!;
+    const sh = local.shears.get(id)!;
+    bones.set(id, [put(p[0],0),put(p[1],1),put(p[2],2),put(p[3],3),put(p[4],4)]);
+    shears.set(id, [put(sh[0],5),put(sh[1],6)]);
+}
+/** Mix Web Game tracks before solving constraints. Incoming discrete attachments stay authoritative. */
+function mixWebGameChannels(
+    from: Bone2dSample, to: Bone2dSample, skins: readonly Skin[], t: number,
+): Bone2dSample {
+    const lerp = (a: number, b: number): number => a + (b - a) * t;
+    const vector = (a: readonly number[], b: readonly number[]): number[] => b.map((v, i) => lerp(a[i], v));
+    const map = <Value>(a: ReadonlyMap<string, Value>, b: ReadonlyMap<string, Value>,
+        mix: (before: Value, after: Value) => Value): Map<string, Value> =>
+        new Map([...b].map(([key, value]) => {
+            const prior = a.get(key);
+            return [key, prior === undefined ? value : mix(prior, value)];
+        }));
+    const slots = map(from.slots, to.slots, (a, b) => ({
+        ...b, color: vector(a.color, b.color) as unknown as RGBA,
+        dark: a.dark && b.dark ? vector(a.dark, b.dark) as unknown as RGB : b.dark,
+    }));
+    const slotFrames = new Map<string, number>();
+    const slotDeform = new Map<string, readonly number[]>();
+    const deform = (sample: Bone2dSample, slot: string, a: Bone2dMesh | PolygonAttachment): readonly number[] | undefined =>
+        sample.slotDeform ? sample.slotDeform.get(slot) :
+            a.kind === 'mesh' ? sample.meshDeltas.get(a.deformParent ?? a) : sample.shapeDeltas.get(a);
+    for (const [id, current] of slots) {
+        const attachment = resolveBone2dAttachment(skins, id, current.attachment);
+        if (!attachment || attachment.kind === 'point') continue;
+        if (attachment.kind === 'mesh' || attachment.kind === 'region') {
+            const frame = to.slotFrames ? to.slotFrames.get(id) : to.sequenceFrames.get(attachment);
+            if (frame !== undefined) slotFrames.set(id, frame);
+        }
+        if (attachment.kind === 'region') continue;
+        const b = deform(to, id, attachment);
+        const a = from.slots.get(id)?.attachment === current.attachment ? deform(from, id, attachment) : undefined;
+        if (a) slotDeform.set(id, a.map((v, i) => lerp(v, b?.[i] ?? 0)));
+        else if (b) slotDeform.set(id, from.slots.get(id)?.attachment === current.attachment ?
+            b.map((v) => v * t) : b);
+    }
+    return {
+        ...to, slots, slotFrames, slotDeform,
+        ik: map(from.ik, to.ik, (a, b) => ({
+            ...(t < 0.5 ? a : b), mix: lerp(a.mix, b.mix), softness: lerp(a.softness, b.softness),
+        })),
+        transforms: map(from.transforms, to.transforms, vector),
+        sliders: map(from.sliders, to.sliders, (a, b) => ({ time: lerp(a.time, b.time), mix: lerp(a.mix, b.mix) })),
+        paths: map(from.paths, to.paths, (a, b) => ({
+            position: lerp(a.position, b.position), spacing: lerp(a.spacing, b.spacing), mix: vector(a.mix, b.mix),
+        })),
+        physics: map(from.physics, to.physics, (a, b) => ({ ...b, mix: lerp(a.mix, b.mix) })),
+    };
+}
+
+function mixPreview(
+    project: Bone2dProject, clip: Clip | undefined, current: Bone2dSample, selectedSkins: readonly Skin[],
+    overlays: readonly string[], mix: Bone2dMixFrame,
+): Bone2dSample {
+    const xfade = mix.transition;
+    if (xfade?.game && xfade.alpha < 1) current = mixWebGameChannels(xfade.game, current, selectedSkins, xfade.alpha);
+    const bones = new Map(current.bones), shears = new Map(current.shears);
+    const slots = new Map(current.slots);
+    const replaced = new Set<string>();
+    if (xfade && xfade.alpha < 1) {
+        for (const id of current.activeBones) {
+            const prev = [...xfade.from.bones.get(id)!, ...xfade.from.shears.get(id)!];
+            const track = clip?.bones.get(id);
+            blendPreviewBone(current, id, (now, j) => {
+                if (xfade.holdPrevious && !keyedBoneAxes[j].some(k => track?.get(k)?.length)) return prev[j];
+                const delta = now - prev[j];
+                return prev[j] + (j === 2 || (xfade.game && j >= 5) ? shortestAngle(delta) : delta) * xfade.alpha;
+            }, bones, shears);
+        }
+    }
+    const byBone = new Map(project.bones.map(b => [b.id,b] as const));
+    const bySlot = new Map(project.slots.map(s => [s.id,s] as const));
+    for (const layer of mix.layers ?? []) {
+        if (layer.weight === 0) continue;
+        const clip = project.clips.get(layer.id)!;
+        const src = sampleBone2dFrame(project, layer.id, layer.time, overlays, undefined, undefined, true);
+        for (const [id, track] of clip.bones) {
+            if (!current.activeBones.has(id)) continue;
+            const bone = byBone.get(id)!;
+            const setup = [...bone.pose,...bone.shear];
+            const next = [...src.bones.get(id)!, ...src.shears.get(id)!];
+            blendPreviewBone({ bones, shears }, id, (cur,j) => {
+                if (!keyedBoneAxes[j].some(k => track.get(k)?.length)) return cur;
+                const delta = next[j] - (layer.additive ? setup[j] : cur);
+                return cur + (j === 2 && !layer.additive ? shortestAngle(delta) : delta) * layer.weight;
+            }, bones, shears);
+        }
+        for (const [id, track] of clip.slots) {
+            const def = bySlot.get(id)!;
+            if (!current.activeBones.has(def.bone)) continue;
+            const cur = slots.get(id)!, next = src.slots.get(id)!;
+            const replace = !layer.additive && layer.weight >= 0.5 && last(track.attachment, layer.time) >= 0;
+            if (replace) replaced.add(id);
+            const color = track.rgba.length || track.rgba2.length ? cur.color.map((v,i) =>
+                Math.max(0, Math.min(1, v + (next.color[i] - (layer.additive ? def.color[i] : v)) * layer.weight)),
+            ) as unknown as RGBA : cur.color;
+            slots.set(id, { ...cur, attachment: replace ? next.attachment : cur.attachment, color });
+        }
+    }
+    if (!replaced.size) return { ...current, bones, shears, slots };
+    // Preview's replace layer changes a picture, not its deformation or sequence clock.
+    const slotFrames = new Map<string, number>();
+    const slotDeform = new Map<string, readonly number[]>();
+    for (const id of slots.keys()) {
+        if (replaced.has(id)) continue;
+        const a = resolveBone2dAttachment(selectedSkins, id, slots.get(id)!.attachment);
+        if (!a) continue;
+        if (a.kind === 'mesh' || a.kind === 'region') {
+            const frame = current.slotFrames ? current.slotFrames.get(id) : current.sequenceFrames.get(a);
+            if (frame !== undefined) slotFrames.set(id, frame);
+        }
+        const deform = current.slotDeform ? current.slotDeform.get(id) : a.kind === 'mesh' ? current.meshDeltas.get(a.deformParent ?? a) :
+            a.kind === 'point' || a.kind === 'region' ? undefined : current.shapeDeltas.get(a);
+        if (deform !== undefined) slotDeform.set(id,deform);
+    }
+    return { ...current, bones, shears, slots, slotFrames, slotDeform };
+}
+
+export function sampleBone2dProject(
+    project: Bone2dProject, clipId: string | null, seconds: number, overlays: readonly string[] = [],
+): Bone2dSample {
+    return sampleBone2dFrame(project, clipId, seconds, overlays);
+}
+
+/** Internal stateful sampling entry; public random access does not touch spring history. */
+export function sampleBone2dFrame(
+    project: Bone2dProject, clipId: string | null, seconds: number, overlays: readonly string[], physicsStep?: PhysicsStep,
+    mix?: Bone2dMixFrame, unsolved = false, controls?: Bone2dPoseControls,
+): Bone2dSample {
+    const clip = clipId === null ? undefined : project.clips.get(clipId);
+    if (clipId !== null && !clip) fail(`unknown animation: ${clipId}`);
+    if (!Number.isFinite(seconds)) fail('invalid sample time');
+    const time = Math.max(0, Math.min(seconds, clip?.duration ?? 0));
+    const activeBones = new Set(project.bones.filter((bone) => !bone.skinRequired).map((bone) => bone.id));
+    const skinConstraints = new Set<string>();
+    const selectedSkins = [project.skins.values().next().value!];
+    if (overlays.length) {
+        const byId = new Map(project.bones.map((bone) => [bone.id, bone] as const));
+        const fallback = project.skins.values().next().value!;
+        for (const id of overlays) {
+            const skin = project.skins.get(id);
+            if (!skin) fail(`unknown skin: ${id}`);
+            if (skin === fallback || selectedSkins.includes(skin)) continue;
+            selectedSkins.push(skin);
+            for (const constraint of skin.constraints) skinConstraints.add(constraint);
+            for (const listed of skin.bones) {
+                for (let current: string | null = listed; current !== null; current = byId.get(current)!.parent) {
+                    activeBones.add(current);
+                }
+            }
+        }
+    }
+    const bones = new Map(
+        project.bones.map((b): [string, Bone2dPose] => {
+            const track = activeBones.has(b.id) ? clip?.bones.get(b.id) : undefined;
+            if (!track) return [b.id, b.pose];
+            const [x, y, rotation, sx, sy] = b.pose;
+            const v = (name: string): number[] | undefined => sampled(track.get(name), time);
+            const xy = v('translate'),
+                scale = v('scale');
+            return [
+                b.id,
+                [
+                    x + (v('translatex')?.[0] ?? xy?.[0] ?? 0),
+                    y + (v('translatey')?.[0] ?? xy?.[1] ?? 0),
+                    rotation + (v('rotate')?.[0] ?? 0),
+                    sx * (v('scalex')?.[0] ?? scale?.[0] ?? 1),
+                    sy * (v('scaley')?.[0] ?? scale?.[1] ?? 1),
+                ],
+            ];
+        }),
+    );
+    const shears = new Map<string, Shears>();
+    for (const bone of project.bones) {
+        const [x, y] = bone.shear;
+        const track = activeBones.has(bone.id) ? clip?.bones.get(bone.id) : undefined;
+        const pair = sampled(track?.get('shear'), time);
+        shears.set(bone.id, [
+            x + (sampled(track?.get('shearx'), time)?.[0] ?? pair?.[0] ?? 0),
+            y + (sampled(track?.get('sheary'), time)?.[0] ?? pair?.[1] ?? 0),
+        ]);
+    }
+    const slots = new Map(
+        project.slots.map((s): [string, Bone2dSlotPose] => {
+            const track = clip?.slots.get(s.id);
+            const key = track ? last(track.attachment, time) : -1;
+            const clamp01 = (v: number): number => Math.max(0, Math.min(1, v));
+            const twoColor = sampled(track?.rgba2, time);
+            const tint = twoColor ?? sampled(track?.rgba, time);
+            const dark = twoColor && s.dark ? twoColor.slice(4).map(clamp01) as unknown as RGB : s.dark;
+            const attachment = activeBones.has(s.bone) ? (key >= 0 ? track!.attachment[key].value : s.attachment) : null;
+            return [
+                s.id,
+                {
+                    attachment,
+                    color: tint ? (tint.slice(0, 4).map(clamp01) as unknown as RGBA) : s.color,
+                    dark,
+                },
+            ];
+        }),
+    );
+    const i = clip ? last(clip.order, time) : -1;
+    const meshDeltas = new Map<Bone2dMesh, readonly number[]>();
+    const shapeDeltas = new Map<PolygonAttachment, readonly number[]>();
+    for (const [target, track] of clip?.deform ?? []) {
+        const deltas = sampled(track, time);
+        if (!deltas) continue;
+        if (target.kind === 'mesh') meshDeltas.set(target, deltas);
+        else shapeDeltas.set(target, deltas);
+    }
+    let order = i >= 0 ? clip!.order[i].value : project.slots.map((s) => s.id);
+    if (clip)
+        for (const [id, folder] of project.folders) {
+            const track = clip.folderOrder.get(id);
+            if (!track?.length) continue;
+            const j = last(track, time),
+                next = j < 0 ? folder.members : track[j].value;
+            const seats = new Set(folder.members);
+            let at = 0;
+            order = order.map((slot) => (seats.has(slot) ? next[at++] : slot));
+        }
+    const sequenceFrames = new Map<Visual, number>();
+    for (const [visual, track] of clip?.sequences ?? []) {
+        const j = last(track, time);
+        if (j < 0) continue;
+        const key = track[j];
+        const sequence = visual.sequence!;
+        const frame = sequenceFrame(key.value, time - key.time, sequence.frames.length);
+        sequenceFrames.set(visual, frame === -1 ? sequence.setup : frame);
+    }
+    const paths = new Map<string, PathState>(), physics = new Map<string, PhysicsParams>();
+    const ik = new Map<string, Bone2dAimOptions>(), transforms = new Map<string, readonly number[]>(), sliders = new Map<string, SliderState>();
+    for (const [id, c] of project.constraints) {
+        if (c.skinRequired && !skinConstraints.has(id)) continue;
+        if (c.kind === 'physics') {
+            if (activeBones.has(c.bone)) physics.set(id, { ...c.setup });
+            continue;
+        }
+        if (c.kind === 'path') {
+            const target = project.slots.find((slot) => slot.id === c.target)!;
+            if (activeBones.has(target.bone)) {
+                const track = clip?.path.get(id);
+                paths.set(id, { position: sampled(track?.position, time)?.[0] ?? c.position,
+                    spacing: sampled(track?.spacing, time)?.[0] ?? c.spacing, mix: sampled(track?.mix, time) ?? c.mix });
+            }
+            continue;
+        }
+        if (c.kind === 'slider') {
+            if (c.animation !== null && (c.bone === null || activeBones.has(c.bone))) {
+                const track = clip?.slider.get(id);
+                sliders.set(id, { time: sampled(track?.time, time)?.[0] ?? c.time, mix: sampled(track?.mix, time)?.[0] ?? c.mix });
+            }
+            continue;
+        }
+        if (c.kind === 'transform') {
+            if (activeBones.has(c.source)) transforms.set(id, sampled(clip?.transform.get(id), time) ?? c.mix);
+            continue;
+        }
+        if (!activeBones.has(c.target) || !activeBones.has(c.bone)) continue;
+        const track = clip?.ik.get(id);
+        const i = track ? last(track, time) : -1;
+        if (i < 0) ik.set(id, c);
+        else {
+            const { compress, stretch, bendPositive } = track![i];
+            const [mix, softness] = sampled(track, time)!;
+            ik.set(id, { mix, softness, scaleY: c.scaleY, compress, stretch, bendPositive });
+        }
+    }
+    applyPhysicsTracks(project, physics, clip, time, (_from, to) => to);
+    const resets = new Set<string>();
+    if (physicsStep) {
+        for (const id of physicsStep.state.keys()) if (!physics.has(id)) physicsStep.state.delete(id);
+        for (const [id, tracks] of clip?.physics ?? []) {
+            if (tracks.reset.length && physicsStep.intervals.some(([from,to,include]) => to >= from && bone2dKeysInWindow(tracks.reset, [from, to, include ?? false]).length > 0)) resets.add(id);
+        }
+    }
+    const raw: Bone2dSample = { bones, shears, activeBones, ik, transforms, sliders, paths, physics, slots, meshDeltas, shapeDeltas, order, sequenceFrames };
+    const sample = mix ? mixPreview(project, clip, raw, selectedSkins, overlays, mix) : raw;
+    if (unsolved) return sample;
+    return sliders.size || paths.size || (physicsStep && physics.size) || controls
+        ? solvePose(project, sample, selectedSkins, physicsStep, resets, controls)
+        : sample;
+}
+
+/** Resolve ordered parent/local 2D affine products without decomposing shear. */
+export function bone2dWorldMatrices(project: Bone2dProject, sample: Bone2dSample): ReadonlyMap<string, Matrix2D> {
+    return sample.solvedWorld ?? solvePose(project, sample, []).solvedWorld!;
+}
+
+const setupLengths = new WeakMap<PathAttachment, readonly number[]>();
+
+function setupLengthsOf(a: PathAttachment, slotBone: string, byId: ReadonlyMap<string, Bone>): readonly number[] {
+    const cached = setupLengths.get(a);
+    if (cached) return cached;
+    const matrices = new Map<string, Matrix2D>();
+    const visit = (id: string): Matrix2D => {
+        let m = matrices.get(id);
+        if (m) return m;
+        const b = byId.get(id)!;
+        const [x, y, r, sx, sy] = b.pose;
+        if (b.parent === null) m = [...poseBasis(r, sx, sy, b.shear), x, y];
+        else {
+            const p = visit(b.parent);
+            m = [...inheritBasis(p, b.inherit, r, sx, sy, b.shear), p[0] * x + p[1] * y + p[4], p[2] * x + p[3] * y + p[5]];
+        }
+        matrices.set(id, m);
+        return m;
+    };
+    visit(slotBone);
+    for (const influences of a.weights ?? []) for (const [id] of influences) visit(id);
+    const answer = pathSetupLengths(bone2dMeshPositions(a, slotBone, matrices), a.closed);
+    setupLengths.set(a, answer);
+    return answer;
+}
+
+function solvePose(
+    project: Bone2dProject, sample: Bone2dSample, skins: readonly Skin[], physicsStep?: PhysicsStep, resets?: ReadonlySet<string>, controls?: Bone2dPoseControls,
+): Bone2dSample {
+    const out = new Map<string, Matrix2D>();
+    const solved = new Map<string, AppliedPose>();
+    const explicitWorld = new Set<string>();
+    const byId = new Map(project.bones.map((b) => [b.id, b] as const));
+    const compute = (id: string): Matrix2D => {
+        const cached = out.get(id);
+        if (cached) return cached;
+        if (!sample.activeBones.has(id)) {
+            const identity: Matrix2D = [1, 0, 0, 1, 0, 0];
+            out.set(id, identity);
+            return identity;
+        }
+        const bone = byId.get(id)!;
+        const local = solved.get(id);
+        const [x, y, degrees, sx, sy] = local?.pose ?? sample.bones.get(id)!;
+        const shear = local?.shear ?? sample.shears.get(id)!;
+        let m: Matrix2D;
+        if (bone.parent === null) {
+            m = [...poseBasis(degrees, sx, sy, shear), x, y];
+        } else {
+            const parent = compute(bone.parent);
+            const [pa, pb, pc, pd, px, py] = parent;
+            m = [...inheritBasis(parent, bone.inherit, degrees, sx, sy, shear), pa*x+pb*y+px, pc*x+pd*y+py];
+        }
+        const held = controls?.heldPositions.get(id);
+        if (held) m = [m[0], m[1], m[2], m[3], held[0], held[1]];
+        if (!m.every(Number.isFinite)) fail(`non-finite solved bone: ${id}`);
+        out.set(id, m);
+        return m;
+    };
+    let order = sample.order;
+    const paths = new Map(sample.paths);
+    const physics = new Map(Array.from(sample.physics, ([id, p]) => [id, { ...p }] as const));
+    const ik = new Map(sample.ik), transforms = new Map(sample.transforms), sliders = new Map(sample.sliders);
+    const slots = new Map(sample.slots);
+    const slotFrames = new Map(sample.slotFrames), slotDeform = new Map(sample.slotDeform);
+    const applyOverride = (id: string): void => {
+        if (!controls?.attachments.has(id)) return;
+        const current = slots.get(id)!;
+        const name = controls.attachments.get(id)!;
+        if (name === current.attachment) return;
+        slots.set(id, { ...current, attachment: name });
+        slotFrames.delete(id);
+        slotDeform.delete(id);
+    };
+    for (const id of controls?.attachments.keys() ?? []) applyOverride(id);
+    const bySlot = new Map(project.slots.map((s) => [s.id, s] as const));
+    const attachment = (id: string): Attachment | undefined => resolveBone2dAttachment(skins, id, slots.get(id)!.attachment);
+    const owner = (a: Attachment | undefined): Attachment | undefined => a?.kind === 'mesh' ? a.deformParent ?? a : a;
+    if ((sliders.size || controls?.attachments.size) && !sample.slotFrames) {
+        for (const { id } of project.slots) {
+            const a = attachment(id);
+            if (!a) continue;
+            if (a.kind === 'mesh' || a.kind === 'region') {
+                const frame = sample.sequenceFrames.get(a);
+                if (frame !== undefined) slotFrames.set(id, frame);
+            }
+            const deform = a.kind === 'mesh' ? sample.meshDeltas.get(a.deformParent ?? a) :
+                a.kind === 'point' || a.kind === 'region' ? undefined : sample.shapeDeltas.get(a);
+            if (deform !== undefined) slotDeform.set(id, deform);
+        }
+    }
+    if (ik.size || transforms.size || sliders.size || paths.size || (physicsStep && physics.size)) {
+        const children = new Map<string, string[]>();
+        for (const { id, parent } of project.bones) {
+            if (parent === null) continue;
+            const siblings = children.get(parent);
+            if (siblings) siblings.push(id);
+            else children.set(parent, [id]);
+        }
+        const readLocal = (id: string): AppliedPose => {
+            const bone = byId.get(id)!;
+            if (explicitWorld.delete(id)) {
+                solved.set(id, transformApplied(out.get(id)!, bone.parent === null ? null : compute(bone.parent), bone.inherit));
+            }
+            return solved.get(id) ?? { pose: sample.bones.get(id)!, shear: sample.shears.get(id)! };
+        };
+        const invalidate = (id: string): void => {
+            if (!out.has(id)) return;
+            // Convert descendants against the old parent before dropping
+            // either matrix; subsequent reads inherit the updated parent.
+            for (const child of children.get(id) ?? []) invalidate(child);
+            if (explicitWorld.has(id)) readLocal(id);
+            out.delete(id);
+        };
+        const writeLocal = (id: string, pose: AppliedPose): void => {
+            invalidate(id);
+            solved.set(id, pose);
+        };
+        const writeWorld = (id: string, world: Matrix2D): void => {
+            for (const child of children.get(id) ?? []) invalidate(child);
+            if (!world.every(Number.isFinite)) fail(`non-finite world transform: ${id}`);
+            out.set(id, world);
+            explicitWorld.add(id);
+        };
+        for (const [id, c] of project.constraints) {
+            if (c.kind === 'physics') {
+                const p = physics.get(id);
+                if (p && physicsStep) {
+                    const world = compute(c.bone);
+                    const next = solveBone2dPhysics(c, p, world, byId.get(c.bone)!.length, project.referenceScale, physicsStep,
+                        resets?.has(globalPhysics) || resets?.has(id) || false, project.source === 'web-game');
+                    if (next !== world) writeWorld(c.bone, next);
+                }
+                continue;
+            }
+            if (c.kind === 'path') {
+                const state = paths.get(id), a = attachment(c.target);
+                if (!state?.mix.some((n) => n !== 0) || a?.kind !== 'path') continue;
+                const slot = bySlot.get(c.target)!;
+                const holder = compute(slot.bone);
+                for (const weights of a.weights ?? []) for (const [bone] of weights) compute(bone);
+                const points = bone2dMeshPositions(a, slot.bone, out, (sliders.size || sample.slotDeform) ? slotDeform.get(c.target) : sample.shapeDeltas.get(a));
+                const result = followBone2dPath(c, state, points, a.constantSpeed ? null : setupLengthsOf(a, slot.bone, byId), a.closed,
+                    holder, c.bones.map((bone) => ({ matrix: compute(bone), length: byId.get(bone)!.length })));
+                result.forEach((m, i) => { if (sample.activeBones.has(c.bones[i])) writeWorld(c.bones[i], m); });
+                continue;
+            }
+            if (c.kind === 'slider') {
+                const state = sliders.get(id);
+                const clip = c.animation === null ? undefined : project.clips.get(c.animation);
+                if (!state || state.mix === 0 || !clip) continue;
+                const alpha = state.mix;
+                let time = state.time;
+                if (c.bone !== null) {
+                    const none = [0, 0, 0, 0, 0, 0];
+                    const driven = c.local ? transformReadLocal(c.property, readLocal(c.bone), none) :
+                        transformReadWorld(c.property, compute(c.bone), none);
+                    time = c.to + (driven - c.from) * c.scale;
+                    time = c.loop && clip.duration > 0 ? clip.duration + time % clip.duration : Math.max(0, time);
+                    sliders.set(id, { ...state, time });
+                }
+                if (c.loop && clip.duration > 0) time %= clip.duration;
+                const blend = (from: number, value: number, add = c.additive): number => from + (value - (add ? 0 : from)) * alpha;
+                for (const [bone, tracks] of clip.bones) {
+                    if (!sample.activeBones.has(bone)) continue;
+                    const setup = byId.get(bone)!;
+                    const from = readLocal(bone);
+                    const value = [...from.pose, ...from.shear];
+                    const base = [...setup.pose, ...setup.shear];
+                    const apply = (channel: string, ...axes: number[]): void => {
+                        const key = sampled(tracks.get(channel), time);
+                        if (!key) return;
+                        axes.forEach((axis, component) => {
+                            const v = key[component];
+                            if (axis !== 3 && axis !== 4) {
+                                value[axis] = blend(value[axis], v + (c.additive ? 0 : base[axis]));
+                            } else {
+                                const target = v * base[axis];
+                                if (c.additive) value[axis] += (target - base[axis]) * alpha;
+                                else value[axis] = blend(Math.abs(value[axis]) * Math.sign(target), target, false);
+                            }
+                        });
+                    };
+                    apply('rotate', 2);
+                    apply('translate', 0, 1);
+                    apply('scale', 3, 4);
+                    apply('shear', 5, 6);
+                    for (const [axis, channel] of ['translatex', 'translatey', '', 'scalex', 'scaley', 'shearx', 'sheary'].entries()) {
+                        if (channel) apply(channel, axis);
+                    }
+                    writeLocal(bone, { pose: [value[0], value[1], value[2], value[3], value[4]], shear: [value[5], value[6]] });
+                }
+                const mixColor = (old: readonly number[], values: readonly number[]): number[] =>
+                    old.map((x, i) => Math.max(0, Math.min(1, blend(x, values[i], false))));
+                for (const [slot, track] of clip.slots) {
+                    if (!sample.activeBones.has(bySlot.get(slot)!.bone)) continue;
+                    let current = slots.get(slot)!;
+                    const index = last(track.attachment, time);
+                    const name = index < 0 || controls?.attachments.has(slot) ? current.attachment : track.attachment[index].value;
+                    if (name !== current.attachment) {
+                        const before = attachment(slot);
+                        current = { ...current, attachment: name };
+                        slots.set(slot, current);
+                        const after = attachment(slot);
+                        slotFrames.delete(slot);
+                        if (!before || !after || before === after || owner(before) !== owner(after)) slotDeform.delete(slot);
+                    }
+                    const light = sampled(track.rgba, time), pair = sampled(track.rgba2, time);
+                    let color = current.color, dark = current.dark;
+                    if (light) color = mixColor(color, light) as unknown as RGBA;
+                    if (pair) {
+                        color = mixColor(color, pair) as unknown as RGBA;
+                        if (dark) dark = mixColor(dark, pair.slice(4)) as unknown as RGB;
+                    }
+                    slots.set(slot, { ...current, color, dark });
+                }
+                for (const [slot, s] of bySlot) {
+                    if (!sample.activeBones.has(s.bone)) continue;
+                    const a = attachment(slot), base = owner(a);
+                    if (base?.kind === 'mesh' || base?.kind === 'path') {
+                        const val = sampled(clip.deform.get(base), time);
+                        if (val) {
+                            const prior = slotDeform.get(slot);
+                            slotDeform.set(slot, val.map((v, i) => blend(prior?.[i] ?? 0, v)));
+                        }
+                    }
+                    if ((a?.kind === 'mesh' || a?.kind === 'region') && a.sequence) {
+                        const track = clip.sequences.get(a);
+                        const j = track ? last(track, time) : -1;
+                        if (j >= 0) {
+                            const key = track![j];
+                            const frame = sequenceFrame(key.value, time - key.time, a.sequence.frames.length);
+                            if (frame >= 0) slotFrames.set(slot, frame);
+                        }
+                    }
+                }
+                const draw = last(clip.order, time);
+                if (draw >= 0) order = clip.order[draw].value;
+                for (const [folderId, folder] of project.folders) {
+                    const track = clip.folderOrder.get(folderId);
+                    if (!track?.length) continue;
+                    const key = last(track, time);
+                    const next = key >= 0 ? track[key].value : folder.members;
+                    const seats = new Set(folder.members);
+                    let offset = 0;
+                    order = order.map((slot) => seats.has(slot) ? next[offset++] : slot);
+                }
+                for (const [idOfIk, keys] of clip.ik) {
+                    const cur = ik.get(idOfIk), key = last(keys, time);
+                    if (!cur || key < 0) continue;
+                    const [mix, softness] = sampled(keys, time)!;
+                    const { compress, stretch, bendPositive } = keys[key];
+                    ik.set(idOfIk, { ...cur, mix: blend(cur.mix, mix, false), softness: blend(cur.softness, softness, false),
+                        compress, stretch, bendPositive });
+                }
+                for (const [idOfTransform, keys] of clip.transform) {
+                    const cur = transforms.get(idOfTransform), val = sampled(keys, time);
+                    if (cur && val) transforms.set(idOfTransform, cur.map((v, i) => blend(v, val[i])));
+                }
+                for (const [pathId, keys] of clip.path) {
+                    const cur = paths.get(pathId);
+                    if (!cur) continue;
+                    const p = sampled(keys.position, time)?.[0], s = sampled(keys.spacing, time)?.[0], m = sampled(keys.mix, time);
+                    paths.set(pathId, { position: p === undefined ? cur.position : blend(cur.position, p),
+                        spacing: s === undefined ? cur.spacing : blend(cur.spacing, s, false),
+                        mix: m === undefined ? cur.mix : cur.mix.map((v, i) => blend(v, m[i])),
+                    });
+                }
+                applyPhysicsTracks(project, physics, clip, time, (from, to, p) => blend(from, to, c.additive && (p === 'wind' || p === 'gravity')));
+                for (const [idOfSlider, keys] of clip.slider) {
+                    const cur = sliders.get(idOfSlider);
+                    if (!cur) continue;
+                    const t = sampled(keys.time, time)?.[0], m = sampled(keys.mix, time)?.[0];
+                    sliders.set(idOfSlider, { time: t === undefined ? cur.time : blend(cur.time, t),
+                        mix: m === undefined ? cur.mix : blend(cur.mix, m) });
+                }
+                continue;
+            }
+            if (c.kind === 'transform') {
+                const mix = transforms.get(id);
+                if (!mix?.some((amount) => amount !== 0)) continue;
+                let worldSource = c.localSource ? null : compute(c.source);
+                let localSource = c.localSource ? readLocal(c.source) : null;
+                const targets = c.bones.filter((bone) => sample.activeBones.has(bone));
+                const previous = c.localTarget ? [] : targets.map(compute);
+                for (let i = 0; i < targets.length; i++) {
+                    const targetId = targets[i];
+                    let world = previous[i];
+                    let local = c.localTarget ? readLocal(targetId) : null;
+                    for (const from of c.mappings) {
+                        const value = (localSource !== null ? transformReadLocal(from.prop, localSource, c.offsets) :
+                            transformReadWorld(from.prop, worldSource!, c.offsets)) - from.offset;
+                        for (const to of from.to) {
+                            const weight = mix[transformProperties.indexOf(to.prop)];
+                            if (weight === 0) continue;
+                            const wanted = to.offset + value * to.scale;
+                            const mapped = c.clamp ? Math.min(Math.max(to.offset, to.max), Math.max(Math.min(to.offset, to.max), wanted)) : wanted;
+                            if (local !== null) {
+                                local = transformWriteLocal(to.prop, local, mapped, weight, c.additive);
+                                if (targetId === c.source && localSource !== null) localSource = local;
+                            } else {
+                                world = transformWriteWorld(to.prop, world, mapped, weight, c.additive);
+                                if (targetId === c.source && worldSource !== null) worldSource = world;
+                            }
+                        }
+                    }
+                    if (local !== null) writeLocal(targetId, local);
+                    else writeWorld(targetId, world);
+                }
+                continue;
+            }
+            const options = ik.get(id);
+            if (!options || options.mix === 0) continue;
+            const bone = byId.get(c.bone)!;
+            // The pinned editor does not aim an unparented bone.
+            if (bone.parent === null) continue;
+            // Read the current target before changing this subtree. Targets
+            // downstream of an earlier constraint must see its new matrix.
+            const target = compute(c.target);
+            const current = compute(c.bone);
+            const { pose: local, shear } = readLocal(c.bone);
+            const frame = compute(bone.parent);
+            if (c.child === null) {
+                writeLocal(c.bone, { pose: aimBone2d(local, shear, bone.inherit, bone.length, frame, current, target, options), shear });
+            } else {
+                const child = byId.get(c.child)!;
+                if (bone.inherit !== 'normal' || child.inherit !== 'normal') continue;
+                // Even an inactive child contributes its setup offset to the
+                // upper bone's solve; inactive descendants still do not render.
+                const lowerLocal = readLocal(c.child);
+                const [upper, lower] = aimBone2dPair(
+                    local, lowerLocal.pose, shear, lowerLocal.shear, bone.length, child.length, frame, current, target, options,
+                );
+                writeLocal(c.bone, { pose: upper, shear });
+                writeLocal(c.child, { pose: lower, shear: lowerLocal.shear });
+            }
+        }
+    }
+    for (const bone of project.bones) compute(bone.id);
+    return { ...sample, solvedWorld: out, slots, order, ik, transforms, sliders, paths, physics,
+        ...(sliders.size || controls?.attachments.size ? { slotFrames, slotDeform } : {}),
+    };
+}
+
+/** Build a mesh in player-root coordinates. Weighted deform offsets are per influence, not per final vertex. */
+export function bone2dMeshPositions(
+    mesh: Positioned,
+    slotBone: string,
+    world: ReadonlyMap<string, Matrix2D>,
+    delta: readonly number[] = [],
+): number[] {
+    const transform = (id: string, x: number, y: number): [number, number] => {
+        const [a, b, c, d, tx, ty] = world.get(id)!;
+        return [a * x + b * y + tx, c * x + d * y + ty];
+    };
+    const out: number[] = [];
+    if (mesh.weights) {
+        let index = 0;
+        for (const row of mesh.weights) {
+            let x = 0,
+                y = 0;
+            for (const [bone, bx, by, weight] of row) {
+                const [px, py] = transform(bone, bx + (delta[index++] ?? 0), by + (delta[index++] ?? 0));
+                x += px * weight;
+                y += py * weight;
+            }
+            out.push(x, y);
+        }
+    } else
+        for (let i = 0; i < mesh.xy.length; i += 2) {
+            out.push(...transform(slotBone, mesh.xy[i] + (delta[i] ?? 0), mesh.xy[i + 1] + (delta[i + 1] ?? 0)));
+        }
+    return out;
+}
+
+export function resolveBone2dAttachment(skins: readonly Skin[], slot: string, name: string | null): Attachment | undefined {
+    if (name === null) return undefined;
+    for (let i = skins.length - 1; i >= 0; --i) {
+        const attachment = skins[i].regions.get(slot)?.get(name);
+        if (attachment) return attachment;
+    }
+    return undefined;
+}
+
+export function bone2dShapeGeometry(
+    attachment: Shape,
+    slotBone: string,
+    sample: Bone2dSample,
+    world: ReadonlyMap<string, Matrix2D>,
+    slotId?: string,
+): Bone2dAttachmentGeometry {
+    if (attachment.kind === 'point') {
+        const [a, b, c, d, tx, ty] = world.get(slotBone)!;
+        const r = attachment.rotation * Math.PI / 180, x = Math.cos(r), y = Math.sin(r);
+        return {
+            kind: 'point',
+            x: a * attachment.x + b * attachment.y + tx,
+            y: c * attachment.x + d * attachment.y + ty,
+            rotation: Math.atan2(c * x + d * y, a * x + b * y) * 180 / Math.PI,
+        };
+    }
+    const vertices = bone2dMeshPositions(attachment, slotBone, world,
+        slotId !== undefined && sample.slotDeform ? sample.slotDeform.get(slotId) : sample.shapeDeltas.get(attachment));
+    if (attachment.kind === 'boundingbox') return { kind: 'boundingbox', vertices };
+    return { kind: 'path', vertices, closed: attachment.closed, constantSpeed: attachment.constantSpeed };
+}

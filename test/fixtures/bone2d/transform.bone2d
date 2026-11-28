@@ -1,0 +1,371 @@
+{
+  "bone2d": 1,
+  "project": {
+    "format": "bone2d",
+    "version": 1,
+    "name": "Clawbot",
+    "skeleton": {
+      "name": "Clawbot",
+      "fps": 30,
+      "bones": [
+        {
+          "id": "root",
+          "name": "root",
+          "parent": null,
+          "length": 0,
+          "x": 0,
+          "y": 0,
+          "rotation": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "shearX": 0,
+          "shearY": 0,
+          "inherit": "normal",
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "skinRequired": false,
+          "hidden": false,
+          "locked": false
+        },
+        {
+          "id": "source",
+          "name": "source",
+          "parent": "root",
+          "length": 0,
+          "x": 0,
+          "y": 0,
+          "rotation": -1,
+          "scaleX": 1,
+          "scaleY": 1,
+          "shearX": 0,
+          "shearY": 0,
+          "inherit": "normal",
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "skinRequired": false,
+          "hidden": false,
+          "locked": false
+        },
+        {
+          "id": "local",
+          "name": "local",
+          "parent": "root",
+          "length": 0,
+          "x": 0,
+          "y": 14,
+          "rotation": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "shearX": 0,
+          "shearY": 0,
+          "inherit": "normal",
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "skinRequired": false,
+          "hidden": false,
+          "locked": false
+        },
+        {
+          "id": "world",
+          "name": "world",
+          "parent": "root",
+          "length": 0,
+          "x": 0,
+          "y": -14,
+          "rotation": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "shearX": 0,
+          "shearY": 0,
+          "inherit": "normal",
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "skinRequired": false,
+          "hidden": false,
+          "locked": false
+        }
+      ],
+      "slots": [
+        {
+          "id": "local-sprite",
+          "name": "local-sprite",
+          "bone": "local",
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "blend": "normal",
+          "attachment": "arm"
+        },
+        {
+          "id": "local-point",
+          "name": "local-point",
+          "bone": "local",
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "blend": "normal",
+          "attachment": "point"
+        },
+        {
+          "id": "world-sprite",
+          "name": "world-sprite",
+          "bone": "world",
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "blend": "normal",
+          "attachment": "arm"
+        },
+        {
+          "id": "world-point",
+          "name": "world-point",
+          "bone": "world",
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "blend": "normal",
+          "attachment": "point"
+        }
+      ],
+      "skins": [
+        {
+          "id": "skin",
+          "name": "default",
+          "bones": [],
+          "constraints": [],
+          "attachments": {
+            "local-sprite": {
+              "arm": {
+                "type": "region",
+                "name": "arm",
+                "path": "arm",
+                "x": 0,
+                "y": 0,
+                "rotation": 0,
+                "scaleX": 1,
+                "scaleY": 1,
+                "width": 32,
+                "height": 16,
+                "color": [
+                  1,
+                  1,
+                  1,
+                  1
+                ]
+              }
+            },
+            "local-point": {
+              "point": {
+                "type": "point",
+                "name": "point",
+                "x": 0,
+                "y": 0,
+                "rotation": 0
+              }
+            },
+            "world-sprite": {
+              "arm": {
+                "type": "region",
+                "name": "arm",
+                "path": "arm",
+                "x": 0,
+                "y": 0,
+                "rotation": 0,
+                "scaleX": 1,
+                "scaleY": 1,
+                "width": 32,
+                "height": 16,
+                "color": [
+                  1,
+                  1,
+                  1,
+                  1
+                ]
+              }
+            },
+            "world-point": {
+              "point": {
+                "type": "point",
+                "name": "point",
+                "x": 0,
+                "y": 0,
+                "rotation": 0
+              }
+            }
+          }
+        }
+      ],
+      "constraints": [
+        {
+          "id": "local-map",
+          "name": "local",
+          "type": "transform",
+          "bones": [
+            "local"
+          ],
+          "source": "source",
+          "localSource": true,
+          "localTarget": true,
+          "additive": false,
+          "clamp": true,
+          "skinRequired": false,
+          "offsets": {
+            "rotation": 0,
+            "x": 0,
+            "y": 0,
+            "scaleX": 0,
+            "scaleY": 0,
+            "shearY": 0
+          },
+          "mix": {
+            "rotate": 0,
+            "x": 1,
+            "y": 0,
+            "scaleX": 0,
+            "scaleY": 0,
+            "shearY": 0
+          },
+          "properties": [
+            {
+              "prop": "rotate",
+              "offset": 0,
+              "to": [
+                {
+                  "prop": "x",
+                  "offset": 10,
+                  "max": -20,
+                  "scale": -1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "world-map",
+          "name": "world",
+          "type": "transform",
+          "bones": [
+            "world"
+          ],
+          "source": "source",
+          "localSource": false,
+          "localTarget": true,
+          "additive": false,
+          "clamp": true,
+          "skinRequired": false,
+          "offsets": {
+            "rotation": 0,
+            "x": 0,
+            "y": 0,
+            "scaleX": 0,
+            "scaleY": 0,
+            "shearY": 0
+          },
+          "mix": {
+            "rotate": 0,
+            "x": 1,
+            "y": 0,
+            "scaleX": 0,
+            "scaleY": 0,
+            "shearY": 0
+          },
+          "properties": [
+            {
+              "prop": "rotate",
+              "offset": 0,
+              "to": [
+                {
+                  "prop": "x",
+                  "offset": 10,
+                  "max": -20,
+                  "scale": -1
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "events": [],
+      "animations": [
+        {
+          "id": "idle",
+          "name": "Idle",
+          "duration": 1,
+          "bones": {
+            "source": {
+              "rotate": [
+                {
+                  "time": 0,
+                  "value": [
+                    0
+                  ]
+                },
+                {
+                  "time": 1,
+                  "value": [
+                    2
+                  ]
+                }
+              ]
+            }
+          },
+          "slots": {},
+          "ik": {},
+          "transform": {},
+          "slider": {},
+          "path": {},
+          "physics": {},
+          "deform": {},
+          "drawOrder": [],
+          "events": []
+        }
+      ]
+    },
+    "images": [
+      {
+        "id": "arm-image",
+        "name": "arm",
+        "width": 8,
+        "height": 8
+      }
+    ]
+  },
+  "images": {
+    "arm": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAGUlEQVR42mNgQAL8T979R8cMBBVgExxyCgBVqKbBcYjt5wAAAABJRU5ErkJggg=="
+  },
+  "ui": {
+    "camera": {
+      "x": 0,
+      "y": 0,
+      "zoom": 1
+    }
+  }
+}

@@ -1,0 +1,279 @@
+{
+  "bone2d": 1,
+  "project": {
+    "format": "bone2d",
+    "version": 1,
+    "name": "Clawbot",
+    "skeleton": {
+      "name": "Clawbot",
+      "fps": 30,
+      "bones": [
+        {
+          "id": "root",
+          "name": "root",
+          "parent": null,
+          "length": 0,
+          "x": 0,
+          "y": 0,
+          "rotation": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "shearX": 0,
+          "shearY": 0,
+          "inherit": "normal",
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "skinRequired": false,
+          "hidden": false,
+          "locked": false
+        },
+        {
+          "id": "driver",
+          "name": "driver",
+          "parent": "root",
+          "length": 4,
+          "x": 0,
+          "y": 0,
+          "rotation": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "shearX": 0,
+          "shearY": 0,
+          "inherit": "normal",
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "skinRequired": false,
+          "hidden": false,
+          "locked": false
+        },
+        {
+          "id": "elbow",
+          "name": "elbow",
+          "parent": "driver",
+          "length": 3,
+          "x": 2,
+          "y": 1,
+          "rotation": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "shearX": 0,
+          "shearY": 0,
+          "inherit": "normal",
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "skinRequired": false,
+          "hidden": false,
+          "locked": false
+        },
+        {
+          "id": "tip",
+          "name": "tip",
+          "parent": "elbow",
+          "length": 0,
+          "x": 3,
+          "y": 0,
+          "rotation": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "shearX": 0,
+          "shearY": 0,
+          "inherit": "normal",
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "skinRequired": false,
+          "hidden": false,
+          "locked": false
+        },
+        {
+          "id": "target",
+          "name": "target",
+          "parent": "root",
+          "length": 0,
+          "x": 4,
+          "y": 2,
+          "rotation": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "shearX": 0,
+          "shearY": 0,
+          "inherit": "normal",
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "skinRequired": false,
+          "hidden": false,
+          "locked": false
+        }
+      ],
+      "slots": [
+        {
+          "id": "arm-slot",
+          "name": "arm-slot",
+          "bone": "elbow",
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "dark": null,
+          "attachment": "arm",
+          "blend": "normal",
+          "hidden": false
+        },
+        {
+          "id": "tip-slot",
+          "name": "tip-slot",
+          "bone": "tip",
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "dark": null,
+          "attachment": "point",
+          "blend": "normal",
+          "hidden": false
+        },
+        {
+          "id": "elbow-slot",
+          "name": "elbow-slot",
+          "bone": "elbow",
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "dark": null,
+          "attachment": "point",
+          "blend": "normal",
+          "hidden": false
+        }
+      ],
+      "skins": [
+        {
+          "id": "skin",
+          "name": "default",
+          "bones": [],
+          "constraints": [],
+          "attachments": {
+            "arm-slot": {
+              "arm": {
+                "type": "region",
+                "name": "arm",
+                "path": "arm",
+                "x": 0,
+                "y": 0,
+                "rotation": 0,
+                "scaleX": 1,
+                "scaleY": 1,
+                "width": 32,
+                "height": 16,
+                "color": [
+                  1,
+                  1,
+                  1,
+                  1
+                ]
+              }
+            },
+            "tip-slot": {
+              "point": {
+                "type": "point",
+                "name": "point",
+                "x": 0,
+                "y": 0,
+                "rotation": 0
+              }
+            },
+            "elbow-slot": {
+              "point": {
+                "type": "point",
+                "name": "point",
+                "x": 0,
+                "y": 0,
+                "rotation": 0
+              }
+            }
+          }
+        }
+      ],
+      "constraints": [
+        {
+          "id": "first",
+          "name": "first",
+          "type": "ik",
+          "bones": [
+            "driver",
+            "elbow"
+          ],
+          "target": "target",
+          "mix": 1,
+          "softness": 0,
+          "compress": false,
+          "stretch": false,
+          "bendPositive": true,
+          "scaleY": "none",
+          "skinRequired": false
+        }
+      ],
+      "events": [],
+      "animations": [
+        {
+          "id": "idle",
+          "name": "Idle",
+          "duration": 1,
+          "bones": {},
+          "slots": {},
+          "ik": {},
+          "transform": {},
+          "slider": {},
+          "path": {},
+          "physics": {},
+          "deform": {},
+          "drawOrder": [],
+          "events": []
+        }
+      ]
+    },
+    "images": [
+      {
+        "id": "arm-image",
+        "name": "arm",
+        "width": 8,
+        "height": 8
+      }
+    ]
+  },
+  "images": {
+    "arm": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAGUlEQVR42mNgQAL8T979R8cMBBVgExxyCgBVqKbBcYjt5wAAAABJRU5ErkJggg=="
+  },
+  "ui": {
+    "camera": {
+      "x": 0,
+      "y": 0,
+      "zoom": 1
+    }
+  }
+}

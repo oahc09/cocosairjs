@@ -1,0 +1,318 @@
+{
+  "bone2d": 1,
+  "project": {
+    "format": "bone2d",
+    "version": 1,
+    "name": "Clawbot",
+    "skeleton": {
+      "name": "Clawbot",
+      "fps": 30,
+      "bones": [
+        {
+          "id": "arm-bone",
+          "name": "arm-bone",
+          "parent": "root",
+          "length": 0,
+          "x": 6,
+          "y": 0,
+          "rotation": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "shearX": 0,
+          "shearY": 0,
+          "inherit": "normal",
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "skinRequired": false,
+          "hidden": false,
+          "locked": false
+        },
+        {
+          "id": "root",
+          "name": "root",
+          "parent": null,
+          "length": 0,
+          "x": 0,
+          "y": 0,
+          "rotation": 0,
+          "scaleX": 1.5,
+          "scaleY": 1,
+          "shearX": 0,
+          "shearY": 0,
+          "inherit": "normal",
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "skinRequired": false,
+          "hidden": false,
+          "locked": false
+        }
+      ],
+      "slots": [
+        {
+          "id": "body-slot",
+          "name": "body-slot",
+          "bone": "root",
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "dark": null,
+          "attachment": "body",
+          "blend": "normal",
+          "hidden": false
+        },
+        {
+          "id": "arm-slot",
+          "name": "arm-slot",
+          "bone": "arm-bone",
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "dark": null,
+          "attachment": "arm",
+          "blend": "normal",
+          "hidden": false
+        }
+      ],
+      "skins": [
+        {
+          "id": "skin",
+          "name": "default",
+          "bones": [],
+          "constraints": [],
+          "attachments": {
+            "body-slot": {
+              "body": {
+                "type": "region",
+                "name": "body",
+                "path": "body",
+                "x": 0,
+                "y": 0,
+                "rotation": 0,
+                "scaleX": 1,
+                "scaleY": 1,
+                "width": 64,
+                "height": 32,
+                "color": [
+                  1,
+                  1,
+                  1,
+                  1
+                ]
+              }
+            },
+            "arm-slot": {
+              "arm": {
+                "type": "region",
+                "name": "arm",
+                "path": "arm",
+                "x": 0,
+                "y": 0,
+                "rotation": 0,
+                "scaleX": 1,
+                "scaleY": 1,
+                "width": 32,
+                "height": 16,
+                "color": [
+                  1,
+                  1,
+                  1,
+                  1
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "constraints": [],
+      "events": [
+        {
+          "id": "ev-start",
+          "name": "Start",
+          "int": 0,
+          "float": 0,
+          "string": ""
+        },
+        {
+          "id": "ev-impact",
+          "name": "Impact",
+          "int": 0,
+          "float": 0,
+          "string": "",
+          "audio": "authoring-only.wav"
+        },
+        {
+          "id": "ev-end",
+          "name": "End",
+          "int": 0,
+          "float": 0,
+          "string": ""
+        }
+      ],
+      "animations": [
+        {
+          "id": "idle",
+          "name": "Idle",
+          "duration": 1,
+          "bones": {
+            "arm-bone": {
+              "rotate": [
+                {
+                  "time": 0,
+                  "value": [
+                    0
+                  ],
+                  "curve": [
+                    0.25,
+                    0,
+                    0.75,
+                    1
+                  ]
+                },
+                {
+                  "time": 0.5,
+                  "value": [
+                    8
+                  ]
+                },
+                {
+                  "time": 1,
+                  "value": [
+                    0
+                  ]
+                }
+              ]
+            }
+          },
+          "slots": {},
+          "ik": {},
+          "transform": {},
+          "slider": {},
+          "path": {},
+          "physics": {},
+          "deform": {},
+          "drawOrder": [],
+          "events": []
+        },
+        {
+          "id": "attack",
+          "name": "Attack",
+          "duration": 1,
+          "bones": {
+            "arm-bone": {
+              "translate": [
+                {
+                  "time": 0.25,
+                  "value": [
+                    0,
+                    0
+                  ]
+                },
+                {
+                  "time": 0.5,
+                  "value": [
+                    20,
+                    0
+                  ]
+                }
+              ],
+              "rotate": [
+                {
+                  "time": 0,
+                  "value": [
+                    0
+                  ],
+                  "curve": "stepped"
+                },
+                {
+                  "time": 0.5,
+                  "value": [
+                    45
+                  ]
+                }
+              ]
+            }
+          },
+          "slots": {
+            "arm-slot": {
+              "attachment": [
+                {
+                  "time": 0.875,
+                  "name": null
+                }
+              ]
+            }
+          },
+          "ik": {},
+          "transform": {},
+          "slider": {},
+          "path": {},
+          "physics": {},
+          "deform": {},
+          "drawOrder": [
+            {
+              "time": 0.5,
+              "order": [
+                "arm-slot",
+                "body-slot"
+              ]
+            }
+          ],
+          "events": [
+            {
+              "time": 0,
+              "event": "ev-start"
+            },
+            {
+              "time": 0.5,
+              "event": "ev-impact",
+              "int": 2
+            },
+            {
+              "time": 1,
+              "event": "ev-end"
+            }
+          ]
+        }
+      ]
+    },
+    "images": [
+      {
+        "id": "body-image",
+        "name": "body",
+        "width": 16,
+        "height": 16
+      },
+      {
+        "id": "arm-image",
+        "name": "arm",
+        "width": 8,
+        "height": 8
+      }
+    ]
+  },
+  "images": {
+    "body": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAHUlEQVR42mNgoAb4b6j/nxw8asCoAaMGUNsASgAAq8bQCNLTXLIAAAAASUVORK5CYII=",
+    "arm": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAGUlEQVR42mNgQAL8T979R8cMBBVgExxyCgBVqKbBcYjt5wAAAABJRU5ErkJggg=="
+  },
+  "ui": {
+    "camera": {
+      "x": 0,
+      "y": 0,
+      "zoom": 1
+    }
+  }
+}
