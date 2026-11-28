@@ -43,3 +43,15 @@ node tools/mcp/glass-pass-browser.mjs
 - `TRANSMISSION_OBSERVED`：两帧背景内容一致且非均匀，真实材质参数变化，最终图像有相应变化。这不是通用 RenderGraph 回放、物理正确性或视觉对标。
 
 端到端测试使用同一示例、同一引擎，另外在隔离页面注入两个故障：关闭背景相机对应的捕获组件，以及仅把玻璃模型移出画面以让合成失效。
+
+## 程序化资产：验证生成、加载和真实画面
+
+```sh
+node tools/fixtures/seeded-material-panel.cjs generate --seed 42 --out /tmp/air-seeded-panel
+node tools/fixtures/seeded-material-panel.cjs check --seed 42 --out /tmp/air-seeded-panel
+node tools/mcp/seeded-panel-browser.mjs
+```
+
+这是 AIR 的小型验证夹具，不是新资源格式或通用资产构建器。生成器把固定几何、seed 驱动的 64×64 瓷砖 PNG 和标准 PBR 材质写入常规 GLB，另存原始 PNG 与收据。收据固定生成器 SHA-256、参数、编码工具链版本和两个文件的 SHA-256，不记录生成时刻或目录。复验时按指定 seed 独立重建并逐字节核对，不能只改收据来接受被替换的文件；目标是同工具链复现，不承诺跨编码器版本的字节一致。
+
+测试用三份独立浏览器上下文运行原生 glTF Viewer。两次独立生成的同 seed PNG／GLB／收据字节一致，浏览器画面也一致；改 seed 必须产生可见差异。篡改的 GLB 在提供给 Viewer 前就被拒绝。通用资产构建和登记规范不在此试点内。

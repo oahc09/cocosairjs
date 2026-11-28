@@ -10,3 +10,5 @@ Use this when deciding whether a browser change works, not when only reviewing a
 Keep debug tooling out of the default bundle. For a bounded interactive review, use the existing MCP session and its scoped writes and cleanup; do not add generic browser execution or publish local screenshots implicitly.
 
 For the repository's glass-refraction fixture, prefer the localized `glass-passes` check from the guide when the question is capture versus composition. Compare the real intermediate attachment first, then confirm it is bound to the consumer and the final frame responds to the controlled material input. If readback is unavailable do not infer a captured background from the final screenshot. The pilot does not inspect arbitrary effects.
+
+When reviewing a generated asset, separate recipe reproducibility, artifact integrity, and visible runtime effect. The seeded panel in the guide exercises all three: fresh processes reproduce the files, a changed asset is rejected before loading, and the real Viewer must show the same pixels for the same seed and different pixels for a changed seed. Do not generalize this to other assets or toolchain versions.
