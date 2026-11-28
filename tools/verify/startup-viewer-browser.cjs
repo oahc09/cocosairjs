@@ -19,6 +19,26 @@ assert.ok(
     bindings.every((binding) => binding.matches),
     'Build both bundles from the current source tree',
 );
+const [fullPaths, viewerPaths] = bundles.map((bundle) =>
+    JSON.parse(readFileSync(bundle + '.sources.json', 'utf8')).sources.map(({ path }) => path),
+);
+for (const expected of [
+    'src/exports/gfx-webgpu.ts',
+    'src/cocos/gfx/webgpu/webgpu-device.ts',
+    'src/cocos/gfx/webgpu/instantiated.ts',
+]) {
+    assert.ok(fullPaths.includes(expected), 'Missing full SDK registration/configuration path: ' + expected);
+}
+assert.ok(viewerPaths.includes('src/air/bootstrap-webgpu-disabled.ts'), 'Missing Viewer facade');
+assert.ok(
+    !viewerPaths.some(
+        (path) =>
+            path.startsWith('src/cocos/gfx/webgpu/') ||
+            path === 'src/exports/gfx-webgpu.ts' ||
+            path === 'src/air/bootstrap-webgpu.ts',
+    ),
+    'Viewer still contains the WebGPU runtime or translator path',
+);
 
 // Each page loads exactly one bundle. The module body is completed by the local server.
 const script = (arm) => `
@@ -29,7 +49,8 @@ try {
     if ('${arm}' === 'viewer') {
         for (const options of [
             {renderer:'webgpu'}, {renderMode:3}, {physics:'cannon'},
-            {physics:'box3d'}, {physics2D:'box2d-v3-wasm'}, {webgpuAssetBaseUrl:'./x'},
+            {physics:'box3d'}, {physics2D:'box2d-v3-wasm'},
+            {webgpu:{assetBaseUrl:'./x'}}, {box2d3:{assetBaseUrl:'./x', subStepCount:2}},
         ]) {
             try { await c.createAirApp({canvas, ...options}); rejected.push('ACCEPTED'); }
             catch (error) { rejected.push(error.code); }
@@ -66,7 +87,8 @@ try {
         n => n.toString(16).padStart(2,'0')).join('');
     const content = rgba.some((n,i) => i%4 !== 3 && n > 45);
     window.release = async () => app.releaseScene();
-    window.result = { rejected, pixels, content, materials, error, width:canvas.width,height:canvas.height };
+    window.result = { rejected, pixels, content, materials, error, width:canvas.width,height:canvas.height,
+        gpuDeviceRegistered: typeof c.cclegacy?.WebGPUDevice === 'function' };
 } catch (error) {window.result = {error: String(error), rejected};}
 `;
 const routes = new Map([
@@ -117,7 +139,8 @@ for (const arm of ['full', 'viewer']) {
                 assert.deepEqual([value.width, value.height], [480, 270]);
                 assert.equal(value.materials['ior2.5 + strength4'], 'air-gltf-physical');
                 assert.equal(value.materials['identity pbr'], 'air-gltf-standard');
-                assert.deepEqual(value.rejected, arm === 'viewer' ? Array(6).fill('AIR_E_VIEWER_PROFILE') : []);
+                assert.deepEqual(value.rejected, arm === 'viewer' ? Array(7).fill('AIR_E_VIEWER_PROFILE') : []);
+                assert.equal(value.gpuDeviceRegistered, arm === 'full');
                 const release = await page.evaluate(() => window.release());
                 assert.equal(release.status, 'released');
                 assert.deepEqual(errors, []);

@@ -23,8 +23,10 @@ The profile keeps the legacy pipeline, basic scene and mesh APIs, glTF material
 and decoding code, animation and skinning. It removes entry roots for the custom
 pipeline and post-processing, external physics backends, UI and browser media
 components, workers, and 2D skeletal middleware. Shared dependencies needed by
-retained code may still be present. The viewer accepts only WebGL2 and rejects
-explicit alternative renderer/physics options; use the full SDK for them or for
+retained code may still be present. The build substitutes only the WebGPU
+bootstrap facade, excluding WebGPU device and shader-translator code. The viewer accepts only WebGL2 and rejects
+explicit alternative renderer/physics options (including nested `webgpu` and
+`box2d3`); use the full SDK for them or for
 custom pipeline settings. Both native physics registries retain
 lightweight builtin defaults, not Cannon or Box2D. Compressed glTF assets still require any decoder
 sidecars configured by the application; this profile does not copy or package them.

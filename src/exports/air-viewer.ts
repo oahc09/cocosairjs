@@ -46,31 +46,17 @@ export { primitives } from './primitive';
 export * from '../air/assets/gltf';
 export type { AirApp } from '../air/bootstrap';
 
-type OptionalBackend =
-    | 'renderer'
-    | 'renderMode'
-    | 'webgpuAssetBaseUrl'
-    | 'physics'
-    | 'physicsOptions'
-    | 'physics2D'
-    | 'box2d3AssetBaseUrl'
-    | 'box2d3SubStepCount';
-export type AirViewerAppOptions = Omit<AirAppOptions, OptionalBackend> & { readonly renderer?: 'webgl2' };
+const optionalBackends = ['renderMode', 'webgpu', 'physics', 'physicsOptions', 'physics2D', 'box2d3'] as const;
+export type AirViewerAppOptions = Omit<AirAppOptions, 'renderer' | (typeof optionalBackends)[number]> & {
+    readonly renderer?: 'webgl2';
+};
 
 /** Opt-in browser viewer profile. The full SDK remains the compatibility entry. */
 export async function createAirApp(options: AirViewerAppOptions) {
     const input = options as AirAppOptions;
     if (
         (input.renderer !== undefined && input.renderer !== 'webgl2') ||
-        [
-            'renderMode',
-            'webgpuAssetBaseUrl',
-            'physics',
-            'physicsOptions',
-            'physics2D',
-            'box2d3AssetBaseUrl',
-            'box2d3SubStepCount',
-        ].some((key) => input[key as keyof AirAppOptions] !== undefined)
+        optionalBackends.some((key) => input[key] !== undefined)
     ) {
         throw airError(
             'AIR_E_VIEWER_PROFILE',

@@ -54,8 +54,7 @@ import {
 import { view } from '../cocos/ui/view';
 import { screenAdapter } from 'pal/screen-adapter';
 import { settings, SettingsCategory } from '../cocos/core/settings';
-import '../exports/gfx-webgpu';
-import { configureWebGPUAssets } from '../cocos/gfx/webgpu/instantiated';
+import { configureWebGPUAssets } from './bootstrap-webgpu';
 import { deviceManager } from '../cocos/gfx/device-manager';
 import { VERSION } from '../cocos/core/global-exports';
 

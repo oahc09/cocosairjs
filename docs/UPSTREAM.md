@@ -693,4 +693,6 @@ Effects may supply pre-specialized WGSL render stages with explicit entry points
 `src/exports/air-viewer.ts` is AIR-owned. Its feature unit in `src/cc.config.json` is
 opt-in and absent from the default JavaScript and declaration feature lists. It
 reuses the native WebGL2/legacy pipeline and glTF stack, omitting aggregate feature
-roots not required by the viewer workload. No extracted `src/cocos/` files are edited.
+roots not required by the viewer workload. The AIR-only backend-facade override
+selects a fail-closed WebGL2 profile without touching the full registration path.
+No extracted `src/cocos/` files are edited.

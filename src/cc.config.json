@@ -98,7 +98,8 @@
             ]
         },
         "air-viewer": {
-            "modules": ["air-viewer"]
+            "modules": ["air-viewer"],
+            "intrinsicFlags": { "AIR_STARTUP_VIEWER": true }
         },
         "spark": {
             "modules": [
@@ -318,6 +319,13 @@
         }
     },
     "moduleOverrides": [
+        {
+            "test": "context.buildTimeConstants.AIR_STARTUP_VIEWER === true",
+            "isVirtualModule": false,
+            "overrides": {
+                "air/bootstrap-webgpu.ts": "air/bootstrap-webgpu-disabled.ts"
+            }
+        },
         {
             "test": "true",
             "isVirtualModule": true,

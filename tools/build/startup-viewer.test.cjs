@@ -16,9 +16,34 @@ test('viewer graph has an explicit root and stays outside the full feature set',
     for (const required of ['physics-builtin', 'physics-2d-builtin']) assert.ok(FEATURES.includes(required));
     assert.ok(!DEFAULT_FEATURES.includes('air-viewer') && DEFAULT_FEATURES.includes('air'));
     for (const other of [
-        'air', 'custom-pipeline', 'custom-pipeline-post-process', 'gfx-webgpu', 'spine-3.8',
-        'dragon-bones', 'worker', 'video', 'webview', 'physics-cannon', 'physics-2d-box2d',
-    ]) assert.ok(!FEATURES.includes(other), other);
+        'air',
+        'custom-pipeline',
+        'custom-pipeline-post-process',
+        'gfx-webgpu',
+        'spine-3.8',
+        'dragon-bones',
+        'worker',
+        'video',
+        'webview',
+        'physics-cannon',
+        'physics-2d-box2d',
+    ])
+        assert.ok(!FEATURES.includes(other), other);
+});
+
+test('ccbuild replaces the full backend facade only for Viewer', async () => {
+    const { StatsQuery } = require('@cocos/ccbuild');
+    const engine = resolve(__dirname, '../../src');
+    const stats = await StatsQuery.create(engine);
+    const mapping = (featureNames) =>
+        stats.evaluateModuleOverrides({
+            mode: 'BUILD',
+            platform: 'HTML5',
+            buildTimeConstants: stats.getIntrinsicFlagsOfFeatures(featureNames),
+        });
+    const backend = join(engine, 'air/bootstrap-webgpu.ts');
+    assert.equal(mapping(FEATURES)[backend], join(engine, 'air/bootstrap-webgpu-disabled.ts'));
+    assert.ok(!(backend in mapping(DEFAULT_FEATURES)));
 });
 
 test('both variant modes reject default and nested destinations, including through symlinks', (t) => {
@@ -53,7 +78,9 @@ test('actual build invocation fails before compiling when profiles are combined 
         [[], { AIR_FEATURES: 'air-viewer' }, /Use --startup-viewer/],
     ]) {
         const result = spawnSync(process.execPath, [build, ...args], {
-            env: { ...base, ...env }, encoding: 'utf8', timeout: 10000,
+            env: { ...base, ...env },
+            encoding: 'utf8',
+            timeout: 10000,
         });
         assert.equal(result.status, 1, result.stderr);
         assert.match(result.stderr, pattern);
