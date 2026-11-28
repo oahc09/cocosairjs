@@ -1486,11 +1486,14 @@ export class ShaderStage {
     constructor (
         public stage: ShaderStageFlagBit = ShaderStageFlagBit.NONE,
         public source: string = '',
+        /** When defined, source is native WGSL and the named entry point is used directly. */
+        public wgslEntryPoint?: string,
     ) {}
 
     public copy (info: Readonly<ShaderStage>): ShaderStage {
         this.stage = info.stage;
         this.source = info.source;
+        this.wgslEntryPoint = info.wgslEntryPoint;
         return this;
     }
 }

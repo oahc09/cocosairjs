@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const { execFileSync } = require('child_process');
+const { verifySourceBinding } = require('../build/source-binding.cjs');
 
 function sourceFingerprint(root) {
     const files = [
@@ -58,22 +59,24 @@ function sourceFingerprint(root) {
     }
     return hash.digest('hex');
 }
-function checkBuildSources(root, bundleName) {
-    const filename = path.join(root, 'build', bundleName + '.map');
-    const map = JSON.parse(fs.readFileSync(filename, 'utf8'));
-    let compared = 0;
-    const mismatches = [];
-    map.sources.forEach((source, index) => {
-        const file = path.resolve(root, 'build', source);
-        if (!/\.[jt]s$/.test(source) || !fs.existsSync(file) || !map.sourcesContent?.[index]) return;
-        compared++;
-        if (fs.readFileSync(file, 'utf8').replace(/\r\n/g, '\n') !== map.sourcesContent[index].replace(/\r\n/g, '\n'))
-            mismatches.push(source);
-    });
+function checkBuildSources(root, bundleName, artifact = path.join(root, 'build', bundleName)) {
+    const bundle = path.join(root, 'build', bundleName);
+    const binding = verifySourceBinding(root, bundle);
+    if (path.resolve(artifact) !== path.resolve(bundle)) {
+        const { stripRuntimeSourceMap } = require('../build/runtime-layout.cjs');
+        const source = fs.readFileSync(bundle, 'utf8');
+        const packaged = stripRuntimeSourceMap(source);
+        if (source === packaged || !fs.readFileSync(artifact).equals(Buffer.from(packaged))) {
+            binding.mismatches.push('package-runtime-bytes');
+            binding.matches = false;
+        }
+    }
     return {
-        compared,
-        mismatches,
-        sha256: crypto.createHash('sha256').update(fs.readFileSync(filename)).digest('hex'),
+        ...binding,
+        sha256: crypto
+            .createHash('sha256')
+            .update(fs.readFileSync(bundle + '.map'))
+            .digest('hex'),
     };
 }
 module.exports = { sourceFingerprint, checkBuildSources };

@@ -150,15 +150,15 @@ function fakeBasis(options = {}) {
     return { module, state };
 }
 
-function embeddedContext(api, provider, signal) {
+function embeddedContext(api, provider, signal, bytes = identifier) {
     // Nonzero subview offset with unrelated geometry on both sides.
-    const storage = new Uint8Array(48).fill(71);
-    storage.set(identifier, 17);
+    const storage = new Uint8Array(bytes.length + 36).fill(71);
+    storage.set(bytes, 17);
     const json = {
         asset: { version: '2.0' },
         images: [{ bufferView: 0, mimeType: 'image/ktx2' }],
         textures: [{ extensions: { KHR_texture_basisu: { source: 0 } } }],
-        bufferViews: [{ buffer: 0, byteOffset: 17, byteLength: identifier.byteLength }],
+        bufferViews: [{ buffer: 0, byteOffset: 17, byteLength: bytes.byteLength }],
     };
     const context = new api.GLTFParserContext(json, undefined, { ktx2Transcoder: provider, signal });
     context.buffers.push(storage.buffer);
@@ -538,4 +538,93 @@ test('pinned Basis WASM confirms transfer/flags separation and actual UASTC-to-B
         assert.equal(decoded.format, transfer === 2 ? api.Format.BC7_SRGB : api.Format.BC7);
         assert.deepEqual(decoded.data, linearData);
     }
+});
+
+test('100 native Basis transcodes balance file ownership and keep the warmed WASM heap stable', async () => {
+    const factory = require(path.join(root, 'build/gltf-decoders/basis/basis_transcoder.js'));
+    const wasmBinary = fs.readFileSync(path.join(root, 'build/gltf-decoders/basis/basis_transcoder.wasm'));
+    const module = await factory({ wasmBinary });
+    const created = { success: 0, failure: 0, cancel: 0 };
+    const live = new Set();
+    let group = 'success';
+    let abort;
+    let initialized = 0;
+    const transcoder = api.createKTX2Transcoder(() => ({
+        ...module,
+        initializeBasis() {
+            initialized++;
+            module.initializeBasis();
+        },
+        KTX2File: class {
+            constructor(bytes) {
+                const file = new module.KTX2File(bytes);
+                const current = group;
+                const cancel = abort;
+                let closed = false;
+                live.add(file);
+                created[current]++;
+                return new Proxy(file, {
+                    get(target, key) {
+                        if (key === 'close')
+                            return () => {
+                                assert.equal(closed, false);
+                                closed = true;
+                                target.close();
+                            };
+                        if (key === 'delete')
+                            return () => {
+                                assert(closed && live.delete(target), 'file deleted before close or released twice');
+                                target.delete();
+                            };
+                        if (key === 'transcodeImage')
+                            return (...args) => {
+                                const succeeded = target.transcodeImage(...args);
+                                cancel?.abort();
+                                return current === 'failure' ? false : succeeded;
+                            };
+                        const value = Reflect.get(target, key);
+                        return typeof value === 'function' ? value.bind(target) : value;
+                    },
+                });
+            }
+        },
+    }));
+    const bytes = uastcTexture(1, 0);
+    const transcode = () => transcoder.transcode(bytes.slice().buffer, ['BC7']);
+    for (let i = 0; i < 10; i++) assert.equal((await transcode()).data.length, 16);
+    const warmedBytes = module.HEAPU8.buffer.byteLength;
+    created.success = 0;
+    const heapBytes = [];
+    for (let i = 0; i < 10; i++) {
+        group = 'failure';
+        await assert.rejects(transcode());
+        group = 'cancel';
+        abort = new AbortController();
+        const parse = embeddedContext(api, transcoder, abort.signal, bytes);
+        try {
+            await assert.rejects(parse.resolve(), { name: 'AbortError' });
+        } finally {
+            parse.context.dispose();
+        }
+        await new Promise(setImmediate);
+        abort = undefined;
+        group = 'success';
+        for (let j = 0; j < 8; j++) assert.equal((await transcode()).data.length, 16);
+        assert.equal(live.size, 0);
+        heapBytes.push(module.HEAPU8.buffer.byteLength);
+    }
+    assert.deepEqual(created, { success: 80, failure: 10, cancel: 10 });
+    assert.equal(initialized, 1);
+    assert(heapBytes.every((size) => size === warmedBytes));
+    console.log(
+        JSON.stringify({
+            wasmSha256: require('node:crypto').createHash('sha256').update(wasmBinary).digest('hex'),
+            input: '4x4 UASTC',
+            successFormat: 'BC7',
+            warmup: 10,
+            created,
+            warmedBytes,
+            heapBytes,
+        }),
+    );
 });

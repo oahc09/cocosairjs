@@ -1,8 +1,8 @@
 {
   "schema": "air-bundle-source-binding-v1",
   "origin": "compiler-map",
-  "bundleSha256": "cc5bc567df0958dc6e601bff5f6c1b88779559067682abf2fcdf443919924e23",
-  "mapSha256": "5ff01b4d75896bfea06747d44d028ebc8526a47641322fbfe8a6c2a66c570c10",
+  "bundleSha256": "3f39858a3cd506b0e9800ceef99084cbc84eee23320c4657120d33cdc44e9062",
+  "mapSha256": "c1d2430879bb1c0438f2e81f1b6175b2c0fb1a371dce98cce5724dfeced38a9e",
   "sources": [
     {
       "path": "src/cocos/core/global-exports.ts",
@@ -182,7 +182,7 @@
     },
     {
       "path": "src/cocos/gfx/base/define.ts",
-      "sha256": "cc08cc3890726cd8d6227f201079b0243d98016b197033ca4adccc9d23880162"
+      "sha256": "94957bd209275f51ceda47e742dabf02d5b2973d0d1ed0c209e7fb7285decdbe"
     },
     {
       "path": "src/cocos/gfx/base/buffer.ts",
@@ -726,15 +726,19 @@
     },
     {
       "path": "src/cocos/asset/asset-manager/download-file.ts",
-      "sha256": "5b2bb0c2b8f23ce65ff820ae019716d9b1f39b6b99848a1cbd19ce6e2fe94917"
+      "sha256": "69dcf2a91b0e58c9e146daf38ce78bbbd29882488e9f00c1954379c4d296843e"
     },
     {
       "path": "src/cocos/asset/asset-manager/download-script.ts",
       "sha256": "b31eaedf60d462531ab338bc0a01c9c428bd45e8afc8a1e91c0db204f7354d10"
     },
     {
+      "path": "src/cocos/asset/asset-manager/atlas-text-response.ts",
+      "sha256": "056df10f36c213b3c84d5bf81c9e475418c97b022b1fd3492bb523682a718fbf"
+    },
+    {
       "path": "src/cocos/asset/asset-manager/downloader.ts",
-      "sha256": "5740536b57454b5016a71b9f31d44055594ef22b359814a08ec74a16d6884283"
+      "sha256": "0bf317d17741f5a757631f762d286583a88698bc9649f955d788c75cec048d57"
     },
     {
       "path": "src/cocos/asset/assets/json-asset.ts",
@@ -750,7 +754,7 @@
     },
     {
       "path": "src/cocos/asset/asset-manager/factory.ts",
-      "sha256": "79c371bc9cae455d2f5b16721b47cd4e30ae7276b139d29b2f22aff38a411960"
+      "sha256": "393ac22b88ac9e0d43d9eaea7c104a33624b049f2cc01b10d0b631c2acf1f541"
     },
     {
       "path": "src/cocos/asset/asset-manager/bin-package-unpack.ts",
@@ -774,7 +778,7 @@
     },
     {
       "path": "src/cocos/asset/asset-manager/load.ts",
-      "sha256": "6d780a266c09208625cc792a152cf51340e1d90fb30769216254dbf0ac2f7d67"
+      "sha256": "035477d25488cc5fdad2519870693387fd7d48109b4de02cc93cab188346a25f"
     },
     {
       "path": "src/cocos/asset/asset-manager/preprocess.ts",
@@ -790,7 +794,7 @@
     },
     {
       "path": "src/cocos/asset/asset-manager/asset-manager.ts",
-      "sha256": "417a48c0b42241fda54df55b25a9623809d65cbde9b445f3a85bb08849314c4a"
+      "sha256": "4080d676ac85a497f8f0a817c82f451d34d7e102ca386c59703bf5b4eed0670e"
     },
     {
       "path": "src/cocos/asset/asset-manager/builtin-res-mgr.ts",
@@ -806,7 +810,7 @@
     },
     {
       "path": "src/air/rendering/effect-json-contract.ts",
-      "sha256": "328639f66afffe423f53f9eab9c51115113db62b92ce2921b83ff52f5e7c67c1"
+      "sha256": "0cd7b2629d3ffa60b10924d1eae125b77a1f47a3a77b49b6dc393acf7ad45841"
     },
     {
       "path": "src/cocos/core/platform/property-validation.ts",
@@ -822,7 +826,7 @@
     },
     {
       "path": "src/cocos/render-scene/core/program-lib.ts",
-      "sha256": "e9a434a74ed4fe6306c834e4181aa8068f1ade4cc9be1a68b7492cc8aa63b76d"
+      "sha256": "79fdcfd908abe69d40552cc04d72055d93781eca477668e7fb18ed88a4839699"
     },
     {
       "path": "src/cocos/rendering/instanced-buffer.ts",
@@ -838,7 +842,7 @@
     },
     {
       "path": "src/cocos/asset/assets/effect-asset.ts",
-      "sha256": "6fae6d19f70ce8539e1fb6725e30ecb76c087542ff5c6fbb05fd6e2c3565b6a0"
+      "sha256": "1cd2454c96d8574b2479953fa46e7e12a8b9721c7b421a5ddd5bd508affacfb4"
     },
     {
       "path": "src/cocos/rendering/pipeline-state-manager.ts",
@@ -2206,7 +2210,7 @@
     },
     {
       "path": "src/cocos/tiledmap/tmx-xml-parser.ts",
-      "sha256": "a9c96802fc1305f945de7ef62174cddc1a5d3bb3a070a3b3a911f35a3b0306a3"
+      "sha256": "c2b00428b67e9d6132decb707ad47ed58362f8163fe43acc8352de2a2d6b3fb8"
     },
     {
       "path": "src/cocos/tiledmap/tiled-tile.ts",
@@ -2230,7 +2234,7 @@
     },
     {
       "path": "src/cocos/tiledmap/tiled-map.ts",
-      "sha256": "c4aec95da36bfef44207ccdaffdb4d321749cdd88a26a8246c2aafd639e62f32"
+      "sha256": "cf59821ba0eb0775112e056b5f52cdc4f432bf793f03a0150b8fbdbdb2ad0710"
     },
     {
       "path": "src/cocos/tiledmap/assembler/simple.ts",
@@ -2910,7 +2914,7 @@
     },
     {
       "path": "src/cocos/rendering/custom/web-program-library.ts",
-      "sha256": "32e0844964c2287346fba0cd0d80caa8c96124b955f94915e945e677125c151b"
+      "sha256": "b87ed49cb7d7f445af145b2237b546f4f26ce517bbf089a8345e9cd5df22421d"
     },
     {
       "path": "src/cocos/rendering/custom/framework.ts",
@@ -3170,15 +3174,15 @@
     },
     {
       "path": "src/cocos/gfx/webgpu/webgpu-commands.ts",
-      "sha256": "55ad9fed1be5c0731c87793b6ebaeaeca2f29a28c6ec1afe94aab025d91c571b"
+      "sha256": "985f5da4020193ad0bb2ff2092cdd7e9bcd277105db16557d7eae318d740468c"
     },
     {
       "path": "src/cocos/gfx/webgpu/webgpu-descriptor-set.ts",
-      "sha256": "48be04522daa70bad2f6a38cd36de8e5091f12968d2f01fa383562d967a467c4"
+      "sha256": "a22a5ffea511315a8f5f10f4aaf96098cdf40a5fb708384b1bc1d54a160db409"
     },
     {
       "path": "src/cocos/gfx/webgpu/webgpu-buffer.ts",
-      "sha256": "6d299f41cea91a0ec77a32292b2bf2ad409fec32c146d9538a352adcc4273f34"
+      "sha256": "cad4972017cce96979a4d26fc9ae0a291f4918f11529f11cdaf986d327a1597d"
     },
     {
       "path": "src/cocos/gfx/webgpu/webgpu-command-buffer.ts",
@@ -3218,11 +3222,11 @@
     },
     {
       "path": "src/cocos/gfx/webgpu/webgpu-sampler.ts",
-      "sha256": "1e7bc7bc0a9e2fa0922f19abe7f52185eaa7a62c7a6cfb8d59fa61ec6b20acfd"
+      "sha256": "9316f6c44570732edb4f0c0313e6c4510cbd1898cbf71613a63b47aa55134fba"
     },
     {
       "path": "src/cocos/gfx/webgpu/webgpu-shader.ts",
-      "sha256": "db4307854cc604eb7b2087a25b030865d7f01a55ee34a48b08563a654f238708"
+      "sha256": "be86d2e380266b011c5c47c71db4ff7eecf82f2470762d2f9aff92487fd7a489"
     },
     {
       "path": "src/cocos/gfx/webgpu/webgpu-state-cache.ts",
@@ -3230,7 +3234,7 @@
     },
     {
       "path": "src/cocos/gfx/webgpu/webgpu-texture.ts",
-      "sha256": "7cac9f170f77dffbede4d586f9e86fbac7898044222f87faf619acc75ed17329"
+      "sha256": "2a10362024aa94b550f8e7cbd9b32a83bf15a2df33a78f8769f8dab361135d04"
     },
     {
       "path": "src/cocos/gfx/webgpu/webgpu-command-allocator.ts",
@@ -3238,7 +3242,7 @@
     },
     {
       "path": "src/cocos/gfx/webgpu/webgpu-gpu-objects.ts",
-      "sha256": "6c27251b499273497c807dbd211b1e3965a6fd184eff415cb83ee26c0996c84b"
+      "sha256": "54709cc766ad99f2f0d705c67c3294e5421cfbdc7875cf14dc508490a18e7fb1"
     },
     {
       "path": "src/cocos/gfx/webgpu/webgpu-swapchain.ts",
@@ -3250,7 +3254,7 @@
     },
     {
       "path": "src/cocos/gfx/webgpu/webgpu-device.ts",
-      "sha256": "1168718d448a6fed75cd30fc2412dcf23e5cd11d563f23045676474c7afc9044"
+      "sha256": "59f3a69a013e1d092f7df284ab939756349fc3a429a5661062e8e3356ba28e93"
     },
     {
       "path": "src/exports/gfx-webgpu.ts",
@@ -3346,11 +3350,11 @@
     },
     {
       "path": "src/air/assets/gltf/request-policy.ts",
-      "sha256": "a8b40f98fb720354327b291083c5198831d41104776151e27d2ce18101eb2767"
+      "sha256": "0758c8f68a211f4ebcb5a5f94674ca2e605ca44fed87686f5bbb62dd9e354765"
     },
     {
       "path": "src/air/assets/gltf/parser-context.ts",
-      "sha256": "1c365b881b4a541a454e2913807e66684db307c6b73baef49b54db6d4d52c099"
+      "sha256": "0fab25bae85d2d933b509a4ad32a0a185165e5a870d9f9c0007a545352a426c3"
     },
     {
       "path": "src/air/assets/gltf/diagnostics.ts",
@@ -3482,11 +3486,11 @@
     },
     {
       "path": "src/air/assets/gltf/extensions/scene/instancing.ts",
-      "sha256": "66da3c2eb0157ee8c0f1fc6d6f387b98eb36eed925c65e4a87fca4fecc55b5d9"
+      "sha256": "61b47d8f6e5600c9a4020d976c66a28b2db389d4d7bd3fdc78e9d0bbbeafbc8a"
     },
     {
       "path": "src/air/assets/gltf/loader.ts",
-      "sha256": "83af7aada1aece09178a0115835ee955071a88df10188a268a6ea4a5eef9e3cc"
+      "sha256": "640848509128dd341d88d8c5e051556826cc8c29a867006e2b27d36f66ef2a5f"
     },
     {
       "path": "src/air/utils/load-asset.ts",
@@ -3670,11 +3674,11 @@
     },
     {
       "path": "src/air/assets/atlas/atlas-loader.ts",
-      "sha256": "15d8d71ddda45e3c8d91827df1a3e1a7503dfca278fd6c683b6d60d28913f9cd"
+      "sha256": "08dd779f2da521a8913bc5804436bb71db636b38afc6f091cd8480cd13b6de1c"
     },
     {
       "path": "src/air/rendering/transmission-capture.ts",
-      "sha256": "335ffb0aa3f1c7ca54f664989a9625b77ec04d119601ae3e5c098b72bfdcd0c5"
+      "sha256": "4b350a26d5283599580a1e1b60fcc56f38374df87a61d85627bc1ee8bad714d6"
     },
     {
       "path": "src/air/effects/unlit-fog.ts",

@@ -174,14 +174,31 @@ async function validateObservations(probe) {
                     );
                     return depth;
                 });
-                const red = [255, 0, 0, 255],
-                    blue = [0, 0, 255, 255];
-                // Equal quantized depths legitimately preserve first draw under strict LESS/GREATER.
-                const nearWins = selected.mode === 'normal' ? depths[0] < depths[1] : depths[0] > depths[1];
+                const markers = [
+                    [255, 0, 0, 255],
+                    [0, 0, 255, 255],
+                ];
+                const clearColor = [0, 0, 0, 255];
+                const { clear } = m.convention(selected.mode);
+                const passes = selected.mode === 'normal' ? (a, b) => a < b : (a, b) => a > b;
+                const expectedColor = (order) => {
+                    let color = clearColor;
+                    let depth = clear;
+                    for (const index of order) {
+                        if (!passes(depths[index], depth)) continue;
+                        color = markers[index];
+                        depth = depths[index];
+                    }
+                    return color;
+                };
                 const tie = depths[0] === depths[1];
                 check(
-                    same(row.orders[0].color, nearWins || tie ? red : blue) &&
-                        same(row.orders[1].color, nearWins ? red : blue),
+                    same(row.single[0].color, expectedColor([0])) && same(row.single[1].color, expectedColor([1])),
+                    `depth comparison against clear value ${id}`,
+                );
+                check(
+                    same(row.orders[0].color, expectedColor([0, 1])) &&
+                        same(row.orders[1].color, expectedColor([1, 0])),
                     `depth comparison order ${id}`,
                 );
                 diagnostic.push({

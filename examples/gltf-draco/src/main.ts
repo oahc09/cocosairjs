@@ -1,11 +1,11 @@
 /**
  * gltf-draco — Draco 压缩合同与缺失 Decoder 的稳定错误教学（E008 教学附加模式）。
  *
- * 本包 shipped artifacts 不含浏览器版 draco3d glue（bundle isolation 约束），
+ * Draco 解码器独立于主入口，需要应用显式注入。
  * 因此本示例固定演示"Decoder Missing"路径：
  *   1. getExtensionSupport() 查询 KHR_draco_mesh_compression 支持状态；
  *   2. 加载 Draco 压缩模型 → 引擎返回稳定错误码 GLTF_DECODER_MISSING（非崩溃、无泄漏实例）；
- *   3. 面板展示宿主接入方式：loader.setDRACODecoder(createDracoDecoder(() => draco3d.createDecoderModule({})))。
+ *   3. 面板展示宿主接入方式：loader.setDRACODecoder(createDracoDecoder(() => window.DracoDecoderModule({ wasmBinary })))。
  */
 
 import {
@@ -77,9 +77,10 @@ try {
 }
 lines.push('---');
 lines.push('host integration (browser):');
-lines.push('  import draco3d browser build, then:');
+lines.push('  load draco_decoder_nodejs.js as a classic script;');
+lines.push('  fetch draco_decoder.wasm as wasmBinary, then:');
 lines.push('  loader.setDRACODecoder(');
-lines.push('    createDracoDecoder(() => draco3d.createDecoderModule({})))');
+lines.push('    createDracoDecoder(() => window.DracoDecoderModule({ wasmBinary })))');
 panel.textContent = lines.join('\n');
 (window as any).__decoderState = decoderState;
 console.log('[gltf-draco] decoderState =', decoderState);

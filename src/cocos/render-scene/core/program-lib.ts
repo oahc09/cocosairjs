@@ -600,14 +600,24 @@ export class ProgramLib {
 
         let shaderInfo = tmplInfo.shaderInfo;
         if (device.gfxAPI === API.WEBGPU) {
-            // keep 'tmplInfo.shaderInfo' originally
             shaderInfo = new ShaderInfo();
             shaderInfo.copy(tmplInfo.shaderInfo);
-            processShaderInfo(tmpl, macroArray, shaderInfo);
+            if (!selectNativeEffectWGSL(device, tmpl, shaderInfo)) {
+                processShaderInfo(tmpl, macroArray, shaderInfo);
+            }
         }
 
         return this._cache[key] = device.createShader(shaderInfo);
     }
+}
+
+export function selectNativeEffectWGSL (device: Device, program: EffectAsset.IShaderInfo, info: ShaderInfo): boolean {
+    const variant = program.wgsl;
+    if (device.gfxAPI !== API.WEBGPU || !variant) return false;
+    info.stages.length = 2;
+    info.stages[0] = new ShaderStage(ShaderStageFlagBit.VERTEX, variant.vert, variant.vertexEntryPoint ?? 'main');
+    info.stages[1] = new ShaderStage(ShaderStageFlagBit.FRAGMENT, variant.frag, variant.fragmentEntryPoint ?? 'main');
+    return true;
 }
 
 export function getDeviceShaderVersion (device: Device): string {

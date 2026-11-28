@@ -44,7 +44,8 @@ const anchors = [
         'GetViewSpaceDepthFromNDCDepth_Orthgraphic',
     ],
     ['water reconstruction', 'examples/water-multipass/shaders/water.frag.glsl', 'depth * 2.0 - 1.0'],
-    ['runtime legacy pipeline', 'src/air/bootstrap.ts', '默认走 legacy 渲染管线'],
+    ['runtime pipeline admission', 'src/cocos/game/game.ts', 'this._setRenderPipeline(!!usesCustomPipeline)'],
+    ['legacy pipeline fallback', 'src/cocos/root.ts', 'legacy_rendering.createDefaultPipeline()'],
     [
         'transparent queue',
         'src/cocos/rendering/forward/forward-stage.ts',

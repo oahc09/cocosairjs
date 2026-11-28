@@ -1,7 +1,9 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { EffectAsset, Material, Vec4, createAirApp } from '../../src';
-import { ProgramLib } from '../../src/cocos/render-scene/core/program-lib';
+import { ProgramLib, selectNativeEffectWGSL } from '../../src/cocos/render-scene/core/program-lib';
+import { API, ShaderInfo } from '../../src/cocos/gfx/base/define';
+import { Device } from '../../src/cocos/gfx/base/device';
 import { normalizeEffectShader } from '../../src/air/rendering/effect-json-contract';
 import { prepareEffectForRegistration } from '../../tools/debug/effect-layout';
 
@@ -46,6 +48,32 @@ describe('compiled effect registration contract', () => {
             effect.destroy();
         }
     });
+    test('native WGSL stages are explicit, WebGPU-only and survive ShaderInfo copying', () => {
+        const source = shader();
+        source.glsl4 = { ...source.glsl3 };
+        source.wgsl = {
+            vert: '@vertex fn main() -> @builtin(position) vec4f { return vec4f(0); }',
+            frag: '@fragment fn draw() -> @location(0) vec4f { return vec4f(1); }',
+            fragmentEntryPoint: 'draw',
+        };
+        const normalized = normalizeEffectShader(source);
+        const info = new ShaderInfo();
+        expect(selectNativeEffectWGSL({ gfxAPI: API.WEBGL2 } as Device, normalized, info)).toBe(false);
+        expect(info.stages).toHaveLength(0);
+        expect(selectNativeEffectWGSL({ gfxAPI: API.WEBGPU } as Device, normalized, info)).toBe(true);
+        const clone = new ShaderInfo();
+        clone.copy(info);
+        expect(clone.stages.map((stage) => [stage.source, stage.wgslEntryPoint])).toEqual([
+            [source.wgsl.vert, 'main'],
+            [source.wgsl.frag, 'draw'],
+        ]);
+        expect(() => normalizeEffectShader({ ...source, wgsl: { frag: source.wgsl.frag } })).toThrow(/wgsl.vert/);
+        expect(() => normalizeEffectShader({ ...source, glsl3: undefined })).toThrow(/glsl3.vert/);
+        expect(() =>
+            normalizeEffectShader({ ...source, wgsl: { ...source.wgsl, fragmentEntryPoint: 'bad-name' } }),
+        ).toThrow(/wgsl.fragmentEntryPoint/);
+    });
+
     test('six omitted resource arrays register and do not mutate caller JSON', () => {
         const source = shader();
         const library = new ProgramLib();

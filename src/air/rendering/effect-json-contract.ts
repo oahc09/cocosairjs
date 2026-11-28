@@ -85,6 +85,29 @@ export function normalizeEffectShader<T>(input: T, effect = '<direct>', path = '
     if (source.hash !== undefined && !Number.isSafeInteger(source.hash))
         invalid(effect, name, `${path}.hash`, 'finite safe integer');
     const normalized = copy(source);
+    if (source.wgsl !== undefined) {
+        const variant = record(source.wgsl, effect, name, `${path}.wgsl`);
+        for (const stage of ['vert', 'frag']) {
+            if (typeof variant[stage] !== 'string' || !variant[stage].trim()) {
+                invalid(effect, name, `${path}.wgsl.${stage}`, 'non-empty WGSL source', variant[stage] === undefined);
+            }
+        }
+        for (const entry of ['vertexEntryPoint', 'fragmentEntryPoint']) {
+            if (variant[entry] !== undefined && (typeof variant[entry] !== 'string' ||
+                !/^[A-Za-z_][A-Za-z_0-9]*$/.test(variant[entry]))) {
+                invalid(effect, name, `${path}.wgsl.${entry}`, 'WGSL entry point identifier');
+            }
+        }
+        for (const target of ['glsl3', 'glsl4']) {
+            const fallback = source[target] ?? {};
+            if (fallback.compute) invalid(effect, name, `${path}.wgsl`, 'render shader variant');
+            for (const stage of ['vert', 'frag']) {
+                if (typeof fallback[stage] !== 'string' || !fallback[stage].trim()) {
+                    invalid(effect, name, `${path}.${target}.${stage}`, 'non-empty GLSL fallback', fallback[stage] === undefined);
+                }
+            }
+        }
+    }
     for (const key of arrays) normalized[key] ??= [];
     const builtins = source.builtins === undefined ? {} : record(source.builtins, effect, name, `${path}.builtins`);
     normalized.builtins = { ...normalized.builtins };

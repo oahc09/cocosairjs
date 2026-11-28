@@ -99,6 +99,15 @@ export class WebGPUDescriptorSet extends DescriptorSet {
     }
 
     private _bindBufferEntry (bind: DescriptorSetLayoutBinding, buffer: WebGPUBuffer): void {
+        if (bind.descriptorType & DESCRIPTOR_STORAGE_BUFFER_TYPE) {
+            const limit = WebGPUDeviceManager.instance.nativeDevice!.limits.maxStorageBufferBindingSize;
+            const size = buffer.gpuBuffer.size;
+            if (size > limit) {
+                throw Object.assign(new RangeError(`WebGPU storage binding ${bind.binding} size ${size} exceeds ${limit} bytes.`), {
+                    code: 'WEBGPU_STORAGE_BINDING_SIZE_LIMIT', binding: bind.binding, size, limit,
+                });
+            }
+        }
         const destBind = this._gpuDescriptorSet!.gpuDescriptors[bind.binding];
         if (destBind) {
             destBind.gpuBuffer = buffer.gpuBuffer;

@@ -15,4 +15,8 @@ function removeRetiredEntries(buildDir) {
     }
 }
 
-module.exports = { runtimeBundles, removeRetiredEntries };
+function stripRuntimeSourceMap(code) {
+    return code.replace(/(?:\r?\n)?\/\/# sourceMappingURL=[^\r\n]*(?:\r?\n)?$/, '\n');
+}
+
+module.exports = { runtimeBundles, removeRetiredEntries, stripRuntimeSourceMap };

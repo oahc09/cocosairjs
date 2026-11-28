@@ -580,6 +580,12 @@ export class WebGPUCmdPackage {
 export function WebGPUCmdFuncCreateBuffer (device: WebGPUDevice, gpuBuffer: IWebGPUGPUBuffer): void {
     const nativeDevice: GPUDevice = device.nativeDevice!;
 
+    const limit = nativeDevice.limits.maxBufferSize;
+    if (!Number.isSafeInteger(gpuBuffer.size) || gpuBuffer.size < 0 || gpuBuffer.size > limit) {
+        throw Object.assign(new RangeError(`WebGPU buffer size ${gpuBuffer.size} exceeds the valid range 0–${limit} bytes.`), {
+            code: 'WEBGPU_BUFFER_SIZE_LIMIT', size: gpuBuffer.size, limit,
+        });
+    }
     const bufferDesc = {} as GPUBufferDescriptor;
     bufferDesc.size = gpuBuffer.size;
 
@@ -614,9 +620,11 @@ export function WebGPUCmdFuncDestroyBuffer (device: WebGPUDevice, gpuBuffer: IWe
     }
 }
 
-export function WebGPUCmdFuncResizeBuffer (device: WebGPUDevice, gpuBuffer: IWebGPUGPUBuffer): void {
+export function WebGPUCmdFuncResizeBuffer (device: WebGPUDevice, gpuBuffer: IWebGPUGPUBuffer, size: number): void {
+    const replacement = { ...gpuBuffer, size };
+    WebGPUCmdFuncCreateBuffer(device, replacement);
     WebGPUCmdFuncDestroyBuffer(device, gpuBuffer);
-    WebGPUCmdFuncCreateBuffer(device, gpuBuffer);
+    Object.assign(gpuBuffer, replacement);
 }
 
 export function WebGPUCmdFuncUpdateBuffer (
@@ -1132,21 +1140,30 @@ function seperateCombinedSamplerTexture (shaderSource: string): string {
     return code;
 }
 
-function reflect (wgsl: string[]): number[][] {
+function reflect (wgsl: string[], native: boolean): number[][] {
     const bindingList: number[][] = [];
-    for (const wgslStr of wgsl) {
-        // @group(1) @binding(0) var<uniform> x_78 : Constants;
-        // @group(1) @binding(1) var albedoMap : texture_2d<f32>;
-        const reg = /@group\((\d)\)\s+@binding\((\d+)\)/g;
-        let iter = reg.exec(wgslStr);
+    for (const source of wgsl) {
+        // Native WGSL allows either order and whitespace in attribute arguments.
+        let comments = 0;
+        let lineComment = false;
+        const clean = native ? source.replace(/\/\*|\*\/|\/\/|\r?\n|[^/*\r\n]+|[/*\r]/g, (token) => {
+            if (token.endsWith('\n')) { lineComment = false; return token; }
+            if (lineComment) return ' ';
+            if (token === '/*') { ++comments; return ' '; }
+            if (token === '*/' && comments) { --comments; return ' '; }
+            if (token === '//' && !comments) lineComment = true;
+            return comments || lineComment ? ' ' : token;
+        }) : source;
+        const reg = /@group\s*\(\s*(\d)\s*\)\s*@binding\s*\(\s*(\d+)\s*\)|@binding\s*\(\s*(\d+)\s*\)\s*@group\s*\(\s*(\d)\s*\)/g;
+        let iter = reg.exec(clean);
         while (iter) {
-            const set = +iter[1];
-            const binding = +iter[2];
+            const set = Number(iter[1] ?? iter[4]);
+            const binding = Number(iter[2] ?? iter[3]);
             while (bindingList.length <= set) {
                 bindingList.push([]);
             }
             bindingList[set][bindingList[set].length] = binding;
-            iter = reg.exec(wgslStr);
+            iter = reg.exec(clean);
         }
     }
     return bindingList;
@@ -1373,52 +1390,60 @@ export function WebGPUCmdFuncCreateGPUShader (device: WebGPUDevice, gpuShader: I
     for (let i = 0; i < stageSize; ++i) {
         wgslCodes.length = 0;
         const gpuStage = gpuShader.gpuStages[i];
-        let source = gpuStage.source;
-        const shadowSample = /\btexture\s*\(\s*(?:shadowMap|cc_shadowMap|cc_spotShadowMap)\s*,/g;
-        let match: RegExpExecArray | null;
-        while ((match = shadowSample.exec(source))) {
-            const open = source.indexOf('(', match.index);
-            let end = open + 1, depth = 1;
-            for (; end < source.length && depth; end++) {
-                if (source[end] === '(') depth++;
-                if (source[end] === ')') depth--;
-            }
-            source = source.slice(0, match.index) + 'textureLod' + source.slice(open, end - 1) + ', 0.0)' + source.slice(end);
-            shadowSample.lastIndex = end + 8;
-        }
-        const glslSource = seperateCombinedSamplerTexture(source);
         const stageStr = gpuStage.type === ShaderStageFlagBit.VERTEX ? 'vertex'
             : gpuStage.type === ShaderStageFlagBit.FRAGMENT ? 'fragment' : 'compute';
-        const sourceCode = `#version 450\n#define CC_USE_WGPU 1\n${glslSource}`;
-        let wgsl: string;
-        try {
-            const spv = glslang.compileGLSL(sourceCode, stageStr, false, '1.3');
-            wgsl = twgsl.convertSpirV2WGSL(spv);
-            if (!wgsl) throw new Error('Translator returned empty WGSL.');
-        } catch (cause) {
-            throw Object.assign(new Error(`WebGPU shader '${gpuShader.name}' ${stageStr} translation failed.`), {
-                code: 'WEBGPU_SHADER_TRANSLATION_FAILED', cause,
-            });
+        const nativeEntry = gpuStage.wgslEntryPoint;
+        let wgsl = gpuStage.source;
+        let sourceCode = wgsl;
+        if (nativeEntry === undefined) {
+            let source = gpuStage.source;
+            const shadowSample = /\btexture\s*\(\s*(?:shadowMap|cc_shadowMap|cc_spotShadowMap)\s*,/g;
+            let match: RegExpExecArray | null;
+            while ((match = shadowSample.exec(source))) {
+                const open = source.indexOf('(', match.index);
+                let end = open + 1, depth = 1;
+                for (; end < source.length && depth; end++) {
+                    if (source[end] === '(') depth++;
+                    if (source[end] === ')') depth--;
+                }
+                source = source.slice(0, match.index) + 'textureLod' + source.slice(open, end - 1) + ', 0.0)' + source.slice(end);
+                shadowSample.lastIndex = end + 8;
+            }
+            const glslSource = seperateCombinedSamplerTexture(source);
+            sourceCode = `#version 450\n#define CC_USE_WGPU 1\n${glslSource}`;
+            try {
+                const spv = glslang.compileGLSL(sourceCode, stageStr, false, '1.3');
+                wgsl = twgsl.convertSpirV2WGSL(spv);
+                if (!wgsl) throw new Error('Translator returned empty WGSL.');
+            } catch (cause) {
+                throw Object.assign(new Error(`WebGPU shader '${gpuShader.name}' ${stageStr} translation failed.`), {
+                    code: 'WEBGPU_SHADER_TRANSLATION_FAILED', cause,
+                });
+            }
+            gpuStage.source = wgsl;
+            findEmployAttr(gpuStage);
+            wgsl = gpuStage.source;
         }
-        gpuStage.source = wgsl;
-        findEmployAttr(gpuStage);
-        wgsl = gpuStage.source;
-        const shader: GPUShaderModule = nativeDevice?.createShaderModule({ code: wgsl });
+        const entry = nativeEntry ?? new RegExp(`@${stageStr}\\b[\\s\\S]*?\\bfn\\s+(\\w+)\\s*\\(`).exec(wgsl)?.[1];
+        if (!entry) throw new Error(`WEBGPU_SHADER_ENTRY_POINT: ${gpuShader.name} ${stageStr}`);
+        const shader = nativeDevice.createShaderModule({ code: wgsl, label: `${gpuShader.name} ${stageStr}` });
         // eslint-disable-next-line no-loop-func
         shader.getCompilationInfo().then((compileInfo: GPUCompilationInfo) => {
             compileInfo.messages.forEach((info) => {
-                log(sourceCode, wgsl, info.lineNum, info.linePos, info.type, info.message);
+                if (nativeEntry !== undefined && info.type === 'error') {
+                    error(`[WEBGPU_SHADER_COMPILATION_FAILED] ${gpuShader.name} ${stageStr} ${info.lineNum}:${info.linePos} ${info.message}`);
+                } else {
+                    log(sourceCode, wgsl, info.lineNum, info.linePos, info.type, info.message);
+                }
             });
         // eslint-disable-next-line no-loop-func
-        }).catch((compileInfo: GPUCompilationInfo) => {
-            error(`WebGPU shader '${gpuShader.name}' ${stageStr} diagnostics failed:`, compileInfo);
+        }).catch((cause: unknown) => {
+            error(`WebGPU shader '${gpuShader.name}' ${stageStr} diagnostics failed:`, cause);
         });
-        const entry = new RegExp(`@${stageStr}\\b[\\s\\S]*?\\bfn\\s+(\\w+)\\s*\\(`).exec(wgsl);
-        if (!entry) throw new Error(`WEBGPU_SHADER_ENTRY_POINT: ${gpuShader.name} ${stageStr}`);
-        const shaderStage: GPUProgrammableStage = { module: shader, entryPoint: entry[1] };
+        const shaderStage: GPUProgrammableStage = { module: shader, entryPoint: entry };
         gpuStage.gpuShader = shaderStage;
         wgslCodes.push(wgsl);
-        const bindingList = reflect(wgslCodes);
+        const bindingList = reflect(wgslCodes, nativeEntry !== undefined);
         gpuStage.bindings = bindingList;
         const bindingListSize = bindingList.length;
         for (let s = 0; s < bindingListSize; s++) {

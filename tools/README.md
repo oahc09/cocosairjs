@@ -176,7 +176,7 @@ Effect布局与双贴图：`node tools/verify/air-effect-layout-browser.cjs --ou
 
 生命周期稳定性：`air-lifecycle-stability-browser.cjs --out=<new.json> [--bundle=<仓库内module.js>]` 并发运行三个浏览器，各做未run/暂停/真实context lost/恢复失败/5秒cleanup超时负例，再进行600000ms实际运行与期间场景释放。`--context-only`跳过长跑，`--duration-ms=2000`只验证工具流程，不能称十分钟通过。记录真实帧/update/draw、引用、回执、可用的JS heap和不可用GPU量；不作为独立性能benchmark，不build。
 
-组合输入：`air-mixed-input-browser.cjs --out=<new.json> [--bundle=<仓库内module.js>]` 覆盖两后端/两canvas的可信键鼠、合成多指取消、100次repeat/restart和editable/HUD；实际hidden与合成hidden分开，未发生后台状态时记NOT_RUN。`--installed`额外实际打包/离线安装并从安装包分块加载，退出清理自有临时目录；该模式会执行prepack刷新build/npm。glTF取消：`air-gltf-cancellation-browser.cjs`接受bundle/out参数，使用真实延迟HTTP验证子请求abort、独立peer及顶层容器未取消。两者写指定新JSON并关闭自有server/browser，不build、不覆写旧报告。
+组合输入：`air-mixed-input-browser.cjs --out=<new.json> [--bundle=<仓库内module.js>]` 覆盖两后端/两canvas的可信键鼠、合成多指取消、100次repeat/restart和editable/HUD；实际hidden与合成hidden分开，未发生后台状态时记NOT_RUN。`--installed`额外实际打包/离线安装并从安装包分块加载，退出清理自有临时目录；该模式会执行prepack刷新build/npm。glTF取消：`air-gltf-cancellation-browser.cjs`接受bundle/out参数，使用真实延迟 HTTP 验证子请求和带 signal 的顶层容器请求均终止传输，独立 peer 正常完成。两者写指定新JSON并关闭自有server/browser，不build、不覆写旧报告。
 
 `port-gap-browser-evidence.cjs --input=<原始.json> --log=<原始.log> --gate=EG3 --type=BROWSER_RENDER_PASS --exit-code=0 --out=<新.json>` 只读取已执行浏览器报告与当前指纹，按PG-34 schema规范化限定范围。原始时间/命令/计数/FAIL/NOT_RUN及合成输入边界保留，漂移或退出码冲突拒绝；仅写显式新报告，不启动浏览器、补跑或将子集标为完整gate。完整gate与子集状态见[报告索引](../docs/evidence/port-gap/README.md)。
 

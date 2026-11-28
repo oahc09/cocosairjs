@@ -100,11 +100,8 @@ for (const name of ['chromium', 'edge', 'firefox', 'webkit', 'package', 'package
         report.probeSha256 === probe && report.bundleSha256 === sha(fs.readFileSync(artifact)),
         name + ': collector/bundle drift',
     );
-    const map = checkBuildSources(root, bundle);
-    check(
-        map.compared > 0 && !map.mismatches.length && report.buildSources.sha256 === map.sha256,
-        name + ': source map drift',
-    );
+    const map = checkBuildSources(root, bundle, artifact);
+    check(map.compared > 0 && map.matches && report.buildSources.sha256 === map.sha256, name + ': source map drift');
     check(
         report.scope?.examples && report.scope?.custom && !report.scope.rendererFilter && !report.scope.exampleFilter,
         name + ': partial scope',
