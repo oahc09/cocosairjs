@@ -288,6 +288,17 @@ A separate WebGL2 check holds the lens and background still, scrubs a real Sprit
 under a RenderRoot2D through native UIOpacity values 255/128/0 and back, compares
 zero opacity against the independently hidden sprite, and checks the lens region
 did not change. UIOpacity is not used to fade the 3D glass mesh.
+A separate resize probe uses native container mode at DPR 1 and 2. Each page
+holds a real pointer while resizing CSS 384×256 → 512×288 → 384×256, checks the
+drawing buffer, current color attachment and shader extent, and verifies exact
+restoration of the initial framebuffer. The pointer keeps its gesture-start
+scale so a container resize cannot move the lens on its own. E09's fullscreen
+vertex path ignores Node translation, so E11 maps the native motion pose to
+the lens shader center before draw; the probe measures changed pixels around
+that off-center position and a separate edge region that must not change.
+The app runtime, E09 shader source, and full-viewport background geometry remain
+unchanged.
+
 The reduced-motion and ordinary runs use separate pages. This is an E11 interaction
 and native-rendering proof, not visual approval of the final E11 concept or
 physical-GPU performance evidence.

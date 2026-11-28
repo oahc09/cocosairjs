@@ -15,13 +15,13 @@ const html = `<!doctype html>
 <html lang="en"><meta charset="utf-8"><title>E11 liquid glass motion</title><link rel="icon" href="data:,">
 <style>
 *{box-sizing:border-box}body{margin:0;background:#101726;color:#e5f9ff;font:16px system-ui}
-main{margin:18px auto;width:408px;padding:12px;border:1px solid #2c4857;border-radius:20px;background:#131f2d}
-h1{font-size:17px;margin:0 0 8px}canvas{display:block;width:384px;height:256px;touch-action:none;border-radius:12px}
+main{margin:18px auto;width:max-content;padding:12px;border:1px solid #2c4857;border-radius:20px;background:#131f2d}
+h1{font-size:17px;margin:0 0 8px}#E11Host{width:384px;height:256px}canvas{display:block;width:100%;height:100%;touch-action:none;border-radius:12px}
 p, label{font-size:13px}label{display:flex;align-items:center;gap:12px}input{flex:1}
 button{margin-top:10px;padding:6px;border-radius:8px;color:#e5f9ff;background:#1a3546;border:1px solid #76aeb7}
 :focus-visible{outline:2px solid #97f8ea;outline-offset:3px}
 </style>
-<main><h1>E11 · Liquid glass motion</h1><canvas id="GameCanvas" width="384" height="256"></canvas>
+<main><h1>E11 · Liquid glass motion</h1><div id="E11Host"><canvas id="GameCanvas" width="384" height="256"></canvas></div>
 <p>Drag the lens and release. Drag again to interrupt the return.</p>
 <label>Scrub return <input type="range" min="0" max=".65" step=".01" value="0"></label>
 <button type="button">Return to center</button></main><script type="module" src="/page.mjs"></script>`;
@@ -182,6 +182,110 @@ async function verify(browser, origin, reducedMotion) {
     }
 }
 
+async function verifyResize(browser, origin, dpr) {
+    const page = await browser.newPage({ viewport: { width: 620, height: 520 }, deviceScaleFactor: dpr });
+    const errors = [];
+    page.on('pageerror', (error) => errors.push(String(error)));
+    page.on('console', (message) => {
+        if (message.type() === 'error') errors.push(message.text());
+    });
+    try {
+        await page.goto(origin + '?fixed');
+        await page.waitForFunction(() => Boolean(window.e11), null, { timeout: 10000 });
+        const box = await page.locator('canvas').boundingBox();
+        const x = box.x + box.width / 2;
+        const y = box.y + box.height / 2;
+        const draw = (mode) => v(page, (arg) => e11.draw(0, arg), mode);
+        const getSize = () => v(page, () => e11.resizeState());
+        function checkSize(metrics, width, height) {
+            for (const key of ['buffer', 'target', 'attachment', 'shader'])
+                assert.deepEqual(metrics[key], [width * dpr, height * dpr], key);
+            assert.equal(metrics.bound, true);
+            assert.equal(metrics.attached, true);
+        }
+        async function resize(width, height) {
+            await v(
+                page,
+                ([w, h]) => {
+                    Object.assign(document.querySelector('#E11Host').style, { width: w + 'px', height: h + 'px' });
+                },
+                [width, height],
+            );
+            await page.waitForFunction(
+                ([w, h]) => {
+                    const { buffer, target } = e11.resizeState();
+                    return buffer[0] === w && buffer[1] === h && target[0] === w && target[1] === h;
+                },
+                [width * dpr, height * dpr],
+                { timeout: 8000 },
+            );
+            const metrics = await getSize();
+            checkSize(metrics, width, height);
+            return metrics;
+        }
+        await page.mouse.move(x, y);
+        await page.mouse.down();
+        await page.mouse.move(x + 50, y - 12);
+        const initial = await draw();
+        const a = await getSize();
+        checkSize(a, 384, 256);
+        const b = await resize(512, 288);
+        assert.equal(b.generation, a.generation + 1);
+        // A real pointer move after resizing uses the original gesture height.
+        await page.mouse.move(x + 51, y - 12);
+        const moved = await draw();
+        assert.ok(Math.abs(moved.state.x - initial.state.x - 2 / 256) < 1e-7);
+        assert.equal(moved.state.y, initial.state.y);
+        await page.mouse.move(x + 50, y - 12);
+        const wide = await draw('remember');
+        assert.deepEqual(select(wide.state), select(initial.state));
+        await v(page, () => e11.refraction(1.4));
+        const refracted = await draw('compare');
+        assert.ok(
+            refracted.difference.count > 25,
+            JSON.stringify({ dpr, wide: wide.sha, refracted: refracted.sha, difference: refracted.difference }),
+        );
+        const [left, bottom, right, top] = refracted.difference.bounds;
+        const center = [(left + right + 1) / 2, (bottom + top + 1) / 2];
+        const targetCenter = [256 + (wide.state.x * 288) / 2, 144 + (wide.state.y * 288) / 2];
+        assert.ok(
+            center.every((value, axis) => Math.abs(value / dpr - targetCenter[axis]) < 8),
+            JSON.stringify({ dpr, center, targetCenter, difference: refracted.difference }),
+        );
+        const renderLayout = await getSize();
+        assert.ok(Math.abs(renderLayout.shaderCenter[0] - (wide.state.x * 288) / 1024) < 1e-7);
+        assert.ok(Math.abs(renderLayout.shaderCenter[1] - wide.state.y / 2) < 1e-7);
+        assert.deepEqual(refracted.edge, wide.edge);
+        await v(page, (value) => e11.refraction(value), wide.state.refraction);
+        assert.equal((await draw()).sha, wide.sha);
+        const returned = await resize(384, 256);
+        assert.equal(returned.generation, b.generation + 1);
+        const restored = await draw();
+        assert.equal(restored.sha, initial.sha);
+        await page.mouse.up();
+        const exit = await v(page, () => e11.exit());
+        assert.equal(exit.receipt.status, 'released');
+        assert.deepEqual(errors, []);
+        return {
+            dpr,
+            initial: a,
+            wide: b,
+            returned,
+            wideHash: wide.sha,
+            refractedHash: refracted.sha,
+            difference: refracted.difference,
+            lensCenter: center,
+            targetCenter,
+            initialHash: initial.sha,
+            returnedHash: restored.sha,
+        };
+    } catch (error) {
+        throw new Error(`${error.stack || error}; browser: ${errors.join('; ')}`);
+    } finally {
+        await page.close();
+    }
+}
+
 async function main() {
     const receipt = verifySourceBinding(root, bundle);
     if (!receipt.matches) throw new Error('E11 requires source-bound SDK');
@@ -206,7 +310,14 @@ async function main() {
         const origin = 'http://127.0.0.1:' + server.address().port + '/';
         const normal = await verify(browser, origin, 'no-preference');
         const reduced = await verify(browser, origin, 'reduce');
-        const report = { browser: browser.version(), sourceBindingSha256: receipt.receiptSha256, normal, reduced };
+        const resize = [await verifyResize(browser, origin, 1), await verifyResize(browser, origin, 2)];
+        const report = {
+            browser: browser.version(),
+            sourceBindingSha256: receipt.receiptSha256,
+            normal,
+            reduced,
+            resize,
+        };
         if (process.env.AIR_PROBE_OUTPUT)
             writeFileSync(process.env.AIR_PROBE_OUTPUT, JSON.stringify(report, null, 2) + '\n');
         console.log(
@@ -216,6 +327,7 @@ async function main() {
                 identicalSeekHash: normal.forward.sha,
                 uniformChangesPixels: true,
                 opacityBlendedChannels: normal.opacity.blendedChannels,
+                resizedDpr: resize.map((row) => row.dpr),
                 normalExit: normal.exit.receipt.status,
                 reducedExit: reduced.exit.receipt.status,
             }),
