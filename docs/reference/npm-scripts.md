@@ -185,3 +185,18 @@ AIR_OUT_DIR=/absolute/path/to/air-lazy npm run build:min -- --defer-gltf-effect
 或自定义特性集，也不将变体打入默认 npm 包。使用会重定位 ESM 的 bundler 时，应用需保留
 这个模块 URL 与侧车文件的相对位置。首屏本来就要加载 glTF 的应用应优先用默认构建，
 除非在目标设备上的对测支持切换。
+
+### Optional WebGL2 startup viewer
+
+```sh
+AIR_OUT_DIR=/absolute/path/to/air-viewer npm run build -- --startup-viewer
+AIR_OUT_DIR=/absolute/path/to/air-viewer npm run build:min -- --startup-viewer
+```
+
+Writes `cocosair.viewer.mjs` or `cocosair.viewer.min.mjs` and corresponding source
+maps and source-binding receipts to the selected directory. Like other builds it
+advances the build number. It does not overwrite the default build directory,
+run the npm packager, publish types for a new package entry, or copy Box2D3/WebGPU
+sidecars. Requires an isolated ESM output directory. Do not combine with
+`AIR_FEATURES`, Spark or `--defer-gltf-effect`. See
+[WebGL2 startup viewer](../guides/startup-viewer.md) for capability boundaries.

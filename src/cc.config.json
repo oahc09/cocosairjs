@@ -97,6 +97,9 @@
                 "air"
             ]
         },
+        "air-viewer": {
+            "modules": ["air-viewer"]
+        },
         "spark": {
             "modules": [
                 "spark"

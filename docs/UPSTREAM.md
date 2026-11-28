@@ -686,3 +686,11 @@ PR #22 carries the XHR final response URL through the native Atlas text path. Th
 The WebGPU backend validates allocation size and storage binding range against the granted device limits. A rejected resize keeps the previous native buffer and accounting. Applications can use aligned buffer views to bind ranges independently.
 
 Effects may supply pre-specialized WGSL render stages with explicit entry points. The WebGPU backend compiles those stages directly using their GFX layout, while the existing GLSL path continues to handle effects without the variant and WebGL2.
+
+
+### Optional AIR viewer build
+
+`src/exports/air-viewer.ts` is AIR-owned. Its feature unit in `src/cc.config.json` is
+opt-in and absent from the default JavaScript and declaration feature lists. It
+reuses the native WebGL2/legacy pipeline and glTF stack, omitting aggregate feature
+roots not required by the viewer workload. No extracted `src/cocos/` files are edited.
