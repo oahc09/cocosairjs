@@ -2,6 +2,7 @@ import * as m from '/build/cocosair.module.js';
 
 const args = new URL(location.href).searchParams;
 const mode = args.get('mode');
+const transparent = args.get('transparent') === '1';
 if (!['plain-off', 'plain-taa', 'fence-off', 'fence-taa', 'fence-zero', 'fence-current', 'fence-union'].includes(mode))
     throw new Error('Invalid motion track');
 const response = await fetch('/vendor/builtin-source/generated/custom-effects.json');
@@ -51,7 +52,7 @@ taa.enabled = !mode.endsWith('-off');
 taa.sampleScale = 0;
 taa.feedback = mode === 'fence-zero' ? 0 : 0.9;
 const mesh = m.utils.createMesh(m.primitives.box());
-function rect(name, x, y, z, w, h, tone) {
+function rect(name, x, y, z, w, h, tone, alpha = 255) {
     const node = new m.Node(name);
     scene.addChild(node);
     node.setPosition(x, y, z);
@@ -59,14 +60,20 @@ function rect(name, x, y, z, w, h, tone) {
     const model = node.addComponent(m.MeshRenderer);
     model.mesh = mesh;
     const mat = new m.Material();
-    mat.initialize({ effectName: 'builtin-unlit' });
-    mat.setProperty('mainColor', new m.Color(tone, tone, tone, 255));
+    mat.initialize({ effectName: 'builtin-unlit', technique: alpha === 255 ? 0 : 1 });
+    mat.setProperty('mainColor', new m.Color(tone, tone, tone, alpha));
     model.setMaterial(mat, 0);
     return node;
 }
-rect('Black opaque reference', 0, 0, -1, width, height, 0);
-const mover = rect('Moving bright piece', -7, 0, 0, 4, 20, 236);
-if (mode.startsWith('fence')) rect('Stationary fence', -4.5, 0, 0, 1, 24, 236);
+if (!transparent) rect('Black opaque reference', 0, 0, -1, width, height, 0);
+else {
+    // Adjacent, non-overlapping tiles in the same opaque depth plane.
+    rect('Left black tile', -42.5, 0, -1, 75, height, 0);
+    rect('Right black tile', 38, 0, -1, 84, height, 0);
+    rect('Same-depth bright stripe', -4.5, 0, -1, 1, height, 236);
+}
+const mover = rect('Moving bright piece', -7, 0, 0, 4, 20, 236, transparent ? 128 : 255);
+if (!transparent && mode.startsWith('fence')) rect('Stationary fence', -4.5, 0, 0, 1, 24, 236);
 const masked = ['fence-current', 'fence-union'].includes(mode);
 let maskTexture;
 if (masked) {

@@ -227,6 +227,23 @@ authored diagnostic masks that drive the real shader mask branch at zero jitter.
 vectors, automatic previous-depth rejection, a validation of the production mask camera, or a claim that the
 masked current-color lookup is correct under nonzero jitter.
 
+### E12 blended motion next to a same-depth backdrop stripe
+
+```sh
+node tools/verify/rendering-iteration/taa-native-probe.cjs \
+  <WPE-or-chrome-headless-shell> <new-report.json> --expect-transparent
+```
+
+After a fresh source-bound build, this negative control draws a half-alpha
+stock unlit rectangle over adjacent opaque tiles at identical depth. With a
+fixed camera and zero jitter, a nearby same-depth stripe can still preserve
+unrelated history in the color bounds. The mode requires the normal-feedback
+track to leave a trail, the zero-feedback track to match TAA-off, and the
+fixture-authored current-plus-previous mask to clear the trail without
+disabling a separate opaque history control. This is not a production fix,
+does not exercise the production mask camera, and does not validate jitter,
+resize, transparent sorting or physical GPUs.
+
 ### E12 camera-only reprojection coordinates
 
 ```sh

@@ -195,6 +195,60 @@ function inspectDepthClamp(result) {
         throw Error('Depth edge, stable accumulation or camera cut acceptance failed');
 }
 
+function inspectTransparentControl({ tracks, errors }) {
+    const modes = motion.filter((name) => name.startsWith('fence'));
+    const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+    if (errors.length || Object.keys(tracks).length !== modes.length)
+        throw new Error('Incomplete transparent E12 capture');
+    for (const name of modes) {
+        const track = tracks[name];
+        if (
+            track.transportErrors.length ||
+            track.consoleErrors.length ||
+            !same(track.extent, [160, 96]) ||
+            track.scanFromX !== 69 ||
+            track.scanY !== 48 ||
+            track.records.some((frame, i) => frame.worldX !== -7 + 8 * i || frame.scan.length !== 17)
+        )
+            throw new Error('Invalid transparent E12 fixture: ' + name);
+        if (name === 'fence-off') {
+            if (track.records.some((frame) => frame.draws.length)) throw new Error('TAA-off control drew a TAA pass');
+            continue;
+        }
+        const [seed, reuse] = track.records.map((frame) => frame.draws[0]);
+        if (
+            track.records.some((frame) => frame.draws.length !== 1) ||
+            !seed.inputs.depthTex ||
+            !reuse.inputs.depthTex ||
+            seed.inputs.taaPrevTexture !== seed.inputs.inputTexture ||
+            reuse.inputs.taaPrevTexture !== seed.output ||
+            !same(seed.params, [0, 0, 0]) ||
+            !same(reuse.params, [0, 0, name === 'fence-zero' ? 0 : 0.9])
+        )
+            throw new Error('Transparent E12 fixture did not exercise the declared history: ' + name);
+    }
+    const read = (name, frame, x) => tracks[name].records[frame].scan[x - 69][0];
+    const stable = (name) => tracks[name].records[1].stableScan[2];
+    const bright = read('fence-off', 0, 74);
+    const trail = read('fence-taa', 1, 74);
+    const clean = tracks['fence-off'].records;
+    if (
+        bright < 80 ||
+        read('fence-off', 1, 75) < bright * 1.5 ||
+        read('fence-off', 1, 74) !== 0 ||
+        read('fence-off', 1, 79) !== bright ||
+        !tracks['fence-zero'].records.every((frame, i) => frame.rgbaSha256 === clean[i].rgbaSha256) ||
+        trail < bright * 0.6 ||
+        read('fence-taa', 1, 79) > bright * 0.2 ||
+        read('fence-current', 1, 74) !== trail ||
+        read('fence-current', 1, 79) !== bright ||
+        !tracks['fence-union'].records.every((frame, i) => same(frame.scan, clean[i].scan)) ||
+        stable('fence-taa') - stable('fence-off') < 30 ||
+        stable('fence-union') !== stable('fence-taa')
+    )
+        throw new Error('Transparent negative control, mask comparison or opaque feedback did not reproduce');
+}
+
 async function main([executable, output, flag, ...rest]) {
     if (
         !executable ||
@@ -206,15 +260,17 @@ async function main([executable, output, flag, ...rest]) {
                 '--expect-isolation',
                 '--expect-jitter',
                 '--expect-motion',
+                '--expect-transparent',
                 '--expect-depth-clamp',
                 '--expect-runtime',
             ].includes(flag))
     )
         throw new Error(
-            'Usage: node taa-native-probe.cjs <WPE or Chrome headless shell executable> <new-report.json> [--expect-baseline|--expect-isolation|--expect-jitter|--expect-motion|--expect-depth-clamp|--expect-runtime]',
+            'Usage: node taa-native-probe.cjs <WPE or Chrome headless shell executable> <new-report.json> [--expect-baseline|--expect-isolation|--expect-jitter|--expect-motion|--expect-depth-clamp|--expect-transparent|--expect-runtime]',
         );
     const depthClamp = flag === '--expect-depth-clamp';
-    const motionProbe = depthClamp || flag === '--expect-motion';
+    const transparent = flag === '--expect-transparent';
+    const motionProbe = depthClamp || transparent || flag === '--expect-motion';
     const binding = verifySourceBinding(root, files['/build/cocosair.module.js'][1]);
     if (!binding.matches) throw new Error('Native probe requires an SDK bound to the current src bytes');
     const hashes = {};
@@ -240,7 +296,13 @@ async function main([executable, output, flag, ...rest]) {
             ...(chrome ? { chromiumSandbox: true } : {}),
         });
         result.browserVersion = browser.version();
-        const modes = depthClamp ? Object.keys(depthCases) : motionProbe ? motion.slice() : ['off', 'single', 'both'];
+        const modes = depthClamp
+            ? Object.keys(depthCases)
+            : transparent
+              ? motion.filter((name) => name.startsWith('fence'))
+              : motionProbe
+                ? motion.slice()
+                : ['off', 'single', 'both'];
         if (flag === '--expect-runtime') modes.push('runtime', 'runtime-control');
         if (flag === '--expect-jitter') modes.push('isolated-jitter');
         if (flag === '--expect-isolation') modes.push('isolated', 'isolated-control', 'isolated-b');
@@ -257,7 +319,13 @@ async function main([executable, output, flag, ...rest]) {
                 if (event.type() === 'error') consoleErrors.push(event.text());
             });
             try {
-                const query = depthClamp ? depthCases[mode] : motionProbe ? { mode, stock: '1' } : { mode };
+                const query = depthClamp
+                    ? depthCases[mode]
+                    : transparent
+                      ? { mode, transparent: '1', stable: '1' }
+                      : motionProbe
+                        ? { mode, stock: '1' }
+                        : { mode };
                 await page.goto(`http://127.0.0.1:${server.address().port}/?${new URLSearchParams(query)}`);
                 await page.waitForFunction(() => typeof window.__probe === 'function', null, { timeout: 15000 });
                 const data = await page.evaluate(() => window.__probe());
@@ -287,6 +355,10 @@ async function main([executable, output, flag, ...rest]) {
             await new Promise((resolve) => server.close(resolve));
             writeFileSync(output, JSON.stringify(result, null, 2) + '\n', { flag: 'wx' });
         }
+    }
+    if (transparent) {
+        inspectTransparentControl(result);
+        return;
     }
     if (depthClamp) {
         inspectDepthClamp(result);
