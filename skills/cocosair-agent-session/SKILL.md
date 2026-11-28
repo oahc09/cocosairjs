@@ -68,3 +68,4 @@ Read relevant [wrong/right examples](references/common-mistakes.md) before imple
 - [Inspect or write?](references/agent-session.md) - Protocol and writable scope
 - [Find live state?](references/runtime-control.md) - IDs and diagnostics
 - [Prove pixels changed?](references/visual-probes.md) - Capture and origins
+- [Review a runnable build?](references/agent-review.md) - CLI evidence and acceptance boundaries
