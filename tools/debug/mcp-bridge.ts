@@ -1,5 +1,5 @@
 /** Explicitly loaded development-only bridge; never exported by the runtime. */
-import { createStepClock } from 'cocosair';
+import { createStepClock, director, gfx } from 'cocosair';
 import type { AirApp } from 'cocosair';
 import { createAgentSession } from './agent-session';
 import { captureControlled, reviewCamera, ReviewRequest } from './mcp-review';
@@ -14,6 +14,9 @@ export function attachMcpBridge(app: AirApp, writable: boolean) {
     let closed = false;
     let created = 0;
     return {
+        isEngine(candidate: typeof director) {
+            return director === candidate && director.getScene() === scene;
+        },
         async call(method: string, args: Record<string, any>) {
             if (closed) {
                 return { ok: false, error: { code: 'SESSION_CLOSED', message: 'Start a new MCP process.' } };
@@ -25,6 +28,13 @@ export function attachMcpBridge(app: AirApp, writable: boolean) {
                         code: 'STALE_TARGET',
                         message: 'Scene changed; start a new MCP process to attach explicitly.',
                     },
+                };
+            }
+            if (method === 'reviewIdentity') {
+                const api = director.root?.device.gfxAPI;
+                return {
+                    sceneId: session.inspectScene().sceneId,
+                    backend: api === gfx.API.WEBGL2 ? 'webgl2' : api === gfx.API.WEBGPU ? 'webgpu' : 'unknown',
                 };
             }
             if (method === 'inspect') {

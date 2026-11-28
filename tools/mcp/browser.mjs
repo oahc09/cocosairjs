@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import { chromium } from 'playwright';
 
 export function localPage(value) {
@@ -17,7 +18,7 @@ export function localPage(value) {
     }
     return url;
 }
-export async function openBrowser({ url, writable = false, executablePath }) {
+export async function openBrowser({ url, writable = false, executablePath, expectedBundleSha256 }) {
     const target = localPage(url);
     const browser = await chromium.launch({
         headless: true,
@@ -25,6 +26,9 @@ export async function openBrowser({ url, writable = false, executablePath }) {
         args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'],
     });
     let closed = false;
+    let bundleObserved = false;
+    let retired = false;
+    const bundleUrl = new URL('/build/cocosair.module.js', target).href;
     let handle;
     let closing;
     const close = () => {
@@ -67,6 +71,18 @@ export async function openBrowser({ url, writable = false, executablePath }) {
             try {
                 const response = await route.fetch({ maxRedirects: 0, timeout: 10000 });
                 if (response.status() >= 300 && response.status() < 400) return route.abort('blockedbyclient');
+                if (expectedBundleSha256 && requested.pathname === '/build/cocosair.module.js') {
+                    const body = await response.body();
+                    if (
+                        !response.ok() ||
+                        requested.href !== bundleUrl ||
+                        createHash('sha256').update(body).digest('hex') !== expectedBundleSha256
+                    ) {
+                        retired = true;
+                        return route.abort('blockedbyclient');
+                    }
+                    bundleObserved = true;
+                }
                 return route.fulfill({ response });
             } catch {
                 return route.abort('failed');
@@ -79,11 +95,29 @@ export async function openBrowser({ url, writable = false, executablePath }) {
             if (extra !== page) void extra.close();
         });
         await page.goto(target.href, { waitUntil: 'load', timeout: 15000 });
+        page.on('framenavigated', (frame) => {
+            if (frame === page.mainFrame()) retired = true;
+        });
+        if (expectedBundleSha256 && (!bundleObserved || retired)) {
+            throw Object.assign(new Error('Browser did not load the pinned development bundle.'), {
+                code: 'BUNDLE_MISMATCH',
+            });
+        }
         await page.waitForFunction(() => window.__airApp?.getScene(), null, { timeout: 15000 });
         handle = await page.evaluateHandle(async (allowWrites) => {
             const { attachMcpBridge } = await import('/__debug/mcp-bridge.js');
             return attachMcpBridge(window.__airApp, allowWrites);
         }, writable);
+        if (expectedBundleSha256) {
+            const matchesEngine = await handle.evaluate(
+                async (bridge, pinnedUrl) => bridge.isEngine((await import(pinnedUrl)).director),
+                bundleUrl,
+            );
+            if (!matchesEngine || retired)
+                throw Object.assign(new Error('Browser import map does not resolve to the pinned AIR bundle.'), {
+                    code: 'BUNDLE_MISMATCH',
+                });
+        }
         let pending = 0;
         return {
             writable,
@@ -92,6 +126,10 @@ export async function openBrowser({ url, writable = false, executablePath }) {
                 if (closed)
                     throw Object.assign(new Error('Session closed. Start a new MCP process.'), {
                         code: 'SESSION_CLOSED',
+                    });
+                if (expectedBundleSha256 && retired)
+                    throw Object.assign(new Error('Page or build changed. Start a fresh review.'), {
+                        code: 'STALE_PAGE',
                     });
                 if (pending) throw Object.assign(new Error('Browser operation already running.'), { code: 'BUSY' });
                 pending++;
@@ -125,6 +163,8 @@ export async function openBrowser({ url, writable = false, executablePath }) {
                             }, 10000);
                         }),
                     ]);
+                    if (expectedBundleSha256 && retired)
+                        throw Object.assign(new Error('Page or build changed during review.'), { code: 'STALE_PAGE' });
                     if (result?.closeRequired) await close();
                     return result;
                 } catch (error) {
