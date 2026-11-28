@@ -58,6 +58,6 @@ node tools/mcp/seeded-panel-browser.mjs
 
 ## 一起复跑三条验收
 
-仓库的 Code quality 提供独立的 `agent-review` 模式，不改变常规检查的范围。它使用 `tools/mcp` 锁定的 Playwright 和配套 Chromium，在一个新构建、一个 loopback 服务器上顺序运行三条验收，保留对应 SHA、日志和原始证据。这个模式不代表全浏览器验收或发布审批。
+三条浏览器验收不接入日常 PR CI，按需用下面的脚本一起复跑。它使用 `tools/mcp` 锁定的 Playwright 和配套 Chromium，在同一份新构建、同一个本地服务器上顺序运行三条验收，保留对应 SHA、日志和原始证据。这不代表全浏览器验收或发布审批。
 
 本地按前文装好依赖和 Chromium，然后运行 `npm run build`，再执行 `bash tools/mcp/review-ci.sh /tmp/air-agent-review-new`。输出目录必须是绝对路径且尚不存在；复用已安装 Chromium 时可设 `AIR_CHROMIUM`。
