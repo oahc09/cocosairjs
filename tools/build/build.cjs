@@ -46,7 +46,9 @@ const VARIANT = spark || FEATURES.length > 0 || OUT !== join(ROOT, 'build');
 // r43 实测：ccbuild 对**未在引擎 cc.config.json 里声明**的 feature 名是静默忽略的——
 // 变体构建 EXIT=0、产物与默认逐字节相同，等于什么都没开（变体取证会整批失效）。
 // 故在构建前先按声明面校验，未声明即失败退出，逼使用者先登记 feature unit。
-const EFFECTIVE = FEATURES.length ? FEATURES : AIR_FEATURES;
+const viewer = process.argv.includes('--startup-viewer');
+const { FEATURES: VIEWER_FEATURES, assertSeparateOutput } = require('./startup-viewer.cjs');
+const EFFECTIVE = viewer ? VIEWER_FEATURES : FEATURES.length ? FEATURES : AIR_FEATURES;
 const DECLARED = new Set(Object.keys(require(join(ENGINE, 'cc.config.json')).features || {}));
 const UNDECLARED = EFFECTIVE.filter((f) => !DECLARED.has(f));
 if (UNDECLARED.length) {
@@ -61,6 +63,19 @@ const args = process.argv.slice(2);
 const min = args.includes('--min');
 const formatIdx = args.indexOf('--format');
 const moduleFormat = formatIdx >= 0 ? args[formatIdx + 1] : 'esm';
+const deferGltf = args.includes('--defer-gltf-effect');
+if (viewer || deferGltf) {
+    assertSeparateOutput({
+        standard: join(ROOT, 'build'),
+        destination: OUT,
+        explicit: !!process.env.AIR_OUT_DIR,
+        incompatible: spark || FEATURES.length > 0 || moduleFormat !== 'esm' || (viewer && deferGltf),
+        flag: viewer ? '--startup-viewer' : '--defer-gltf-effect',
+    });
+}
+if (!viewer && FEATURES.includes('air-viewer')) {
+    throw Error('Use --startup-viewer, not AIR_FEATURES=air-viewer.');
+}
 
 (async function exec() {
     if (spark) {
@@ -79,13 +94,16 @@ const moduleFormat = formatIdx >= 0 ? args[formatIdx + 1] : 'esm';
         const buildNumber = readBuildNumber(ROOT) + 1;
         console.log(`[build] AIR_BUILD_DATE=${buildDate} AIR_BUILD_NUMBER=${buildNumber}`);
         require('./builtin-assets.cjs').verify();
-        require('./webgpu-assets.cjs').copy(ROOT, OUT);
-        require('./box2d3.cjs').copy(OUT);
+        if (!viewer) {
+            require('./webgpu-assets.cjs').copy(ROOT, OUT);
+            require('./box2d3.cjs').copy(OUT);
+        }
         const box3dAssets = await stageBox3DAssets({
             features: EFFECTIVE,
             outputDirectory: OUT,
             buildDirectory: process.env.AIR_BOX3D_ST_BUILD_DIR,
         });
+        const gltf = deferGltf ? require('./deferred-gltf-effect.cjs').deferredGltfEffect(ROOT) : null;
         const started = Date.now();
         const build = () =>
             withESMHelpers(
@@ -111,6 +129,7 @@ const moduleFormat = formatIdx >= 0 ? args[formatIdx + 1] : 'esm';
                         targets: { chrome: '66' },
                     }),
                 [
+                    ...(gltf ? [gltf.plugin] : []),
                     lineEndingsPlugin(),
                     require('./webgpu-assets.cjs').webgpuAssetsPlugin(ROOT),
                     require('./box2d3.cjs').box2dAssetsPlugin(),
@@ -122,10 +141,14 @@ const moduleFormat = formatIdx >= 0 ? args[formatIdx + 1] : 'esm';
         else await build();
         console.log(`[build] ccbuild done in ${((Date.now() - started) / 1000).toFixed(1)}s`);
 
+        gltf?.publish(OUT);
+
         // 归一化产物名并移动到 build/ 根目录：
         //   ESM  dev: build/cocosair.module.js      min: build/cocosair.module.min.js
         //   SYS  dev: build/cc.js
-        const bundleName = min ? 'cocosair.module.min.js' : moduleFormat === 'esm' ? 'cocosair.module.js' : 'cc.js';
+        const bundleName = viewer
+            ? min ? 'cocosair.viewer.min.mjs' : 'cocosair.viewer.mjs'
+            : min ? 'cocosair.module.min.js' : moduleFormat === 'esm' ? 'cocosair.module.js' : 'cc.js';
         const candidates = moduleFormat === 'esm' ? ['cc.mjs', 'cc.js'] : ['cc.js'];
         let moved = false;
         for (const c of candidates) {

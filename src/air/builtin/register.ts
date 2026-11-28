@@ -56,23 +56,59 @@ function toGlsl3(src: string): string {
     );
 }
 
+function registerEffect(data: (typeof effects)[number], stages: (typeof glsl4)[number]): void {
+    const effect = Object.assign(new EffectAsset(), data);
+    effect.shaders.forEach((shaderInfo, index) => {
+        const source = stages[index];
+        if (source) {
+            shaderInfo.glsl4 = source;
+            shaderInfo.glsl3 = { vert: toGlsl3(source.vert), frag: toGlsl3(source.frag) };
+        }
+    });
+    effect.hideInEditor = true;
+    effect.onLoaded();
+}
+
+interface DeferredEffect {
+    readonly url: string;
+    readonly integrity: string;
+}
+
+// Replaced only by the opt-in ESM build. The default bundle keeps this effect eager.
+function deferredGltfEffect(): DeferredEffect | undefined {
+    return undefined /* AIR_DEFERRED_GLTF_EFFECT */;
+}
+
+let pendingGltfEffect: Promise<void> | undefined;
+
+/** Shares registration, not a model request's abort signal. */
+export function prepareBuiltinGltfEffect(): Promise<void> | undefined {
+    const deferred = deferredGltfEffect();
+    if (!deferred || EffectAsset.get('air-gltf-template')) return undefined;
+    if (!pendingGltfEffect) {
+        pendingGltfEffect = fetch(deferred.url, { integrity: deferred.integrity })
+            .then(async (response) => {
+                if (!response.ok) throw new Error(`AIR glTF shader data HTTP ${response.status}`);
+                const { effect, stages } = await response.json();
+                if (effect?.name !== 'air-gltf-template' || !Array.isArray(effect.shaders)
+                    || !Array.isArray(effect.techniques) || !Array.isArray(stages)
+                    || stages.length !== effect.shaders.length
+                    || stages.some((stage) => typeof stage?.vert !== 'string' || typeof stage?.frag !== 'string')) {
+                    throw new Error('Invalid AIR glTF shader data');
+                }
+                if (!EffectAsset.get(effect.name)) registerEffect(effect, stages);
+            })
+            .then(
+                () => { pendingGltfEffect = undefined; },
+                (error) => { pendingGltfEffect = undefined; throw error; },
+            );
+    }
+    return pendingGltfEffect;
+}
+
 export function registerBuiltinAirAssets(): void {
     // 1. 注册 builtin effects：glsl4 为引擎同源源码；glsl3 供 WebGL2 设备。
-    effects.forEach((e, effectIndex) => {
-        const effect = Object.assign(new EffectAsset(), e);
-        effect.shaders.forEach((shaderInfo, shaderIndex) => {
-            const source = glsl4[effectIndex][shaderIndex];
-            if (source) {
-                shaderInfo.glsl4 = source;
-                shaderInfo.glsl3 = {
-                    vert: toGlsl3(source.vert),
-                    frag: toGlsl3(source.frag),
-                };
-            }
-        });
-        effect.hideInEditor = true;
-        effect.onLoaded();
-    });
+    effects.forEach((effect, index) => registerEffect(effect, glsl4[index]));
 
     // 2. 注册 builtin 材质（missing/particle/sprite/standard 等）
     initBuiltinMaterial();

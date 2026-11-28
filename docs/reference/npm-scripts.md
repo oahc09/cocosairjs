@@ -168,3 +168,35 @@ Spark 高斯泼溅是可选特性单元，仅进 spark 变体产物（`build/spa
 `consumer-acceptance.cjs` uses the actual installed npm tarball, not source imports. The default type checks use TypeScript 4.9.5; `--modern-ts=<bin/tsc>` requires exactly 5.9.3. An omitted modern compiler is `NOT_RUN`, not a modern-consumer PASS. `skipLibCheck: true` remains the documented consumer contract. `node --test tools/verify/upstream-sdk-contracts.test.cjs` tests the verifier with synthetic packages and is not SDK acceptance evidence.
 
 `tarball-browser-consumer.cjs --out=<new.json> [--vite=<package-directory>]` retains existing API, import-map, nested-path, CSP, pixel and source-map checks. Its added matrix checks installed unminified/minified modules, compositor screenshots and release/close. With pinned Vite 7.1.12 it runs seven cases including Vite development/production for both module variants; without Vite those four cases remain `NOT_RUN`. It does not install Vite or change dependencies. The two Chromium collectors use an explicit absolute `AIR_CHROMIUM_PATH`, or Playwright’s matching default executable, and never silently substitute a browser after failure. Screenshots are written next to the requested report. Browser launch errors are infrastructure failures, not rendering passes or unsupported GPU capabilities.
+
+### 可选的 glTF 着色器延迟加载（直接部署 ESM）
+
+```sh
+AIR_OUT_DIR=/absolute/path/to/air-lazy npm run build -- --defer-gltf-effect
+# 为同一个独立目录生成 min 入口时：
+AIR_OUT_DIR=/absolute/path/to/air-lazy npm run build:min -- --defer-gltf-effect
+```
+
+发布该入口时，必须同时在同一目录发布构建生成的
+`air-gltf-effect-<hash>.json`。运行时通过相对 ESM URL 加载，并用内容完整性校验拒绝
+错误版本；有 CSP 的部署需允许该同源请求。不加载带网格的 glTF 时不发请求。
+多个模型共享一次初始化，但取消其中一个模型不会取消其他模型；下载或校验失败可重新加载。
+默认构建和 npm 入口仍同步注册模板，不依赖这个文件。该选项不支持 SystemJS、Spark
+或自定义特性集，也不将变体打入默认 npm 包。使用会重定位 ESM 的 bundler 时，应用需保留
+这个模块 URL 与侧车文件的相对位置。首屏本来就要加载 glTF 的应用应优先用默认构建，
+除非在目标设备上的对测支持切换。
+
+### Optional WebGL2 startup viewer
+
+```sh
+AIR_OUT_DIR=/absolute/path/to/air-viewer npm run build -- --startup-viewer
+AIR_OUT_DIR=/absolute/path/to/air-viewer npm run build:min -- --startup-viewer
+```
+
+Writes `cocosair.viewer.mjs` or `cocosair.viewer.min.mjs` and corresponding source
+maps and source-binding receipts to the selected directory. Like other builds it
+advances the build number. It does not overwrite the default build directory,
+run the npm packager, publish types for a new package entry, or copy Box2D3/WebGPU
+sidecars. Requires an isolated ESM output directory. Do not combine with
+`AIR_FEATURES`, Spark or `--defer-gltf-effect`. See
+[WebGL2 startup viewer](../guides/startup-viewer.md) for capability boundaries.
