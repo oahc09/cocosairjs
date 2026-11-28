@@ -262,3 +262,28 @@ resize, and compares B's readback with an untouched two-camera control.
 History slots are reused up to the observed simultaneous-camera high-water
 mark for that pass. This does not certify moving-object disocclusion, HDR
 presentation, or the modeled WebGPU coordinate path.
+
+## E11 liquid glass motion
+
+Build the current source and use a Playwright installation that can launch Chromium
+(or WPE WebKit). The probe runs on private loopback and serves a small interactive
+fixture reusing the native glass shader. It only writes an output report when
+`AIR_PROBE_OUTPUT` is set.
+
+```sh
+npm run build
+npm test -- --runInBand --runTestsByPath test/smoke/air-motion.test.ts
+NODE_PATH=<playwright-node_modules> \
+AIR_PROBE_CHROMIUM_EXECUTABLE=<chrome-headless-shell> \
+AIR_PROBE_OUTPUT=/tmp/e11-motion.json \
+node tools/verify/rendering-iteration/e11-motion-probe.cjs
+```
+
+Use `AIR_PROBE_WEBKIT_EXECUTABLE` instead of the Chromium executable to test WPE.
+The probe asserts trusted pointer drag and mid-flight interruption, identical node,
+material and pixel values at the same time when scrubbing in both directions,
+a material-only pixel change without editing the shared material, keyboard slider
+input, reduced motion and no writes or completion callbacks after scene release.
+The reduced-motion and ordinary runs use separate pages. This is an E11 interaction
+and native-rendering proof, not visual approval of the final E11 concept or
+physical-GPU performance evidence.
